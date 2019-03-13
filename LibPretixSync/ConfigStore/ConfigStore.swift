@@ -10,5 +10,5 @@ import Foundation
 
 /// Holds key-value pairs for configuration.
 public protocol ConfigStore {
-    
+
 }

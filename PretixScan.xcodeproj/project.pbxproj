@@ -129,6 +129,7 @@
 			buildConfigurationList = DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScan" */;
 			buildPhases = (
 				DC07357222392474008326F7 /* Sources */,
+				DCAAFF2D2239342B0059C000 /* Run Linter */,
 				DC07357322392474008326F7 /* Frameworks */,
 				DC07357422392474008326F7 /* Resources */,
 				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
@@ -237,6 +238,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nif ! which jazzy > /dev/null; then\necho \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\nelse\njazzy\nfi\n";
+		};
+		DCAAFF2D2239342B0059C000 /* Run Linter */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Linter";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
