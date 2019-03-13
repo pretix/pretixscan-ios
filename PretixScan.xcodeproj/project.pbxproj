@@ -1,0 +1,470 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DC07357A22392474008326F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07357922392474008326F7 /* AppDelegate.swift */; };
+		DC07357C22392474008326F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07357B22392474008326F7 /* ViewController.swift */; };
+		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
+		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
+		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
+		DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07358E22392476008326F7 /* PretixScanTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DC07358B22392476008326F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC07356E22392474008326F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC07357522392474008326F7;
+			remoteInfo = PretixScan;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DC07357622392474008326F7 /* PretixScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PretixScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC07357922392474008326F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DC07357B22392474008326F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DC07357E22392474008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DC07358022392476008326F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC07358322392476008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DC07358522392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC07358A22392476008326F7 /* PretixScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PretixScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC07358E22392476008326F7 /* PretixScanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PretixScanTests.swift; sourceTree = "<group>"; };
+		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC07357322392474008326F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC07358722392476008326F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DC07356D22392474008326F7 = {
+			isa = PBXGroup;
+			children = (
+				DC07357822392474008326F7 /* PretixScan */,
+				DC07358D22392476008326F7 /* PretixScanTests */,
+				DC07357722392474008326F7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DC07357722392474008326F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC07357622392474008326F7 /* PretixScan.app */,
+				DC07358A22392476008326F7 /* PretixScanTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DC07357822392474008326F7 /* PretixScan */ = {
+			isa = PBXGroup;
+			children = (
+				DC07357922392474008326F7 /* AppDelegate.swift */,
+				DC07357B22392474008326F7 /* ViewController.swift */,
+				DC07357D22392474008326F7 /* Main.storyboard */,
+				DC07358022392476008326F7 /* Assets.xcassets */,
+				DC07358222392476008326F7 /* LaunchScreen.storyboard */,
+				DC07358522392476008326F7 /* Info.plist */,
+			);
+			path = PretixScan;
+			sourceTree = "<group>";
+		};
+		DC07358D22392476008326F7 /* PretixScanTests */ = {
+			isa = PBXGroup;
+			children = (
+				DC07358E22392476008326F7 /* PretixScanTests.swift */,
+				DC07359022392476008326F7 /* Info.plist */,
+			);
+			path = PretixScanTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DC07357522392474008326F7 /* PretixScan */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScan" */;
+			buildPhases = (
+				DC07357222392474008326F7 /* Sources */,
+				DC07357322392474008326F7 /* Frameworks */,
+				DC07357422392474008326F7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PretixScan;
+			productName = PretixScan;
+			productReference = DC07357622392474008326F7 /* PretixScan.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DC07358922392476008326F7 /* PretixScanTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC07359622392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScanTests" */;
+			buildPhases = (
+				DC07358622392476008326F7 /* Sources */,
+				DC07358722392476008326F7 /* Frameworks */,
+				DC07358822392476008326F7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC07358C22392476008326F7 /* PBXTargetDependency */,
+			);
+			name = PretixScanTests;
+			productName = PretixScanTests;
+			productReference = DC07358A22392476008326F7 /* PretixScanTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DC07356E22392474008326F7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = PreTix;
+				TargetAttributes = {
+					DC07357522392474008326F7 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					DC07358922392476008326F7 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = DC07357522392474008326F7;
+					};
+				};
+			};
+			buildConfigurationList = DC07357122392474008326F7 /* Build configuration list for PBXProject "PretixScan" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DC07356D22392474008326F7;
+			productRefGroup = DC07357722392474008326F7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DC07357522392474008326F7 /* PretixScan */,
+				DC07358922392476008326F7 /* PretixScanTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC07357422392474008326F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */,
+				DC07358122392476008326F7 /* Assets.xcassets in Resources */,
+				DC07357F22392474008326F7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC07358822392476008326F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC07357222392474008326F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC07357C22392474008326F7 /* ViewController.swift in Sources */,
+				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC07358622392476008326F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DC07358C22392476008326F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC07357522392474008326F7 /* PretixScan */;
+			targetProxy = DC07358B22392476008326F7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DC07357D22392474008326F7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC07357E22392474008326F7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DC07358222392476008326F7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC07358322392476008326F7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DC07359122392476008326F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DC07359222392476008326F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DC07359422392476008326F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FL4V655A94;
+				INFOPLIST_FILE = PretixScan/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScan;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DC07359522392476008326F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FL4V655A94;
+				INFOPLIST_FILE = PretixScan/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScan;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DC07359722392476008326F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FL4V655A94;
+				INFOPLIST_FILE = PretixScanTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PretixScan.app/PretixScan";
+			};
+			name = Debug;
+		};
+		DC07359822392476008326F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FL4V655A94;
+				INFOPLIST_FILE = PretixScanTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScanTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PretixScan.app/PretixScan";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DC07357122392474008326F7 /* Build configuration list for PBXProject "PretixScan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC07359122392476008326F7 /* Debug */,
+				DC07359222392476008326F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScan" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC07359422392476008326F7 /* Debug */,
+				DC07359522392476008326F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC07359622392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScanTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC07359722392476008326F7 /* Debug */,
+				DC07359822392476008326F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DC07356E22392474008326F7 /* Project object */;
+}
