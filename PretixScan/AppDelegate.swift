@@ -3,7 +3,7 @@
 //  PretixScan
 //
 //  Created by Daniel Jilg on 13.03.19.
-//  Copyright © 2019 PreTix. All rights reserved.
+//  Copyright © 2019 rami.io. All rights reserved.
 //
 
 import UIKit
@@ -11,13 +11,17 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var configStore: ConfigStore?
     var window: UIWindow?
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
         ) -> Bool {
-        // Override point for customization after application launch.
+
+        // Prepare ConfigStore
+        configStore = InMemoryConfigStore()
+
         return true
     }
 

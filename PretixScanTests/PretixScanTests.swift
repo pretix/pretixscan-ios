@@ -3,7 +3,7 @@
 //  PretixScanTests
 //
 //  Created by Daniel Jilg on 13.03.19.
-//  Copyright © 2019 PreTix. All rights reserved.
+//  Copyright © 2019 rami.io. All rights reserved.
 //
 
 import XCTest

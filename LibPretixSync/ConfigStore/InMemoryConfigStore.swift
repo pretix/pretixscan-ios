@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// ConfigStore implementation that uses UserDefaults as place to store configuration
-public class DefaultsConfigStore: NSObject, ConfigStore {
+/// ConfigStore implementation that stores configuration in memory.
+public class InMemoryConfigStore: ConfigStore {
 
 }

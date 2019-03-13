@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		DC07357A22392474008326F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07357922392474008326F7 /* AppDelegate.swift */; };
-		DC07357C22392474008326F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07357B22392474008326F7 /* ViewController.swift */; };
 		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
 		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
 		DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07358E22392476008326F7 /* PretixScanTests.swift */; };
 		DCAAFF29223929B60059C000 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DCAAFF28223929B60059C000 /* README.md */; };
-		DCAAFF2B22392B460059C000 /* DefaultsConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF2A22392B460059C000 /* DefaultsConfigStore.swift */; };
+		DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */; };
+		DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,7 +31,6 @@
 /* Begin PBXFileReference section */
 		DC07357622392474008326F7 /* PretixScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PretixScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07357922392474008326F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DC07357B22392474008326F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DC07357E22392474008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC07358022392476008326F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC07358322392476008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,7 +39,8 @@
 		DC07358E22392476008326F7 /* PretixScanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PretixScanTests.swift; sourceTree = "<group>"; };
 		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCAAFF28223929B60059C000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		DCAAFF2A22392B460059C000 /* DefaultsConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsConfigStore.swift; sourceTree = "<group>"; };
+		DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryConfigStore.swift; sourceTree = "<group>"; };
+		DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateTicketViewController.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,11 +85,10 @@
 		DC07357822392474008326F7 /* PretixScan */ = {
 			isa = PBXGroup;
 			children = (
+				DCAAFF3222394BE80059C000 /* Storyboards */,
 				DC07357922392474008326F7 /* AppDelegate.swift */,
-				DC07357B22392474008326F7 /* ViewController.swift */,
-				DC07357D22392474008326F7 /* Main.storyboard */,
+				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
-				DC07358222392476008326F7 /* LaunchScreen.storyboard */,
 				DC07358522392476008326F7 /* Info.plist */,
 			);
 			path = PretixScan;
@@ -104,6 +103,15 @@
 			path = PretixScanTests;
 			sourceTree = "<group>";
 		};
+		DCAAFF3222394BE80059C000 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				DC07357D22392474008326F7 /* Main.storyboard */,
+				DC07358222392476008326F7 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				DCEF6E35223925EF009E7078 /* ConfigStore.swift */,
-				DCAAFF2A22392B460059C000 /* DefaultsConfigStore.swift */,
+				DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */,
 			);
 			path = ConfigStore;
 			sourceTree = "<group>";
@@ -265,9 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
-				DC07357C22392474008326F7 /* ViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
-				DCAAFF2B22392B460059C000 /* DefaultsConfigStore.swift in Sources */,
+				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
+				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
