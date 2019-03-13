@@ -1,0 +1,15 @@
+author: rami.io
+author_url: http://pretix.eu
+github_url: https://github.com/pretix
+copyright: '© 2019 [rami.io](http://rami.io)'
+
+swift_version: 4.2.1
+
+module: PretixScan
+module_version: 1.0a
+
+custom_categories:
+  - name: ConfigStore
+    children:
+    - ConfigStore
+    - DefaultsConfigStore

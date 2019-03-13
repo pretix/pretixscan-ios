@@ -14,6 +14,7 @@
 		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
 		DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07358E22392476008326F7 /* PretixScanTests.swift */; };
 		DCAAFF29223929B60059C000 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DCAAFF28223929B60059C000 /* README.md */; };
+		DCAAFF2B22392B460059C000 /* DefaultsConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF2A22392B460059C000 /* DefaultsConfigStore.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		DC07358E22392476008326F7 /* PretixScanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PretixScanTests.swift; sourceTree = "<group>"; };
 		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCAAFF28223929B60059C000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DCAAFF2A22392B460059C000 /* DefaultsConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsConfigStore.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				DCEF6E35223925EF009E7078 /* ConfigStore.swift */,
+				DCAAFF2A22392B460059C000 /* DefaultsConfigStore.swift */,
 			);
 			path = ConfigStore;
 			sourceTree = "<group>";
@@ -128,6 +131,7 @@
 				DC07357222392474008326F7 /* Sources */,
 				DC07357322392474008326F7 /* Frameworks */,
 				DC07357422392474008326F7 /* Resources */,
+				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
 			);
 			buildRules = (
 			);
@@ -215,6 +219,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		DCAAFF2C2239323B0059C000 /* Generate Documentation */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Documentation";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nif ! which jazzy > /dev/null; then\necho \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\nelse\njazzy\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DC07357222392474008326F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -223,6 +248,7 @@
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
 				DC07357C22392474008326F7 /* ViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
+				DCAAFF2B22392B460059C000 /* DefaultsConfigStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

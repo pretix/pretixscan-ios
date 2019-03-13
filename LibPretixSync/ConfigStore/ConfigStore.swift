@@ -9,6 +9,6 @@
 import Foundation
 
 /// Holds key-value pairs for configuration.
-protocol ConfigStore {
+public protocol ConfigStore {
     
 }
