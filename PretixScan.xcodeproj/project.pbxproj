@@ -13,6 +13,8 @@
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
 		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
 		DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07358E22392476008326F7 /* PretixScanTests.swift */; };
+		DCAAFF29223929B60059C000 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DCAAFF28223929B60059C000 /* README.md */; };
+		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		DC07358A22392476008326F7 /* PretixScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PretixScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07358E22392476008326F7 /* PretixScanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PretixScanTests.swift; sourceTree = "<group>"; };
 		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCAAFF28223929B60059C000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 		DC07356D22392474008326F7 = {
 			isa = PBXGroup;
 			children = (
+				DCAAFF28223929B60059C000 /* README.md */,
+				DCEF6E31223924F2009E7078 /* LibPretixSync */,
 				DC07357822392474008326F7 /* PretixScan */,
 				DC07358D22392476008326F7 /* PretixScanTests */,
 				DC07357722392474008326F7 /* Products */,
@@ -94,6 +100,22 @@
 				DC07359022392476008326F7 /* Info.plist */,
 			);
 			path = PretixScanTests;
+			sourceTree = "<group>";
+		};
+		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
+			isa = PBXGroup;
+			children = (
+				DCEF6E322239255B009E7078 /* ConfigStore */,
+			);
+			path = LibPretixSync;
+			sourceTree = "<group>";
+		};
+		DCEF6E322239255B009E7078 /* ConfigStore */ = {
+			isa = PBXGroup;
+			children = (
+				DCEF6E35223925EF009E7078 /* ConfigStore.swift */,
+			);
+			path = ConfigStore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,7 +164,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = PreTix;
+				ORGANIZATIONNAME = rami.io;
 				TargetAttributes = {
 					DC07357522392474008326F7 = {
 						CreatedOnToolsVersion = 10.1;
@@ -179,6 +201,7 @@
 			files = (
 				DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */,
 				DC07358122392476008326F7 /* Assets.xcassets in Resources */,
+				DCAAFF29223929B60059C000 /* README.md in Resources */,
 				DC07357F22392474008326F7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
 				DC07357C22392474008326F7 /* ViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 			);
