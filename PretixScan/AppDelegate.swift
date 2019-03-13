@@ -19,9 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
         ) -> Bool {
 
-        // Prepare ConfigStore
         configStore = InMemoryConfigStore()
-
         return true
     }
 

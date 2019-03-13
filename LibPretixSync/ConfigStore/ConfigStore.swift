@@ -8,7 +8,11 @@
 
 import Foundation
 
-/// Holds key-value pairs for configuration.
+/// A protocol that defines elements that contain information about the app's configuration.
 public protocol ConfigStore {
+    /// Returns `true` if the warning screen has been accepted by the user
+    var welcomeScreenIsConfirmed: Bool { get set }
 
+    /// Returns `true` if the API connection parameters are configured correctly.
+    var isConfigured: Bool { get }
 }

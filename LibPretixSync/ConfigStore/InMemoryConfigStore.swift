@@ -10,5 +10,6 @@ import UIKit
 
 /// ConfigStore implementation that stores configuration in memory.
 public class InMemoryConfigStore: ConfigStore {
-
+    public var welcomeScreenIsConfirmed: Bool = false
+    public var isConfigured: Bool = false
 }

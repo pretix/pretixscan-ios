@@ -15,6 +15,9 @@
 		DCAAFF29223929B60059C000 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DCAAFF28223929B60059C000 /* README.md */; };
 		DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */; };
 		DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */; };
+		DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF35223952350059C000 /* WelcomeViewController.swift */; };
+		DCAAFF3822396EC30059C000 /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3722396EC30059C000 /* Segues.swift */; };
+		DCAAFF3A223970090059C000 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF39223970090059C000 /* Localization.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +44,9 @@
 		DCAAFF28223929B60059C000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryConfigStore.swift; sourceTree = "<group>"; };
 		DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateTicketViewController.swift; sourceTree = "<group>"; };
+		DCAAFF35223952350059C000 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		DCAAFF3722396EC30059C000 /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
+		DCAAFF39223970090059C000 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,8 +94,11 @@
 				DCAAFF3222394BE80059C000 /* Storyboards */,
 				DC07357922392474008326F7 /* AppDelegate.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
+				DCAAFF35223952350059C000 /* WelcomeViewController.swift */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
 				DC07358522392476008326F7 /* Info.plist */,
+				DCAAFF3722396EC30059C000 /* Segues.swift */,
+				DCAAFF39223970090059C000 /* Localization.swift */,
 			);
 			path = PretixScan;
 			sourceTree = "<group>";
@@ -273,6 +282,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
+				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
+				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
+				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
