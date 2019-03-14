@@ -34,10 +34,63 @@
                     </view>
                     <connections>
                         <segue destination="UR2-m6-Blb" kind="presentation" identifier="presentWelcomeViewController" id="GkZ-ev-8dv"/>
+                        <segue destination="Urx-Wb-p9O" kind="presentation" identifier="presentConnectDeviceViewController" id="N4U-ol-VwL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+        </scene>
+        <!--Connect Device View Controller-->
+        <scene sceneID="Yt1-Uo-1IR">
+            <objects>
+                <viewController id="Urx-Wb-p9O" customClass="ConnectDeviceViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Mig-Hm-qZu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-4M-LfC">
+                                <rect key="frame" x="20" y="40" width="335" height="161"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ConnectDeviceViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN5-8A-7r9">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="73"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
+                                        <rect key="frame" x="0.0" y="93" width="335" height="18"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bk8-1A-62O">
+                                        <rect key="frame" x="0.0" y="131" width="335" height="30"/>
+                                        <state key="normal" title="Manual Setup"/>
+                                        <connections>
+                                            <action selector="manualSetup:" destination="Urx-Wb-p9O" eventType="touchUpInside" id="GLK-Ok-Ixk"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="35d-vW-nNp" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="q5m-4M-LfC" secondAttribute="bottom" constant="20" id="XaL-Df-42h"/>
+                            <constraint firstItem="q5m-4M-LfC" firstAttribute="top" secondItem="35d-vW-nNp" secondAttribute="top" constant="20" id="ZxP-aa-YaZ"/>
+                            <constraint firstItem="q5m-4M-LfC" firstAttribute="leading" secondItem="35d-vW-nNp" secondAttribute="leading" constant="20" id="kfL-LM-eKQ"/>
+                            <constraint firstItem="35d-vW-nNp" firstAttribute="trailing" secondItem="q5m-4M-LfC" secondAttribute="trailing" constant="20" id="pJt-Ue-yzB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="35d-vW-nNp"/>
+                    </view>
+                    <connections>
+                        <outlet property="explanationLabel" destination="IJo-PF-JTu" id="pGT-qa-KQn"/>
+                        <outlet property="manualSetupButton" destination="bk8-1A-62O" id="sz5-2a-hgR"/>
+                        <outlet property="titleLabel" destination="dN5-8A-7r9" id="kVF-62-WNP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oSX-Sd-kHF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1825" y="-709"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="FeZ-Zp-g9G">
@@ -50,7 +103,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
                                 <rect key="frame" x="20" y="40" width="335" height="215.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69I-Ce-qdN">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WelcomeViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69I-Ce-qdN">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="36"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                         <nil key="textColor"/>

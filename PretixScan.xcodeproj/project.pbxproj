@@ -18,6 +18,19 @@
 		DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF35223952350059C000 /* WelcomeViewController.swift */; };
 		DCAAFF3822396EC30059C000 /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3722396EC30059C000 /* Segues.swift */; };
 		DCAAFF3A223970090059C000 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF39223970090059C000 /* Localization.swift */; };
+		DCAAFF3C223978FB0059C000 /* ConnectDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3B223978FB0059C000 /* ConnectDeviceViewController.swift */; };
+		DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF40223AAB8E0059C000 /* Handshake.swift */; };
+		DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF42223AAF4C0059C000 /* HandshakeParsingTests.swift */; };
+		DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF40223AAB8E0059C000 /* Handshake.swift */; };
+		DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */; };
+		DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF48223AB8450059C000 /* DeviceInitializationResponse.swift */; };
+		DCAAFF4B223AB9CE0059C000 /* DeviceInitializationParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF4A223AB9CE0059C000 /* DeviceInitializationParsingTests.swift */; };
+		DCAAFF4C223AB9F20059C000 /* DeviceInitializationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */; };
+		DCAAFF4D223AB9F40059C000 /* DeviceInitializationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF48223AB8450059C000 /* DeviceInitializationResponse.swift */; };
+		DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF4E223ABC670059C000 /* APIClient.swift */; };
+		DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF50223ACAC60059C000 /* HttpMethods.swift */; };
+		DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF54223AE6E20059C000 /* Errors.swift */; };
+		DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF56223AF14B0059C000 /* Utilities.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +60,16 @@
 		DCAAFF35223952350059C000 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		DCAAFF3722396EC30059C000 /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
 		DCAAFF39223970090059C000 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		DCAAFF3B223978FB0059C000 /* ConnectDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectDeviceViewController.swift; path = PretixScan/ConnectDeviceViewController.swift; sourceTree = SOURCE_ROOT; };
+		DCAAFF40223AAB8E0059C000 /* Handshake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handshake.swift; sourceTree = "<group>"; };
+		DCAAFF42223AAF4C0059C000 /* HandshakeParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandshakeParsingTests.swift; sourceTree = "<group>"; };
+		DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInitializationRequest.swift; sourceTree = "<group>"; };
+		DCAAFF48223AB8450059C000 /* DeviceInitializationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInitializationResponse.swift; sourceTree = "<group>"; };
+		DCAAFF4A223AB9CE0059C000 /* DeviceInitializationParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInitializationParsingTests.swift; sourceTree = "<group>"; };
+		DCAAFF4E223ABC670059C000 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		DCAAFF50223ACAC60059C000 /* HttpMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethods.swift; sourceTree = "<group>"; };
+		DCAAFF54223AE6E20059C000 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		DCAAFF56223AF14B0059C000 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,10 +118,12 @@
 				DC07357922392474008326F7 /* AppDelegate.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DCAAFF35223952350059C000 /* WelcomeViewController.swift */,
+				DCAAFF3B223978FB0059C000 /* ConnectDeviceViewController.swift */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
 				DC07358522392476008326F7 /* Info.plist */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
 				DCAAFF39223970090059C000 /* Localization.swift */,
+				DCAAFF56223AF14B0059C000 /* Utilities.swift */,
 			);
 			path = PretixScan;
 			sourceTree = "<group>";
@@ -108,6 +133,8 @@
 			children = (
 				DC07358E22392476008326F7 /* PretixScanTests.swift */,
 				DC07359022392476008326F7 /* Info.plist */,
+				DCAAFF42223AAF4C0059C000 /* HandshakeParsingTests.swift */,
+				DCAAFF4A223AB9CE0059C000 /* DeviceInitializationParsingTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -121,9 +148,31 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		DCAAFF3F223AAB800059C000 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DCAAFF40223AAB8E0059C000 /* Handshake.swift */,
+				DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */,
+				DCAAFF48223AB8450059C000 /* DeviceInitializationResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DCAAFF45223AB62B0059C000 /* API Client */ = {
+			isa = PBXGroup;
+			children = (
+				DCAAFF4E223ABC670059C000 /* APIClient.swift */,
+				DCAAFF50223ACAC60059C000 /* HttpMethods.swift */,
+				DCAAFF54223AE6E20059C000 /* Errors.swift */,
+			);
+			path = "API Client";
+			sourceTree = "<group>";
+		};
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
 			isa = PBXGroup;
 			children = (
+				DCAAFF45223AB62B0059C000 /* API Client */,
+				DCAAFF3F223AAB800059C000 /* Models */,
 				DCEF6E322239255B009E7078 /* ConfigStore */,
 			);
 			path = LibPretixSync;
@@ -282,12 +331,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
+				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
+				DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
+				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
+				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
+				DCAAFF3C223978FB0059C000 /* ConnectDeviceViewController.swift in Sources */,
+				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
+				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
+				DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,7 +352,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCAAFF4B223AB9CE0059C000 /* DeviceInitializationParsingTests.swift in Sources */,
+				DCAAFF4C223AB9F20059C000 /* DeviceInitializationRequest.swift in Sources */,
+				DCAAFF4D223AB9F40059C000 /* DeviceInitializationResponse.swift in Sources */,
+				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
 				DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */,
+				DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

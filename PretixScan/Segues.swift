@@ -10,4 +10,5 @@ import Foundation
 
 struct Segue {
     static let presentWelcomeViewController = "presentWelcomeViewController"
+    static let presentConnectDeviceViewController = "presentConnectDeviceViewController"
 }

@@ -23,10 +23,13 @@ class ValidateTicketViewController: UIViewController {
         checkFirstRunActions(appDelegate.configStore!)
     }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let welcomeViewController = segue.destination as? WelcomeViewController {
             welcomeViewController.configStore = appDelegate.configStore
+        }
+
+        if let connectDeviceViewController = segue.destination as? ConnectDeviceViewController {
+            connectDeviceViewController.configStore = appDelegate.configStore
         }
     }
 }
@@ -34,14 +37,14 @@ class ValidateTicketViewController: UIViewController {
 // MARK: First Run Actions
 extension ValidateTicketViewController {
     func checkFirstRunActions(_ configStore: ConfigStore) {
-        // First Run Warning Screen
+        // First Run Welcome Screen
         if !configStore.welcomeScreenIsConfirmed {
             performSegue(withIdentifier: Segue.presentWelcomeViewController, sender: self)
         }
 
         // API Connection
-        else if !configStore.isConfigured {
-
+        else if !configStore.isAPIConfigured {
+            performSegue(withIdentifier: Segue.presentConnectDeviceViewController, sender: self)
         }
     }
 }

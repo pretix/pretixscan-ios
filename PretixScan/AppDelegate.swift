@@ -19,7 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
         ) -> Bool {
 
-        configStore = InMemoryConfigStore()
+        let inMemoryConfigStore = InMemoryConfigStore()
+        inMemoryConfigStore.debug = true
+        configStore = inMemoryConfigStore
+
         return true
     }
 

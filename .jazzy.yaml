@@ -13,3 +13,13 @@ custom_categories:
     children:
     - ConfigStore
     - InMemoryConfigStore
+
+  - name: Models
+    children:
+    - Handshake
+    - DeviceInitializationRequest
+    - DeviceInitializationResponse
+  
+  - name: API Client
+    children:
+    - APIClient
