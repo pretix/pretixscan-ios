@@ -31,6 +31,10 @@
 		DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF50223ACAC60059C000 /* HttpMethods.swift */; };
 		DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF54223AE6E20059C000 /* Errors.swift */; };
 		DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF56223AF14B0059C000 /* Utilities.swift */; };
+		DCC0003A223BE07D00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
+		DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
+		DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */; };
+		DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +74,9 @@
 		DCAAFF50223ACAC60059C000 /* HttpMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethods.swift; sourceTree = "<group>"; };
 		DCAAFF54223AE6E20059C000 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		DCAAFF56223AF14B0059C000 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		DCC00039223BE07D00236424 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		DCC0003B223BE31F00236424 /* MultiLingualString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualString.swift; sourceTree = "<group>"; };
+		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +142,7 @@
 				DC07359022392476008326F7 /* Info.plist */,
 				DCAAFF42223AAF4C0059C000 /* HandshakeParsingTests.swift */,
 				DCAAFF4A223AB9CE0059C000 /* DeviceInitializationParsingTests.swift */,
+				DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -154,6 +162,8 @@
 				DCAAFF40223AAB8E0059C000 /* Handshake.swift */,
 				DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */,
 				DCAAFF48223AB8450059C000 /* DeviceInitializationResponse.swift */,
+				DCC00039223BE07D00236424 /* Event.swift */,
+				DCC0003B223BE31F00236424 /* MultiLingualString.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -335,9 +345,11 @@
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
 				DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
+				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
+				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
@@ -353,10 +365,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCAAFF4B223AB9CE0059C000 /* DeviceInitializationParsingTests.swift in Sources */,
+				DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */,
 				DCAAFF4C223AB9F20059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF4D223AB9F40059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
 				DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */,
+				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
 				DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
