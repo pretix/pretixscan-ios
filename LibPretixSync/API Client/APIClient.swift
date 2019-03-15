@@ -20,8 +20,18 @@ public class APIClient {
     public var isReadyToCommunicate: Bool { return configStore.isAPIConfigured }
 
     // MARK: - Private Properties
-    private let jsonEncoder = JSONEncoder()
-    private let jsonDecoder = JSONDecoder()
+    private let jsonEncoder: JSONEncoder = {
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.dateEncodingStrategy = .iso8601
+        return jsonEncoder
+    }()
+
+    private let jsonDecoder: JSONDecoder = {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .iso8601
+        return jsonDecoder
+    }()
+
     private let session = URLSession.shared
 
     // MARK: - Initialization

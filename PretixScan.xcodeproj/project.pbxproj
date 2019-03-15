@@ -11,7 +11,6 @@
 		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
 		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
-		DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07358E22392476008326F7 /* PretixScanTests.swift */; };
 		DCAAFF29223929B60059C000 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DCAAFF28223929B60059C000 /* README.md */; };
 		DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */; };
 		DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */; };
@@ -35,6 +34,8 @@
 		DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
 		DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */; };
 		DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
+		DCC00041223BEAF300236424 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00040223BEAF300236424 /* EventTests.swift */; };
+		DCC00042223BEB3B00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +57,6 @@
 		DC07358322392476008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC07358522392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC07358A22392476008326F7 /* PretixScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PretixScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC07358E22392476008326F7 /* PretixScanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PretixScanTests.swift; sourceTree = "<group>"; };
 		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCAAFF28223929B60059C000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryConfigStore.swift; sourceTree = "<group>"; };
@@ -77,6 +77,7 @@
 		DCC00039223BE07D00236424 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DCC0003B223BE31F00236424 /* MultiLingualString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualString.swift; sourceTree = "<group>"; };
 		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
+		DCC00040223BEAF300236424 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,11 +139,11 @@
 		DC07358D22392476008326F7 /* PretixScanTests */ = {
 			isa = PBXGroup;
 			children = (
-				DC07358E22392476008326F7 /* PretixScanTests.swift */,
 				DC07359022392476008326F7 /* Info.plist */,
 				DCAAFF42223AAF4C0059C000 /* HandshakeParsingTests.swift */,
 				DCAAFF4A223AB9CE0059C000 /* DeviceInitializationParsingTests.swift */,
 				DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */,
+				DCC00040223BEAF300236424 /* EventTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -368,9 +369,10 @@
 				DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */,
 				DCAAFF4C223AB9F20059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF4D223AB9F40059C000 /* DeviceInitializationResponse.swift in Sources */,
+				DCC00042223BEB3B00236424 /* Event.swift in Sources */,
 				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
-				DC07358F22392476008326F7 /* PretixScanTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
+				DCC00041223BEAF300236424 /* EventTests.swift in Sources */,
 				DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -79,4 +79,15 @@ class MultiLingualStringTests: XCTestCase {
         parsedMLString = try? JSONDecoder().decode(MultiLingualString.self, from: emptyJSON)
         XCTAssertEqual(parsedMLString?.description, "(no value)")
     }
+
+    func testEquatable() {
+        let mlString1 = MultiLingualString(english: "en", german: "de", germanInformal: nil, spanish: nil, french: nil, dutch: nil, dutchInformal: nil, turkish: nil)
+        let mlString2 = MultiLingualString(english: "en", german: "de", germanInformal: nil, spanish: nil, french: nil, dutch: nil, dutchInformal: nil, turkish: nil)
+        let mlString3 = MultiLingualString(english: "not en", german: "de", germanInformal: nil, spanish: nil, french: nil, dutch: nil, dutchInformal: nil, turkish: nil)
+        let mlString4 = MultiLingualString(english: nil, german: "de", germanInformal: "du", spanish: nil, french: nil, dutch: nil, dutchInformal: nil, turkish: nil)
+
+        XCTAssertEqual(mlString1, mlString2)
+        XCTAssertNotEqual(mlString1, mlString3)
+        XCTAssertNotEqual(mlString1, mlString4)
+    }
 }

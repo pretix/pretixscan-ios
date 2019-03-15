@@ -8,6 +8,9 @@
 
 import Foundation
 
+/// A String equal that contains various translations.
+///
+/// Use the `description` method to automatically return out a displayable string.
 public struct MultiLingualString: Codable, Equatable {
     public let english: String?
     public let german: String?
@@ -30,6 +33,7 @@ public struct MultiLingualString: Codable, Equatable {
     }
 }
 
+// MARK: - CustomStringConvertible
 extension MultiLingualString: CustomStringConvertible {
     public var description: String {
         let allLanguages = [english, german, germanInformal, spanish, french, dutch, dutchInformal, turkish]
@@ -38,5 +42,21 @@ extension MultiLingualString: CustomStringConvertible {
         }
 
         return "(no value)"
+    }
+}
+
+// MARK: Easy creation
+extension MultiLingualString {
+    static func new(_ with: String) -> MultiLingualString {
+        return MultiLingualString.init(
+            english: with,
+            german: nil,
+            germanInformal: nil,
+            spanish: nil,
+            french: nil,
+            dutch: nil,
+            dutchInformal: nil,
+            turkish: nil
+        )
     }
 }

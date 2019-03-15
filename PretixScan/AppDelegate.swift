@@ -20,7 +20,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ) -> Bool {
 
         let inMemoryConfigStore = InMemoryConfigStore()
+
+        /*
+        ----------------------------------------
+        InMemoryConfigStore
+        ----------------------------------------
+        welcomeScreenIsConfirmed: true
+        isAPIConfigured:          true
+        apiBaseURL:               Optional(https://pretix.eu)
+        apiToken:                 1hmo8vtjajk8wwgwzcgz3xtuzswz63132q03e486xmaohou4oyku3y114jpwyd2y
+        deviceName:               Test iOS Simulator
+        organizerName:            iosdemo
+        deviceID:                 Optional(7)
+        deviceUniqueSerial:       H9AC2B59AOO293Y0
+        ----------------------------------------
+        */
+        inMemoryConfigStore.welcomeScreenIsConfirmed = true
+        inMemoryConfigStore.apiBaseURL = URL(string: "https://pretix.eu")
+        inMemoryConfigStore.apiToken = "1hmo8vtjajk8wwgwzcgz3xtuzswz63132q03e486xmaohou4oyku3y114jpwyd2y"
+        inMemoryConfigStore.deviceName = "Test iOS Simulator"
+        inMemoryConfigStore.organizerName = "iosdemo"
+        inMemoryConfigStore.deviceID = 7
+        inMemoryConfigStore.deviceUniqueSerial = "H9AC2B59AOO293Y0"
+
         inMemoryConfigStore.debug = true
+
         configStore = inMemoryConfigStore
 
         return true
