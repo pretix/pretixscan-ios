@@ -34,4 +34,8 @@ struct Localization {
     struct SelectEventTableViewController {
         static let Title = NSLocalizedString("Select Event", comment: "")
     }
+
+    struct SelectCheckInListTableViewController {
+        static let Title = NSLocalizedString("Select Check-In List", comment: "")
+    }
 }

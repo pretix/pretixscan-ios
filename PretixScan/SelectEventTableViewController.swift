@@ -51,8 +51,6 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
         }
     }
 
-    // MARK: Loading
-
     // MARK: - Table view data source
     private static let reuseIdentifier = "SelectEventTableViewControllerCell"
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -78,5 +76,15 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
         guard let events = events else { return nil }
         guard events.count > indexPath.row else { return nil }
         return events[indexPath.row]
+    }
+
+    // MARK: View Communication
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        if let selectCheckInListViewController = segue.destination as? SelectCheckInListTableViewController,
+            let selectedCell = sender as? UITableViewCell,
+            let selectedIndexPath = tableView.indexPath(for: selectedCell) {
+            selectCheckInListViewController.event = event(for: selectedIndexPath)
+        }
     }
 }
