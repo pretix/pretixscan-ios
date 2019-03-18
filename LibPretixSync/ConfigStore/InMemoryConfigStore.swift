@@ -9,6 +9,8 @@
 import UIKit
 
 /// ConfigStore implementation that stores configuration in memory.
+///
+/// Set the `debug` flag to make it print out each change to the console.
 public class InMemoryConfigStore: ConfigStore {
     // MARK: - Welcome Screen
     public var welcomeScreenIsConfirmed: Bool = false { didSet { debugPrint() } }
@@ -20,7 +22,7 @@ public class InMemoryConfigStore: ConfigStore {
 
     // MARK: - Device
     public var deviceName: String? { didSet { debugPrint() } }
-    public var organizerName: String? { didSet { debugPrint() } }
+    public var organizerSlug: String? { didSet { debugPrint() } }
     public var deviceID: Int? { didSet { debugPrint() } }
     public var deviceUniqueSerial: String? { didSet { debugPrint() } }
 
@@ -53,7 +55,7 @@ extension InMemoryConfigStore: CustomStringConvertible {
         desc.append("apiBaseURL:               \(String(describing: apiBaseURL))\n")
         desc.append("apiToken:                 \(apiToken ?? "nil")\n")
         desc.append("deviceName:               \(deviceName ?? "nil")\n")
-        desc.append("organizerName:            \(organizerName ?? "nil")\n")
+        desc.append("organizerSlug:            \(organizerSlug ?? "nil")\n")
         desc.append("deviceID:                 \(String(describing: deviceID))\n")
         desc.append("deviceUniqueSerial:       \(deviceUniqueSerial ?? "nil")\n")
         desc.append("----------------------------------------\n")

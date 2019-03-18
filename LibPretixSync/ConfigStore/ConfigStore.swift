@@ -29,7 +29,7 @@ public protocol ConfigStore {
     var deviceName: String? { get set }
 
     /// The event organizer for this device
-    var organizerName: String? { get set }
+    var organizerSlug: String? { get set }
 
     /// The ID for this device as assigned by the API
     var deviceID: Int? { get set }

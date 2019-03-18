@@ -20,8 +20,18 @@ public class APIClient {
     public var isReadyToCommunicate: Bool { return configStore.isAPIConfigured }
 
     // MARK: - Private Properties
-    private let jsonEncoder = JSONEncoder()
-    private let jsonDecoder = JSONDecoder()
+    private let jsonEncoder: JSONEncoder = {
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.dateEncodingStrategy = .iso8601
+        return jsonEncoder
+    }()
+
+    private let jsonDecoder: JSONDecoder = {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .iso8601
+        return jsonDecoder
+    }()
+
     private let session = URLSession.shared
 
     // MARK: - Initialization
@@ -30,8 +40,8 @@ public class APIClient {
     }
 }
 
+// MARK: - Devices
 public extension APIClient {
-    // MARK: - Devices
     public func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
         guard let baseURL = configStore.apiBaseURL else {
             print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
@@ -69,9 +79,61 @@ public extension APIClient {
             self.configStore.deviceID = initializationResponse.deviceID
             self.configStore.deviceName = initializationResponse.name
             self.configStore.deviceUniqueSerial = initializationResponse.uniqueSerial
-            self.configStore.organizerName = initializationResponse.organizer
+            self.configStore.organizerSlug = initializationResponse.organizer
 
             completionHandler(nil)
+        }
+
+        task.resume()
+    }
+}
+
+// MARK: - Events
+public extension APIClient {
+    /// Returns a list of all events within a given organizer the authenticated user/token has access to.
+    public func getEvents(forOrganizer organizer: String, completionHandler: @escaping ([Event]?, Error?) -> Void) {
+        guard let baseURL = configStore.apiBaseURL else {
+            print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
+            return
+        }
+
+        guard let apiToken = configStore.apiToken else {
+            print("Please set the APIClient's configStore.apiToken property before calling this function. ")
+            return
+        }
+
+        guard let organizerSlug = configStore.organizerSlug else {
+            print("Please set the APIClient's configStore.organizerSlug property before calling this function. ")
+            return
+        }
+
+        let url = baseURL.appendingPathComponent("/api/v1/organizers/\(organizerSlug)/events/")
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = HttpMethod.GET
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("Device \(apiToken)", forHTTPHeaderField: "Authorization")
+        urlRequest.httpBody = nil
+
+        let task = session.dataTask(with: urlRequest) { (data, _, error) in
+            guard error == nil else {
+                completionHandler(nil, error)
+                return
+            }
+
+            guard let responseData = data else {
+                completionHandler(nil, EmptyResponseError())
+                return
+            }
+
+            let pagedEventList: PagedList<Event>
+            do {
+                pagedEventList = try self.jsonDecoder.decode(PagedList<Event>.self, from: responseData)
+            } catch let jsonError {
+                completionHandler(nil, jsonError)
+                return
+            }
+
+            completionHandler(pagedEventList.results, nil)
         }
 
         task.resume()

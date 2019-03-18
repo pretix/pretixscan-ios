@@ -8,20 +8,20 @@
 
 import UIKit
 
-class ConnectDeviceViewController: UIViewController {
+class ConnectDeviceViewController: UIViewController, Configurable {
     var configStore: ConfigStore?
-
-    private var apiClient: APIClient?
+    var apiClient: APIClient?
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var explanationLabel: UILabel!
-    @IBOutlet weak var manualSetupButton: UIButton!
+    @IBOutlet weak var manualSetupButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = Localization.ConnectDeviceViewController.Title
         titleLabel.text = Localization.ConnectDeviceViewController.Title
         explanationLabel.text = Localization.ConnectDeviceViewController.Explanation
-        manualSetupButton.setTitle(Localization.ConnectDeviceViewController.ManualSetup, for: .normal)
+        manualSetupButton.title = Localization.ConnectDeviceViewController.ManualSetup
     }
 
     @IBAction private func manualSetup(_ sender: Any) {
@@ -64,7 +64,11 @@ class ConnectDeviceViewController: UIViewController {
                     fatalError(error.localizedDescription)
                 }
 
-                self.dismiss(animated: true, completion: nil)
+                // API Client is correctly initialized
+                DispatchQueue.main.async {
+                    (self.navigationController as? ConfiguredNavigationController)?.apiClient = self.apiClient
+                    self.performSegue(withIdentifier: Segue.presentSelectEventTableViewController, sender: self)
+                }
             }
         })
         present(alert, animated: true)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WelcomeViewController: UIViewController {
+class WelcomeViewController: UIViewController, Configurable {
     var configStore: ConfigStore?
 
     @IBOutlet private weak var titleLabel: UILabel!
@@ -20,6 +20,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = Localization.WelcomeViewController.Title
         titleLabel.text = Localization.WelcomeViewController.Title
         explanationLabel.text = Localization.WelcomeViewController.Explanation
         checkmarkDetailLabel.text = Localization.WelcomeViewController.CheckMarkDetail
@@ -32,7 +33,8 @@ class WelcomeViewController: UIViewController {
     }
 
     @IBAction private func `continue`(_ sender: Any) {
-        configStore?.welcomeScreenIsConfirmed = true
+        guard var configStore = self.configStore else { return }
+        configStore.welcomeScreenIsConfirmed = true
         dismiss(animated: true, completion: nil)
     }
 }
