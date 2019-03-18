@@ -36,4 +36,11 @@ public protocol ConfigStore {
 
     /// The serial number for this device as assigned by the API
     var deviceUniqueSerial: String? { get set }
+
+    // MARK: - Current Event and Check-In List
+    /// The currently managed event
+    var event: Event? { get set }
+
+    /// The CheckInList to scan against
+    var checkInList: CheckInList? { get set }
 }

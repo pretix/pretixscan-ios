@@ -26,6 +26,10 @@ public class InMemoryConfigStore: ConfigStore {
     public var deviceID: Int? { didSet { debugPrint() } }
     public var deviceUniqueSerial: String? { didSet { debugPrint() } }
 
+    // MARK: - Current Event and Check-In List
+    public var event: Event? { didSet { debugPrint() } }
+    public var checkInList: CheckInList? { didSet { debugPrint() } }
+
     // MARK: - Debugging
     public var debug: Bool = false {
         didSet {
@@ -58,6 +62,8 @@ extension InMemoryConfigStore: CustomStringConvertible {
         desc.append("organizerSlug:            \(organizerSlug ?? "nil")\n")
         desc.append("deviceID:                 \(String(describing: deviceID))\n")
         desc.append("deviceUniqueSerial:       \(deviceUniqueSerial ?? "nil")\n")
+        desc.append("event:                    \(String(describing: event))\n")
+        desc.append("checkInList:              \(String(describing: checkInList))\n")
         desc.append("----------------------------------------\n")
 
         return desc

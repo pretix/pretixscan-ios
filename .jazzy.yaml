@@ -17,6 +17,7 @@ custom_categories:
   - name: Models
     children:
     - Event
+    - CheckInList
     - Handshake
     - DeviceInitializationRequest
     - DeviceInitializationResponse
