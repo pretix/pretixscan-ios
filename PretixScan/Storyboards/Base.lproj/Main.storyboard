@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eLd-q2-LUY">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,27 +19,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Validate Ticket" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jto-op-1Ka">
-                                <rect key="frame" x="131" y="333" width="113" height="21"/>
+                                <rect key="frame" x="131" y="355" width="113" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pe6-kW-uIS">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items/>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pe6-kW-uIS" secondAttribute="trailing" id="0l0-y5-1HA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pe6-kW-uIS" secondAttribute="bottom" id="5wG-7f-srX"/>
+                            <constraint firstItem="pe6-kW-uIS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZOx-U9-Z8M"/>
                             <constraint firstItem="jto-op-1Ka" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cdq-nb-fIj"/>
                             <constraint firstItem="jto-op-1Ka" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="zkS-Fa-zxt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="60x-zZ-2W1">
+                        <barButtonItem key="leftBarButtonItem" title="Event Name" id="cOt-oc-Yuk">
+                            <connections>
+                                <segue destination="Xkm-hP-p78" kind="show" id="b8v-Hs-BIa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="eventButton" destination="cOt-oc-Yuk" id="UwT-QF-X0X"/>
                         <segue destination="S7W-QK-Oc8" kind="presentation" identifier="presentWelcomeViewController" id="GkZ-ev-8dv"/>
                         <segue destination="VRx-cx-5T1" kind="presentation" identifier="presentConnectDeviceViewController" id="N4U-ol-VwL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="100" y="27"/>
+            <point key="canvasLocation" x="861.60000000000002" y="26.53673163418291"/>
         </scene>
         <!--Connect Device View Controller-->
         <scene sceneID="Yt1-Uo-1IR">
@@ -92,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oSX-Sd-kHF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1921" y="27"/>
+            <point key="canvasLocation" x="2860" y="26.53673163418291"/>
         </scene>
         <!--Select Event Table View Controller-->
         <scene sceneID="jmf-Um-Ek2">
@@ -136,10 +151,14 @@
                             <outlet property="delegate" destination="U9m-zl-Ego" id="xmX-Xa-T2H"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="7rO-bQ-V7w"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="mH7-gS-Aq1">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdx-HE-gPf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2889" y="27"/>
+            <point key="canvasLocation" x="3828" y="26.53673163418291"/>
         </scene>
         <!--Select Check In List Table View Controller-->
         <scene sceneID="03P-2q-POD">
@@ -176,10 +195,13 @@
                             <outlet property="delegate" destination="LEl-FM-wwk" id="fGU-Xs-Aku"/>
                         </connections>
                     </tableView>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="37m-Qf-gXf">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fgl-eq-YuL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3879" y="27"/>
+            <point key="canvasLocation" x="4816.8000000000002" y="26.53673163418291"/>
         </scene>
         <!--Setup Finished View Controller-->
         <scene sceneID="zBj-in-czS">
@@ -252,7 +274,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PLU-TN-JqD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4855" y="27"/>
+            <point key="canvasLocation" x="5792.8000000000002" y="26.53673163418291"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="FeZ-Zp-g9G">
@@ -319,7 +341,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gbf-8L-YWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1920.8" y="-709.29535232383819"/>
+            <point key="canvasLocation" x="2860" y="-756"/>
         </scene>
         <!--Configured Navigation Controller-->
         <scene sceneID="g2L-Qo-PfX">
@@ -337,7 +359,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5P-Fg-jC2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="982" y="27"/>
+            <point key="canvasLocation" x="1921" y="-98"/>
         </scene>
         <!--Configured Navigation Controller-->
         <scene sceneID="RDb-Df-bly">
@@ -355,7 +377,44 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btC-6x-arR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="981.60000000000002" y="-709.29535232383819"/>
+            <point key="canvasLocation" x="1921" y="-756"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vus-vw-LEh">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eLd-q2-LUY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TIW-oc-r62">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="oOl-qF-uj8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fX3-hJ-nRc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-74" y="27"/>
+        </scene>
+        <!--Configured Navigation Controller-->
+        <scene sceneID="oPR-fd-zge">
+            <objects>
+                <navigationController id="Xkm-hP-p78" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5bs-Si-Hnd">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="U9m-zl-Ego" kind="relationship" relationship="rootViewController" id="6un-Hd-Wow"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KSH-qY-5Xy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1921" y="560"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="6un-Hd-Wow"/>
+    </inferredMetricsTieBreakers>
 </document>

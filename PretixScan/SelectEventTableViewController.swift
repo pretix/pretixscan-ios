@@ -12,7 +12,19 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
     var configStore: ConfigStore?
     var apiClient: APIClient?
 
-    private var isLoading = true { didSet { DispatchQueue.main.async { self.tableView.reloadData() }}}
+    private var isLoading = true {
+        didSet {
+            DispatchQueue.main.async {
+                if self.isLoading {
+                    self.tableView.refreshControl?.beginRefreshing()
+                } else {
+                    self.tableView.refreshControl?.endRefreshing()
+                }
+                self.tableView.reloadData()
+            }
+        }
+    }
+
     private var events: [Event]?
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -25,13 +37,14 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localization.SelectEventTableViewController.Title
+        refreshControl?.addTarget(self, action: #selector(updateView), for: .valueChanged)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         updateView()
     }
 
-    private func updateView() {
+    @objc private func updateView() {
         guard let configStore =  configStore, let apiClient = apiClient else {
             print("ConfigStore and APIStore not set, cancelling")
             return
@@ -42,6 +55,7 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
             return
         }
 
+        isLoading = true
         apiClient.getEvents(forOrganizer: organizerSlug) { (eventList, error) in
             if let error = error {
                 fatalError(error.localizedDescription)
