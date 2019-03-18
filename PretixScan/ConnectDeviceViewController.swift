@@ -50,6 +50,8 @@ class ConnectDeviceViewController: UIViewController, Configurable {
 
             configStore.apiBaseURL = url
             self.apiClient = APIClient(configStore: configStore)
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.apiClient = self.apiClient
 
             let deviceInitializatioRequest = DeviceInitializationRequest.init(
                 token: token,

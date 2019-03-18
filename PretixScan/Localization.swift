@@ -10,6 +10,11 @@
 import Foundation
 
 struct Localization {
+    struct ValidateTicketViewController {
+        static let Title = NSLocalizedString("PretixScan", comment: "")
+        static let NoEvent = NSLocalizedString("No Event", comment: "")
+    }
+
     struct WelcomeViewController {
         static let Title = NSLocalizedString("Welcome to PretixScan", comment: "")
         static let Explanation = NSLocalizedString("PretixScan is an event entry app that you can use to validate tickets that you sold throught pretix.", comment: "")

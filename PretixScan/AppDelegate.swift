@@ -12,6 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var configStore: ConfigStore?
+    var apiClient: APIClient?
+
     var window: UIWindow?
 
     func application(
@@ -19,9 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
         ) -> Bool {
 
-        let inMemoryConfigStore = InMemoryConfigStore()
-        inMemoryConfigStore.debug = true
+        let inMemoryConfigStore = prefilledInMemoryConfigStore()
         configStore = inMemoryConfigStore
+
+        if let configStore = configStore, configStore.isAPIConfigured {
+            apiClient = APIClient(configStore: configStore)
+        }
 
         return true
     }
