@@ -166,6 +166,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="scQ-Rp-23B" kind="show" id="Ybx-kZ-ZDy"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -177,6 +180,79 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fgl-eq-YuL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3879" y="27"/>
+        </scene>
+        <!--Setup Finished View Controller-->
+        <scene sceneID="zBj-in-czS">
+            <objects>
+                <viewController id="scQ-Rp-23B" customClass="SetupFinishedViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fjx-9L-lXe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xpg-TF-Qdv">
+                                <rect key="frame" x="20" y="84" width="335" height="376.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✅" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EW6-d9-gTY">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="107.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="90"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SetupFinishedViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwv-i3-NIR">
+                                        <rect key="frame" x="0.0" y="127.5" width="335" height="73"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sy-ib-gvc">
+                                        <rect key="frame" x="0.0" y="220.5" width="335" height="18"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H0-rB-JlM">
+                                        <rect key="frame" x="0.0" y="258.5" width="335" height="24"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check-In List" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNE-8y-Z73">
+                                        <rect key="frame" x="0.0" y="302.5" width="335" height="24"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UH6-KN-D1X">
+                                        <rect key="frame" x="0.0" y="346.5" width="335" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="dismiss:" destination="scQ-Rp-23B" eventType="touchUpInside" id="JAU-O1-T3I"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0yg-NU-4De" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xpg-TF-Qdv" secondAttribute="bottom" constant="20" id="55W-FG-GOA"/>
+                            <constraint firstItem="xpg-TF-Qdv" firstAttribute="top" secondItem="0yg-NU-4De" secondAttribute="top" constant="20" id="6g6-fC-yxu"/>
+                            <constraint firstItem="0yg-NU-4De" firstAttribute="trailing" secondItem="xpg-TF-Qdv" secondAttribute="trailing" constant="20" id="88e-v7-7cW"/>
+                            <constraint firstItem="xpg-TF-Qdv" firstAttribute="leading" secondItem="0yg-NU-4De" secondAttribute="leading" constant="20" id="DiH-8d-VMq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0yg-NU-4De"/>
+                    </view>
+                    <connections>
+                        <outlet property="checkInListLabel" destination="YNE-8y-Z73" id="v3t-8e-Ngg"/>
+                        <outlet property="confimationIcon" destination="EW6-d9-gTY" id="z7X-me-Hm8"/>
+                        <outlet property="dismissButton" destination="UH6-KN-D1X" id="onl-fr-g4K"/>
+                        <outlet property="eventLabel" destination="9H0-rB-JlM" id="gKe-5U-epX"/>
+                        <outlet property="explanationLabel" destination="6sy-ib-gvc" id="vCl-co-kw7"/>
+                        <outlet property="titleLabel" destination="cwv-i3-NIR" id="Pgo-F1-Z1p"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PLU-TN-JqD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4855" y="27"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="FeZ-Zp-g9G">

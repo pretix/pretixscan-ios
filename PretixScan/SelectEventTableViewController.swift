@@ -84,7 +84,10 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
         if let selectCheckInListViewController = segue.destination as? SelectCheckInListTableViewController,
             let selectedCell = sender as? UITableViewCell,
             let selectedIndexPath = tableView.indexPath(for: selectedCell) {
-            selectCheckInListViewController.event = event(for: selectedIndexPath)
+
+            let selectedEvent = event(for: selectedIndexPath)
+            configStore?.event = selectedEvent
+            selectCheckInListViewController.event = selectedEvent
         }
     }
 }

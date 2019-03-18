@@ -90,7 +90,6 @@ public extension APIClient {
 
 // MARK: - Events
 public extension APIClient {
-
     /// Returns a list of all events within a given organizer the authenticated user/token has access to.
     public func getEvents(forOrganizer organizer: String, completionHandler: @escaping ([Event]?, Error?) -> Void) {
         guard let urlRequest = createURLRequest(for: "/api/v1/organizers/\(organizer)/events/") else { return }

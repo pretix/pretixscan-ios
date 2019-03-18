@@ -74,4 +74,12 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable,
         guard checkInLists.count > indexPath.row else { return nil }
         return checkInLists[indexPath.row]
     }
+
+    // MARK: View Communication
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let selectedCell = sender as? UITableViewCell, let selectedIndexPath = tableView.indexPath(for: selectedCell) {
+            let selectedCheckInList = checkInList(for: selectedIndexPath)
+            configStore?.checkInList = selectedCheckInList
+        }
+    }
 }

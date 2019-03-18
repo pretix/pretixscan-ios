@@ -15,6 +15,7 @@
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA50223FD68E00ED7713 /* SelectCheckInListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */; };
+		DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -68,6 +69,7 @@
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCheckInListTableViewController.swift; path = PretixScan/SelectCheckInListTableViewController.swift; sourceTree = SOURCE_ROOT; };
+		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				DCAAFF3B223978FB0059C000 /* ConnectDeviceViewController.swift */,
 				DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */,
 				DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */,
+				DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
 				DC07358522392476008326F7 /* Info.plist */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
@@ -364,6 +367,7 @@
 				DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */,
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
+				DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */,
 				DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */,
 				DC23BA50223FD68E00ED7713 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
