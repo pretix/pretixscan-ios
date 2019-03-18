@@ -13,20 +13,33 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable,
     var apiClient: APIClient?
     var event: Event?
 
-    private var isLoading = true { didSet { DispatchQueue.main.async { self.tableView.reloadData() }}}
+    private var isLoading = true {
+        didSet {
+            DispatchQueue.main.async {
+                if self.isLoading {
+                    self.tableView.refreshControl?.beginRefreshing()
+                } else {
+                    self.tableView.refreshControl?.endRefreshing()
+                }
+                self.tableView.reloadData()
+            }
+        }
+    }
+
     private var checkInLists: [CheckInList]?
 
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localization.SelectCheckInListTableViewController.Title
+        refreshControl?.addTarget(self, action: #selector(updateView), for: .valueChanged)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         updateView()
     }
 
-    private func updateView() {
+    @objc private func updateView() {
         guard let configStore =  configStore, let apiClient = apiClient else {
             print("ConfigStore and APIStore not set, cancelling")
             return
@@ -42,6 +55,7 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable,
             return
         }
 
+        isLoading = true
         apiClient.getCheckinLists(forOrganizer: organizerSlug, event: event) { (checkInLists, error) in
             if let error = error {
                 fatalError(error.localizedDescription)

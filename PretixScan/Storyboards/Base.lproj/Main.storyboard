@@ -152,6 +152,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="7rO-bQ-V7w"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="mH7-gS-Aq1">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kdx-HE-gPf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -192,6 +195,9 @@
                             <outlet property="delegate" destination="LEl-FM-wwk" id="fGU-Xs-Aku"/>
                         </connections>
                     </tableView>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="37m-Qf-gXf">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fgl-eq-YuL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
