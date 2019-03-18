@@ -90,64 +90,20 @@ public extension APIClient {
 
 // MARK: - Events
 public extension APIClient {
+
     /// Returns a list of all events within a given organizer the authenticated user/token has access to.
     public func getEvents(forOrganizer organizer: String, completionHandler: @escaping ([Event]?, Error?) -> Void) {
-        guard let baseURL = configStore.apiBaseURL else {
-            print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
-            return
-        }
-
-        guard let apiToken = configStore.apiToken else {
-            print("Please set the APIClient's configStore.apiToken property before calling this function. ")
-            return
-        }
-
-        let url = baseURL.appendingPathComponent("/api/v1/organizers/\(organizer)/events/")
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = HttpMethod.GET
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.addValue("Device \(apiToken)", forHTTPHeaderField: "Authorization")
-        urlRequest.httpBody = nil
+        guard let urlRequest = createURLRequest(for: "/api/v1/organizers/\(organizer)/events/") else { return }
 
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
-            guard error == nil else {
+            if let error = self.extractedError(fromData: data, response: response, error: error) {
                 completionHandler(nil, error)
                 return
             }
 
-            guard let responseData = data else {
-                completionHandler(nil, Errors.EmptyResponse())
-                return
-            }
-
-            guard let httpURLResponse = response as? HTTPURLResponse else {
-                completionHandler(nil, Errors.NonHTTPResponse())
-                return
-            }
-
-            guard httpURLResponse.statusCode == 200 else {
-                switch httpURLResponse.statusCode {
-                case 401:
-                    completionHandler(nil, Errors.Unauthorized())
-                case 403:
-                    completionHandler(nil, Errors.Forbidden())
-                default:
-                    completionHandler(nil, Errors.UnknownStatusCode())
-                }
-                return
-            }
-
-            let pagedEventList: PagedList<Event>
-            do {
-                pagedEventList = try self.jsonDecoder.decode(PagedList<Event>.self, from: responseData)
-            } catch let jsonError {
-                completionHandler(nil, jsonError)
-                return
-            }
-
-            completionHandler(pagedEventList.results, nil)
+            let pagedListResult: (list: PagedList<Event>?, error: Error?) = self.pagedList(from: data!)
+            completionHandler(pagedListResult.list?.results, pagedListResult.error)
         }
-
         task.resume()
     }
 }
@@ -160,62 +116,75 @@ public extension APIClient {
         event: Event,
         completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
 
+        guard let urlRequest = createURLRequest(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/checkinlists/") else { return }
+
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = self.extractedError(fromData: data, response: response, error: error) {
+                completionHandler(nil, error)
+                return
+            }
+
+            let pagedListResult: (list: PagedList<CheckInList>?, error: Error?) = self.pagedList(from: data!)
+            completionHandler(pagedListResult.list?.results, pagedListResult.error)
+        }
+        task.resume()
+    }
+}
+
+// MARK: - Common
+private extension APIClient {
+    func createURLRequest(for pathComponent: String) -> URLRequest? {
         guard let baseURL = configStore.apiBaseURL else {
             print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
-            return
+            return nil
         }
 
         guard let apiToken = configStore.apiToken else {
             print("Please set the APIClient's configStore.apiToken property before calling this function. ")
-            return
+            return nil
         }
 
-        let url = baseURL.appendingPathComponent("/api/v1/organizers/\(organizer)/events/\(event.slug)/checkinlists/")
+        let url = baseURL.appendingPathComponent(pathComponent)
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = HttpMethod.GET
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("Device \(apiToken)", forHTTPHeaderField: "Authorization")
         urlRequest.httpBody = nil
+        return urlRequest
+    }
 
-        let task = session.dataTask(with: urlRequest) { (data, response, error) in
-            guard error == nil else {
-                completionHandler(nil, error)
-                return
-            }
-
-            guard let responseData = data else {
-                completionHandler(nil, Errors.EmptyResponse())
-                return
-            }
-
-            guard let httpURLResponse = response as? HTTPURLResponse else {
-                completionHandler(nil, Errors.NonHTTPResponse())
-                return
-            }
-
-            guard httpURLResponse.statusCode == 200 else {
-                switch httpURLResponse.statusCode {
-                case 401:
-                    completionHandler(nil, Errors.Unauthorized())
-                case 403:
-                    completionHandler(nil, Errors.Forbidden())
-                default:
-                    completionHandler(nil, Errors.UnknownStatusCode())
-                }
-                return
-            }
-
-            let pagedCheckInListList: PagedList<CheckInList>
-            do {
-                pagedCheckInListList = try self.jsonDecoder.decode(PagedList<CheckInList>.self, from: responseData)
-            } catch let jsonError {
-                completionHandler(nil, jsonError)
-                return
-            }
-
-            completionHandler(pagedCheckInListList.results, nil)
+    func extractedError(fromData data: Data?, response: URLResponse?, error: Error?) -> Error? {
+        guard error == nil else {
+            return error
         }
 
-        task.resume()
+        guard data != nil else {
+            return Errors.EmptyResponse()
+        }
+
+        guard let httpURLResponse = response as? HTTPURLResponse else {
+            return Errors.NonHTTPResponse()
+        }
+
+        guard httpURLResponse.statusCode == 200 else {
+            switch httpURLResponse.statusCode {
+            case 401:
+                return Errors.Unauthorized()
+            case 403:
+                return Errors.Forbidden()
+            default:
+                return Errors.UnknownStatusCode()
+            }
+        }
+
+        return nil
+    }
+
+    func pagedList<T: Codable>(from data: Data) -> (list: PagedList<T>?, error: Error?) {
+        do {
+            return (try self.jsonDecoder.decode(PagedList<T>.self, from: data), nil)
+        } catch let jsonError {
+            return (nil, jsonError)
+        }
     }
 }
