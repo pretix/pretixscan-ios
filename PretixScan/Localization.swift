@@ -30,4 +30,8 @@ struct Localization {
         static let Connect = NSLocalizedString("Connect", comment: "")
         static let Cancel = NSLocalizedString("Cancel", comment: "")
     }
+
+    struct SelectEventTableViewController {
+        static let Title = NSLocalizedString("Select Event", comment: "")
+    }
 }

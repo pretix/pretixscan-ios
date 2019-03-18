@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ConnectDeviceViewController: ConfiguredViewController {
-    private var apiClient: APIClient?
+class ConnectDeviceViewController: UIViewController, Configurable {
+    var configStore: ConfigStore?
+    var apiClient: APIClient?
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var explanationLabel: UILabel!
@@ -63,7 +64,11 @@ class ConnectDeviceViewController: ConfiguredViewController {
                     fatalError(error.localizedDescription)
                 }
 
-                self.dismiss(animated: true, completion: nil)
+                // API Client is correctly initialized
+                DispatchQueue.main.async {
+                    (self.navigationController as? ConfiguredNavigationController)?.apiClient = self.apiClient
+                    self.performSegue(withIdentifier: Segue.presentSelectEventTableViewController, sender: self)
+                }
             }
         })
         present(alert, animated: true)

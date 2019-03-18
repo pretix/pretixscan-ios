@@ -8,7 +8,9 @@
 
 import UIKit
 
-class WelcomeViewController: ConfiguredViewController {
+class WelcomeViewController: UIViewController, Configurable {
+    var configStore: ConfigStore?
+
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var explanationLabel: UILabel!
     @IBOutlet private weak var checkmarkDetailLabel: UILabel!

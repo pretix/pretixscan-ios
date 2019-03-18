@@ -12,7 +12,8 @@
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
 		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
-		DC91EB2A223FA0EA00704F24 /* ConfiguredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB29223FA0EA00704F24 /* ConfiguredViewController.swift */; };
+		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
+		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
 		DCAAFF29223929B60059C000 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DCAAFF28223929B60059C000 /* README.md */; };
 		DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */; };
 		DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */; };
@@ -61,7 +62,8 @@
 		DC07358A22392476008326F7 /* PretixScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PretixScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
-		DC91EB29223FA0EA00704F24 /* ConfiguredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredViewController.swift; sourceTree = "<group>"; };
+		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
+		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
 		DCAAFF28223929B60059C000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryConfigStore.swift; sourceTree = "<group>"; };
 		DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateTicketViewController.swift; sourceTree = "<group>"; };
@@ -128,10 +130,11 @@
 			children = (
 				DCAAFF3222394BE80059C000 /* Storyboards */,
 				DC07357922392474008326F7 /* AppDelegate.swift */,
-				DC91EB2B223FA11E00704F24 /* ConfigStoreViewControllers */,
+				DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DCAAFF35223952350059C000 /* WelcomeViewController.swift */,
 				DCAAFF3B223978FB0059C000 /* ConnectDeviceViewController.swift */,
+				DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
 				DC07358522392476008326F7 /* Info.plist */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
@@ -153,15 +156,6 @@
 			path = PretixScanTests;
 			sourceTree = "<group>";
 		};
-		DC91EB2B223FA11E00704F24 /* ConfigStoreViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */,
-				DC91EB29223FA0EA00704F24 /* ConfiguredViewController.swift */,
-			);
-			path = ConfigStoreViewControllers;
-			sourceTree = "<group>";
-		};
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				DCAAFF40223AAB8E0059C000 /* Handshake.swift */,
+				DC91EB32223FAFF300704F24 /* PagedList.swift */,
 				DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */,
 				DCAAFF48223AB8450059C000 /* DeviceInitializationResponse.swift */,
 				DCC00039223BE07D00236424 /* Event.swift */,
@@ -355,18 +350,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC91EB2A223FA0EA00704F24 /* ConfiguredViewController.swift in Sources */,
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
 				DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
+				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
+				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,

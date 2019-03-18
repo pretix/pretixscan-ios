@@ -16,9 +16,15 @@ custom_categories:
 
   - name: Models
     children:
+    - Event
     - Handshake
     - DeviceInitializationRequest
     - DeviceInitializationResponse
+
+  - name: Meta Models
+    children: 
+    - PagedList
+    - MultiLingualString
   
   - name: API Client
     children:
