@@ -24,12 +24,8 @@ class ValidateTicketViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let welcomeViewController = segue.destination as? WelcomeViewController {
-            welcomeViewController.configStore = appDelegate.configStore
-        }
-
-        if let connectDeviceViewController = segue.destination as? ConnectDeviceViewController {
-            connectDeviceViewController.configStore = appDelegate.configStore
+        if let configuredNavigationController = segue.destination as? ConfiguredNavigationController {
+            configuredNavigationController.configStore = appDelegate.configStore
         }
     }
 }

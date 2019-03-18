@@ -8,6 +8,7 @@
 
 import XCTest
 
+// swiftlint:disable line_length
 class MultiLingualStringTests: XCTestCase {
     let completeJSON = """
         {

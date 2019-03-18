@@ -33,8 +33,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <segue destination="UR2-m6-Blb" kind="presentation" identifier="presentWelcomeViewController" id="GkZ-ev-8dv"/>
-                        <segue destination="Urx-Wb-p9O" kind="presentation" identifier="presentConnectDeviceViewController" id="N4U-ol-VwL"/>
+                        <segue destination="S7W-QK-Oc8" kind="presentation" identifier="presentWelcomeViewController" id="GkZ-ev-8dv"/>
+                        <segue destination="VRx-cx-5T1" kind="presentation" identifier="presentConnectDeviceViewController" id="N4U-ol-VwL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -49,7 +49,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-4M-LfC">
-                                <rect key="frame" x="20" y="40" width="335" height="161"/>
+                                <rect key="frame" x="20" y="84" width="335" height="111"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ConnectDeviceViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN5-8A-7r9">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="73"/>
@@ -63,13 +63,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bk8-1A-62O">
-                                        <rect key="frame" x="0.0" y="131" width="335" height="30"/>
-                                        <state key="normal" title="Manual Setup"/>
-                                        <connections>
-                                            <action selector="manualSetup:" destination="Urx-Wb-p9O" eventType="touchUpInside" id="GLK-Ok-Ixk"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -82,15 +75,22 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="35d-vW-nNp"/>
                     </view>
+                    <navigationItem key="navigationItem" id="kVk-iA-bFi">
+                        <barButtonItem key="rightBarButtonItem" title="Manual Setup Button" id="pwV-7H-1HG">
+                            <connections>
+                                <action selector="manualSetup:" destination="Urx-Wb-p9O" id="yfh-kh-uUN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="explanationLabel" destination="IJo-PF-JTu" id="pGT-qa-KQn"/>
-                        <outlet property="manualSetupButton" destination="bk8-1A-62O" id="sz5-2a-hgR"/>
+                        <outlet property="manualSetupButton" destination="pwV-7H-1HG" id="0sU-R9-Swm"/>
                         <outlet property="titleLabel" destination="dN5-8A-7r9" id="kVF-62-WNP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oSX-Sd-kHF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1825" y="-709"/>
+            <point key="canvasLocation" x="3703.1999999999998" y="-709.29535232383819"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="FeZ-Zp-g9G">
@@ -101,7 +101,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
-                                <rect key="frame" x="20" y="40" width="335" height="215.5"/>
+                                <rect key="frame" x="20" y="84" width="335" height="215.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WelcomeViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69I-Ce-qdN">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="36"/>
@@ -146,6 +146,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qjF-Rf-4hM"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ahr-Oy-hfN"/>
                     <connections>
                         <outlet property="acceptSwitch" destination="TNe-rX-kKv" id="ctA-4o-AcD"/>
                         <outlet property="checkmarkDetailLabel" destination="YKq-ou-VNF" id="bw7-0a-MRD"/>
@@ -156,7 +157,43 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gbf-8L-YWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="983" y="-709"/>
+            <point key="canvasLocation" x="1920.8" y="-709.29535232383819"/>
+        </scene>
+        <!--Configured Navigation Controller-->
+        <scene sceneID="g2L-Qo-PfX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VRx-cx-5T1" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U8a-QJ-kDP">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Urx-Wb-p9O" kind="relationship" relationship="rootViewController" id="aKY-v7-kRQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e5P-Fg-jC2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2764" y="-709.29535232383819"/>
+        </scene>
+        <!--Configured Navigation Controller-->
+        <scene sceneID="RDb-Df-bly">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S7W-QK-Oc8" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Kfi-bL-aVd">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UR2-m6-Blb" kind="relationship" relationship="rootViewController" id="5fJ-dl-ctr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="btC-6x-arR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="981.60000000000002" y="-709.29535232383819"/>
         </scene>
     </scenes>
 </document>

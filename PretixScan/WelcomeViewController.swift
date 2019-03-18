@@ -8,9 +8,7 @@
 
 import UIKit
 
-class WelcomeViewController: UIViewController {
-    var configStore: ConfigStore?
-
+class WelcomeViewController: ConfiguredViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var explanationLabel: UILabel!
     @IBOutlet private weak var checkmarkDetailLabel: UILabel!
@@ -20,6 +18,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = Localization.WelcomeViewController.Title
         titleLabel.text = Localization.WelcomeViewController.Title
         explanationLabel.text = Localization.WelcomeViewController.Explanation
         checkmarkDetailLabel.text = Localization.WelcomeViewController.CheckMarkDetail
@@ -32,7 +31,8 @@ class WelcomeViewController: UIViewController {
     }
 
     @IBAction private func `continue`(_ sender: Any) {
-        configStore?.welcomeScreenIsConfirmed = true
+        guard var configStore = self.configStore else { return }
+        configStore.welcomeScreenIsConfirmed = true
         dismiss(animated: true, completion: nil)
     }
 }

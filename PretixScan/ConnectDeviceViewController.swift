@@ -8,20 +8,19 @@
 
 import UIKit
 
-class ConnectDeviceViewController: UIViewController {
-    var configStore: ConfigStore?
-
+class ConnectDeviceViewController: ConfiguredViewController {
     private var apiClient: APIClient?
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var explanationLabel: UILabel!
-    @IBOutlet weak var manualSetupButton: UIButton!
+    @IBOutlet weak var manualSetupButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = Localization.ConnectDeviceViewController.Title
         titleLabel.text = Localization.ConnectDeviceViewController.Title
         explanationLabel.text = Localization.ConnectDeviceViewController.Explanation
-        manualSetupButton.setTitle(Localization.ConnectDeviceViewController.ManualSetup, for: .normal)
+        manualSetupButton.title = Localization.ConnectDeviceViewController.ManualSetup
     }
 
     @IBAction private func manualSetup(_ sender: Any) {
