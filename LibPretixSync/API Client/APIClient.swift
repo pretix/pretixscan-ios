@@ -63,7 +63,7 @@ public extension APIClient {
             }
 
             guard let responseData = data else {
-                completionHandler(EmptyResponseError())
+                completionHandler(Errors.EmptyResponse())
                 return
             }
 
@@ -114,14 +114,31 @@ public extension APIClient {
         urlRequest.addValue("Device \(apiToken)", forHTTPHeaderField: "Authorization")
         urlRequest.httpBody = nil
 
-        let task = session.dataTask(with: urlRequest) { (data, _, error) in
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
             guard error == nil else {
                 completionHandler(nil, error)
                 return
             }
 
             guard let responseData = data else {
-                completionHandler(nil, EmptyResponseError())
+                completionHandler(nil, Errors.EmptyResponse())
+                return
+            }
+
+            guard let httpURLResponse = response as? HTTPURLResponse else {
+                completionHandler(nil, Errors.NonHTTPResponse())
+                return
+            }
+
+            guard httpURLResponse.statusCode == 200 else {
+                switch httpURLResponse.statusCode {
+                case 401:
+                    completionHandler(nil, Errors.Unauthorized())
+                case 403:
+                    completionHandler(nil, Errors.Forbidden())
+                default:
+                    completionHandler(nil, Errors.UnknownStatusCode())
+                }
                 return
             }
 
