@@ -47,16 +47,9 @@
                                 </segue>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" id="Eeg-IG-giR">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jl7-Fv-eqB">
-                                <rect key="frame" x="276" y="7" width="83" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Search"/>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="Search" id="w9h-6l-N9R">
                             <connections>
-                                <segue destination="yDH-q6-FxU" kind="popoverPresentation" popoverAnchorBarButtonItem="Eeg-IG-giR" id="TOj-5u-CFK">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
+                                <segue destination="9Ks-db-0j1" kind="presentation" id="Fec-tr-VQ0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -79,7 +72,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-4M-LfC">
-                                <rect key="frame" x="20" y="84" width="335" height="111"/>
+                                <rect key="frame" x="20" y="136" width="335" height="111"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ConnectDeviceViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN5-8A-7r9">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="73"/>
@@ -228,7 +221,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xpg-TF-Qdv">
-                                <rect key="frame" x="20" y="84" width="335" height="341"/>
+                                <rect key="frame" x="20" y="136" width="335" height="341"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SetupFinishedViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwv-i3-NIR">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="73"/>
@@ -301,7 +294,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
-                                <rect key="frame" x="20" y="84" width="335" height="215.5"/>
+                                <rect key="frame" x="20" y="136" width="335" height="215.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WelcomeViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69I-Ce-qdN">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="36"/>
@@ -364,8 +357,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VRx-cx-5T1" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U8a-QJ-kDP">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="U8a-QJ-kDP">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -382,8 +375,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S7W-QK-Oc8" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Kfi-bL-aVd">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Kfi-bL-aVd">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -417,8 +410,8 @@
         <scene sceneID="oPR-fd-zge">
             <objects>
                 <navigationController id="Xkm-hP-p78" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5bs-Si-Hnd">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="5bs-Si-Hnd">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -429,66 +422,52 @@
             </objects>
             <point key="canvasLocation" x="1921" y="560"/>
         </scene>
-        <!--Root View Controller-->
-        <scene sceneID="gUl-EW-Jqk">
+        <!--Search Order Positions Table View Controller-->
+        <scene sceneID="dFS-J1-nEb">
             <objects>
-                <tableViewController id="p6e-5E-y49" customClass="SearchOrderPositionsTableViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="2dC-fY-GVT">
+                <tableViewController id="9AG-Z6-LZr" customClass="SearchOrderPositionsTableViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Dbr-W0-Vbx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchOrderPositionsTableViewControllerCell" textLabel="Lst-uu-UvV" detailTextLabel="khf-vy-kzk" style="IBUITableViewCellStyleSubtitle" id="dOr-4n-kJq">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchOrderPositionsTableViewControllerCell" id="Spx-SC-bqV">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dOr-4n-kJq" id="FcN-kd-Plp">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Spx-SC-bqV" id="zhg-s6-3Pb">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lst-uu-UvV">
-                                            <rect key="frame" x="16" y="5" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="khf-vy-kzk">
-                                            <rect key="frame" x="16" y="25.5" width="44" height="14.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="p6e-5E-y49" id="mCi-1K-r5d"/>
-                            <outlet property="delegate" destination="p6e-5E-y49" id="kxU-bX-Soj"/>
+                            <outlet property="dataSource" destination="9AG-Z6-LZr" id="aTA-ya-lP2"/>
+                            <outlet property="delegate" destination="9AG-Z6-LZr" id="dy5-QI-B8I"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="s8i-ur-6U6"/>
+                    <navigationItem key="navigationItem" id="73J-6r-Oil"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LQF-uU-m0z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sbc-Sc-MKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2127" y="1245"/>
+            <point key="canvasLocation" x="2313" y="1236"/>
         </scene>
         <!--Configured Navigation Controller-->
-        <scene sceneID="Gou-0n-FVe">
+        <scene sceneID="2hE-d4-Lw6">
             <objects>
-                <navigationController id="yDH-q6-FxU" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8yM-9K-QQR">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Ks-db-0j1" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Q4V-Xd-Oaj">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="p6e-5E-y49" kind="relationship" relationship="rootViewController" id="A3R-EC-S0p"/>
+                        <segue destination="9AG-Z6-LZr" kind="relationship" relationship="rootViewController" id="uE2-M1-pw0"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="18J-JV-W3S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hci-35-Hzd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1340" y="1245"/>
+            <point key="canvasLocation" x="1374" y="1236"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

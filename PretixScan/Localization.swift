@@ -49,4 +49,9 @@ struct Localization {
         static let Explanation = NSLocalizedString("You can now start scanning", comment: "")
         static let Dismiss = NSLocalizedString("Start Scanning", comment: "")
     }
+
+    struct SearchOrderPositionsTableViewController {
+        static let Title = NSLocalizedString("Search", comment: "")
+        static let Placeholder = NSLocalizedString("Type at least 3 characters", comment: "")
+    }
 }
