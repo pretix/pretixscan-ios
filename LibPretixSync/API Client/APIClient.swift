@@ -16,8 +16,7 @@ import Foundation
 /// - Then call initialize with a DeviceInitializationRequest to obtain an API Token
 public class APIClient {
     // MARK: - Public Properties
-    public var configStore: ConfigStore
-    public var isReadyToCommunicate: Bool { return configStore.isAPIConfigured }
+    private var configStore: ConfigStore
 
     // MARK: - Private Properties
     private let jsonEncoder: JSONEncoder = {
