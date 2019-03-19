@@ -12,7 +12,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var configStore: ConfigStore?
-    var apiClient: APIClient?
 
     var window: UIWindow?
 
@@ -23,10 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let inMemoryConfigStore = prefilledInMemoryConfigStore()
         configStore = inMemoryConfigStore
-
-        if let configStore = configStore, configStore.isAPIConfigured {
-            apiClient = APIClient(configStore: configStore)
-        }
 
         return true
     }

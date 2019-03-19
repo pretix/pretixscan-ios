@@ -8,9 +8,8 @@
 
 import UIKit
 
-class SelectEventTableViewController: UITableViewController, Configurable, APIUsing {
+class SelectEventTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
-    var apiClient: APIClient?
 
     private var isLoading = true {
         didSet {
@@ -45,21 +44,10 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
     }
 
     @objc private func updateView() {
-        guard let configStore =  configStore, let apiClient = apiClient else {
-            print("ConfigStore and APIStore not set, cancelling")
-            return
-        }
-
-        guard let organizerSlug = configStore.organizerSlug else {
-            print("No organizer Slug in config store, cancelling")
-            return
-        }
-
         isLoading = true
-        apiClient.getEvents(forOrganizer: organizerSlug) { (eventList, error) in
-            if let error = error {
-                fatalError(error.localizedDescription)
-            }
+
+        configStore?.apiClient?.getEvents { (eventList, error) in
+            self.presentErrorAlert(ifError: error)
             self.events = eventList
             self.isLoading = false
         }

@@ -19,6 +19,11 @@ public class InMemoryConfigStore: ConfigStore {
     public var isAPIConfigured: Bool { return apiBaseURL != nil && apiToken != nil }
     public var apiBaseURL: URL? { didSet { debugPrint() } }
     public var apiToken: String? { didSet { debugPrint() } }
+    public var apiClient: APIClient? {
+        storedAPIClient = storedAPIClient ?? APIClient(configStore: self)
+        return storedAPIClient
+    }
+    private var storedAPIClient: APIClient?
 
     // MARK: - Device
     public var deviceName: String? { didSet { debugPrint() } }

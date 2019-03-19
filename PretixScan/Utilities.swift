@@ -56,3 +56,19 @@ extension UIDevice {
         }
     }
 }
+
+extension UIViewController {
+    func presentErrorAlert(ifError error: Error?) {
+        guard let error = error else { return }
+        let alert = UIAlertController.errorAlert(with: error)
+        self.present(alert, animated: true)
+    }
+}
+
+extension UIAlertController {
+    static func errorAlert(with error: Error) -> UIAlertController {
+        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        return alert
+    }
+}

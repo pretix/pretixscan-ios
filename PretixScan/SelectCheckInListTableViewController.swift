@@ -8,9 +8,8 @@
 
 import UIKit
 
-class SelectCheckInListTableViewController: UITableViewController, Configurable, APIUsing {
+class SelectCheckInListTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
-    var apiClient: APIClient?
     var event: Event?
 
     private var isLoading = true {
@@ -40,23 +39,8 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable,
     }
 
     @objc private func updateView() {
-        guard let configStore =  configStore, let apiClient = apiClient else {
-            print("ConfigStore and APIStore not set, cancelling")
-            return
-        }
-
-        guard let organizerSlug = configStore.organizerSlug else {
-            print("No organizer Slug in config store, cancelling")
-            return
-        }
-
-        guard let event = event else {
-            print("No organizer event given, cancelling")
-            return
-        }
-
         isLoading = true
-        apiClient.getCheckinLists(forOrganizer: organizerSlug, event: event) { (checkInLists, error) in
+        configStore?.apiClient?.getCheckinLists { (checkInLists, error) in
             if let error = error {
                 fatalError(error.localizedDescription)
             }

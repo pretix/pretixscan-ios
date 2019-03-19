@@ -12,17 +12,12 @@ protocol Configurable {
     var configStore: ConfigStore? { get set }
 }
 
-protocol APIUsing {
-    var apiClient: APIClient? { get set }
-}
-
 /// Subclass of UINavigationController that saves a ConfigStore
 ///
-/// If your UIViewController is marked as Configurable or APIUsing, it will automatially get
-/// assigned a ConfigStore or APIClient respectively when it gets pushed.
+/// If your UIViewController is marked as implementing the Configurable protocol
+/// it will automatially get assigned a ConfigStore when it gets pushed.
 class ConfiguredNavigationController: UINavigationController {
     var configStore: ConfigStore? { didSet { configureTopViewController() } }
-    var apiClient: APIClient? { didSet { configureTopViewController() } }
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
@@ -53,8 +48,5 @@ class ConfiguredNavigationController: UINavigationController {
             configurableViewController.configStore = self.configStore
         }
 
-        if var apiUsingViewController = viewController as? APIUsing, apiUsingViewController.apiClient == nil {
-            apiUsingViewController.apiClient = self.apiClient
-        }
     }
 }

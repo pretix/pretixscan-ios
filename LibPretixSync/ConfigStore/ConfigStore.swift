@@ -24,6 +24,9 @@ public protocol ConfigStore {
     /// The access token for the API
     var apiToken: String? { get set }
 
+    /// Creates or returns a single APIClient instance configured for this ConfigStore
+    var apiClient: APIClient? { get }
+
     // MARK: - Device
     /// The name that was specified for this device in the Pretix Organizer Backend
     var deviceName: String? { get set }

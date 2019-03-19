@@ -5,15 +5,14 @@ The following is a draft:
 
 ## AppDelegate
 - initialises ConfigStore
-- initialises DataStore
-- initialises APIClient
 - initialises TicketValidator
+- initialises DataStore
 
 ## Models
 A collection of enum based models and parsing code to and from JSON
 
 ## ConfigStore (Protocol)
-Holds key-value pairs for configuration.
+Holds key-value pairs for configuration. Creates and holds an APIClient per instance
 
 Optional: Notifications when configuration changes
 
@@ -27,16 +26,12 @@ Database that optionally manages a queue of changes to be uploaded to the API.
 - Optional: Notifications when data changes
 
 ## APIClient (Protocol)
-Manages requests to and responses from the Pretix REST API.
- 
-- needs to be initialised with token and base URL
-- has sub-objects like RequestFactory
+Manages requests to and responses from the Pretix REST API. Needs to be initialised with configStore.
 
 ## TicketValidator (Protocol)
 Exposes methods to check the validity of tickets and show event status.
 
-- requires a DataStore instance
-- requires an APIClient instance
+- requires a ConfigStore instance
 
 ### Protocol methods
 - check(ticketid, List of Answers, ignore_unpaid);
