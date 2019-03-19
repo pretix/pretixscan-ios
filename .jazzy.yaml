@@ -27,6 +27,8 @@ custom_categories:
     children:
     - Event
     - CheckInList
+    - CheckIn
+    - OrderPosition
     - Handshake
     - DeviceInitializationRequest
     - DeviceInitializationResponse
