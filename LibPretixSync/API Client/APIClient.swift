@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Communicates with the pretix API.
+/// Manages requests to and responses from the Pretix REST API.
 ///
 /// ## New Connections
 /// - Init with a config Store

@@ -9,6 +9,15 @@ module: PretixScan
 module_version: 1.0a
 
 custom_categories:
+  - name: TicketValidator
+    children:
+    - TicketValidator
+    - OnlineTicketValidator
+    
+  - name: API Client
+    children:
+    - APIClient
+
   - name: ConfigStore
     children:
     - ConfigStore
@@ -26,7 +35,3 @@ custom_categories:
     children: 
     - PagedList
     - MultiLingualString
-  
-  - name: API Client
-    children:
-    - APIClient

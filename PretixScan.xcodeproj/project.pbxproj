@@ -11,6 +11,8 @@
 		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
 		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
+		DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */; };
+		DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */; };
 		DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
@@ -66,6 +68,8 @@
 		DC07358522392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC07358A22392476008326F7 /* PretixScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PretixScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketValidator.swift; sourceTree = "<group>"; };
+		DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineTicketValidator.swift; sourceTree = "<group>"; };
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCheckInListTableViewController.swift; path = PretixScan/SelectCheckInListTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -168,6 +172,15 @@
 			path = PretixScanTests;
 			sourceTree = "<group>";
 		};
+		DC1D6FAF2240ECE6008A9E06 /* TicketValidator */ = {
+			isa = PBXGroup;
+			children = (
+				DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */,
+				DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */,
+			);
+			path = TicketValidator;
+			sourceTree = "<group>";
+		};
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +217,7 @@
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
 			isa = PBXGroup;
 			children = (
+				DC1D6FAF2240ECE6008A9E06 /* TicketValidator */,
 				DCAAFF45223AB62B0059C000 /* API Client */,
 				DCAAFF3F223AAB800059C000 /* Models */,
 				DCEF6E322239255B009E7078 /* ConfigStore */,
@@ -373,6 +387,7 @@
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
+				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
@@ -380,6 +395,7 @@
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
+				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				DCAAFF3C223978FB0059C000 /* ConnectDeviceViewController.swift in Sources */,
