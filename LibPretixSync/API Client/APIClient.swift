@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Communicates with the pretix API.
+/// Manages requests to and responses from the Pretix REST API.
 ///
 /// ## New Connections
 /// - Init with a config Store
@@ -130,20 +130,52 @@ public extension APIClient {
     }
 }
 
+// MARK: - Search
+public extension APIClient {
+    public func getSearchResults(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
+        guard let organizer = configStore.organizerSlug else { return }
+        guard let event = configStore.event else { return }
+        guard let url = createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/orderpositions/") else { return }
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        urlComponents?.queryItems = [URLQueryItem(name: "search", value: query)]
+        guard let urlComponentsURL = urlComponents?.url else { return }
+        guard let urlRequest = createURLRequest(for: urlComponentsURL) else { return }
+
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = self.extractedError(fromData: data, response: response, error: error) {
+                completionHandler(nil, error)
+                return
+            }
+
+            let pagedListResult: (list: PagedList<OrderPosition>?, error: Error?) = self.pagedList(from: data!)
+            completionHandler(pagedListResult.list?.results, pagedListResult.error)
+        }
+        task.resume()
+    }
+}
+
 // MARK: - Common
 private extension APIClient {
     func createURLRequest(for pathComponent: String) -> URLRequest? {
+        guard let url = createURL(for: pathComponent) else { return nil }
+        return createURLRequest(for: url)
+    }
+
+    func createURL(for pathComponent: String) -> URL? {
         guard let baseURL = configStore.apiBaseURL else {
             print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
             return nil
         }
 
+        return baseURL.appendingPathComponent(pathComponent)
+    }
+
+    func createURLRequest(for url: URL) -> URLRequest? {
         guard let apiToken = configStore.apiToken else {
             print("Please set the APIClient's configStore.apiToken property before calling this function. ")
             return nil
         }
 
-        let url = baseURL.appendingPathComponent(pathComponent)
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = HttpMethod.GET
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")

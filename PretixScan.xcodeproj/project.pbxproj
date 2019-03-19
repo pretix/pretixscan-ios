@@ -11,6 +11,13 @@
 		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
 		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
+		DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */; };
+		DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */; };
+		DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB42240F689008A9E06 /* OrderPosition.swift */; };
+		DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB62240F82B008A9E06 /* CheckIn.swift */; };
+		DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FBA2240FA16008A9E06 /* OrderPositionTests.swift */; };
+		DC1D6FBC2240FA46008A9E06 /* OrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB42240F689008A9E06 /* OrderPosition.swift */; };
+		DC1D6FBD2240FA49008A9E06 /* CheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB62240F82B008A9E06 /* CheckIn.swift */; };
 		DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
@@ -66,6 +73,11 @@
 		DC07358522392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC07358A22392476008326F7 /* PretixScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PretixScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketValidator.swift; sourceTree = "<group>"; };
+		DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineTicketValidator.swift; sourceTree = "<group>"; };
+		DC1D6FB42240F689008A9E06 /* OrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPosition.swift; sourceTree = "<group>"; };
+		DC1D6FB62240F82B008A9E06 /* CheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIn.swift; sourceTree = "<group>"; };
+		DC1D6FBA2240FA16008A9E06 /* OrderPositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPositionTests.swift; sourceTree = "<group>"; };
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCheckInListTableViewController.swift; path = PretixScan/SelectCheckInListTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -164,8 +176,18 @@
 				DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */,
 				DCC00040223BEAF300236424 /* EventTests.swift */,
 				DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */,
+				DC1D6FBA2240FA16008A9E06 /* OrderPositionTests.swift */,
 			);
 			path = PretixScanTests;
+			sourceTree = "<group>";
+		};
+		DC1D6FAF2240ECE6008A9E06 /* TicketValidator */ = {
+			isa = PBXGroup;
+			children = (
+				DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */,
+				DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */,
+			);
+			path = TicketValidator;
 			sourceTree = "<group>";
 		};
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
@@ -187,6 +209,8 @@
 				DCC00039223BE07D00236424 /* Event.swift */,
 				DC23BA4A223FCFF200ED7713 /* CheckInList.swift */,
 				DCC0003B223BE31F00236424 /* MultiLingualString.swift */,
+				DC1D6FB42240F689008A9E06 /* OrderPosition.swift */,
+				DC1D6FB62240F82B008A9E06 /* CheckIn.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -204,6 +228,7 @@
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
 			isa = PBXGroup;
 			children = (
+				DC1D6FAF2240ECE6008A9E06 /* TicketValidator */,
 				DCAAFF45223AB62B0059C000 /* API Client */,
 				DCAAFF3F223AAB800059C000 /* Models */,
 				DCEF6E322239255B009E7078 /* ConfigStore */,
@@ -373,13 +398,17 @@
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
+				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
+				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
+				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
+				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				DCAAFF3C223978FB0059C000 /* ConnectDeviceViewController.swift in Sources */,
@@ -393,13 +422,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC1D6FBC2240FA46008A9E06 /* OrderPosition.swift in Sources */,
 				DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */,
 				DCAAFF4B223AB9CE0059C000 /* DeviceInitializationParsingTests.swift in Sources */,
 				DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */,
 				DCAAFF4C223AB9F20059C000 /* DeviceInitializationRequest.swift in Sources */,
+				DC1D6FBD2240FA49008A9E06 /* CheckIn.swift in Sources */,
 				DCAAFF4D223AB9F40059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DCC00042223BEB3B00236424 /* Event.swift in Sources */,
 				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
+				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
 				DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */,
 				DCC00041223BEAF300236424 /* EventTests.swift in Sources */,
