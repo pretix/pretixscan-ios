@@ -10,5 +10,5 @@ import Foundation
 
 /// Exposes methods to check the validity of tickets and show event status.
 public protocol TicketValidator {
-    func search(query: String, completionHandler: @escaping ([String]?, Error?) -> Void)
+    func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
 }

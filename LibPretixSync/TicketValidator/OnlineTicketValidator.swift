@@ -18,7 +18,7 @@ public class OnlineTicketValidator: TicketValidator {
         self.apiClient = apiClient
     }
 
-    public func search(query: String, completionHandler: @escaping ([String]?, Error?) -> Void) {
-
+    public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
+        apiClient.getSearchResults(query: query, completionHandler: completionHandler)
     }
 }
