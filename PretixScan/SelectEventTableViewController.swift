@@ -45,21 +45,15 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
     }
 
     @objc private func updateView() {
-        guard let configStore =  configStore, let apiClient = apiClient else {
-            print("ConfigStore and APIStore not set, cancelling")
-            return
-        }
-
-        guard let organizerSlug = configStore.organizerSlug else {
-            print("No organizer Slug in config store, cancelling")
+        guard let apiClient = apiClient else {
+            print("APIClient not set, cancelling")
             return
         }
 
         isLoading = true
-        apiClient.getEvents(forOrganizer: organizerSlug) { (eventList, error) in
-            if let error = error {
-                fatalError(error.localizedDescription)
-            }
+
+        apiClient.getEvents { (eventList, error) in
+            self.presentErrorAlert(ifError: error)
             self.events = eventList
             self.isLoading = false
         }

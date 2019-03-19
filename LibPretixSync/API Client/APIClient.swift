@@ -63,7 +63,7 @@ public extension APIClient {
             }
 
             guard let responseData = data else {
-                completionHandler(Errors.EmptyResponse())
+                completionHandler(APIErrors.emptyResponse)
                 return
             }
 
@@ -91,89 +91,126 @@ public extension APIClient {
 // MARK: - Events
 public extension APIClient {
     /// Returns a list of all events within a given organizer the authenticated user/token has access to.
-    public func getEvents(forOrganizer organizer: String, completionHandler: @escaping ([Event]?, Error?) -> Void) {
-        guard let urlRequest = createURLRequest(for: "/api/v1/organizers/\(organizer)/events/") else { return }
+    public func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
+        do {
+            let organizer = try getOrganizerSlug()
+            let urlRequest = try createURLRequest(for: "/api/v1/organizers/\(organizer)/events/")
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(nil, error)
+                    return
+                }
 
-        let task = session.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = self.extractedError(fromData: data, response: response, error: error) {
-                completionHandler(nil, error)
-                return
+                let pagedListResult: (list: PagedList<Event>?, error: Error?) = self.pagedList(from: data!)
+                completionHandler(pagedListResult.list?.results, pagedListResult.error)
             }
-
-            let pagedListResult: (list: PagedList<Event>?, error: Error?) = self.pagedList(from: data!)
-            completionHandler(pagedListResult.list?.results, pagedListResult.error)
+            task.resume()
+        } catch {
+            completionHandler(nil, error)
         }
-        task.resume()
     }
 }
 
 // MARK: - Check In Lists
 public extension APIClient {
     /// Returns a list of all check-in lists within a given event.
-    public func getCheckinLists(
-        forOrganizer organizer: String,
-        event: Event,
-        completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
+    public func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
+        do {
+            let organizer = try getOrganizerSlug()
+            let event = try getEvent()
+            let urlPath = "/api/v1/organizers/\(organizer)/events/\(event.slug)/checkinlists/"
+            let urlRequest = try createURLRequest(for: urlPath)
 
-        guard let urlRequest = createURLRequest(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/checkinlists/") else { return }
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(nil, error)
+                    return
+                }
 
-        let task = session.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = self.extractedError(fromData: data, response: response, error: error) {
-                completionHandler(nil, error)
-                return
+                let pagedListResult: (list: PagedList<CheckInList>?, error: Error?) = self.pagedList(from: data!)
+                completionHandler(pagedListResult.list?.results, pagedListResult.error)
             }
+            task.resume()
 
-            let pagedListResult: (list: PagedList<CheckInList>?, error: Error?) = self.pagedList(from: data!)
-            completionHandler(pagedListResult.list?.results, pagedListResult.error)
+        } catch {
+            completionHandler(nil, error)
         }
-        task.resume()
+
     }
 }
 
 // MARK: - Search
 public extension APIClient {
     public func getSearchResults(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        guard let organizer = configStore.organizerSlug else { return }
-        guard let event = configStore.event else { return }
-        guard let url = createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/orderpositions/") else { return }
-        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        urlComponents?.queryItems = [URLQueryItem(name: "search", value: query)]
-        guard let urlComponentsURL = urlComponents?.url else { return }
-        guard let urlRequest = createURLRequest(for: urlComponentsURL) else { return }
+        do {
+            let organizer = try getOrganizerSlug()
+            let event = try getEvent()
+            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/orderpositions/")
 
-        let task = session.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = self.extractedError(fromData: data, response: response, error: error) {
-                completionHandler(nil, error)
-                return
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            urlComponents?.queryItems = [URLQueryItem(name: "search", value: query)]
+            guard let urlComponentsURL = urlComponents?.url else {
+                throw APIErrors.couldNotCreateURL
             }
+            let urlRequest = try createURLRequest(for: urlComponentsURL)
 
-            let pagedListResult: (list: PagedList<OrderPosition>?, error: Error?) = self.pagedList(from: data!)
-            completionHandler(pagedListResult.list?.results, pagedListResult.error)
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(nil, error)
+                    return
+                }
+
+                let pagedListResult: (list: PagedList<OrderPosition>?, error: Error?) = self.pagedList(from: data!)
+                completionHandler(pagedListResult.list?.results, pagedListResult.error)
+            }
+            task.resume()
+
+        } catch {
+            completionHandler(nil, error)
         }
-        task.resume()
     }
 }
 
-// MARK: - Common
+// MARK: - Accessing Properties
 private extension APIClient {
-    func createURLRequest(for pathComponent: String) -> URLRequest? {
-        guard let url = createURL(for: pathComponent) else { return nil }
-        return createURLRequest(for: url)
+    func getOrganizerSlug() throws -> String {
+        guard let organizer = configStore.organizerSlug else {
+            throw APIErrors.notConfigured(message:
+                "APIClient's configStore.organizerSlug property must be set before calling this function."
+            )
+        }
+
+        return organizer
     }
 
-    func createURL(for pathComponent: String) -> URL? {
+    func getEvent() throws -> Event {
+        guard let event = configStore.event else {
+            throw APIErrors.notConfigured(message: "APIClient's configStore.event property must be set before calling this function.")
+        }
+
+        return event
+    }
+}
+
+// MARK: - Creating Requests
+private extension APIClient {
+    func createURLRequest(for pathComponent: String) throws -> URLRequest {
+        let url = try createURL(for: pathComponent)
+        let urlRequest = try createURLRequest(for: url)
+        return urlRequest
+    }
+
+    func createURL(for pathComponent: String) throws -> URL {
         guard let baseURL = configStore.apiBaseURL else {
-            print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
-            return nil
+            throw APIErrors.notConfigured(message: "APIClient's configStore.apiBaseURL property must be set before calling this function.")
         }
 
         return baseURL.appendingPathComponent(pathComponent)
     }
 
-    func createURLRequest(for url: URL) -> URLRequest? {
+    func createURLRequest(for url: URL) throws -> URLRequest {
         guard let apiToken = configStore.apiToken else {
-            print("Please set the APIClient's configStore.apiToken property before calling this function. ")
-            return nil
+            throw APIErrors.notConfigured(message: "APIClient's configStore.apiToken property must be set before calling this function.")
         }
 
         var urlRequest = URLRequest(url: url)
@@ -184,27 +221,27 @@ private extension APIClient {
         return urlRequest
     }
 
-    func extractedError(fromData data: Data?, response: URLResponse?, error: Error?) -> Error? {
+    func checkResponse(data: Data?, response: URLResponse?, error: Error?) -> Error? {
         guard error == nil else {
             return error
         }
 
         guard data != nil else {
-            return Errors.EmptyResponse()
+            return APIErrors.emptyResponse
         }
 
         guard let httpURLResponse = response as? HTTPURLResponse else {
-            return Errors.NonHTTPResponse()
+            return APIErrors.nonHTTPResponse
         }
 
         guard httpURLResponse.statusCode == 200 else {
             switch httpURLResponse.statusCode {
             case 401:
-                return Errors.Unauthorized()
+                return APIErrors.unauthorized
             case 403:
-                return Errors.Forbidden()
+                return APIErrors.forbidden
             default:
-                return Errors.UnknownStatusCode()
+                return APIErrors.unknownStatusCode(statusCode: httpURLResponse.statusCode)
             }
         }
 

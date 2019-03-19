@@ -40,23 +40,13 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable,
     }
 
     @objc private func updateView() {
-        guard let configStore =  configStore, let apiClient = apiClient else {
-            print("ConfigStore and APIStore not set, cancelling")
-            return
-        }
-
-        guard let organizerSlug = configStore.organizerSlug else {
-            print("No organizer Slug in config store, cancelling")
-            return
-        }
-
-        guard let event = event else {
-            print("No organizer event given, cancelling")
+        guard  let apiClient = apiClient else {
+            print("APIClient not set, cancelling")
             return
         }
 
         isLoading = true
-        apiClient.getCheckinLists(forOrganizer: organizerSlug, event: event) { (checkInLists, error) in
+        apiClient.getCheckinLists { (checkInLists, error) in
             if let error = error {
                 fatalError(error.localizedDescription)
             }
