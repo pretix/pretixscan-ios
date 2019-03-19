@@ -18,6 +18,7 @@
 		DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FBA2240FA16008A9E06 /* OrderPositionTests.swift */; };
 		DC1D6FBC2240FA46008A9E06 /* OrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB42240F689008A9E06 /* OrderPosition.swift */; };
 		DC1D6FBD2240FA49008A9E06 /* CheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB62240F82B008A9E06 /* CheckIn.swift */; };
+		DC1D6FBF22416268008A9E06 /* SearchOrderPositionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FBE22416268008A9E06 /* SearchOrderPositionsTableViewController.swift */; };
 		DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
@@ -78,6 +79,7 @@
 		DC1D6FB42240F689008A9E06 /* OrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPosition.swift; sourceTree = "<group>"; };
 		DC1D6FB62240F82B008A9E06 /* CheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIn.swift; sourceTree = "<group>"; };
 		DC1D6FBA2240FA16008A9E06 /* OrderPositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPositionTests.swift; sourceTree = "<group>"; };
+		DC1D6FBE22416268008A9E06 /* SearchOrderPositionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOrderPositionsTableViewController.swift; sourceTree = "<group>"; };
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCheckInListTableViewController.swift; path = PretixScan/SelectCheckInListTableViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -158,6 +160,7 @@
 				DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */,
 				DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */,
 				DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */,
+				DC1D6FBE22416268008A9E06 /* SearchOrderPositionsTableViewController.swift */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
 				DC07358522392476008326F7 /* Info.plist */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
@@ -405,6 +408,7 @@
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
+				DC1D6FBF22416268008A9E06 /* SearchOrderPositionsTableViewController.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,

@@ -9,32 +9,42 @@
 import UIKit
 
 class ValidateTicketViewController: UIViewController {
-    weak var appDelegate: AppDelegate!
+    var configStore: ConfigStore!
 
     @IBOutlet private weak var eventButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let configStore = (UIApplication.shared.delegate as? AppDelegate)?.configStore else {
+            fatalError("Could not get ConfigStore from AppDelegate")
+        }
+        self.configStore = configStore
+
+        NotificationCenter.default.addObserver(self, selector: #selector(updateEventButton),
+                                               name: configStore.changedNotification, object: nil)
     }
 
     // MARK: - Navigation
     override func viewWillAppear(_ animated: Bool) {
-        eventButton.title = Localization.ValidateTicketViewController.NoEvent
-        if let eventName = appDelegate.configStore?.event?.name.description,
-            let checkInListName = appDelegate.configStore?.checkInList?.name {
-            eventButton.title = "\(eventName): \(checkInListName)"
-        }
+        updateEventButton()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        checkFirstRunActions(appDelegate.configStore!)
+        checkFirstRunActions(configStore)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let configuredNavigationController = segue.destination as? ConfiguredNavigationController {
-            configuredNavigationController.configStore = appDelegate.configStore
+            configuredNavigationController.configStore = configStore
+        }
+    }
+
+    @objc func updateEventButton() {
+        eventButton.title = Localization.ValidateTicketViewController.NoEvent
+        if let eventName = configStore.event?.name.description,
+            let checkInListName = configStore.checkInList?.name {
+            eventButton.title = "\(eventName): \(checkInListName)"
         }
     }
 }

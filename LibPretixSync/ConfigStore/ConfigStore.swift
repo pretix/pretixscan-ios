@@ -47,3 +47,8 @@ public protocol ConfigStore {
     /// The CheckInList to scan against
     var checkInList: CheckInList? { get set }
 }
+
+extension ConfigStore {
+    /// Notification that should be fired whenever a ConfigStore value changes
+    var changedNotification: Notification.Name { return Notification.Name("ConfigStoreChanged") }
+}

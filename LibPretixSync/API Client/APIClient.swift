@@ -144,7 +144,8 @@ public extension APIClient {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
             let checkInList = try getCheckInList()
-            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/checkinlists/\(checkInList.identifier)/positions/")
+            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
+                "/checkinlists/\(checkInList.identifier)/positions/")
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = [URLQueryItem(name: "search", value: query)]
