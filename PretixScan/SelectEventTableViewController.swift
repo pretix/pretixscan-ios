@@ -8,9 +8,8 @@
 
 import UIKit
 
-class SelectEventTableViewController: UITableViewController, Configurable, APIUsing {
+class SelectEventTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
-    var apiClient: APIClient?
 
     private var isLoading = true {
         didSet {
@@ -45,14 +44,9 @@ class SelectEventTableViewController: UITableViewController, Configurable, APIUs
     }
 
     @objc private func updateView() {
-        guard let apiClient = apiClient else {
-            print("APIClient not set, cancelling")
-            return
-        }
-
         isLoading = true
 
-        apiClient.getEvents { (eventList, error) in
+        configStore?.apiClient?.getEvents { (eventList, error) in
             self.presentErrorAlert(ifError: error)
             self.events = eventList
             self.isLoading = false

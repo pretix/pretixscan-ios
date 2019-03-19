@@ -10,7 +10,6 @@ import UIKit
 
 class ConnectDeviceViewController: UIViewController, Configurable {
     var configStore: ConfigStore?
-    var apiClient: APIClient?
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var explanationLabel: UILabel!
@@ -49,9 +48,6 @@ class ConnectDeviceViewController: UIViewController, Configurable {
             guard let token = alert.textFields![1].text else { return }
 
             configStore.apiBaseURL = url
-            self.apiClient = APIClient(configStore: configStore)
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            appDelegate?.apiClient = self.apiClient
 
             let deviceInitializatioRequest = DeviceInitializationRequest.init(
                 token: token,
@@ -61,14 +57,14 @@ class ConnectDeviceViewController: UIViewController, Configurable {
                 softwareVersion: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
             )
 
-            self.apiClient?.initialize(deviceInitializatioRequest) { error in
+            self.configStore?.apiClient?.initialize(deviceInitializatioRequest) { error in
                 if let error = error {
                     fatalError(error.localizedDescription)
                 }
 
                 // API Client is correctly initialized
                 DispatchQueue.main.async {
-                    (self.navigationController as? ConfiguredNavigationController)?.apiClient = self.apiClient
+                    (self.navigationController as? ConfiguredNavigationController)?.configStore = self.configStore
                     self.performSegue(withIdentifier: Segue.presentSelectEventTableViewController, sender: self)
                 }
             }

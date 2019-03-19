@@ -8,9 +8,8 @@
 
 import UIKit
 
-class SelectCheckInListTableViewController: UITableViewController, Configurable, APIUsing {
+class SelectCheckInListTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
-    var apiClient: APIClient?
     var event: Event?
 
     private var isLoading = true {
@@ -40,13 +39,8 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable,
     }
 
     @objc private func updateView() {
-        guard  let apiClient = apiClient else {
-            print("APIClient not set, cancelling")
-            return
-        }
-
         isLoading = true
-        apiClient.getCheckinLists { (checkInLists, error) in
+        configStore?.apiClient?.getCheckinLists { (checkInLists, error) in
             if let error = error {
                 fatalError(error.localizedDescription)
             }

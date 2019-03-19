@@ -35,7 +35,6 @@ class ValidateTicketViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let configuredNavigationController = segue.destination as? ConfiguredNavigationController {
             configuredNavigationController.configStore = appDelegate.configStore
-            configuredNavigationController.apiClient = appDelegate.apiClient
         }
     }
 }

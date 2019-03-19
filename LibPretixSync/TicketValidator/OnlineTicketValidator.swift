@@ -12,13 +12,13 @@ import Foundation
 ///
 /// Does not add anything to DataStore's queue, but instead returns errors if no network available
 public class OnlineTicketValidator: TicketValidator {
-    private let apiClient: APIClient
+    private let configStore: ConfigStore
 
-    public init(apiClient: APIClient) {
-        self.apiClient = apiClient
+    public init(configStore: ConfigStore) {
+        self.configStore = configStore
     }
 
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        apiClient.getSearchResults(query: query, completionHandler: completionHandler)
+        configStore.apiClient?.getSearchResults(query: query, completionHandler: completionHandler)
     }
 }
