@@ -12,6 +12,10 @@ protocol Configurable {
     var configStore: ConfigStore? { get set }
 }
 
+protocol ConfigStoreProvider {
+    func getConfigStore() -> ConfigStore
+}
+
 /// Subclass of UINavigationController that saves a ConfigStore
 ///
 /// If your UIViewController is marked as implementing the Configurable protocol

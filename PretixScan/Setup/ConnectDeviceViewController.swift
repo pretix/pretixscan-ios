@@ -58,9 +58,7 @@ class ConnectDeviceViewController: UIViewController, Configurable {
             )
 
             self.configStore?.apiClient?.initialize(deviceInitializatioRequest) { error in
-                if let error = error {
-                    fatalError(error.localizedDescription)
-                }
+                self.presentErrorAlert(ifError: error)
 
                 // API Client is correctly initialized
                 DispatchQueue.main.async {

@@ -43,6 +43,11 @@ public struct OrderPosition: Codable, Equatable {
     /// List of check-ins with this ticket
     public let checkins: [CheckIn]
 
+    /// Ticket has already been used
+    public var isRedeemed: Bool {
+        return checkins.count > 0
+    }
+
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
         case order

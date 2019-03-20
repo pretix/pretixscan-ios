@@ -137,15 +137,15 @@ public extension APIClient {
         }
 
     }
-}
 
-// MARK: - Search
-public extension APIClient {
+    /// Search all OrderPositions within a CheckInList
     public func getSearchResults(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
-            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/orderpositions/")
+            let checkInList = try getCheckInList()
+            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
+                "/checkinlists/\(checkInList.identifier)/positions/")
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = [URLQueryItem(name: "search", value: query)]
@@ -189,6 +189,14 @@ private extension APIClient {
         }
 
         return event
+    }
+
+    func getCheckInList() throws -> CheckInList {
+        guard let checkInList = configStore.checkInList else {
+            throw APIErrors.notConfigured(message: "APIClient's configStore.checkInList property must be set before calling this function.")
+        }
+
+        return checkInList
     }
 }
 

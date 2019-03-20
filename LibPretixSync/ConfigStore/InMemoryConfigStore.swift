@@ -13,12 +13,12 @@ import UIKit
 /// Set the `debug` flag to make it print out each change to the console.
 public class InMemoryConfigStore: ConfigStore {
     // MARK: - Welcome Screen
-    public var welcomeScreenIsConfirmed: Bool = false { didSet { debugPrint() } }
+    public var welcomeScreenIsConfirmed: Bool = false { didSet { valueChanged() } }
 
     // MARK: - API Configuration
     public var isAPIConfigured: Bool { return apiBaseURL != nil && apiToken != nil }
-    public var apiBaseURL: URL? { didSet { debugPrint() } }
-    public var apiToken: String? { didSet { debugPrint() } }
+    public var apiBaseURL: URL? { didSet { valueChanged() } }
+    public var apiToken: String? { didSet { valueChanged() } }
     public var apiClient: APIClient? {
         storedAPIClient = storedAPIClient ?? APIClient(configStore: self)
         return storedAPIClient
@@ -26,14 +26,20 @@ public class InMemoryConfigStore: ConfigStore {
     private var storedAPIClient: APIClient?
 
     // MARK: - Device
-    public var deviceName: String? { didSet { debugPrint() } }
-    public var organizerSlug: String? { didSet { debugPrint() } }
-    public var deviceID: Int? { didSet { debugPrint() } }
-    public var deviceUniqueSerial: String? { didSet { debugPrint() } }
+    public var deviceName: String? { didSet { valueChanged() } }
+    public var organizerSlug: String? { didSet { valueChanged() } }
+    public var deviceID: Int? { didSet { valueChanged() } }
+    public var deviceUniqueSerial: String? { didSet { valueChanged() } }
 
     // MARK: - Current Event and Check-In List
-    public var event: Event? { didSet { debugPrint() } }
-    public var checkInList: CheckInList? { didSet { debugPrint() } }
+    public var event: Event? {
+        didSet {
+            // If the event changes, the check in list is invalid
+            checkInList = nil
+            valueChanged()
+        }
+    }
+    public var checkInList: CheckInList? { didSet { valueChanged() } }
 
     // MARK: - Debugging
     public var debug: Bool = false {
@@ -43,13 +49,13 @@ public class InMemoryConfigStore: ConfigStore {
             } else {
                 print("InMemoryConfigStore disabled printing out all state changes to the console.")
             }
-            debugPrint()
+            valueChanged()
         }
     }
 
-    private func debugPrint() {
-        guard debug else { return }
-        print(self)
+    private func valueChanged() {
+        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: nil)
+        if debug { print(self) }
     }
 }
 

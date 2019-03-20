@@ -42,7 +42,9 @@
                     <navigationItem key="navigationItem" id="60x-zZ-2W1">
                         <barButtonItem key="leftBarButtonItem" title="Event Name" id="cOt-oc-Yuk">
                             <connections>
-                                <segue destination="Xkm-hP-p78" kind="show" id="b8v-Hs-BIa"/>
+                                <segue destination="Xkm-hP-p78" kind="popoverPresentation" popoverAnchorBarButtonItem="cOt-oc-Yuk" id="b8v-Hs-BIa">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -65,7 +67,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-4M-LfC">
-                                <rect key="frame" x="20" y="84" width="335" height="111"/>
+                                <rect key="frame" x="20" y="136" width="335" height="111"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ConnectDeviceViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN5-8A-7r9">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="73"/>
@@ -214,7 +216,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xpg-TF-Qdv">
-                                <rect key="frame" x="20" y="84" width="335" height="341"/>
+                                <rect key="frame" x="20" y="136" width="335" height="341"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SetupFinishedViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwv-i3-NIR">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="73"/>
@@ -287,7 +289,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
-                                <rect key="frame" x="20" y="84" width="335" height="215.5"/>
+                                <rect key="frame" x="20" y="136" width="335" height="215.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WelcomeViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69I-Ce-qdN">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="36"/>
@@ -350,8 +352,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VRx-cx-5T1" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="U8a-QJ-kDP">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="U8a-QJ-kDP">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -368,8 +370,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S7W-QK-Oc8" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Kfi-bL-aVd">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Kfi-bL-aVd">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -403,8 +405,8 @@
         <scene sceneID="oPR-fd-zge">
             <objects>
                 <navigationController id="Xkm-hP-p78" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5bs-Si-Hnd">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="5bs-Si-Hnd">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -414,6 +416,89 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KSH-qY-5Xy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1921" y="560"/>
+        </scene>
+        <!--Search Results Table View Controller-->
+        <scene sceneID="dFS-J1-nEb">
+            <objects>
+                <tableViewController storyboardIdentifier="searchResults" id="9AG-Z6-LZr" customClass="SearchResultsTableViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Dbr-W0-Vbx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchOrderPositionsTableViewControllerCell" rowHeight="130" id="Spx-SC-bqV" customClass="SearchResultTableViewCell" customModule="PretixScan" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="130"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Spx-SC-bqV" id="zhg-s6-3Pb">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="129.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="VLb-ZX-faA">
+                                            <rect key="frame" x="20" y="20" width="101.5" height="89.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsu-B7-zD1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="101.5" height="24"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ticket Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gAy-dG-qdy">
+                                                    <rect key="frame" x="0.0" y="38.5" width="101.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Secret" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wG2-40-N99">
+                                                    <rect key="frame" x="0.0" y="73.5" width="101.5" height="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqP-6y-ZoK">
+                                            <rect key="frame" x="141.5" y="20" width="213.5" height="89.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="fqP-6y-ZoK" secondAttribute="bottom" constant="20" id="9bO-Hm-lBl"/>
+                                        <constraint firstAttribute="bottom" secondItem="VLb-ZX-faA" secondAttribute="bottom" constant="20" id="9s7-8Y-eM2"/>
+                                        <constraint firstAttribute="trailing" secondItem="fqP-6y-ZoK" secondAttribute="trailing" constant="20" id="FdT-0i-4CM"/>
+                                        <constraint firstItem="fqP-6y-ZoK" firstAttribute="top" secondItem="zhg-s6-3Pb" secondAttribute="top" constant="20" id="HTE-P0-0dZ"/>
+                                        <constraint firstItem="fqP-6y-ZoK" firstAttribute="leading" secondItem="VLb-ZX-faA" secondAttribute="trailing" constant="20" id="N0e-ZM-moY"/>
+                                        <constraint firstItem="VLb-ZX-faA" firstAttribute="leading" secondItem="zhg-s6-3Pb" secondAttribute="leading" constant="20" id="fxG-YQ-zdA"/>
+                                        <constraint firstItem="VLb-ZX-faA" firstAttribute="top" secondItem="zhg-s6-3Pb" secondAttribute="top" constant="20" id="vND-hd-oBq"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="orderCodeLabel" destination="bsu-B7-zD1" id="9cO-RL-ekO"/>
+                                    <outlet property="secretLabel" destination="wG2-40-N99" id="vLv-N4-Ka5"/>
+                                    <outlet property="statusLabel" destination="fqP-6y-ZoK" id="3GR-ik-N0R"/>
+                                    <outlet property="ticketType" destination="gAy-dG-qdy" id="ZIW-5x-UKo"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="9AG-Z6-LZr" id="aTA-ya-lP2"/>
+                            <outlet property="delegate" destination="9AG-Z6-LZr" id="dy5-QI-B8I"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="73J-6r-Oil"/>
+                    <connections>
+                        <outlet property="searchFooterView" destination="8BM-Qa-NtS" id="zh8-PS-qhN"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sbc-Sc-MKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8BM-Qa-NtS" customClass="SearchFooterView" customModule="PretixScan" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </objects>
+            <point key="canvasLocation" x="1920.8" y="1294.9025487256372"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
