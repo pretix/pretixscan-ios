@@ -10,7 +10,7 @@ import UIKit
 
 class SearchResultsTableViewController: UITableViewController {
     private static let reuseIdentifier = "SearchOrderPositionsTableViewControllerCell"
-    var configStoreProvider: ConfigStoreProvider?
+    var configStoreProvider: AppCoordinator?
 
     // MARK: - Private Properties
     @IBOutlet private var searchFooterView: SearchFooterView!

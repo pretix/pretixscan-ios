@@ -12,7 +12,7 @@ protocol Configurable {
     var configStore: ConfigStore? { get set }
 }
 
-protocol ConfigStoreProvider {
+protocol AppCoordinator {
     func getConfigStore() -> ConfigStore
 }
 

@@ -57,7 +57,7 @@ extension ValidateTicketViewController {
 }
 
 // MARK: - ConfigStoreProvider
-extension ValidateTicketViewController: ConfigStoreProvider {
+extension ValidateTicketViewController: AppCoordinator {
     func getConfigStore() -> ConfigStore {
         return configStore
     }
