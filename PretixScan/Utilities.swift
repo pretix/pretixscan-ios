@@ -59,9 +59,11 @@ extension UIDevice {
 
 extension UIViewController {
     func presentErrorAlert(ifError error: Error?) {
-        guard let error = error else { return }
-        let alert = UIAlertController.errorAlert(with: error)
-        self.present(alert, animated: true)
+        DispatchQueue.main.async {
+            guard let error = error else { return }
+            let alert = UIAlertController.errorAlert(with: error)
+            self.present(alert, animated: true)
+        }
     }
 }
 

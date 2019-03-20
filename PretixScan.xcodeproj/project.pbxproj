@@ -20,10 +20,12 @@
 		DC1D6FBD2240FA49008A9E06 /* CheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB62240F82B008A9E06 /* CheckIn.swift */; };
 		DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FBE22416268008A9E06 /* SearchResultsTableViewController.swift */; };
 		DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC022424CA9008A9E06 /* SearchFooterView.swift */; };
+		DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC22242589B008A9E06 /* SearchResultTableViewCell.swift */; };
+		DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */; };
+		DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */; };
 		DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
-		DC23BA50223FD68E00ED7713 /* SelectCheckInListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */; };
 		DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
@@ -34,7 +36,6 @@
 		DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF35223952350059C000 /* WelcomeViewController.swift */; };
 		DCAAFF3822396EC30059C000 /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3722396EC30059C000 /* Segues.swift */; };
 		DCAAFF3A223970090059C000 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF39223970090059C000 /* Localization.swift */; };
-		DCAAFF3C223978FB0059C000 /* ConnectDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3B223978FB0059C000 /* ConnectDeviceViewController.swift */; };
 		DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF40223AAB8E0059C000 /* Handshake.swift */; };
 		DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF42223AAF4C0059C000 /* HandshakeParsingTests.swift */; };
 		DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF40223AAB8E0059C000 /* Handshake.swift */; };
@@ -82,9 +83,11 @@
 		DC1D6FBA2240FA16008A9E06 /* OrderPositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPositionTests.swift; sourceTree = "<group>"; };
 		DC1D6FBE22416268008A9E06 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		DC1D6FC022424CA9008A9E06 /* SearchFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFooterView.swift; sourceTree = "<group>"; };
+		DC1D6FC22242589B008A9E06 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectDeviceViewController.swift; sourceTree = "<group>"; };
+		DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCheckInListTableViewController.swift; sourceTree = "<group>"; };
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
-		DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectCheckInListTableViewController.swift; path = PretixScan/SelectCheckInListTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +98,6 @@
 		DCAAFF35223952350059C000 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		DCAAFF3722396EC30059C000 /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
 		DCAAFF39223970090059C000 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
-		DCAAFF3B223978FB0059C000 /* ConnectDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectDeviceViewController.swift; path = PretixScan/ConnectDeviceViewController.swift; sourceTree = SOURCE_ROOT; };
 		DCAAFF40223AAB8E0059C000 /* Handshake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Handshake.swift; sourceTree = "<group>"; };
 		DCAAFF42223AAF4C0059C000 /* HandshakeParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandshakeParsingTests.swift; sourceTree = "<group>"; };
 		DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInitializationRequest.swift; sourceTree = "<group>"; };
@@ -157,13 +159,8 @@
 				DC07357922392474008326F7 /* AppDelegate.swift */,
 				DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
-				DCAAFF35223952350059C000 /* WelcomeViewController.swift */,
-				DCAAFF3B223978FB0059C000 /* ConnectDeviceViewController.swift */,
-				DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */,
-				DC23BA4F223FD68E00ED7713 /* SelectCheckInListTableViewController.swift */,
-				DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */,
-				DC1D6FBE22416268008A9E06 /* SearchResultsTableViewController.swift */,
-				DC1D6FC022424CA9008A9E06 /* SearchFooterView.swift */,
+				DC1D6FC5224258B6008A9E06 /* Setup */,
+				DC1D6FC4224258A4008A9E06 /* Search */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
 				DC07358522392476008326F7 /* Info.plist */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
@@ -194,6 +191,28 @@
 				DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */,
 			);
 			path = TicketValidator;
+			sourceTree = "<group>";
+		};
+		DC1D6FC4224258A4008A9E06 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				DC1D6FBE22416268008A9E06 /* SearchResultsTableViewController.swift */,
+				DC1D6FC22242589B008A9E06 /* SearchResultTableViewCell.swift */,
+				DC1D6FC022424CA9008A9E06 /* SearchFooterView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		DC1D6FC5224258B6008A9E06 /* Setup */ = {
+			isa = PBXGroup;
+			children = (
+				DCAAFF35223952350059C000 /* WelcomeViewController.swift */,
+				DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */,
+				DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */,
+				DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */,
+				DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */,
+			);
+			path = Setup;
 			sourceTree = "<group>";
 		};
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
@@ -400,7 +419,6 @@
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
 				DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */,
 				DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */,
-				DC23BA50223FD68E00ED7713 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
@@ -417,9 +435,11 @@
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */,
 				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
+				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
+				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
-				DCAAFF3C223978FB0059C000 /* ConnectDeviceViewController.swift in Sources */,
+				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
 				DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */,

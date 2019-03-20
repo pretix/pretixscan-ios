@@ -34,9 +34,11 @@ class SearchResultsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultsTableViewController.reuseIdentifier, for: indexPath)
+        let defaultCell = tableView.dequeueReusableCell(withIdentifier: SearchResultsTableViewController.reuseIdentifier, for: indexPath)
+        guard let cell = defaultCell as? SearchResultTableViewCell else { return defaultCell }
+
         let result = results[indexPath.row]
-        cell.textLabel?.text = result.attendeeName
+        cell.orderPosition = result
         return cell
     }
 }
