@@ -13,6 +13,7 @@ struct Localization {
     struct ValidateTicketViewController {
         static let Title = NSLocalizedString("PretixScan", comment: "")
         static let NoEvent = NSLocalizedString("No Event", comment: "")
+        static let SearchPlaceHolder = NSLocalizedString("Search", comment: "")
     }
 
     struct WelcomeViewController {
@@ -52,6 +53,5 @@ struct Localization {
 
     struct SearchOrderPositionsTableViewController {
         static let Title = NSLocalizedString("Search", comment: "")
-        static let Placeholder = NSLocalizedString("Type at least 3 characters", comment: "")
     }
 }

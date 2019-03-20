@@ -47,11 +47,6 @@
                                 </segue>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Search" id="w9h-6l-N9R">
-                            <connections>
-                                <segue destination="9Ks-db-0j1" kind="presentation" id="Fec-tr-VQ0"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="eventButton" destination="cOt-oc-Yuk" id="UwT-QF-X0X"/>
@@ -422,10 +417,10 @@
             </objects>
             <point key="canvasLocation" x="1921" y="560"/>
         </scene>
-        <!--Search Order Positions Table View Controller-->
+        <!--Search Results Table View Controller-->
         <scene sceneID="dFS-J1-nEb">
             <objects>
-                <tableViewController id="9AG-Z6-LZr" customClass="SearchOrderPositionsTableViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="searchResults" id="9AG-Z6-LZr" customClass="SearchResultsTableViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Dbr-W0-Vbx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -446,28 +441,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="73J-6r-Oil"/>
+                    <connections>
+                        <outlet property="searchFooterView" destination="8BM-Qa-NtS" id="zh8-PS-qhN"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbc-Sc-MKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8BM-Qa-NtS" customClass="SearchFooterView" customModule="PretixScan" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="2313" y="1236"/>
-        </scene>
-        <!--Configured Navigation Controller-->
-        <scene sceneID="2hE-d4-Lw6">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Ks-db-0j1" customClass="ConfiguredNavigationController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Q4V-Xd-Oaj">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="9AG-Z6-LZr" kind="relationship" relationship="rootViewController" id="uE2-M1-pw0"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hci-35-Hzd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1374" y="1236"/>
+            <point key="canvasLocation" x="1921" y="1295"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
