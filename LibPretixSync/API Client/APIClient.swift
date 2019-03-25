@@ -169,6 +169,38 @@ public extension APIClient {
             completionHandler(nil, error)
         }
     }
+
+    /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
+    ///
+    /// - See `RedemptionResponse` for the response returned in the completion handler.
+    public func redeem(_ orderPosition: OrderPosition, completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+        do {
+            let organizer = try getOrganizerSlug()
+            let event = try getEvent()
+            let checkInList = try getCheckInList()
+            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
+                "/checkinlists/\(checkInList.identifier)/positions/\(orderPosition.identifier)/redeem/")
+            let urlRequest = try createURLRequest(for: urlPath)
+
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(nil, error)
+                    return
+                }
+
+                do {
+                    let redemptionResponse = try self.jsonDecoder.decode(RedemptionResponse.self, from: data!)
+                    completionHandler(redemptionResponse, nil)
+                } catch let jsonError {
+                    completionHandler(nil, jsonError)
+                    return
+                }
+            }
+            task.resume()
+        } catch {
+            completionHandler(nil, error)
+        }
+    }
 }
 
 // MARK: - Accessing Properties

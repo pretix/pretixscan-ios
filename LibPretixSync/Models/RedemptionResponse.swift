@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The result of a `RedemptionRequest`, reporting wether the check in was successful.
+///
+/// - See also `RedemptionRequest`
+/// - See also `APIClient.redeem(_:completionHandler:)`
 public struct RedemptionResponse: Codable, Equatable {
     public let status: Status
     public let errorReason: ErrorReason?
