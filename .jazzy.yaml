@@ -32,6 +32,7 @@ custom_categories:
     - Handshake
     - DeviceInitializationRequest
     - DeviceInitializationResponse
+    - RedemptionRequest
 
   - name: Meta Models
     children: 

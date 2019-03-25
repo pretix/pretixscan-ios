@@ -23,6 +23,7 @@
 		DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC22242589B008A9E06 /* SearchResultTableViewCell.swift */; };
 		DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */; };
 		DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */; };
+		DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */; };
 		DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
@@ -87,6 +88,7 @@
 		DC1D6FC22242589B008A9E06 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectDeviceViewController.swift; sourceTree = "<group>"; };
 		DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCheckInListTableViewController.swift; sourceTree = "<group>"; };
+		DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionRequest.swift; sourceTree = "<group>"; };
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				DCC0003B223BE31F00236424 /* MultiLingualString.swift */,
 				DC1D6FB42240F689008A9E06 /* OrderPosition.swift */,
 				DC1D6FB62240F82B008A9E06 /* CheckIn.swift */,
+				DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
+				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
