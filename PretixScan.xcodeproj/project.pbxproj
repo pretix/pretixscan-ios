@@ -48,7 +48,7 @@
 		DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF4E223ABC670059C000 /* APIClient.swift */; };
 		DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF50223ACAC60059C000 /* HttpMethods.swift */; };
 		DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF54223AE6E20059C000 /* Errors.swift */; };
-		DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF56223AF14B0059C000 /* Utilities.swift */; };
+		DCAAFF57223AF14B0059C000 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF56223AF14B0059C000 /* UIViewController.swift */; };
 		DCB35B8C2248E8E300860385 /* fa-solid-900.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */; };
 		DCB35B8E2248EB5800860385 /* RedemptionRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */; };
 		DCB35B8F2248EB8400860385 /* RedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */; };
@@ -58,6 +58,9 @@
 		DCB35B96224901BA00860385 /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B95224901BA00860385 /* CryptoHelpers.swift */; };
 		DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */; };
 		DCB35B9922490D5200860385 /* DateFormattingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */; };
+		DCB35B9B2249402300860385 /* TicketStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9A2249402300860385 /* TicketStatusViewController.swift */; };
+		DCB35B9D2249406000860385 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9C2249406000860385 /* UIDevice.swift */; };
+		DCB35BA02249408800860385 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9F2249408800860385 /* UIAlertController.swift */; };
 		DCC0003A223BE07D00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
 		DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
 		DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */; };
@@ -117,13 +120,16 @@
 		DCAAFF4E223ABC670059C000 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		DCAAFF50223ACAC60059C000 /* HttpMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethods.swift; sourceTree = "<group>"; };
 		DCAAFF54223AE6E20059C000 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		DCAAFF56223AF14B0059C000 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		DCAAFF56223AF14B0059C000 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-solid-900.ttf"; sourceTree = "<group>"; };
 		DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionRequestTests.swift; sourceTree = "<group>"; };
 		DCB35B902248F31400860385 /* RedemptionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionResponse.swift; sourceTree = "<group>"; };
 		DCB35B932248F66100860385 /* RedemptionResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionResponseTests.swift; sourceTree = "<group>"; };
 		DCB35B95224901BA00860385 /* CryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelpers.swift; sourceTree = "<group>"; };
 		DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormattingHelpers.swift; sourceTree = "<group>"; };
+		DCB35B9A2249402300860385 /* TicketStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusViewController.swift; sourceTree = "<group>"; };
+		DCB35B9C2249406000860385 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		DCB35B9F2249408800860385 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		DCC00039223BE07D00236424 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DCC0003B223BE31F00236424 /* MultiLingualString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualString.swift; sourceTree = "<group>"; };
 		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
@@ -176,6 +182,7 @@
 				DC07357922392474008326F7 /* AppDelegate.swift */,
 				DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
+				DCB35B9A2249402300860385 /* TicketStatusViewController.swift */,
 				DC1D6FC5224258B6008A9E06 /* Setup */,
 				DC1D6FC4224258A4008A9E06 /* Search */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
@@ -183,7 +190,7 @@
 				DC07358522392476008326F7 /* Info.plist */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
 				DCAAFF39223970090059C000 /* Localization.swift */,
-				DCAAFF56223AF14B0059C000 /* Utilities.swift */,
+				DCB35B9E2249407300860385 /* Extensions */,
 			);
 			path = PretixScan;
 			sourceTree = "<group>";
@@ -272,6 +279,16 @@
 				DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */,
 			);
 			path = "API Client";
+			sourceTree = "<group>";
+		};
+		DCB35B9E2249407300860385 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DCAAFF56223AF14B0059C000 /* UIViewController.swift */,
+				DCB35B9F2249408800860385 /* UIAlertController.swift */,
+				DCB35B9C2249406000860385 /* UIDevice.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
@@ -446,12 +463,13 @@
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
 				DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */,
 				DCB35B96224901BA00860385 /* CryptoHelpers.swift in Sources */,
-				DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */,
+				DCAAFF57223AF14B0059C000 /* UIViewController.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
+				DCB35BA02249408800860385 /* UIAlertController.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
@@ -459,6 +477,7 @@
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
+				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
@@ -474,6 +493,7 @@
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
 				DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */,
+				DCB35B9B2249402300860385 /* TicketStatusViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

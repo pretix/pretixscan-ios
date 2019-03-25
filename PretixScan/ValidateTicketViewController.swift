@@ -66,7 +66,21 @@ extension ValidateTicketViewController: AppCoordinator {
         configStore.apiClient?.redeem(orderPosition, force: force, ignoreUnpaid: ignoreUnpaid,
                                       completionHandler: { (redemptionResponse, error) in
             self.presentErrorAlert(ifError: error)
-            print(String(describing: redemptionResponse?.status))
+            do {
+                guard let response = redemptionResponse else { return }
+                let alert = UIAlertController(title: "Redeem", message: "omsn", preferredStyle: .alert)
+
+                switch response.status {
+                case .redeemed:
+                    alert.message = "VALID TICKET"
+                case .incomplete:
+                    alert.message = "TICKET ALREADY USED"
+                case .error:
+                    alert.message = "INVALID TICKET"
+                }
+                self.present(alert, animated: true)
+            }
+
         })
     }
 }

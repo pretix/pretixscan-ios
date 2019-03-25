@@ -1,8 +1,8 @@
 //
-//  Utilities.swift
+//  UIDevice.swift
 //  PretixScan
 //
-//  Created by Daniel Jilg on 14.03.19.
+//  Created by Daniel Jilg on 25.03.19.
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 
@@ -54,23 +54,5 @@ extension UIDevice {
         case "i386", "x86_64":                          return "Simulator"
         default:                                        return identifier
         }
-    }
-}
-
-extension UIViewController {
-    func presentErrorAlert(ifError error: Error?) {
-        DispatchQueue.main.async {
-            guard let error = error else { return }
-            let alert = UIAlertController.errorAlert(with: error)
-            self.present(alert, animated: true)
-        }
-    }
-}
-
-extension UIAlertController {
-    static func errorAlert(with error: Error) -> UIAlertController {
-        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        return alert
     }
 }
