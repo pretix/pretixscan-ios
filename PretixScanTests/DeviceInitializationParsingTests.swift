@@ -45,13 +45,13 @@ class DeviceInitializationParsingTests: XCTestCase {
             }
             """.data(using: .utf8)!
 
-    func testEncodingValidRequest() {
+    func testDecodingValidRequest() {
         let parsedRequest = try? JSONDecoder().decode(DeviceInitializationRequest.self, from: validRequestJSON)
         XCTAssertNotNil(parsedRequest)
         XCTAssertEqual(parsedRequest, validDeviceInitializationRequest)
     }
 
-    func testEncodingValidResponse() {
+    func testDecodingValidResponse() {
         let parsedResponse = try? JSONDecoder().decode(DeviceInitializationResponse.self, from: validResponseJSON)
         XCTAssertNotNil(parsedResponse)
         XCTAssertEqual(parsedResponse, validDeviceInitializationResponse)

@@ -13,10 +13,6 @@ custom_categories:
     children:
     - TicketValidator
     - OnlineTicketValidator
-    
-  - name: API Client
-    children:
-    - APIClient
 
   - name: ConfigStore
     children:
@@ -32,6 +28,12 @@ custom_categories:
     - Handshake
     - DeviceInitializationRequest
     - DeviceInitializationResponse
+    - RedemptionRequest
+    - RedemptionResponse
+    
+  - name: API Client
+    children:
+    - APIClient
 
   - name: Meta Models
     children: 

@@ -61,6 +61,14 @@ extension ValidateTicketViewController: AppCoordinator {
     func getConfigStore() -> ConfigStore {
         return configStore
     }
+
+    func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool) {
+        configStore.apiClient?.redeem(orderPosition, force: force, ignoreUnpaid: ignoreUnpaid,
+                                      completionHandler: { (redemptionResponse, error) in
+            self.presentErrorAlert(ifError: error)
+            print(String(describing: redemptionResponse?.status))
+        })
+    }
 }
 
 // MARK: - Setup
@@ -73,13 +81,12 @@ extension ValidateTicketViewController {
     }
 
     private func setupSearchController() {
-        // Configure SearchController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let resultsViewController = storyboard.instantiateViewController(withIdentifier: "searchResults")
         guard let resultsController = resultsViewController as? SearchResultsTableViewController else {
             fatalError("Could not get get results view controller from Storyboard")
         }
-        resultsController.configStoreProvider = self
+        resultsController.appCoordinator = self
         searchController = UISearchController(searchResultsController: resultsController )
         searchController.searchResultsUpdater = resultsController
         searchController.searchBar.placeholder = Localization.ValidateTicketViewController.SearchPlaceHolder

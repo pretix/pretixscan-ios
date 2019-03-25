@@ -10,7 +10,7 @@ import UIKit
 
 class SearchResultsTableViewController: UITableViewController {
     private static let reuseIdentifier = "SearchOrderPositionsTableViewControllerCell"
-    var configStoreProvider: AppCoordinator?
+    var appCoordinator: AppCoordinator?
 
     // MARK: - Private Properties
     @IBOutlet private var searchFooterView: SearchFooterView!
@@ -41,6 +41,12 @@ class SearchResultsTableViewController: UITableViewController {
         cell.orderPosition = result
         return cell
     }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let result = results[indexPath.row]
+        appCoordinator?.redeem(result, force: false, ignoreUnpaid: false)
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension SearchResultsTableViewController: UISearchResultsUpdating {
@@ -55,7 +61,7 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
         let nextSearchNumber = numberOfSearches + 1
 
         searchFooterView.status = .loading
-        configStoreProvider?.getConfigStore().apiClient?.getSearchResults(query: searchText) { (orders, error) in
+        appCoordinator?.getConfigStore().apiClient?.getSearchResults(query: searchText) { (orders, error) in
             DispatchQueue.main.async {
                 // Protect against old slow searches overwriting new fast searches
                 guard nextSearchNumber > self.numberOfSearches else { return }

@@ -11,7 +11,7 @@ import XCTest
 class EventTests: XCTestCase {
     let jsonDecoder: JSONDecoder = {
         let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .iso8601
+        jsonDecoder.dateDecodingStrategy = .fractionalISO8601
         return jsonDecoder
     }()
 
