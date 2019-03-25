@@ -11,13 +11,13 @@ import XCTest
 class RedemptionRequestTests: XCTestCase {
     let jsonDecoder: JSONDecoder = {
         let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .iso8601
+        jsonDecoder.dateDecodingStrategy = .fractionalISO8601
         return jsonDecoder
     }()
 
     let jsonEncoder: JSONEncoder = {
         let jsonEncoder = JSONEncoder()
-        jsonEncoder.dateEncodingStrategy = .iso8601
+        jsonEncoder.dateEncodingStrategy = .fractionalISO8601
         return jsonEncoder
     }()
 

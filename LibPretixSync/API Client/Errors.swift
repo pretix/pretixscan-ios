@@ -18,4 +18,5 @@ enum APIErrors: Error {
     case notFound // 404
     case unknownStatusCode(statusCode: Int)
     case couldNotCreateURL
+    case couldNotCreateNonce
 }

@@ -29,6 +29,7 @@ custom_categories:
     - DeviceInitializationRequest
     - DeviceInitializationResponse
     - RedemptionRequest
+    - RedemptionResponse
     
   - name: API Client
     children:

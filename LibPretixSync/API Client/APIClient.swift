@@ -21,13 +21,13 @@ public class APIClient {
     // MARK: - Private Properties
     private let jsonEncoder: JSONEncoder = {
         let jsonEncoder = JSONEncoder()
-        jsonEncoder.dateEncodingStrategy = .iso8601
+        jsonEncoder.dateEncodingStrategy = .iso8601withFractions
         return jsonEncoder
     }()
 
     private let jsonDecoder: JSONDecoder = {
         let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .iso8601
+        jsonDecoder.dateDecodingStrategy = .iso8601withFractions
         return jsonDecoder
     }()
 
@@ -173,14 +173,22 @@ public extension APIClient {
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    public func redeem(_ orderPosition: OrderPosition, completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+    public func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool,
+                       completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
             let checkInList = try getCheckInList()
             let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
                 "/checkinlists/\(checkInList.identifier)/positions/\(orderPosition.identifier)/redeem/")
-            let urlRequest = try createURLRequest(for: urlPath)
+            var urlRequest = try createURLRequest(for: urlPath)
+            urlRequest.httpMethod = HttpMethod.POST
+
+            let redemptionRequest = RedemptionRequest(
+                questionsSupported: false,
+                date: nil, force: force, ignoreUnpaid: ignoreUnpaid,
+                nonce: try NonceGenerator.nonce())
+            urlRequest.httpBody = try jsonEncoder.encode(redemptionRequest)
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
@@ -274,10 +282,8 @@ private extension APIClient {
             return APIErrors.nonHTTPResponse
         }
 
-        guard httpURLResponse.statusCode == 200 else {
+        guard [200, 201, 400].contains(httpURLResponse.statusCode) else {
             switch httpURLResponse.statusCode {
-            case 400:
-                return APIErrors.badRequest
             case 401:
                 return APIErrors.unauthorized
             case 403:

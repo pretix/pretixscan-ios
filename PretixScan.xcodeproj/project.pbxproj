@@ -55,6 +55,9 @@
 		DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B902248F31400860385 /* RedemptionResponse.swift */; };
 		DCB35B922248F65000860385 /* RedemptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B902248F31400860385 /* RedemptionResponse.swift */; };
 		DCB35B942248F66100860385 /* RedemptionResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B932248F66100860385 /* RedemptionResponseTests.swift */; };
+		DCB35B96224901BA00860385 /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B95224901BA00860385 /* CryptoHelpers.swift */; };
+		DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */; };
+		DCB35B9922490D5200860385 /* DateFormattingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */; };
 		DCC0003A223BE07D00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
 		DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
 		DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */; };
@@ -119,6 +122,8 @@
 		DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionRequestTests.swift; sourceTree = "<group>"; };
 		DCB35B902248F31400860385 /* RedemptionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionResponse.swift; sourceTree = "<group>"; };
 		DCB35B932248F66100860385 /* RedemptionResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionResponseTests.swift; sourceTree = "<group>"; };
+		DCB35B95224901BA00860385 /* CryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelpers.swift; sourceTree = "<group>"; };
+		DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormattingHelpers.swift; sourceTree = "<group>"; };
 		DCC00039223BE07D00236424 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DCC0003B223BE31F00236424 /* MultiLingualString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualString.swift; sourceTree = "<group>"; };
 		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
@@ -263,6 +268,8 @@
 				DCAAFF4E223ABC670059C000 /* APIClient.swift */,
 				DCAAFF50223ACAC60059C000 /* HttpMethods.swift */,
 				DCAAFF54223AE6E20059C000 /* Errors.swift */,
+				DCB35B95224901BA00860385 /* CryptoHelpers.swift */,
+				DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */,
 			);
 			path = "API Client";
 			sourceTree = "<group>";
@@ -436,6 +443,7 @@
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
 				DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */,
+				DCB35B96224901BA00860385 /* CryptoHelpers.swift in Sources */,
 				DCAAFF57223AF14B0059C000 /* Utilities.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
@@ -452,6 +460,7 @@
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
+				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */,
 				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
 				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
@@ -485,6 +494,7 @@
 				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
 				DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */,
+				DCB35B9922490D5200860385 /* DateFormattingHelpers.swift in Sources */,
 				DCC00041223BEAF300236424 /* EventTests.swift in Sources */,
 				DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */,
 				DCB35B942248F66100860385 /* RedemptionResponseTests.swift in Sources */,
