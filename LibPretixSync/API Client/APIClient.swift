@@ -244,10 +244,14 @@ private extension APIClient {
 
         guard httpURLResponse.statusCode == 200 else {
             switch httpURLResponse.statusCode {
+            case 400:
+                return APIErrors.badRequest
             case 401:
                 return APIErrors.unauthorized
             case 403:
                 return APIErrors.forbidden
+            case 404:
+                return APIErrors.notFound
             default:
                 return APIErrors.unknownStatusCode(statusCode: httpURLResponse.statusCode)
             }
