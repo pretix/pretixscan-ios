@@ -12,9 +12,11 @@ class SearchResultTableViewCell: UITableViewCell {
     var orderPosition: OrderPosition? { didSet { configure() }}
 
     @IBOutlet private weak var orderCodeLabel: UILabel!
+    @IBOutlet private weak var orderIDLabel: UILabel!
     @IBOutlet private weak var ticketType: UILabel!
-    @IBOutlet weak var secretLabel: UILabel!
+    @IBOutlet private weak var secretLabel: UILabel!
     @IBOutlet private weak var statusLabel: UILabel!
+    @IBOutlet private weak var statusBackgroundView: UIView!
 
     private func configure() {
         guard let orderPosition = orderPosition else {
@@ -25,9 +27,12 @@ class SearchResultTableViewCell: UITableViewCell {
             return
         }
 
-        orderCodeLabel.text = "\(orderPosition.order) \(orderPosition.attendeeName ?? "--")"
-        ticketType.text = "NO TYPE"
+        orderCodeLabel.text = "\(orderPosition.attendeeName ?? "--")"
+        orderIDLabel.text = orderPosition.order
+        ticketType.text = "\(orderPosition.item)"
         secretLabel.text = orderPosition.secret
-        statusLabel.text = "NO STATUS"
+        statusLabel.text = orderPosition.checkins.count > 0 ?
+            Localization.SearchResultsTableViewCell.Redeemed : Localization.SearchResultsTableViewCell.Valid
+        statusBackgroundView.backgroundColor = orderPosition.checkins.count > 0 ? Color.warning : Color.okay
     }
 }

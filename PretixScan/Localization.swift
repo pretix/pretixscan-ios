@@ -61,4 +61,9 @@ struct Localization {
     struct SearchOrderPositionsTableViewController {
         static let Title = NSLocalizedString("Search", comment: "")
     }
+
+    struct SearchResultsTableViewCell {
+        static let Redeemed = NSLocalizedString("Checked In", comment: "")
+        static let Valid = NSLocalizedString("Valid", comment: "")
+    }
 }
