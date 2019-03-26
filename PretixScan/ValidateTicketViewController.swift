@@ -38,6 +38,10 @@ class ValidateTicketViewController: UIViewController {
         if let configuredNavigationController = segue.destination as? ConfiguredNavigationController {
             configuredNavigationController.configStore = configStore
         }
+
+        if let ticketStatusViewController = segue.destination as? TicketStatusViewController {
+            ticketStatusViewController.redemptionResponse = sender as? RedemptionResponse
+        }
     }
 }
 
@@ -56,17 +60,26 @@ extension ValidateTicketViewController {
     }
 }
 
-// MARK: - ConfigStoreProvider
+// MARK: - AppCoordinator
 extension ValidateTicketViewController: AppCoordinator {
     func getConfigStore() -> ConfigStore {
         return configStore
     }
 
     func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool) {
-        configStore.apiClient?.redeem(orderPosition, force: force, ignoreUnpaid: ignoreUnpaid,
+        configStore.apiClient?.redeem(orderPosition,
+                                      force: force,
+                                      ignoreUnpaid: ignoreUnpaid,
                                       completionHandler: { (redemptionResponse, error) in
             self.presentErrorAlert(ifError: error)
-            print(String(describing: redemptionResponse?.status))
+            do {
+                guard let response = redemptionResponse else { return }
+
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: response)
+                }
+            }
+
         })
     }
 }

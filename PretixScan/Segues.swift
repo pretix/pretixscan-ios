@@ -12,4 +12,5 @@ struct Segue {
     static let presentWelcomeViewController = "presentWelcomeViewController"
     static let presentConnectDeviceViewController = "presentConnectDeviceViewController"
     static let presentSelectEventTableViewController = "presentSelectEventTableViewController"
+    static let presentTicketStatusViewController = "presentTicketStatusViewController"
 }

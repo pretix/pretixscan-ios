@@ -44,8 +44,8 @@ class SearchResultsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let result = results[indexPath.row]
-        appCoordinator?.redeem(result, force: false, ignoreUnpaid: false)
         dismiss(animated: true, completion: nil)
+        appCoordinator?.redeem(result, force: false, ignoreUnpaid: false)
     }
 }
 
