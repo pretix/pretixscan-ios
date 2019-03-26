@@ -346,9 +346,11 @@
 				TargetAttributes = {
 					DC07357522392474008326F7 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 					DC07358922392476008326F7 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 						TestTargetID = DC07357522392474008326F7;
 					};
 				};
@@ -411,7 +413,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nif ! which jazzy > /dev/null; then\necho \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\nelse\njazzy\nfi\n";
+			shellScript = "set -e\n\n#if ! which jazzy > /dev/null; then\n#echo \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\n#else\n#jazzy\n#fi\n";
 		};
 		DCAAFF2D2239342B0059C000 /* Run Linter */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -660,7 +662,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -678,7 +680,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -698,7 +700,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScanTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PretixScan.app/PretixScan";
 			};
@@ -719,7 +721,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScanTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PretixScan.app/PretixScan";
 			};
