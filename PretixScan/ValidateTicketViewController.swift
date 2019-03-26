@@ -38,6 +38,10 @@ class ValidateTicketViewController: UIViewController {
         if let configuredNavigationController = segue.destination as? ConfiguredNavigationController {
             configuredNavigationController.configStore = configStore
         }
+
+        if let ticketStatusViewController = segue.destination as? TicketStatusViewController {
+            ticketStatusViewController.redemptionResponse = sender as? RedemptionResponse
+        }
     }
 
     @IBAction func debugValidation(_ sender: Any) {
@@ -72,29 +76,13 @@ extension ValidateTicketViewController: AppCoordinator {
     }
 
     func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool) {
-        configStore.apiClient?.redeem(orderPosition, force: force, ignoreUnpaid: ignoreUnpaid,
-                                      completionHandler: { (redemptionResponse, error) in
+        configStore.apiClient?.redeem(orderPosition, force: force, ignoreUnpaid: ignoreUnpaid, completionHandler: { (redemptionResponse, error) in
             self.presentErrorAlert(ifError: error)
             do {
                 guard let response = redemptionResponse else { return }
-                let alert = UIAlertController(title: "Redeem", message: "omsn", preferredStyle: .alert)
-
-                switch response.status {
-                case .redeemed:
-                    alert.message = "VALID TICKET"
-                case .incomplete:
-                    alert.message = "INCOMPLETE"
-                case .error:
-                    if response.errorReason == .alreadyRedeemed {
-                        alert.message = "TICKET ALREADY USED"
-                    } else {
-                        alert.message = "INVALID TICKET"
-                    }
-
-                }
 
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: self)
+                    self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: response)
                 }
             }
 

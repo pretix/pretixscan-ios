@@ -68,6 +68,8 @@
 		DCC00041223BEAF300236424 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00040223BEAF300236424 /* EventTests.swift */; };
 		DCC00042223BEB3B00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
 		DCDD82C7224A839800DC0200 /* BottomCardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */; };
+		DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CA224AB1A400DC0200 /* Icon.swift */; };
+		DCDD82CD224AB25900DC0200 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CC224AB25900DC0200 /* Color.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +138,8 @@
 		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
 		DCC00040223BEAF300236424 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
 		DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCardSegue.swift; sourceTree = "<group>"; };
+		DCDD82CA224AB1A400DC0200 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		DCDD82CC224AB25900DC0200 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +194,8 @@
 				DC07358022392476008326F7 /* Assets.xcassets */,
 				DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */,
 				DC07358522392476008326F7 /* Info.plist */,
+				DCDD82CA224AB1A400DC0200 /* Icon.swift */,
+				DCDD82CC224AB25900DC0200 /* Color.swift */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
 				DCAAFF39223970090059C000 /* Localization.swift */,
 				DCB35B9E2249407300860385 /* Extensions */,
@@ -473,6 +479,7 @@
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCB35BA02249408800860385 /* UIAlertController.swift in Sources */,
+				DCDD82CD224AB25900DC0200 /* Color.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
@@ -486,6 +493,7 @@
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */,
+				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
 				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
 				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,

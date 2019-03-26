@@ -16,6 +16,13 @@ struct Localization {
         static let SearchPlaceHolder = NSLocalizedString("Search", comment: "")
     }
 
+    struct TicketStatusViewController {
+        static let ValidTicket = NSLocalizedString("Valid Ticket", comment: "")
+        static let TicketAlreadyRedeemed = NSLocalizedString("Ticket Already Used", comment: "")
+        static let InvalidTicket = NSLocalizedString("Invalid Ticket", comment: "")
+        static let IncompleteInformation = NSLocalizedString("Incomplete Information", comment: "")
+    }
+
     struct WelcomeViewController {
         static let Title = NSLocalizedString("Welcome to PretixScan", comment: "")
         static let Explanation = NSLocalizedString("PretixScan is an event entry app that you can use to validate tickets that you sold throught pretix.", comment: "")
