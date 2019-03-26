@@ -411,7 +411,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nif ! which jazzy > /dev/null; then\necho \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\nelse\njazzy\nfi\n";
+			shellScript = "set -e\n\n#if ! which jazzy > /dev/null; then\n#echo \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\n#else\n#jazzy\n#fi\n";
 		};
 		DCAAFF2D2239342B0059C000 /* Run Linter */ = {
 			isa = PBXShellScriptBuildPhase;
