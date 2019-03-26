@@ -76,7 +76,10 @@ extension ValidateTicketViewController: AppCoordinator {
     }
 
     func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool) {
-        configStore.apiClient?.redeem(orderPosition, force: force, ignoreUnpaid: ignoreUnpaid, completionHandler: { (redemptionResponse, error) in
+        configStore.apiClient?.redeem(orderPosition,
+                                      force: force,
+                                      ignoreUnpaid: ignoreUnpaid,
+                                      completionHandler: { (redemptionResponse, error) in
             self.presentErrorAlert(ifError: error)
             do {
                 guard let response = redemptionResponse else { return }

@@ -186,7 +186,6 @@
 			children = (
 				DCAAFF3222394BE80059C000 /* Storyboards */,
 				DC07357922392474008326F7 /* AppDelegate.swift */,
-				DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DCB35B9A2249402300860385 /* TicketStatusViewController.swift */,
 				DC1D6FC5224258B6008A9E06 /* Setup */,
@@ -198,8 +197,7 @@
 				DCDD82CC224AB25900DC0200 /* Color.swift */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
 				DCAAFF39223970090059C000 /* Localization.swift */,
-				DCB35B9E2249407300860385 /* Extensions */,
-				DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */,
+				DCB35B9E2249407300860385 /* Utilities */,
 			);
 			path = PretixScan;
 			sourceTree = "<group>";
@@ -290,14 +288,16 @@
 			path = "API Client";
 			sourceTree = "<group>";
 		};
-		DCB35B9E2249407300860385 /* Extensions */ = {
+		DCB35B9E2249407300860385 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */,
+				DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */,
 				DCAAFF56223AF14B0059C000 /* UIViewController.swift */,
 				DCB35B9F2249408800860385 /* UIAlertController.swift */,
 				DCB35B9C2249406000860385 /* UIDevice.swift */,
 			);
-			path = Extensions;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {

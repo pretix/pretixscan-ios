@@ -6,11 +6,13 @@
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 
+// swiftlint:disable multiple_closures_with_trailing_closure
+
 import UIKit
 
 class BottomCardSegue: UIStoryboardSegue {
 
-    private var selfRetainer: BottomCardSegue? = nil
+    private var selfRetainer: BottomCardSegue?
 
     override func perform() {
         destination.transitioningDelegate = self
@@ -21,7 +23,8 @@ class BottomCardSegue: UIStoryboardSegue {
 }
 
 extension BottomCardSegue: UIViewControllerTransitioningDelegate {
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forPresented presented: UIViewController,
+                                    presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return Presenter()
     }
 
