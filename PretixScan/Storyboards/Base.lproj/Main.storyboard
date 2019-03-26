@@ -33,22 +33,13 @@
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items/>
                             </toolbar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8W-4q-MB9">
-                                <rect key="frame" x="160" y="318.5" width="55" height="30"/>
-                                <state key="normal" title="Validate"/>
-                                <connections>
-                                    <action selector="debugValidation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8WR-8B-MKM"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pe6-kW-uIS" secondAttribute="trailing" id="0l0-y5-1HA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pe6-kW-uIS" secondAttribute="bottom" id="5wG-7f-srX"/>
-                            <constraint firstItem="y8W-4q-MB9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WR6-Hv-eXq"/>
                             <constraint firstItem="pe6-kW-uIS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZOx-U9-Z8M"/>
                             <constraint firstItem="jto-op-1Ka" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cdq-nb-fIj"/>
-                            <constraint firstItem="y8W-4q-MB9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="oOz-og-XYz"/>
                             <constraint firstItem="jto-op-1Ka" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="zkS-Fa-zxt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
