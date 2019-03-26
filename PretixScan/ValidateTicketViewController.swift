@@ -39,6 +39,15 @@ class ValidateTicketViewController: UIViewController {
             configuredNavigationController.configStore = configStore
         }
     }
+
+    @IBAction func debugValidation(_ sender: Any) {
+        let orderPosition = OrderPosition(
+            identifier: 1842899, order: "RDTBG", positionid: 1, item: 25643, variation: nil, price: "250.00",
+            attendeeName: "Daniel Jilg", attendeeEmail: nil, secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y",
+            pseudonymizationId: "DAC7ULNMUB", checkins: []
+        )
+        redeem(orderPosition, force: false, ignoreUnpaid: false)
+    }
 }
 
 // MARK: First Run Actions
@@ -56,7 +65,7 @@ extension ValidateTicketViewController {
     }
 }
 
-// MARK: - ConfigStoreProvider
+// MARK: - AppCoordinator
 extension ValidateTicketViewController: AppCoordinator {
     func getConfigStore() -> ConfigStore {
         return configStore
@@ -74,9 +83,14 @@ extension ValidateTicketViewController: AppCoordinator {
                 case .redeemed:
                     alert.message = "VALID TICKET"
                 case .incomplete:
-                    alert.message = "TICKET ALREADY USED"
+                    alert.message = "INCOMPLETE"
                 case .error:
-                    alert.message = "INVALID TICKET"
+                    if response.errorReason == .alreadyRedeemed {
+                        alert.message = "TICKET ALREADY USED"
+                    } else {
+                        alert.message = "INVALID TICKET"
+                    }
+
                 }
                 self.present(alert, animated: true)
             }
