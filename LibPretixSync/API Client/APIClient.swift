@@ -42,7 +42,7 @@ public class APIClient {
 
 // MARK: - Devices
 public extension APIClient {
-    public func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
+    func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
         guard let baseURL = configStore.apiBaseURL else {
             print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
             return
@@ -91,7 +91,7 @@ public extension APIClient {
 // MARK: - Events
 public extension APIClient {
     /// Returns a list of all events within a given organizer the authenticated user/token has access to.
-    public func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
+    func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let urlRequest = try createURLRequest(for: "/api/v1/organizers/\(organizer)/events/")
@@ -114,7 +114,7 @@ public extension APIClient {
 // MARK: - Check In Lists
 public extension APIClient {
     /// Returns a list of all check-in lists within a given event.
-    public func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
+    func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
@@ -139,7 +139,7 @@ public extension APIClient {
     }
 
     /// Search all OrderPositions within a CheckInList
-    public func getSearchResults(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
+    func getSearchResults(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
@@ -173,8 +173,8 @@ public extension APIClient {
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    public func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool,
-                       completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+    func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool,
+                completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
