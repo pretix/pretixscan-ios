@@ -67,6 +67,7 @@
 		DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
 		DCC00041223BEAF300236424 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00040223BEAF300236424 /* EventTests.swift */; };
 		DCC00042223BEB3B00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
+		DCDD82C7224A839800DC0200 /* BottomCardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -134,6 +135,7 @@
 		DCC0003B223BE31F00236424 /* MultiLingualString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualString.swift; sourceTree = "<group>"; };
 		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
 		DCC00040223BEAF300236424 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
+		DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCardSegue.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -191,6 +193,7 @@
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
 				DCAAFF39223970090059C000 /* Localization.swift */,
 				DCB35B9E2249407300860385 /* Extensions */,
+				DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */,
 			);
 			path = PretixScan;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
+				DCDD82C7224A839800DC0200 /* BottomCardSegue.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,

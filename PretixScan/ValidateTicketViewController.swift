@@ -92,7 +92,10 @@ extension ValidateTicketViewController: AppCoordinator {
                     }
 
                 }
-                self.present(alert, animated: true)
+
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: self)
+                }
             }
 
         })

@@ -9,5 +9,7 @@
 import UIKit
 
 class TicketStatusViewController: UIViewController {
-
+    override func viewDidAppear(_ animated: Bool) {
+        dismiss(animated: true, completion: nil)
+    }
 }

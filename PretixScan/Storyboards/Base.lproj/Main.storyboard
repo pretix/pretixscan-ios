@@ -66,53 +66,53 @@
                         <outlet property="eventButton" destination="cOt-oc-Yuk" id="UwT-QF-X0X"/>
                         <segue destination="S7W-QK-Oc8" kind="presentation" identifier="presentWelcomeViewController" id="GkZ-ev-8dv"/>
                         <segue destination="VRx-cx-5T1" kind="presentation" identifier="presentConnectDeviceViewController" id="N4U-ol-VwL"/>
-                        <segue destination="YdL-xT-kVF" kind="presentation" identifier="presentTicketStatusViewController" id="KiX-7b-XXe"/>
+                        <segue destination="YdL-xT-kVF" kind="custom" identifier="presentTicketStatusViewController" customClass="BottomCardSegue" customModule="PretixScan" customModuleProvider="target" id="4rb-9a-QOx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="861.60000000000002" y="26.53673163418291"/>
         </scene>
-        <!--View Controller-->
+        <!--Ticket Status View Controller-->
         <scene sceneID="44S-iH-zbx">
             <objects>
-                <viewController modalPresentationStyle="pageSheet" id="YdL-xT-kVF" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="pageSheet" id="YdL-xT-kVF" customClass="TicketStatusViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wWc-OI-sUy">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="nOw-mI-zVU">
-                                <rect key="frame" x="20" y="262.5" width="335" height="142"/>
+                                <rect key="frame" x="20" y="79" width="260" height="142"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-ON-nVd">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="20.5"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ticket Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rcg-Oi-qF2">
-                                        <rect key="frame" x="0.0" y="40.5" width="335" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="40.5" width="260" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTu-Kg-YZG">
-                                        <rect key="frame" x="0.0" y="81" width="335" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="81" width="260" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="MYu-m9-N0Z">
-                                        <rect key="frame" x="0.0" y="121.5" width="335" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="121.5" width="260" height="20.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order ID" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Xn-UT-Ort">
-                                                <rect key="frame" x="0.0" y="0.0" width="157.5" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendee Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArE-vk-H54">
-                                                <rect key="frame" x="177.5" y="0.0" width="157.5" height="20.5"/>
+                                                <rect key="frame" x="140" y="0.0" width="120" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -136,6 +136,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="300"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rdg-ts-dAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
