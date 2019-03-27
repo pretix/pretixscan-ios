@@ -16,6 +16,7 @@ class ValidateTicketViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = Bundle.main.infoDictionary!["CFBundleName"] as? String
 
         // ConfigStore
         setupConfigStore()
@@ -37,6 +38,10 @@ class ValidateTicketViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let configuredNavigationController = segue.destination as? ConfiguredNavigationController {
             configuredNavigationController.configStore = configStore
+        }
+
+        if var configurable = segue.destination as? Configurable {
+            configurable.configStore = configStore
         }
 
         if let ticketStatusViewController = segue.destination as? TicketStatusViewController {

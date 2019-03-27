@@ -211,7 +211,7 @@ public extension APIClient {
     }
 
     /// Get Status information for the current CheckInList
-    func getCheckListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
+    func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
