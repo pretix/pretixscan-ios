@@ -10,8 +10,12 @@ import UIKit
 
 class AdvancedCheckInStatusItemTableViewCell: UITableViewCell {
 
+    static let reuseIdentifier = "advancedStatusItemCell"
+
     @IBOutlet private weak var itemNameLabel: UILabel!
     @IBOutlet private weak var itemCountLabel: UILabel!
+    @IBOutlet weak var variantsTableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var variantsTableView: UITableView!
 
     var checkInListStatusItem: CheckInListStatus.Item? { didSet { update() }}
 
@@ -35,10 +39,30 @@ class AdvancedCheckInStatusItemTableViewCell: UITableViewCell {
         }
 
         itemNameLabel.text = checkInListStatusItem.name
+        variantsTableViewHeightConstraint.constant = CGFloat((checkInListStatusItem.variations?.count ?? 0) * 44)
 
         if let checkInCount = numberFormatter.string(from: NSNumber(value: checkInListStatusItem.checkinCount)),
             let positionCount = numberFormatter.string(from: NSNumber(value: checkInListStatusItem.positionCount)) {
             itemCountLabel.text = "\(checkInCount)/\(positionCount)"
         }
     }
+}
+
+extension AdvancedCheckInStatusItemTableViewCell: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return checkInListStatusItem?.variations?.count ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ItemVariantTableViewCell.reuseIdentifier, for: indexPath)
+        if let cell = cell as? ItemVariantTableViewCell {
+            cell.itemVariation = checkInListStatusItem?.variations?[indexPath.row]
+        }
+        return cell
+    }
+
 }

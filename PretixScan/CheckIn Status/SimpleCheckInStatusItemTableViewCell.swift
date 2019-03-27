@@ -10,6 +10,8 @@ import UIKit
 
 class SimpleCheckInStatusItemTableViewCell: UITableViewCell {
 
+    static let reuseIdentifier = "simpleStatusItemCell"
+
     @IBOutlet private weak var itemNameLabel: UILabel!
     @IBOutlet private weak var itemCountLabel: UILabel!
 

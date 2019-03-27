@@ -9,6 +9,8 @@
 import UIKit
 
 class CheckInStatusOverviewTableViewCell: UITableViewCell {
+    static let reuseIdentifier = "overviewCell"
+
     @IBOutlet private weak var checkInCountLabel: UILabel!
     @IBOutlet private weak var positionCountLabel: UILabel!
     @IBOutlet private weak var checkInCountTitleLabel: UILabel!

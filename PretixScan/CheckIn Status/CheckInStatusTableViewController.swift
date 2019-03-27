@@ -34,11 +34,6 @@ class CheckInStatusTableViewController: UITableViewController, Configurable {
 
     private var checkInListStatus: CheckInListStatus?
 
-    // MARK: Static Properties
-    static let overviewCellReuseIdentifier = "overviewCell"
-    static let simpleStatusItemCellReuseIdentifier = "simpleStatusItemCell"
-    static let advancedStatusItemCellReuseIdentifier = "advancedStatusItemCell"
-
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +77,7 @@ class CheckInStatusTableViewController: UITableViewController, Configurable {
 
         case .overview:
             let cell = tableView.dequeueReusableCell(
-                withIdentifier: CheckInStatusTableViewController.overviewCellReuseIdentifier,
+                withIdentifier: CheckInStatusOverviewTableViewCell.reuseIdentifier,
                 for: indexPath)
             if let cell = cell as? CheckInStatusOverviewTableViewCell {
                 cell.checkInListStatus = self.checkInListStatus
@@ -93,7 +88,7 @@ class CheckInStatusTableViewController: UITableViewController, Configurable {
             let item = checkInStatusItem(for: indexPath)
             if let variations = item?.variations, variations.count > 0 {
                 let cell = tableView.dequeueReusableCell(
-                    withIdentifier: CheckInStatusTableViewController.advancedStatusItemCellReuseIdentifier,
+                    withIdentifier: AdvancedCheckInStatusItemTableViewCell.reuseIdentifier,
                     for: indexPath)
                 if let cell = cell as? AdvancedCheckInStatusItemTableViewCell {
                     cell.checkInListStatusItem = item
@@ -101,7 +96,7 @@ class CheckInStatusTableViewController: UITableViewController, Configurable {
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(
-                    withIdentifier: CheckInStatusTableViewController.simpleStatusItemCellReuseIdentifier,
+                    withIdentifier: SimpleCheckInStatusItemTableViewCell.reuseIdentifier,
                     for: indexPath)
                 if let cell = cell as? SimpleCheckInStatusItemTableViewCell {
                     cell.checkInListStatusItem = item
