@@ -64,6 +64,7 @@ class TicketStatusViewController: UIViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        preferredContentSize = CGSize(width: 0, height: UIScreen.main.bounds.height * 0.70)
         update()
     }
 
@@ -71,5 +72,9 @@ class TicketStatusViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + presentationTime) {
             self.dismiss(animated: true, completion: nil)
         }
+    }
+
+    @IBAction func tap(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

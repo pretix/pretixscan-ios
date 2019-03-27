@@ -75,20 +75,20 @@
             <objects>
                 <viewController modalPresentationStyle="pageSheet" id="YdL-xT-kVF" customClass="TicketStatusViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wWc-OI-sUy">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="6j9-eu-btb">
-                                <rect key="frame" x="20" y="226" width="260" height="54"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6j9-eu-btb">
+                                <rect key="frame" x="20" y="386" width="260" height="54"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendee Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArE-vk-H54">
-                                        <rect key="frame" x="0.0" y="0.0" width="197" height="33.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="33.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Xn-UT-Ort">
-                                        <rect key="frame" x="0.0" y="33.5" width="65" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="33.5" width="260" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -96,22 +96,22 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hin-1O-uRs">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="206"/>
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="366"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-ON-nVd">
-                                        <rect key="frame" x="20" y="20" width="260" height="97.5"/>
+                                        <rect key="frame" x="20" y="80" width="260" height="197.5"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="80"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ticket Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rcg-Oi-qF2">
-                                        <rect key="frame" x="20" y="132" width="260" height="33.5"/>
+                                        <rect key="frame" x="20" y="292" width="260" height="33.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTu-Kg-YZG">
-                                        <rect key="frame" x="20" y="165.5" width="260" height="20.5"/>
+                                        <rect key="frame" x="20" y="325.5" width="260" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -123,7 +123,7 @@
                                     <constraint firstAttribute="bottom" secondItem="hTu-Kg-YZG" secondAttribute="bottom" constant="20" id="5Gn-cs-tiK"/>
                                     <constraint firstItem="8LH-ON-nVd" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="9NE-nK-3UX"/>
                                     <constraint firstItem="Rcg-Oi-qF2" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="9gI-K5-oxO"/>
-                                    <constraint firstItem="8LH-ON-nVd" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="top" constant="20" id="9st-1n-2KA"/>
+                                    <constraint firstItem="8LH-ON-nVd" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="top" constant="80" id="9st-1n-2KA"/>
                                     <constraint firstAttribute="trailing" secondItem="8LH-ON-nVd" secondAttribute="trailing" constant="20" id="Jjz-QW-y0F"/>
                                     <constraint firstItem="Rcg-Oi-qF2" firstAttribute="top" secondItem="8LH-ON-nVd" secondAttribute="bottom" constant="14.5" id="Luu-i6-0xa"/>
                                     <constraint firstAttribute="trailing" secondItem="Rcg-Oi-qF2" secondAttribute="trailing" constant="20" id="cQ5-57-AJd"/>
@@ -133,6 +133,7 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="6j9-eu-btb" secondAttribute="trailing" constant="20" id="8FN-S1-WuE"/>
                             <constraint firstItem="hin-1O-uRs" firstAttribute="leading" secondItem="wWc-OI-sUy" secondAttribute="leading" id="BLw-To-Rk2"/>
@@ -140,15 +141,18 @@
                             <constraint firstItem="6j9-eu-btb" firstAttribute="leading" secondItem="wWc-OI-sUy" secondAttribute="leading" constant="20" id="Tk3-ou-jm9"/>
                             <constraint firstItem="hin-1O-uRs" firstAttribute="top" secondItem="wWc-OI-sUy" secondAttribute="top" id="cEe-mY-sBw"/>
                             <constraint firstAttribute="trailing" secondItem="hin-1O-uRs" secondAttribute="trailing" id="dMx-mv-O1g"/>
-                            <constraint firstAttribute="bottom" secondItem="6j9-eu-btb" secondAttribute="bottom" constant="20" id="da7-ey-Odz"/>
+                            <constraint firstAttribute="bottom" secondItem="6j9-eu-btb" secondAttribute="bottom" constant="60" id="da7-ey-Odz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RdG-rZ-yD4"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Q1K-6u-PNc" appends="YES" id="ttr-uU-5Qa"/>
+                        </connections>
                     </view>
                     <value key="contentSizeForViewInPopover" type="size" width="300" height="300"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="300"/>
+                    <size key="freeformSize" width="300" height="500"/>
                     <connections>
                         <outlet property="attendeeNameLabel" destination="ArE-vk-H54" id="yy8-Bz-nZL"/>
                         <outlet property="backgroundColorView" destination="hin-1O-uRs" id="QiY-LE-qKn"/>
@@ -159,6 +163,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rdg-ts-dAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Q1K-6u-PNc">
+                    <connections>
+                        <action selector="tap:" destination="YdL-xT-kVF" id="VTN-W8-HJn"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="860.79999999999995" y="833.88305847076469"/>
         </scene>
@@ -680,6 +689,7 @@
                         </connections>
                     </tableView>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="rOM-2f-NIr">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
                 </tableViewController>
