@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemVariantTableViewCell: UITableViewCell {
+class ItemVariationTableViewCell: UITableViewCell {
     static let reuseIdentifier = "itemVariantCell"
 
     var itemVariation: CheckInListStatus.Item.Variation? { didSet { update() }}

@@ -58,8 +58,8 @@ extension AdvancedCheckInStatusItemTableViewCell: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ItemVariantTableViewCell.reuseIdentifier, for: indexPath)
-        if let cell = cell as? ItemVariantTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ItemVariationTableViewCell.reuseIdentifier, for: indexPath)
+        if let cell = cell as? ItemVariationTableViewCell {
             cell.itemVariation = checkInListStatusItem?.variations?[indexPath.row]
         }
         return cell
