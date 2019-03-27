@@ -66,4 +66,13 @@ struct Localization {
         static let Redeemed = NSLocalizedString("Checked In", comment: "")
         static let Valid = NSLocalizedString("Valid", comment: "")
     }
+
+    struct CheckInStatusTableViewController {
+        static let Title = NSLocalizedString("Statistics", comment: "")
+    }
+
+    struct CheckInStatusOverviewTableViewCell {
+        static let CheckInCountTitle = NSLocalizedString("Already Scanned", comment: "")
+        static let PositionCountTitle = NSLocalizedString("Total Tickets Sold", comment: "")
+    }
 }

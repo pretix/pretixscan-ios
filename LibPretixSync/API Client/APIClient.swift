@@ -63,7 +63,7 @@ public extension APIClient {
             }
 
             guard let responseData = data else {
-                completionHandler(APIErrors.emptyResponse)
+                completionHandler(APIError.emptyResponse)
                 return
             }
 
@@ -150,7 +150,7 @@ public extension APIClient {
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = [URLQueryItem(name: "search", value: query)]
             guard let urlComponentsURL = urlComponents?.url else {
-                throw APIErrors.couldNotCreateURL
+                throw APIError.couldNotCreateURL
             }
             let urlRequest = try createURLRequest(for: urlComponentsURL)
 
@@ -209,13 +209,40 @@ public extension APIClient {
             completionHandler(nil, error)
         }
     }
+
+    /// Get Status information for the current CheckInList
+    func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
+        do {
+            let organizer = try getOrganizerSlug()
+            let event = try getEvent()
+            let checkInList = try getCheckInList()
+            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
+                "/checkinlists/\(checkInList.identifier)/status/")
+            let urlRequest = try createURLRequest(for: urlPath)
+
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(nil, error)
+                    return
+                }
+                if let data = data, let checkInListStatus = try? self.jsonDecoder.decode(CheckInListStatus.self, from: data) {
+                    completionHandler(checkInListStatus, nil)
+                } else {
+                    completionHandler(nil, APIError.couldNotParseJSON)
+                }
+            }
+            task.resume()
+        } catch {
+            completionHandler(nil, error)
+        }
+    }
 }
 
 // MARK: - Accessing Properties
 private extension APIClient {
     func getOrganizerSlug() throws -> String {
         guard let organizer = configStore.organizerSlug else {
-            throw APIErrors.notConfigured(message:
+            throw APIError.notConfigured(message:
                 "APIClient's configStore.organizerSlug property must be set before calling this function."
             )
         }
@@ -225,7 +252,7 @@ private extension APIClient {
 
     func getEvent() throws -> Event {
         guard let event = configStore.event else {
-            throw APIErrors.notConfigured(message: "APIClient's configStore.event property must be set before calling this function.")
+            throw APIError.notConfigured(message: "APIClient's configStore.event property must be set before calling this function.")
         }
 
         return event
@@ -233,7 +260,7 @@ private extension APIClient {
 
     func getCheckInList() throws -> CheckInList {
         guard let checkInList = configStore.checkInList else {
-            throw APIErrors.notConfigured(message: "APIClient's configStore.checkInList property must be set before calling this function.")
+            throw APIError.notConfigured(message: "APIClient's configStore.checkInList property must be set before calling this function.")
         }
 
         return checkInList
@@ -250,7 +277,7 @@ private extension APIClient {
 
     func createURL(for pathComponent: String) throws -> URL {
         guard let baseURL = configStore.apiBaseURL else {
-            throw APIErrors.notConfigured(message: "APIClient's configStore.apiBaseURL property must be set before calling this function.")
+            throw APIError.notConfigured(message: "APIClient's configStore.apiBaseURL property must be set before calling this function.")
         }
 
         return baseURL.appendingPathComponent(pathComponent)
@@ -258,7 +285,7 @@ private extension APIClient {
 
     func createURLRequest(for url: URL) throws -> URLRequest {
         guard let apiToken = configStore.apiToken else {
-            throw APIErrors.notConfigured(message: "APIClient's configStore.apiToken property must be set before calling this function.")
+            throw APIError.notConfigured(message: "APIClient's configStore.apiToken property must be set before calling this function.")
         }
 
         var urlRequest = URLRequest(url: url)
@@ -275,23 +302,23 @@ private extension APIClient {
         }
 
         guard data != nil else {
-            return APIErrors.emptyResponse
+            return APIError.emptyResponse
         }
 
         guard let httpURLResponse = response as? HTTPURLResponse else {
-            return APIErrors.nonHTTPResponse
+            return APIError.nonHTTPResponse
         }
 
         guard [200, 201, 400].contains(httpURLResponse.statusCode) else {
             switch httpURLResponse.statusCode {
             case 401:
-                return APIErrors.unauthorized
+                return APIError.unauthorized
             case 403:
-                return APIErrors.forbidden
+                return APIError.forbidden
             case 404:
-                return APIErrors.notFound
+                return APIError.notFound
             default:
-                return APIErrors.unknownStatusCode(statusCode: httpURLResponse.statusCode)
+                return APIError.unknownStatusCode(statusCode: httpURLResponse.statusCode)
             }
         }
 

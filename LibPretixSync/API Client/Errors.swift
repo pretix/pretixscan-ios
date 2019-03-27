@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum APIErrors: Error {
+enum APIError: Error {
     case notConfigured(message: String)
     case emptyResponse
     case nonHTTPResponse
@@ -19,4 +19,5 @@ enum APIErrors: Error {
     case unknownStatusCode(statusCode: Int)
     case couldNotCreateURL
     case couldNotCreateNonce
+    case couldNotParseJSON
 }
