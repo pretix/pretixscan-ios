@@ -70,6 +70,9 @@
 		DCDD82C7224A839800DC0200 /* BottomCardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */; };
 		DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CA224AB1A400DC0200 /* Icon.swift */; };
 		DCDD82CD224AB25900DC0200 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CC224AB25900DC0200 /* Color.swift */; };
+		DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */; };
+		DCDD82D1224BBD7600DC0200 /* CheckListStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82D0224BBD7600DC0200 /* CheckListStatusTests.swift */; };
+		DCDD82D2224BBDAB00DC0200 /* CheckInListStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +143,8 @@
 		DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCardSegue.swift; sourceTree = "<group>"; };
 		DCDD82CA224AB1A400DC0200 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		DCDD82CC224AB25900DC0200 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListStatus.swift; sourceTree = "<group>"; };
+		DCDD82D0224BBD7600DC0200 /* CheckListStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListStatusTests.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +219,7 @@
 				DC1D6FBA2240FA16008A9E06 /* OrderPositionTests.swift */,
 				DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */,
 				DCB35B932248F66100860385 /* RedemptionResponseTests.swift */,
+				DCDD82D0224BBD7600DC0200 /* CheckListStatusTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -272,6 +278,7 @@
 				DC1D6FB62240F82B008A9E06 /* CheckIn.swift */,
 				DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */,
 				DCB35B902248F31400860385 /* RedemptionResponse.swift */,
+				DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -478,6 +485,7 @@
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
+				DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */,
 				DCB35BA02249408800860385 /* UIAlertController.swift in Sources */,
 				DCDD82CD224AB25900DC0200 /* Color.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
@@ -516,6 +524,7 @@
 				DCB35B922248F65000860385 /* RedemptionResponse.swift in Sources */,
 				DC1D6FBC2240FA46008A9E06 /* OrderPosition.swift in Sources */,
 				DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */,
+				DCDD82D2224BBDAB00DC0200 /* CheckInListStatus.swift in Sources */,
 				DCB35B8F2248EB8400860385 /* RedemptionRequest.swift in Sources */,
 				DCB35B8E2248EB5800860385 /* RedemptionRequestTests.swift in Sources */,
 				DCAAFF4B223AB9CE0059C000 /* DeviceInitializationParsingTests.swift in Sources */,
@@ -523,6 +532,7 @@
 				DCAAFF4C223AB9F20059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DC1D6FBD2240FA49008A9E06 /* CheckIn.swift in Sources */,
 				DCAAFF4D223AB9F40059C000 /* DeviceInitializationResponse.swift in Sources */,
+				DCDD82D1224BBD7600DC0200 /* CheckListStatusTests.swift in Sources */,
 				DCC00042223BEB3B00236424 /* Event.swift in Sources */,
 				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
 				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,
