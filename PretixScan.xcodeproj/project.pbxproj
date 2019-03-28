@@ -78,6 +78,8 @@
 		DCDD82D8224BCBC600DC0200 /* SimpleCheckInStatusItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82D7224BCBC600DC0200 /* SimpleCheckInStatusItemTableViewCell.swift */; };
 		DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82D9224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift */; };
 		DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82DC224BDE7E00DC0200 /* ItemVariationTableViewCell.swift */; };
+		DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */; };
+		DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -155,6 +157,8 @@
 		DCDD82D7224BCBC600DC0200 /* SimpleCheckInStatusItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCheckInStatusItemTableViewCell.swift; sourceTree = "<group>"; };
 		DCDD82D9224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedCheckInStatusItemTableViewCell.swift; sourceTree = "<group>"; };
 		DCDD82DC224BDE7E00DC0200 /* ItemVariationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVariationTableViewCell.swift; sourceTree = "<group>"; };
+		DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketScannerViewController.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +207,8 @@
 				DC07357922392474008326F7 /* AppDelegate.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DCB35B9A2249402300860385 /* TicketStatusViewController.swift */,
+				DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */,
+				DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */,
 				DC1D6FC5224258B6008A9E06 /* Setup */,
 				DC1D6FC4224258A4008A9E06 /* Search */,
 				DCDD82DB224BCBEB00DC0200 /* CheckIn Status */,
@@ -518,6 +524,7 @@
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
+				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
@@ -538,6 +545,7 @@
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
+				DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */,
 				DCDD82D6224BCBA000DC0200 /* CheckInStatusOverviewTableViewCell.swift in Sources */,
 				DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */,
 				DCDD82D8224BCBC600DC0200 /* SimpleCheckInStatusItemTableViewCell.swift in Sources */,

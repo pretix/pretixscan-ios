@@ -64,7 +64,7 @@ class TicketStatusViewController: UIViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        preferredContentSize = CGSize(width: 0, height: UIScreen.main.bounds.height * 0.70)
+        preferredContentSize = CGSize(width: 0, height: UIScreen.main.bounds.height * 0.50)
         update()
     }
 

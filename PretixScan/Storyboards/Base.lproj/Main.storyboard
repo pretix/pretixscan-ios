@@ -20,16 +20,16 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ValidateTicketViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Validate Ticket" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jto-op-1Ka">
-                                <rect key="frame" x="131" y="381" width="113" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="08w-Xa-JKK">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <segue destination="aPb-M9-RAz" kind="embed" id="Bgg-pr-hHu"/>
+                                </connections>
+                            </containerView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pe6-kW-uIS">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items/>
@@ -37,13 +37,14 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pe6-kW-uIS" secondAttribute="trailing" id="0l0-y5-1HA"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="pe6-kW-uIS" secondAttribute="bottom" id="5wG-7f-srX"/>
-                            <constraint firstItem="pe6-kW-uIS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZOx-U9-Z8M"/>
-                            <constraint firstItem="jto-op-1Ka" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cdq-nb-fIj"/>
-                            <constraint firstItem="jto-op-1Ka" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="zkS-Fa-zxt"/>
+                            <constraint firstAttribute="trailing" secondItem="pe6-kW-uIS" secondAttribute="trailing" id="0l0-y5-1HA"/>
+                            <constraint firstAttribute="bottom" secondItem="pe6-kW-uIS" secondAttribute="bottom" id="5wG-7f-srX"/>
+                            <constraint firstAttribute="bottom" secondItem="08w-Xa-JKK" secondAttribute="bottom" id="JmO-Bi-7dL"/>
+                            <constraint firstItem="08w-Xa-JKK" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="UpP-gq-biE"/>
+                            <constraint firstItem="pe6-kW-uIS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZOx-U9-Z8M"/>
+                            <constraint firstAttribute="trailing" secondItem="08w-Xa-JKK" secondAttribute="trailing" id="dmH-wo-Hgo"/>
+                            <constraint firstItem="08w-Xa-JKK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qCw-xQ-8Co"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="60x-zZ-2W1">
                         <barButtonItem key="leftBarButtonItem" title="Event Name" id="cOt-oc-Yuk">
@@ -857,6 +858,20 @@
                 </view>
             </objects>
             <point key="canvasLocation" x="1920.8" y="1294.9025487256372"/>
+        </scene>
+        <!--Ticket Scanner View Controller-->
+        <scene sceneID="jfa-Se-IkI">
+            <objects>
+                <viewController id="aPb-M9-RAz" customClass="TicketScannerViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iXB-JL-VMv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wj7-8X-iRI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-74" y="834"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

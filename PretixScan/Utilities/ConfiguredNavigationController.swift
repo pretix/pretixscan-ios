@@ -14,7 +14,7 @@ protocol Configurable {
 
 protocol AppCoordinator {
     func getConfigStore() -> ConfigStore
-    func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool)
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool)
 }
 
 /// Subclass of UINavigationController that saves a ConfigStore

@@ -47,6 +47,10 @@ class ValidateTicketViewController: UIViewController {
         if let ticketStatusViewController = segue.destination as? TicketStatusViewController {
             ticketStatusViewController.redemptionResponse = sender as? RedemptionResponse
         }
+
+        if let ticketScannerViewController = segue.destination as? TicketScannerViewController {
+            ticketScannerViewController.appCoordinator = self
+        }
     }
 }
 
@@ -67,15 +71,13 @@ extension ValidateTicketViewController {
 
 // MARK: - AppCoordinator
 extension ValidateTicketViewController: AppCoordinator {
+
     func getConfigStore() -> ConfigStore {
         return configStore
     }
 
-    func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool) {
-        configStore.apiClient?.redeem(orderPosition,
-                                      force: force,
-                                      ignoreUnpaid: ignoreUnpaid,
-                                      completionHandler: { (redemptionResponse, error) in
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
+        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { (redemptionResponse, error) in
             self.presentErrorAlert(ifError: error)
             do {
                 guard let response = redemptionResponse else { return }
@@ -85,7 +87,7 @@ extension ValidateTicketViewController: AppCoordinator {
                 }
             }
 
-        })
+        }
     }
 }
 

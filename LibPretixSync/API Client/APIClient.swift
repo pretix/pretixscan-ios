@@ -170,17 +170,16 @@ public extension APIClient {
         }
     }
 
-    /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
+    /// Check in an attendee, identified by their secret code, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool,
-                completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
             let checkInList = try getCheckInList()
             let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
-                "/checkinlists/\(checkInList.identifier)/positions/\(orderPosition.identifier)/redeem/")
+                "/checkinlists/\(checkInList.identifier)/positions/\(secret)/redeem/")
             var urlRequest = try createURLRequest(for: urlPath)
             urlRequest.httpMethod = HttpMethod.POST
 
