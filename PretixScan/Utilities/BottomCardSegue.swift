@@ -61,7 +61,7 @@ private class Presenter: NSObject, UIViewControllerAnimatedTransitioning {
         // Apply some styling
         do {
             toView.layer.masksToBounds = true
-            toView.layer.cornerRadius = 20
+            toView.layer.cornerRadius = Style.cornerRadius
         }
         // Perform the animation
         do {

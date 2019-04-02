@@ -18,3 +18,7 @@ struct Color {
     static let warning = #colorLiteral(red: 0.9480441213, green: 0.8097700477, blue: 0.2334584594, alpha: 1)
     static let okay = #colorLiteral(red: 0.6854265928, green: 0.7983864546, blue: 0.0941010341, alpha: 1)
 }
+
+struct Style {
+    static let cornerRadius: CGFloat = 20
+}

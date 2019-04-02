@@ -26,7 +26,7 @@ class SetupFinishedViewController: UIViewController, Configurable {
         dismissButton.setTitle(Localization.SetupFinishedViewController.Dismiss, for: .normal)
 
         eventPreviewView.layer.masksToBounds = true
-        eventPreviewView.layer.cornerRadius = 20
+        eventPreviewView.layer.cornerRadius = Style.cornerRadius
         eventPreviewView.layer.borderColor = UIColor.lightGray.cgColor
         eventPreviewView.layer.borderWidth = 0.5
         eventPreviewBackgroundView.backgroundColor = Color.okay

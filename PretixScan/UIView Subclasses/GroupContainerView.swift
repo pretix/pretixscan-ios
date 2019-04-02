@@ -21,6 +21,6 @@ class GroupContainerView: UIView {
 
     private func setup() {
         backgroundColor = Color.grayBackground
-        layer.cornerRadius = 10
+        layer.cornerRadius = Style.cornerRadius
     }
 }
