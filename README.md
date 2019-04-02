@@ -1,7 +1,12 @@
 # PretixScan for iOS
 
 # Architecture
-The following is a draft:
+
+- Configurable and ConfiguredNavigationController: If a UIViewController is marked as implementing the Configurable protocol it will automatially get assigned a ConfigStore when it gets pushed.
+- AppCoordinator: One Class, ValidateTicketViewController, is implementing the appcoordinator protocol. Classes that are marked as appCoordinatorReceiver will get their appcoordinator property set. Use AppCoordinator for anything that needs to be a singleton 
+
+----
+Everything above the line is decided and implemented, everything below is a draft.
 
 ## AppDelegate
 - initialises ConfigStore
