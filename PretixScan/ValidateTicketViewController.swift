@@ -71,7 +71,7 @@ extension ValidateTicketViewController {
         }
 
         // API Connection
-        else if !configStore.isAPIConfigured {
+        else if configStore.apiToken == nil {
             performSegue(withIdentifier: Segue.presentConnectDeviceViewController, sender: self)
         }
 
@@ -95,14 +95,11 @@ extension ValidateTicketViewController: AppCoordinator {
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
         configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { (redemptionResponse, error) in
             self.presentErrorAlert(ifError: error)
-            do {
-                guard let response = redemptionResponse else { return }
+            guard let response = redemptionResponse else { return }
 
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: response)
-                }
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: response)
             }
-
         }
     }
 }

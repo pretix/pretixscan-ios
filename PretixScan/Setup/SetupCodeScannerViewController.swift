@@ -8,13 +8,26 @@
 
 import UIKit
 
+protocol SetupScannerViewControllerDelegate: class {
+    func initialize(token: String, url: URL)
+}
+
 class SetupCodeScannerViewController: ScannerViewController {
-    override func viewDidLoad() {
+    weak var delegate: SetupScannerViewControllerDelegate?
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         shouldScan = true
-        super.viewDidLoad()
     }
 
     override func found(code: String) {
-        print(code)
+        do {
+            guard let codeData = code.data(using: .utf8) else { return }
+            let handshake = try JSONDecoder().decode(Handshake.self, from: codeData)
+            delegate?.initialize(token: handshake.token, url: handshake.url)
+            self.shouldScan = false
+        } catch let error {
+            self.presentErrorAlert(ifError: error)
+        }
     }
 }

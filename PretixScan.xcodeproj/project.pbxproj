@@ -210,6 +210,7 @@
 				DCAAFF3222394BE80059C000 /* Storyboards */,
 				DC07357922392474008326F7 /* AppDelegate.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
+				DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */,
 				DC227F1F22536AFE00314448 /* Ticket Scanning */,
 				DC1D6FC5224258B6008A9E06 /* Setup */,
 				DC1D6FC4224258A4008A9E06 /* Search */,
@@ -266,11 +267,11 @@
 			isa = PBXGroup;
 			children = (
 				DCAAFF35223952350059C000 /* WelcomeViewController.swift */,
-				DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */,
 				DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */,
+				DC227F222253700900314448 /* SetupCodeScannerViewController.swift */,
+				DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */,
 				DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */,
 				DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */,
-				DC227F222253700900314448 /* SetupCodeScannerViewController.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -279,7 +280,6 @@
 			isa = PBXGroup;
 			children = (
 				DCB35B9A2249402300860385 /* TicketStatusViewController.swift */,
-				DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */,
 				DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */,
 			);
 			path = "Ticket Scanning";
