@@ -27,6 +27,7 @@
 		DC227F2122536B5B00314448 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC227F2022536B5B00314448 /* AppCoordinator.swift */; };
 		DC227F232253700900314448 /* SetupCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC227F222253700900314448 /* SetupCodeScannerViewController.swift */; };
 		DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC227F2422539BF000314448 /* PrimaryButton.swift */; };
+		DC227F272253A58400314448 /* GroupContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC227F262253A58400314448 /* GroupContainerView.swift */; };
 		DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
@@ -119,6 +120,7 @@
 		DC227F2022536B5B00314448 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		DC227F222253700900314448 /* SetupCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCodeScannerViewController.swift; sourceTree = "<group>"; };
 		DC227F2422539BF000314448 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		DC227F262253A58400314448 /* GroupContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupContainerView.swift; sourceTree = "<group>"; };
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
@@ -213,7 +215,6 @@
 				DC07357922392474008326F7 /* AppDelegate.swift */,
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */,
-				DC227F2422539BF000314448 /* PrimaryButton.swift */,
 				DC227F1F22536AFE00314448 /* Ticket Scanning */,
 				DC1D6FC5224258B6008A9E06 /* Setup */,
 				DC1D6FC4224258A4008A9E06 /* Search */,
@@ -225,6 +226,7 @@
 				DCDD82CC224AB25900DC0200 /* Color.swift */,
 				DCAAFF3722396EC30059C000 /* Segues.swift */,
 				DCAAFF39223970090059C000 /* Localization.swift */,
+				DC227F282253A58E00314448 /* UIView Subclasses */,
 				DCB35B9E2249407300860385 /* Utilities */,
 			);
 			path = PretixScan;
@@ -286,6 +288,15 @@
 				DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */,
 			);
 			path = "Ticket Scanning";
+			sourceTree = "<group>";
+		};
+		DC227F282253A58E00314448 /* UIView Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				DC227F262253A58400314448 /* GroupContainerView.swift */,
+				DC227F2422539BF000314448 /* PrimaryButton.swift */,
+			);
+			path = "UIView Subclasses";
 			sourceTree = "<group>";
 		};
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
@@ -545,6 +556,7 @@
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
+				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
