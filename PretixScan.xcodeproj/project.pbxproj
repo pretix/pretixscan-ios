@@ -25,6 +25,7 @@
 		DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */; };
 		DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */; };
 		DC227F2122536B5B00314448 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC227F2022536B5B00314448 /* AppCoordinator.swift */; };
+		DC227F232253700900314448 /* SetupCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC227F222253700900314448 /* SetupCodeScannerViewController.swift */; };
 		DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
@@ -115,6 +116,7 @@
 		DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCheckInListTableViewController.swift; sourceTree = "<group>"; };
 		DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionRequest.swift; sourceTree = "<group>"; };
 		DC227F2022536B5B00314448 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		DC227F222253700900314448 /* SetupCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCodeScannerViewController.swift; sourceTree = "<group>"; };
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */,
 				DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */,
 				DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */,
+				DC227F222253700900314448 /* SetupCodeScannerViewController.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */,
 				DCB35BA02249408800860385 /* UIAlertController.swift in Sources */,
+				DC227F232253700900314448 /* SetupCodeScannerViewController.swift in Sources */,
 				DCDD82CD224AB25900DC0200 /* Color.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,

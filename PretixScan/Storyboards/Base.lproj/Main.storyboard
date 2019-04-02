@@ -177,12 +177,22 @@
         <scene sceneID="Yt1-Uo-1IR">
             <objects>
                 <viewController id="Urx-Wb-p9O" customClass="ConnectDeviceViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Mig-Hm-qZu">
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Mig-Hm-qZu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="obh-43-p8F">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <segue destination="Ppy-gf-dQu" kind="embed" id="cFF-y4-Fue"/>
+                                </connections>
+                            </containerView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WnZ-Ib-s5z">
+                                <rect key="frame" x="0.0" y="603" width="375" height="64"/>
+                                <items/>
+                            </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
-                                <rect key="frame" x="20" y="136" width="335" height="18"/>
+                                <rect key="frame" x="20" y="623" width="335" height="18"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -190,11 +200,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="IJo-PF-JTu" firstAttribute="top" secondItem="35d-vW-nNp" secondAttribute="top" constant="20" id="2wJ-0c-NDC"/>
-                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="35d-vW-nNp" secondAttribute="leading" constant="20" id="7MQ-n5-6XY"/>
-                            <constraint firstItem="35d-vW-nNp" firstAttribute="trailing" secondItem="IJo-PF-JTu" secondAttribute="trailing" constant="20" id="O2b-lb-9Gi"/>
+                            <constraint firstAttribute="trailing" secondItem="obh-43-p8F" secondAttribute="trailing" id="3fc-ix-6T0"/>
+                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leading" constant="20" id="7MQ-n5-6XY"/>
+                            <constraint firstAttribute="trailing" secondItem="WnZ-Ib-s5z" secondAttribute="trailing" id="Edj-op-c3j"/>
+                            <constraint firstAttribute="trailing" secondItem="IJo-PF-JTu" secondAttribute="trailing" constant="20" id="O2b-lb-9Gi"/>
+                            <constraint firstItem="obh-43-p8F" firstAttribute="top" secondItem="Mig-Hm-qZu" secondAttribute="top" id="R8k-1n-zCx"/>
+                            <constraint firstItem="WnZ-Ib-s5z" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leading" id="btD-4g-7QM"/>
+                            <constraint firstItem="Hge-Pf-JNf" firstAttribute="bottom" secondItem="IJo-PF-JTu" secondAttribute="bottom" constant="26" id="hug-Gv-4F1"/>
+                            <constraint firstItem="obh-43-p8F" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leading" id="iAA-3r-Rvq"/>
+                            <constraint firstItem="IJo-PF-JTu" firstAttribute="top" secondItem="WnZ-Ib-s5z" secondAttribute="top" constant="20" id="nJF-bT-VF5"/>
+                            <constraint firstAttribute="bottom" secondItem="WnZ-Ib-s5z" secondAttribute="bottom" id="o0R-o8-gGJ"/>
+                            <constraint firstAttribute="bottom" secondItem="obh-43-p8F" secondAttribute="bottom" id="vP0-mX-tiD"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="35d-vW-nNp"/>
+                        <viewLayoutGuide key="safeArea" id="Hge-Pf-JNf"/>
                     </view>
                     <navigationItem key="navigationItem" id="kVk-iA-bFi">
                         <barButtonItem key="rightBarButtonItem" title="Manual Setup Button" id="pwV-7H-1HG">
@@ -861,6 +879,19 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wj7-8X-iRI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-74" y="834"/>
+        </scene>
+        <!--Setup Code Scanner View Controller-->
+        <scene sceneID="L5u-Lm-d9j">
+            <objects>
+                <viewController id="Ppy-gf-dQu" customClass="SetupCodeScannerViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aJL-DU-HD7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yvd-8p-4X3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
