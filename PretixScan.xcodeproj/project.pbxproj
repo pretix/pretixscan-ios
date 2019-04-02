@@ -207,6 +207,7 @@
 			children = (
 				DCAAFF3222394BE80059C000 /* Storyboards */,
 				DC07357922392474008326F7 /* AppDelegate.swift */,
+				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DC227F1F22536AFE00314448 /* Ticket Scanning */,
 				DC1D6FC5224258B6008A9E06 /* Setup */,
 				DC1D6FC4224258A4008A9E06 /* Search */,
@@ -274,7 +275,6 @@
 		DC227F1F22536AFE00314448 /* Ticket Scanning */ = {
 			isa = PBXGroup;
 			children = (
-				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DCB35B9A2249402300860385 /* TicketStatusViewController.swift */,
 				DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */,
 				DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */,

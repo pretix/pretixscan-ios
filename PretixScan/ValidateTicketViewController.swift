@@ -13,6 +13,7 @@ class ValidateTicketViewController: UIViewController {
 
     @IBOutlet private weak var eventButton: UIBarButtonItem!
     private var searchController: UISearchController!
+    private var ticketScannerViewController: TicketScannerViewController!
 
     private let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
@@ -28,6 +29,7 @@ class ValidateTicketViewController: UIViewController {
 
     // MARK: - View Lifecycle
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupEventButton()
     }
 
@@ -53,6 +55,10 @@ class ValidateTicketViewController: UIViewController {
         if let ticketStatusViewController = segue.destination as? TicketStatusViewController {
             ticketStatusViewController.redemptionResponse = sender as? RedemptionResponse
         }
+
+        if let ticketScannerViewController = segue.destination as? TicketScannerViewController {
+            self.ticketScannerViewController = ticketScannerViewController
+        }
     }
 }
 
@@ -67,6 +73,11 @@ extension ValidateTicketViewController {
         // API Connection
         else if !configStore.isAPIConfigured {
             performSegue(withIdentifier: Segue.presentConnectDeviceViewController, sender: self)
+        }
+
+        // Begin Scanning
+        else {
+            ticketScannerViewController.shouldScan = true
         }
     }
 }

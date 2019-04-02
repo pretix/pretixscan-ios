@@ -40,8 +40,6 @@ class ConfiguredNavigationController: UINavigationController {
     }
 
     private func configureTopViewController() {
-        print("Configuring", topViewController as Any)
-
         guard let viewController = topViewController else { return }
 
         if var configurableViewController = viewController as? Configurable, configurableViewController.configStore == nil {

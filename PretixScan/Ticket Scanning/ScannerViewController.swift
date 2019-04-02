@@ -10,14 +10,25 @@ import AVFoundation
 import UIKit
 
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
-    var captureSession: AVCaptureSession!
-    var previewLayer: AVCaptureVideoPreviewLayer!
-
     /// Period between scans when the timer will not fire
     var gracePeriod: TimeInterval = 2
 
+    /// If `true`, scanning will be active
+    var shouldScan = false {
+        didSet {
+            if shouldScan {
+                startScanning()
+            } else {
+                stopScanning()
+            }
+        }
+    }
+
     private var lastFoundAt: Date = Date.distantPast
     private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+
+    private var captureSession: AVCaptureSession!
+    private var previewLayer: AVCaptureVideoPreviewLayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,8 +68,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
-
-        captureSession.startRunning()
     }
 
     func failed() {
@@ -68,15 +77,23 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if captureSession?.isRunning == false {
-            captureSession.startRunning()
+        if shouldScan {
+            startScanning()
         }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        stopScanning()
+    }
 
+    private func startScanning() {
+        if captureSession?.isRunning == false {
+            captureSession.startRunning()
+        }
+    }
+
+    private func stopScanning() {
         if captureSession?.isRunning == true {
             captureSession.stopRunning()
         }

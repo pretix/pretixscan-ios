@@ -45,6 +45,7 @@
                             <constraint firstAttribute="trailing" secondItem="08w-Xa-JKK" secondAttribute="trailing" id="dmH-wo-Hgo"/>
                             <constraint firstItem="08w-Xa-JKK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qCw-xQ-8Co"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="BMQ-N5-fdF"/>
                     </view>
                     <navigationItem key="navigationItem" id="60x-zZ-2W1">
                         <barButtonItem key="leftBarButtonItem" title="Event Name" id="cOt-oc-Yuk">
@@ -180,30 +181,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="q5m-4M-LfC">
-                                <rect key="frame" x="20" y="136" width="335" height="111"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ConnectDeviceViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN5-8A-7r9">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="73"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
-                                        <rect key="frame" x="0.0" y="93" width="335" height="18"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
+                                <rect key="frame" x="20" y="136" width="335" height="18"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="35d-vW-nNp" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="q5m-4M-LfC" secondAttribute="bottom" constant="20" id="XaL-Df-42h"/>
-                            <constraint firstItem="q5m-4M-LfC" firstAttribute="top" secondItem="35d-vW-nNp" secondAttribute="top" constant="20" id="ZxP-aa-YaZ"/>
-                            <constraint firstItem="q5m-4M-LfC" firstAttribute="leading" secondItem="35d-vW-nNp" secondAttribute="leading" constant="20" id="kfL-LM-eKQ"/>
-                            <constraint firstItem="35d-vW-nNp" firstAttribute="trailing" secondItem="q5m-4M-LfC" secondAttribute="trailing" constant="20" id="pJt-Ue-yzB"/>
+                            <constraint firstItem="IJo-PF-JTu" firstAttribute="top" secondItem="35d-vW-nNp" secondAttribute="top" constant="20" id="2wJ-0c-NDC"/>
+                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="35d-vW-nNp" secondAttribute="leading" constant="20" id="7MQ-n5-6XY"/>
+                            <constraint firstItem="35d-vW-nNp" firstAttribute="trailing" secondItem="IJo-PF-JTu" secondAttribute="trailing" constant="20" id="O2b-lb-9Gi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="35d-vW-nNp"/>
                     </view>
@@ -217,7 +206,6 @@
                     <connections>
                         <outlet property="explanationLabel" destination="IJo-PF-JTu" id="pGT-qa-KQn"/>
                         <outlet property="manualSetupButton" destination="pwV-7H-1HG" id="0sU-R9-Swm"/>
-                        <outlet property="titleLabel" destination="dN5-8A-7r9" id="kVF-62-WNP"/>
                         <segue destination="U9m-zl-Ego" kind="show" identifier="presentSelectEventTableViewController" id="1Go-Du-NWk"/>
                     </connections>
                 </viewController>
@@ -867,6 +855,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="BHl-3A-YBL"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wj7-8X-iRI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -875,6 +864,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6un-Hd-Wow"/>
+        <segue reference="1Go-Du-NWk"/>
     </inferredMetricsTieBreakers>
 </document>

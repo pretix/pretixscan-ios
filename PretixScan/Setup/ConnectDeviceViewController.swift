@@ -11,14 +11,12 @@ import UIKit
 class ConnectDeviceViewController: UIViewController, Configurable {
     var configStore: ConfigStore?
 
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var explanationLabel: UILabel!
     @IBOutlet weak var manualSetupButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localization.ConnectDeviceViewController.Title
-        titleLabel.text = Localization.ConnectDeviceViewController.Title
         explanationLabel.text = Localization.ConnectDeviceViewController.Explanation
         manualSetupButton.title = Localization.ConnectDeviceViewController.ManualSetup
     }
