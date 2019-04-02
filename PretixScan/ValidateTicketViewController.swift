@@ -14,6 +14,8 @@ class ValidateTicketViewController: UIViewController {
     @IBOutlet private weak var eventButton: UIBarButtonItem!
     private var searchController: UISearchController!
 
+    private let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = Bundle.main.infoDictionary!["CFBundleName"] as? String
@@ -44,6 +46,10 @@ class ValidateTicketViewController: UIViewController {
             configurable.configStore = configStore
         }
 
+        if var appCoordinatorReceiver = segue.destination as? AppCoordinatorReceiver {
+            appCoordinatorReceiver.appCoordinator = self
+        }
+
         if let ticketStatusViewController = segue.destination as? TicketStatusViewController {
             ticketStatusViewController.redemptionResponse = sender as? RedemptionResponse
         }
@@ -67,15 +73,16 @@ extension ValidateTicketViewController {
 
 // MARK: - AppCoordinator
 extension ValidateTicketViewController: AppCoordinator {
+    func performHapticNotification(ofType type: UINotificationFeedbackGenerator.FeedbackType) {
+        notificationFeedbackGenerator.notificationOccurred(type)
+    }
+
     func getConfigStore() -> ConfigStore {
         return configStore
     }
 
-    func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool) {
-        configStore.apiClient?.redeem(orderPosition,
-                                      force: force,
-                                      ignoreUnpaid: ignoreUnpaid,
-                                      completionHandler: { (redemptionResponse, error) in
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
+        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { (redemptionResponse, error) in
             self.presentErrorAlert(ifError: error)
             do {
                 guard let response = redemptionResponse else { return }
@@ -85,7 +92,7 @@ extension ValidateTicketViewController: AppCoordinator {
                 }
             }
 
-        })
+        }
     }
 }
 

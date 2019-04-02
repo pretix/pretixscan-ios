@@ -14,7 +14,12 @@ protocol Configurable {
 
 protocol AppCoordinator {
     func getConfigStore() -> ConfigStore
-    func redeem(_ orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool)
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool)
+    func performHapticNotification(ofType type: UINotificationFeedbackGenerator.FeedbackType)
+}
+
+protocol AppCoordinatorReceiver {
+    var appCoordinator: AppCoordinator? { get set }
 }
 
 /// Subclass of UINavigationController that saves a ConfigStore
