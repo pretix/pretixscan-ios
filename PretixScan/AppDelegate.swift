@@ -20,8 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
         ) -> Bool {
 
-        let inMemoryConfigStore = prefilledInMemoryConfigStore()
-        configStore = inMemoryConfigStore
+        configStore = InMemoryConfigStore()
 
         return true
     }
