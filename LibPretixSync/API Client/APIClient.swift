@@ -34,8 +34,7 @@ public class APIClient {
     private let session = URLSession.shared
 
     // MARK: - Initialization
-    init?(configStore: ConfigStore) {
-        if !configStore.isAPIConfigured { return nil }
+    init(configStore: ConfigStore) {
         self.configStore = configStore
     }
 }

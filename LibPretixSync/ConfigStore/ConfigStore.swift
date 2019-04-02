@@ -14,10 +14,6 @@ public protocol ConfigStore {
     /// Returns `true` if the warning screen has been accepted by the user
     var welcomeScreenIsConfirmed: Bool { get set }
 
-    // MARK: - API Configuration
-    /// Returns `true` if the API connection parameters are configured correctly.
-    var isAPIConfigured: Bool { get }
-
     /// The base URL for the API
     var apiBaseURL: URL? { get set }
 

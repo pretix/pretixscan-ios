@@ -16,7 +16,6 @@ public class InMemoryConfigStore: ConfigStore {
     public var welcomeScreenIsConfirmed: Bool = false { didSet { valueChanged() } }
 
     // MARK: - API Configuration
-    public var isAPIConfigured: Bool { return apiBaseURL != nil && apiToken != nil }
     public var apiBaseURL: URL? { didSet { valueChanged() } }
     public var apiToken: String? { didSet { valueChanged() } }
     public var apiClient: APIClient? {
@@ -66,7 +65,6 @@ extension InMemoryConfigStore: CustomStringConvertible {
         desc.append("InMemoryConfigStore\n")
         desc.append("----------------------------------------\n")
         desc.append("welcomeScreenIsConfirmed: \(welcomeScreenIsConfirmed)\n")
-        desc.append("isAPIConfigured:          \(isAPIConfigured)\n")
         desc.append("apiBaseURL:               \(String(describing: apiBaseURL))\n")
         desc.append("apiToken:                 \(apiToken ?? "nil")\n")
         desc.append("deviceName:               \(deviceName ?? "nil")\n")

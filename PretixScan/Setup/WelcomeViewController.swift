@@ -11,7 +11,6 @@ import UIKit
 class WelcomeViewController: UIViewController, Configurable {
     var configStore: ConfigStore?
 
-    @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var explanationLabel: UILabel!
     @IBOutlet private weak var checkmarkDetailLabel: UILabel!
     @IBOutlet private weak var continueButton: UIButton!
@@ -21,7 +20,6 @@ class WelcomeViewController: UIViewController, Configurable {
         super.viewDidLoad()
 
         title = Localization.WelcomeViewController.Title
-        titleLabel.text = Localization.WelcomeViewController.Title
         explanationLabel.text = Localization.WelcomeViewController.Explanation
         checkmarkDetailLabel.text = Localization.WelcomeViewController.CheckMarkDetail
         continueButton.setTitle(Localization.WelcomeViewController.Continue, for: .normal)

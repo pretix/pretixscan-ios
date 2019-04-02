@@ -8,27 +8,26 @@
 
 import UIKit
 
-class ConnectDeviceViewController: UIViewController, Configurable {
+class ConnectDeviceViewController: UIViewController, Configurable, SetupScannerViewControllerDelegate {
     var configStore: ConfigStore?
 
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var explanationLabel: UILabel!
     @IBOutlet weak var manualSetupButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localization.ConnectDeviceViewController.Title
-        titleLabel.text = Localization.ConnectDeviceViewController.Title
         explanationLabel.text = Localization.ConnectDeviceViewController.Explanation
         manualSetupButton.title = Localization.ConnectDeviceViewController.ManualSetup
     }
 
-    @IBAction private func manualSetup(_ sender: Any) {
-        guard var configStore = self.configStore else {
-            print("configStore not available")
-            return
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let setupCodeScannerViewController = segue.destination as? SetupCodeScannerViewController {
+            setupCodeScannerViewController.delegate = self
         }
+    }
 
+    @IBAction private func manualSetup(_ sender: Any) {
         let alert = UIAlertController(
             title: Localization.ConnectDeviceViewController.ManualSetupTitle,
             message: Localization.ConnectDeviceViewController.ManualSetupMessage,
@@ -47,26 +46,34 @@ class ConnectDeviceViewController: UIViewController, Configurable {
             guard let url = URL(string: urlString) else { return }
             guard let token = alert.textFields![1].text else { return }
 
-            configStore.apiBaseURL = url
-
-            let deviceInitializatioRequest = DeviceInitializationRequest.init(
-                token: token,
-                hardwareBrand: "Apple",
-                hardwareModel: UIDevice.current.modelName,
-                softwareBrand: Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "n/a",
-                softwareVersion: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
-            )
-
-            self.configStore?.apiClient?.initialize(deviceInitializatioRequest) { error in
-                self.presentErrorAlert(ifError: error)
-
-                // API Client is correctly initialized
-                DispatchQueue.main.async {
-                    (self.navigationController as? ConfiguredNavigationController)?.configStore = self.configStore
-                    self.performSegue(withIdentifier: Segue.presentSelectEventTableViewController, sender: self)
-                }
-            }
+            self.initialize(token: token, url: url)
         })
         present(alert, animated: true)
+    }
+
+    func initialize(token: String, url: URL) {
+        guard var configStore = self.configStore else {
+            print("configStore not available")
+            return
+        }
+
+        let deviceInitializatioRequest = DeviceInitializationRequest.init(
+            token: token,
+            hardwareBrand: "Apple",
+            hardwareModel: UIDevice.current.modelName,
+            softwareBrand: Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "n/a",
+            softwareVersion: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
+        )
+
+        configStore.apiBaseURL = url
+        configStore.apiClient?.initialize(deviceInitializatioRequest) { error in
+            self.presentErrorAlert(ifError: error)
+
+            // API Client is correctly initialized
+            DispatchQueue.main.async {
+                (self.navigationController as? ConfiguredNavigationController)?.configStore = self.configStore
+                self.performSegue(withIdentifier: Segue.presentSelectEventTableViewController, sender: self)
+            }
+        }
     }
 }
