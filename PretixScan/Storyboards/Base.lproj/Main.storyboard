@@ -408,36 +408,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
                                 <rect key="frame" x="20" y="136" width="335" height="215.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WelcomeViewController" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69I-Ce-qdN">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="36"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeI-ky-AEf">
-                                        <rect key="frame" x="0.0" y="56" width="335" height="18"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TNe-rX-kKv">
-                                        <rect key="frame" x="0.0" y="94" width="337" height="31"/>
-                                        <connections>
-                                            <action selector="accept:" destination="UR2-m6-Blb" eventType="valueChanged" id="KnQ-3I-PUA"/>
-                                        </connections>
-                                    </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Checkmark Details" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKq-ou-VNF">
-                                        <rect key="frame" x="0.0" y="145" width="335" height="20.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fh9-PP-IPs">
-                                        <rect key="frame" x="0.0" y="185.5" width="335" height="30"/>
-                                        <state key="normal" title="Continue"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kFQ-ir-nAp">
+                                        <rect key="frame" x="0.0" y="60.5" width="335" height="71"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Checkmark Details" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKq-ou-VNF">
+                                                <rect key="frame" x="89" y="20" width="226" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TNe-rX-kKv">
+                                                <rect key="frame" x="20" y="20" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="accept:" destination="UR2-m6-Blb" eventType="valueChanged" id="KnQ-3I-PUA"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.78991472283941888" green="0.8970661604361303" blue="0.95693005181347146" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="YKq-ou-VNF" secondAttribute="trailing" constant="20" id="7uV-hY-73G"/>
+                                            <constraint firstAttribute="bottom" secondItem="YKq-ou-VNF" secondAttribute="bottom" constant="20" id="AOs-mh-7m3"/>
+                                            <constraint firstItem="TNe-rX-kKv" firstAttribute="centerY" secondItem="kFQ-ir-nAp" secondAttribute="centerY" id="Znx-CT-xPw"/>
+                                            <constraint firstItem="YKq-ou-VNF" firstAttribute="leading" secondItem="TNe-rX-kKv" secondAttribute="trailing" constant="20" id="eC0-oJ-kxs"/>
+                                            <constraint firstItem="YKq-ou-VNF" firstAttribute="top" secondItem="kFQ-ir-nAp" secondAttribute="top" constant="20" id="sec-AX-Zhp"/>
+                                            <constraint firstItem="TNe-rX-kKv" firstAttribute="leading" secondItem="kFQ-ir-nAp" secondAttribute="leading" constant="20" id="yhT-aM-xro"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fh9-PP-IPs" customClass="PrimaryButton" customModule="PretixScan" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="171.5" width="335" height="44"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <state key="normal" title="Button"/>
                                         <connections>
                                             <action selector="continue:" destination="UR2-m6-Blb" eventType="touchUpInside" id="Cj4-J0-Zci"/>
                                         </connections>
@@ -457,15 +466,15 @@
                     <navigationItem key="navigationItem" id="ahr-Oy-hfN"/>
                     <connections>
                         <outlet property="acceptSwitch" destination="TNe-rX-kKv" id="ctA-4o-AcD"/>
+                        <outlet property="checkmarkBackgroundView" destination="kFQ-ir-nAp" id="UWB-OG-UZF"/>
                         <outlet property="checkmarkDetailLabel" destination="YKq-ou-VNF" id="bw7-0a-MRD"/>
                         <outlet property="continueButton" destination="fh9-PP-IPs" id="tYi-cK-cFd"/>
                         <outlet property="explanationLabel" destination="EeI-ky-AEf" id="oB8-O8-FE7"/>
-                        <outlet property="titleLabel" destination="69I-Ce-qdN" id="duU-dM-oeF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gbf-8L-YWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2860" y="-756"/>
+            <point key="canvasLocation" x="2860" y="-756.07196401799104"/>
         </scene>
         <!--Configured Navigation Controller-->
         <scene sceneID="g2L-Qo-PfX">
@@ -892,6 +901,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yvd-8p-4X3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="2860" y="899"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
