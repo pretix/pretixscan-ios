@@ -17,6 +17,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     var gracePeriod: TimeInterval = 2
 
     private var lastFoundAt: Date = Date.distantPast
+    private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +98,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
 
     func vibrate() {
-        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        selectionFeedbackGenerator.selectionChanged()
     }
 
     func flashView() {

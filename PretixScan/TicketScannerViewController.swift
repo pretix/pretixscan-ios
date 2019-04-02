@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TicketScannerViewController: ScannerViewController {
+class TicketScannerViewController: ScannerViewController, AppCoordinatorReceiver {
     var appCoordinator: AppCoordinator?
 
     override func found(code: String) {

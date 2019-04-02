@@ -8,7 +8,9 @@
 
 import UIKit
 
-class TicketStatusViewController: UIViewController {
+class TicketStatusViewController: UIViewController, AppCoordinatorReceiver {
+    var appCoordinator: AppCoordinator?
+
     var redemptionResponse: RedemptionResponse? { didSet { update() }}
 
     private let presentationTime: TimeInterval = 5
@@ -42,20 +44,24 @@ class TicketStatusViewController: UIViewController {
             backgroundColorView.backgroundColor = Color.okay
             iconLabel.text = Icon.okay
             ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+            appCoordinator?.performHapticNotification(ofType: .success)
         case .incomplete:
             backgroundColorView.backgroundColor = Color.warning
             iconLabel.text = Icon.warning
             ticketStatusLabel.text = Localization.TicketStatusViewController.IncompleteInformation
+            appCoordinator?.performHapticNotification(ofType: .warning)
         case .error:
             if redemptionResponse.errorReason == .alreadyRedeemed {
                 backgroundColorView.backgroundColor = Color.warning
                 iconLabel.text = Icon.warning
                 ticketStatusLabel.text = Localization.TicketStatusViewController.TicketAlreadyRedeemed
+                appCoordinator?.performHapticNotification(ofType: .warning)
             } else {
                 backgroundColorView.backgroundColor = Color.error
                 iconLabel.text = Icon.error
                 ticketStatusLabel.text = Localization.TicketStatusViewController.InvalidTicket
                 productNameLabel.text = redemptionResponse.errorReason.map { $0.rawValue }
+                appCoordinator?.performHapticNotification(ofType: .error)
             }
 
         }
