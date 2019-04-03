@@ -93,11 +93,13 @@ extension ValidateTicketViewController: AppCoordinator {
     }
 
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
+        showLoadingIndicator(over: view)
         configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { (redemptionResponse, error) in
             self.presentErrorAlert(ifError: error)
             guard let response = redemptionResponse else { return }
 
             DispatchQueue.main.async {
+                self.hideLoadingIndicator()
                 self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: response)
             }
         }
