@@ -177,7 +177,7 @@
         <scene sceneID="Yt1-Uo-1IR">
             <objects>
                 <viewController id="Urx-Wb-p9O" customClass="ConnectDeviceViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Mig-Hm-qZu">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" id="Mig-Hm-qZu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -191,8 +191,8 @@
                                 <rect key="frame" x="0.0" y="603" width="375" height="64"/>
                                 <items/>
                             </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="\" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
-                                <rect key="frame" x="20" y="623" width="335" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
+                                <rect key="frame" x="16" y="623" width="343" height="18"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -201,9 +201,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="obh-43-p8F" secondAttribute="trailing" id="3fc-ix-6T0"/>
-                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leading" constant="20" id="7MQ-n5-6XY"/>
+                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leadingMargin" id="7MQ-n5-6XY"/>
                             <constraint firstAttribute="trailing" secondItem="WnZ-Ib-s5z" secondAttribute="trailing" id="Edj-op-c3j"/>
-                            <constraint firstAttribute="trailing" secondItem="IJo-PF-JTu" secondAttribute="trailing" constant="20" id="O2b-lb-9Gi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="IJo-PF-JTu" secondAttribute="trailing" id="O2b-lb-9Gi"/>
                             <constraint firstItem="obh-43-p8F" firstAttribute="top" secondItem="Mig-Hm-qZu" secondAttribute="top" id="R8k-1n-zCx"/>
                             <constraint firstItem="WnZ-Ib-s5z" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leading" id="btD-4g-7QM"/>
                             <constraint firstItem="Hge-Pf-JNf" firstAttribute="bottom" secondItem="IJo-PF-JTu" secondAttribute="bottom" constant="26" id="hug-Gv-4F1"/>
@@ -235,7 +235,7 @@
         <scene sceneID="jmf-Um-Ek2">
             <objects>
                 <tableViewController id="U9m-zl-Ego" customClass="SelectEventTableViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tLe-gq-Xwl">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tLe-gq-Xwl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -243,7 +243,7 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectEventTableViewControllerCell" textLabel="hw5-UO-NCl" detailTextLabel="tfs-lP-aOu" style="IBUITableViewCellStyleValue1" id="a8D-uM-ApR">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a8D-uM-ApR" id="bv6-it-S0R">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a8D-uM-ApR" id="bv6-it-S0R">
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -287,7 +287,7 @@
         <scene sceneID="03P-2q-POD">
             <objects>
                 <tableViewController id="LEl-FM-wwk" customClass="SelectCheckInListTableViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="bIU-3P-oTA">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="bIU-3P-oTA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -295,7 +295,7 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="SelectCheckInListTableViewControllerCell" textLabel="ubh-pK-6TC" style="IBUITableViewCellStyleDefault" id="EHr-QF-GEf">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EHr-QF-GEf" id="G2D-OZ-FWy">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EHr-QF-GEf" id="G2D-OZ-FWy">
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -331,36 +331,36 @@
         <scene sceneID="zBj-in-czS">
             <objects>
                 <viewController id="scQ-Rp-23B" customClass="SetupFinishedViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fjx-9L-lXe">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="fjx-9L-lXe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sy-ib-gvc">
-                                <rect key="frame" x="20" y="136" width="335" height="18"/>
+                                <rect key="frame" x="16" y="136" width="343" height="18"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9uQ-lp-XUw">
-                                <rect key="frame" x="20" y="174" width="335" height="347"/>
+                                <rect key="frame" x="16" y="174" width="343" height="347"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check-In List" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YNE-8y-Z73">
-                                        <rect key="frame" x="20" y="273.5" width="295" height="33.5"/>
+                                        <rect key="frame" x="20" y="273.5" width="303" height="33.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3z-Xw-PIk">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="253.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="253.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EW6-d9-gTY">
-                                                <rect key="frame" x="0.0" y="60" width="335" height="80"/>
+                                                <rect key="frame" x="0.0" y="60" width="343" height="80"/>
                                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="80"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H0-rB-JlM">
-                                                <rect key="frame" x="20" y="200" width="295" height="33.5"/>
+                                                <rect key="frame" x="20" y="200" width="303" height="33.5"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -390,7 +390,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enC-LR-18x" customClass="PrimaryButton" customModule="PretixScan" customModuleProvider="target">
-                                <rect key="frame" x="20" y="541" width="335" height="30"/>
+                                <rect key="frame" x="16" y="541" width="343" height="30"/>
                                 <state key="normal" title="Dismiss button"/>
                                 <connections>
                                     <action selector="dismiss:" destination="scQ-Rp-23B" eventType="touchUpInside" id="Nbx-Fx-aOd"/>
@@ -400,14 +400,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9uQ-lp-XUw" firstAttribute="top" secondItem="6sy-ib-gvc" secondAttribute="bottom" constant="20" id="4AA-PO-08g"/>
-                            <constraint firstItem="0yg-NU-4De" firstAttribute="trailing" secondItem="9uQ-lp-XUw" secondAttribute="trailing" constant="20" id="5na-J1-P37"/>
-                            <constraint firstItem="9uQ-lp-XUw" firstAttribute="leading" secondItem="0yg-NU-4De" secondAttribute="leading" constant="20" id="AZ9-pO-r5d"/>
-                            <constraint firstItem="6sy-ib-gvc" firstAttribute="leading" secondItem="0yg-NU-4De" secondAttribute="leading" constant="20" id="JSs-dL-Yaj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9uQ-lp-XUw" secondAttribute="trailing" id="5na-J1-P37"/>
+                            <constraint firstItem="9uQ-lp-XUw" firstAttribute="leading" secondItem="fjx-9L-lXe" secondAttribute="leadingMargin" id="AZ9-pO-r5d"/>
+                            <constraint firstItem="6sy-ib-gvc" firstAttribute="leading" secondItem="fjx-9L-lXe" secondAttribute="leadingMargin" id="JSs-dL-Yaj"/>
                             <constraint firstItem="6sy-ib-gvc" firstAttribute="top" secondItem="0yg-NU-4De" secondAttribute="top" constant="20" id="Y2a-Fe-Z6Q"/>
-                            <constraint firstItem="0yg-NU-4De" firstAttribute="trailing" secondItem="enC-LR-18x" secondAttribute="trailing" constant="20" id="kdr-HE-knU"/>
-                            <constraint firstItem="enC-LR-18x" firstAttribute="leading" secondItem="0yg-NU-4De" secondAttribute="leading" constant="20" id="kza-qP-ObL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="enC-LR-18x" secondAttribute="trailing" id="kdr-HE-knU"/>
+                            <constraint firstItem="enC-LR-18x" firstAttribute="leading" secondItem="fjx-9L-lXe" secondAttribute="leadingMargin" id="kza-qP-ObL"/>
                             <constraint firstItem="enC-LR-18x" firstAttribute="top" secondItem="9uQ-lp-XUw" secondAttribute="bottom" constant="20" id="pEQ-tw-jmy"/>
-                            <constraint firstItem="0yg-NU-4De" firstAttribute="trailing" secondItem="6sy-ib-gvc" secondAttribute="trailing" constant="20" id="ysI-vR-lyI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6sy-ib-gvc" secondAttribute="trailing" id="ysI-vR-lyI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0yg-NU-4De"/>
                     </view>
@@ -429,24 +429,24 @@
         <scene sceneID="FeZ-Zp-g9G">
             <objects>
                 <viewController storyboardIdentifier="WelcomeViewController" id="UR2-m6-Blb" customClass="WelcomeViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ioB-Ts-w66">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="ioB-Ts-w66">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
-                                <rect key="frame" x="20" y="136" width="335" height="175.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
+                                <rect key="frame" x="16" y="136" width="343" height="175.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeI-ky-AEf">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kFQ-ir-nAp" customClass="GroupContainerView" customModule="PretixScan" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="40.5" width="335" height="71"/>
+                                        <rect key="frame" x="0.0" y="40.5" width="343" height="71"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Checkmark Details" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKq-ou-VNF">
-                                                <rect key="frame" x="89" y="20" width="226" height="31"/>
+                                                <rect key="frame" x="89" y="20" width="234" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -469,7 +469,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fh9-PP-IPs" customClass="PrimaryButton" customModule="PretixScan" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="131.5" width="335" height="44"/>
+                                        <rect key="frame" x="0.0" y="131.5" width="343" height="44"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
@@ -481,9 +481,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="qjF-Rf-4hM" firstAttribute="trailing" secondItem="mnu-KG-Ycf" secondAttribute="trailing" constant="20" id="4YK-bH-6Ub"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mnu-KG-Ycf" secondAttribute="trailing" id="4YK-bH-6Ub"/>
                             <constraint firstItem="qjF-Rf-4hM" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mnu-KG-Ycf" secondAttribute="bottom" constant="20" id="Cwu-gJ-z9k"/>
-                            <constraint firstItem="mnu-KG-Ycf" firstAttribute="leading" secondItem="qjF-Rf-4hM" secondAttribute="leading" constant="20" id="NVc-sZ-ujf"/>
+                            <constraint firstItem="mnu-KG-Ycf" firstAttribute="leading" secondItem="ioB-Ts-w66" secondAttribute="leadingMargin" id="NVc-sZ-ujf"/>
                             <constraint firstItem="mnu-KG-Ycf" firstAttribute="top" secondItem="qjF-Rf-4hM" secondAttribute="top" constant="20" id="bNu-Vw-OEV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qjF-Rf-4hM"/>
@@ -632,7 +632,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="244.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7VR-eu-Kjv">
+                                        <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7VR-eu-Kjv">
                                             <rect key="frame" x="16" y="19" width="335" height="37.5"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="T-Shirt" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bjf-de-jlQ">
@@ -649,7 +649,7 @@
                                                 </label>
                                             </subviews>
                                         </stackView>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HYf-nq-fgd">
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HYf-nq-fgd">
                                             <rect key="frame" x="16" y="64.5" width="359" height="180"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -659,7 +659,7 @@
                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="itemVariantCell" id="Ak7-42-dkG" customClass="ItemVariationTableViewCell" customModule="PretixScan" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="28" width="359" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ak7-42-dkG" id="WRY-Fp-aY7">
+                                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ak7-42-dkG" id="WRY-Fp-aY7">
                                                         <rect key="frame" x="0.0" y="0.0" width="359" height="43.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
@@ -793,7 +793,7 @@
         <scene sceneID="dFS-J1-nEb">
             <objects>
                 <tableViewController storyboardIdentifier="searchResults" id="9AG-Z6-LZr" customClass="SearchResultsTableViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Dbr-W0-Vbx">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Dbr-W0-Vbx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -801,7 +801,7 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchOrderPositionsTableViewControllerCell" rowHeight="102" id="Spx-SC-bqV" customClass="SearchResultTableViewCell" customModule="PretixScan" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="102"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Spx-SC-bqV" id="zhg-s6-3Pb">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Spx-SC-bqV" id="zhg-s6-3Pb">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="101.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -861,8 +861,8 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="VLb-ZX-faA" secondAttribute="bottom" constant="20" id="9s7-8Y-eM2"/>
-                                        <constraint firstAttribute="trailing" secondItem="ViU-wb-I4p" secondAttribute="trailing" id="fht-ZP-uXm"/>
-                                        <constraint firstItem="VLb-ZX-faA" firstAttribute="leading" secondItem="zhg-s6-3Pb" secondAttribute="leading" constant="20" id="fxG-YQ-zdA"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ViU-wb-I4p" secondAttribute="trailing" constant="-16" id="fht-ZP-uXm"/>
+                                        <constraint firstItem="VLb-ZX-faA" firstAttribute="leading" secondItem="zhg-s6-3Pb" secondAttribute="leadingMargin" constant="4" id="fxG-YQ-zdA"/>
                                         <constraint firstItem="ViU-wb-I4p" firstAttribute="leading" secondItem="VLb-ZX-faA" secondAttribute="trailing" constant="20" id="nQE-Z3-DfV"/>
                                         <constraint firstItem="ViU-wb-I4p" firstAttribute="top" secondItem="zhg-s6-3Pb" secondAttribute="top" id="ooS-TC-ONr"/>
                                         <constraint firstAttribute="bottom" secondItem="ViU-wb-I4p" secondAttribute="bottom" id="uAd-bf-dCc"/>
@@ -921,6 +921,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="d7E-2l-7Qd"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yvd-8p-4X3" userLabel="First Responder" sceneMemberID="firstResponder"/>
