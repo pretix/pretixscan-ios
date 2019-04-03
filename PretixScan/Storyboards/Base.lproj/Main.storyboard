@@ -192,7 +192,7 @@
                                 <items/>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
-                                <rect key="frame" x="20" y="623" width="335" height="18"/>
+                                <rect key="frame" x="16" y="623" width="343" height="18"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -201,9 +201,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="obh-43-p8F" secondAttribute="trailing" id="3fc-ix-6T0"/>
-                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leadingMargin" constant="4" id="7MQ-n5-6XY"/>
+                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leadingMargin" id="7MQ-n5-6XY"/>
                             <constraint firstAttribute="trailing" secondItem="WnZ-Ib-s5z" secondAttribute="trailing" id="Edj-op-c3j"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="IJo-PF-JTu" secondAttribute="trailing" constant="4" id="O2b-lb-9Gi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="IJo-PF-JTu" secondAttribute="trailing" id="O2b-lb-9Gi"/>
                             <constraint firstItem="obh-43-p8F" firstAttribute="top" secondItem="Mig-Hm-qZu" secondAttribute="top" id="R8k-1n-zCx"/>
                             <constraint firstItem="WnZ-Ib-s5z" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leading" id="btD-4g-7QM"/>
                             <constraint firstItem="Hge-Pf-JNf" firstAttribute="bottom" secondItem="IJo-PF-JTu" secondAttribute="bottom" constant="26" id="hug-Gv-4F1"/>
@@ -331,36 +331,36 @@
         <scene sceneID="zBj-in-czS">
             <objects>
                 <viewController id="scQ-Rp-23B" customClass="SetupFinishedViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fjx-9L-lXe">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="fjx-9L-lXe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6sy-ib-gvc">
-                                <rect key="frame" x="20" y="136" width="335" height="18"/>
+                                <rect key="frame" x="16" y="136" width="343" height="18"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9uQ-lp-XUw">
-                                <rect key="frame" x="20" y="174" width="335" height="347"/>
+                                <rect key="frame" x="16" y="174" width="343" height="347"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check-In List" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YNE-8y-Z73">
-                                        <rect key="frame" x="20" y="273.5" width="295" height="33.5"/>
+                                        <rect key="frame" x="20" y="273.5" width="303" height="33.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3z-Xw-PIk">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="253.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="253.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EW6-d9-gTY">
-                                                <rect key="frame" x="0.0" y="60" width="335" height="80"/>
+                                                <rect key="frame" x="0.0" y="60" width="343" height="80"/>
                                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="80"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H0-rB-JlM">
-                                                <rect key="frame" x="20" y="200" width="295" height="33.5"/>
+                                                <rect key="frame" x="20" y="200" width="303" height="33.5"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -390,7 +390,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enC-LR-18x" customClass="PrimaryButton" customModule="PretixScan" customModuleProvider="target">
-                                <rect key="frame" x="20" y="541" width="335" height="30"/>
+                                <rect key="frame" x="16" y="541" width="343" height="30"/>
                                 <state key="normal" title="Dismiss button"/>
                                 <connections>
                                     <action selector="dismiss:" destination="scQ-Rp-23B" eventType="touchUpInside" id="Nbx-Fx-aOd"/>
@@ -400,14 +400,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9uQ-lp-XUw" firstAttribute="top" secondItem="6sy-ib-gvc" secondAttribute="bottom" constant="20" id="4AA-PO-08g"/>
-                            <constraint firstItem="0yg-NU-4De" firstAttribute="trailing" secondItem="9uQ-lp-XUw" secondAttribute="trailing" constant="20" id="5na-J1-P37"/>
-                            <constraint firstItem="9uQ-lp-XUw" firstAttribute="leading" secondItem="0yg-NU-4De" secondAttribute="leading" constant="20" id="AZ9-pO-r5d"/>
-                            <constraint firstItem="6sy-ib-gvc" firstAttribute="leading" secondItem="0yg-NU-4De" secondAttribute="leading" constant="20" id="JSs-dL-Yaj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9uQ-lp-XUw" secondAttribute="trailing" id="5na-J1-P37"/>
+                            <constraint firstItem="9uQ-lp-XUw" firstAttribute="leading" secondItem="fjx-9L-lXe" secondAttribute="leadingMargin" id="AZ9-pO-r5d"/>
+                            <constraint firstItem="6sy-ib-gvc" firstAttribute="leading" secondItem="fjx-9L-lXe" secondAttribute="leadingMargin" id="JSs-dL-Yaj"/>
                             <constraint firstItem="6sy-ib-gvc" firstAttribute="top" secondItem="0yg-NU-4De" secondAttribute="top" constant="20" id="Y2a-Fe-Z6Q"/>
-                            <constraint firstItem="0yg-NU-4De" firstAttribute="trailing" secondItem="enC-LR-18x" secondAttribute="trailing" constant="20" id="kdr-HE-knU"/>
-                            <constraint firstItem="enC-LR-18x" firstAttribute="leading" secondItem="0yg-NU-4De" secondAttribute="leading" constant="20" id="kza-qP-ObL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="enC-LR-18x" secondAttribute="trailing" id="kdr-HE-knU"/>
+                            <constraint firstItem="enC-LR-18x" firstAttribute="leading" secondItem="fjx-9L-lXe" secondAttribute="leadingMargin" id="kza-qP-ObL"/>
                             <constraint firstItem="enC-LR-18x" firstAttribute="top" secondItem="9uQ-lp-XUw" secondAttribute="bottom" constant="20" id="pEQ-tw-jmy"/>
-                            <constraint firstItem="0yg-NU-4De" firstAttribute="trailing" secondItem="6sy-ib-gvc" secondAttribute="trailing" constant="20" id="ysI-vR-lyI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6sy-ib-gvc" secondAttribute="trailing" id="ysI-vR-lyI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0yg-NU-4De"/>
                     </view>
@@ -434,19 +434,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
-                                <rect key="frame" x="20" y="136" width="335" height="175.5"/>
+                                <rect key="frame" x="16" y="136" width="343" height="175.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeI-ky-AEf">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kFQ-ir-nAp" customClass="GroupContainerView" customModule="PretixScan" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="40.5" width="335" height="71"/>
+                                        <rect key="frame" x="0.0" y="40.5" width="343" height="71"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Checkmark Details" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YKq-ou-VNF">
-                                                <rect key="frame" x="89" y="20" width="226" height="31"/>
+                                                <rect key="frame" x="89" y="20" width="234" height="31"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -469,7 +469,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fh9-PP-IPs" customClass="PrimaryButton" customModule="PretixScan" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="131.5" width="335" height="44"/>
+                                        <rect key="frame" x="0.0" y="131.5" width="343" height="44"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
@@ -481,9 +481,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="mnu-KG-Ycf" secondAttribute="trailing" constant="4" id="4YK-bH-6Ub"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mnu-KG-Ycf" secondAttribute="trailing" id="4YK-bH-6Ub"/>
                             <constraint firstItem="qjF-Rf-4hM" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mnu-KG-Ycf" secondAttribute="bottom" constant="20" id="Cwu-gJ-z9k"/>
-                            <constraint firstItem="mnu-KG-Ycf" firstAttribute="leading" secondItem="ioB-Ts-w66" secondAttribute="leadingMargin" constant="4" id="NVc-sZ-ujf"/>
+                            <constraint firstItem="mnu-KG-Ycf" firstAttribute="leading" secondItem="ioB-Ts-w66" secondAttribute="leadingMargin" id="NVc-sZ-ujf"/>
                             <constraint firstItem="mnu-KG-Ycf" firstAttribute="top" secondItem="qjF-Rf-4hM" secondAttribute="top" constant="20" id="bNu-Vw-OEV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qjF-Rf-4hM"/>
