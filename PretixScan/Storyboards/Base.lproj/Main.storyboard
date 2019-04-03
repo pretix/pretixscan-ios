@@ -177,7 +177,7 @@
         <scene sceneID="Yt1-Uo-1IR">
             <objects>
                 <viewController id="Urx-Wb-p9O" customClass="ConnectDeviceViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Mig-Hm-qZu">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" id="Mig-Hm-qZu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -191,7 +191,7 @@
                                 <rect key="frame" x="0.0" y="603" width="375" height="64"/>
                                 <items/>
                             </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="\" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IJo-PF-JTu">
                                 <rect key="frame" x="20" y="623" width="335" height="18"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
@@ -201,9 +201,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="obh-43-p8F" secondAttribute="trailing" id="3fc-ix-6T0"/>
-                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leading" constant="20" id="7MQ-n5-6XY"/>
+                            <constraint firstItem="IJo-PF-JTu" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leadingMargin" constant="4" id="7MQ-n5-6XY"/>
                             <constraint firstAttribute="trailing" secondItem="WnZ-Ib-s5z" secondAttribute="trailing" id="Edj-op-c3j"/>
-                            <constraint firstAttribute="trailing" secondItem="IJo-PF-JTu" secondAttribute="trailing" constant="20" id="O2b-lb-9Gi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="IJo-PF-JTu" secondAttribute="trailing" constant="4" id="O2b-lb-9Gi"/>
                             <constraint firstItem="obh-43-p8F" firstAttribute="top" secondItem="Mig-Hm-qZu" secondAttribute="top" id="R8k-1n-zCx"/>
                             <constraint firstItem="WnZ-Ib-s5z" firstAttribute="leading" secondItem="Mig-Hm-qZu" secondAttribute="leading" id="btD-4g-7QM"/>
                             <constraint firstItem="Hge-Pf-JNf" firstAttribute="bottom" secondItem="IJo-PF-JTu" secondAttribute="bottom" constant="26" id="hug-Gv-4F1"/>
@@ -429,11 +429,11 @@
         <scene sceneID="FeZ-Zp-g9G">
             <objects>
                 <viewController storyboardIdentifier="WelcomeViewController" id="UR2-m6-Blb" customClass="WelcomeViewController" customModule="PretixScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ioB-Ts-w66">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="ioB-Ts-w66">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
+                            <stackView opaque="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mnu-KG-Ycf">
                                 <rect key="frame" x="20" y="136" width="335" height="175.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeI-ky-AEf">
@@ -481,9 +481,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="qjF-Rf-4hM" firstAttribute="trailing" secondItem="mnu-KG-Ycf" secondAttribute="trailing" constant="20" id="4YK-bH-6Ub"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mnu-KG-Ycf" secondAttribute="trailing" constant="4" id="4YK-bH-6Ub"/>
                             <constraint firstItem="qjF-Rf-4hM" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mnu-KG-Ycf" secondAttribute="bottom" constant="20" id="Cwu-gJ-z9k"/>
-                            <constraint firstItem="mnu-KG-Ycf" firstAttribute="leading" secondItem="qjF-Rf-4hM" secondAttribute="leading" constant="20" id="NVc-sZ-ujf"/>
+                            <constraint firstItem="mnu-KG-Ycf" firstAttribute="leading" secondItem="ioB-Ts-w66" secondAttribute="leadingMargin" constant="4" id="NVc-sZ-ujf"/>
                             <constraint firstItem="mnu-KG-Ycf" firstAttribute="top" secondItem="qjF-Rf-4hM" secondAttribute="top" constant="20" id="bNu-Vw-OEV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qjF-Rf-4hM"/>
