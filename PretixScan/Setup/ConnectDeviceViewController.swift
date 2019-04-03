@@ -65,12 +65,15 @@ class ConnectDeviceViewController: UIViewController, Configurable, SetupScannerV
             softwareVersion: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
         )
 
+        showLoadingIndicator(over: view)
+
         configStore.apiBaseURL = url
         configStore.apiClient?.initialize(deviceInitializatioRequest) { error in
             self.presentErrorAlert(ifError: error)
 
             // API Client is correctly initialized
             DispatchQueue.main.async {
+                self.hideLoadingIndicator()
                 (self.navigationController as? ConfiguredNavigationController)?.configStore = self.configStore
                 self.performSegue(withIdentifier: Segue.presentSelectEventTableViewController, sender: self)
             }
