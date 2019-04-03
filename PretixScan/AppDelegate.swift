@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
         ) -> Bool {
 
-        configStore = InMemoryConfigStore()
+        configStore = DefaultsConfigStore(defaults: UserDefaults.standard)
 
         return true
     }
