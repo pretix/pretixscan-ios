@@ -88,12 +88,14 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
 
     private func startScanning() {
+        guard AVCaptureDevice.default(for: .video) != nil else { return }
         if captureSession?.isRunning == false {
             captureSession.startRunning()
         }
     }
 
     private func stopScanning() {
+        guard AVCaptureDevice.default(for: .video) != nil else { return }
         if captureSession?.isRunning == true {
             captureSession.stopRunning()
         }
