@@ -55,11 +55,14 @@
                                 </segue>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Status" id="s7g-wb-P9R">
-                            <connections>
-                                <segue destination="KZp-jt-kVc" kind="show" id="VLT-jO-N3a"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="" id="zBM-02-1lR" customClass="FontAwesomeBarButtonItem" customModule="PretixScan" customModuleProvider="target"/>
+                            <barButtonItem title="Status" id="s7g-wb-P9R">
+                                <connections>
+                                    <segue destination="KZp-jt-kVc" kind="show" id="VLT-jO-N3a"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="eventButton" destination="cOt-oc-Yuk" id="UwT-QF-X0X"/>

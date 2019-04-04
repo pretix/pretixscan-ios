@@ -34,6 +34,7 @@
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */; };
+		DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -128,6 +129,7 @@
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
+		DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontAwesomeBarButtonItem.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				DC227F262253A58400314448 /* GroupContainerView.swift */,
 				DC227F2422539BF000314448 /* PrimaryButton.swift */,
 				DC227F292253E0AE00314448 /* LoadingIndicator.swift */,
+				DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */,
 			);
 			path = "UIView Subclasses";
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
 				DCDD82C7224A839800DC0200 /* BottomCardSegue.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
+				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
