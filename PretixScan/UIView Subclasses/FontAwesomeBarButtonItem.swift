@@ -21,7 +21,7 @@ class FontAwesomeBarButtonItem: UIBarButtonItem {
 
     private func setup() {
         let fontAwesome = "FontAwesome5Free-Solid"
-        let controlStates: [UIControl.State] = [.normal, .highlighted, .disabled, .selected, .focused]
+        let controlStates: [UIControl.State] = [.normal, .highlighted, .disabled, .focused]
         for state in controlStates {
             setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: fontAwesome, size: 17)!], for: state)
         }
