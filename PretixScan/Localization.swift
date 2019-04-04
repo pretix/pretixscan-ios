@@ -75,4 +75,13 @@ struct Localization {
         static let CheckInCountTitle = NSLocalizedString("Already Scanned", comment: "")
         static let PositionCountTitle = NSLocalizedString("Total Tickets Sold", comment: "")
     }
+
+    struct SettingsTableViewController {
+        static let Title = NSLocalizedString("Settings", comment: "")
+        static let Version = NSLocalizedString("App Version", comment: "")
+        static let Reset = NSLocalizedString("Reset Contents and Settings", comment: "")
+        static let SyncMode = NSLocalizedString("Sync Mode", comment: "")
+        static let SyncModeOnline = NSLocalizedString("Online", comment: "")
+        static let SyncModeOffline = NSLocalizedString("Offline", comment: "")
+    }
 }

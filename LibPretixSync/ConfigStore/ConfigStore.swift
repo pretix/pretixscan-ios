@@ -42,6 +42,9 @@ public protocol ConfigStore {
 
     /// The CheckInList to scan against
     var checkInList: CheckInList? { get set }
+
+    /// If `true`, the app will use a local cache to redeem tickets. Will access the internet each time otherwise.
+    var asyncModeEnabled: Bool { get set }
 }
 
 extension ConfigStore {

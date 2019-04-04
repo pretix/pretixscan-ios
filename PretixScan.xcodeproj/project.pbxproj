@@ -34,6 +34,8 @@
 		DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */; };
 		DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA4A223FCFF200ED7713 /* CheckInList.swift */; };
 		DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */; };
+		DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */; };
+		DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -128,6 +130,8 @@
 		DC23BA4A223FCFF200ED7713 /* CheckInList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInList.swift; sourceTree = "<group>"; };
 		DC23BA4C223FD28700ED7713 /* CheckinListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinListTests.swift; sourceTree = "<group>"; };
 		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
+		DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontAwesomeBarButtonItem.swift; sourceTree = "<group>"; };
+		DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 				DC227F1F22536AFE00314448 /* Ticket Scanning */,
 				DC1D6FC4224258A4008A9E06 /* Search */,
 				DCDD82DB224BCBEB00DC0200 /* CheckIn Status */,
+				DC2F49FE2256669100710EFA /* Settings */,
 				DC227F282253A58E00314448 /* UIView Subclasses */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
 				DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */,
@@ -300,8 +305,17 @@
 				DC227F262253A58400314448 /* GroupContainerView.swift */,
 				DC227F2422539BF000314448 /* PrimaryButton.swift */,
 				DC227F292253E0AE00314448 /* LoadingIndicator.swift */,
+				DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */,
 			);
 			path = "UIView Subclasses";
+			sourceTree = "<group>";
+		};
+		DC2F49FE2256669100710EFA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
@@ -556,6 +570,7 @@
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
+				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
@@ -578,6 +593,7 @@
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
 				DCDD82C7224A839800DC0200 /* BottomCardSegue.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
+				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,

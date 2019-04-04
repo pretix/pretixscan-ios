@@ -39,6 +39,7 @@ public class InMemoryConfigStore: ConfigStore {
         }
     }
     public var checkInList: CheckInList? { didSet { valueChanged() } }
+    public var asyncModeEnabled: Bool = false { didSet { valueChanged() } }
 
     // MARK: - Debugging
     public var debug: Bool = false {

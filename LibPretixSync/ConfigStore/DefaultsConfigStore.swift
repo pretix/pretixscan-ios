@@ -27,6 +27,7 @@ class DefaultsConfigStore: ConfigStore {
         case deviceUniqueSerial
         case event
         case checkInList
+        case asyncModeEnabled
     }
 
     public var welcomeScreenIsConfirmed: Bool {
@@ -124,6 +125,16 @@ class DefaultsConfigStore: ConfigStore {
         }
     }
 
+    public var asyncModeEnabled: Bool {
+        get {
+            return _asyncModeEnabled
+        }
+        set {
+            _asyncModeEnabled = newValue
+            valueChanged()
+        }
+    }
+
     private var _welcomeScreenIsConfirmed: Bool = false
     private var _apiBaseURL: URL?
     private var _apiToken: String?
@@ -134,6 +145,7 @@ class DefaultsConfigStore: ConfigStore {
     private var _deviceUniqueSerial: String?
     private var _event: Event?
     private var _checkInList: CheckInList?
+    private var _asyncModeEnabled: Bool = false
 
     private let jsonEncoder: JSONEncoder = {
         let jsonEncoder = JSONEncoder()
@@ -165,6 +177,7 @@ class DefaultsConfigStore: ConfigStore {
         _organizerSlug = defaults.string(forKey: key(.organizerSlug))
         _deviceID = defaults.integer(forKey: key(.deviceID))
         _deviceUniqueSerial = defaults.string(forKey: key(.deviceUniqueSerial))
+        _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))
 
         // Event
         if let eventData = defaults.data(forKey: key(.event)) {
@@ -187,6 +200,7 @@ class DefaultsConfigStore: ConfigStore {
         defaults.set(_organizerSlug, forKey: key(.organizerSlug))
         defaults.set(_deviceID, forKey: key(.deviceID))
         defaults.set(_deviceUniqueSerial, forKey: key(.deviceUniqueSerial))
+        defaults.set(_asyncModeEnabled, forKey: key(.asyncModeEnabled))
 
         // Event
         if let eventData = try? jsonEncoder.encode(_event) {
