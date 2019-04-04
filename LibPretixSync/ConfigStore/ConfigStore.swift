@@ -51,3 +51,12 @@ extension ConfigStore {
     /// Notification that should be fired whenever a ConfigStore value changes
     var changedNotification: Notification.Name { return Notification.Name("ConfigStoreChanged") }
 }
+
+/// Value Keys to be used for notifications
+public enum ConfigStoreValue: String {
+    case apiToken
+    case organizerSlug
+    case event
+    case checkInList
+    case asyncModeEnabled
+}

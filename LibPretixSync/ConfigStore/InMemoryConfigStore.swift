@@ -17,7 +17,7 @@ public class InMemoryConfigStore: ConfigStore {
 
     // MARK: - API Configuration
     public var apiBaseURL: URL? { didSet { valueChanged() } }
-    public var apiToken: String? { didSet { valueChanged() } }
+    public var apiToken: String? { didSet { valueChanged(.apiToken) } }
     public var apiClient: APIClient? {
         storedAPIClient = storedAPIClient ?? APIClient(configStore: self)
         return storedAPIClient
@@ -26,7 +26,7 @@ public class InMemoryConfigStore: ConfigStore {
 
     // MARK: - Device
     public var deviceName: String? { didSet { valueChanged() } }
-    public var organizerSlug: String? { didSet { valueChanged() } }
+    public var organizerSlug: String? { didSet { valueChanged(.organizerSlug) } }
     public var deviceID: Int? { didSet { valueChanged() } }
     public var deviceUniqueSerial: String? { didSet { valueChanged() } }
 
@@ -35,11 +35,11 @@ public class InMemoryConfigStore: ConfigStore {
         didSet {
             // If the event changes, the check in list is invalid
             checkInList = nil
-            valueChanged()
+            valueChanged(.event)
         }
     }
-    public var checkInList: CheckInList? { didSet { valueChanged() } }
-    public var asyncModeEnabled: Bool = false { didSet { valueChanged() } }
+    public var checkInList: CheckInList? { didSet { valueChanged(.checkInList) } }
+    public var asyncModeEnabled: Bool = false { didSet { valueChanged(.asyncModeEnabled) } }
 
     // MARK: - Debugging
     public var debug: Bool = false {
@@ -53,8 +53,8 @@ public class InMemoryConfigStore: ConfigStore {
         }
     }
 
-    private func valueChanged() {
-        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: nil)
+    private func valueChanged(_ value: ConfigStoreValue? = nil) {
+        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
         if debug { print(self) }
     }
 }
