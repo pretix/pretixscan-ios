@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91CCDCAF6BD0E373EC1C6934 /* Pods_PretixScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */; };
 		DC07357A22392474008326F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07357922392474008326F7 /* AppDelegate.swift */; };
 		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
@@ -36,6 +37,8 @@
 		DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */; };
 		DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */; };
 		DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */; };
+		DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A012256722100710EFA /* NotifcationManager.swift */; };
+		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -75,7 +78,6 @@
 		DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
 		DCC00041223BEAF300236424 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00040223BEAF300236424 /* EventTests.swift */; };
 		DCC00042223BEB3B00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
-		DCDD82C7224A839800DC0200 /* BottomCardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */; };
 		DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CA224AB1A400DC0200 /* Icon.swift */; };
 		DCDD82CD224AB25900DC0200 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CC224AB25900DC0200 /* Color.swift */; };
 		DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */; };
@@ -89,6 +91,7 @@
 		DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */; };
 		DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
+		E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +105,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F8337068DC28D5BB74F8AD9 /* Pods-PretixScanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.release.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.release.xcconfig"; sourceTree = "<group>"; };
+		21519C9F8BA4033B8E89C05F /* Pods-PretixScan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScan.debug.xcconfig"; path = "Target Support Files/Pods-PretixScan/Pods-PretixScan.debug.xcconfig"; sourceTree = "<group>"; };
+		BDF1F626BB1093C36D3971D4 /* Pods-PretixScan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScan.release.xcconfig"; path = "Target Support Files/Pods-PretixScan/Pods-PretixScan.release.xcconfig"; sourceTree = "<group>"; };
+		D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.debug.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DC07357622392474008326F7 /* PretixScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PretixScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07357922392474008326F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC07357E22392474008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -132,6 +140,8 @@
 		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
 		DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontAwesomeBarButtonItem.swift; sourceTree = "<group>"; };
 		DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		DC2F4A012256722100710EFA /* NotifcationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationManager.swift; sourceTree = "<group>"; };
+		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -163,7 +173,6 @@
 		DCC0003B223BE31F00236424 /* MultiLingualString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualString.swift; sourceTree = "<group>"; };
 		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
 		DCC00040223BEAF300236424 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
-		DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCardSegue.swift; sourceTree = "<group>"; };
 		DCDD82CA224AB1A400DC0200 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		DCDD82CC224AB25900DC0200 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListStatus.swift; sourceTree = "<group>"; };
@@ -176,6 +185,7 @@
 		DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketScannerViewController.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
+		FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91CCDCAF6BD0E373EC1C6934 /* Pods_PretixScan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,12 +201,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28A432BB3FF806F2EDB1FE73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */,
+				09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A6C5D16AFBC1EE32D87B8211 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				21519C9F8BA4033B8E89C05F /* Pods-PretixScan.debug.xcconfig */,
+				BDF1F626BB1093C36D3971D4 /* Pods-PretixScan.release.xcconfig */,
+				D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */,
+				1F8337068DC28D5BB74F8AD9 /* Pods-PretixScanTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		DC07356D22392474008326F7 = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +236,8 @@
 				DC07357822392474008326F7 /* PretixScan */,
 				DC07358D22392476008326F7 /* PretixScanTests */,
 				DC07357722392474008326F7 /* Products */,
+				A6C5D16AFBC1EE32D87B8211 /* Pods */,
+				28A432BB3FF806F2EDB1FE73 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -233,9 +267,10 @@
 				DC07358522392476008326F7 /* Info.plist */,
 				DCDD82CA224AB1A400DC0200 /* Icon.swift */,
 				DCDD82CC224AB25900DC0200 /* Color.swift */,
-				DCAAFF3722396EC30059C000 /* Segues.swift */,
+				DC2F4A03225781B100710EFA /* Segues */,
 				DCAAFF39223970090059C000 /* Localization.swift */,
 				DCB35B9E2249407300860385 /* Utilities */,
+				DC2F4A012256722100710EFA /* NotifcationManager.swift */,
 			);
 			path = PretixScan;
 			sourceTree = "<group>";
@@ -318,6 +353,15 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		DC2F4A03225781B100710EFA /* Segues */ = {
+			isa = PBXGroup;
+			children = (
+				DCAAFF3722396EC30059C000 /* Segues.swift */,
+				DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */,
+			);
+			path = Segues;
+			sourceTree = "<group>";
+		};
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -361,7 +405,6 @@
 		DCB35B9E2249407300860385 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				DCDD82C6224A839800DC0200 /* BottomCardSegue.swift */,
 				DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */,
 				DCAAFF56223AF14B0059C000 /* UIViewController.swift */,
 				DCB35B9F2249408800860385 /* UIAlertController.swift */,
@@ -411,11 +454,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScan" */;
 			buildPhases = (
+				AE76B1F69530806A3340C94A /* [CP] Check Pods Manifest.lock */,
 				DC07357222392474008326F7 /* Sources */,
 				DCAAFF2D2239342B0059C000 /* Run Linter */,
 				DC07357322392474008326F7 /* Frameworks */,
 				DC07357422392474008326F7 /* Resources */,
 				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
+				1521320A5643DCDD8F3FCE3E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -430,6 +475,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC07359622392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScanTests" */;
 			buildPhases = (
+				7D01100A24E5CD559246DCC9 /* [CP] Check Pods Manifest.lock */,
 				DC07358622392476008326F7 /* Sources */,
 				DC07358722392476008326F7 /* Frameworks */,
 				DC07358822392476008326F7 /* Resources */,
@@ -507,6 +553,72 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1521320A5643DCDD8F3FCE3E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PretixScan/Pods-PretixScan-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PretixScan/Pods-PretixScan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D01100A24E5CD559246DCC9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PretixScanTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AE76B1F69530806A3340C94A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PretixScan-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DCAAFF2C2239323B0059C000 /* Generate Documentation */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -579,6 +691,7 @@
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
 				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,
+				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
@@ -591,7 +704,7 @@
 				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
-				DCDD82C7224A839800DC0200 /* BottomCardSegue.swift in Sources */,
+				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
@@ -785,6 +898,7 @@
 		};
 		DC07359422392476008326F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21519C9F8BA4033B8E89C05F /* Pods-PretixScan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -803,6 +917,7 @@
 		};
 		DC07359522392476008326F7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BDF1F626BB1093C36D3971D4 /* Pods-PretixScan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -821,6 +936,7 @@
 		};
 		DC07359722392476008326F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -842,6 +958,7 @@
 		};
 		DC07359822392476008326F7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F8337068DC28D5BB74F8AD9 /* Pods-PretixScanTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

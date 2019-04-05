@@ -78,10 +78,19 @@ struct Localization {
 
     struct SettingsTableViewController {
         static let Title = NSLocalizedString("Settings", comment: "")
+        static let AboutSectionTitle = NSLocalizedString("About this App", comment: "")
+        static let ConfigurationSectionTitle = NSLocalizedString("Configuration", comment: "")
+        static let LicensesSectionTitle = NSLocalizedString("Libraries and Licenses", comment: "")
         static let Version = NSLocalizedString("App Version", comment: "")
         static let Reset = NSLocalizedString("Reset Contents and Settings", comment: "")
         static let SyncMode = NSLocalizedString("Sync Mode", comment: "")
         static let SyncModeOnline = NSLocalizedString("Online", comment: "")
         static let SyncModeOffline = NSLocalizedString("Offline", comment: "")
+        static let MITLicense = NSLocalizedString("MIT License", comment: "")
+    }
+
+    struct NotificationManager {
+        static let SyncModeOnline = NSLocalizedString("Sync Mode Switched to Online", comment: "")
+        static let SyncModeOffline = NSLocalizedString("Sync Mode Switched to Offline", comment: "")
     }
 }

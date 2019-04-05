@@ -56,7 +56,7 @@ class DefaultsConfigStore: ConfigStore {
         }
         set {
             _apiToken = newValue
-            valueChanged()
+            valueChanged(.apiToken)
         }
     }
 
@@ -81,7 +81,7 @@ class DefaultsConfigStore: ConfigStore {
         }
         set {
             _organizerSlug = newValue
-            valueChanged()
+            valueChanged(.organizerSlug)
         }
     }
 
@@ -111,7 +111,7 @@ class DefaultsConfigStore: ConfigStore {
         }
         set {
             _event = newValue
-            valueChanged()
+            valueChanged(.event)
         }
     }
 
@@ -121,7 +121,7 @@ class DefaultsConfigStore: ConfigStore {
         }
         set {
             _checkInList = newValue
-            valueChanged()
+            valueChanged(.checkInList)
         }
     }
 
@@ -131,7 +131,7 @@ class DefaultsConfigStore: ConfigStore {
         }
         set {
             _asyncModeEnabled = newValue
-            valueChanged()
+            valueChanged(.asyncModeEnabled)
         }
     }
 
@@ -164,8 +164,8 @@ class DefaultsConfigStore: ConfigStore {
         loadFromDefaults()
     }
 
-    private func valueChanged() {
-        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: nil)
+    private func valueChanged(_ value: ConfigStoreValue? = nil) {
+        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
         saveToDefaults()
     }
 
