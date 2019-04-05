@@ -21,31 +21,22 @@ class NotificationManager {
     @objc
     func configStoreChanged(_ notification: Notification) {
         if let value = notification.userInfo?["value"] as? ConfigStoreValue {
-            SwiftMessages.hideAll()
-            SwiftMessages.show {
-                let view = MessageView.viewFromNib(layout: .statusLine)
-                view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
-                view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
-                switch value {
-                case .apiToken:
-                    view.configureContent(body: "API Token Received")
-                case .organizerSlug:
-                    view.configureContent(body: "Organizer Saved")
-                case .event:
-                    view.configureContent(body: "Event Set")
-                case .checkInList:
-                    view.configureContent(body: "Check In List Set")
-                case .asyncModeEnabled:
+            if value == .asyncModeEnabled {
+
+                SwiftMessages.hideAll()
+                SwiftMessages.show {
+                    let view = MessageView.viewFromNib(layout: .statusLine)
+                    view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
+                    view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+
                     if self.configStore.asyncModeEnabled {
                         view.configureContent(body: Localization.NotificationManager.SyncModeOffline)
                     } else {
                         view.configureContent(body: Localization.NotificationManager.SyncModeOnline)
                     }
-
+                    return view
                 }
-
-                return view
             }
         }
 
