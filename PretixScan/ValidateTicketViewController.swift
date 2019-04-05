@@ -53,7 +53,7 @@ class ValidateTicketViewController: UIViewController {
         }
 
         if let ticketStatusViewController = segue.destination as? TicketStatusViewController {
-            ticketStatusViewController.redemptionResponse = sender as? RedemptionResponse
+            ticketStatusViewController.configuration = sender as? TicketStatusViewController.Configuration
         }
 
         if let ticketScannerViewController = segue.destination as? TicketScannerViewController {
@@ -93,16 +93,9 @@ extension ValidateTicketViewController: AppCoordinator {
     }
 
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
-        showLoadingIndicator(over: view)
-        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { (redemptionResponse, error) in
-            self.presentErrorAlert(ifError: error)
-            guard let response = redemptionResponse else { return }
-
-            DispatchQueue.main.async {
-                self.hideLoadingIndicator()
-                self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: response)
-            }
-        }
+        let ticketStatusViewControllerConfiguration = TicketStatusViewController.Configuration(
+            secret: secret, force: force, ignoreUnpaid: ignoreUnpaid)
+        self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: ticketStatusViewControllerConfiguration)
     }
 }
 

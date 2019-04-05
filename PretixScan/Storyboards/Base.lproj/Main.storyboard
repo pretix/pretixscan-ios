@@ -87,6 +87,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TVc-eH-wzS">
+                                <rect key="frame" x="140" y="448" width="20" height="20"/>
+                            </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6j9-eu-btb">
                                 <rect key="frame" x="20" y="386" width="260" height="54"/>
                                 <subviews>
@@ -149,8 +152,10 @@
                             <constraint firstItem="6j9-eu-btb" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="bottom" constant="20" id="T02-Fb-oej"/>
                             <constraint firstItem="6j9-eu-btb" firstAttribute="leading" secondItem="wWc-OI-sUy" secondAttribute="leading" constant="20" id="Tk3-ou-jm9"/>
                             <constraint firstItem="hin-1O-uRs" firstAttribute="top" secondItem="wWc-OI-sUy" secondAttribute="top" id="cEe-mY-sBw"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="TVc-eH-wzS" secondAttribute="bottom" constant="32" id="cWc-dk-xdM"/>
                             <constraint firstAttribute="trailing" secondItem="hin-1O-uRs" secondAttribute="trailing" id="dMx-mv-O1g"/>
                             <constraint firstAttribute="bottom" secondItem="6j9-eu-btb" secondAttribute="bottom" constant="60" id="da7-ey-Odz"/>
+                            <constraint firstItem="TVc-eH-wzS" firstAttribute="centerX" secondItem="6j9-eu-btb" secondAttribute="centerX" id="ugz-HD-TAW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RdG-rZ-yD4"/>
                         <connections>
@@ -163,6 +168,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="300" height="500"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="TVc-eH-wzS" id="mkk-PW-kdP"/>
                         <outlet property="attendeeNameLabel" destination="ArE-vk-H54" id="yy8-Bz-nZL"/>
                         <outlet property="backgroundColorView" destination="hin-1O-uRs" id="QiY-LE-qKn"/>
                         <outlet property="iconLabel" destination="8LH-ON-nVd" id="55e-j1-4Q1"/>
