@@ -72,7 +72,7 @@
                         <outlet property="eventButton" destination="cOt-oc-Yuk" id="UwT-QF-X0X"/>
                         <segue destination="S7W-QK-Oc8" kind="presentation" identifier="presentWelcomeViewController" id="GkZ-ev-8dv"/>
                         <segue destination="VRx-cx-5T1" kind="presentation" identifier="presentConnectDeviceViewController" id="N4U-ol-VwL"/>
-                        <segue destination="YdL-xT-kVF" kind="custom" identifier="presentTicketStatusViewController" customClass="BottomCardSegue" customModule="PretixScan" customModuleProvider="target" id="4rb-9a-QOx"/>
+                        <segue destination="YdL-xT-kVF" kind="custom" identifier="presentTicketStatusViewController" customClass="TicketStatusSegue" customModule="PretixScan" customModuleProvider="target" id="4rb-9a-QOx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -178,7 +178,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="860.79999999999995" y="833.88305847076469"/>
+            <point key="canvasLocation" x="1038" y="847"/>
         </scene>
         <!--Connect Device View Controller-->
         <scene sceneID="Yt1-Uo-1IR">
