@@ -16,6 +16,8 @@ class NotificationManager {
         self.configStore = configStore
         NotificationCenter.default.addObserver(self, selector: #selector(configStoreChanged(_:)),
                                                name: configStore.changedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(configStoreReset(_:)),
+                                               name: configStore.resetNotification, object: nil)
     }
 
     @objc
@@ -23,7 +25,6 @@ class NotificationManager {
         if let value = notification.userInfo?["value"] as? ConfigStoreValue {
 
             if value == .asyncModeEnabled {
-
                 SwiftMessages.hideAll()
                 SwiftMessages.show {
                     let view = MessageView.viewFromNib(layout: .statusLine)
@@ -39,6 +40,22 @@ class NotificationManager {
                 }
             }
         }
+    }
 
+    @objc
+    func configStoreReset(_ notification: Notification) {
+        SwiftMessages.hideAll()
+        SwiftMessages.show {
+            let view = MessageView.viewFromNib(layout: .statusLine)
+            view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
+            view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+
+            if self.configStore.asyncModeEnabled {
+                view.configureContent(body: Localization.NotificationManager.SyncModeOffline)
+            } else {
+                view.configureContent(body: Localization.NotificationManager.SyncModeOnline)
+            }
+            return view
+        }
     }
 }
