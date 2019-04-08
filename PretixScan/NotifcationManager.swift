@@ -16,6 +16,8 @@ class NotificationManager {
         self.configStore = configStore
         NotificationCenter.default.addObserver(self, selector: #selector(configStoreChanged(_:)),
                                                name: configStore.changedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(configStoreFactoryReset(_:)),
+                                               name: configStore.resetNotification, object: nil)
     }
 
     @objc
@@ -23,7 +25,6 @@ class NotificationManager {
         if let value = notification.userInfo?["value"] as? ConfigStoreValue {
 
             if value == .asyncModeEnabled {
-
                 SwiftMessages.hideAll()
                 SwiftMessages.show {
                     let view = MessageView.viewFromNib(layout: .statusLine)
@@ -39,6 +40,20 @@ class NotificationManager {
                 }
             }
         }
+    }
 
+    @objc
+    func configStoreFactoryReset(_ notification: Notification) {
+        SwiftMessages.hideAll()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            // we wait for 2 seconds so the application can settle down and reset its UI before we show the alert
+            SwiftMessages.show {
+                let view = MessageView.viewFromNib(layout: .statusLine)
+                view.configureTheme(backgroundColor: Color.warning, foregroundColor: Color.primaryText)
+                view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+                view.configureContent(body: Localization.NotificationManager.Reset)
+                return view
+            }
+        }
     }
 }

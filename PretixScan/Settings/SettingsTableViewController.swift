@@ -27,7 +27,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
         versionCell.textLabel?.text = Localization.SettingsTableViewController.Version
         versionCell.detailTextLabel?.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
 
-        resetContentCell.textLabel?.text = Localization.SettingsTableViewController.Reset
+        resetContentCell.textLabel?.text = Localization.SettingsTableViewController.PerformFactoryReset
 
         offlineModeCell.textLabel?.text = Localization.SettingsTableViewController.SyncMode
         offlineModeCell.detailTextLabel?.text = configStore?.asyncModeEnabled == true ?
@@ -41,13 +41,11 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
         // Offline Mode
         if indexPath == tableView.indexPath(for: offlineModeCell) {
-            if var configStore = configStore {
-                configStore.asyncModeEnabled = !(configStore.asyncModeEnabled)
-                offlineModeCell.detailTextLabel?.text = configStore.asyncModeEnabled ?
-                    Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
-            }
+            toggleOfflineMode()
+        } else if indexPath == tableView.indexPath(for: resetContentCell) {
+            configStoreFactoryReset()
         } else if indexPath == tableView.indexPath(for: swiftMessagesLicenseCell) {
-            UIApplication.shared.open(URL(string: "https://github.com/SwiftKickMobile/SwiftMessages/blob/master/LICENSE.md")!, options: [:])
+            showSwiftMessagesLicense()
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -60,5 +58,31 @@ class SettingsTableViewController: UITableViewController, Configurable {
             Localization.SettingsTableViewController.LicensesSectionTitle
         ]
         return sectionTitles[section]
+    }
+
+    // MARK: - Actions
+    func toggleOfflineMode() {
+        if var configStore = configStore {
+            configStore.asyncModeEnabled = !(configStore.asyncModeEnabled)
+            offlineModeCell.detailTextLabel?.text = configStore.asyncModeEnabled ?
+                Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
+        }
+    }
+
+    func configStoreFactoryReset() {
+        let alert = UIAlertController(
+            title: Localization.SettingsTableViewController.PerformFactoryReset,
+            message: Localization.SettingsTableViewController.FactoryResetConfirmMessage,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.CancelReset, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.ConfirmReset, style: .destructive, handler: { _ in
+            self.configStore?.factoryReset()
+            self.navigationController?.popViewController(animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showSwiftMessagesLicense() {
+        UIApplication.shared.open(URL(string: "https://github.com/SwiftKickMobile/SwiftMessages/blob/master/LICENSE.md")!, options: [:])
     }
 }

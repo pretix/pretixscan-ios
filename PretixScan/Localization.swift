@@ -82,7 +82,10 @@ struct Localization {
         static let ConfigurationSectionTitle = NSLocalizedString("Configuration", comment: "")
         static let LicensesSectionTitle = NSLocalizedString("Libraries and Licenses", comment: "")
         static let Version = NSLocalizedString("App Version", comment: "")
-        static let Reset = NSLocalizedString("Reset Contents and Settings", comment: "")
+        static let PerformFactoryReset = NSLocalizedString("Reset Contents and Settings", comment: "")
+        static let FactoryResetConfirmMessage = NSLocalizedString("This will delete event data from the device and log you out. Do you want to continue?", comment: "")
+        static let CancelReset = NSLocalizedString("Do Nothing", comment: "")
+        static let ConfirmReset = NSLocalizedString("Delete Everything", comment: "")
         static let SyncMode = NSLocalizedString("Sync Mode", comment: "")
         static let SyncModeOnline = NSLocalizedString("Online", comment: "")
         static let SyncModeOffline = NSLocalizedString("Offline", comment: "")
@@ -92,5 +95,6 @@ struct Localization {
     struct NotificationManager {
         static let SyncModeOnline = NSLocalizedString("Sync Mode Switched to Online", comment: "")
         static let SyncModeOffline = NSLocalizedString("Sync Mode Switched to Offline", comment: "")
+        static let Reset = NSLocalizedString("All Contents and Settings were deleted", comment: "")
     }
 }

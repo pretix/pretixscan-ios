@@ -45,11 +45,15 @@ public protocol ConfigStore {
 
     /// If `true`, the app will use a local cache to redeem tickets. Will access the internet each time otherwise.
     var asyncModeEnabled: Bool { get set }
+
+    /// Restore all settings to factory default and start over. Returns the app into the state at first launch.
+    func factoryReset()
 }
 
 extension ConfigStore {
     /// Notification that should be fired whenever a ConfigStore value changes
     var changedNotification: Notification.Name { return Notification.Name("ConfigStoreChanged") }
+    var resetNotification: Notification.Name { return Notification.Name("ConfigStoreFactoryReset") }
 }
 
 /// Value Keys to be used for notifications

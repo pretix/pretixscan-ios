@@ -28,7 +28,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     @IBOutlet private weak var attendeeNameLabel: UILabel!
     @IBOutlet private weak var orderIDLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+
     // MARK: - Updating
     private func update() {
         guard isViewLoaded else { return }

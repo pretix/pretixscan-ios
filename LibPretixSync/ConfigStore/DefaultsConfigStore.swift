@@ -169,6 +169,23 @@ class DefaultsConfigStore: ConfigStore {
         saveToDefaults()
     }
 
+    public func factoryReset() {
+        _welcomeScreenIsConfirmed = false
+        _apiBaseURL = nil
+        _apiToken = nil
+        _apiClient = nil
+        _deviceName = nil
+        _organizerSlug = nil
+        _deviceID = nil
+        _deviceUniqueSerial = nil
+        _event = nil
+        _checkInList = nil
+        _asyncModeEnabled = false
+
+        saveToDefaults()
+        NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
+    }
+
     func loadFromDefaults() {
         _welcomeScreenIsConfirmed = defaults.bool(forKey: key(.welcomeScreenIsConfirmed))
         _apiBaseURL = defaults.url(forKey: key(.apiBaseURL))

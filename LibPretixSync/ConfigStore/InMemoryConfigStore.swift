@@ -41,6 +41,22 @@ public class InMemoryConfigStore: ConfigStore {
     public var checkInList: CheckInList? { didSet { valueChanged(.checkInList) } }
     public var asyncModeEnabled: Bool = false { didSet { valueChanged(.asyncModeEnabled) } }
 
+    public func factoryReset() {
+        welcomeScreenIsConfirmed = false
+        apiBaseURL = nil
+        apiToken = nil
+        storedAPIClient = nil
+        deviceName = nil
+        organizerSlug = nil
+        deviceID = nil
+        deviceUniqueSerial = nil
+        event = nil
+        checkInList = nil
+        asyncModeEnabled = false
+
+        NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
+    }
+
     // MARK: - Debugging
     public var debug: Bool = false {
         didSet {
