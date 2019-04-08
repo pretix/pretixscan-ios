@@ -11,8 +11,12 @@ import UIKit
 
 extension UIAlertController {
     static func errorAlert(with error: Error) -> UIAlertController {
-        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        let alert = UIAlertController(title: Localization.Errors.Error, message: getMessage(for: error), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localization.Errors.Confirm, style: .default, handler: nil))
         return alert
+    }
+
+    static func getMessage(for error: Error) -> String {
+        return error.localizedDescription
     }
 }

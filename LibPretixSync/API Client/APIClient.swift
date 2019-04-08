@@ -223,10 +223,12 @@ public extension APIClient {
                     completionHandler(nil, error)
                     return
                 }
-                if let data = data, let checkInListStatus = try? self.jsonDecoder.decode(CheckInListStatus.self, from: data) {
+
+                do {
+                    let checkInListStatus = try self.jsonDecoder.decode(CheckInListStatus.self, from: data ?? Data())
                     completionHandler(checkInListStatus, nil)
-                } else {
-                    completionHandler(nil, APIError.couldNotParseJSON)
+                } catch let jsonError {
+                    completionHandler (nil, jsonError)
                 }
             }
             task.resume()

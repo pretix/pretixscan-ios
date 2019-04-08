@@ -97,4 +97,9 @@ struct Localization {
         static let SyncModeOffline = NSLocalizedString("Sync Mode Switched to Offline", comment: "")
         static let Reset = NSLocalizedString("All Contents and Settings were deleted", comment: "")
     }
+
+    struct Errors {
+        static let Error = NSLocalizedString("Error", comment: "")
+        static let Confirm = NSLocalizedString("OK", comment: "")
+    }
 }

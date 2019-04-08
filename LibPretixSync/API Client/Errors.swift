@@ -19,5 +19,4 @@ enum APIError: Error {
     case unknownStatusCode(statusCode: Int)
     case couldNotCreateURL
     case couldNotCreateNonce
-    case couldNotParseJSON
 }
