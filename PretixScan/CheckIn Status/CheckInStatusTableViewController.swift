@@ -48,7 +48,7 @@ class CheckInStatusTableViewController: UITableViewController, Configurable {
     @objc private func updateView() {
         isLoading = true
 
-        configStore?.apiClient?.getCheckInListStatus { (checkInListStatus, error) in
+        configStore?.ticketValidator?.getCheckInListStatus { (checkInListStatus, error) in
             self.presentErrorAlert(ifError: error)
             self.checkInListStatus = checkInListStatus
             self.isLoading = false

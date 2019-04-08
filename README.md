@@ -12,13 +12,6 @@
 - subclass and override the found() method
 - set shouldScan to true
 
-----
-Everything above the line is decided and implemented, everything below is a draft.
-
-## AppDelegate
-- initialises ConfigStore
-- initialises TicketValidator
-- initialises DataStore
 
 ## Models
 A collection of enum based models and parsing code to and from JSON
@@ -28,17 +21,29 @@ Holds key-value pairs for configuration. Creates and holds an APIClient per inst
 
 Optional: Notifications when configuration changes
 
-## DataStore (Protocol)
-Database that optionally manages a queue of changes to be uploaded to the API.
+## APIClient (Protocol)
+Manages requests to and responses from the Pretix REST API. Needs to be initialised with configStore.
 
-- requires an APIClient instance 
+----
+Everything above the line is decided and implemented, everything below is a draft.
+
+## AppDelegate
+- initialises ConfigStore
+- initialises TicketValidator
+- initialises DataStore
+
+## SyncManager (Protocol)
+Manages a queue of changes to be uploaded to the API.
+
+- requires a DataStore and an APIClient
+
 - Has sub-objects for queueing uploads and managing downloads
 - will periodically try to upload the queue to the server 
 - will periodically try to download all (or all new) server data
-- Optional: Notifications when data changes
 
-## APIClient (Protocol)
-Manages requests to and responses from the Pretix REST API. Needs to be initialised with configStore.
+## DataStore (Protocol)
+Database 
+- Optional: Notifications when data changes
 
 ## TicketValidator (Protocol)
 Exposes methods to check the validity of tickets and show event status.

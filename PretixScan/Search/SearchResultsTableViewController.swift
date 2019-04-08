@@ -61,7 +61,7 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
         let nextSearchNumber = numberOfSearches + 1
 
         searchFooterView.status = .loading
-        appCoordinator?.getConfigStore().apiClient?.getSearchResults(query: searchText) { (orders, error) in
+        appCoordinator?.getConfigStore().ticketValidator?.search(query: searchText) { (orders, error) in
             DispatchQueue.main.async {
                 // Protect against old slow searches overwriting new fast searches
                 guard nextSearchNumber > self.numberOfSearches else { return }

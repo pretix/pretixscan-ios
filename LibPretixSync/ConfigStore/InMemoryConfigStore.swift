@@ -24,6 +24,21 @@ public class InMemoryConfigStore: ConfigStore {
     }
     private var storedAPIClient: APIClient?
 
+    // MARK: TicketValidator
+    public var ticketValidator: TicketValidator? {
+        if !asyncModeEnabled {
+            // Online Mode
+            storedOnlineTicketValidator = storedOnlineTicketValidator ?? OnlineTicketValidator(configStore: self)
+            return storedOnlineTicketValidator
+        } else {
+            // Ofline mode
+            storedOfflineTicketValidator = storedOfflineTicketValidator ?? OfflineTicketValidator(configStore: self)
+            return storedOfflineTicketValidator
+        }
+    }
+    private var storedOnlineTicketValidator: OnlineTicketValidator?
+    private var storedOfflineTicketValidator: OfflineTicketValidator?
+
     // MARK: - Device
     public var deviceName: String? { didSet { valueChanged() } }
     public var organizerSlug: String? { didSet { valueChanged(.organizerSlug) } }
