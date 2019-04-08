@@ -21,6 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
         ) -> Bool {
 
+        // Prevent display sleep for the entire app
+        // We never want the app to turn itself off
+        UIApplication.shared.isIdleTimerDisabled = true
+
         // ConfigStore
         configStore = DefaultsConfigStore(defaults: UserDefaults.standard)
 
