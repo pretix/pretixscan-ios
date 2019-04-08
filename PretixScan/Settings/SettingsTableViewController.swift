@@ -41,13 +41,11 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
         // Offline Mode
         if indexPath == tableView.indexPath(for: offlineModeCell) {
-            if var configStore = configStore {
-                configStore.asyncModeEnabled = !(configStore.asyncModeEnabled)
-                offlineModeCell.detailTextLabel?.text = configStore.asyncModeEnabled ?
-                    Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
-            }
+            toggleOfflineMode()
+        } else if indexPath == tableView.indexPath(for: resetContentCell) {
+            reset()
         } else if indexPath == tableView.indexPath(for: swiftMessagesLicenseCell) {
-            UIApplication.shared.open(URL(string: "https://github.com/SwiftKickMobile/SwiftMessages/blob/master/LICENSE.md")!, options: [:])
+            showSwiftMessagesLicense()
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -60,5 +58,31 @@ class SettingsTableViewController: UITableViewController, Configurable {
             Localization.SettingsTableViewController.LicensesSectionTitle
         ]
         return sectionTitles[section]
+    }
+
+    // MARK: - Actions
+    func toggleOfflineMode() {
+        if var configStore = configStore {
+            configStore.asyncModeEnabled = !(configStore.asyncModeEnabled)
+            offlineModeCell.detailTextLabel?.text = configStore.asyncModeEnabled ?
+                Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
+        }
+    }
+
+    func reset() {
+        let alert = UIAlertController(
+            title: Localization.SettingsTableViewController.Reset,
+            message: Localization.SettingsTableViewController.ConfirmReset,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.CancelReset, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.ContinueReset, style: .destructive, handler: { _ in
+            self.configStore?.factoryReset()
+            self.navigationController?.popViewController(animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showSwiftMessagesLicense() {
+        UIApplication.shared.open(URL(string: "https://github.com/SwiftKickMobile/SwiftMessages/blob/master/LICENSE.md")!, options: [:])
     }
 }

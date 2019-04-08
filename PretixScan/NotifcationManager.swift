@@ -45,17 +45,15 @@ class NotificationManager {
     @objc
     func configStoreReset(_ notification: Notification) {
         SwiftMessages.hideAll()
-        SwiftMessages.show {
-            let view = MessageView.viewFromNib(layout: .statusLine)
-            view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
-            view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-
-            if self.configStore.asyncModeEnabled {
-                view.configureContent(body: Localization.NotificationManager.SyncModeOffline)
-            } else {
-                view.configureContent(body: Localization.NotificationManager.SyncModeOnline)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            // we wait for 2 seconds so the application can settle down and reset its UI before we show the alert
+            SwiftMessages.show {
+                let view = MessageView.viewFromNib(layout: .statusLine)
+                view.configureTheme(backgroundColor: Color.warning, foregroundColor: Color.primaryText)
+                view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+                view.configureContent(body: Localization.NotificationManager.Reset)
+                return view
             }
-            return view
         }
     }
 }
