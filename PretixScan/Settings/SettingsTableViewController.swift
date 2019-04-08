@@ -27,7 +27,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
         versionCell.textLabel?.text = Localization.SettingsTableViewController.Version
         versionCell.detailTextLabel?.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
 
-        resetContentCell.textLabel?.text = Localization.SettingsTableViewController.Reset
+        resetContentCell.textLabel?.text = Localization.SettingsTableViewController.PerformFactoryReset
 
         offlineModeCell.textLabel?.text = Localization.SettingsTableViewController.SyncMode
         offlineModeCell.detailTextLabel?.text = configStore?.asyncModeEnabled == true ?
@@ -43,7 +43,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
         if indexPath == tableView.indexPath(for: offlineModeCell) {
             toggleOfflineMode()
         } else if indexPath == tableView.indexPath(for: resetContentCell) {
-            reset()
+            configStoreFactoryReset()
         } else if indexPath == tableView.indexPath(for: swiftMessagesLicenseCell) {
             showSwiftMessagesLicense()
         }
@@ -69,13 +69,13 @@ class SettingsTableViewController: UITableViewController, Configurable {
         }
     }
 
-    func reset() {
+    func configStoreFactoryReset() {
         let alert = UIAlertController(
-            title: Localization.SettingsTableViewController.Reset,
-            message: Localization.SettingsTableViewController.ConfirmReset,
+            title: Localization.SettingsTableViewController.PerformFactoryReset,
+            message: Localization.SettingsTableViewController.FactoryResetConfirmMessage,
             preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.CancelReset, style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.ContinueReset, style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.ConfirmReset, style: .destructive, handler: { _ in
             self.configStore?.factoryReset()
             self.navigationController?.popViewController(animated: true)
         }))

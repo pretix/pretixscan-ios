@@ -16,7 +16,7 @@ class NotificationManager {
         self.configStore = configStore
         NotificationCenter.default.addObserver(self, selector: #selector(configStoreChanged(_:)),
                                                name: configStore.changedNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(configStoreReset(_:)),
+        NotificationCenter.default.addObserver(self, selector: #selector(configStoreFactoryReset(_:)),
                                                name: configStore.resetNotification, object: nil)
     }
 
@@ -43,7 +43,7 @@ class NotificationManager {
     }
 
     @objc
-    func configStoreReset(_ notification: Notification) {
+    func configStoreFactoryReset(_ notification: Notification) {
         SwiftMessages.hideAll()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             // we wait for 2 seconds so the application can settle down and reset its UI before we show the alert
