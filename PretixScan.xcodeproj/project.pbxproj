@@ -453,10 +453,10 @@
 			isa = PBXGroup;
 			children = (
 				DCEF6E322239255B009E7078 /* ConfigStore */,
-				DC8467A5225B7FC70013F647 /* DataStore */,
-				DC8467A8225B99960013F647 /* SyncManager */,
 				DC1D6FAF2240ECE6008A9E06 /* TicketValidator */,
 				DCAAFF45223AB62B0059C000 /* API Client */,
+				DC8467A8225B99960013F647 /* SyncManager */,
+				DC8467A5225B7FC70013F647 /* DataStore */,
 				DCAAFF3F223AAB800059C000 /* Models */,
 			);
 			path = LibPretixSync;
