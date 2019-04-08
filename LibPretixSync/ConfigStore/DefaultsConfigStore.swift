@@ -65,6 +65,18 @@ class DefaultsConfigStore: ConfigStore {
         return _apiClient
     }
 
+    public var ticketValidator: TicketValidator? {
+        if !_asyncModeEnabled {
+            // Online Mode
+            _onlineTicketValidator = _onlineTicketValidator ?? OnlineTicketValidator(configStore: self)
+            return _onlineTicketValidator
+        } else {
+            // Ofline mode
+            _offlineTicketValidator = _offlineTicketValidator ?? OfflineTicketValidator(configStore: self)
+            return _offlineTicketValidator
+        }
+    }
+
     public var deviceName: String? {
         get {
             return _deviceName
@@ -139,6 +151,8 @@ class DefaultsConfigStore: ConfigStore {
     private var _apiBaseURL: URL?
     private var _apiToken: String?
     private var _apiClient: APIClient?
+    private var _offlineTicketValidator: OfflineTicketValidator?
+    private var _onlineTicketValidator: OnlineTicketValidator?
     private var _deviceName: String?
     private var _organizerSlug: String?
     private var _deviceID: Int?

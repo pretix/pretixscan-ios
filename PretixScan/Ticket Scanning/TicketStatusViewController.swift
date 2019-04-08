@@ -100,7 +100,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
         activityIndicator.startAnimating()
 
-        configStore?.apiClient?.redeem(
+        configStore?.ticketValidator?.redeem(
             secret: configuration.secret,
             force: configuration.force,
             ignoreUnpaid: configuration.ignoreUnpaid

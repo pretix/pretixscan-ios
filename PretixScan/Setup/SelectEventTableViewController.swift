@@ -46,7 +46,7 @@ class SelectEventTableViewController: UITableViewController, Configurable {
     @objc private func updateView() {
         isLoading = true
 
-        configStore?.apiClient?.getEvents { (eventList, error) in
+        configStore?.ticketValidator?.getEvents { (eventList, error) in
             self.presentErrorAlert(ifError: error)
             self.events = eventList
             self.isLoading = false

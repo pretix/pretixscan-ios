@@ -23,6 +23,16 @@ public protocol ConfigStore {
     /// Creates or returns a single APIClient instance configured for this ConfigStore
     var apiClient: APIClient? { get }
 
+    /// Creates or returns a single TicketValidator instance configured for this ConfigStore
+    ///
+    /// The type of TicketValidator depends on the `asyncModeEnabled` property.
+    var ticketValidator: TicketValidator? { get }
+
+    /// If `true`, the app will use a local cache to redeem tickets. Will access the internet each time otherwise.
+    ///
+    /// Updates the `ticketValidator` property.
+    var asyncModeEnabled: Bool { get set }
+
     // MARK: - Device
     /// The name that was specified for this device in the Pretix Organizer Backend
     var deviceName: String? { get set }
@@ -42,9 +52,6 @@ public protocol ConfigStore {
 
     /// The CheckInList to scan against
     var checkInList: CheckInList? { get set }
-
-    /// If `true`, the app will use a local cache to redeem tickets. Will access the internet each time otherwise.
-    var asyncModeEnabled: Bool { get set }
 
     /// Restore all settings to factory default and start over. Returns the app into the state at first launch.
     func factoryReset()

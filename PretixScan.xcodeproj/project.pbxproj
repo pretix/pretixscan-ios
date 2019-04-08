@@ -41,6 +41,7 @@
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
 		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
+		DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -146,6 +147,7 @@
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
+		DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTicketValidator.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			children = (
 				DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */,
 				DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */,
+				DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */,
 			);
 			path = TicketValidator;
 			sourceTree = "<group>";
@@ -704,6 +707,7 @@
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
+				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
 				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,

@@ -40,7 +40,7 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable 
 
     @objc private func updateView() {
         isLoading = true
-        configStore?.apiClient?.getCheckinLists { (checkInLists, error) in
+        configStore?.ticketValidator?.getCheckinLists { (checkInLists, error) in
             self.presentErrorAlert(ifError: error)
             self.checkInLists = checkInLists
             self.isLoading = false
