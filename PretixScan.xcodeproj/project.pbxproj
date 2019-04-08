@@ -42,6 +42,10 @@
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
 		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
 		DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */; };
+		DC8467AE225BCA6A0013F647 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AD225BCA6A0013F647 /* Order.swift */; };
+		DC8467B0225BD7F70013F647 /* OrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AF225BD7F70013F647 /* OrderTests.swift */; };
+		DC8467B1225BD8040013F647 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AD225BCA6A0013F647 /* Order.swift */; };
+		DC8467B3225BD93F0013F647 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B2225BD93F0013F647 /* Locale.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -148,6 +152,9 @@
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTicketValidator.swift; sourceTree = "<group>"; };
+		DC8467AD225BCA6A0013F647 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		DC8467AF225BD7F70013F647 /* OrderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTests.swift; sourceTree = "<group>"; };
+		DC8467B2225BD93F0013F647 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -294,6 +301,7 @@
 				DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */,
 				DCB35B932248F66100860385 /* RedemptionResponseTests.swift */,
 				DCDD82D0224BBD7600DC0200 /* CheckListStatusTests.swift */,
+				DC8467AF225BD7F70013F647 /* OrderTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -409,6 +417,8 @@
 				DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */,
 				DCB35B902248F31400860385 /* RedemptionResponse.swift */,
 				DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */,
+				DC8467AD225BCA6A0013F647 /* Order.swift */,
+				DC8467B2225BD93F0013F647 /* Locale.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -708,6 +718,7 @@
 				DCDD82CD224AB25900DC0200 /* Color.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
+				DC8467AE225BCA6A0013F647 /* Order.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
 				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
@@ -756,6 +767,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC8467B0225BD7F70013F647 /* OrderTests.swift in Sources */,
 				DCB35B922248F65000860385 /* RedemptionResponse.swift in Sources */,
 				DC1D6FBC2240FA46008A9E06 /* OrderPosition.swift in Sources */,
 				DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */,
@@ -775,8 +787,10 @@
 				DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */,
 				DCB35B9922490D5200860385 /* DateFormattingHelpers.swift in Sources */,
 				DCC00041223BEAF300236424 /* EventTests.swift in Sources */,
+				DC8467B1225BD8040013F647 /* Order.swift in Sources */,
 				DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */,
 				DCB35B942248F66100860385 /* RedemptionResponseTests.swift in Sources */,
+				DC8467B3225BD93F0013F647 /* Locale.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
