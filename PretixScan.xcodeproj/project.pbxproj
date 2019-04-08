@@ -39,6 +39,8 @@
 		DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */; };
 		DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A012256722100710EFA /* NotifcationManager.swift */; };
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
+		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
+		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -142,6 +144,8 @@
 		DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		DC2F4A012256722100710EFA /* NotifcationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationManager.swift; sourceTree = "<group>"; };
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
+		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -362,6 +366,22 @@
 			path = Segues;
 			sourceTree = "<group>";
 		};
+		DC8467A5225B7FC70013F647 /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				DC8467A6225B99590013F647 /* DataStore.swift */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
+		DC8467A8225B99960013F647 /* SyncManager */ = {
+			isa = PBXGroup;
+			children = (
+				DC8467A9225B99A50013F647 /* SyncManager.swift */,
+			);
+			path = SyncManager;
+			sourceTree = "<group>";
+		};
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,10 +449,12 @@
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
 			isa = PBXGroup;
 			children = (
+				DCEF6E322239255B009E7078 /* ConfigStore */,
+				DC8467A5225B7FC70013F647 /* DataStore */,
+				DC8467A8225B99960013F647 /* SyncManager */,
 				DC1D6FAF2240ECE6008A9E06 /* TicketValidator */,
 				DCAAFF45223AB62B0059C000 /* API Client */,
 				DCAAFF3F223AAB800059C000 /* Models */,
-				DCEF6E322239255B009E7078 /* ConfigStore */,
 			);
 			path = LibPretixSync;
 			sourceTree = "<group>";
@@ -682,6 +704,7 @@
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
+				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
 				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
@@ -697,6 +720,7 @@
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
+				DC8467A7225B99590013F647 /* DataStore.swift in Sources */,
 				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */,
 				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
