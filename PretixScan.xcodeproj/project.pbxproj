@@ -58,6 +58,9 @@
 		DC8467C7225CF5280013F647 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		DC8467C8225CF52B0013F647 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		DC8467CA225CF9E20013F647 /* ItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C9225CF9E20013F647 /* ItemTests.swift */; };
+		DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467CD225D08D10013F647 /* ItemCategory.swift */; };
+		DC8467CF225D09C90013F647 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467CD225D08D10013F647 /* ItemCategory.swift */; };
+		DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -173,6 +176,8 @@
 		DC8467BA225CF3D70013F647 /* ItemBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemBundle.swift; sourceTree = "<group>"; };
 		DC8467C6225CF5280013F647 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		DC8467C9225CF9E20013F647 /* ItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
+		DC8467CD225D08D10013F647 /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
+		DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategoryTests.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -321,6 +326,7 @@
 				DCDD82D0224BBD7600DC0200 /* CheckListStatusTests.swift */,
 				DC8467AF225BD7F70013F647 /* OrderTests.swift */,
 				DC8467C9225CF9E20013F647 /* ItemTests.swift */,
+				DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				DC8467B6225CF0FB0013F647 /* ItemVariation.swift */,
 				DC8467B8225CF2630013F647 /* ItemAddon.swift */,
 				DC8467BA225CF3D70013F647 /* ItemBundle.swift */,
+				DC8467CD225D08D10013F647 /* ItemCategory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -765,6 +772,7 @@
 				DC8467A7225B99590013F647 /* DataStore.swift in Sources */,
 				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */,
+				DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */,
 				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
 				DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */,
 				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
@@ -808,12 +816,14 @@
 				DCAAFF4B223AB9CE0059C000 /* DeviceInitializationParsingTests.swift in Sources */,
 				DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */,
 				DCAAFF4C223AB9F20059C000 /* DeviceInitializationRequest.swift in Sources */,
+				DC8467CF225D09C90013F647 /* ItemCategory.swift in Sources */,
 				DC1D6FBD2240FA49008A9E06 /* CheckIn.swift in Sources */,
 				DCAAFF4D223AB9F40059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DCDD82D1224BBD7600DC0200 /* CheckListStatusTests.swift in Sources */,
 				DC8467CA225CF9E20013F647 /* ItemTests.swift in Sources */,
 				DCC00042223BEB3B00236424 /* Event.swift in Sources */,
 				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
+				DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */,
 				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
 				DC8467C4225CF4020013F647 /* ItemAddon.swift in Sources */,
