@@ -20,7 +20,7 @@ import Foundation
 /// Source: https://docs.pretix.eu/en/latest/api/resources/checkinlists.html
 public struct CheckInList: Codable, Equatable {
     /// Internal ID of the check-in list
-    public let identifier: Int
+    public let identifier: Identifier
 
     /// The internal name of the check-in list
     public let name: String
@@ -33,7 +33,7 @@ public struct CheckInList: Codable, Equatable {
     public let limitProducts: [Int]?
 
     /// ID of the date inside an event series this list belongs to (or null).
-    public let subEvent: Int?
+    public let subEvent: Identifier?
 
     /// Number of tickets that match this list
     public let positionCount: Int

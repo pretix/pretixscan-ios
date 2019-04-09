@@ -38,7 +38,7 @@ public struct Order: Codable, Equatable {
     public let lastModifiedAt: Date?
 
     /// Total value of this order
-    public let total: String?
+    public let total: Money?
 
     /// Internal comment on this order
     public let comment: String?

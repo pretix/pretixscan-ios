@@ -11,7 +11,7 @@ import Foundation
 /// A check-in with a ticket in a CheckIn List
 public struct CheckIn: Codable, Equatable {
     /// Internal ID of the check-in list
-    public let listID: Int
+    public let listID: Identifier
 
     /// Time of check-in
     public let date: Date

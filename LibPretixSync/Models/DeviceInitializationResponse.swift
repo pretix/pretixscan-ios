@@ -29,7 +29,7 @@ import Foundation
 /// }
 public struct DeviceInitializationResponse: Codable, Equatable {
     public let organizer: String
-    public let deviceID: Int
+    public let deviceID: Identifier
     public let uniqueSerial: String
     public let apiToken: String
     public let name: String
