@@ -61,6 +61,7 @@
 		DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467CD225D08D10013F647 /* ItemCategory.swift */; };
 		DC8467CF225D09C90013F647 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467CD225D08D10013F647 /* ItemCategory.swift */; };
 		DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */; };
+		DC8467D3225D0A980013F647 /* SyncManagerNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467D2225D0A980013F647 /* SyncManagerNotifications.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -178,6 +179,7 @@
 		DC8467C9225CF9E20013F647 /* ItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
 		DC8467CD225D08D10013F647 /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategoryTests.swift; sourceTree = "<group>"; };
+		DC8467D2225D0A980013F647 /* SyncManagerNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerNotifications.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 			isa = PBXGroup;
 			children = (
 				DC8467A9225B99A50013F647 /* SyncManager.swift */,
+				DC8467D2225D0A980013F647 /* SyncManagerNotifications.swift */,
 			);
 			path = SyncManager;
 			sourceTree = "<group>";
@@ -759,6 +762,7 @@
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
+				DC8467D3225D0A980013F647 /* SyncManagerNotifications.swift in Sources */,
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,

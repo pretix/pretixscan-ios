@@ -15,10 +15,25 @@ import Foundation
 /// - will periodically try to download all (or all new) server data
 ///
 /// - requires a ConfigStore instance from which it retrieves DataStore and APIClient
-class SyncManager {
+public class SyncManager {
     private let configStore: ConfigStore
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
+    }
+}
+
+private extension SyncManager {
+    func syncItemCategories(isFirstSync: Bool) {
+        configStore.apiClient?.getItemCategories { result in
+
+            guard let pagedItemCategories = try? result.get() else {
+                return
+            }
+
+            let isLastPage = pagedItemCategories.next == nil
+
+            
+        }
     }
 }
