@@ -8,6 +8,13 @@
 
 import Foundation
 
-protocol DataStore: class {
-
+/// Stores large amounts of relational data
+///
+/// - Note: All `store*` methods will completely overwrite all existing data, without any merging. This is because we expect data to
+///         always come from the server, which has the canonical truth.
+///         For performance reasons, implementations might do a comparison first and not update unchanged items.
+public protocol DataStore: class {
+    // MARK: - Storing
+    /// Store a list of `ItemCategory` instances.
+    func store(_ itemCategories: [ItemCategory], for event: Event)
 }

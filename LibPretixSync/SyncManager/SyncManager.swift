@@ -24,7 +24,9 @@ public class SyncManager {
 }
 
 private extension SyncManager {
-    func syncItemCategories(isFirstSync: Bool) {
+    func syncItemCategories(isFirstSync: Bool) throws {
+        let event = try getEvent()
+
         configStore.apiClient?.getItemCategories { result in
 
             guard let pagedItemCategories = try? result.get() else {
@@ -32,8 +34,19 @@ private extension SyncManager {
             }
 
             let isLastPage = pagedItemCategories.next == nil
+            // TO DO: Send Notifications
 
-            
+            self.configStore.dataStore?.store(pagedItemCategories.results, for: event)
         }
+    }
+}
+
+private extension SyncManager {
+    func getEvent() throws -> Event {
+        guard let event = configStore.event else {
+            throw APIError.notConfigured(message: "ConfigStore.event property must be set before calling this function.")
+        }
+
+        return event
     }
 }

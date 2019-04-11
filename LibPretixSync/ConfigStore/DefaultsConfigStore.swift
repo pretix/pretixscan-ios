@@ -77,6 +77,11 @@ class DefaultsConfigStore: ConfigStore {
         }
     }
 
+    public var dataStore: DataStore? {
+        _dataStore = _dataStore ?? FMDBDataStore()
+        return _dataStore
+    }
+
     public var deviceName: String? {
         get {
             return _deviceName
@@ -153,6 +158,7 @@ class DefaultsConfigStore: ConfigStore {
     private var _apiClient: APIClient?
     private var _offlineTicketValidator: OfflineTicketValidator?
     private var _onlineTicketValidator: OnlineTicketValidator?
+    private var _dataStore: DataStore?
     private var _deviceName: String?
     private var _organizerSlug: String?
     private var _deviceID: Int?
