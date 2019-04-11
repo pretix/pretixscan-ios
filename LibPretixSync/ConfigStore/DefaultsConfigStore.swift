@@ -77,6 +77,11 @@ class DefaultsConfigStore: ConfigStore {
         }
     }
 
+    public var syncManager: SyncManager {
+        _syncManager = _syncManager ?? SyncManager(configStore: self)
+        return _syncManager!
+    }
+
     public var dataStore: DataStore? {
         _dataStore = _dataStore ?? FMDBDataStore()
         return _dataStore
@@ -158,6 +163,7 @@ class DefaultsConfigStore: ConfigStore {
     private var _apiClient: APIClient?
     private var _offlineTicketValidator: OfflineTicketValidator?
     private var _onlineTicketValidator: OnlineTicketValidator?
+    private var _syncManager: SyncManager?
     private var _dataStore: DataStore?
     private var _deviceName: String?
     private var _organizerSlug: String?

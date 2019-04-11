@@ -23,6 +23,9 @@ public protocol ConfigStore {
     /// The type of TicketValidator depends on the `asyncModeEnabled` property.
     var ticketValidator: TicketValidator? { get }
 
+    /// Returns a singleton SyncManager instance configured for this ConfigStore
+    var syncManager: SyncManager { get }
+
     /// Creates or returns a singleton DataStore instance configured for this ConfigStore
     var dataStore: DataStore? { get }
 

@@ -30,6 +30,12 @@ public class InMemoryConfigStore: ConfigStore {
     }
     private var storedDataStore: DataStore?
 
+    public var syncManager: SyncManager {
+        storedSyncManager = storedSyncManager ?? SyncManager(configStore: self)
+        return storedSyncManager!
+    }
+    private var storedSyncManager: SyncManager?
+
     // MARK: TicketValidator
     public var ticketValidator: TicketValidator? {
         if !asyncModeEnabled {

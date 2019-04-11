@@ -23,6 +23,12 @@ public class SyncManager {
     }
 }
 
+// MARK: - Notifications
+extension SyncManager {
+    var itemCategoriesSyncedNotification: Notification.Name { return Notification.Name("SyncManagerItemCategoriesSynced") }
+}
+
+// MARK: - Syncing
 private extension SyncManager {
     func syncItemCategories(isFirstSync: Bool) throws {
         let event = try getEvent()
@@ -33,14 +39,18 @@ private extension SyncManager {
                 return
             }
 
+            // Notify Listeners
             let isLastPage = pagedItemCategories.next == nil
-            // TO DO: Send Notifications
+            NotificationCenter.default.post(name: self.itemCategoriesSyncedNotification, object: self, userInfo: [
+                "loadedAmount": pagedItemCategories.results.count, "totalAmount": pagedItemCategories.count, "isLastPage": isLastPage])
 
+            // Store Data
             self.configStore.dataStore?.store(pagedItemCategories.results, for: event)
         }
     }
 }
 
+// MARK: - Helper Methods
 private extension SyncManager {
     func getEvent() throws -> Event {
         guard let event = configStore.event else {
