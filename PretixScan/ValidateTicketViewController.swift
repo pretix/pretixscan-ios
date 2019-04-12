@@ -78,6 +78,7 @@ extension ValidateTicketViewController {
         // Begin Scanning
         else {
             ticketScannerViewController.shouldScan = true
+            configStore.syncManager.beginSyncing()
         }
     }
 }

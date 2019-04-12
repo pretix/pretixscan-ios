@@ -96,7 +96,7 @@ public extension APIClient {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
-            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event)/categories/")
+            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/categories/")
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = [URLQueryItem(name: "page", value: "\(page)")]

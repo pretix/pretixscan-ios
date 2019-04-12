@@ -21,11 +21,26 @@ public class SyncManager {
     init(configStore: ConfigStore) {
         self.configStore = configStore
     }
+
+    public enum NotificationKeys: String {
+        case model
+        case loadedAmount
+        case totalAmount
+        case isLastPage
+    }
+
+    public func beginSyncing() {
+        do {
+            try syncItemCategories(isFirstSync: false)
+        } catch {
+            print(error)
+        }
+    }
 }
 
 // MARK: - Notifications
 extension SyncManager {
-    var itemCategoriesSyncedNotification: Notification.Name { return Notification.Name("SyncManagerItemCategoriesSynced") }
+    var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
 }
 
 // MARK: - Syncing
@@ -41,8 +56,11 @@ private extension SyncManager {
 
             // Notify Listeners
             let isLastPage = pagedItemCategories.next == nil
-            NotificationCenter.default.post(name: self.itemCategoriesSyncedNotification, object: self, userInfo: [
-                "loadedAmount": pagedItemCategories.results.count, "totalAmount": pagedItemCategories.count, "isLastPage": isLastPage])
+            NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                NotificationKeys.model: "ItemCategory",
+                NotificationKeys.loadedAmount: pagedItemCategories.results.count,
+                NotificationKeys.totalAmount: pagedItemCategories.count,
+                NotificationKeys.isLastPage: isLastPage])
 
             // Store Data
             self.configStore.dataStore?.store(pagedItemCategories.results, for: event)

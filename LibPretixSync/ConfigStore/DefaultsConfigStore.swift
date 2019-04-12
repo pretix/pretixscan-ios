@@ -13,7 +13,7 @@ import Foundation
 /// Saving occurs automatically each time a property is set.
 ///
 /// Loading occurs at init time. You can also load manually by calling `loadFromDefaults()`.
-class DefaultsConfigStore: ConfigStore {
+public class DefaultsConfigStore: ConfigStore {
     private var defaults: UserDefaults
 
     private enum Keys: String {

@@ -692,7 +692,7 @@
 		};
 		DCAAFF2C2239323B0059C000 /* Generate Documentation */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -706,7 +706,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nif ! which jazzy > /dev/null; then\necho \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\nelse\njazzy\nfi\n";
+			shellScript = "set -e\n\nif ! which jazzy > /dev/null; then\necho \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\nelse\nunset LLVM_TARGET_TRIPLE_SUFFIX\njazzy\nfi\n";
 		};
 		DCAAFF2D2239342B0059C000 /* Run Linter */ = {
 			isa = PBXShellScriptBuildPhase;

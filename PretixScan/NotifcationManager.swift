@@ -18,6 +18,8 @@ class NotificationManager {
                                                name: configStore.changedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(configStoreFactoryReset(_:)),
                                                name: configStore.resetNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(syncStatusUpdate(_:)),
+                                               name: configStore.syncManager.syncStatusUpdateNotification, object: nil)
     }
 
     @objc
@@ -54,6 +56,20 @@ class NotificationManager {
                 view.configureContent(body: Localization.NotificationManager.Reset)
                 return view
             }
+        }
+    }
+
+    @objc
+    func syncStatusUpdate(_ notification: Notification) {
+        let model: String = notification.userInfo?[SyncManager.NotificationKeys.model] as? String ?? "No Model"
+        let loadedAmount = notification.userInfo?[SyncManager.NotificationKeys.loadedAmount] as? Int ?? -1
+        let totalAmount = notification.userInfo?[SyncManager.NotificationKeys.totalAmount] as? Int ?? -1
+        let isLastPage = notification.userInfo?[SyncManager.NotificationKeys.isLastPage] as? Bool ?? false
+
+        print("\(model) updated, added \(loadedAmount)/\(totalAmount).")
+
+        if isLastPage {
+            print("Finished syncing \(model).")
         }
     }
 }
