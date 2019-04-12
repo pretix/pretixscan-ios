@@ -10,6 +10,10 @@ import Foundation
 
 /// DataStore that uses FMDB to store data inside a MySQL file
 public class FMDBDataStore: DataStore {
+    public func store(_ resources: [Any], for event: Event) {
+
+    }
+
     public func store(_ itemCategories: [ItemCategory], for event: Event) {
 
     }

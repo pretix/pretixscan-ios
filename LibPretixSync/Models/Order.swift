@@ -8,7 +8,10 @@
 
 import Foundation
 
-public struct Order: Codable, Equatable {
+public struct Order: Model {
+    public static let humanReadableName = "Order"
+    public static let urlPathPart = "orders"
+
     public let code: String
     public let status: Status
 

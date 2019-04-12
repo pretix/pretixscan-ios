@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		91CCDCAF6BD0E373EC1C6934 /* Pods_PretixScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */; };
 		DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E7225FB02B002D985B /* FMDBDataStore.swift */; };
+		DC0052EA2260D385002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
+		DC0052EB2260D437002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
 		DC07357A22392474008326F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07357922392474008326F7 /* AppDelegate.swift */; };
 		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
@@ -134,6 +136,7 @@
 		BDF1F626BB1093C36D3971D4 /* Pods-PretixScan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScan.release.xcconfig"; path = "Target Support Files/Pods-PretixScan/Pods-PretixScan.release.xcconfig"; sourceTree = "<group>"; };
 		D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.debug.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
+		DC0052E92260D385002D985B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		DC07357622392474008326F7 /* PretixScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PretixScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07357922392474008326F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC07357E22392474008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -434,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				DC8467C6225CF5280013F647 /* TypeAliases.swift */,
+				DC0052E92260D385002D985B /* Model.swift */,
 				DCAAFF40223AAB8E0059C000 /* Handshake.swift */,
 				DC91EB32223FAFF300704F24 /* PagedList.swift */,
 				DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */,
@@ -768,6 +772,7 @@
 				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,
 				DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */,
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
+				DC0052EA2260D385002D985B /* Model.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
@@ -839,6 +844,7 @@
 				DC8467C5225CF4020013F647 /* ItemBundle.swift in Sources */,
 				DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */,
 				DC8467C7225CF5280013F647 /* TypeAliases.swift in Sources */,
+				DC0052EB2260D437002D985B /* Model.swift in Sources */,
 				DCB35B942248F66100860385 /* RedemptionResponseTests.swift in Sources */,
 				DC8467C1225CF4020013F647 /* Locale.swift in Sources */,
 			);

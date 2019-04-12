@@ -15,6 +15,8 @@ import Foundation
 ///         For performance reasons, implementations might do a comparison first and not update unchanged items.
 public protocol DataStore: class {
     // MARK: - Storing
+    func store(_ resources: [Any], for event: Event)
+
     /// Store a list of `ItemCategory` instances.
     func store(_ itemCategories: [ItemCategory], for event: Event)
 

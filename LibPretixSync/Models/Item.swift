@@ -9,7 +9,10 @@
 import Foundation
 
 /// Items (better known as products) are the things that can be sold using pretix
-public struct Item: Codable, Equatable {
+public struct Item: Model {
+    public static let humanReadableName = "Item"
+    public static let urlPathPart = "items"
+
     /// Internal ID of the item
     public let identifier: Identifier
 

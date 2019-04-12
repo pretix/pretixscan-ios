@@ -87,16 +87,14 @@ public extension APIClient {
     }
 }
 
-// MARK: - Items and ItemCategories
+// MARK: - Retrieving Items
 public extension APIClient {
-    /// Returns a list of all item categories within a given event the authenticated user/token has access to.
-    ///
-    /// Calls the completion handler once for each page returned
-    func getItemCategories(page: Int = 1, completionHandler: @escaping (Result<PagedList<ItemCategory>, Error>) -> Void) {
+
+    func get<T: Model>(_ model: T.Type, page: Int = 1, completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
-            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/categories/")
+            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.urlPathPart)/")
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
@@ -117,107 +115,12 @@ public extension APIClient {
                 }
 
                 do {
-                    let pagedList = try self.jsonDecoder.decode(PagedList<ItemCategory>.self, from: data)
+                    let pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
                     completionHandler(.success(pagedList))
 
                     // Check if there are more pages to load
                     if pagedList.next != nil {
-                        self.getItemCategories(page: page+1, completionHandler: completionHandler)
-                    }
-                } catch {
-                    return completionHandler(.failure(error))
-                }
-
-            }
-            task.resume()
-        } catch {
-            completionHandler(.failure(error))
-        }
-    }
-
-    /// Returns a list of all items within a given event the authenticated user/token has access to.
-    ///
-    /// Calls the completion handler once for each page returned
-    func getItems(page: Int = 1, completionHandler: @escaping (Result<PagedList<Item>, Error>) -> Void) {
-        do {
-            let organizer = try getOrganizerSlug()
-            let event = try getEvent()
-            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/items/")
-
-            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            urlComponents?.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
-            guard let urlComponentsURL = urlComponents?.url else {
-                throw APIError.couldNotCreateURL
-            }
-            let urlRequest = try createURLRequest(for: urlComponentsURL)
-
-            let task = session.dataTask(with: urlRequest) { (data, response, error) in
-                if let error = self.checkResponse(data: data, response: response, error: error) {
-                    completionHandler(.failure(error))
-                    return
-                }
-
-                guard let data = data else {
-                    completionHandler(.failure(APIError.emptyResponse))
-                    return
-                }
-
-                do {
-                    let pagedList = try self.jsonDecoder.decode(PagedList<Item>.self, from: data)
-                    completionHandler(.success(pagedList))
-
-                    // Check if there are more pages to load
-                    if pagedList.next != nil {
-                        self.getItems(page: page+1, completionHandler: completionHandler)
-                    }
-                } catch {
-                    return completionHandler(.failure(error))
-                }
-
-            }
-            task.resume()
-        } catch {
-            completionHandler(.failure(error))
-        }
-    }
-}
-
-// MARK: - Orders
-public extension APIClient {
-    /// Returns a list of all orders within a given event the authenticated user/token has access to.
-    ///
-    /// Calls the completion handler once for each page returned
-    func getOrders(page: Int = 1, completionHandler: @escaping (Result<PagedList<Order>, Error>) -> Void) {
-        do {
-            let organizer = try getOrganizerSlug()
-            let event = try getEvent()
-            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/orders/")
-
-            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            urlComponents?.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
-            guard let urlComponentsURL = urlComponents?.url else {
-                throw APIError.couldNotCreateURL
-            }
-            let urlRequest = try createURLRequest(for: urlComponentsURL)
-
-            let task = session.dataTask(with: urlRequest) { (data, response, error) in
-                if let error = self.checkResponse(data: data, response: response, error: error) {
-                    completionHandler(.failure(error))
-                    return
-                }
-
-                guard let data = data else {
-                    completionHandler(.failure(APIError.emptyResponse))
-                    return
-                }
-
-                do {
-                    let pagedList = try self.jsonDecoder.decode(PagedList<Order>.self, from: data)
-                    completionHandler(.success(pagedList))
-
-                    // Check if there are more pages to load
-                    if pagedList.next != nil {
-                        self.getOrders(page: page+1, completionHandler: completionHandler)
+                        self.get(model, page: page+1, completionHandler: completionHandler)
                     }
                 } catch {
                     return completionHandler(.failure(error))
