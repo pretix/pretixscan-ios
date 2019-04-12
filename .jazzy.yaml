@@ -6,6 +6,8 @@ copyright: '© 2019 [rami.io](http://rami.io)'
 module: PretixScan
 module_version: 1.0a
 
+theme: fullwidth
+
 custom_categories:
   - name: TicketValidator
     children:
@@ -47,12 +49,9 @@ custom_categories:
     - Order
     - Identifier
     - Money
+    - PagedList
+    - MultiLingualString
     
   - name: API Client
     children:
     - APIClient
-
-  - name: Meta Models
-    children: 
-    - PagedList
-    - MultiLingualString

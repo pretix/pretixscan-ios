@@ -528,8 +528,8 @@
 				DCAAFF2D2239342B0059C000 /* Run Linter */,
 				DC07357322392474008326F7 /* Frameworks */,
 				DC07357422392474008326F7 /* Resources */,
-				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
 				1521320A5643DCDD8F3FCE3E /* [CP] Embed Pods Frameworks */,
+				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
 			);
 			buildRules = (
 			);
@@ -692,7 +692,7 @@
 		};
 		DCAAFF2C2239323B0059C000 /* Generate Documentation */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -704,7 +704,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nif ! which jazzy > /dev/null; then\necho \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\nelse\nunset LLVM_TARGET_TRIPLE_SUFFIX\njazzy\nfi\n";
 		};

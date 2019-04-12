@@ -13,4 +13,12 @@ public class FMDBDataStore: DataStore {
     public func store(_ itemCategories: [ItemCategory], for event: Event) {
 
     }
+
+    public func store(_ items: [Item], for event: Event) {
+
+    }
+
+    public func store(_ orders: [Order], for event: Event) {
+
+    }
 }

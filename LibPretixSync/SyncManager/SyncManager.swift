@@ -30,10 +30,31 @@ public class SyncManager {
     }
 
     public func beginSyncing() {
-        do {
-            try syncItemCategories(isFirstSync: false)
-        } catch {
-            print(error)
+        print("Beginning Syncing Item Categories")
+        syncItemCategories(isFirstSync: false) { error in
+            guard error == nil else {
+                print(error!)
+                return
+            }
+
+            print("Finished Syncing Item Categories")
+            print("Beginning Syncing Items")
+            self.syncItems(isFirstSync: false) { error in
+                guard error == nil else {
+                    print(error!)
+                    return
+                }
+                print("Finished Syncing Item Categories")
+                print("Beginning Syncing Orders")
+                self.syncOrders(isFirstSync: false) { error in
+                    guard error == nil else {
+                        print(error!)
+                        return
+                    }
+                    print("Finished Syncing Orders")
+                }
+            }
+
         }
     }
 }
@@ -45,25 +66,102 @@ extension SyncManager {
 
 // MARK: - Syncing
 private extension SyncManager {
-    func syncItemCategories(isFirstSync: Bool) throws {
-        let event = try getEvent()
+    func syncItemCategories(isFirstSync: Bool, completionHandler: @escaping (Error?) -> Void) {
+        do {
+            let event = try getEvent()
 
-        configStore.apiClient?.getItemCategories { result in
+            configStore.apiClient?.getItemCategories { result in
 
-            guard let pagedItemCategories = try? result.get() else {
-                return
+                guard let pagedItemCategories = try? result.get() else {
+                    return
+                }
+
+                // Notify Listeners
+                let isLastPage = pagedItemCategories.next == nil
+                NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                    NotificationKeys.model: "ItemCategory",
+                    NotificationKeys.loadedAmount: pagedItemCategories.results.count,
+                    NotificationKeys.totalAmount: pagedItemCategories.count,
+                    NotificationKeys.isLastPage: isLastPage])
+
+                // Store Data
+                self.configStore.dataStore?.store(pagedItemCategories.results, for: event)
+
+                // Callback that we are completely finished
+                if isLastPage {
+                    completionHandler(nil)
+                }
             }
 
-            // Notify Listeners
-            let isLastPage = pagedItemCategories.next == nil
-            NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
-                NotificationKeys.model: "ItemCategory",
-                NotificationKeys.loadedAmount: pagedItemCategories.results.count,
-                NotificationKeys.totalAmount: pagedItemCategories.count,
-                NotificationKeys.isLastPage: isLastPage])
+        } catch {
+            completionHandler(error)
+            return
+        }
+    }
 
-            // Store Data
-            self.configStore.dataStore?.store(pagedItemCategories.results, for: event)
+    func syncItems(isFirstSync: Bool, completionHandler: @escaping (Error?) -> Void) {
+        do {
+            let event = try getEvent()
+
+            configStore.apiClient?.getItems { result in
+
+                guard let pagedItems = try? result.get() else {
+                    return
+                }
+
+                // Notify Listeners
+                let isLastPage = pagedItems.next == nil
+                NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                    NotificationKeys.model: "ItemCategory",
+                    NotificationKeys.loadedAmount: pagedItems.results.count,
+                    NotificationKeys.totalAmount: pagedItems.count,
+                    NotificationKeys.isLastPage: isLastPage])
+
+                // Store Data
+                self.configStore.dataStore?.store(pagedItems.results, for: event)
+
+                // Callback that we are completely finished
+                if isLastPage {
+                    completionHandler(nil)
+                }
+            }
+
+        } catch {
+            completionHandler(error)
+            return
+        }
+    }
+
+    func syncOrders(isFirstSync: Bool, completionHandler: @escaping (Error?) -> Void) {
+        do {
+            let event = try getEvent()
+
+            configStore.apiClient?.getOrders { result in
+
+                guard let pagedItems = try? result.get() else {
+                    return
+                }
+
+                // Notify Listeners
+                let isLastPage = pagedItems.next == nil
+                NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                    NotificationKeys.model: "ItemCategory",
+                    NotificationKeys.loadedAmount: pagedItems.results.count,
+                    NotificationKeys.totalAmount: pagedItems.count,
+                    NotificationKeys.isLastPage: isLastPage])
+
+                // Store Data
+                self.configStore.dataStore?.store(pagedItems.results, for: event)
+
+                // Callback that we are completely finished
+                if isLastPage {
+                    completionHandler(nil)
+                }
+            }
+
+        } catch {
+            completionHandler(error)
+            return
         }
     }
 }

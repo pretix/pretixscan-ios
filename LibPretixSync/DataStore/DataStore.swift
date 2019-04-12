@@ -17,4 +17,10 @@ public protocol DataStore: class {
     // MARK: - Storing
     /// Store a list of `ItemCategory` instances.
     func store(_ itemCategories: [ItemCategory], for event: Event)
+
+    /// Store a list of `Item` instances.
+    func store(_ items: [Item], for event: Event)
+
+    /// Store a list of `Order` instances.
+    func store(_ orders: [Order], for event: Event)
 }

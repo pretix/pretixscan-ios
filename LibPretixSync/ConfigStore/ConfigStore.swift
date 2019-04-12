@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// A protocol that defines elements that contain information about the app's configuration.
+/// Aaaaa protocol that defines elements that contain information about the app's configuration.
 public protocol ConfigStore {
     // MARK: - Configuration
     /// Restore all settings to factory default and start over. Returns the app into the state at first launch.
