@@ -29,27 +29,31 @@ public class SyncManager {
         case isLastPage
     }
 
+    //  TODO: Save this in Config- or Data Store
+    private var lastSynced = [String: Date?]()
+
     public func beginSyncing() {
-        print("Beginning Syncing Item Categories")
-        sync(ItemCategory.self, isFirstSync: false) { error in
+        let firstSyncCompletionHandler: ((Error?) -> Void) = { error in
             guard error == nil else {
                 print(error!)
                 return
             }
 
-            print("Beginning Syncing Items")
-            self.sync(Item.self, isFirstSync: false) { error in
-                guard error == nil else {
-                    print(error!)
-                    return
-                }
-
-                print("Beginning Syncing Orders")
-                self.sync(Order.self, isFirstSync: false) { error in
-
-                }
-            }
+            self.beginSyncing()
         }
+
+        // First Sync
+        if lastSynced[ItemCategory.urlPathPart] == nil {
+            // ItemCategory never synced
+            sync(ItemCategory.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler)
+        } else if lastSynced[Item.urlPathPart] == nil {
+            // Item never synced
+            sync(Item.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler)
+        } else if lastSynced[Order.urlPathPart] == nil {
+            // Item never synced
+            sync(Order.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler)
+        }
+
     }
 }
 
@@ -84,6 +88,7 @@ private extension SyncManager {
 
                 // Callback that we are completely finished
                 if isLastPage {
+                    self.lastSynced[model.urlPathPart] = Date()
                     completionHandler(nil)
                 }
             }
