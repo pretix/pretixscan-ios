@@ -20,6 +20,9 @@ public class SyncManager {
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
+
+        NotificationCenter.default.addObserver(self, selector: #selector(syncNotification(_:)),
+                                               name: syncStatusUpdateNotification, object: nil)
     }
 
     public enum NotificationKeys: String {
@@ -30,7 +33,15 @@ public class SyncManager {
     }
 
     private var lastSynced = [String: String]() { didSet { configStore.dataStore?.storeLastSynced(lastSynced) }}
+    private var dataTaskQueue = [URLSessionDataTask]()
 
+    /// Throw away all data and sync fresh
+    public func forceSync() {
+        lastSynced = [String: String]()
+        beginSyncing()
+    }
+
+    /// Update Sync
     public func beginSyncing() {
         guard let dataStore = configStore.dataStore else { return }
         lastSynced = dataStore.retrieveLastSynced()
@@ -40,22 +51,27 @@ public class SyncManager {
                 print(error!)
                 return
             }
-
-            self.beginSyncing()
         }
 
         // First Sync
         if lastSynced[ItemCategory.urlPathPart] == nil {
             // ItemCategory never synced
-            sync(ItemCategory.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler)
-        } else if lastSynced[Item.urlPathPart] == nil {
-            // Item never synced
-            sync(Item.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler)
-        } else if lastSynced[Order.urlPathPart] == nil {
-            // Item never synced
-            sync(Order.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler)
+            queue(task: syncTask(ItemCategory.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
+        if lastSynced[Item.urlPathPart] == nil {
+            // Item never synced
+            queue(task: syncTask(Item.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
+        }
+
+        if lastSynced[Order.urlPathPart] == nil {
+            // Item never synced
+            queue(task: syncTask(Order.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
+        }
+
+        queue(task: syncTask(ItemCategory.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
+        queue(task: syncTask(Item.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
+        queue(task: syncTask(Order.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
     }
 }
 
@@ -64,13 +80,42 @@ extension SyncManager {
     var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
 }
 
+// MARK: - Qeueing
+private extension SyncManager {
+    func queue(task: URLSessionDataTask?) {
+        guard let task = task else { return }
+        dataTaskQueue.append(task)
+        updateQueue()
+    }
+
+    func updateQueue() {
+        guard let task = dataTaskQueue.first else { return }
+        if task.state == .completed {
+            dataTaskQueue.remove(at: 0)
+            dataTaskQueue.first?.resume()
+        } else if task.state == .suspended {
+            task.resume()
+        }
+    }
+
+    func resetQueue() {
+        dataTaskQueue.first?.cancel()
+        dataTaskQueue = []
+    }
+
+    @objc
+    func syncNotification(_ notification: Notification) {
+        updateQueue()
+    }
+}
+
 // MARK: - Syncing
 private extension SyncManager {
-    func sync<T: Model>(_ model: T.Type, isFirstSync: Bool, completionHandler: @escaping (Error?) -> Void) {
+    func syncTask<T: Model>(_ model: T.Type, isFirstSync: Bool, completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
         do {
             let event = try getEvent()
 
-            configStore.apiClient?.get(model, lastUpdated: self.lastSynced[model.urlPathPart]) { result in
+            return configStore.apiClient?.getTask(model, lastUpdated: self.lastSynced[model.urlPathPart]) { result in
 
                 guard let pagedList = try? result.get() else {
                     completionHandler(APIError.emptyResponse)
@@ -96,7 +141,7 @@ private extension SyncManager {
             }
         } catch {
             completionHandler(error)
-            return
+            return nil
         }
     }
 }
