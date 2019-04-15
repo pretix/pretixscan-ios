@@ -42,6 +42,7 @@
 		DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */; };
 		DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A012256722100710EFA /* NotifcationManager.swift */; };
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
+		DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
 		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
 		DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */; };
@@ -169,6 +170,7 @@
 		DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		DC2F4A012256722100710EFA /* NotifcationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationManager.swift; sourceTree = "<group>"; };
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
+		DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryDataStore.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTicketValidator.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 			children = (
 				DC8467A6225B99590013F647 /* DataStore.swift */,
 				DC0052E7225FB02B002D985B /* FMDBDataStore.swift */,
+				DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */,
 			);
 			path = DataStore;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
+				DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */,

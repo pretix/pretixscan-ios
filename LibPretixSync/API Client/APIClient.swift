@@ -91,14 +91,13 @@ public extension APIClient {
 public extension APIClient {
 
     func get<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
-                       completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
+                       completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) {
         let task = getTask(model, page: page, lastUpdated: lastUpdated, completionHandler: completionHandler)
         task?.resume()
-        return task
     }
 
     func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
-                       completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
+                           completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()

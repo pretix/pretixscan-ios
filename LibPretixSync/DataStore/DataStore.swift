@@ -19,7 +19,7 @@ public protocol DataStore: class {
     func retrieveLastSynced() -> [String: String]
 
     // MARK: - Storing
-    func store(_ resources: [Any], for event: Event)
+    func store<T: Model>(_ resources: [T], for event: Event)
 
     /// Store a list of `ItemCategory` instances.
     func store(_ itemCategories: [ItemCategory], for event: Event)
