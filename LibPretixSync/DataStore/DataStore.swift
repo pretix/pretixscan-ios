@@ -14,6 +14,10 @@ import Foundation
 ///         always come from the server, which has the canonical truth.
 ///         For performance reasons, implementations might do a comparison first and not update unchanged items.
 public protocol DataStore: class {
+    // MARK: Metadata
+    func storeLastSynced(_ data: [String: String])
+    func retrieveLastSynced() -> [String: String]
+
     // MARK: - Storing
     func store(_ resources: [Any], for event: Event)
 

@@ -9,6 +9,9 @@
 import Foundation
 
 public protocol Model: Codable, Equatable {
-    static var urlPathPart: String { get }
+    /// A human name for the model, used in logging and UI
     static var humanReadableName: String { get }
+
+    /// Appended to the base URL to retrieve the model
+    static var urlPathPart: String { get }
 }

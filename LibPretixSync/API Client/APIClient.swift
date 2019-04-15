@@ -90,7 +90,8 @@ public extension APIClient {
 // MARK: - Retrieving Items
 public extension APIClient {
 
-    func get<T: Model>(_ model: T.Type, page: Int = 1, completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) {
+    func get<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
+                       completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
@@ -98,6 +99,9 @@ public extension APIClient {
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
+            if lastUpdated != nil {
+                urlComponents?.queryItems = [URLQueryItem(name: "modified_since", value: lastUpdated)]
+            }
             guard let urlComponentsURL = urlComponents?.url else {
                 throw APIError.couldNotCreateURL
             }
@@ -115,12 +119,13 @@ public extension APIClient {
                 }
 
                 do {
-                    let pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
+                    var pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
+                    pagedList.generatedAt = (response as? HTTPURLResponse)?.allHeaderFields["X-Page-Generated"] as? String
                     completionHandler(.success(pagedList))
 
                     // Check if there are more pages to load
                     if pagedList.next != nil {
-                        self.get(model, page: page+1, completionHandler: completionHandler)
+                        self.get(model, page: page+1, lastUpdated: lastUpdated, completionHandler: completionHandler)
                     }
                 } catch {
                     return completionHandler(.failure(error))

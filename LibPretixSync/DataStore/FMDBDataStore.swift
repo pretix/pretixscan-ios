@@ -10,6 +10,16 @@ import Foundation
 
 /// DataStore that uses FMDB to store data inside a MySQL file
 public class FMDBDataStore: DataStore {
+
+    private var lastSynced = [String: String]()
+    public func storeLastSynced(_ data: [String: String]) {
+        lastSynced = data
+    }
+
+    public func retrieveLastSynced() -> [String: String] {
+        return lastSynced
+    }
+
     public func store(_ resources: [Any], for event: Event) {
 
     }

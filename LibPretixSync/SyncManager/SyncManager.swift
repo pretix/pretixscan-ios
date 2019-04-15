@@ -29,10 +29,12 @@ public class SyncManager {
         case isLastPage
     }
 
-    //  TODO: Save this in Config- or Data Store
-    private var lastSynced = [String: Date?]()
+    private var lastSynced = [String: String]() { didSet { configStore.dataStore?.storeLastSynced(lastSynced) }}
 
     public func beginSyncing() {
+        guard let dataStore = configStore.dataStore else { return }
+        lastSynced = dataStore.retrieveLastSynced()
+
         let firstSyncCompletionHandler: ((Error?) -> Void) = { error in
             guard error == nil else {
                 print(error!)
@@ -68,27 +70,27 @@ private extension SyncManager {
         do {
             let event = try getEvent()
 
-            configStore.apiClient?.get(model) { result in
+            configStore.apiClient?.get(model, lastUpdated: self.lastSynced[model.urlPathPart]) { result in
 
-                guard let pagedItemCategories = try? result.get() else {
+                guard let pagedList = try? result.get() else {
                     completionHandler(APIError.emptyResponse)
                     return
                 }
 
                 // Notify Listeners
-                let isLastPage = pagedItemCategories.next == nil
+                let isLastPage = pagedList.next == nil
                 NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
                     NotificationKeys.model: model.humanReadableName,
-                    NotificationKeys.loadedAmount: pagedItemCategories.results.count,
-                    NotificationKeys.totalAmount: pagedItemCategories.count,
+                    NotificationKeys.loadedAmount: pagedList.results.count,
+                    NotificationKeys.totalAmount: pagedList.count,
                     NotificationKeys.isLastPage: isLastPage])
 
                 // Store Data
-                self.configStore.dataStore?.store(pagedItemCategories.results, for: event)
+                self.configStore.dataStore?.store(pagedList.results, for: event)
 
                 // Callback that we are completely finished
                 if isLastPage {
-                    self.lastSynced[model.urlPathPart] = Date()
+                    self.lastSynced[model.urlPathPart] = pagedList.generatedAt ?? ""
                     completionHandler(nil)
                 }
             }
