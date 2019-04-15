@@ -12,6 +12,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
 
     @IBOutlet weak var versionCell: UITableViewCell!
+    @IBOutlet weak var forceSyncCell: UITableViewCell!
     @IBOutlet weak var resetContentCell: UITableViewCell!
     @IBOutlet weak var offlineModeCell: UITableViewCell!
     @IBOutlet weak var swiftMessagesLicenseCell: UITableViewCell!
@@ -23,6 +24,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        forceSyncCell.textLabel?.text = Localization.SettingsTableViewController.ForceSync
 
         versionCell.textLabel?.text = Localization.SettingsTableViewController.Version
         versionCell.detailTextLabel?.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
@@ -39,8 +42,9 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        // Offline Mode
-        if indexPath == tableView.indexPath(for: offlineModeCell) {
+        if indexPath == tableView.indexPath(for: forceSyncCell) {
+            forceSync()
+        } else if indexPath == tableView.indexPath(for: offlineModeCell) {
             toggleOfflineMode()
         } else if indexPath == tableView.indexPath(for: resetContentCell) {
             configStoreFactoryReset()
@@ -61,6 +65,10 @@ class SettingsTableViewController: UITableViewController, Configurable {
     }
 
     // MARK: - Actions
+    func forceSync() {
+        configStore?.syncManager.beginSyncing()
+    }
+
     func toggleOfflineMode() {
         if var configStore = configStore {
             configStore.asyncModeEnabled = !(configStore.asyncModeEnabled)
