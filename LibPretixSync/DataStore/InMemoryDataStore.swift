@@ -8,7 +8,9 @@
 
 import Foundation
 
-/// DataStore that uses FMDB to store data inside a MySQL file
+/// DataStore that stores data in memory for debugging and testing.
+///
+/// - Note: See `DataStore` for function level documentation.
 public class InMemoryDataStore: DataStore {
     private var lastSynced = [String: String]()
     public func storeLastSynced(_ data: [String: String]) {
@@ -20,18 +22,6 @@ public class InMemoryDataStore: DataStore {
     }
 
     public func store<T: Model>(_ resources: [T], for event: Event) {
-
-    }
-
-    public func store(_ itemCategories: [ItemCategory], for event: Event) {
-
-    }
-
-    public func store(_ items: [Item], for event: Event) {
-
-    }
-
-    public func store(_ orders: [Order], for event: Event) {
 
     }
 }

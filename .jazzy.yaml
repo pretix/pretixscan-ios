@@ -25,11 +25,14 @@ custom_categories:
   - name: Data Storage & Sync
     children:
     - DataStore
+    - InMemoryDataStore
     - FMDBDataStore
     - SyncManager
+    - APIClient
 
   - name: Models
     children:
+    - Model
     - Event
     - CheckInList
     - CheckIn
@@ -51,7 +54,3 @@ custom_categories:
     - Money
     - PagedList
     - MultiLingualString
-    
-  - name: API Client
-    children:
-    - APIClient

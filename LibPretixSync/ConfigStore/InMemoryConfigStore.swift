@@ -11,6 +11,8 @@ import UIKit
 /// ConfigStore implementation that stores configuration in memory.
 ///
 /// Set the `debug` flag to make it print out each change to the console.
+///
+/// - See: `ConfigStore`
 public class InMemoryConfigStore: ConfigStore {
     // MARK: - Welcome Screen
     public var welcomeScreenIsConfirmed: Bool = false { didSet { valueChanged() } }

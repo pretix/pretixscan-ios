@@ -18,8 +18,8 @@ class NotificationManager {
                                                name: configStore.changedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(configStoreFactoryReset(_:)),
                                                name: configStore.resetNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(syncStatusUpdate(_:)),
-                                               name: configStore.syncManager.syncStatusUpdateNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(syncDownloadStatusUpdate(_:)),
+                                               name: configStore.syncManager.syncDownloadStatusUpdateNotification, object: nil)
     }
 
     @objc
@@ -60,7 +60,7 @@ class NotificationManager {
     }
 
     @objc
-    func syncStatusUpdate(_ notification: Notification) {
+    func syncDownloadStatusUpdate(_ notification: Notification) {
         let model: String = notification.userInfo?[SyncManager.NotificationKeys.model] as? String ?? "No Model"
         let loadedAmount = notification.userInfo?[SyncManager.NotificationKeys.loadedAmount] as? Int ?? -1
         let totalAmount = notification.userInfo?[SyncManager.NotificationKeys.totalAmount] as? Int ?? -1

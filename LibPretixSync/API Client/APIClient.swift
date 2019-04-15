@@ -10,10 +10,14 @@ import Foundation
 
 /// Manages requests to and responses from the Pretix REST API.
 ///
-/// ## New Connections
-/// - Init with a config Store
+/// - Note: You should almost never use the APIClient directly. Instead, use an instance of `TicketValidator`, which uses
+///   `APIClient`, `SyncManager` and `DataStore` in various strategies to get you the result you want.
+///
+/// ## Creating new API Connections
+/// - Ask your user for a base URL and a device handshake token, usually via a QR code
+/// - Call `init:` with a config Store
 /// - Set the config store's apiBaseURL
-/// - Then call initialize with a DeviceInitializationRequest to obtain an API Token
+/// - Then call initialize with a DeviceInitializationRequest that contains the handshake token to obtain an API Token
 public class APIClient {
     // MARK: - Public Properties
     private var configStore: ConfigStore
@@ -41,6 +45,7 @@ public class APIClient {
 
 // MARK: - Devices
 public extension APIClient {
+    /// Retrieve an API token from the API and save it into the attached `ConfigStore`
     func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
         guard let baseURL = configStore.apiBaseURL else {
             print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")

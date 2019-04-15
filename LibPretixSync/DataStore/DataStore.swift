@@ -15,18 +15,13 @@ import Foundation
 ///         For performance reasons, implementations might do a comparison first and not update unchanged items.
 public protocol DataStore: class {
     // MARK: Metadata
+    /// Store timestamps of the last syncs
     func storeLastSynced(_ data: [String: String])
+
+    /// Retrieve timestamps of the last syncs
     func retrieveLastSynced() -> [String: String]
 
     // MARK: - Storing
+    /// Store a list of `Model`s related to an `Event`
     func store<T: Model>(_ resources: [T], for event: Event)
-
-    /// Store a list of `ItemCategory` instances.
-    func store(_ itemCategories: [ItemCategory], for event: Event)
-
-    /// Store a list of `Item` instances.
-    func store(_ items: [Item], for event: Event)
-
-    /// Store a list of `Order` instances.
-    func store(_ orders: [Order], for event: Event)
 }
