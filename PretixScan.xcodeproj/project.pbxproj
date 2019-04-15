@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		91CCDCAF6BD0E373EC1C6934 /* Pods_PretixScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */; };
+		DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E7225FB02B002D985B /* FMDBDataStore.swift */; };
+		DC0052EA2260D385002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
+		DC0052EB2260D437002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
 		DC07357A22392474008326F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC07357922392474008326F7 /* AppDelegate.swift */; };
 		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
@@ -39,9 +42,29 @@
 		DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */; };
 		DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A012256722100710EFA /* NotifcationManager.swift */; };
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
+		DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
 		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
 		DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */; };
+		DC8467AE225BCA6A0013F647 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AD225BCA6A0013F647 /* Order.swift */; };
+		DC8467B0225BD7F70013F647 /* OrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AF225BD7F70013F647 /* OrderTests.swift */; };
+		DC8467B1225BD8040013F647 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AD225BCA6A0013F647 /* Order.swift */; };
+		DC8467BC225CF4000013F647 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B2225BD93F0013F647 /* Locale.swift */; };
+		DC8467BD225CF4000013F647 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B4225CEE420013F647 /* Item.swift */; };
+		DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B6225CF0FB0013F647 /* ItemVariation.swift */; };
+		DC8467BF225CF4000013F647 /* ItemAddon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B8225CF2630013F647 /* ItemAddon.swift */; };
+		DC8467C0225CF4000013F647 /* ItemBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467BA225CF3D70013F647 /* ItemBundle.swift */; };
+		DC8467C1225CF4020013F647 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B2225BD93F0013F647 /* Locale.swift */; };
+		DC8467C2225CF4020013F647 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B4225CEE420013F647 /* Item.swift */; };
+		DC8467C3225CF4020013F647 /* ItemVariation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B6225CF0FB0013F647 /* ItemVariation.swift */; };
+		DC8467C4225CF4020013F647 /* ItemAddon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467B8225CF2630013F647 /* ItemAddon.swift */; };
+		DC8467C5225CF4020013F647 /* ItemBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467BA225CF3D70013F647 /* ItemBundle.swift */; };
+		DC8467C7225CF5280013F647 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
+		DC8467C8225CF52B0013F647 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
+		DC8467CA225CF9E20013F647 /* ItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C9225CF9E20013F647 /* ItemTests.swift */; };
+		DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467CD225D08D10013F647 /* ItemCategory.swift */; };
+		DC8467CF225D09C90013F647 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467CD225D08D10013F647 /* ItemCategory.swift */; };
+		DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */; };
 		DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */; };
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
@@ -113,6 +136,8 @@
 		21519C9F8BA4033B8E89C05F /* Pods-PretixScan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScan.debug.xcconfig"; path = "Target Support Files/Pods-PretixScan/Pods-PretixScan.debug.xcconfig"; sourceTree = "<group>"; };
 		BDF1F626BB1093C36D3971D4 /* Pods-PretixScan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScan.release.xcconfig"; path = "Target Support Files/Pods-PretixScan/Pods-PretixScan.release.xcconfig"; sourceTree = "<group>"; };
 		D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.debug.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
+		DC0052E92260D385002D985B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		DC07357622392474008326F7 /* PretixScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PretixScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07357922392474008326F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC07357E22392474008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -145,9 +170,21 @@
 		DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		DC2F4A012256722100710EFA /* NotifcationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationManager.swift; sourceTree = "<group>"; };
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
+		DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryDataStore.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTicketValidator.swift; sourceTree = "<group>"; };
+		DC8467AD225BCA6A0013F647 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		DC8467AF225BD7F70013F647 /* OrderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTests.swift; sourceTree = "<group>"; };
+		DC8467B2225BD93F0013F647 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
+		DC8467B4225CEE420013F647 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		DC8467B6225CF0FB0013F647 /* ItemVariation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVariation.swift; sourceTree = "<group>"; };
+		DC8467B8225CF2630013F647 /* ItemAddon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemAddon.swift; sourceTree = "<group>"; };
+		DC8467BA225CF3D70013F647 /* ItemBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemBundle.swift; sourceTree = "<group>"; };
+		DC8467C6225CF5280013F647 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
+		DC8467C9225CF9E20013F647 /* ItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTests.swift; sourceTree = "<group>"; };
+		DC8467CD225D08D10013F647 /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
+		DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategoryTests.swift; sourceTree = "<group>"; };
 		DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguredNavigationController.swift; sourceTree = "<group>"; };
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
@@ -294,6 +331,9 @@
 				DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */,
 				DCB35B932248F66100860385 /* RedemptionResponseTests.swift */,
 				DCDD82D0224BBD7600DC0200 /* CheckListStatusTests.swift */,
+				DC8467AF225BD7F70013F647 /* OrderTests.swift */,
+				DC8467C9225CF9E20013F647 /* ItemTests.swift */,
+				DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -373,6 +413,8 @@
 			isa = PBXGroup;
 			children = (
 				DC8467A6225B99590013F647 /* DataStore.swift */,
+				DC0052E7225FB02B002D985B /* FMDBDataStore.swift */,
+				DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */,
 			);
 			path = DataStore;
 			sourceTree = "<group>";
@@ -397,6 +439,8 @@
 		DCAAFF3F223AAB800059C000 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DC8467C6225CF5280013F647 /* TypeAliases.swift */,
+				DC0052E92260D385002D985B /* Model.swift */,
 				DCAAFF40223AAB8E0059C000 /* Handshake.swift */,
 				DC91EB32223FAFF300704F24 /* PagedList.swift */,
 				DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */,
@@ -409,6 +453,13 @@
 				DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */,
 				DCB35B902248F31400860385 /* RedemptionResponse.swift */,
 				DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */,
+				DC8467AD225BCA6A0013F647 /* Order.swift */,
+				DC8467B2225BD93F0013F647 /* Locale.swift */,
+				DC8467B4225CEE420013F647 /* Item.swift */,
+				DC8467B6225CF0FB0013F647 /* ItemVariation.swift */,
+				DC8467B8225CF2630013F647 /* ItemAddon.swift */,
+				DC8467BA225CF3D70013F647 /* ItemBundle.swift */,
+				DC8467CD225D08D10013F647 /* ItemCategory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -484,8 +535,8 @@
 				DCAAFF2D2239342B0059C000 /* Run Linter */,
 				DC07357322392474008326F7 /* Frameworks */,
 				DC07357422392474008326F7 /* Resources */,
-				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
 				1521320A5643DCDD8F3FCE3E /* [CP] Embed Pods Frameworks */,
+				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
 			);
 			buildRules = (
 			);
@@ -587,12 +638,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PretixScan/Pods-PretixScan-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -646,7 +699,7 @@
 		};
 		DCAAFF2C2239323B0059C000 /* Generate Documentation */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -658,9 +711,9 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\n#if ! which jazzy > /dev/null; then\n#echo \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\n#else\n#jazzy\n#fi\n";
+			shellScript = "set -e\n\nif ! which jazzy > /dev/null; then\necho \"warning: Jazzy is not installed. Vistit http://github.com/realm/jazzy to learn more.\"\nelse\nunset LLVM_TARGET_TRIPLE_SUFFIX\njazzy\nfi\n";
 		};
 		DCAAFF2D2239342B0059C000 /* Run Linter */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -687,6 +740,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC8467C8225CF52B0013F647 /* TypeAliases.swift in Sources */,
 				DC227F2A2253E0AE00314448 /* LoadingIndicator.swift in Sources */,
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
 				DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */,
@@ -698,6 +752,7 @@
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
+				DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */,
@@ -706,6 +761,7 @@
 				DCDD82CD224AB25900DC0200 /* Color.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
+				DC8467AE225BCA6A0013F647 /* Order.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
 				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
@@ -718,7 +774,9 @@
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
 				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,
+				DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */,
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
+				DC0052EA2260D385002D985B /* Model.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
@@ -727,20 +785,26 @@
 				DC8467A7225B99590013F647 /* DataStore.swift in Sources */,
 				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */,
+				DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */,
 				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
+				DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */,
 				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
 				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
+				DC8467BD225CF4000013F647 /* Item.swift in Sources */,
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
+				DC8467C0225CF4000013F647 /* ItemBundle.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
+				DC8467BC225CF4000013F647 /* Locale.swift in Sources */,
+				DC8467BF225CF4000013F647 /* ItemAddon.swift in Sources */,
 				DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */,
 				DCDD82D6224BCBA000DC0200 /* CheckInStatusOverviewTableViewCell.swift in Sources */,
 				DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */,
@@ -754,27 +818,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC8467B0225BD7F70013F647 /* OrderTests.swift in Sources */,
 				DCB35B922248F65000860385 /* RedemptionResponse.swift in Sources */,
 				DC1D6FBC2240FA46008A9E06 /* OrderPosition.swift in Sources */,
 				DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */,
 				DCDD82D2224BBDAB00DC0200 /* CheckInListStatus.swift in Sources */,
+				DC8467C2225CF4020013F647 /* Item.swift in Sources */,
 				DCB35B8F2248EB8400860385 /* RedemptionRequest.swift in Sources */,
 				DCB35B8E2248EB5800860385 /* RedemptionRequestTests.swift in Sources */,
 				DCAAFF4B223AB9CE0059C000 /* DeviceInitializationParsingTests.swift in Sources */,
 				DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */,
 				DCAAFF4C223AB9F20059C000 /* DeviceInitializationRequest.swift in Sources */,
+				DC8467CF225D09C90013F647 /* ItemCategory.swift in Sources */,
 				DC1D6FBD2240FA49008A9E06 /* CheckIn.swift in Sources */,
 				DCAAFF4D223AB9F40059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DCDD82D1224BBD7600DC0200 /* CheckListStatusTests.swift in Sources */,
+				DC8467CA225CF9E20013F647 /* ItemTests.swift in Sources */,
 				DCC00042223BEB3B00236424 /* Event.swift in Sources */,
 				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
+				DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */,
 				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
+				DC8467C4225CF4020013F647 /* ItemAddon.swift in Sources */,
 				DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */,
 				DCB35B9922490D5200860385 /* DateFormattingHelpers.swift in Sources */,
+				DC8467C3225CF4020013F647 /* ItemVariation.swift in Sources */,
 				DCC00041223BEAF300236424 /* EventTests.swift in Sources */,
+				DC8467B1225BD8040013F647 /* Order.swift in Sources */,
+				DC8467C5225CF4020013F647 /* ItemBundle.swift in Sources */,
 				DCAAFF44223AB0920059C000 /* Handshake.swift in Sources */,
+				DC8467C7225CF5280013F647 /* TypeAliases.swift in Sources */,
+				DC0052EB2260D437002D985B /* Model.swift in Sources */,
 				DCB35B942248F66100860385 /* RedemptionResponseTests.swift in Sources */,
+				DC8467C1225CF4020013F647 /* Locale.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

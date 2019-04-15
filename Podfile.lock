@@ -1,18 +1,24 @@
 PODS:
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - SwiftMessages (6.0.2):
     - SwiftMessages/App (= 6.0.2)
   - SwiftMessages/App (6.0.2)
 
 DEPENDENCIES:
+  - FMDB
   - SwiftMessages
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - FMDB
     - SwiftMessages
 
 SPEC CHECKSUMS:
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   SwiftMessages: 8b3cc68dba2f1c91aac1a74c90b10287aac35371
 
-PODFILE CHECKSUM: fbddb49d0253766cdb1aab7964020d323c84d1aa
+PODFILE CHECKSUM: 4e84896c6565a3d9569c055c361f8150379ad1ba
 
 COCOAPODS: 1.6.1

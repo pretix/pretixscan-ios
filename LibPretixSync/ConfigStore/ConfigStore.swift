@@ -10,23 +10,35 @@ import Foundation
 
 /// A protocol that defines elements that contain information about the app's configuration.
 public protocol ConfigStore {
+    // MARK: - Configuration
+    /// Restore all settings to factory default and start over. Returns the app into the state at first launch.
+    func factoryReset()
+
+    // MARK: - Configured Sub Systems
+    /// Creates or returns a singleton APIClient instance configured for this ConfigStore
+    var apiClient: APIClient? { get }
+
+    /// Creates or returns a singleton TicketValidator instance configured for this ConfigStore
+    ///
+    /// The type of TicketValidator depends on the `asyncModeEnabled` property.
+    var ticketValidator: TicketValidator? { get }
+
+    /// Returns a singleton SyncManager instance configured for this ConfigStore
+    var syncManager: SyncManager { get }
+
+    /// Creates or returns a singleton DataStore instance configured for this ConfigStore
+    var dataStore: DataStore? { get }
+
     // MARK: - Welcome Screen
     /// Returns `true` if the warning screen has been accepted by the user
     var welcomeScreenIsConfirmed: Bool { get set }
 
+    // MARK: - API Configuration
     /// The base URL for the API
     var apiBaseURL: URL? { get set }
 
     /// The access token for the API
     var apiToken: String? { get set }
-
-    /// Creates or returns a single APIClient instance configured for this ConfigStore
-    var apiClient: APIClient? { get }
-
-    /// Creates or returns a single TicketValidator instance configured for this ConfigStore
-    ///
-    /// The type of TicketValidator depends on the `asyncModeEnabled` property.
-    var ticketValidator: TicketValidator? { get }
 
     /// If `true`, the app will use a local cache to redeem tickets. Will access the internet each time otherwise.
     ///
@@ -52,9 +64,6 @@ public protocol ConfigStore {
 
     /// The CheckInList to scan against
     var checkInList: CheckInList? { get set }
-
-    /// Restore all settings to factory default and start over. Returns the app into the state at first launch.
-    func factoryReset()
 }
 
 extension ConfigStore {

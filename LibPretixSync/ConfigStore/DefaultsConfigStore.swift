@@ -13,7 +13,7 @@ import Foundation
 /// Saving occurs automatically each time a property is set.
 ///
 /// Loading occurs at init time. You can also load manually by calling `loadFromDefaults()`.
-class DefaultsConfigStore: ConfigStore {
+public class DefaultsConfigStore: ConfigStore {
     private var defaults: UserDefaults
 
     private enum Keys: String {
@@ -75,6 +75,16 @@ class DefaultsConfigStore: ConfigStore {
             _offlineTicketValidator = _offlineTicketValidator ?? OfflineTicketValidator(configStore: self)
             return _offlineTicketValidator
         }
+    }
+
+    public var syncManager: SyncManager {
+        _syncManager = _syncManager ?? SyncManager(configStore: self)
+        return _syncManager!
+    }
+
+    public var dataStore: DataStore? {
+        _dataStore = _dataStore ?? FMDBDataStore()
+        return _dataStore
     }
 
     public var deviceName: String? {
@@ -153,6 +163,8 @@ class DefaultsConfigStore: ConfigStore {
     private var _apiClient: APIClient?
     private var _offlineTicketValidator: OfflineTicketValidator?
     private var _onlineTicketValidator: OnlineTicketValidator?
+    private var _syncManager: SyncManager?
+    private var _dataStore: DataStore?
     private var _deviceName: String?
     private var _organizerSlug: String?
     private var _deviceID: Int?

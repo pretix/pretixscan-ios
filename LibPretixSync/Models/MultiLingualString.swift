@@ -47,9 +47,35 @@ extension MultiLingualString: CustomStringConvertible {
 
 // MARK: Easy creation
 extension MultiLingualString {
-    static func new(_ with: String) -> MultiLingualString {
+    static func english(_ with: String) -> MultiLingualString {
         return MultiLingualString.init(
             english: with,
+            german: nil,
+            germanInformal: nil,
+            spanish: nil,
+            french: nil,
+            dutch: nil,
+            dutchInformal: nil,
+            turkish: nil
+        )
+    }
+
+    static func german(_ with: String) -> MultiLingualString {
+        return MultiLingualString.init(
+            english: nil,
+            german: with,
+            germanInformal: nil,
+            spanish: nil,
+            french: nil,
+            dutch: nil,
+            dutchInformal: nil,
+            turkish: nil
+        )
+    }
+
+    static func empty() -> MultiLingualString {
+        return MultiLingualString.init(
+            english: nil,
             german: nil,
             germanInformal: nil,
             spanish: nil,

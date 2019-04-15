@@ -24,7 +24,7 @@ public struct CheckInListStatus: Codable, Equatable {
     /// An item to be checked in, e.g. "Student Ticket", "Regular Ticket", or "T-Shirt"
     public struct Item: Codable, Equatable {
         public let name: String
-        public let identifier: Int
+        public let identifier: Identifier
         public let checkinCount: Int
         public let admission: Bool
         public let positionCount: Int

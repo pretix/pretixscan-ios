@@ -10,10 +10,14 @@ import Foundation
 
 /// Manages requests to and responses from the Pretix REST API.
 ///
-/// ## New Connections
-/// - Init with a config Store
+/// - Note: You should almost never use the APIClient directly. Instead, use an instance of `TicketValidator`, which uses
+///   `APIClient`, `SyncManager` and `DataStore` in various strategies to get you the result you want.
+///
+/// ## Creating new API Connections
+/// - Ask your user for a base URL and a device handshake token, usually via a QR code
+/// - Call `init:` with a config Store
 /// - Set the config store's apiBaseURL
-/// - Then call initialize with a DeviceInitializationRequest to obtain an API Token
+/// - Then call initialize with a DeviceInitializationRequest that contains the handshake token to obtain an API Token
 public class APIClient {
     // MARK: - Public Properties
     private var configStore: ConfigStore
@@ -41,6 +45,7 @@ public class APIClient {
 
 // MARK: - Devices
 public extension APIClient {
+    /// Retrieve an API token from the API and save it into the attached `ConfigStore`
     func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
         guard let baseURL = configStore.apiBaseURL else {
             print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
@@ -84,6 +89,65 @@ public extension APIClient {
         }
 
         task.resume()
+    }
+}
+
+// MARK: - Retrieving Items
+public extension APIClient {
+
+    func get<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
+                       completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) {
+        let task = getTask(model, page: page, lastUpdated: lastUpdated, completionHandler: completionHandler)
+        task?.resume()
+    }
+
+    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
+                           completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
+        do {
+            let organizer = try getOrganizerSlug()
+            let event = try getEvent()
+            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.urlPathPart)/")
+
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            urlComponents?.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
+            if lastUpdated != nil {
+                urlComponents?.queryItems = [URLQueryItem(name: "modified_since", value: lastUpdated)]
+            }
+            guard let urlComponentsURL = urlComponents?.url else {
+                throw APIError.couldNotCreateURL
+            }
+            let urlRequest = try createURLRequest(for: urlComponentsURL)
+
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(.failure(error))
+                    return
+                }
+
+                guard let data = data else {
+                    completionHandler(.failure(APIError.emptyResponse))
+                    return
+                }
+
+                do {
+                    var pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
+                    pagedList.generatedAt = (response as? HTTPURLResponse)?.allHeaderFields["X-Page-Generated"] as? String
+                    completionHandler(.success(pagedList))
+
+                    // Check if there are more pages to load
+                    if pagedList.next != nil {
+                        self.get(model, page: page+1, lastUpdated: lastUpdated, completionHandler: completionHandler)
+                    }
+                } catch {
+                    return completionHandler(.failure(error))
+                }
+
+            }
+            return task
+        } catch {
+            completionHandler(.failure(error))
+            return nil
+        }
     }
 }
 

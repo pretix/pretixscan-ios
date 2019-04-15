@@ -3,24 +3,36 @@ author_url: http://pretix.eu
 github_url: https://github.com/pretix
 copyright: '© 2019 [rami.io](http://rami.io)'
 
-swift_version: 4.2.1
-
 module: PretixScan
 module_version: 1.0a
+
+theme: fullwidth
 
 custom_categories:
   - name: TicketValidator
     children:
     - TicketValidator
     - OnlineTicketValidator
+    - OfflineTicketValidator
 
   - name: ConfigStore
     children:
     - ConfigStore
+    - ConfigStoreValue
     - InMemoryConfigStore
+    - DefaultsConfigStore
+
+  - name: Data Storage & Sync
+    children:
+    - DataStore
+    - InMemoryDataStore
+    - FMDBDataStore
+    - SyncManager
+    - APIClient
 
   - name: Models
     children:
+    - Model
     - Event
     - CheckInList
     - CheckIn
@@ -30,12 +42,15 @@ custom_categories:
     - DeviceInitializationResponse
     - RedemptionRequest
     - RedemptionResponse
-    
-  - name: API Client
-    children:
-    - APIClient
-
-  - name: Meta Models
-    children: 
+    - Locale
+    - CheckInListStatus
+    - Item
+    - ItemAddon
+    - ItemBundle
+    - ItemCategory
+    - ItemVariation
+    - Order
+    - Identifier
+    - Money
     - PagedList
     - MultiLingualString

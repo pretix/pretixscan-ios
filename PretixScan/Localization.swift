@@ -81,6 +81,7 @@ struct Localization {
         static let AboutSectionTitle = NSLocalizedString("About this App", comment: "")
         static let ConfigurationSectionTitle = NSLocalizedString("Configuration", comment: "")
         static let LicensesSectionTitle = NSLocalizedString("Libraries and Licenses", comment: "")
+        static let ForceSync = NSLocalizedString("Force Sync", comment: "")
         static let Version = NSLocalizedString("App Version", comment: "")
         static let PerformFactoryReset = NSLocalizedString("Reset Contents and Settings", comment: "")
         static let FactoryResetConfirmMessage = NSLocalizedString("This will delete event data from the device and log you out. Do you want to continue?", comment: "")

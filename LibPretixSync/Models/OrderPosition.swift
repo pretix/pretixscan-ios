@@ -11,22 +11,22 @@ import Foundation
 /// Part of an Order
 public struct OrderPosition: Codable, Equatable {
     /// Internal ID of the order position
-    public let identifier: Int
+    public let identifier: Identifier
 
     /// Order code of the order the position belongs to
     public let order: String
 
     /// Number of the position within the order
-    public let positionid: Int
+    public let positionid: Identifier
 
     /// ID of the purchased item
-    public let item: Int
+    public let item: Identifier
 
     /// ID of the purchased variation (if any)
-    public let variation: Int?
+    public let variation: Identifier?
 
     /// Price of this position
-    public let price: String
+    public let price: Money
 
     /// Specified attendee name for this position
     public let attendeeName: String?

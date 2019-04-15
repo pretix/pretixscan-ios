@@ -66,6 +66,9 @@ Uses the DataStore to check the validity of tickets.
 - adds new information to DataStore's upload queue
 - tries to init sync every now and then
 
+# Tests
+Mostly just parsing tests
+
 # Rebranding 
 TBD
 

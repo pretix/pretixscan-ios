@@ -11,6 +11,8 @@ import UIKit
 /// ConfigStore implementation that stores configuration in memory.
 ///
 /// Set the `debug` flag to make it print out each change to the console.
+///
+/// - See: `ConfigStore`
 public class InMemoryConfigStore: ConfigStore {
     // MARK: - Welcome Screen
     public var welcomeScreenIsConfirmed: Bool = false { didSet { valueChanged() } }
@@ -23,6 +25,18 @@ public class InMemoryConfigStore: ConfigStore {
         return storedAPIClient
     }
     private var storedAPIClient: APIClient?
+
+    public var dataStore: DataStore? {
+        storedDataStore = storedDataStore ?? FMDBDataStore()
+        return storedDataStore
+    }
+    private var storedDataStore: DataStore?
+
+    public var syncManager: SyncManager {
+        storedSyncManager = storedSyncManager ?? SyncManager(configStore: self)
+        return storedSyncManager!
+    }
+    private var storedSyncManager: SyncManager?
 
     // MARK: TicketValidator
     public var ticketValidator: TicketValidator? {
