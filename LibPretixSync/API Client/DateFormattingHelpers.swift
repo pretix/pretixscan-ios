@@ -27,11 +27,27 @@ extension JSONDecoder.DateDecodingStrategy {
     }
 }
 
+extension JSONDecoder {
+    static let iso8601withFractionsDecoder: JSONDecoder = {
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.dateDecodingStrategy = .iso8601withFractions
+        return jsonDecoder
+    }()
+}
+
 extension JSONEncoder.DateEncodingStrategy {
     static let iso8601withFractions = custom { date, encoder throws in
         var container = encoder.singleValueContainer()
         try container.encode(Formatter.iso8601.string(from: date))
     }
+}
+
+extension JSONEncoder {
+    public static let iso8601withFractionsEncoder: JSONEncoder = {
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.dateEncodingStrategy = .iso8601withFractions
+        return jsonEncoder
+    }()
 }
 
 extension Formatter {

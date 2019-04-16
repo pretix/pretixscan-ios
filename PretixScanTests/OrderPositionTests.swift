@@ -9,11 +9,7 @@
 import XCTest
 
 class OrderPositionTests: XCTestCase {
-    let jsonDecoder: JSONDecoder = {
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .iso8601withFractions
-        return jsonDecoder
-    }()
+    let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
 
     let exampleJSON = """
         {

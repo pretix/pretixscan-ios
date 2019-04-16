@@ -20,13 +20,13 @@ class HandshakeParsingTests: XCTestCase {
             """.data(using: .utf8)!
 
     func testEncodingValidHandshake() {
-        let parsedHandshake = try? JSONDecoder().decode(Handshake.self, from: validJSON)
+        let parsedHandshake = try? JSONDecoder.iso8601withFractionsDecoder.decode(Handshake.self, from: validJSON)
         XCTAssertNotNil(parsedHandshake)
         XCTAssertEqual(parsedHandshake, validHandshake)
     }
 
     func testEncodingInvalidHandshake() {
-        let invalidHandshake = try? JSONDecoder().decode(Handshake.self, from: invalidJSON)
+        let invalidHandshake = try? JSONDecoder.iso8601withFractionsDecoder.decode(Handshake.self, from: invalidJSON)
         XCTAssertNil(invalidHandshake)
     }
 }

@@ -44,13 +44,13 @@ class MultiLingualStringTests: XCTestCase {
     )
 
     func testCompleteParsing() {
-        let parsedMLString = try? JSONDecoder().decode(MultiLingualString.self, from: completeJSON)
+        let parsedMLString = try? JSONDecoder.iso8601withFractionsDecoder.decode(MultiLingualString.self, from: completeJSON)
         XCTAssertNotNil(parsedMLString)
         XCTAssertEqual(parsedMLString, completeMultiLingualString)
     }
 
     func testPartialParsing() {
-        let parsedMLString = try? JSONDecoder().decode(MultiLingualString.self, from: partialJSON)
+        let parsedMLString = try? JSONDecoder.iso8601withFractionsDecoder.decode(MultiLingualString.self, from: partialJSON)
         XCTAssertNotNil(parsedMLString)
         XCTAssertEqual(parsedMLString?.german, "Demokonferenz")
         XCTAssertEqual(parsedMLString?.turkish, "Konferans")
@@ -58,7 +58,7 @@ class MultiLingualStringTests: XCTestCase {
     }
 
     func testEmptyParsing() {
-        let parsedMLString = try? JSONDecoder().decode(MultiLingualString.self, from: emptyJSON)
+        let parsedMLString = try? JSONDecoder.iso8601withFractionsDecoder.decode(MultiLingualString.self, from: emptyJSON)
         XCTAssertNotNil(parsedMLString)
         XCTAssertNil(parsedMLString?.english)
         XCTAssertNil(parsedMLString?.german)
@@ -71,13 +71,13 @@ class MultiLingualStringTests: XCTestCase {
     }
 
     func testStringRepresentation() {
-        var parsedMLString = try? JSONDecoder().decode(MultiLingualString.self, from: completeJSON)
+        var parsedMLString = try? JSONDecoder.iso8601withFractionsDecoder.decode(MultiLingualString.self, from: completeJSON)
         XCTAssertEqual(parsedMLString?.description, "Demo Conference")
 
-        parsedMLString = try? JSONDecoder().decode(MultiLingualString.self, from: partialJSON)
+        parsedMLString = try? JSONDecoder.iso8601withFractionsDecoder.decode(MultiLingualString.self, from: partialJSON)
         XCTAssertEqual(parsedMLString?.description, "Demokonferenz")
 
-        parsedMLString = try? JSONDecoder().decode(MultiLingualString.self, from: emptyJSON)
+        parsedMLString = try? JSONDecoder.iso8601withFractionsDecoder.decode(MultiLingualString.self, from: emptyJSON)
         XCTAssertEqual(parsedMLString?.description, "(no value)")
     }
 

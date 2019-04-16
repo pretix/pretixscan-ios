@@ -54,7 +54,6 @@ public class SyncManager {
                                                name: syncDownloadStatusUpdateNotification, object: nil)
     }
 
-
     // MARK: - Notifications
     var syncDownloadStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
 
@@ -172,7 +171,8 @@ private extension SyncManager {
         do {
             let event = try getEvent()
 
-            return configStore.apiClient?.getTask(model, lastUpdated: self.lastSynced[model.urlPathPart]) { result in
+            return configStore.apiClient?.getTask(model, lastUpdated: self.lastSynced[model.urlPathPart],
+                                                  isFirstGet: isFirstSync) { result in
 
                 guard let pagedList = try? result.get() else {
                     completionHandler(APIError.emptyResponse)

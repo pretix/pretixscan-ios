@@ -19,22 +19,10 @@ import Foundation
 /// - Set the config store's apiBaseURL
 /// - Then call initialize with a DeviceInitializationRequest that contains the handshake token to obtain an API Token
 public class APIClient {
-    // MARK: - Public Properties
     private var configStore: ConfigStore
 
-    // MARK: - Private Properties
-    private let jsonEncoder: JSONEncoder = {
-        let jsonEncoder = JSONEncoder()
-        jsonEncoder.dateEncodingStrategy = .iso8601withFractions
-        return jsonEncoder
-    }()
-
-    private let jsonDecoder: JSONDecoder = {
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .iso8601withFractions
-        return jsonDecoder
-    }()
-
+    private let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
+    private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
     private let session = URLSession.shared
 
     // MARK: - Initialization
@@ -95,13 +83,13 @@ public extension APIClient {
 // MARK: - Retrieving Items
 public extension APIClient {
 
-    func get<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
+    func get<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, isFirstGet: Bool,
                        completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) {
-        let task = getTask(model, page: page, lastUpdated: lastUpdated, completionHandler: completionHandler)
+        let task = getTask(model, page: page, lastUpdated: lastUpdated, isFirstGet: isFirstGet, completionHandler: completionHandler)
         task?.resume()
     }
 
-    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
+    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, isFirstGet: Bool,
                            completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
@@ -112,6 +100,9 @@ public extension APIClient {
             urlComponents?.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
             if lastUpdated != nil {
                 urlComponents?.queryItems = [URLQueryItem(name: "modified_since", value: lastUpdated)]
+            }
+            if isFirstGet {
+                urlComponents?.queryItems = [URLQueryItem(name: "ordering", value: "datetime_desc")]
             }
             guard let urlComponentsURL = urlComponents?.url else {
                 throw APIError.couldNotCreateURL
@@ -136,7 +127,8 @@ public extension APIClient {
 
                     // Check if there are more pages to load
                     if pagedList.next != nil {
-                        self.get(model, page: page+1, lastUpdated: lastUpdated, completionHandler: completionHandler)
+                        self.get(model, page: page+1, lastUpdated: lastUpdated, isFirstGet: isFirstGet,
+                                 completionHandler: completionHandler)
                     }
                 } catch {
                     return completionHandler(.failure(error))

@@ -9,17 +9,8 @@
 import XCTest
 
 class RedemptionRequestTests: XCTestCase {
-    let jsonDecoder: JSONDecoder = {
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .iso8601withFractions
-        return jsonDecoder
-    }()
-
-    let jsonEncoder: JSONEncoder = {
-        let jsonEncoder = JSONEncoder()
-        jsonEncoder.dateEncodingStrategy = .iso8601withFractions
-        return jsonEncoder
-    }()
+    let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
+    let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
 
     let exampleJSONNoQuestions = String("""
         {

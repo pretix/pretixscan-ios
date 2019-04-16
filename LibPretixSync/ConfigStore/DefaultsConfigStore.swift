@@ -173,17 +173,8 @@ public class DefaultsConfigStore: ConfigStore {
     private var _checkInList: CheckInList?
     private var _asyncModeEnabled: Bool = false
 
-    private let jsonEncoder: JSONEncoder = {
-        let jsonEncoder = JSONEncoder()
-        jsonEncoder.dateEncodingStrategy = .iso8601withFractions
-        return jsonEncoder
-    }()
-
-    private let jsonDecoder: JSONDecoder = {
-        let jsonDecoder = JSONDecoder()
-        jsonDecoder.dateDecodingStrategy = .iso8601withFractions
-        return jsonDecoder
-    }()
+    private let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
+    private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
 
     init(defaults: UserDefaults) {
         self.defaults = defaults
