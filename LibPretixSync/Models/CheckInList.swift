@@ -18,7 +18,10 @@ import Foundation
 /// performances as well as tickets only valid for single performances.
 ///
 /// Source: https://docs.pretix.eu/en/latest/api/resources/checkinlists.html
-public struct CheckInList: Codable, Equatable {
+public struct CheckInList: Model {
+    public static let humanReadableName = "Check-In List"
+    public static let urlPathPart = "checkinlists"
+
     /// Internal ID of the check-in list
     public let identifier: Identifier
 
@@ -53,5 +56,17 @@ public struct CheckInList: Codable, Equatable {
         case positionCount = "position_count"
         case checkinCount = "checkin_count"
         case includePending = "include_pending"
+    }
+}
+
+extension CheckInList: Equatable {
+    public static func == (lhs: CheckInList, rhs: CheckInList) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+}
+
+extension CheckInList: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.identifier)
     }
 }
