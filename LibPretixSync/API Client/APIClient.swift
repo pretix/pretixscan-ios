@@ -170,27 +170,15 @@ public extension APIClient {
 public extension APIClient {
     /// Returns a list of all check-in lists within a given event.
     func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
-        do {
-            let organizer = try getOrganizerSlug()
-            let event = try getEvent()
-            let urlPath = "/api/v1/organizers/\(organizer)/events/\(event.slug)/checkinlists/"
-            let urlRequest = try createURLRequest(for: urlPath)
-
-            let task = session.dataTask(with: urlRequest) { (data, response, error) in
-                if let error = self.checkResponse(data: data, response: response, error: error) {
-                    completionHandler(nil, error)
-                    return
-                }
-
-                let pagedListResult: (list: PagedList<CheckInList>?, error: Error?) = self.pagedList(from: data!)
-                completionHandler(pagedListResult.list?.results, pagedListResult.error)
+        let task = getTask(CheckInList.self, lastUpdated: nil, isFirstGet: true) { result in
+            switch result {
+            case .failure(let error):
+                completionHandler(nil, error)
+            case .success(let eventList):
+                completionHandler(eventList.results, nil)
             }
-            task.resume()
-
-        } catch {
-            completionHandler(nil, error)
         }
-
+        task?.resume()
     }
 
     /// Search all OrderPositions within a CheckInList
