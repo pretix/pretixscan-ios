@@ -154,12 +154,18 @@ public extension APIClient {
 public extension APIClient {
     /// Returns a list of all events within a given organizer the authenticated user/token has access to.
     func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
+        var results = [Event]()
+
         let task = getTask(Event.self, lastUpdated: nil, isFirstGet: true) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
-            case .success(let eventList):
-                completionHandler(eventList.results, nil)
+            case .success(let resultList):
+                results += resultList.results
+                if resultList.next == nil {
+                    // Last Page
+                    completionHandler(results, nil)
+                }
             }
         }
         task?.resume()
@@ -170,12 +176,18 @@ public extension APIClient {
 public extension APIClient {
     /// Returns a list of all check-in lists within a given event.
     func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
+        var results = [CheckInList]()
+
         let task = getTask(CheckInList.self, lastUpdated: nil, isFirstGet: true) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
-            case .success(let eventList):
-                completionHandler(eventList.results, nil)
+            case .success(let resultList):
+                results += resultList.results
+                if resultList.next == nil {
+                    // Last Page
+                    completionHandler(results, nil)
+                }
             }
         }
         task?.resume()
