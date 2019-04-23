@@ -11,7 +11,10 @@ import Foundation
 /// An Event managed by Pretix
 ///
 /// Source: https://docs.pretix.eu/en/latest/api/resources/events.html
-public struct Event: Codable, Equatable {
+public struct Event: Model {
+    public static let humanReadableName = "Events"
+    public static let urlPathPart = "events"
+
     /// The event’s full name
     public let name: MultiLingualString
 
@@ -25,5 +28,17 @@ public struct Event: Codable, Equatable {
         case name
         case slug
         case dateFrom = "date_from"
+    }
+}
+
+extension Event: Equatable {
+    public static func == (lhs: Event, rhs: Event) -> Bool {
+        return lhs.slug == rhs.slug
+    }
+}
+
+extension Event: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.slug)
     }
 }
