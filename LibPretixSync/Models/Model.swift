@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Model: Codable, Equatable {
+public protocol Model: Codable, Hashable {
     /// A human name for the model, used in logging and UI
     static var humanReadableName: String { get }
 

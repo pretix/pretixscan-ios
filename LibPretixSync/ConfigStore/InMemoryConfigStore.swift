@@ -27,7 +27,7 @@ public class InMemoryConfigStore: ConfigStore {
     private var storedAPIClient: APIClient?
 
     public var dataStore: DataStore? {
-        storedDataStore = storedDataStore ?? FMDBDataStore()
+        storedDataStore = storedDataStore ?? InMemoryDataStore()
         return storedDataStore
     }
     private var storedDataStore: DataStore?
