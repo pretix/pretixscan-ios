@@ -126,10 +126,12 @@ public class SyncManager {
         }
 
         if lastSynced[Order.urlPathPart] == nil {
-            // Item never synced
+            // Orders never synced
             queue(task: syncTask(Order.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
+        queue(task: syncTask(Event.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
+        queue(task: syncTask(CheckInList.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         queue(task: syncTask(ItemCategory.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
         queue(task: syncTask(Item.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
         queue(task: syncTask(Order.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
