@@ -24,7 +24,15 @@ public class InMemoryDataStore: DataStore {
 
     // MARK: - Storing
     public func store<T: Model>(_ resources: [T], for event: Event) {
-        if let orders = resources as? [Order] {
+        if let events = resources as? [Event] {
+            for event in events {
+                self.events.insert(event)
+            }
+        } else if let checkInLists = resources as? [CheckInList] {
+            for checkInList in checkInLists {
+                self.checkInLists.insert(checkInList)
+            }
+        } else if let orders = resources as? [Order] {
             for order in orders {
                 self.orders.insert(order)
             }
@@ -41,10 +49,12 @@ public class InMemoryDataStore: DataStore {
 
     // MARK: - Retrieving
     public func getEvents() -> [Event] {
-        return []
+        return Array(events)
     }
 
     // MARK: - Internal
+    private var events = Set<Event>()
+    private var checkInLists = Set<CheckInList>()
     private var orders = Set<Order>()
     private var itemCategories = Set<ItemCategory>()
     private var items = Set<Item>()
