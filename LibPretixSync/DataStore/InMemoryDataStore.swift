@@ -12,6 +12,7 @@ import Foundation
 ///
 /// - Note: See `DataStore` for function level documentation.
 public class InMemoryDataStore: DataStore {
+    // MARK: - Last Synced
     private var lastSynced = [String: String]()
     public func storeLastSynced(_ data: [String: String]) {
         lastSynced = data
@@ -21,6 +22,7 @@ public class InMemoryDataStore: DataStore {
         return lastSynced
     }
 
+    // MARK: - Storing
     public func store<T: Model>(_ resources: [T], for event: Event) {
         if let orders = resources as? [Order] {
             for order in orders {
@@ -35,6 +37,11 @@ public class InMemoryDataStore: DataStore {
                 self.items.insert(item)
             }
         }
+    }
+
+    // MARK: - Retrieving
+    public func getEvents() -> [Event] {
+        return []
     }
 
     // MARK: - Internal

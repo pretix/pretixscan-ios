@@ -24,4 +24,8 @@ public protocol DataStore: class {
     // MARK: - Storing
     /// Store a list of `Model`s related to an `Event`
     func store<T: Model>(_ resources: [T], for event: Event)
+
+    // MARK: - Retrieving
+    // Retrieve all Events for the current user
+    func getEvents() -> [Event]
 }
