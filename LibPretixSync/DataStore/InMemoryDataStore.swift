@@ -22,6 +22,23 @@ public class InMemoryDataStore: DataStore {
     }
 
     public func store<T: Model>(_ resources: [T], for event: Event) {
-
+        if let orders = resources as? [Order] {
+            for order in orders {
+                self.orders.insert(order)
+            }
+        } else if let itemCategories = resources as? [ItemCategory] {
+            for itemCategory in itemCategories {
+                self.itemCategories.insert(itemCategory)
+            }
+        } else if let items = resources as? [Item] {
+            for item in items {
+                self.items.insert(item)
+            }
+        }
     }
+
+    // MARK: - Internal
+    private var orders = Set<Order>()
+    private var itemCategories = Set<ItemCategory>()
+    private var items = Set<Item>()
 }

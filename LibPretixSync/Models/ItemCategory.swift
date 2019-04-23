@@ -41,3 +41,15 @@ public struct ItemCategory: Model {
         case isAddon = "is_addon"
     }
 }
+
+extension ItemCategory: Equatable {
+    public static func == (lhs: ItemCategory, rhs: ItemCategory) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+}
+
+extension ItemCategory: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.identifier)
+    }
+}

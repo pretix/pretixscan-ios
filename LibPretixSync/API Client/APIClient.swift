@@ -97,13 +97,15 @@ public extension APIClient {
             let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.urlPathPart)/")
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            urlComponents?.queryItems = [URLQueryItem(name: "page", value: "\(page)")]
+            var queryItems = [URLQueryItem]()
+            queryItems.append(URLQueryItem(name: "page", value: "\(page)"))
             if lastUpdated != nil {
-                urlComponents?.queryItems = [URLQueryItem(name: "modified_since", value: lastUpdated)]
+                queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
             }
             if isFirstGet {
-                urlComponents?.queryItems = [URLQueryItem(name: "ordering", value: "datetime_desc")]
+                queryItems.append(URLQueryItem(name: "ordering", value: "datetime_desc"))
             }
+            urlComponents?.queryItems = queryItems
             guard let urlComponentsURL = urlComponents?.url else {
                 throw APIError.couldNotCreateURL
             }

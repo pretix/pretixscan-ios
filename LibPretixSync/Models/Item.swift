@@ -142,3 +142,15 @@ public struct Item: Model {
         case bundles
     }
 }
+
+extension Item: Equatable {
+    public static func == (lhs: Item, rhs: Item) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+}
+
+extension Item: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.identifier)
+    }
+}

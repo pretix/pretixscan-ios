@@ -83,7 +83,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public var dataStore: DataStore? {
-        _dataStore = _dataStore ?? FMDBDataStore()
+        _dataStore = _dataStore ?? InMemoryDataStore()
         return _dataStore
     }
 

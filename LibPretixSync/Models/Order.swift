@@ -82,5 +82,16 @@ public struct Order: Model {
         case expored = "e"
         case cancelled = "c"
     }
+}
 
+extension Order: Equatable {
+    public static func == (lhs: Order, rhs: Order) -> Bool {
+        return lhs.code == rhs.code
+    }
+}
+
+extension Order: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.code)
+    }
 }
