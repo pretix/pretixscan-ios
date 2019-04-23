@@ -94,7 +94,12 @@ public extension APIClient {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
-            let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.urlPathPart)/")
+            let url: URL
+            if model is Event.Type {
+                url = try createURL(for: "/api/v1/organizers/\(organizer)/events/")
+            } else {
+                url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.urlPathPart)/")
+            }
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             var queryItems = [URLQueryItem]()
@@ -149,22 +154,15 @@ public extension APIClient {
 public extension APIClient {
     /// Returns a list of all events within a given organizer the authenticated user/token has access to.
     func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
-        do {
-            let organizer = try getOrganizerSlug()
-            let urlRequest = try createURLRequest(for: "/api/v1/organizers/\(organizer)/events/")
-            let task = session.dataTask(with: urlRequest) { (data, response, error) in
-                if let error = self.checkResponse(data: data, response: response, error: error) {
-                    completionHandler(nil, error)
-                    return
-                }
-
-                let pagedListResult: (list: PagedList<Event>?, error: Error?) = self.pagedList(from: data!)
-                completionHandler(pagedListResult.list?.results, pagedListResult.error)
+        let task = getTask(Event.self, lastUpdated: nil, isFirstGet: true) { result in
+            switch result {
+            case .failure(let error):
+                completionHandler(nil, error)
+            case .success(let eventList):
+                completionHandler(eventList.results, nil)
             }
-            task.resume()
-        } catch {
-            completionHandler(nil, error)
         }
+        task?.resume()
     }
 }
 
