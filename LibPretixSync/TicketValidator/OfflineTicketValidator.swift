@@ -29,9 +29,14 @@ public class OfflineTicketValidator: TicketValidator {
         completionHandler(events, nil)
     }
 
-    // Retrieve all available CheckInLists for the current event
+    // Retrieve all available CheckInLists for the specified event
     public func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
-        configStore.apiClient?.getCheckinLists(completionHandler: completionHandler)
+        guard let event = configStore.event else {
+            completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
+            return
+        }
+        let checkInLists = configStore.dataStore?.getCheckInLists(for: event)
+        completionHandler(checkInLists, nil)
     }
 
     /// Retrieve Statistics for the currently selected CheckInList

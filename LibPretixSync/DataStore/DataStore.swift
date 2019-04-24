@@ -28,4 +28,7 @@ public protocol DataStore: class {
     // MARK: - Retrieving
     // Retrieve all Events for the current user
     func getEvents() -> [Event]
+
+    // Retrieve all Check-In Lists for the current user and event
+    func getCheckInLists(for event: Event) -> [CheckInList]
 }

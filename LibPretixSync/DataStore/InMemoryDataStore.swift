@@ -30,19 +30,19 @@ public class InMemoryDataStore: DataStore {
             }
         } else if let checkInLists = resources as? [CheckInList] {
             for checkInList in checkInLists {
-                self.checkInLists.insert(checkInList)
+                 dataStore(for: event).checkInLists.insert(checkInList)
             }
         } else if let orders = resources as? [Order] {
             for order in orders {
-                self.orders.insert(order)
+                dataStore(for: event).orders.insert(order)
             }
         } else if let itemCategories = resources as? [ItemCategory] {
             for itemCategory in itemCategories {
-                self.itemCategories.insert(itemCategory)
+                dataStore(for: event).itemCategories.insert(itemCategory)
             }
         } else if let items = resources as? [Item] {
             for item in items {
-                self.items.insert(item)
+                dataStore(for: event).items.insert(item)
             }
         }
     }
@@ -52,10 +52,27 @@ public class InMemoryDataStore: DataStore {
         return Array(events)
     }
 
+    public func getCheckInLists(for event: Event) -> [CheckInList] {
+        return Array(dataStore(for: event).checkInLists)
+    }
+
     // MARK: - Internal
     private var events = Set<Event>()
-    private var checkInLists = Set<CheckInList>()
-    private var orders = Set<Order>()
-    private var itemCategories = Set<ItemCategory>()
-    private var items = Set<Item>()
+    private var inMemoryEventDataStores = [String: InMemoryEventDataStore]()
+
+    private func dataStore(for event: Event) -> InMemoryEventDataStore {
+        guard let dataStore = inMemoryEventDataStores[event.slug] else {
+            let newDataStore = InMemoryEventDataStore()
+            inMemoryEventDataStores[event.slug] = newDataStore
+            return newDataStore
+        }
+        return dataStore
+    }
+}
+
+private class InMemoryEventDataStore {
+    fileprivate var checkInLists = Set<CheckInList>()
+    fileprivate var orders = Set<Order>()
+    fileprivate var itemCategories = Set<ItemCategory>()
+    fileprivate var items = Set<Item>()
 }
