@@ -11,7 +11,7 @@ import Foundation
 /// DataStore that uses FMDB to store data inside a MySQL file
 ///
 /// - Note: See `DataStore` for function level documentation.
-public class FMDBDataStore: DataStore {
+public class FMDBDataStore {
 
     private var lastSynced = [String: String]()
     public func storeLastSynced(_ data: [String: String]) {

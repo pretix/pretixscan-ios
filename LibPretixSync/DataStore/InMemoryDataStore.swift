@@ -12,33 +12,71 @@ import Foundation
 ///
 /// - Note: See `DataStore` for function level documentation.
 public class InMemoryDataStore: DataStore {
-    private var lastSynced = [String: String]()
-    public func storeLastSynced(_ data: [String: String]) {
-        lastSynced = data
+    // MARK: - Last Synced
+    public func invalidateLastSynced(in event: Event) {
+        dataStore(for: event).lastSynced = [String: String]()
     }
 
-    public func retrieveLastSynced() -> [String: String] {
-        return lastSynced
+    public func setLastSyncTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
+        dataStore(for: event).lastSynced[model.urlPathPart] = dateString
     }
 
+    public func lastSyncTime<T: Model>(of model: T.Type, in event: Event) -> String? {
+        return dataStore(for: event).lastSynced[model.urlPathPart]
+    }
+
+    // MARK: - Storing
     public func store<T: Model>(_ resources: [T], for event: Event) {
-        if let orders = resources as? [Order] {
+        if let events = resources as? [Event] {
+            for event in events {
+                self.events.insert(event)
+            }
+        } else if let checkInLists = resources as? [CheckInList] {
+            for checkInList in checkInLists {
+                 dataStore(for: event).checkInLists.insert(checkInList)
+            }
+        } else if let orders = resources as? [Order] {
             for order in orders {
-                self.orders.insert(order)
+                dataStore(for: event).orders.insert(order)
             }
         } else if let itemCategories = resources as? [ItemCategory] {
             for itemCategory in itemCategories {
-                self.itemCategories.insert(itemCategory)
+                dataStore(for: event).itemCategories.insert(itemCategory)
             }
         } else if let items = resources as? [Item] {
             for item in items {
-                self.items.insert(item)
+                dataStore(for: event).items.insert(item)
             }
         }
     }
 
+    // MARK: - Retrieving
+    public func getEvents() -> [Event] {
+        return Array(events)
+    }
+
+    public func getCheckInLists(for event: Event) -> [CheckInList] {
+        return Array(dataStore(for: event).checkInLists)
+    }
+
     // MARK: - Internal
-    private var orders = Set<Order>()
-    private var itemCategories = Set<ItemCategory>()
-    private var items = Set<Item>()
+    private var events = Set<Event>()
+    private var inMemoryEventDataStores = [String: InMemoryEventDataStore]()
+
+    private func dataStore(for event: Event) -> InMemoryEventDataStore {
+        guard let dataStore = inMemoryEventDataStores[event.slug] else {
+            let newDataStore = InMemoryEventDataStore()
+            inMemoryEventDataStores[event.slug] = newDataStore
+            return newDataStore
+        }
+        return dataStore
+    }
+}
+
+private class InMemoryEventDataStore {
+    fileprivate var lastSynced = [String: String]()
+    fileprivate var checkInLists = Set<CheckInList>()
+    fileprivate var orders = Set<Order>()
+    fileprivate var itemCategories = Set<ItemCategory>()
+    fileprivate var items = Set<Item>()
 }

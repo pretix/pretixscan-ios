@@ -15,13 +15,23 @@ import Foundation
 ///         For performance reasons, implementations might do a comparison first and not update unchanged items.
 public protocol DataStore: class {
     // MARK: Metadata
+    /// Remove all Sync Times and pretend nothing was ever synced
+    func invalidateLastSynced(in event: Event)
+
     /// Store timestamps of the last syncs
-    func storeLastSynced(_ data: [String: String])
+    func setLastSyncTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event)
 
     /// Retrieve timestamps of the last syncs
-    func retrieveLastSynced() -> [String: String]
+    func lastSyncTime<T: Model>(of model: T.Type, in event: Event) -> String?
 
     // MARK: - Storing
     /// Store a list of `Model`s related to an `Event`
     func store<T: Model>(_ resources: [T], for event: Event)
+
+    // MARK: - Retrieving
+    // Retrieve all Events for the current user
+    func getEvents() -> [Event]
+
+    // Retrieve all Check-In Lists for the current user and event
+    func getCheckInLists(for event: Event) -> [CheckInList]
 }

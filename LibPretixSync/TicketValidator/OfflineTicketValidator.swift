@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Uses the APIClient directly to check the validity of tickets.
+/// Uses the `DataStore` provided by `ConfigStore` to attempt all operations without a network connection present.
 public class OfflineTicketValidator: TicketValidator {
     private let configStore: ConfigStore
 
@@ -17,18 +17,26 @@ public class OfflineTicketValidator: TicketValidator {
     }
 
     /// Initialize ConfigStore and APIClient with Device Keys
+    ///
+    /// Note: This always uses the API directly. Offline Mode is not supported.
     public func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
         configStore.apiClient?.initialize(initializationRequest, completionHandler: completionHandler)
     }
 
     // Retrieve all available Events for the current user
     public func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
-        configStore.apiClient?.getEvents(completionHandler: completionHandler)
+        let events = configStore.dataStore?.getEvents()
+        completionHandler(events, nil)
     }
 
-    // Retrieve all available CheckInLists for the current event
+    // Retrieve all available CheckInLists for the specified event
     public func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
-        configStore.apiClient?.getCheckinLists(completionHandler: completionHandler)
+        guard let event = configStore.event else {
+            completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
+            return
+        }
+        let checkInLists = configStore.dataStore?.getCheckInLists(for: event)
+        completionHandler(checkInLists, nil)
     }
 
     /// Retrieve Statistics for the currently selected CheckInList
