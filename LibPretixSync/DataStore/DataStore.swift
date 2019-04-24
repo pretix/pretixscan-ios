@@ -34,4 +34,7 @@ public protocol DataStore: class {
 
     // Retrieve all Check-In Lists for the current user and event
     func getCheckInLists(for event: Event) -> [CheckInList]
+
+    // Return all `OrderPosition`s matching the given query
+    func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition]
 }

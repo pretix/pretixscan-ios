@@ -59,6 +59,24 @@ public class InMemoryDataStore: DataStore {
         return Array(dataStore(for: event).checkInLists)
     }
 
+    public func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition] {
+        var searchResult = [OrderPosition]()
+        for order in dataStore(for: event).orders {
+            if let email = order.email, email.contains(query), let positions = order.positions {
+                searchResult += positions
+            } else {
+                searchResult += (order.positions ?? [OrderPosition]()).filter({ orderPosition -> Bool in
+                    return (
+                        (orderPosition.attendeeName ?? "").contains(query) ||
+                        (orderPosition.attendeeEmail ?? "").contains(query) ||
+                        orderPosition.order.contains(query)
+                    )
+                })
+            }
+        }
+        return searchResult
+    }
+
     // MARK: - Internal
     private var events = Set<Event>()
     private var inMemoryEventDataStores = [String: InMemoryEventDataStore]()
