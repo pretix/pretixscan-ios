@@ -92,20 +92,20 @@ public class SyncManager {
         case isLastPage
     }
 
-    private var lastSynced = [String: String]() { didSet { configStore.dataStore?.storeLastSynced(lastSynced) }}
     private var dataTaskQueue = [URLSessionDataTask]()
 
     // MARK: - Syncing
     /// Force a complete redownload of all synced data
     public func forceSync() {
-        lastSynced = [String: String]()
+        guard let event = configStore.event else { return }
+        configStore.dataStore?.invalidateLastSynced(in: event)
         beginSyncing()
     }
 
     /// Trigger a sync process, which will check for new data from the server
     public func beginSyncing() {
         guard let dataStore = configStore.dataStore else { return }
-        lastSynced = dataStore.retrieveLastSynced()
+        guard let event = configStore.event else { return }
 
         let firstSyncCompletionHandler: ((Error?) -> Void) = { error in
             guard error == nil else {
@@ -115,17 +115,17 @@ public class SyncManager {
         }
 
         // First Sync
-        if lastSynced[ItemCategory.urlPathPart] == nil {
+        if dataStore.lastSyncTime(of: ItemCategory.self, in: event) == nil {
             // ItemCategory never synced
             queue(task: syncTask(ItemCategory.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
-        if lastSynced[Item.urlPathPart] == nil {
+        if dataStore.lastSyncTime(of: Item.self, in: event) == nil {
             // Item never synced
             queue(task: syncTask(Item.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
-        if lastSynced[Order.urlPathPart] == nil {
+        if dataStore.lastSyncTime(of: Order.self, in: event) == nil {
             // Orders never synced
             queue(task: syncTask(Order.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
@@ -172,8 +172,9 @@ private extension SyncManager {
     func syncTask<T: Model>(_ model: T.Type, isFirstSync: Bool, completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
         do {
             let event = try getEvent()
+            let dataStore = try getDataStore()
 
-            return configStore.apiClient?.getTask(model, lastUpdated: self.lastSynced[model.urlPathPart],
+            return configStore.apiClient?.getTask(model, lastUpdated: dataStore.lastSyncTime(of: model, in: event),
                                                   isFirstGet: isFirstSync) { result in
 
                 guard let pagedList = try? result.get() else {
@@ -194,7 +195,7 @@ private extension SyncManager {
 
                 // Callback that we are completely finished
                 if isLastPage {
-                    self.lastSynced[model.urlPathPart] = pagedList.generatedAt ?? ""
+                    self.configStore.dataStore?.setLastSyncTime(pagedList.generatedAt ?? "", of: model, in: event)
                     completionHandler(nil)
                 }
             }
@@ -213,5 +214,13 @@ private extension SyncManager {
         }
 
         return event
+    }
+
+    func getDataStore() throws -> DataStore {
+        guard let dataStore = configStore.dataStore else {
+            throw APIError.notConfigured(message: "ConfigStore.dataStore property must be set before calling this function.")
+        }
+
+        return dataStore
     }
 }

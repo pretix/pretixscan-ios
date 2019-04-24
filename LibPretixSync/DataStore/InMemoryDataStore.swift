@@ -13,13 +13,16 @@ import Foundation
 /// - Note: See `DataStore` for function level documentation.
 public class InMemoryDataStore: DataStore {
     // MARK: - Last Synced
-    private var lastSynced = [String: String]()
-    public func storeLastSynced(_ data: [String: String]) {
-        lastSynced = data
+    public func invalidateLastSynced(in event: Event) {
+        dataStore(for: event).lastSynced = [String: String]()
     }
 
-    public func retrieveLastSynced() -> [String: String] {
-        return lastSynced
+    public func setLastSyncTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
+        dataStore(for: event).lastSynced[model.urlPathPart] = dateString
+    }
+
+    public func lastSyncTime<T: Model>(of model: T.Type, in event: Event) -> String? {
+        return dataStore(for: event).lastSynced[model.urlPathPart]
     }
 
     // MARK: - Storing
@@ -71,6 +74,7 @@ public class InMemoryDataStore: DataStore {
 }
 
 private class InMemoryEventDataStore {
+    fileprivate var lastSynced = [String: String]()
     fileprivate var checkInLists = Set<CheckInList>()
     fileprivate var orders = Set<Order>()
     fileprivate var itemCategories = Set<ItemCategory>()
