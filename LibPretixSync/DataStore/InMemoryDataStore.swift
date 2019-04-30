@@ -77,6 +77,10 @@ public class InMemoryDataStore: DataStore {
         return searchResult
     }
 
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) -> RedemptionResponse {
+        return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: nil)
+    }
+
     // MARK: - Internal
     private var events = Set<Event>()
     private var inMemoryEventDataStores = [String: InMemoryEventDataStore]()

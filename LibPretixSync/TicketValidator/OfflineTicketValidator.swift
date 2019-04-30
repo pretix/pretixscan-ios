@@ -59,6 +59,9 @@ public class OfflineTicketValidator: TicketValidator {
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, completionHandler: completionHandler)
+        let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid)
+        completionHandler(response, nil)
+        
+        // TODO: Queue uplaod
     }
 }

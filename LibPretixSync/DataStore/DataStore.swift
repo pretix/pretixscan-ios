@@ -37,4 +37,9 @@ public protocol DataStore: class {
 
     // Return all `OrderPosition`s matching the given query
     func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition]
+
+    /// Check in an attendee, identified by their secret, into the currently configured CheckInList
+    ///
+    /// - See `RedemptionResponse` for the response returned in the completion handler.
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) -> RedemptionResponse
 }
