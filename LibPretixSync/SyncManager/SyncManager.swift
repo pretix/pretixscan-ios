@@ -217,14 +217,9 @@ private extension SyncManager {
                 secret: firstRedemptionRequest.secret,
                 force: firstRedemptionRequest.redemptionRequest.force,
                 ignoreUnpaid: firstRedemptionRequest.redemptionRequest.ignoreUnpaid) { (_, error) in
-                    print("uploading Queued Redemption Request: \(firstRedemptionRequest.secret)")
                     if error == nil {
                         // Upload went through
                         self.configStore.dataStore?.delete(firstRedemptionRequest, in: event)
-
-                        print("uploading Queued Redemption Request \(firstRedemptionRequest.secret) finished")
-                    } else {
-                        print("uploading Queued Redemption Request \(firstRedemptionRequest.secret) failed")
                     }
 
                     // Begin the next upload
