@@ -108,9 +108,16 @@ public class SyncManager {
         guard let event = configStore.event else { return }
 
         let firstSyncCompletionHandler: ((Error?) -> Void) = { error in
-            guard error == nil else {
-                print(error!)
-                return
+            if let error = error {
+                print(error)
+            }
+
+            self.beginSyncing()
+        }
+
+        let laterSyncCompletionHandler: ((Error?) -> Void) = { error in
+            if let error = error {
+                print(error)
             }
         }
 
@@ -120,24 +127,39 @@ public class SyncManager {
             queue(task: syncTask(ItemCategory.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
-        if dataStore.lastSyncTime(of: Item.self, in: event) == nil {
+        else if dataStore.lastSyncTime(of: Item.self, in: event) == nil {
             // Item never synced
             queue(task: syncTask(Item.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
-        if dataStore.lastSyncTime(of: Order.self, in: event) == nil {
+        else if dataStore.lastSyncTime(of: Order.self, in: event) == nil {
             // Orders never synced
             queue(task: syncTask(Order.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
-        queue(task: syncTask(Event.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        queue(task: syncTask(CheckInList.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        queue(task: syncTask(ItemCategory.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
-        queue(task: syncTask(Item.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
-        queue(task: syncTask(Order.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
+        else if dataStore.lastSyncTime(of: Event.self, in: event) == nil {
+            // Events never synced
+            queue(task: syncTask(Event.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
+        }
 
-        // Queue upload tasks for RedemptionRequests
-        uploadQueuedRedemptionRequest(in: event)
+        else if dataStore.lastSyncTime(of: CheckInList.self, in: event) == nil {
+            // CheckInLists never synced
+            queue(task: syncTask(CheckInList.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
+        }
+
+        else {
+            // TODO: Double check that the correct lastSyncTimes are being stored and used
+
+            // Queue Download Update Tasksh
+            queue(task: syncTask(Event.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+            queue(task: syncTask(CheckInList.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+            queue(task: syncTask(ItemCategory.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+            queue(task: syncTask(Item.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+            queue(task: syncTask(Order.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+
+            // Queue upload tasks for RedemptionRequests
+            uploadQueuedRedemptionRequest(in: event)
+        }
     }
 }
 
