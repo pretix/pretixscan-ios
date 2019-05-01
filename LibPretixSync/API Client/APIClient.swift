@@ -229,6 +229,14 @@ public extension APIClient {
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+        if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, completionHandler: completionHandler) {
+            task.resume()
+        }
+    }
+
+    /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
+    func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, completionHandler: @escaping (RedemptionResponse?, Error?) -> Void)
+        -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
@@ -258,9 +266,10 @@ public extension APIClient {
                     return
                 }
             }
-            task.resume()
+            return task
         } catch {
             completionHandler(nil, error)
+            return nil
         }
     }
 

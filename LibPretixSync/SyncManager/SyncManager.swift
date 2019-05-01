@@ -51,11 +51,11 @@ public class SyncManager {
         self.configStore = configStore
 
         NotificationCenter.default.addObserver(self, selector: #selector(syncNotification(_:)),
-                                               name: syncDownloadStatusUpdateNotification, object: nil)
+                                               name: syncStatusUpdateNotification, object: nil)
     }
 
     // MARK: - Notifications
-    var syncDownloadStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
+    var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
 
     /// Notifications sent out by SyncManager
     ///
@@ -135,6 +135,9 @@ public class SyncManager {
         queue(task: syncTask(ItemCategory.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
         queue(task: syncTask(Item.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
         queue(task: syncTask(Order.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
+
+        // Queue upload tasks for RedemptionRequests
+        uploadQueuedRedemptionRequest(in: event)
     }
 }
 
@@ -184,7 +187,7 @@ private extension SyncManager {
 
                 // Notify Listeners
                 let isLastPage = pagedList.next == nil
-                NotificationCenter.default.post(name: self.syncDownloadStatusUpdateNotification, object: self, userInfo: [
+                NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
                     NotificationKeys.model: model.humanReadableName,
                     NotificationKeys.loadedAmount: pagedList.results.count,
                     NotificationKeys.totalAmount: pagedList.count,
@@ -202,6 +205,40 @@ private extension SyncManager {
         } catch {
             completionHandler(error)
             return nil
+        }
+    }
+}
+
+// MARK: - Uploading
+private extension SyncManager {
+    func uploadQueuedRedemptionRequest(in event: Event) {
+        if let firstRedemptionRequest = configStore.dataStore?.getRedemptionRequest(in: event) {
+            queue(task: configStore.apiClient?.redeemTask(
+                secret: firstRedemptionRequest.secret,
+                force: firstRedemptionRequest.redemptionRequest.force,
+                ignoreUnpaid: firstRedemptionRequest.redemptionRequest.ignoreUnpaid) { (_, error) in
+                    print("uploading Queued Redemption Request: \(firstRedemptionRequest.secret)")
+                    if error == nil {
+                        // Upload went through
+                        self.configStore.dataStore?.delete(firstRedemptionRequest, in: event)
+
+                        print("uploading Queued Redemption Request \(firstRedemptionRequest.secret) finished")
+                    } else {
+                        print("uploading Queued Redemption Request \(firstRedemptionRequest.secret) failed")
+                    }
+
+                    // Begin the next upload
+                    self.uploadQueuedRedemptionRequest(in: event)
+
+                    // Notify Queue Management
+                    let totalAmount = self.configStore.dataStore?.numberOfRedemptionRequestsInQueue(in: event) ?? 0
+                    NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                        NotificationKeys.model: QueuedRedemptionRequest.humanReadableName,
+                        NotificationKeys.loadedAmount: 1,
+                        NotificationKeys.totalAmount: totalAmount,
+                        NotificationKeys.isLastPage: (totalAmount <= 1)])
+                }
+            )
         }
     }
 }

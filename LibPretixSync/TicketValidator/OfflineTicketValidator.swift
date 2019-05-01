@@ -85,5 +85,7 @@ public class OfflineTicketValidator: TicketValidator {
         let queuedRedemptionRequest = QueuedRedemptionRequest(redemptionRequest: redemptionRequest, event: event, checkInList: checkInList, secret: secret)
         let redemptionQeue: [QueuedRedemptionRequest] = [queuedRedemptionRequest]
         configStore.dataStore?.store(redemptionQeue, for: event)
+
+        configStore.syncManager.beginSyncing()
     }
 }

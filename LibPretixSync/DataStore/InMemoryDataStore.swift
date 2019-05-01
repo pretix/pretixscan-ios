@@ -95,6 +95,20 @@ public class InMemoryDataStore: DataStore {
         return nil
     }
 
+    public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
+        return dataStore(for: event).queuedRedemptionRequests.count
+    }
+
+    /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
+    public func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest? {
+        return dataStore(for: event).queuedRedemptionRequests.first
+    }
+
+    /// Remove a `QeuedRedemptionRequest` instance from the database
+    public func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event) {
+        dataStore(for: event).queuedRedemptionRequests.remove(queuedRedemptionRequest)
+    }
+
     // MARK: - Internal
     private var events = Set<Event>()
     private var inMemoryEventDataStores = [String: InMemoryEventDataStore]()
