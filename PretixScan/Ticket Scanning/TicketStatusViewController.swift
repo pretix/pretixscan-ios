@@ -100,13 +100,16 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
         activityIndicator.startAnimating()
 
-        configStore?.ticketValidator?.redeem(
-            secret: configuration.secret,
-            force: configuration.force,
-            ignoreUnpaid: configuration.ignoreUnpaid
-        ) { (redemptionResponse, error) in
-            self.presentErrorAlert(ifError: error)
-            self.redemptionResponse = redemptionResponse
+        // The wait here fixes a timing issue with presentation animations
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            self.configStore?.ticketValidator?.redeem(
+                secret: configuration.secret,
+                force: configuration.force,
+                ignoreUnpaid: configuration.ignoreUnpaid
+            ) { (redemptionResponse, error) in
+                self.presentErrorAlert(ifError: error)
+                self.redemptionResponse = redemptionResponse
+            }
         }
     }
 
