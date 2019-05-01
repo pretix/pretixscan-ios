@@ -6,6 +6,8 @@
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 
+// swiftlint:disable cyclomatic_complexity
+
 import Foundation
 
 /// DataStore that stores data in memory for debugging and testing.

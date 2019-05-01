@@ -82,7 +82,8 @@ public class OfflineTicketValidator: TicketValidator {
             questionsSupported: false,
             date: Date(), force: force, ignoreUnpaid: ignoreUnpaid,
             nonce: NonceGenerator.nonce())
-        let queuedRedemptionRequest = QueuedRedemptionRequest(redemptionRequest: redemptionRequest, event: event, checkInList: checkInList, secret: secret)
+        let queuedRedemptionRequest = QueuedRedemptionRequest(redemptionRequest: redemptionRequest,
+                                                              event: event, checkInList: checkInList, secret: secret)
         let redemptionQeue: [QueuedRedemptionRequest] = [queuedRedemptionRequest]
         configStore.dataStore?.store(redemptionQeue, for: event)
 
