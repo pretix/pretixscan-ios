@@ -11,6 +11,7 @@ import Foundation
 /// Tries to redeem an order position, identified by its internal ID, i.e. checks the attendee in.
 ///
 /// - See also `RedemptionResponse`
+/// - See also `QueuedRedemptionRequest`
 public struct RedemptionRequest: Codable, Equatable {
     /// Wether the current device supports handling questions
     ///
@@ -66,5 +67,14 @@ public struct RedemptionRequest: Codable, Equatable {
         case ignoreUnpaid = "ignore_unpaid"
         case nonce
 
+    }
+}
+
+extension RedemptionRequest: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(date)
+        hasher.combine(force)
+        hasher.combine(ignoreUnpaid)
+        hasher.combine(nonce)
     }
 }

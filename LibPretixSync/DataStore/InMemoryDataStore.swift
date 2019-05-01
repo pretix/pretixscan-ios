@@ -47,6 +47,12 @@ public class InMemoryDataStore: DataStore {
             for item in items {
                 dataStore(for: event).items.insert(item)
             }
+        } else if let items = resources as? [QueuedRedemptionRequest] {
+            for item in items {
+                dataStore(for: event).queuedRedemptionRequests.insert(item)
+            }
+        } else {
+            fatalError("InMemoryDataStore doesn't know what to do with \(T.humanReadableName) instances.")
         }
     }
 
@@ -77,6 +83,32 @@ public class InMemoryDataStore: DataStore {
         return searchResult
     }
 
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
+        -> RedemptionResponse? {
+        for order in dataStore(for: event).orders {
+            guard let positions = order.positions else { continue }
+            for orderPosition in positions where orderPosition.secret == secret {
+                return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition)
+            }
+        }
+
+        return nil
+    }
+
+    public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
+        return dataStore(for: event).queuedRedemptionRequests.count
+    }
+
+    /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
+    public func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest? {
+        return dataStore(for: event).queuedRedemptionRequests.first
+    }
+
+    /// Remove a `QeuedRedemptionRequest` instance from the database
+    public func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event) {
+        dataStore(for: event).queuedRedemptionRequests.remove(queuedRedemptionRequest)
+    }
+
     // MARK: - Internal
     private var events = Set<Event>()
     private var inMemoryEventDataStores = [String: InMemoryEventDataStore]()
@@ -97,4 +129,5 @@ private class InMemoryEventDataStore {
     fileprivate var orders = Set<Order>()
     fileprivate var itemCategories = Set<ItemCategory>()
     fileprivate var items = Set<Item>()
+    fileprivate var queuedRedemptionRequests = Set<QueuedRedemptionRequest>()
 }

@@ -37,4 +37,20 @@ public protocol DataStore: class {
 
     // Return all `OrderPosition`s matching the given query
     func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition]
+
+    /// Check in an attendee, identified by their secret, into the currently configured CheckInList
+    ///
+    /// Will return `nil` if no orderposition with the specified secret is found
+    ///
+    /// - See `RedemptionResponse` for the response returned in the completion handler.
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList) -> RedemptionResponse?
+
+    /// Return the number of QueuedRedemptionReqeusts in the DataStore
+    func numberOfRedemptionRequestsInQueue(in event: Event) -> Int
+
+    /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
+    func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest?
+
+    /// Remove a `QeuedRedemptionRequest` instance from the database
+    func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event)
 }

@@ -116,6 +116,7 @@
 		DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82DC224BDE7E00DC0200 /* ItemVariationTableViewCell.swift */; };
 		DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */; };
 		DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */; };
+		DCEEF11F22799FD600BCAF82 /* QeuedRedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF11E22799FD600BCAF82 /* QeuedRedemptionRequest.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 		E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */; };
 /* End PBXBuildFile section */
@@ -227,6 +228,7 @@
 		DCDD82DC224BDE7E00DC0200 /* ItemVariationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVariationTableViewCell.swift; sourceTree = "<group>"; };
 		DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketScannerViewController.swift; sourceTree = "<group>"; };
+		DCEEF11E22799FD600BCAF82 /* QeuedRedemptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QeuedRedemptionRequest.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 		FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -450,6 +452,7 @@
 				DCC0003B223BE31F00236424 /* MultiLingualString.swift */,
 				DC1D6FB42240F689008A9E06 /* OrderPosition.swift */,
 				DC1D6FB62240F82B008A9E06 /* CheckIn.swift */,
+				DCEEF11E22799FD600BCAF82 /* QeuedRedemptionRequest.swift */,
 				DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */,
 				DCB35B902248F31400860385 /* RedemptionResponse.swift */,
 				DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */,
@@ -751,6 +754,7 @@
 				DCAAFF57223AF14B0059C000 /* UIViewController.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
+				DCEEF11F22799FD600BCAF82 /* QeuedRedemptionRequest.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,

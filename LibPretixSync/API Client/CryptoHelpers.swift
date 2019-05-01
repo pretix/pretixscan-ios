@@ -9,7 +9,7 @@
 import Foundation
 
 struct NonceGenerator {
-    static func nonce(lenght: Int = 64) throws -> String {
+    static func nonce(lenght: Int = 64) -> String {
         return NSUUID().uuidString
     }
 }
