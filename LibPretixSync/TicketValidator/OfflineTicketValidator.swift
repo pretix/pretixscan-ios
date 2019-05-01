@@ -77,5 +77,13 @@ public class OfflineTicketValidator: TicketValidator {
             completionHandler(nil, APIError.notFound)
         }
 
+        // Queue Upload
+        let redemptionRequest = RedemptionRequest(
+            questionsSupported: false,
+            date: Date(), force: force, ignoreUnpaid: ignoreUnpaid,
+            nonce: NonceGenerator.nonce())
+        let queuedRedemptionRequest = QueuedRedemptionRequest(redemptionRequest: redemptionRequest, event: event, checkInList: checkInList, secret: secret)
+        let redemptionQeue: [QueuedRedemptionRequest] = [queuedRedemptionRequest]
+        configStore.dataStore?.store(redemptionQeue, for: event)
     }
 }

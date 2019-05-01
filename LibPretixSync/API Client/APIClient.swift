@@ -241,7 +241,7 @@ public extension APIClient {
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: false,
                 date: nil, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: try NonceGenerator.nonce())
+                nonce: NonceGenerator.nonce())
             urlRequest.httpBody = try jsonEncoder.encode(redemptionRequest)
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in

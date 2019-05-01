@@ -47,6 +47,12 @@ public class InMemoryDataStore: DataStore {
             for item in items {
                 dataStore(for: event).items.insert(item)
             }
+        } else if let items = resources as? [QueuedRedemptionRequest] {
+            for item in items {
+                dataStore(for: event).queuedRedemptionRequests.insert(item)
+            }
+        } else {
+            fatalError("InMemoryDataStore doesn't know what to do with \(T.humanReadableName) instances.")
         }
     }
 
@@ -109,4 +115,5 @@ private class InMemoryEventDataStore {
     fileprivate var orders = Set<Order>()
     fileprivate var itemCategories = Set<ItemCategory>()
     fileprivate var items = Set<Item>()
+    fileprivate var queuedRedemptionRequests = Set<QueuedRedemptionRequest>()
 }
