@@ -77,8 +77,16 @@ public class InMemoryDataStore: DataStore {
         return searchResult
     }
 
-    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) -> RedemptionResponse {
-        return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: nil)
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
+        -> RedemptionResponse? {
+        for order in dataStore(for: event).orders {
+            guard let positions = order.positions else { continue }
+            for orderPosition in positions where orderPosition.secret == secret {
+                return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition)
+            }
+        }
+
+        return nil
     }
 
     // MARK: - Internal

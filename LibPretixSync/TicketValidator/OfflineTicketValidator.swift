@@ -59,9 +59,23 @@ public class OfflineTicketValidator: TicketValidator {
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid)
-        completionHandler(response, nil)
-        
-        // TODO: Queue uplaod
+        guard let event = configStore.event else {
+            completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
+            return
+        }
+
+        guard let checkInList = configStore.checkInList else {
+            completionHandler(nil, APIError.notConfigured(message: "No CheckInList is set"))
+            return
+        }
+
+        // Redeem using DataStore
+        let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, in: event, in: checkInList)
+        if let response = response {
+            completionHandler(response, nil)
+        } else {
+            completionHandler(nil, APIError.notFound)
+        }
+
     }
 }

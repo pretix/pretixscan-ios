@@ -40,6 +40,8 @@ public protocol DataStore: class {
 
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
+    /// Will return `nil` if no orderposition with the specified secret is found
+    ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) -> RedemptionResponse
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList) -> RedemptionResponse?
 }
