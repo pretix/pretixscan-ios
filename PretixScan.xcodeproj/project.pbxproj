@@ -117,6 +117,7 @@
 		DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */; };
 		DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */; };
 		DCEEF11F22799FD600BCAF82 /* QeuedRedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF11E22799FD600BCAF82 /* QeuedRedemptionRequest.swift */; };
+		DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF121227AFC4600BCAF82 /* SyncStatusViewController.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 		E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */; };
 /* End PBXBuildFile section */
@@ -229,6 +230,7 @@
 		DCDD82DE224C169E00DC0200 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketScannerViewController.swift; sourceTree = "<group>"; };
 		DCEEF11E22799FD600BCAF82 /* QeuedRedemptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QeuedRedemptionRequest.swift; sourceTree = "<group>"; };
+		DCEEF121227AFC4600BCAF82 /* SyncStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatusViewController.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 		FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -303,6 +305,7 @@
 				DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */,
 				DC1D6FC5224258B6008A9E06 /* Setup */,
 				DC227F1F22536AFE00314448 /* Ticket Scanning */,
+				DCEEF120227AFC3100BCAF82 /* SyncStatus */,
 				DC1D6FC4224258A4008A9E06 /* Search */,
 				DCDD82DB224BCBEB00DC0200 /* CheckIn Status */,
 				DC2F49FE2256669100710EFA /* Settings */,
@@ -501,6 +504,14 @@
 				DCDD82DC224BDE7E00DC0200 /* ItemVariationTableViewCell.swift */,
 			);
 			path = "CheckIn Status";
+			sourceTree = "<group>";
+		};
+		DCEEF120227AFC3100BCAF82 /* SyncStatus */ = {
+			isa = PBXGroup;
+			children = (
+				DCEEF121227AFC4600BCAF82 /* SyncStatusViewController.swift */,
+			);
+			path = SyncStatus;
 			sourceTree = "<group>";
 		};
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
@@ -779,6 +790,7 @@
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
 				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,
 				DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */,
+				DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */,
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
 				DC0052EA2260D385002D985B /* Model.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,

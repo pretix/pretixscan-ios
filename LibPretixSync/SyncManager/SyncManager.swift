@@ -6,6 +6,8 @@
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 
+// swiftlint:disable statement_position
+
 import Foundation
 
 /// Manages a queue of changes to be up- and downloaded to and from the API.
@@ -46,16 +48,22 @@ import Foundation
 /// ```
 public class SyncManager {
     private let configStore: ConfigStore
+    private var syncTimer: Timer?
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
 
+        syncTimer = Timer.scheduledTimer(timeInterval: 1 * 60, target: self, selector: #selector(checkSyncing),
+                                         userInfo: nil, repeats: true)
+
         NotificationCenter.default.addObserver(self, selector: #selector(syncNotification(_:)),
-                                               name: syncStatusUpdateNotification, object: nil)
+                                               name: SyncManager.syncStatusUpdateNotification, object: nil)
     }
 
     // MARK: - Notifications
-    var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
+    public static var syncBeganNotification: Notification.Name { return Notification.Name("SyncManagerSyncBegan") }
+    public static var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
+    public static var syncEndedNotification: Notification.Name { return Notification.Name("SyncManagerSyncEnded") }
 
     /// Notifications sent out by SyncManager
     ///
@@ -90,6 +98,9 @@ public class SyncManager {
 
         /// The sync process for this model is completed with this notification
         case isLastPage
+
+        /// Sent in the syncingEnded notification, the last Date when the sync finished
+        case lastSyncDate
     }
 
     private var dataTaskQueue = [URLSessionDataTask]()
@@ -102,15 +113,56 @@ public class SyncManager {
         beginSyncing()
     }
 
+    private var lastSyncTime = Date.distantPast
+    private var isSyncing = false
+
+    /// Check if the last sync is longer than 5 minutes ago and if so, trigger a new one.
+    @objc
+    public func checkSyncing() {
+        guard !isSyncing else { return }
+        guard -lastSyncTime.timeIntervalSinceNow > 5 * 60 else { return }
+
+        beginSyncing()
+    }
+
     /// Trigger a sync process, which will check for new data from the server
     public func beginSyncing() {
+        isSyncing = true
+        NotificationCenter.default.post(name: SyncManager.syncBeganNotification, object: nil)
+        continueSyncing()
+    }
+
+    private func endSyncing() {
+        self.lastSyncTime = Date()
+        NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: nil,
+                                        userInfo: [SyncManager.NotificationKeys.lastSyncDate: self.lastSyncTime])
+        NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: nil)
+        self.isSyncing = false
+    }
+
+    private func continueSyncing() {
         guard let dataStore = configStore.dataStore else { return }
         guard let event = configStore.event else { return }
 
         let firstSyncCompletionHandler: ((Error?) -> Void) = { error in
-            guard error == nil else {
-                print(error!)
-                return
+            if let error = error {
+                print(error)
+            }
+
+            self.continueSyncing()
+
+            if self.dataTaskQueue.count <= 1 {
+                self.endSyncing()
+            }
+        }
+
+        let laterSyncCompletionHandler: ((Error?) -> Void) = { error in
+            if let error = error {
+                print(error)
+            }
+
+            if self.dataTaskQueue.count <= 1 {
+                self.endSyncing()
             }
         }
 
@@ -120,24 +172,39 @@ public class SyncManager {
             queue(task: syncTask(ItemCategory.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
-        if dataStore.lastSyncTime(of: Item.self, in: event) == nil {
+        else if dataStore.lastSyncTime(of: Item.self, in: event) == nil {
             // Item never synced
             queue(task: syncTask(Item.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
-        if dataStore.lastSyncTime(of: Order.self, in: event) == nil {
+        else if dataStore.lastSyncTime(of: Order.self, in: event) == nil {
             // Orders never synced
             queue(task: syncTask(Order.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
         }
 
-        queue(task: syncTask(Event.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        queue(task: syncTask(CheckInList.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        queue(task: syncTask(ItemCategory.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
-        queue(task: syncTask(Item.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
-        queue(task: syncTask(Order.self, isFirstSync: false, completionHandler: firstSyncCompletionHandler))
+        else if dataStore.lastSyncTime(of: Event.self, in: event) == nil {
+            // Events never synced
+            queue(task: syncTask(Event.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
+        }
 
-        // Queue upload tasks for RedemptionRequests
-        uploadQueuedRedemptionRequest(in: event)
+        else if dataStore.lastSyncTime(of: CheckInList.self, in: event) == nil {
+            // CheckInLists never synced
+            queue(task: syncTask(CheckInList.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
+        }
+
+        else {
+            // TODO: Double check that the correct lastSyncTimes are being stored and used
+
+            // Queue Download Update Tasksh
+            queue(task: syncTask(Event.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+            queue(task: syncTask(CheckInList.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+            queue(task: syncTask(ItemCategory.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+            queue(task: syncTask(Item.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+            queue(task: syncTask(Order.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
+
+            // Queue upload tasks for RedemptionRequests
+            uploadQueuedRedemptionRequest(in: event)
+        }
     }
 }
 
@@ -187,7 +254,7 @@ private extension SyncManager {
 
                 // Notify Listeners
                 let isLastPage = pagedList.next == nil
-                NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
                     NotificationKeys.model: model.humanReadableName,
                     NotificationKeys.loadedAmount: pagedList.results.count,
                     NotificationKeys.totalAmount: pagedList.count,
@@ -217,14 +284,9 @@ private extension SyncManager {
                 secret: firstRedemptionRequest.secret,
                 force: firstRedemptionRequest.redemptionRequest.force,
                 ignoreUnpaid: firstRedemptionRequest.redemptionRequest.ignoreUnpaid) { (_, error) in
-                    print("uploading Queued Redemption Request: \(firstRedemptionRequest.secret)")
                     if error == nil {
                         // Upload went through
                         self.configStore.dataStore?.delete(firstRedemptionRequest, in: event)
-
-                        print("uploading Queued Redemption Request \(firstRedemptionRequest.secret) finished")
-                    } else {
-                        print("uploading Queued Redemption Request \(firstRedemptionRequest.secret) failed")
                     }
 
                     // Begin the next upload
@@ -232,7 +294,7 @@ private extension SyncManager {
 
                     // Notify Queue Management
                     let totalAmount = self.configStore.dataStore?.numberOfRedemptionRequestsInQueue(in: event) ?? 0
-                    NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                    NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
                         NotificationKeys.model: QueuedRedemptionRequest.humanReadableName,
                         NotificationKeys.loadedAmount: 1,
                         NotificationKeys.totalAmount: totalAmount,
