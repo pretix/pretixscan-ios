@@ -98,6 +98,9 @@ public class SyncManager {
 
         /// The sync process for this model is completed with this notification
         case isLastPage
+
+        /// Sent in the syncingEnded notification, the last Date when the sync finished
+        case lastSyncDate
     }
 
     private var dataTaskQueue = [URLSessionDataTask]()
@@ -130,9 +133,11 @@ public class SyncManager {
     }
 
     private func endSyncing() {
+        self.lastSyncTime = Date()
+        NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: nil,
+                                        userInfo: [SyncManager.NotificationKeys.lastSyncDate: self.lastSyncTime])
         NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: nil)
         self.isSyncing = false
-        self.lastSyncTime = Date()
     }
 
     private func continueSyncing() {
@@ -146,7 +151,7 @@ public class SyncManager {
 
             self.continueSyncing()
 
-            if self.dataTaskQueue.count == 0 {
+            if self.dataTaskQueue.count <= 1 {
                 self.endSyncing()
             }
         }
@@ -156,7 +161,7 @@ public class SyncManager {
                 print(error)
             }
 
-            if self.dataTaskQueue.count == 0 {
+            if self.dataTaskQueue.count <= 1 {
                 self.endSyncing()
             }
         }

@@ -34,8 +34,10 @@ class SyncStatusViewController: UIViewController {
 
     @objc
     func syncEnded(_ notification: Notification) {
+        let lastSyncDate = notification.userInfo?[SyncManager.NotificationKeys.lastSyncDate] as? Date
+
         DispatchQueue.main.async {
-            self.titleLabel.text = "Syncing Done"
+            self.titleLabel.text = "Syncing Done: \(notification.userInfo?[SyncManager.NotificationKeys.lastSyncDate])"
             self.activityIndicator.stopAnimating()
         }
     }
