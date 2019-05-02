@@ -19,7 +19,7 @@ class NotificationManager {
         NotificationCenter.default.addObserver(self, selector: #selector(configStoreFactoryReset(_:)),
                                                name: configStore.resetNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncDownloadStatusUpdate(_:)),
-                                               name: configStore.syncManager.syncStatusUpdateNotification, object: nil)
+                                               name: SyncManager.syncStatusUpdateNotification, object: nil)
     }
 
     @objc

@@ -57,13 +57,13 @@ public class SyncManager {
                                          userInfo: nil, repeats: true)
 
         NotificationCenter.default.addObserver(self, selector: #selector(syncNotification(_:)),
-                                               name: syncStatusUpdateNotification, object: nil)
+                                               name: SyncManager.syncStatusUpdateNotification, object: nil)
     }
 
     // MARK: - Notifications
-    public var syncBeganNotification: Notification.Name { return Notification.Name("SyncManagerSyncBegan") }
-    public var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
-    public var syncEndedNotification: Notification.Name { return Notification.Name("SyncManagerSyncEnded") }
+    public static var syncBeganNotification: Notification.Name { return Notification.Name("SyncManagerSyncBegan") }
+    public static var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
+    public static var syncEndedNotification: Notification.Name { return Notification.Name("SyncManagerSyncEnded") }
 
     /// Notifications sent out by SyncManager
     ///
@@ -125,12 +125,12 @@ public class SyncManager {
     /// Trigger a sync process, which will check for new data from the server
     public func beginSyncing() {
         isSyncing = true
-        NotificationCenter.default.post(name: syncBeganNotification, object: nil)
+        NotificationCenter.default.post(name: SyncManager.syncBeganNotification, object: nil)
         continueSyncing()
     }
 
     private func endSyncing() {
-        NotificationCenter.default.post(name: self.syncEndedNotification, object: nil)
+        NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: nil)
         self.isSyncing = false
         self.lastSyncTime = Date()
     }
@@ -249,7 +249,7 @@ private extension SyncManager {
 
                 // Notify Listeners
                 let isLastPage = pagedList.next == nil
-                NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
                     NotificationKeys.model: model.humanReadableName,
                     NotificationKeys.loadedAmount: pagedList.results.count,
                     NotificationKeys.totalAmount: pagedList.count,
@@ -289,7 +289,7 @@ private extension SyncManager {
 
                     // Notify Queue Management
                     let totalAmount = self.configStore.dataStore?.numberOfRedemptionRequestsInQueue(in: event) ?? 0
-                    NotificationCenter.default.post(name: self.syncStatusUpdateNotification, object: self, userInfo: [
+                    NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
                         NotificationKeys.model: QueuedRedemptionRequest.humanReadableName,
                         NotificationKeys.loadedAmount: 1,
                         NotificationKeys.totalAmount: totalAmount,
