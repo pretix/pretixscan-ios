@@ -129,6 +129,12 @@ public class SyncManager {
         continueSyncing()
     }
 
+    private func endSyncing() {
+        NotificationCenter.default.post(name: self.syncEndedNotification, object: nil)
+        self.isSyncing = false
+        self.lastSyncTime = Date()
+    }
+
     private func continueSyncing() {
         guard let dataStore = configStore.dataStore else { return }
         guard let event = configStore.event else { return }
@@ -141,9 +147,7 @@ public class SyncManager {
             self.continueSyncing()
 
             if self.dataTaskQueue.count == 0 {
-                NotificationCenter.default.post(name: self.syncEndedNotification, object: nil)
-                self.isSyncing = false
-                self.lastSyncTime = Date()
+                self.endSyncing()
             }
         }
 
@@ -153,9 +157,7 @@ public class SyncManager {
             }
 
             if self.dataTaskQueue.count == 0 {
-                NotificationCenter.default.post(name: self.syncEndedNotification, object: nil)
-                self.isSyncing = false
-                self.lastSyncTime = Date()
+                self.endSyncing()
             }
         }
 
