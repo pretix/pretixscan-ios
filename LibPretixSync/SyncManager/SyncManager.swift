@@ -6,6 +6,8 @@
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 
+// swiftlint:disable statement_position
+
 import Foundation
 
 /// Manages a queue of changes to be up- and downloaded to and from the API.
