@@ -48,16 +48,22 @@ import Foundation
 /// ```
 public class SyncManager {
     private let configStore: ConfigStore
+    private var syncTimer: Timer?
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
+
+        syncTimer = Timer.scheduledTimer(timeInterval: 1 * 60, target: self, selector: #selector(checkSyncing),
+                                         userInfo: nil, repeats: true)
 
         NotificationCenter.default.addObserver(self, selector: #selector(syncNotification(_:)),
                                                name: syncStatusUpdateNotification, object: nil)
     }
 
     // MARK: - Notifications
-    var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
+    public var syncBeganNotification: Notification.Name { return Notification.Name("SyncManagerSyncBegan") }
+    public var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
+    public var syncEndedNotification: Notification.Name { return Notification.Name("SyncManagerSyncEnded") }
 
     /// Notifications sent out by SyncManager
     ///
@@ -104,8 +110,26 @@ public class SyncManager {
         beginSyncing()
     }
 
+    private var lastSyncTime = Date.distantPast
+    private var isSyncing = false
+
+    /// Check if the last sync is longer than 5 minutes ago and if so, trigger a new one.
+    @objc
+    public func checkSyncing() {
+        guard !isSyncing else { return }
+        guard -lastSyncTime.timeIntervalSinceNow > 5 * 60 else { return }
+
+        beginSyncing()
+    }
+
     /// Trigger a sync process, which will check for new data from the server
     public func beginSyncing() {
+        isSyncing = true
+        NotificationCenter.default.post(name: syncBeganNotification, object: nil)
+        continueSyncing()
+    }
+
+    private func continueSyncing() {
         guard let dataStore = configStore.dataStore else { return }
         guard let event = configStore.event else { return }
 
@@ -114,12 +138,24 @@ public class SyncManager {
                 print(error)
             }
 
-            self.beginSyncing()
+            self.continueSyncing()
+
+            if self.dataTaskQueue.count == 0 {
+                NotificationCenter.default.post(name: self.syncEndedNotification, object: nil)
+                self.isSyncing = false
+                self.lastSyncTime = Date()
+            }
         }
 
         let laterSyncCompletionHandler: ((Error?) -> Void) = { error in
             if let error = error {
                 print(error)
+            }
+
+            if self.dataTaskQueue.count == 0 {
+                NotificationCenter.default.post(name: self.syncEndedNotification, object: nil)
+                self.isSyncing = false
+                self.lastSyncTime = Date()
             }
         }
 
