@@ -118,6 +118,8 @@
 		DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */; };
 		DCEEF11F22799FD600BCAF82 /* QeuedRedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF11E22799FD600BCAF82 /* QeuedRedemptionRequest.swift */; };
 		DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF121227AFC4600BCAF82 /* SyncStatusViewController.swift */; };
+		DCEEF12A227DBD9F00BCAF82 /* SyncOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */; };
+		DCEEF12C227DBDD000BCAF82 /* PendingOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF12B227DBDD000BCAF82 /* PendingOperations.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 		E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */; };
 /* End PBXBuildFile section */
@@ -231,6 +233,8 @@
 		DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketScannerViewController.swift; sourceTree = "<group>"; };
 		DCEEF11E22799FD600BCAF82 /* QeuedRedemptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QeuedRedemptionRequest.swift; sourceTree = "<group>"; };
 		DCEEF121227AFC4600BCAF82 /* SyncStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatusViewController.swift; sourceTree = "<group>"; };
+		DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncOperations.swift; sourceTree = "<group>"; };
+		DCEEF12B227DBDD000BCAF82 /* PendingOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingOperations.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 		FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -428,6 +432,8 @@
 			isa = PBXGroup;
 			children = (
 				DC8467A9225B99A50013F647 /* SyncManager.swift */,
+				DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */,
+				DCEEF12B227DBDD000BCAF82 /* PendingOperations.swift */,
 			);
 			path = SyncManager;
 			sourceTree = "<group>";
@@ -760,6 +766,7 @@
 				DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */,
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
+				DCEEF12A227DBD9F00BCAF82 /* SyncOperations.swift in Sources */,
 				DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */,
 				DCB35B96224901BA00860385 /* CryptoHelpers.swift in Sources */,
 				DCAAFF57223AF14B0059C000 /* UIViewController.swift in Sources */,
@@ -801,6 +808,7 @@
 				DC8467A7225B99590013F647 /* DataStore.swift in Sources */,
 				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */,
+				DCEEF12C227DBDD000BCAF82 /* PendingOperations.swift in Sources */,
 				DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */,
 				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
 				DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */,
