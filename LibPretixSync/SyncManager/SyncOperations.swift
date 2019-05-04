@@ -77,13 +77,16 @@ class APIClientOperation: Operation {
     }
 }
 
-class DownloadAllOrders: APIClientOperation {
+class FullOrderDownloader: APIClientOperation {
     override func start() {
+        print("DownloadAllOrders start")
         if isCancelled {
             return
         }
 
         isExecuting = true
+
+        // TODO: Check if full order sync already happened
 
         let task = apiClient.getTask(Order.self, lastUpdated: nil, isFirstGet: true) { result in
             guard let pagedList = try? result.get() else {
@@ -94,6 +97,8 @@ class DownloadAllOrders: APIClientOperation {
             }
 
             // Notify Listeners
+
+            print("DownloadAllOrders checkIn")
             let isLastPage = pagedList.next == nil
             //NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
             //    NotificationKeys.model: model.humanReadableName,
@@ -108,6 +113,8 @@ class DownloadAllOrders: APIClientOperation {
             if isLastPage {
                 // TODO: self.configStore.dataStore?.setLastSyncTime(pagedList.generatedAt ?? "", of: model, in: event)
                 self.completeOperation()
+
+                print("DownloadAllOrders complete")
             }
         }
         task?.resume()

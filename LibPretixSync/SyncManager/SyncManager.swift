@@ -100,17 +100,65 @@ public class SyncManager {
     // MARK: - Syncing
     /// Force a complete redownload of all synced data
     public func forceSync() {
-        guard let event = configStore.event, let checkInList = configStore.checkInList else {
+        guard let event = configStore.event, let checkInList = configStore.checkInList, let apiClient = configStore.apiClient else {
             print("SyncStore will not work unless both event and checkInList are set")
             return
         }
+
+        populateQueues(apiClient: apiClient, event: event, checkInList: checkInList)
     }
 
     /// Trigger a sync process, which will check for new data from the server
     public func beginSyncing() {
-        guard let event = configStore.event, let checkInList = configStore.checkInList else {
+        guard let event = configStore.event, let checkInList = configStore.checkInList, let apiClient = configStore.apiClient else {
             print("SyncStore will not work unless both event and checkInList are set")
             return
         }
+
+        populateQueues(apiClient: apiClient, event: event, checkInList: checkInList)
+    }
+
+    // MARK: - Queues
+    private lazy var downloadsInProgress: [String: Operation] = [:]
+    private lazy var downloadQueue: OperationQueue = {
+        var queue = OperationQueue()
+        queue.name = "Download Queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
+    private lazy var uploadsInProgress: [String: Operation] = [:]
+    private lazy var uploadQeuue: OperationQueue = {
+        var queue = OperationQueue()
+        queue.name = "Upload Queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
+    private func populateQueues(apiClient: APIClient, event: Event, checkInList: CheckInList) {
+        populateDownloadQueue(apiClient: apiClient, event: event, checkInList: checkInList)
+        populateDownloadQueue(apiClient: apiClient, event: event, checkInList: checkInList)
+    }
+
+    private func populateDownloadQueue(apiClient: APIClient, event: Event, checkInList: CheckInList) {
+        if downloadsInProgress[Order.urlPathPart] == nil {
+            let downloader = FullOrderDownloader(apiClient: apiClient, event: event, checkInList: checkInList)
+            downloader.completionBlock = {
+                if downloader.isCancelled {
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.downloadsInProgress.removeValue(forKey: Order.urlPathPart)
+                }
+            }
+
+            downloadsInProgress[Order.urlPathPart] = downloader
+            downloadQueue.addOperation(downloader)
+        }
+    }
+
+    private func populateUploadQueue(event: Event, checkInList: CheckInList) {
+
     }
 }
