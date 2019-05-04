@@ -100,11 +100,17 @@ public class SyncManager {
     // MARK: - Syncing
     /// Force a complete redownload of all synced data
     public func forceSync() {
-
+        guard let event = configStore.event, let checkInList = configStore.checkInList else {
+            print("SyncStore will not work unless both event and checkInList are set")
+            return
+        }
     }
 
     /// Trigger a sync process, which will check for new data from the server
     public func beginSyncing() {
-
+        guard let event = configStore.event, let checkInList = configStore.checkInList else {
+            print("SyncStore will not work unless both event and checkInList are set")
+            return
+        }
     }
 }
