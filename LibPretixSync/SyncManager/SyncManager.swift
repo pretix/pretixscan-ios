@@ -6,8 +6,6 @@
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 
-// swiftlint:disable statement_position
-
 import Foundation
 
 /// Manages a queue of changes to be up- and downloaded to and from the API.
@@ -100,22 +98,28 @@ public class SyncManager {
     // MARK: - Syncing
     /// Force a complete redownload of all synced data
     public func forceSync() {
-        guard let event = configStore.event, let checkInList = configStore.checkInList, let apiClient = configStore.apiClient else {
-            print("SyncStore will not work unless both event and checkInList are set")
-            return
+        guard let event = configStore.event,
+            let checkInList = configStore.checkInList,
+            let apiClient = configStore.apiClient,
+            let dataStore = configStore.dataStore else {
+                print("SyncStore will not work unless event, checkinList, dataStore and APIclient are set")
+                return
         }
 
-        populateQueues(apiClient: apiClient, event: event, checkInList: checkInList)
+        populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
     /// Trigger a sync process, which will check for new data from the server
     public func beginSyncing() {
-        guard let event = configStore.event, let checkInList = configStore.checkInList, let apiClient = configStore.apiClient else {
-            print("SyncStore will not work unless both event and checkInList are set")
+        guard let event = configStore.event,
+            let checkInList = configStore.checkInList,
+            let apiClient = configStore.apiClient,
+            let dataStore = configStore.dataStore else {
+            print("SyncStore will not work unless event, checkinList, dataStore and APIclient are set")
             return
         }
 
-        populateQueues(apiClient: apiClient, event: event, checkInList: checkInList)
+        populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
     // MARK: - Queues
@@ -135,27 +139,53 @@ public class SyncManager {
         return queue
     }()
 
-    private func populateQueues(apiClient: APIClient, event: Event, checkInList: CheckInList) {
-        populateDownloadQueue(apiClient: apiClient, event: event, checkInList: checkInList)
-        populateDownloadQueue(apiClient: apiClient, event: event, checkInList: checkInList)
+    private func populateQueues(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
-    private func populateDownloadQueue(apiClient: APIClient, event: Event, checkInList: CheckInList) {
-        if downloadsInProgress[Order.urlPathPart] == nil {
-            let downloader = FullOrderDownloader(apiClient: apiClient, event: event, checkInList: checkInList)
+    private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        let fullOrderKey = Order.urlPathPart + "-full"
+        if downloadsInProgress[fullOrderKey] == nil {
+            let downloader = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             downloader.completionBlock = {
                 if downloader.isCancelled {
                     return
                 }
 
+                if let error = downloader.error {
+                    print(error)
+                }
+
                 DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: Order.urlPathPart)
+                    self.downloadsInProgress.removeValue(forKey: fullOrderKey)
+                }
+            }
+
+            downloadsInProgress[fullOrderKey] = downloader
+            downloadQueue.addOperation(downloader)
+        }
+
+        if downloadsInProgress[Order.urlPathPart] == nil {
+            let downloader = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            downloader.completionBlock = {
+                if downloader.isCancelled {
+                    return
+                }
+
+                if let error = downloader.error {
+                    print(error)
+                }
+
+                DispatchQueue.main.async {
+                    self.downloadsInProgress.removeValue(forKey: fullOrderKey)
                 }
             }
 
             downloadsInProgress[Order.urlPathPart] = downloader
             downloadQueue.addOperation(downloader)
         }
+
     }
 
     private func populateUploadQueue(event: Event, checkInList: CheckInList) {

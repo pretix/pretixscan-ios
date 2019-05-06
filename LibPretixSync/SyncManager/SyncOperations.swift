@@ -13,6 +13,10 @@ class APIClientOperation: Operation {
     let apiClient: APIClient
     let event: Event
     let checkInList: CheckInList
+    let dataStore: DataStore
+
+    /// If not nil, the error that occurred during fetch
+    var error: Error?
 
     // MARK: - Private Properties
     private var urSessionTask: URLSessionTask?
@@ -43,10 +47,11 @@ class APIClientOperation: Operation {
         }
     }
 
-    init(apiClient: APIClient, event: Event, checkInList: CheckInList) {
+    init(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
         self.apiClient = apiClient
         self.event = event
         self.checkInList = checkInList
+        self.dataStore = dataStore
     }
 
     // MARK: - Management Methods
@@ -57,7 +62,8 @@ class APIClientOperation: Operation {
 
         isExecuting = true
 
-        // TODO: Do actual work
+        // Override this method to do actual work
+
         completeOperation()
     }
 
@@ -78,44 +84,86 @@ class APIClientOperation: Operation {
 }
 
 class FullOrderDownloader: APIClientOperation {
+    let model = Order.self
+
     override func start() {
-        print("DownloadAllOrders start")
         if isCancelled {
-            return
+            completeOperation()
         }
 
         isExecuting = true
 
-        // TODO: Check if full order sync already happened
+        if dataStore.lastSyncTime(of: model, in: event) != nil {
+            // full order sync already happened, we don't need to do anything
+            completeOperation()
+        }
 
-        let task = apiClient.getTask(Order.self, lastUpdated: nil, isFirstGet: true) { result in
-            guard let pagedList = try? result.get() else {
-                // TODO: completionHandler(APIError.emptyResponse)
-                // TODO: Report error somewhere
+        let task = apiClient.getTask(model, lastUpdated: nil, isFirstGet: true) { result in
+            switch result {
+            case .success(let pagedList):
+                let isLastPage = pagedList.next == nil
+
+                // Notify Listeners
+                NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
+                    SyncManager.NotificationKeys.model: self.model.humanReadableName,
+                    SyncManager.NotificationKeys.loadedAmount: pagedList.results.count,
+                    SyncManager.NotificationKeys.totalAmount: pagedList.count,
+                    SyncManager.NotificationKeys.isLastPage: isLastPage])
+
+                // Store Data
+                self.dataStore.store(pagedList.results, for: self.event)
+
+                if isLastPage {
+                    // We are done
+                    self.dataStore.setLastSyncTime(pagedList.generatedAt ?? "", of: self.model, in: self.event)
+                    self.completeOperation()
+                }
+            case .failure(let error):
+                self.error = error
                 self.completeOperation()
-                return
             }
 
-            // Notify Listeners
+        }
+        task?.resume()
+    }
+}
 
-            print("DownloadAllOrders checkIn")
-            let isLastPage = pagedList.next == nil
-            //NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
-            //    NotificationKeys.model: model.humanReadableName,
-            //    NotificationKeys.loadedAmount: pagedList.results.count,
-            //    NotificationKeys.totalAmount: pagedList.count,
-            //    NotificationKeys.isLastPage: isLastPage])
+class PartialOrderDownloader: APIClientOperation {
+    let model = Order.self
 
-            // Store Data
-            // TODO: self.configStore.dataStore?.store(pagedList.results, for: event)
+    override func start() {
+        if isCancelled {
+            completeOperation()
+        }
 
-            // Callback that we are completely finished
-            if isLastPage {
-                // TODO: self.configStore.dataStore?.setLastSyncTime(pagedList.generatedAt ?? "", of: model, in: event)
+        isExecuting = true
+        let lastUpdated = dataStore.lastSyncTime(of: model, in: event)
+
+        let task = apiClient.getTask(model, lastUpdated: lastUpdated, isFirstGet: false) { result in
+            switch result {
+            case .success(let pagedList):
+                let isLastPage = pagedList.next == nil
+
+                // Notify Listeners
+                NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
+                    SyncManager.NotificationKeys.model: self.model.humanReadableName,
+                    SyncManager.NotificationKeys.loadedAmount: pagedList.results.count,
+                    SyncManager.NotificationKeys.totalAmount: pagedList.count,
+                    SyncManager.NotificationKeys.isLastPage: isLastPage])
+
+                // Store Data
+                self.dataStore.store(pagedList.results, for: self.event)
+
+                if isLastPage {
+                    // We are done
+                    self.dataStore.setLastSyncTime(pagedList.generatedAt ?? "", of: self.model, in: self.event)
+                    self.completeOperation()
+                }
+            case .failure(let error):
+                self.error = error
                 self.completeOperation()
-
-                print("DownloadAllOrders complete")
             }
+
         }
         task?.resume()
     }
