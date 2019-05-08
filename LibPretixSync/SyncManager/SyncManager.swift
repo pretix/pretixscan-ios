@@ -6,8 +6,6 @@
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 
-// swiftlint:disable statement_position
-
 import Foundation
 
 /// Manages a queue of changes to be up- and downloaded to and from the API.
@@ -52,12 +50,6 @@ public class SyncManager {
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
-
-        syncTimer = Timer.scheduledTimer(timeInterval: 1 * 60, target: self, selector: #selector(checkSyncing),
-                                         userInfo: nil, repeats: true)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(syncNotification(_:)),
-                                               name: SyncManager.syncStatusUpdateNotification, object: nil)
     }
 
     // MARK: - Notifications
@@ -103,223 +95,100 @@ public class SyncManager {
         case lastSyncDate
     }
 
-    private var dataTaskQueue = [URLSessionDataTask]()
-
     // MARK: - Syncing
     /// Force a complete redownload of all synced data
     public func forceSync() {
-        guard let event = configStore.event else { return }
-        configStore.dataStore?.invalidateLastSynced(in: event)
-        beginSyncing()
-    }
+        guard let event = configStore.event,
+            let checkInList = configStore.checkInList,
+            let apiClient = configStore.apiClient,
+            let dataStore = configStore.dataStore else {
+                print("SyncStore will not work unless event, checkinList, dataStore and APIclient are set")
+                return
+        }
 
-    private var lastSyncTime = Date.distantPast
-    private var isSyncing = false
-
-    /// Check if the last sync is longer than 5 minutes ago and if so, trigger a new one.
-    @objc
-    public func checkSyncing() {
-        guard !isSyncing else { return }
-        guard -lastSyncTime.timeIntervalSinceNow > 5 * 60 else { return }
-
-        beginSyncing()
+        populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
     /// Trigger a sync process, which will check for new data from the server
     public func beginSyncing() {
-        isSyncing = true
-        NotificationCenter.default.post(name: SyncManager.syncBeganNotification, object: nil)
-        continueSyncing()
+        guard let event = configStore.event,
+            let checkInList = configStore.checkInList,
+            let apiClient = configStore.apiClient,
+            let dataStore = configStore.dataStore else {
+            print("SyncStore will not work unless event, checkinList, dataStore and APIclient are set")
+            return
+        }
+
+        populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
-    private func endSyncing() {
-        self.lastSyncTime = Date()
-        NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: nil,
-                                        userInfo: [SyncManager.NotificationKeys.lastSyncDate: self.lastSyncTime])
-        NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: nil)
-        self.isSyncing = false
+    // MARK: - Queues
+    private lazy var downloadsInProgress: [String: Operation] = [:]
+    private lazy var downloadQueue: OperationQueue = {
+        var queue = OperationQueue()
+        queue.name = "Download Queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
+    private lazy var uploadsInProgress: [String: Operation] = [:]
+    private lazy var uploadQeuue: OperationQueue = {
+        var queue = OperationQueue()
+        queue.name = "Upload Queue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
+
+    private func populateQueues(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
-    private func continueSyncing() {
-        guard let dataStore = configStore.dataStore else { return }
-        guard let event = configStore.event else { return }
-
-        let firstSyncCompletionHandler: ((Error?) -> Void) = { error in
-            if let error = error {
-                print(error)
-            }
-
-            self.continueSyncing()
-
-            if self.dataTaskQueue.count <= 1 {
-                self.endSyncing()
-            }
-        }
-
-        let laterSyncCompletionHandler: ((Error?) -> Void) = { error in
-            if let error = error {
-                print(error)
-            }
-
-            if self.dataTaskQueue.count <= 1 {
-                self.endSyncing()
-            }
-        }
-
-        // First Sync
-        if dataStore.lastSyncTime(of: ItemCategory.self, in: event) == nil {
-            // ItemCategory never synced
-            queue(task: syncTask(ItemCategory.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        }
-
-        else if dataStore.lastSyncTime(of: Item.self, in: event) == nil {
-            // Item never synced
-            queue(task: syncTask(Item.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        }
-
-        else if dataStore.lastSyncTime(of: Order.self, in: event) == nil {
-            // Orders never synced
-            queue(task: syncTask(Order.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        }
-
-        else if dataStore.lastSyncTime(of: Event.self, in: event) == nil {
-            // Events never synced
-            queue(task: syncTask(Event.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        }
-
-        else if dataStore.lastSyncTime(of: CheckInList.self, in: event) == nil {
-            // CheckInLists never synced
-            queue(task: syncTask(CheckInList.self, isFirstSync: true, completionHandler: firstSyncCompletionHandler))
-        }
-
-        else {
-            // TODO: Double check that the correct lastSyncTimes are being stored and used
-
-            // Queue Download Update Tasksh
-            queue(task: syncTask(Event.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
-            queue(task: syncTask(CheckInList.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
-            queue(task: syncTask(ItemCategory.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
-            queue(task: syncTask(Item.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
-            queue(task: syncTask(Order.self, isFirstSync: false, completionHandler: laterSyncCompletionHandler))
-
-            // Queue upload tasks for RedemptionRequests
-            uploadQueuedRedemptionRequest(in: event)
-        }
-    }
-}
-
-// MARK: - Queue Management
-private extension SyncManager {
-    func queue(task: URLSessionDataTask?) {
-        guard let task = task else { return }
-        dataTaskQueue.append(task)
-        updateQueue()
-    }
-
-    func updateQueue() {
-        guard let task = dataTaskQueue.first else { return }
-        if task.state == .completed {
-            dataTaskQueue.remove(at: 0)
-            dataTaskQueue.first?.resume()
-        } else if task.state == .suspended {
-            task.resume()
-        }
-    }
-
-    func resetQueue() {
-        dataTaskQueue.first?.cancel()
-        dataTaskQueue = []
-    }
-
-    @objc
-    func syncNotification(_ notification: Notification) {
-        updateQueue()
-    }
-}
-
-// MARK: - Syncing
-private extension SyncManager {
-    func syncTask<T: Model>(_ model: T.Type, isFirstSync: Bool, completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
-        do {
-            let event = try getEvent()
-            let dataStore = try getDataStore()
-
-            return configStore.apiClient?.getTask(model, lastUpdated: dataStore.lastSyncTime(of: model, in: event),
-                                                  isFirstGet: isFirstSync) { result in
-
-                guard let pagedList = try? result.get() else {
-                    completionHandler(APIError.emptyResponse)
+    private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        let fullOrderKey = Order.urlPathPart + "-full"
+        if downloadsInProgress[fullOrderKey] == nil {
+            let downloader = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            downloader.completionBlock = {
+                if downloader.isCancelled {
                     return
                 }
 
-                // Notify Listeners
-                let isLastPage = pagedList.next == nil
-                NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
-                    NotificationKeys.model: model.humanReadableName,
-                    NotificationKeys.loadedAmount: pagedList.results.count,
-                    NotificationKeys.totalAmount: pagedList.count,
-                    NotificationKeys.isLastPage: isLastPage])
+                if let error = downloader.error {
+                    print(error)
+                }
 
-                // Store Data
-                self.configStore.dataStore?.store(pagedList.results, for: event)
-
-                // Callback that we are completely finished
-                if isLastPage {
-                    self.configStore.dataStore?.setLastSyncTime(pagedList.generatedAt ?? "", of: model, in: event)
-                    completionHandler(nil)
+                DispatchQueue.main.async {
+                    self.downloadsInProgress.removeValue(forKey: fullOrderKey)
                 }
             }
-        } catch {
-            completionHandler(error)
-            return nil
+
+            downloadsInProgress[fullOrderKey] = downloader
+            downloadQueue.addOperation(downloader)
         }
-    }
-}
 
-// MARK: - Uploading
-private extension SyncManager {
-    func uploadQueuedRedemptionRequest(in event: Event) {
-        if let firstRedemptionRequest = configStore.dataStore?.getRedemptionRequest(in: event) {
-            queue(task: configStore.apiClient?.redeemTask(
-                secret: firstRedemptionRequest.secret,
-                force: firstRedemptionRequest.redemptionRequest.force,
-                ignoreUnpaid: firstRedemptionRequest.redemptionRequest.ignoreUnpaid) { (_, error) in
-                    if error == nil {
-                        // Upload went through
-                        self.configStore.dataStore?.delete(firstRedemptionRequest, in: event)
-                    }
-
-                    // Begin the next upload
-                    self.uploadQueuedRedemptionRequest(in: event)
-
-                    // Notify Queue Management
-                    let totalAmount = self.configStore.dataStore?.numberOfRedemptionRequestsInQueue(in: event) ?? 0
-                    NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
-                        NotificationKeys.model: QueuedRedemptionRequest.humanReadableName,
-                        NotificationKeys.loadedAmount: 1,
-                        NotificationKeys.totalAmount: totalAmount,
-                        NotificationKeys.isLastPage: (totalAmount <= 1)])
+        if downloadsInProgress[Order.urlPathPart] == nil {
+            let downloader = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            downloader.completionBlock = {
+                if downloader.isCancelled {
+                    return
                 }
-            )
+
+                if let error = downloader.error {
+                    print(error)
+                }
+
+                DispatchQueue.main.async {
+                    self.downloadsInProgress.removeValue(forKey: fullOrderKey)
+                }
+            }
+
+            downloadsInProgress[Order.urlPathPart] = downloader
+            downloadQueue.addOperation(downloader)
         }
+
     }
-}
 
-// MARK: - Helper Methods
-private extension SyncManager {
-    func getEvent() throws -> Event {
-        guard let event = configStore.event else {
-            throw APIError.notConfigured(message: "ConfigStore.event property must be set before calling this function.")
-        }
+    private func populateUploadQueue(event: Event, checkInList: CheckInList) {
 
-        return event
-    }
-
-    func getDataStore() throws -> DataStore {
-        guard let dataStore = configStore.dataStore else {
-            throw APIError.notConfigured(message: "ConfigStore.dataStore property must be set before calling this function.")
-        }
-
-        return dataStore
     }
 }
