@@ -63,7 +63,12 @@ public extension APIClient {
             do {
                 initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
             } catch let jsonError {
-                completionHandler(jsonError)
+                if String(data: responseData, encoding: .utf8)?.contains("This initialization token has already been used.") == true {
+                    completionHandler(APIError.initializationTokenAlreadyUsed)
+                } else {
+                    completionHandler(jsonError)
+                }
+
                 return
             }
 

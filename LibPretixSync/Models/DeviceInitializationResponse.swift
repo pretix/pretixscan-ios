@@ -42,3 +42,7 @@ public struct DeviceInitializationResponse: Codable, Equatable {
         case name
     }
 }
+
+public struct DeviceInitializationResponseError: Codable, Equatable {
+    public let token: [String]
+}
