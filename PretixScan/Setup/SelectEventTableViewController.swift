@@ -88,7 +88,6 @@ class SelectEventTableViewController: UITableViewController, Configurable {
             let selectedIndexPath = tableView.indexPath(for: selectedCell) {
 
             let selectedEvent = event(for: selectedIndexPath)
-            configStore?.event = selectedEvent
             selectCheckInListViewController.event = selectedEvent
         }
     }

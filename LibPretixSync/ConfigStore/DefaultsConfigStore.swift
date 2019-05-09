@@ -127,7 +127,7 @@ public class DefaultsConfigStore: ConfigStore {
         }
     }
 
-    public var event: Event? {
+    public private(set) var event: Event? {
         get {
             return _event
         }
@@ -137,7 +137,7 @@ public class DefaultsConfigStore: ConfigStore {
         }
     }
 
-    public var checkInList: CheckInList? {
+    public private(set) var checkInList: CheckInList? {
         get {
             return _checkInList
         }
@@ -145,6 +145,11 @@ public class DefaultsConfigStore: ConfigStore {
             _checkInList = newValue
             valueChanged(.checkInList)
         }
+    }
+
+    public func set(event: Event, checkInList: CheckInList) {
+        self.event = event
+        self.checkInList = checkInList
     }
 
     public var asyncModeEnabled: Bool {

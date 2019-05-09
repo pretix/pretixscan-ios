@@ -60,14 +60,20 @@ public class InMemoryConfigStore: ConfigStore {
     public var deviceUniqueSerial: String? { didSet { valueChanged() } }
 
     // MARK: - Current Event and Check-In List
-    public var event: Event? {
+    public private(set) var event: Event? {
         didSet {
             // If the event changes, the check in list is invalid
             checkInList = nil
             valueChanged(.event)
         }
     }
-    public var checkInList: CheckInList? { didSet { valueChanged(.checkInList) } }
+    public private(set) var checkInList: CheckInList? { didSet { valueChanged(.checkInList) } }
+
+    public func set(event: Event, checkInList: CheckInList) {
+        self.event = event
+        self.checkInList = checkInList
+    }
+
     public var asyncModeEnabled: Bool = false { didSet { valueChanged(.asyncModeEnabled) } }
 
     public func factoryReset() {

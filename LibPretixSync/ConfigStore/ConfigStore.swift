@@ -60,10 +60,13 @@ public protocol ConfigStore {
 
     // MARK: - Current Event and Check-In List
     /// The currently managed event
-    var event: Event? { get set }
+    var event: Event? { get }
 
     /// The CheckInList to scan against
-    var checkInList: CheckInList? { get set }
+    var checkInList: CheckInList? { get }
+
+    // Set both event and checkinlist
+    func set(event: Event, checkInList: CheckInList)
 }
 
 extension ConfigStore {

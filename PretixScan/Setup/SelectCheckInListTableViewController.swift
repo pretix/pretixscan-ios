@@ -73,9 +73,9 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable 
 
     // MARK: View Communication
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let selectedCell = sender as? UITableViewCell, let selectedIndexPath = tableView.indexPath(for: selectedCell) {
-            let selectedCheckInList = checkInList(for: selectedIndexPath)
-            configStore?.checkInList = selectedCheckInList
+        if let selectedCell = sender as? UITableViewCell, let selectedIndexPath = tableView.indexPath(for: selectedCell),
+            let selectedCheckInList = checkInList(for: selectedIndexPath), let event = self.event {
+            configStore?.set(event: event, checkInList: selectedCheckInList)
         }
     }
 }
