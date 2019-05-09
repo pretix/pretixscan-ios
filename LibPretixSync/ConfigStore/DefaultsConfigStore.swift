@@ -127,7 +127,7 @@ public class DefaultsConfigStore: ConfigStore {
         }
     }
 
-    public var event: Event? {
+    public private(set) var event: Event? {
         get {
             return _event
         }
@@ -137,7 +137,7 @@ public class DefaultsConfigStore: ConfigStore {
         }
     }
 
-    public var checkInList: CheckInList? {
+    public private(set) var checkInList: CheckInList? {
         get {
             return _checkInList
         }
@@ -145,6 +145,11 @@ public class DefaultsConfigStore: ConfigStore {
             _checkInList = newValue
             valueChanged(.checkInList)
         }
+    }
+
+    public func set(event: Event, checkInList: CheckInList) {
+        self.event = event
+        self.checkInList = checkInList
     }
 
     public var asyncModeEnabled: Bool {
@@ -227,23 +232,57 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     func saveToDefaults() {
-        defaults.set(_welcomeScreenIsConfirmed, forKey: key(.welcomeScreenIsConfirmed))
-        defaults.set(_apiBaseURL, forKey: key(.apiBaseURL))
-        defaults.set(_apiToken, forKey: key(.apiToken))
-        defaults.set(_deviceName, forKey: key(.deviceName))
-        defaults.set(_organizerSlug, forKey: key(.organizerSlug))
-        defaults.set(_deviceID, forKey: key(.deviceID))
-        defaults.set(_deviceUniqueSerial, forKey: key(.deviceUniqueSerial))
-        defaults.set(_asyncModeEnabled, forKey: key(.asyncModeEnabled))
+        save(_welcomeScreenIsConfirmed, forKey: .welcomeScreenIsConfirmed)
+        save(_apiBaseURL, forKey: .apiBaseURL)
+        save(_apiToken, forKey: .apiToken)
+        save(_deviceName, forKey: .deviceName)
+        save(_organizerSlug, forKey: .organizerSlug)
+        save(_deviceID, forKey: .deviceID)
+        save(_deviceUniqueSerial, forKey: .deviceUniqueSerial)
+        save(_asyncModeEnabled, forKey: .asyncModeEnabled)
+        save(try? jsonEncoder.encode(_event), forKey: .event)
+        save(try? jsonEncoder.encode(_checkInList), forKey: .checkInList)
 
-        // Event
-        if let eventData = try? jsonEncoder.encode(_event) {
-            defaults.set(eventData, forKey: key(.event))
+        defaults.synchronize()
+    }
+
+    private func save(_ value: Bool?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
         }
+    }
 
-        // CheckInList
-        if let checkInListData = try? jsonEncoder.encode(_checkInList) {
-            defaults.set(checkInListData, forKey: key(.checkInList))
+    private func save(_ value: URL?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
+        }
+    }
+
+    private func save(_ value: String?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
+        }
+    }
+
+    private func save(_ value: Int?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
+        }
+    }
+
+    private func save(_ value: Data?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
         }
     }
 

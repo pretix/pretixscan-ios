@@ -30,7 +30,7 @@ public class OfflineTicketValidator: TicketValidator {
     }
 
     // Retrieve all available CheckInLists for the specified event
-    public func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
+    public func getCheckinLists(event: Event, completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
         guard let event = configStore.event else {
             completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
             return

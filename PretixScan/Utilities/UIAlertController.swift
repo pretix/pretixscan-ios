@@ -17,6 +17,8 @@ extension UIAlertController {
     }
 
     static func getMessage(for error: Error) -> String {
+        // TODO: return proper error messages
+
         return error.localizedDescription
     }
 }

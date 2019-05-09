@@ -63,7 +63,12 @@ public extension APIClient {
             do {
                 initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
             } catch let jsonError {
-                completionHandler(jsonError)
+                if String(data: responseData, encoding: .utf8)?.contains("This initialization token has already been used.") == true {
+                    completionHandler(APIError.initializationTokenAlreadyUsed)
+                } else {
+                    completionHandler(jsonError)
+                }
+
                 return
             }
 
@@ -89,15 +94,15 @@ public extension APIClient {
         task?.resume()
     }
 
-    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, isFirstGet: Bool,
+    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, isFirstGet: Bool, event: Event? = nil,
                            completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
-            let event = try getEvent()
             let url: URL
             if model is Event.Type {
                 url = try createURL(for: "/api/v1/organizers/\(organizer)/events/")
             } else {
+                let event = try event ?? getEvent()
                 url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.urlPathPart)/")
             }
 
@@ -187,10 +192,10 @@ public extension APIClient {
 // MARK: - Check In Lists
 public extension APIClient {
     /// Returns a list of all check-in lists within a given event.
-    func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
+    func getCheckinLists(event: Event, completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
         var results = [CheckInList]()
 
-        let task = getTask(CheckInList.self, lastUpdated: nil, isFirstGet: true) { result in
+        let task = getTask(CheckInList.self, lastUpdated: nil, isFirstGet: true, event: event) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
