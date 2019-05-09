@@ -98,11 +98,11 @@ public extension APIClient {
                            completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
-            let event = try getEvent()
             let url: URL
             if model is Event.Type {
                 url = try createURL(for: "/api/v1/organizers/\(organizer)/events/")
             } else {
+                let event = try getEvent()
                 url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.urlPathPart)/")
             }
 
