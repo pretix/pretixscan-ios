@@ -12,8 +12,8 @@ extension Error {
     var localized: String {
         if let apiError = self as? APIError {
             switch apiError {
-            case .initializationTokenAlreadyUsed:
-                return Localization.Errors.InitializationTokenAlreadyUsed
+            case .initializationError(let message):
+                return message
             case .notConfigured(let message):
                 return Localization.Errors.NotConfigured + message
             case .emptyResponse:

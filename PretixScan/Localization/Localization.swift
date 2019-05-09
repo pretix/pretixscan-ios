@@ -104,7 +104,7 @@ struct Localization {
         static let Error = NSLocalizedString("Error", comment: "")
         static let Confirm = NSLocalizedString("OK", comment: "")
 
-        static let InitializationTokenAlreadyUsed = NSLocalizedString("Initialization Token already used", comment: "")
+        static let InitializationError = NSLocalizedString("Initialization Token already used", comment: "")
         static let NotConfigured = NSLocalizedString("This feature cannot be used at the moment: ", comment: "")
         static let EmptyResponse = NSLocalizedString("The server returned an empty response", comment: "")
         static let NonHTTPResponse = NSLocalizedString("The server returned a non HTTP response", comment: "")
