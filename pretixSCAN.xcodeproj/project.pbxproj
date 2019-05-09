@@ -43,6 +43,7 @@
 		DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A012256722100710EFA /* NotifcationManager.swift */; };
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
 		DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */; };
+		DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
 		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
 		DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */; };
@@ -174,6 +175,7 @@
 		DC2F4A012256722100710EFA /* NotifcationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationManager.swift; sourceTree = "<group>"; };
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
 		DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryDataStore.swift; sourceTree = "<group>"; };
+		DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTicketValidator.swift; sourceTree = "<group>"; };
@@ -318,7 +320,7 @@
 				DCDD82CA224AB1A400DC0200 /* Icon.swift */,
 				DCDD82CC224AB25900DC0200 /* Color.swift */,
 				DC2F4A03225781B100710EFA /* Segues */,
-				DCAAFF39223970090059C000 /* Localization.swift */,
+				DC7DD5C122846B0000C08817 /* Localization */,
 				DCB35B9E2249407300860385 /* Utilities */,
 				DC2F4A012256722100710EFA /* NotifcationManager.swift */,
 			);
@@ -414,6 +416,15 @@
 				DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */,
 			);
 			path = Segues;
+			sourceTree = "<group>";
+		};
+		DC7DD5C122846B0000C08817 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				DCAAFF39223970090059C000 /* Localization.swift */,
+				DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		DC8467A5225B7FC70013F647 /* DataStore */ = {
@@ -764,6 +775,7 @@
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
 				DCEEF12A227DBD9F00BCAF82 /* SyncOperations.swift in Sources */,
+				DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */,
 				DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */,
 				DCB35B96224901BA00860385 /* CryptoHelpers.swift in Sources */,
 				DCAAFF57223AF14B0059C000 /* UIViewController.swift in Sources */,

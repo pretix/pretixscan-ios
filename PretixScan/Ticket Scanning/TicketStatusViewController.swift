@@ -51,7 +51,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             let newBackgroundColor = Color.error
             iconLabel.text = Icon.error
             ticketStatusLabel.text = Localization.TicketStatusViewController.Error
-            productNameLabel.text = self.error?.localizedDescription
+            productNameLabel.text = self.error?.localized
             appCoordinator?.performHapticNotification(ofType: .error)
 
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {

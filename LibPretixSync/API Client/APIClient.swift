@@ -36,7 +36,9 @@ public extension APIClient {
     /// Retrieve an API token from the API and save it into the attached `ConfigStore`
     func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
         guard let baseURL = configStore.apiBaseURL else {
-            print("Please set the APIClient's configStore.apiBaseURL property before calling this function. ")
+            let message = "Please set the APIClient's configStore.apiBaseURL property before calling this function."
+            print(message)
+            completionHandler(APIError.notConfigured(message: message))
             return
         }
 
@@ -63,8 +65,9 @@ public extension APIClient {
             do {
                 initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
             } catch let jsonError {
-                if String(data: responseData, encoding: .utf8)?.contains("This initialization token has already been used.") == true {
-                    completionHandler(APIError.initializationTokenAlreadyUsed)
+
+                if let errorResponse = try? self.jsonDecoder.decode(DeviceInitializationResponseError.self, from: responseData), let message = errorResponse.token.first {
+                    completionHandler(APIError.initializationError(message: message))
                 } else {
                     completionHandler(jsonError)
                 }

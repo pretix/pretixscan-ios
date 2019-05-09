@@ -9,7 +9,7 @@
 import Foundation
 
 enum APIError: Error {
-    case initializationTokenAlreadyUsed
+    case initializationError(message: String)
     case notConfigured(message: String)
     case emptyResponse
     case nonHTTPResponse
