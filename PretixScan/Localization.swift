@@ -11,7 +11,7 @@ import Foundation
 
 struct Localization {
     struct ValidateTicketViewController {
-        static let Title = NSLocalizedString("PretixScan", comment: "")
+        static let Title = NSLocalizedString("pretixSCAN", comment: "")
         static let NoEvent = NSLocalizedString("No Event", comment: "")
         static let SearchPlaceHolder = NSLocalizedString("Search", comment: "")
     }
@@ -25,7 +25,7 @@ struct Localization {
 
     struct WelcomeViewController {
         static let Title = NSLocalizedString("Welcome", comment: "")
-        static let Explanation = NSLocalizedString("PretixScan is an event entry app that you can use to validate tickets that you sold through pretix.", comment: "")
+        static let Explanation = NSLocalizedString("pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix.", comment: "")
         static let CheckMarkDetail = NSLocalizedString("I understand that personal data of attendees of my connected events will be stored on this device and I will secure the device properly.", comment: "")
         static let Continue = NSLocalizedString("Continue", comment: "")
     }

@@ -1,4 +1,4 @@
-# PretixScan for iOS
+# pretixSCAN for iOS
 
 # Architecture
 
