@@ -103,5 +103,17 @@ struct Localization {
     struct Errors {
         static let Error = NSLocalizedString("Error", comment: "")
         static let Confirm = NSLocalizedString("OK", comment: "")
+
+        static let InitializationTokenAlreadyUsed = NSLocalizedString("Initialization Token already used", comment: "")
+        static let NotConfigured = NSLocalizedString("This feature cannot be used at the moment: ", comment: "")
+        static let EmptyResponse = NSLocalizedString("The server returned an empty response", comment: "")
+        static let NonHTTPResponse = NSLocalizedString("The server returned a non HTTP response", comment: "")
+        static let BadRequest = NSLocalizedString("The server refused to handle our request", comment: "")
+        static let Unauthorized = NSLocalizedString("You are not authorized to access this resource", comment: "")
+        static let Forbidden = NSLocalizedString("You are forbidden from accessing this resource", comment: "")
+        static let NotFound = NSLocalizedString("The resource was not found on the server", comment: "")
+        static let UnknownStatusCode = NSLocalizedString("The server returned an unkown status code: ", comment: "")
+        static let CouldNotCreateURL = NSLocalizedString("Could not create URL", comment: "")
+        static let CouldNotCreateNonce = NSLocalizedString("Could not create Nonce", comment: "")
     }
 }
