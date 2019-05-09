@@ -141,7 +141,7 @@
 		D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.debug.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
 		DC0052E92260D385002D985B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		DC07357622392474008326F7 /* PretixScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PretixScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC07357622392474008326F7 /* pretixSCAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pretixSCAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07357922392474008326F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC07357E22392474008326F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DC07358022392476008326F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -293,7 +293,7 @@
 		DC07357722392474008326F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DC07357622392474008326F7 /* PretixScan.app */,
+				DC07357622392474008326F7 /* pretixSCAN.app */,
 				DC07358A22392476008326F7 /* PretixScanTests.xctest */,
 			);
 			name = Products;
@@ -543,9 +543,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DC07357522392474008326F7 /* PretixScan */ = {
+		DC07357522392474008326F7 /* pretixSCAN */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScan" */;
+			buildConfigurationList = DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "pretixSCAN" */;
 			buildPhases = (
 				AE76B1F69530806A3340C94A /* [CP] Check Pods Manifest.lock */,
 				DC07357222392474008326F7 /* Sources */,
@@ -559,9 +559,9 @@
 			);
 			dependencies = (
 			);
-			name = PretixScan;
+			name = pretixSCAN;
 			productName = PretixScan;
-			productReference = DC07357622392474008326F7 /* PretixScan.app */;
+			productReference = DC07357622392474008326F7 /* pretixSCAN.app */;
 			productType = "com.apple.product-type.application";
 		};
 		DC07358922392476008326F7 /* PretixScanTests */ = {
@@ -604,7 +604,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DC07357122392474008326F7 /* Build configuration list for PBXProject "PretixScan" */;
+			buildConfigurationList = DC07357122392474008326F7 /* Build configuration list for PBXProject "pretixSCAN" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -617,7 +617,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DC07357522392474008326F7 /* PretixScan */,
+				DC07357522392474008326F7 /* pretixSCAN */,
 				DC07358922392476008326F7 /* PretixScanTests */,
 			);
 		};
@@ -879,7 +879,7 @@
 /* Begin PBXTargetDependency section */
 		DC07358C22392476008326F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DC07357522392474008326F7 /* PretixScan */;
+			target = DC07357522392474008326F7 /* pretixSCAN */;
 			targetProxy = DC07358B22392476008326F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1032,7 +1032,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScan;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.pretixSCAN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1051,7 +1051,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.PretixScan;
+				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.pretixSCAN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1076,7 +1076,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PretixScan.app/PretixScan";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pretixSCAN.temp_caseinsensitive_rename.app/pretixSCAN.temp_caseinsensitive_rename";
 			};
 			name = Debug;
 		};
@@ -1098,14 +1098,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PretixScan.app/PretixScan";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pretixSCAN.temp_caseinsensitive_rename.app/pretixSCAN.temp_caseinsensitive_rename";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DC07357122392474008326F7 /* Build configuration list for PBXProject "PretixScan" */ = {
+		DC07357122392474008326F7 /* Build configuration list for PBXProject "pretixSCAN" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC07359122392476008326F7 /* Debug */,
@@ -1114,7 +1114,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScan" */ = {
+		DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "pretixSCAN" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC07359422392476008326F7 /* Debug */,
