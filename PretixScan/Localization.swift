@@ -20,6 +20,7 @@ struct Localization {
         static let ValidTicket = NSLocalizedString("Valid Ticket", comment: "")
         static let TicketAlreadyRedeemed = NSLocalizedString("Ticket Already Used", comment: "")
         static let InvalidTicket = NSLocalizedString("Invalid Ticket", comment: "")
+        static let Error = NSLocalizedString("Error", comment: "")
         static let IncompleteInformation = NSLocalizedString("Incomplete Information", comment: "")
     }
 

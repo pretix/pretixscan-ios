@@ -14,6 +14,9 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     var configuration: Configuration? { didSet { update() } }
     var redemptionResponse: RedemptionResponse? { didSet { update() } }
 
+    private var beganRedeeming = false
+    private var error: Error? { didSet { update() } }
+
     struct Configuration {
         let secret: String
         var force: Bool
@@ -38,8 +41,25 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func updateMain() {
-        if configuration != nil, redemptionResponse == nil {
+        if configuration != nil, redemptionResponse == nil, beganRedeeming == false {
             redeem()
+        }
+
+        guard error == nil else {
+            resetToEmpty()
+
+            let newBackgroundColor = Color.error
+            iconLabel.text = Icon.error
+            ticketStatusLabel.text = Localization.TicketStatusViewController.Error
+            productNameLabel.text = self.error?.localizedDescription
+            appCoordinator?.performHapticNotification(ofType: .error)
+
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
+                self.backgroundColorView.backgroundColor = newBackgroundColor
+                self.view.layoutIfNeeded()
+            })
+
+            return
         }
 
         guard let redemptionResponse = self.redemptionResponse else {
@@ -96,6 +116,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func redeem() {
+        beganRedeeming = true
         guard let configuration = configuration else { return }
 
         activityIndicator.startAnimating()
@@ -107,7 +128,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 force: configuration.force,
                 ignoreUnpaid: configuration.ignoreUnpaid
             ) { (redemptionResponse, error) in
-                self.presentErrorAlert(ifError: error)
+                self.error = error
                 self.redemptionResponse = redemptionResponse
             }
         }
