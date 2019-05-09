@@ -48,6 +48,17 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         guard error == nil else {
             resetToEmpty()
 
+            productNameLabel.text = self.error?.localized
+
+            if let apiError = error as? APIError {
+                switch apiError {
+                case .notFound:
+                    productNameLabel.text = Localization.Errors.TicketNotFound
+                default:
+                    productNameLabel.text = self.error?.localized
+                }
+            }
+
             let newBackgroundColor = Color.error
             iconLabel.text = Icon.error
             ticketStatusLabel.text = Localization.TicketStatusViewController.Error

@@ -115,5 +115,6 @@ struct Localization {
         static let UnknownStatusCode = NSLocalizedString("The server returned an unkown status code: ", comment: "")
         static let CouldNotCreateURL = NSLocalizedString("Could not create URL", comment: "")
         static let CouldNotCreateNonce = NSLocalizedString("Could not create Nonce", comment: "")
+        static let TicketNotFound = NSLocalizedString("The ticket was not found for the current event", comment: "")
     }
 }
