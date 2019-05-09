@@ -112,7 +112,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         guard let stringValue = readableObject.stringValue else { return }
 
         vibrate()
-        flashView()
+        // flashView()
         found(code: stringValue)
     }
 
