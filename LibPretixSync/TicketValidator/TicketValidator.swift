@@ -19,7 +19,7 @@ public protocol TicketValidator {
     func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void)
 
     // Retrieve all available CheckInLists for the current event
-    func getCheckinLists(completionHandler: @escaping ([CheckInList]?, Error?) -> Void)
+    func getCheckinLists(event: Event, completionHandler: @escaping ([CheckInList]?, Error?) -> Void)
 
     /// Retrieve Statistics for the currently selected CheckInList
     func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void)
