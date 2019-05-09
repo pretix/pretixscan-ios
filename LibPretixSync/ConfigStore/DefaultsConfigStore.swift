@@ -232,26 +232,58 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     func saveToDefaults() {
-        defaults.set(_welcomeScreenIsConfirmed, forKey: key(.welcomeScreenIsConfirmed))
-        defaults.set(_apiBaseURL, forKey: key(.apiBaseURL))
-        defaults.set(_apiToken, forKey: key(.apiToken))
-        defaults.set(_deviceName, forKey: key(.deviceName))
-        defaults.set(_organizerSlug, forKey: key(.organizerSlug))
-        defaults.set(_deviceID, forKey: key(.deviceID))
-        defaults.set(_deviceUniqueSerial, forKey: key(.deviceUniqueSerial))
-        defaults.set(_asyncModeEnabled, forKey: key(.asyncModeEnabled))
-
-        // Event
-        if let eventData = try? jsonEncoder.encode(_event) {
-            defaults.set(eventData, forKey: key(.event))
-        }
-
-        // CheckInList
-        if let checkInListData = try? jsonEncoder.encode(_checkInList) {
-            defaults.set(checkInListData, forKey: key(.checkInList))
-        }
+        save(_welcomeScreenIsConfirmed, forKey: .welcomeScreenIsConfirmed)
+        save(_apiBaseURL, forKey: .apiBaseURL)
+        save(_apiToken, forKey: .apiToken)
+        save(_deviceName, forKey: .deviceName)
+        save(_organizerSlug, forKey: .organizerSlug)
+        save(_deviceID, forKey: .deviceID)
+        save(_deviceUniqueSerial, forKey: .deviceUniqueSerial)
+        save(_asyncModeEnabled, forKey: .asyncModeEnabled)
+        save(try? jsonEncoder.encode(_event), forKey: .event)
+        save(try? jsonEncoder.encode(_checkInList), forKey: .checkInList)
 
         defaults.synchronize()
+    }
+
+    private func save(_ value: Bool?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
+        }
+    }
+
+    private func save(_ value: URL?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
+        }
+    }
+
+    private func save(_ value: String?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
+        }
+    }
+
+    private func save(_ value: Int?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
+        }
+    }
+
+    private func save(_ value: Data?, forKey key: Keys) {
+        if value == nil {
+            defaults.removeObject(forKey: self.key(key))
+        } else {
+            defaults.set(value, forKey: self.key(key))
+        }
     }
 
     private func key(_ key: Keys) -> String {
