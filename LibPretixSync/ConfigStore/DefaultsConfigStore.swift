@@ -250,6 +250,8 @@ public class DefaultsConfigStore: ConfigStore {
         if let checkInListData = try? jsonEncoder.encode(_checkInList) {
             defaults.set(checkInListData, forKey: key(.checkInList))
         }
+
+        defaults.synchronize()
     }
 
     private func key(_ key: Keys) -> String {
