@@ -194,6 +194,25 @@ public extension APIClient {
         }
         task?.resume()
     }
+
+    // Returns a list of all subevents
+    func getSubEvents(event: Event, completionHandler: @escaping ([SubEvent]?, Error?) -> Void) {
+        var results = [SubEvent]()
+
+        let task = getTask(SubEvent.self, lastUpdated: nil, event: event) { result in
+            switch result {
+            case .failure(let error):
+                completionHandler(nil, error)
+            case .success(let resultList):
+                results += resultList.results
+                if resultList.next == nil {
+                    // Last Page
+                    completionHandler(results, nil)
+                }
+            }
+        }
+        task?.resume()
+    }
 }
 
 // MARK: - Check In Lists
