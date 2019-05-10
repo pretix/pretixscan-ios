@@ -141,6 +141,11 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             ) { (redemptionResponse, error) in
                 self.error = error
                 self.redemptionResponse = redemptionResponse
+
+                // Dismiss
+                DispatchQueue.main.asyncAfter(deadline: .now() + self.presentationTime) {
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         }
     }
@@ -150,12 +155,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         super.viewDidLoad()
         preferredContentSize = CGSize(width: 0, height: UIScreen.main.bounds.height * 0.50)
         update()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + presentationTime) {
-            self.dismiss(animated: true, completion: nil)
-        }
     }
 
     @IBAction func tap(_ sender: Any) {
