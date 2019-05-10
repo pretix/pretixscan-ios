@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// `Event`s can represent whole event series
 ///
 /// if the has_subevents property of the event is active. In this case,
@@ -52,7 +51,7 @@ public struct SubEvent: Model {
     public let location: MultiLingualString?
 
     private enum CodingKeys: String, CodingKey {
-        case identifier
+        case identifier = "id"
         case name
         case event
         case isActive = "active"
