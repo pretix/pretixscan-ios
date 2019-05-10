@@ -24,10 +24,13 @@ public struct Event: Model {
     /// The event’s start date
     public let dateFrom: Date?
 
+    public let hasSubEvents: Bool
+
     private enum CodingKeys: String, CodingKey {
         case name
         case slug
         case dateFrom = "date_from"
+        case hasSubEvents = "has_subevents"
     }
 }
 
