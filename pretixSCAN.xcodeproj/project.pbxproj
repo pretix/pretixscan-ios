@@ -44,6 +44,7 @@
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
 		DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */; };
 		DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */; };
+		DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C42285816D00C08817 /* SubEvent.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
 		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
 		DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */; };
@@ -176,6 +177,7 @@
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
 		DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryDataStore.swift; sourceTree = "<group>"; };
 		DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		DC7DD5C42285816D00C08817 /* SubEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubEvent.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTicketValidator.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				DCAAFF46223AB6A00059C000 /* DeviceInitializationRequest.swift */,
 				DCAAFF48223AB8450059C000 /* DeviceInitializationResponse.swift */,
 				DCC00039223BE07D00236424 /* Event.swift */,
+				DC7DD5C42285816D00C08817 /* SubEvent.swift */,
 				DC23BA4A223FCFF200ED7713 /* CheckInList.swift */,
 				DCC0003B223BE31F00236424 /* MultiLingualString.swift */,
 				DC1D6FB42240F689008A9E06 /* OrderPosition.swift */,
@@ -781,6 +784,7 @@
 				DCAAFF57223AF14B0059C000 /* UIViewController.swift in Sources */,
 				DCAAFF3A223970090059C000 /* Localization.swift in Sources */,
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
+				DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */,
 				DCEEF11F22799FD600BCAF82 /* QeuedRedemptionRequest.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */,
