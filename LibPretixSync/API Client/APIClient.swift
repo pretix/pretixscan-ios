@@ -91,13 +91,13 @@ public extension APIClient {
 // MARK: - Retrieving Items
 public extension APIClient {
 
-    func get<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, isFirstGet: Bool,
+    func get<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
                        completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) {
-        let task = getTask(model, page: page, lastUpdated: lastUpdated, isFirstGet: isFirstGet, completionHandler: completionHandler)
+        let task = getTask(model, page: page, lastUpdated: lastUpdated, completionHandler: completionHandler)
         task?.resume()
     }
 
-    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, isFirstGet: Bool, event: Event? = nil,
+    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, event: Event? = nil, filters: [String: String] = [:],
                            completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
@@ -117,8 +117,12 @@ public extension APIClient {
                 allowedCharacterSet.remove("+")
                 queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
             }
+            let isFirstGet = lastUpdated == nil
             if isFirstGet {
                 queryItems.append(URLQueryItem(name: "ordering", value: "datetime_desc"))
+            }
+            for filter in filters {
+                queryItems.append(URLQueryItem(name: filter.key, value: filter.value))
             }
             urlComponents?.queryItems = queryItems
 
@@ -154,7 +158,7 @@ public extension APIClient {
 
                     // Check if there are more pages to load
                     if pagedList.next != nil {
-                        self.get(model, page: page+1, lastUpdated: lastUpdated, isFirstGet: isFirstGet,
+                        self.get(model, page: page+1, lastUpdated: lastUpdated,
                                  completionHandler: completionHandler)
                     }
                 } catch {
@@ -176,7 +180,7 @@ public extension APIClient {
     func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
         var results = [Event]()
 
-        let task = getTask(Event.self, lastUpdated: nil, isFirstGet: true) { result in
+        let task = getTask(Event.self, lastUpdated: nil) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
@@ -198,7 +202,7 @@ public extension APIClient {
     func getCheckinLists(event: Event, completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
         var results = [CheckInList]()
 
-        let task = getTask(CheckInList.self, lastUpdated: nil, isFirstGet: true, event: event) { result in
+        let task = getTask(CheckInList.self, lastUpdated: nil, event: event) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)

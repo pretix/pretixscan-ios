@@ -98,7 +98,7 @@ class FullOrderDownloader: APIClientOperation {
             completeOperation()
         }
 
-        let task = apiClient.getTask(model, lastUpdated: nil, isFirstGet: true) { result in
+        let task = apiClient.getTask(model, lastUpdated: nil) { result in
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
@@ -139,7 +139,7 @@ class PartialOrderDownloader: APIClientOperation {
         isExecuting = true
         let lastUpdated = dataStore.lastSyncTime(of: model, in: event)
 
-        let task = apiClient.getTask(model, lastUpdated: lastUpdated, isFirstGet: false) { result in
+        let task = apiClient.getTask(model, lastUpdated: lastUpdated) { result in
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
