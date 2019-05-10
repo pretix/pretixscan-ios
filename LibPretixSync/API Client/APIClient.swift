@@ -66,7 +66,8 @@ public extension APIClient {
                 initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
             } catch let jsonError {
 
-                if let errorResponse = try? self.jsonDecoder.decode(DeviceInitializationResponseError.self, from: responseData), let message = errorResponse.token.first {
+                if let errorResponse = try? self.jsonDecoder.decode(DeviceInitializationResponseError.self, from: responseData),
+                    let message = errorResponse.token.first {
                     completionHandler(APIError.initializationError(message: message))
                 } else {
                     completionHandler(jsonError)
@@ -158,8 +159,8 @@ public extension APIClient {
 
                     // Check if there are more pages to load
                     if pagedList.next != nil {
-                        self.get(model, page: page+1, lastUpdated: lastUpdated,
-                                 completionHandler: completionHandler)
+                        self.getTask(model, page: page+1, lastUpdated: lastUpdated, event: event,
+                                     filters: filters, completionHandler: completionHandler)?.resume()
                     }
                 } catch {
                     return completionHandler(.failure(error))
