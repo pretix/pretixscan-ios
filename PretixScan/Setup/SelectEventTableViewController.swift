@@ -137,7 +137,9 @@ class SelectEventTableViewController: UITableViewController, Configurable {
             let selectedIndexPath = tableView.indexPath(for: selectedCell) {
 
             let selectedEvent = event(for: selectedIndexPath)
+            let selectedSubEvent = subEvent(for: selectedIndexPath)
             selectCheckInListViewController.event = selectedEvent
+            selectCheckInListViewController.subEvent = selectedSubEvent
         }
     }
 }

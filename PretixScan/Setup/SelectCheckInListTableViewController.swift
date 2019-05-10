@@ -11,6 +11,7 @@ import UIKit
 class SelectCheckInListTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
     var event: Event?
+    var subEvent: SubEvent?
 
     private var isLoading = true {
         didSet {
@@ -44,7 +45,16 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable 
 
         configStore?.ticketValidator?.getCheckinLists(event: event) { (checkInLists, error) in
             self.presentErrorAlert(ifError: error)
-            self.checkInLists = checkInLists
+
+            if let subEvent = self.subEvent {
+                let filteredCheckInLists = checkInLists?.filter {
+                    $0.subEvent == subEvent.identifier
+                }
+                self.checkInLists = filteredCheckInLists
+            } else {
+                self.checkInLists = checkInLists
+            }
+
             self.isLoading = false
         }
     }
