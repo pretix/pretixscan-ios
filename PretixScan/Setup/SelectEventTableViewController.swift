@@ -25,6 +25,8 @@ class SelectEventTableViewController: UITableViewController, Configurable {
     }
 
     private var events: [Event]?
+    private var subEvents: [Event: [SubEvent]]?
+
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .none
@@ -45,11 +47,42 @@ class SelectEventTableViewController: UITableViewController, Configurable {
 
     @objc private func updateView() {
         isLoading = true
+        events = nil
+        subEvents = nil
+
+        var subEventsLoading = 0
 
         configStore?.ticketValidator?.getEvents { (eventList, error) in
             self.presentErrorAlert(ifError: error)
             self.events = eventList
-            self.isLoading = false
+            if let events = self.events {
+                subEventsLoading = events.count
+                for event in events {
+                    guard event.hasSubEvents else {
+                        subEventsLoading -= 1
+                        if subEventsLoading < 1 {
+                            self.isLoading = false
+                        }
+
+                        continue
+                    }
+
+                    self.configStore?.ticketValidator?.getSubEvents(event: event) { (subeventList, error) in
+                        subEventsLoading -= 1
+                        self.presentErrorAlert(ifError: error)
+
+                        if let subeventList = subeventList {
+                            self.subEvents?[event] = subeventList
+                        }
+
+                        if subEventsLoading < 1 {
+                            self.isLoading = false
+                        }
+                    }
+                }
+            } else {
+                self.isLoading = false
+            }
         }
     }
 
