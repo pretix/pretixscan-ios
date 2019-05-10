@@ -48,7 +48,7 @@ class SelectEventTableViewController: UITableViewController, Configurable {
     @objc private func updateView() {
         isLoading = true
         events = nil
-        subEvents = nil
+        subEvents = [:]
 
         var subEventsLoading = 0
 
@@ -89,28 +89,44 @@ class SelectEventTableViewController: UITableViewController, Configurable {
     // MARK: - Table view data source
     private static let reuseIdentifier = "SelectEventTableViewControllerCell"
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return events?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events?.count ?? 0
+        guard let event = events?[section] else { return 0 }
+        guard let subEventsCount = subEvents?[event]?.count else { return 1 }
+        return subEventsCount + 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SelectEventTableViewController.reuseIdentifier, for: indexPath)
-        if let event = event(for: indexPath) {
+
+        if let subEvent = subEvent(for: indexPath) {
+            cell.textLabel?.text = " " +  subEvent.name.description
+            cell.detailTextLabel?.text = " " + dateFormatter.string(from: subEvent.dateFrom)
+        } else if let event = event(for: indexPath) {
             cell.textLabel?.text = event.name.description
             if let date = event.dateFrom {
                 cell.detailTextLabel?.text = dateFormatter.string(from: date)
             }
         }
+
         return cell
     }
 
     private func event(for indexPath: IndexPath) -> Event? {
         guard let events = events else { return nil }
-        guard events.count > indexPath.row else { return nil }
-        return events[indexPath.row]
+        guard events.count > indexPath.section else { return nil }
+        return events[indexPath.section]
+    }
+
+    private func subEvent(for indexPath: IndexPath) -> SubEvent? {
+        guard indexPath.row > 0 else { return nil }
+        guard let events = events else { return nil }
+        guard events.count > indexPath.section else { return nil }
+        let event = events[indexPath.section]
+
+        return subEvents?[event]?[indexPath.row - 1]
     }
 
     // MARK: View Communication
