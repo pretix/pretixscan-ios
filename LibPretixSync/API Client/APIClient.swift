@@ -180,7 +180,7 @@ public extension APIClient {
     func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
         var results = [Event]()
 
-        let task = getTask(Event.self, lastUpdated: nil) { result in
+        let task = getTask(Event.self, lastUpdated: nil, filters: ["is_past": "false"]) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
