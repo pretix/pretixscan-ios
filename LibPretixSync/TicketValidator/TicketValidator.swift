@@ -15,10 +15,13 @@ public protocol TicketValidator {
     func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void)
 
     // MARK: - Check-In Lists and Events
-    // Retrieve all available Events for the current user
+    /// Retrieve all available Events for the given user
     func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void)
 
-    // Retrieve all available CheckInLists for the current event
+    /// Retrieve all available Sub Events for the given event
+    func getSubEvents(event: Event, completionHandler: @escaping ([SubEvent]?, Error?) -> Void)
+
+    /// Retrieve all available CheckInLists for the current event
     func getCheckinLists(event: Event, completionHandler: @escaping ([CheckInList]?, Error?) -> Void)
 
     /// Retrieve Statistics for the currently selected CheckInList

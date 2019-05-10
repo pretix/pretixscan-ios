@@ -26,6 +26,10 @@ public class OnlineTicketValidator: TicketValidator {
         configStore.apiClient?.getEvents(completionHandler: completionHandler)
     }
 
+    public func getSubEvents(event: Event, completionHandler: @escaping ([SubEvent]?, Error?) -> Void) {
+        configStore.apiClient?.getSubEvents(event: event, completionHandler: completionHandler)
+    }
+
     public func getCheckinLists(event: Event, completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
         configStore.apiClient?.getCheckinLists(event: event, completionHandler: completionHandler)
     }
