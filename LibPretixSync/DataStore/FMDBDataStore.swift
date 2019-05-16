@@ -35,6 +35,8 @@ public class FMDBDataStore: DataStore {
     public func store<T>(_ resources: [T], for event: Event) where T: Model {
         let queue = databaseQueue(with: event)
 
+        print("Don't know how to store \(T.humanReadableName)")
+
         // TODO: Store Item Categories
         // TODO: Store Items
         // TODO: Store Sub Events

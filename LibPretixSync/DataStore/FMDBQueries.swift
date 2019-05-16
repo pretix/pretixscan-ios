@@ -51,4 +51,21 @@ extension OrderPosition: FMDBModel {
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(OrderPosition.tableName)\""
 }
 
+extension CheckIn: FMDBModel {
+    public static var tableName = "checkins"
+
+    public static var creationQuery = """
+        CREATE TABLE "checkins" (
+            "list"    INTEGER,
+            "date"    TEXT
+        );
+    """
+
+    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(CheckIn.tableName)\""
 }
+
+// TODO: SQL for Item Categories
+// TODO: SQL for Items
+// TODO: SQL for Sub Events
+// TODO: SQL for Quotas
+// TODO: SQL for Orders

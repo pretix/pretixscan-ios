@@ -83,6 +83,53 @@ class APIClientOperation: Operation {
     }
 }
 
+class ItemCategoriesDownloader: APIClientOperation {
+    let model = ItemCategory.self
+
+    override func start() {
+        // TODO: Refactor and Reuse download code
+
+        if isCancelled {
+            completeOperation()
+        }
+
+        isExecuting = true
+
+        if dataStore.lastSyncTime(of: model, in: event) != nil {
+            // full sync already happened, we don't need to do anything
+            completeOperation()
+        }
+
+        let task = apiClient.getTask(model, lastUpdated: nil) { result in
+            switch result {
+            case .success(let pagedList):
+                let isLastPage = pagedList.next == nil
+
+                // Notify Listeners
+                NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
+                    SyncManager.NotificationKeys.model: self.model.humanReadableName,
+                    SyncManager.NotificationKeys.loadedAmount: pagedList.results.count,
+                    SyncManager.NotificationKeys.totalAmount: pagedList.count,
+                    SyncManager.NotificationKeys.isLastPage: isLastPage])
+
+                // Store Data
+                self.dataStore.store(pagedList.results, for: self.event)
+
+                if isLastPage {
+                    // We are done
+                    self.dataStore.setLastSyncTime(pagedList.generatedAt ?? "", of: self.model, in: self.event)
+                    self.completeOperation()
+                }
+            case .failure(let error):
+                self.error = error
+                self.completeOperation()
+            }
+
+        }
+        task?.resume()
+    }
+}
+
 class FullOrderDownloader: APIClientOperation {
     let model = Order.self
 

@@ -151,6 +151,29 @@ public class SyncManager {
         // TODO: Create DownloadQueue for quotas
         // TODO: Create DownloadQueue for orders
 
+        if downloadsInProgress[ItemCategory.urlPathPart] == nil {
+            let downloader = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            // TODO: Refactor and extract
+            downloader.completionBlock = {
+                if downloader.isCancelled {
+                    return
+                }
+
+                if let error = downloader.error {
+                    print(error)
+                }
+
+                DispatchQueue.main.async {
+                    self.downloadsInProgress.removeValue(forKey: downloader.model.urlPathPart)
+                }
+            }
+
+
+            downloadsInProgress[downloader.model.urlPathPart] = downloader
+            downloadQueue.addOperation(downloader)
+        }
+
+
         let fullOrderKey = Order.urlPathPart + "-full"
         if downloadsInProgress[fullOrderKey] == nil {
             let downloader = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
