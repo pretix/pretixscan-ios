@@ -116,7 +116,8 @@ public class FMDBDataStore: DataStore {
         queue?.inDatabase { database in
             do {
                 try database.executeUpdate(Event.creationQuery, values: nil)
-                // TODO: Create DB for Item Categories
+                try database.executeUpdate(ItemCategory.creationQuery, values: nil)
+                
                 // TODO: Create DB for Items
                 // TODO: Create DB for Sub Events
                 // TODO: Create DB for Quotas

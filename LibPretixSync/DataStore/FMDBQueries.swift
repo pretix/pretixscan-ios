@@ -64,7 +64,24 @@ extension CheckIn: FMDBModel {
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(CheckIn.tableName)\""
 }
 
-// TODO: SQL for Item Categories
+extension ItemCategory: FMDBModel {
+    public static var tableName = "categories"
+
+    public static var creationQuery = """
+        CREATE TABLE IF NOT EXISTS "\(ItemCategory.tableName)" (
+            "id"    INTEGER NOT NULL UNIQUE,
+            "name"    TEXT,
+            "internal_name"    TEXT,
+            "description"    TEXT,
+            "position"    INTEGER,
+            "is_addon"    INTEGER,
+            PRIMARY KEY("id")
+        );
+    """
+
+    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(ItemCategory.tableName)\""
+}
+
 // TODO: SQL for Items
 // TODO: SQL for Sub Events
 // TODO: SQL for Quotas
