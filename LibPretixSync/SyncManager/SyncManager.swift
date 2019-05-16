@@ -148,7 +148,6 @@ public class SyncManager {
         // TODO: Create DownloadQueue for items
         // TODO: Create DownloadQueue for sub events
         // TODO: Create DownloadQueue for quotas
-        // TODO: Create DownloadQueue for orders
 
         if downloadsInProgress[ItemCategory.urlPathPart] == nil {
             let downloader = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)

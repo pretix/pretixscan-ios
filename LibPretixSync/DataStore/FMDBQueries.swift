@@ -82,7 +82,28 @@ extension ItemCategory: FMDBModel {
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(ItemCategory.tableName)\""
 }
 
-// TODO: SQL for Items
+extension Item: FMDBModel {
+    public static var tableName = "items"
+
+    public static var creationQuery = """
+    CREATE TABLE IF NOT EXISTS "\(Item.tableName)" (
+        "id"    INTEGER NOT NULL UNIQUE,
+        "name"    TEXT,
+        "internal_name"    TEXT,
+        "default_price"    TEXT,
+        "category"    INTEGER,
+        "active"    INTEGER,
+        "description"    TEXT,
+        "position"    INTEGER,
+        "checkInAttention"    INTEGER,
+        "json"    INTEGER,
+        PRIMARY KEY("id")
+    );
+    """
+
+    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Item.tableName)\""
+}
+
 // TODO: SQL for Sub Events
 // TODO: SQL for Quotas
 // TODO: SQL for Orders
