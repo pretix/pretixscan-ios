@@ -33,8 +33,16 @@ public class FMDBDataStore: DataStore {
     // MARK: - Storing
     /// Store a list of `Model`s related to an `Event`
     public func store<T>(_ resources: [T], for event: Event) where T: Model {
-        // TODO
         let queue = databaseQueue(with: event)
+
+        // TODO: Store Item Categories
+        // TODO: Store Items
+        // TODO: Store Sub Events
+        // TODO: Store Quotas
+        // TODO: Store OrderPositions
+        // TODO: Store Checkins
+        // TODO: Store Events
+        // TODO: Store Orders
     }
 
     // MARK: - Retrieving
@@ -106,6 +114,13 @@ public class FMDBDataStore: DataStore {
         queue?.inDatabase { database in
             do {
                 try database.executeUpdate(Event.creationQuery, values: nil)
+                // TODO: Create DB for Item Categories
+                // TODO: Create DB for Items
+                // TODO: Create DB for Sub Events
+                // TODO: Create DB for Quotas
+                // TODO: Create DB for OrderPositions
+                // TODO: Create DB for Checkins
+                // TODO: Create DB for Orders
             } catch {
                 print("db init failed: \(error.localizedDescription)")
             }

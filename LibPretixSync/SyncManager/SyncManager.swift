@@ -145,6 +145,12 @@ public class SyncManager {
     }
 
     private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        // TODO: Create DownloadQueue for ItemCategories
+        // TODO: Create DownloadQueue for items
+        // TODO: Create DownloadQueue for sub events
+        // TODO: Create DownloadQueue for quotas
+        // TODO: Create DownloadQueue for orders
+
         let fullOrderKey = Order.urlPathPart + "-full"
         if downloadsInProgress[fullOrderKey] == nil {
             let downloader = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
