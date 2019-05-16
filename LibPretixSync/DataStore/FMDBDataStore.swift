@@ -105,7 +105,7 @@ public class FMDBDataStore: DataStore {
         // Configure the queue
         queue?.inDatabase { database in
             do {
-                try database.executeUpdate(Event.createSQLQuery(), values: nil)
+                try database.executeUpdate(Event.creationQuery, values: nil)
             } catch {
                 print("db init failed: \(error.localizedDescription)")
             }

@@ -45,15 +45,3 @@ extension Event: Hashable {
         hasher.combine(self.slug)
     }
 }
-
-extension Event {
-    static func createSQLQuery() -> String {
-        return """
-        create table if not exists \(urlPathPart) (
-            slug string primary key,
-            date string,
-            name string
-        )
-        """
-    }
-}
