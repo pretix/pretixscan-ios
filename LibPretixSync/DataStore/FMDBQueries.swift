@@ -104,6 +104,21 @@ extension Item: FMDBModel {
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Item.tableName)\""
 }
 
-// TODO: SQL for Sub Events
+extension SubEvent: FMDBModel {
+    public static var tableName = "subevents"
+
+    public static var creationQuery = """
+    CREATE TABLE IF NOT EXISTS "\(SubEvent.tableName)" (
+        "id"    INTEGER NOT NULL UNIQUE,
+        "name"    TEXT,
+        "event"    TEXT NOT NULL,
+        "json"    TEXT,
+        PRIMARY KEY("id")
+    );
+    """
+
+    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(SubEvent.tableName)\""
+}
+
 // TODO: SQL for Quotas
 // TODO: SQL for Orders

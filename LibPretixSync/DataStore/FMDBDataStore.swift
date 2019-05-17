@@ -118,8 +118,8 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(Event.creationQuery, values: nil)
                 try database.executeUpdate(ItemCategory.creationQuery, values: nil)
                 try database.executeUpdate(Item.creationQuery, values: nil)
-                
-                // TODO: Create DB for Sub Events
+                try database.executeUpdate(SubEvent.creationQuery, values: nil)
+
                 // TODO: Create DB for Quotas
                 // TODO: Create DB for OrderPositions
                 // TODO: Create DB for Checkins
