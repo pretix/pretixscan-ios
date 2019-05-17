@@ -71,7 +71,7 @@ public struct Order: Model {
         case lastModifiedAt = "last_modified"
         case total
         case comment
-        case checkInAttention
+        case checkInAttention = "checkin_attention"
         case positions
         case requireApproval = "require_approval"
     }

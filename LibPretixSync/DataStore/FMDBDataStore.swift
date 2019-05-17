@@ -119,11 +119,11 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(ItemCategory.creationQuery, values: nil)
                 try database.executeUpdate(Item.creationQuery, values: nil)
                 try database.executeUpdate(SubEvent.creationQuery, values: nil)
+                try database.executeUpdate(Order.creationQuery, values: nil)
 
                 // TODO: Create DB for Quotas
                 // TODO: Create DB for OrderPositions
                 // TODO: Create DB for Checkins
-                // TODO: Create DB for Orders
             } catch {
                 print("db init failed: \(error.localizedDescription)")
             }
