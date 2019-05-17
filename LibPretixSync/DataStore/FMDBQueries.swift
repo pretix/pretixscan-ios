@@ -55,7 +55,7 @@ extension CheckIn: FMDBModel {
     public static var tableName = "checkins"
 
     public static var creationQuery = """
-        CREATE TABLE "checkins" (
+        CREATE TABLE IF NOT EXISTS "\(CheckIn.tableName)" (
             "list"    INTEGER,
             "date"    TEXT
         );

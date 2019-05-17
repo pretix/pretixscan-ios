@@ -145,12 +145,38 @@ public class SyncManager {
     }
 
     private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
-        // TODO: Create DownloadQueue for items
-        // TODO: Create DownloadQueue for sub events
         // TODO: Create DownloadQueue for quotas
 
         if downloadsInProgress[ItemCategory.urlPathPart] == nil {
             let downloader = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            downloader.completionBlock = {
+                if downloader.isCancelled { return }
+                if let error = downloader.error { print(error) }
+                DispatchQueue.main.async {
+                    self.downloadsInProgress.removeValue(forKey: downloader.model.urlPathPart)
+                }
+            }
+
+            downloadsInProgress[downloader.model.urlPathPart] = downloader
+            downloadQueue.addOperation(downloader)
+        }
+
+        if downloadsInProgress[Item.urlPathPart] == nil {
+            let downloader = ItemsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            downloader.completionBlock = {
+                if downloader.isCancelled { return }
+                if let error = downloader.error { print(error) }
+                DispatchQueue.main.async {
+                    self.downloadsInProgress.removeValue(forKey: downloader.model.urlPathPart)
+                }
+            }
+
+            downloadsInProgress[downloader.model.urlPathPart] = downloader
+            downloadQueue.addOperation(downloader)
+        }
+
+        if downloadsInProgress[SubEvent.urlPathPart] == nil {
+            let downloader = SubEventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             downloader.completionBlock = {
                 if downloader.isCancelled { return }
                 if let error = downloader.error { print(error) }

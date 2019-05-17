@@ -169,10 +169,18 @@ class ItemCategoriesDownloader: FullDownloader<ItemCategory> {
     let model = ItemCategory.self
 }
 
+class ItemsDownloader: FullDownloader<Item> {
+    let model = Item.self
+}
+
 class FullOrderDownloader: FullDownloader<Order> {
     let model = Order.self
 }
 
 class PartialOrderDownloader: PartialDownloader<Order> {
     let model = Order.self
+}
+
+class SubEventsDownloader: FullDownloader<SubEvent> {
+    let model = SubEvent.self
 }
