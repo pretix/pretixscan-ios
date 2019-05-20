@@ -63,24 +63,12 @@ public class FMDBDataStore: DataStore {
             return
         }
 
-        // TODO: Store Events
+        // TODO: Store QueuedRedemptionRequests (?)
 
         print("Don't know how to store \(T.humanReadableName)")
     }
 
     // MARK: - Retrieving
-    // Retrieve all Events for the current user
-    public func getEvents() -> [Event] {
-        // TODO
-        return []
-    }
-
-    // Retrieve all Check-In Lists for the current user and event
-    public func getCheckInLists(for event: Event) -> [CheckInList] {
-        // TODO
-        return []
-    }
-
     // Return all `OrderPosition`s matching the given query
     public func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition] {
         // TODO
