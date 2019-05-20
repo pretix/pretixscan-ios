@@ -13,7 +13,7 @@ import Foundation
 /// - See also `RedemptionRequest`
 public struct QueuedRedemptionRequest: Model {
     public static var humanReadableName = "Queued Redemption Request"
-    public static var stringName = "queued_redemption_request"
+    public static var stringName = "queued_redemption_requests"
 
     public let redemptionRequest: RedemptionRequest
     public let event: Event

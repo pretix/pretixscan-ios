@@ -12,7 +12,10 @@ import Foundation
 ///
 /// - See also `RedemptionResponse`
 /// - See also `QueuedRedemptionRequest`
-public struct RedemptionRequest: Codable, Equatable {
+public struct RedemptionRequest: Model {
+    public static var humanReadableName = "Redemption Request"
+    public static var stringName = "redemption_requests"
+
     /// Wether the current device supports handling questions
     ///
     /// When this parameter is set to `true`, handling of questions is supported.

@@ -63,7 +63,10 @@ public class FMDBDataStore: DataStore {
             return
         }
 
-        // TODO: Store QueuedRedemptionRequests (?)
+        if let queuedRedemptionRequests = resources as? [QueuedRedemptionRequest] {
+            store(queuedRedemptionRequests, in: queue)
+            return
+        }
 
         print("Don't know how to store \(T.humanReadableName)")
     }
@@ -131,6 +134,8 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(Order.creationQuery, values: nil)
                 try database.executeUpdate(OrderPosition.creationQuery, values: nil)
                 try database.executeUpdate(CheckIn.creationQuery, values: nil)
+                try database.executeUpdate(RedemptionRequest.creationQuery, values: nil)
+                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
             } catch {
                 print("db init failed: \(error.localizedDescription)")
             }
@@ -273,6 +278,45 @@ private extension FMDBDataStore {
                 do {
                     try database.executeUpdate(CheckIn.insertQuery, values: [
                         list, order_position, date as Any])
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+
+    func store(_ records: [QueuedRedemptionRequest], in queue: FMDatabaseQueue) {
+        for record in records {
+            store([record.redemptionRequest], in: queue)
+
+            queue.inDatabase { database in
+                let redemption_request = record.redemptionRequest.nonce
+                let event = record.event.slug
+                let check_in_list = record.checkInList.identifier as Int
+                let secret = record.secret
+
+                do {
+                    try database.executeUpdate(Order.insertQuery, values: [
+                        redemption_request, event, check_in_list, secret])
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+
+    func store(_ records: [RedemptionRequest], in queue: FMDatabaseQueue) {
+        queue.inDatabase { database in
+            for record in records {
+                let questions_supported = record.questionsSupported.toInt()
+                let datetime = record.date?.toJSONString()
+                let force = record.force.toInt()
+                let ignore_unpaid = record.ignoreUnpaid.toInt()
+                let nonce = record.nonce
+
+                do {
+                    try database.executeUpdate(RedemptionRequest.insertQuery, values: [
+                        questions_supported, datetime as Any, force, ignore_unpaid, nonce])
                 } catch {
                     print(error)
                 }
