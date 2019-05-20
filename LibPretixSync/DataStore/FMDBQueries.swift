@@ -8,15 +8,19 @@
 
 import Foundation
 
-public protocol FMDBModel {
+public protocol FMDBModel: Model {
     static var creationQuery: String { get }
     static var destructionQuery: String { get }
     static var insertQuery: String { get }
 }
 
+public extension FMDBModel {
+    static var destructionQuery: String { return "DROP TABLE IF EXISTS \"\(stringName)\"" }
+}
+
 extension OrderPosition: FMDBModel {
     public static var creationQuery = """
-        CREATE TABLE IF NOT EXISTS "\(OrderPosition.stringName)" (
+        CREATE TABLE IF NOT EXISTS "\(stringName)" (
             "id"    INTEGER NOT NULL UNIQUE,
             "order"    TEXT,
             "positionid"    INTEGER,
@@ -31,10 +35,8 @@ extension OrderPosition: FMDBModel {
         );
     """
 
-    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(OrderPosition.stringName)\""
-
     public static var insertQuery = """
-        REPLACE INTO "\(OrderPosition.stringName)"
+        REPLACE INTO "\(stringName)"
         ("id", "order", "positionid", "item", "variation", "price", "attendee_name", "attendee_email", "secret", "pseudonymization_id")
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
@@ -42,23 +44,21 @@ extension OrderPosition: FMDBModel {
 
 extension CheckIn: FMDBModel {
     public static var creationQuery = """
-        CREATE TABLE IF NOT EXISTS "\(CheckIn.stringName)" (
+        CREATE TABLE IF NOT EXISTS "\(stringName)" (
             "list"    INTEGER,
             "order_position"    INTEGER,
             "date"    TEXT
         );
     """
 
-    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(CheckIn.stringName)\""
-
     public static var insertQuery = """
-        REPLACE INTO "\(CheckIn.stringName)"("list","date","order_position") VALUES (?,?,?);
+        REPLACE INTO "\(stringName)"("list","date","order_position") VALUES (?,?,?);
     """
 }
 
 extension ItemCategory: FMDBModel {
     public static var creationQuery = """
-        CREATE TABLE IF NOT EXISTS "\(ItemCategory.stringName)" (
+        CREATE TABLE IF NOT EXISTS "\(stringName)" (
             "id"    INTEGER NOT NULL UNIQUE,
             "name"    TEXT,
             "internal_name"    TEXT,
@@ -69,10 +69,8 @@ extension ItemCategory: FMDBModel {
         );
     """
 
-    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(ItemCategory.stringName)\""
-
     public static var insertQuery = """
-        REPLACE INTO "\(ItemCategory.stringName)"
+        REPLACE INTO "\(stringName)"
         ("id", "name", "internal_name", "description", "position", "is_addon")
         VALUES (?, ?, ?, ?, ?, ?);
     """
@@ -80,7 +78,7 @@ extension ItemCategory: FMDBModel {
 
 extension Item: FMDBModel {
     public static var creationQuery = """
-    CREATE TABLE IF NOT EXISTS "\(Item.stringName)" (
+    CREATE TABLE IF NOT EXISTS "\(stringName)" (
         "id"    INTEGER NOT NULL UNIQUE,
         "name"    TEXT,
         "internal_name"    TEXT,
@@ -95,10 +93,8 @@ extension Item: FMDBModel {
     );
     """
 
-    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Item.stringName)\""
-
     public static var insertQuery = """
-        REPLACE INTO \"\(Item.stringName)\"(
+        REPLACE INTO \"\(stringName)\"(
             "id","name","internal_name","default_price",
             "category","active","description","position",
             "checkin_attention","json"
@@ -108,7 +104,7 @@ extension Item: FMDBModel {
 
 extension SubEvent: FMDBModel {
     public static var creationQuery = """
-    CREATE TABLE IF NOT EXISTS "\(SubEvent.stringName)" (
+    CREATE TABLE IF NOT EXISTS "\(stringName)" (
         "id"    INTEGER NOT NULL UNIQUE,
         "name"    TEXT,
         "event"    TEXT NOT NULL,
@@ -117,16 +113,14 @@ extension SubEvent: FMDBModel {
     );
     """
 
-    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(SubEvent.stringName)\""
-
     public static var insertQuery = """
-        REPLACE INTO "\(SubEvent.stringName)"("id","name","event","json") VALUES (?,?,?,?);
+        REPLACE INTO "\(stringName)"("id","name","event","json") VALUES (?,?,?,?);
     """
 }
 
 extension Order: FMDBModel {
     public static var creationQuery = """
-    CREATE TABLE IF NOT EXISTS "\(Order.stringName)" (
+    CREATE TABLE IF NOT EXISTS "\(stringName)" (
         "code"    TEXT NOT NULL UNIQUE,
         "status"    TEXT,
         "secret"    TEXT,
@@ -137,11 +131,9 @@ extension Order: FMDBModel {
         PRIMARY KEY("code")
     );
     """
-
-    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Order.stringName)\""
-
+    
     public static var insertQuery = """
-        REPLACE INTO "\(Order.stringName)"
+        REPLACE INTO "\(stringName)"
             ("code","status","secret","email","checkin_attention",
             "require_approval","json")
         VALUES (?,?,?,?,?,?,?);
