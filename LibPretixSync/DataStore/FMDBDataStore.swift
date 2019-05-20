@@ -69,7 +69,6 @@ public class FMDBDataStore: DataStore {
         }
 
         // TODO: Store CheckIns
-        // TODO: Store Quotas
         // TODO: Store Events
 
         print("Don't know how to store \(T.humanReadableName)")
@@ -152,8 +151,6 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(Order.creationQuery, values: nil)
                 try database.executeUpdate(OrderPosition.creationQuery, values: nil)
                 try database.executeUpdate(CheckIn.creationQuery, values: nil)
-
-                // TODO: Create DB for Quotas
             } catch {
                 print("db init failed: \(error.localizedDescription)")
             }

@@ -177,5 +177,3 @@ extension Order: FMDBModel {
 
     """
 }
-
-// TODO: SQL for Quotas

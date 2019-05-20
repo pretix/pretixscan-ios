@@ -145,8 +145,6 @@ public class SyncManager {
     }
 
     private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
-        // TODO: Create DownloadQueue for quotas
-
         if downloadsInProgress[ItemCategory.urlPathPart] == nil {
             let downloader = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             downloader.completionBlock = {
