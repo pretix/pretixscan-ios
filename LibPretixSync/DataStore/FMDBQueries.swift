@@ -54,8 +54,11 @@ extension OrderPosition: FMDBModel {
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(OrderPosition.tableName)\""
 
-    // TODO: Insert Query for OrderPosition
-    public static var insertQuery = ""
+    public static var insertQuery = """
+        REPLACE INTO "\(OrderPosition.tableName)"
+        ("id", "order", "positionid", "item", "variation", "price", "attendee_name", "attendee_email", "secret", "pseudonymization_id")
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    """
 }
 
 extension CheckIn: FMDBModel {
@@ -166,8 +169,13 @@ extension Order: FMDBModel {
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Order.tableName)\""
 
-    // TODO: Insert Query for Order
-    public static var insertQuery = ""
+    public static var insertQuery = """
+        REPLACE INTO "\(Order.tableName)"
+            ("code","status","secret","email","checkin_attention",
+            "require_approval","json")
+        VALUES (?,?,?,?,?,?,?);
+
+    """
 }
 
 // TODO: SQL for Quotas

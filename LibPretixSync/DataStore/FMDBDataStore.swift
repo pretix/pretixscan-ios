@@ -57,11 +57,20 @@ public class FMDBDataStore: DataStore {
             store(subEvents, in: queue)
             return
         }
-        
+
+        if let orders = resources as? [Order] {
+            store(orders, in: queue)
+            return
+        }
+
+        if let orderPositions = resources as? [OrderPosition] {
+            store(orderPositions, in: queue)
+            return
+        }
+
+        // TODO: Store CheckIns
         // TODO: Store Quotas
-        // TODO: Store OrderPositions
         // TODO: Store Events
-        // TODO: Store Orders
 
         print("Don't know how to store \(T.humanReadableName)")
     }
@@ -221,6 +230,57 @@ private extension FMDBDataStore {
                 do {
                     try database.executeUpdate(SubEvent.insertQuery, values: [
                         identifier, name as Any, event, json as Any])
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+
+    func store(_ records: [Order], in queue: FMDatabaseQueue) {
+        for record in records {
+            if let positions = record.positions {
+                store(positions, in: queue)
+            }
+
+            queue.inDatabase { database in
+                let code = record.code
+                let status = record.status.rawValue
+                let secret = record.secret
+                let email = record.email
+                let checkin_attention = record.checkInAttention?.toInt()
+                let require_approval = record.requireApproval?.toInt()
+                let json = record.toJSONString()
+
+                do {
+                    try database.executeUpdate(Order.insertQuery, values: [
+                        code, status, secret, email as Any, checkin_attention as Any,
+                        require_approval as Any, json as Any])
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+
+    func store(_ records: [OrderPosition], in queue: FMDatabaseQueue) {
+        queue.inDatabase { database in
+            for record in records {
+                let identifier = record.identifier as Int
+                let order = record.order
+                let positionid = record.positionid
+                let item = record.item
+                let variation = record.variation
+                let price = record.price as String
+                let attendee_name = record.attendeeName
+                let attendee_email = record.attendeeEmail
+                let secret = record.secret
+                let pseudonymization_id = record.pseudonymizationId
+
+                do {
+                    try database.executeUpdate(OrderPosition.insertQuery, values: [
+                        identifier, order, positionid, item, variation as Any, price,
+                        attendee_name as Any, attendee_email as Any, secret, pseudonymization_id])
                 } catch {
                     print(error)
                 }
