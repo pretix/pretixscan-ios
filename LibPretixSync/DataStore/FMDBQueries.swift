@@ -14,22 +14,6 @@ public protocol FMDBModel {
     static var insertQuery: String { get }
 }
 
-extension Event: FMDBModel {
-    public static var creationQuery = """
-            CREATE TABLE IF NOT EXISTS "\(stringName)" (
-                "slug"    TEXT NOT NULL UNIQUE,
-                "date"    TEXT,
-                "name"    TEXT,
-                PRIMARY KEY("name")
-            )
-        """
-
-    public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Event.stringName)\""
-
-    // TODO: Insert Query for Event
-    public static var insertQuery = ""
-}
-
 extension OrderPosition: FMDBModel {
     public static var creationQuery = """
         CREATE TABLE IF NOT EXISTS "\(OrderPosition.stringName)" (

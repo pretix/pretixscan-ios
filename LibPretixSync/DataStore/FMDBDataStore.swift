@@ -125,7 +125,6 @@ public class FMDBDataStore: DataStore {
         // Configure the queue
         queue?.inDatabase { database in
             do {
-                try database.executeUpdate(Event.creationQuery, values: nil)
                 try database.executeUpdate(ItemCategory.creationQuery, values: nil)
                 try database.executeUpdate(Item.creationQuery, values: nil)
                 try database.executeUpdate(SubEvent.creationQuery, values: nil)
@@ -282,6 +281,7 @@ private extension FMDBDataStore {
     }
 }
 
+// MARK: Type conversions to and from Sqlite
 fileprivate extension Bool {
     func toInt() -> Int {
         return self ? 1 : 0
@@ -294,7 +294,6 @@ fileprivate extension Int {
     }
 }
 
-// MARK: Storing as String
 fileprivate extension Model {
     func toJSONString() -> String? {
         if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
