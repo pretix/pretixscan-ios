@@ -91,8 +91,11 @@ extension ItemCategory: FMDBModel {
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(ItemCategory.tableName)\""
 
-    // TODO: Insert Query for ItemCategory
-    public static var insertQuery = ""
+    public static var insertQuery = """
+        INSERT INTO "main"."categories"
+        ("id", "name", "internal_name", "description", "position", "is_addon")
+        VALUES (?, ?, ?, ?, ?, ?);
+    """
 }
 
 extension Item: FMDBModel {
