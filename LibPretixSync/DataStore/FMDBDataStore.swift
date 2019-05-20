@@ -38,11 +38,6 @@ public class FMDBDataStore: DataStore {
             fatalError("Could not create database queue")
         }
 
-        if let checkIns = resources as? [CheckIn] {
-            store(checkIns, in: queue)
-            return
-        }
-
         if let items = resources as? [Item] {
             store(items, in: queue)
             return
@@ -68,7 +63,6 @@ public class FMDBDataStore: DataStore {
             return
         }
 
-        // TODO: Store CheckIns
         // TODO: Store Events
 
         print("Don't know how to store \(T.humanReadableName)")
@@ -145,7 +139,6 @@ public class FMDBDataStore: DataStore {
             do {
                 try database.executeUpdate(Event.creationQuery, values: nil)
                 try database.executeUpdate(ItemCategory.creationQuery, values: nil)
-                try database.executeUpdate(Item.destructionQuery, values: nil)
                 try database.executeUpdate(Item.creationQuery, values: nil)
                 try database.executeUpdate(SubEvent.creationQuery, values: nil)
                 try database.executeUpdate(Order.creationQuery, values: nil)
@@ -166,10 +159,6 @@ public class FMDBDataStore: DataStore {
 
 // MARK: - Storing
 private extension FMDBDataStore {
-    func store(_ checkIns: [CheckIn], in queue: FMDatabaseQueue) {
-        // TODO: Store Checkins
-    }
-
     func store(_ items: [Item], in queue: FMDatabaseQueue) {
         queue.inDatabase { database in
             for item in items {
@@ -261,8 +250,10 @@ private extension FMDBDataStore {
     }
 
     func store(_ records: [OrderPosition], in queue: FMDatabaseQueue) {
-        queue.inDatabase { database in
-            for record in records {
+        for record in records {
+            store(record.checkins, for: record, in: queue)
+
+            queue.inDatabase { database in
                 let identifier = record.identifier as Int
                 let order = record.order
                 let positionid = record.positionid
@@ -278,6 +269,23 @@ private extension FMDBDataStore {
                     try database.executeUpdate(OrderPosition.insertQuery, values: [
                         identifier, order, positionid, item, variation as Any, price,
                         attendee_name as Any, attendee_email as Any, secret, pseudonymization_id])
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+
+    func store(_ records: [CheckIn], for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
+        queue.inDatabase { database in
+            for record in records {
+                let list = record.listID as Int
+                let order_position = orderPosition.identifier as Int
+                let date = record.date.toJSONString()
+
+                do {
+                    try database.executeUpdate(CheckIn.insertQuery, values: [
+                        list, order_position, date as Any])
                 } catch {
                     print(error)
                 }
@@ -300,6 +308,16 @@ fileprivate extension Int {
 
 // MARK: Storing as String
 fileprivate extension Model {
+    func toJSONString() -> String? {
+        if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
+            return String(data: data, encoding: .utf8)
+        }
+
+        return nil
+    }
+}
+
+fileprivate extension Date {
     func toJSONString() -> String? {
         if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
             return String(data: data, encoding: .utf8)

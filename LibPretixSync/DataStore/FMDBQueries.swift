@@ -67,14 +67,16 @@ extension CheckIn: FMDBModel {
     public static var creationQuery = """
         CREATE TABLE IF NOT EXISTS "\(CheckIn.tableName)" (
             "list"    INTEGER,
+            "order_position"    INTEGER,
             "date"    TEXT
         );
     """
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(CheckIn.tableName)\""
 
-    // TODO: Insert Query for CheckIn
-    public static var insertQuery = ""
+    public static var insertQuery = """
+        REPLACE INTO "\(CheckIn.tableName)"("list","date","order_position") VALUES (?,?,?);
+    """
 }
 
 extension ItemCategory: FMDBModel {
