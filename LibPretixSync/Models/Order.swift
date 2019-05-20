@@ -10,7 +10,7 @@ import Foundation
 
 public struct Order: Model {
     public static let humanReadableName = "Order"
-    public static let urlPathPart = "orders"
+    public static let stringName = "orders"
 
     public let code: String
     public let status: Status

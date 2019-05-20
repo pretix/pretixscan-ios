@@ -107,7 +107,7 @@ public extension APIClient {
                 url = try createURL(for: "/api/v1/organizers/\(organizer)/events/")
             } else {
                 let event = try event ?? getEvent()
-                url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.urlPathPart)/")
+                url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.stringName)/")
             }
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)

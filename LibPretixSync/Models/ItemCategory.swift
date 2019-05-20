@@ -11,7 +11,7 @@ import Foundation
 /// Categories provide grouping for items (better known as products)
 public struct ItemCategory: Model {
     public static let humanReadableName = "Category"
-    public static let urlPathPart = "categories"
+    public static let stringName = "categories"
 
     /// Internal ID of the category
     public let identifier: Identifier

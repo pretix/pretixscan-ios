@@ -20,11 +20,11 @@ public class InMemoryDataStore: DataStore {
     }
 
     public func setLastSyncTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
-        dataStore(for: event).lastSynced[model.urlPathPart] = dateString
+        dataStore(for: event).lastSynced[model.stringName] = dateString
     }
 
     public func lastSyncTime<T: Model>(of model: T.Type, in event: Event) -> String? {
-        return dataStore(for: event).lastSynced[model.urlPathPart]
+        return dataStore(for: event).lastSynced[model.stringName]
     }
 
     // MARK: - Storing

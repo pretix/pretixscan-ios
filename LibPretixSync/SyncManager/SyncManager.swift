@@ -145,49 +145,49 @@ public class SyncManager {
     }
 
     private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
-        if downloadsInProgress[ItemCategory.urlPathPart] == nil {
+        if downloadsInProgress[ItemCategory.stringName] == nil {
             let downloader = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             downloader.completionBlock = {
                 if downloader.isCancelled { return }
                 if let error = downloader.error { print(error) }
                 DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: downloader.model.urlPathPart)
+                    self.downloadsInProgress.removeValue(forKey: downloader.model.stringName)
                 }
             }
 
-            downloadsInProgress[downloader.model.urlPathPart] = downloader
+            downloadsInProgress[downloader.model.stringName] = downloader
             downloadQueue.addOperation(downloader)
         }
 
-        if downloadsInProgress[Item.urlPathPart] == nil {
+        if downloadsInProgress[Item.stringName] == nil {
             let downloader = ItemsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             downloader.completionBlock = {
                 if downloader.isCancelled { return }
                 if let error = downloader.error { print(error) }
                 DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: downloader.model.urlPathPart)
+                    self.downloadsInProgress.removeValue(forKey: downloader.model.stringName)
                 }
             }
 
-            downloadsInProgress[downloader.model.urlPathPart] = downloader
+            downloadsInProgress[downloader.model.stringName] = downloader
             downloadQueue.addOperation(downloader)
         }
 
-        if downloadsInProgress[SubEvent.urlPathPart] == nil {
+        if downloadsInProgress[SubEvent.stringName] == nil {
             let downloader = SubEventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             downloader.completionBlock = {
                 if downloader.isCancelled { return }
                 if let error = downloader.error { print(error) }
                 DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: downloader.model.urlPathPart)
+                    self.downloadsInProgress.removeValue(forKey: downloader.model.stringName)
                 }
             }
 
-            downloadsInProgress[downloader.model.urlPathPart] = downloader
+            downloadsInProgress[downloader.model.stringName] = downloader
             downloadQueue.addOperation(downloader)
         }
 
-        let fullOrderKey = Order.urlPathPart + "-full"
+        let fullOrderKey = Order.stringName + "-full"
         if downloadsInProgress[fullOrderKey] == nil {
             let downloader = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             downloader.completionBlock = {
@@ -202,7 +202,7 @@ public class SyncManager {
             downloadQueue.addOperation(downloader)
         }
 
-        if downloadsInProgress[Order.urlPathPart] == nil {
+        if downloadsInProgress[Order.stringName] == nil {
             let downloader = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             downloader.completionBlock = {
                 if downloader.isCancelled { return }
@@ -212,7 +212,7 @@ public class SyncManager {
                 }
             }
 
-            downloadsInProgress[Order.urlPathPart] = downloader
+            downloadsInProgress[Order.stringName] = downloader
             downloadQueue.addOperation(downloader)
         }
 

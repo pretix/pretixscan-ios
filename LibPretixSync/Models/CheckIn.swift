@@ -9,7 +9,10 @@
 import Foundation
 
 /// A check-in with a ticket in a CheckIn List
-public struct CheckIn: Codable, Equatable {
+public struct CheckIn: Model {
+    public static let humanReadableName = "Check-In"
+    public static let stringName = "checkins"
+
     /// Internal ID of the check-in list
     public let listID: Identifier
 
