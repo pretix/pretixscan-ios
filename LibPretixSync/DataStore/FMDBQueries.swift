@@ -92,7 +92,7 @@ extension ItemCategory: FMDBModel {
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(ItemCategory.tableName)\""
 
     public static var insertQuery = """
-        INSERT INTO "\(ItemCategory.tableName)"
+        REPLACE INTO "\(ItemCategory.tableName)"
         ("id", "name", "internal_name", "description", "position", "is_addon")
         VALUES (?, ?, ?, ?, ?, ?);
     """
@@ -120,7 +120,7 @@ extension Item: FMDBModel {
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Item.tableName)\""
 
     public static var insertQuery = """
-        INSERT INTO \"\(Item.tableName)\"(
+        REPLACE INTO \"\(Item.tableName)\"(
             "id","name","internal_name","default_price",
             "category","active","description","position",
             "checkin_attention","json"
@@ -144,7 +144,7 @@ extension SubEvent: FMDBModel {
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(SubEvent.tableName)\""
 
     public static var insertQuery = """
-        INSERT INTO "\(SubEvent.tableName)"("id","name","event","json") VALUES (?,?,?,?);
+        REPLACE INTO "\(SubEvent.tableName)"("id","name","event","json") VALUES (?,?,?,?);
     """
 }
 
