@@ -53,7 +53,11 @@ public class FMDBDataStore: DataStore {
             return
         }
 
-        // TODO: Store Sub Events
+        if let subEvents = resources as? [SubEvent] {
+            store(subEvents, in: queue)
+            return
+        }
+        
         // TODO: Store Quotas
         // TODO: Store OrderPositions
         // TODO: Store Events
@@ -199,6 +203,24 @@ private extension FMDBDataStore {
                 do {
                     try database.executeUpdate(ItemCategory.insertQuery, values: [
                         identifier, name as Any, internal_name as Any, description as Any, position, is_addon])
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+
+    func store(_ records: [SubEvent], in queue: FMDatabaseQueue) {
+        queue.inDatabase { database in
+            for record in records {
+                let identifier = record.identifier as Int
+                let name = record.name.toJSONString()
+                let event = record.event
+                let json = record.toJSONString()
+
+                do {
+                    try database.executeUpdate(SubEvent.insertQuery, values: [
+                        identifier, name as Any, event, json as Any])
                 } catch {
                     print(error)
                 }

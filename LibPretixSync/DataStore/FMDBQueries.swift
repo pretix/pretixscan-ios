@@ -92,7 +92,7 @@ extension ItemCategory: FMDBModel {
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(ItemCategory.tableName)\""
 
     public static var insertQuery = """
-        INSERT INTO "main"."categories"
+        INSERT INTO "\(ItemCategory.tableName)"
         ("id", "name", "internal_name", "description", "position", "is_addon")
         VALUES (?, ?, ?, ?, ?, ?);
     """
@@ -143,8 +143,9 @@ extension SubEvent: FMDBModel {
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(SubEvent.tableName)\""
 
-    // TODO: Insert Query for Sub Event
-    public static var insertQuery = ""
+    public static var insertQuery = """
+        INSERT INTO "\(SubEvent.tableName)"("id","name","event","json") VALUES (?,?,?,?);
+    """
 }
 
 extension Order: FMDBModel {
