@@ -11,7 +11,10 @@ import Foundation
 /// A String equal that contains various translations.
 ///
 /// Use the `description` method to automatically return out a displayable string.
-public struct MultiLingualString: Codable, Equatable {
+public struct MultiLingualString: Model {
+    public static var humanReadableName = "Multi Lingual String"
+    public static var urlPathPart = ""
+
     public let english: String?
     public let german: String?
     public let germanInformal: String?

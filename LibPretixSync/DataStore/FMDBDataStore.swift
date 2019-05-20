@@ -5,6 +5,7 @@
 //  Created by Daniel Jilg on 11.04.19.
 //  Copyright © 2019 rami.io. All rights reserved.
 //
+// swiftlint:disable identifier_name
 
 import Foundation
 import FMDB
@@ -33,18 +34,29 @@ public class FMDBDataStore: DataStore {
     // MARK: - Storing
     /// Store a list of `Model`s related to an `Event`
     public func store<T>(_ resources: [T], for event: Event) where T: Model {
-        let queue = databaseQueue(with: event)
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
 
-        print("Don't know how to store \(T.humanReadableName)")
+        if let checkIns = resources as? [CheckIn] {
+            store(checkIns, in: queue)
+            return
+        }
+
+        if let items = resources as? [Item] {
+            store(items, in: queue)
+            return
+        }
 
         // TODO: Store Item Categories
-        // TODO: Store Items
         // TODO: Store Sub Events
         // TODO: Store Quotas
         // TODO: Store OrderPositions
-        // TODO: Store Checkins
+
         // TODO: Store Events
         // TODO: Store Orders
+
+        print("Don't know how to store \(T.humanReadableName)")
     }
 
     // MARK: - Retrieving
@@ -110,6 +122,7 @@ public class FMDBDataStore: DataStore {
         let fileURL = try? FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(event.slug).sqlite")
+        print("Opening Database \(fileURL?.path ?? "ERROR")")
         let queue = FMDatabaseQueue(url: fileURL)
 
         // Configure the queue
@@ -117,6 +130,7 @@ public class FMDBDataStore: DataStore {
             do {
                 try database.executeUpdate(Event.creationQuery, values: nil)
                 try database.executeUpdate(ItemCategory.creationQuery, values: nil)
+                try database.executeUpdate(Item.destructionQuery, values: nil)
                 try database.executeUpdate(Item.creationQuery, values: nil)
                 try database.executeUpdate(SubEvent.creationQuery, values: nil)
                 try database.executeUpdate(Order.creationQuery, values: nil)
@@ -134,5 +148,61 @@ public class FMDBDataStore: DataStore {
         currentDataBaseQueueEvent = event
 
         return queue
+    }
+}
+
+// MARK: - Storing
+private extension FMDBDataStore {
+    func store(_ checkIns: [CheckIn], in queue: FMDatabaseQueue) {
+        // TODO: Store Checkins
+    }
+
+    func store(_ items: [Item], in queue: FMDatabaseQueue) {
+        queue.inDatabase { database in
+            for item in items {
+                let identifier = item.identifier as Int
+                let name = item.name.toJSONString()
+                let internal_name = item.internalName
+                let default_price = item.defaultPrice as String
+                let category = item.categoryIdentifier as Int?
+                let active = item.active.toInt()
+                let description = item.description?.toJSONString()
+                let position = item.position
+                let checkin_attention = item.checkInAttention.toInt()
+                let json = item.toJSONString()
+
+                do {
+                    try database.executeUpdate(Item.insertQuery, values: [
+                        identifier, name as Any, internal_name as Any, default_price,
+                        category as Any, active, description as Any,
+                        position, checkin_attention, json as Any])
+                } catch {
+                    print(error)
+                }
+            }
+        }
+    }
+}
+
+fileprivate extension Bool {
+    func toInt() -> Int {
+        return self ? 1 : 0
+    }
+}
+
+fileprivate extension Int {
+    func toBool() -> Bool {
+        return self > 0
+    }
+}
+
+// MARK: Storing as String
+fileprivate extension Model {
+    func toJSONString() -> String? {
+        if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
+            return String(data: data, encoding: .utf8)
+        }
+
+        return nil
     }
 }

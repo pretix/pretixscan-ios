@@ -12,6 +12,7 @@ public protocol FMDBModel {
     static var tableName: String { get }
     static var creationQuery: String { get }
     static var destructionQuery: String { get }
+    static var insertQuery: String { get }
 }
 
 extension Event: FMDBModel {
@@ -27,6 +28,9 @@ extension Event: FMDBModel {
         """
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Event.tableName)\""
+
+    // TODO: Insert Query for Event
+    public static var insertQuery = ""
 }
 
 extension OrderPosition: FMDBModel {
@@ -49,6 +53,9 @@ extension OrderPosition: FMDBModel {
     """
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(OrderPosition.tableName)\""
+
+    // TODO: Insert Query for OrderPosition
+    public static var insertQuery = ""
 }
 
 extension CheckIn: FMDBModel {
@@ -62,6 +69,9 @@ extension CheckIn: FMDBModel {
     """
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(CheckIn.tableName)\""
+
+    // TODO: Insert Query for CheckIn
+    public static var insertQuery = ""
 }
 
 extension ItemCategory: FMDBModel {
@@ -80,6 +90,9 @@ extension ItemCategory: FMDBModel {
     """
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(ItemCategory.tableName)\""
+
+    // TODO: Insert Query for ItemCategory
+    public static var insertQuery = ""
 }
 
 extension Item: FMDBModel {
@@ -95,13 +108,21 @@ extension Item: FMDBModel {
         "active"    INTEGER,
         "description"    TEXT,
         "position"    INTEGER,
-        "checkInAttention"    INTEGER,
+        "checkin_attention"    INTEGER,
         "json"    INTEGER,
         PRIMARY KEY("id")
     );
     """
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Item.tableName)\""
+
+    public static var insertQuery = """
+        INSERT INTO \"\(Item.tableName)\"(
+            "id","name","internal_name","default_price",
+            "category","active","description","position",
+            "checkin_attention","json"
+        ) VALUES (?,?,?,?,?,?,?,?,?,?);
+    """
 }
 
 extension SubEvent: FMDBModel {
@@ -118,6 +139,9 @@ extension SubEvent: FMDBModel {
     """
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(SubEvent.tableName)\""
+
+    // TODO: Insert Query for Sub Event
+    public static var insertQuery = ""
 }
 
 extension Order: FMDBModel {
@@ -137,6 +161,9 @@ extension Order: FMDBModel {
     """
 
     public static var destructionQuery = "DROP TABLE IF EXISTS \"\(Order.tableName)\""
+
+    // TODO: Insert Query for Order
+    public static var insertQuery = ""
 }
 
 // TODO: SQL for Quotas
