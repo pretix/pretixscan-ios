@@ -72,16 +72,16 @@ extension OrderPosition: FMDBModel {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
 
-    public static var searchQuery = """
+    public static let searchQuery = """
         SELECT * FROM "\(OrderPosition.stringName)"
-        LEFT JOIN "\(Order.stringName)'"
+        LEFT JOIN "\(Order.stringName)"
         ON "\(OrderPosition.stringName)"."order" = "\(Order.stringName)"."code"
         LEFT JOIN "\(Item.stringName)"
         ON "\(OrderPosition.stringName)"."item" = "\(Item.stringName)"."id"
-        WHERE "attendee_name" LIKE "%?%"
-        OR "attendee_email" LIKE "%?%"
-        OR "email" LIKE "%?%"
-        OR "code" LIKE "%?%";
+        WHERE "attendee_name" LIKE ?
+        OR "attendee_email" LIKE ?
+        OR "email" LIKE ?
+        OR "code" LIKE ?;
     """
 
     public static func from(result: FMResultSet) -> OrderPosition? {
@@ -115,8 +115,18 @@ extension CheckIn: FMDBModel {
     """
 
     public static var insertQuery = """
-        REPLACE INTO "\(stringName)"("list","date","order_position") VALUES (?,?,?);
+        REPLACE INTO "\(stringName)"("list","order_position","date") VALUES (?,?,?);
     """
+
+    public static let retrieveByOrderPositionQuery = """
+        SELECT * FROM "\(stringName)" WHERE order_position=?;
+    """
+
+    public static func from(result: FMResultSet) -> CheckIn? {
+        let list = Identifier(result.int(forColumn: "list"))
+        guard let date = Date.from(jsonString: result.string(forColumn: "date")) else { return nil }
+        return CheckIn(listID: list, date: date)
+    }
 }
 
 extension ItemCategory: FMDBModel {

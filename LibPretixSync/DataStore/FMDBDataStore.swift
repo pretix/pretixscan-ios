@@ -116,9 +116,12 @@ public class FMDBDataStore: DataStore {
             fatalError("Could not create database queue")
         }
 
+        let queryPlaceholder = "\"%\(query)%\""
+        let fullQuery = OrderPosition.searchQuery.replacingOccurrences(of: "?", with: queryPlaceholder)
+
         var searchResults = [OrderPosition]()
         queue.inDatabase { database in
-            if let result = try? database.executeQuery(QueuedRedemptionRequest.numberOfRequestsQuery, values: []) {
+            if let result = try? database.executeQuery(fullQuery, values: []) {
                 while result.next() {
                     if let nextResult = OrderPosition.from(result: result) {
                         searchResults.append(nextResult)
@@ -127,14 +130,40 @@ public class FMDBDataStore: DataStore {
             }
         }
 
-        // Todo: populate with checkIns
+        // Populate with checkIns
+        var foundOrderPositions = [OrderPosition]()
+        for orderPosition in searchResults {
+            let populatedOrderPosition = OrderPosition(
+                identifier: orderPosition.identifier, order: orderPosition.order,
+                positionid: orderPosition.positionid, item: orderPosition.item,
+                variation: orderPosition.variation, price: orderPosition.price,
+                attendeeName: orderPosition.attendeeName, attendeeEmail: orderPosition.attendeeEmail,
+                secret: orderPosition.secret, pseudonymizationId: orderPosition.pseudonymizationId,
+                checkins: getCheckIns(for: orderPosition, in: event))
+            foundOrderPositions.append(populatedOrderPosition)
+        }
 
-        return searchResults
+        return foundOrderPositions
     }
 
-    private func getCheckIns(for orderPosition: OrderPosition) -> [CheckIn] {
-        // TODO: implement
-        return []
+    private func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        var checkIns = [CheckIn]()
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(CheckIn.retrieveByOrderPositionQuery, values: [orderPosition.identifier]) {
+                while result.next() {
+                    if let nextCheckin = CheckIn.from(result: result) {
+                        checkIns.append(nextCheckin)
+                    }
+                }
+            }
+
+        }
+
+        return checkIns
     }
 
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
@@ -364,6 +393,7 @@ private extension FMDBDataStore {
     }
 
     func store(_ records: [CheckIn], for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
+        // TODO: Check for duplicates
         queue.inDatabase { database in
             for record in records {
                 let list = record.listID as Int
@@ -411,12 +441,6 @@ extension Bool {
     }
 }
 
-extension Int {
-    func toBool() -> Bool {
-        return self > 0
-    }
-}
-
 extension Model {
     func toJSONString() -> String? {
         if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
@@ -429,6 +453,8 @@ extension Model {
 
 extension Date {
     func toJSONString() -> String? {
+        // TODO: This always returns nil
+        // TODO: use https://ccgus.github.io/fmdb/html/Classes/FMDatabase.html#//api/name/dateFromString:
         if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
             return String(data: data, encoding: .utf8)
         }
@@ -437,6 +463,7 @@ extension Date {
     }
 
     static func from(jsonString: String?) -> Date? {
+        // TODO: use https://ccgus.github.io/fmdb/html/Classes/FMDatabase.html#//api/name/dateFromString:
         guard let jsonString = jsonString else { return nil }
 
         if let data = jsonString.data(using: .utf8),
