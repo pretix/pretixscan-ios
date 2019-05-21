@@ -83,9 +83,7 @@ class APIClientOperation: Operation {
     }
 }
 
-class FullOrderDownloader: APIClientOperation {
-    let model = Order.self
-
+class FullDownloader<T: Model>: APIClientOperation {
     override func start() {
         if isCancelled {
             completeOperation()
@@ -93,19 +91,19 @@ class FullOrderDownloader: APIClientOperation {
 
         isExecuting = true
 
-        if dataStore.lastSyncTime(of: model, in: event) != nil {
-            // full order sync already happened, we don't need to do anything
+        if dataStore.lastSyncTime(of: T.self, in: event) != nil {
+            // full sync already happened, we don't need to do anything
             completeOperation()
         }
 
-        let task = apiClient.getTask(model, lastUpdated: nil) { result in
+        let task = apiClient.getTask(T.self, lastUpdated: nil) { result in
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
 
                 // Notify Listeners
                 NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
-                    SyncManager.NotificationKeys.model: self.model.humanReadableName,
+                    SyncManager.NotificationKeys.model: T.self.humanReadableName,
                     SyncManager.NotificationKeys.loadedAmount: pagedList.results.count,
                     SyncManager.NotificationKeys.totalAmount: pagedList.count,
                     SyncManager.NotificationKeys.isLastPage: isLastPage])
@@ -115,7 +113,7 @@ class FullOrderDownloader: APIClientOperation {
 
                 if isLastPage {
                     // We are done
-                    self.dataStore.setLastSyncTime(pagedList.generatedAt ?? "", of: self.model, in: self.event)
+                    self.dataStore.setLastSyncTime(pagedList.generatedAt ?? "", of: T.self, in: self.event)
                     self.completeOperation()
                 }
             case .failure(let error):
@@ -128,25 +126,23 @@ class FullOrderDownloader: APIClientOperation {
     }
 }
 
-class PartialOrderDownloader: APIClientOperation {
-    let model = Order.self
-
+class PartialDownloader<T: Model>: APIClientOperation {
     override func start() {
         if isCancelled {
             completeOperation()
         }
 
         isExecuting = true
-        let lastUpdated = dataStore.lastSyncTime(of: model, in: event)
+        let lastUpdated = dataStore.lastSyncTime(of: T.self, in: event)
 
-        let task = apiClient.getTask(model, lastUpdated: lastUpdated) { result in
+        let task = apiClient.getTask(T.self, lastUpdated: lastUpdated) { result in
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
 
                 // Notify Listeners
                 NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
-                    SyncManager.NotificationKeys.model: self.model.humanReadableName,
+                    SyncManager.NotificationKeys.model: T.self.humanReadableName,
                     SyncManager.NotificationKeys.loadedAmount: pagedList.results.count,
                     SyncManager.NotificationKeys.totalAmount: pagedList.count,
                     SyncManager.NotificationKeys.isLastPage: isLastPage])
@@ -156,7 +152,7 @@ class PartialOrderDownloader: APIClientOperation {
 
                 if isLastPage {
                     // We are done
-                    self.dataStore.setLastSyncTime(pagedList.generatedAt ?? "", of: self.model, in: self.event)
+                    self.dataStore.setLastSyncTime(pagedList.generatedAt ?? "", of: T.self, in: self.event)
                     self.completeOperation()
                 }
             case .failure(let error):
@@ -167,4 +163,24 @@ class PartialOrderDownloader: APIClientOperation {
         }
         task?.resume()
     }
+}
+
+class ItemCategoriesDownloader: FullDownloader<ItemCategory> {
+    let model = ItemCategory.self
+}
+
+class ItemsDownloader: FullDownloader<Item> {
+    let model = Item.self
+}
+
+class FullOrderDownloader: FullDownloader<Order> {
+    let model = Order.self
+}
+
+class PartialOrderDownloader: PartialDownloader<Order> {
+    let model = Order.self
+}
+
+class SubEventsDownloader: FullDownloader<SubEvent> {
+    let model = SubEvent.self
 }

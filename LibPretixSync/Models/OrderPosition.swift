@@ -9,7 +9,10 @@
 import Foundation
 
 /// Part of an Order
-public struct OrderPosition: Codable, Equatable {
+public struct OrderPosition: Model {
+    public static let humanReadableName = "Order Position"
+    public static let stringName = "orderpositions"
+
     /// Internal ID of the order position
     public let identifier: Identifier
 

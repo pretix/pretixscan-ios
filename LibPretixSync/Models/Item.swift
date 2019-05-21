@@ -11,7 +11,7 @@ import Foundation
 /// Items (better known as products) are the things that can be sold using pretix
 public struct Item: Model {
     public static let humanReadableName = "Item"
-    public static let urlPathPart = "items"
+    public static let stringName = "items"
 
     /// Internal ID of the item
     public let identifier: Identifier

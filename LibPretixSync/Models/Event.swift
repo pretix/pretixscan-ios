@@ -13,7 +13,7 @@ import Foundation
 /// Source: https://docs.pretix.eu/en/latest/api/resources/events.html
 public struct Event: Model {
     public static let humanReadableName = "Events"
-    public static let urlPathPart = "events"
+    public static let stringName = "events"
 
     /// The event’s full name
     public let name: MultiLingualString

@@ -10,7 +10,7 @@ import Foundation
 
 public struct Order: Model {
     public static let humanReadableName = "Order"
-    public static let urlPathPart = "orders"
+    public static let stringName = "orders"
 
     public let code: String
     public let status: Status
@@ -71,7 +71,7 @@ public struct Order: Model {
         case lastModifiedAt = "last_modified"
         case total
         case comment
-        case checkInAttention
+        case checkInAttention = "checkin_attention"
         case positions
         case requireApproval = "require_approval"
     }

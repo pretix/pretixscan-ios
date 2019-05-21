@@ -20,7 +20,7 @@ import Foundation
 /// Source: https://docs.pretix.eu/en/latest/api/resources/checkinlists.html
 public struct CheckInList: Model {
     public static let humanReadableName = "Check-In List"
-    public static let urlPathPart = "checkinlists"
+    public static let stringName = "checkinlists"
 
     /// Internal ID of the check-in list
     public let identifier: Identifier

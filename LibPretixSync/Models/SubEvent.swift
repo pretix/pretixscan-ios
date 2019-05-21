@@ -15,7 +15,7 @@ import Foundation
 /// (also called sub-event).
 public struct SubEvent: Model {
     public static let humanReadableName = "Sub Event"
-    public static let urlPathPart = "subevents"
+    public static let stringName = "subevents"
 
     /// Internal ID of the sub-event
     public let identifier: Identifier

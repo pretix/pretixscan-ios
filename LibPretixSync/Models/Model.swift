@@ -12,6 +12,6 @@ public protocol Model: Codable, Hashable {
     /// A human name for the model, used in logging and UI
     static var humanReadableName: String { get }
 
-    /// Appended to the base URL to retrieve the model
-    static var urlPathPart: String { get }
+    /// Appended to the base URL to retrieve the model, use as table name, etc.
+    static var stringName: String { get }
 }

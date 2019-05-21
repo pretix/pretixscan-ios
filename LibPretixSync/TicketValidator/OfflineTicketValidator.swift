@@ -25,22 +25,15 @@ public class OfflineTicketValidator: TicketValidator {
 
     // Retrieve all available Events for the current user
     public func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
-        let events = configStore.dataStore?.getEvents()
-        completionHandler(events, nil)
+        configStore.apiClient?.getEvents(completionHandler: completionHandler)
     }
 
     public func getSubEvents(event: Event, completionHandler: @escaping ([SubEvent]?, Error?) -> Void) {
         configStore.apiClient?.getSubEvents(event: event, completionHandler: completionHandler)
     }
 
-    // Retrieve all available CheckInLists for the specified event
     public func getCheckinLists(event: Event, completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
-        guard let event = configStore.event else {
-            completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
-            return
-        }
-        let checkInLists = configStore.dataStore?.getCheckInLists(for: event)
-        completionHandler(checkInLists, nil)
+        configStore.apiClient?.getCheckinLists(event: event, completionHandler: completionHandler)
     }
 
     /// Retrieve Statistics for the currently selected CheckInList
@@ -87,7 +80,7 @@ public class OfflineTicketValidator: TicketValidator {
             date: Date(), force: force, ignoreUnpaid: ignoreUnpaid,
             nonce: NonceGenerator.nonce())
         let queuedRedemptionRequest = QueuedRedemptionRequest(redemptionRequest: redemptionRequest,
-                                                              event: event, checkInList: checkInList, secret: secret)
+            eventSlug: event.slug, checkInListIdentifier: checkInList.identifier, secret: secret)
         let redemptionQeue: [QueuedRedemptionRequest] = [queuedRedemptionRequest]
         configStore.dataStore?.store(redemptionQeue, for: event)
 
