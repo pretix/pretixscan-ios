@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - Protocol
 public protocol FMDBModel: Model {
     static var creationQuery: String { get }
     static var destructionQuery: String { get }
@@ -18,6 +19,35 @@ public extension FMDBModel {
     static var destructionQuery: String { return "DROP TABLE IF EXISTS \"\(stringName)\"" }
 }
 
+// MARK: - New Models
+/// Represents when a certain model has been synced last, if at all
+struct SyncTimeStamp: FMDBModel {
+    public static let humanReadableName = "Sync Timestamp"
+    public static let stringName = "sync_timestamps"
+
+    public let model: String
+    public let lastSyncedAt: String
+
+    public static var creationQuery = """
+        CREATE TABLE IF NOT EXISTS "\(stringName)" (
+            "model"    TEXT NOT NULL UNIQUE,
+            "last_synced_at"    TEXT,
+            PRIMARY KEY("model")
+        );
+    """
+
+    public static var insertQuery = """
+        REPLACE INTO "\(stringName)"
+        ("model", "last_synced_at")
+        VALUES (?, ?);
+    """
+
+    public static var getSingleModelQuery = """
+        SELECT * FROM \(stringName) WHERE model=?;
+    """
+}
+
+// MARK: - Extensions of existing Models
 extension OrderPosition: FMDBModel {
     public static var creationQuery = """
         CREATE TABLE IF NOT EXISTS "\(stringName)" (

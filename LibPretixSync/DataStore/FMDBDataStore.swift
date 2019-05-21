@@ -17,18 +17,56 @@ public class FMDBDataStore: DataStore {
     // MARK: Metadata
     /// Remove all Sync Times and pretend nothing was ever synced
     public func invalidateLastSynced(in event: Event) {
-        // TODO
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        // Drop and recreate the sync times table
+        queue.inDatabase { database in
+            do {
+                try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
+                try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
+            } catch {
+                print("db operation failed: \(error.localizedDescription)")
+            }
+        }
     }
 
     /// Store timestamps of the last syncs
     public func setLastSyncTime<T>(_ dateString: String, of model: T.Type, in event: Event) where T: Model {
-        // TODO
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        queue.inDatabase { database in
+            do {
+                try database.executeUpdate(SyncTimeStamp.insertQuery, values: [model.stringName, dateString])
+            } catch {
+                print(error)
+            }
+        }
     }
 
     /// Retrieve timestamps of the last syncs
     public func lastSyncTime<T>(of model: T.Type, in event: Event) -> String? where T: Model {
-        // TODO
-        return nil
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        var lastSyncedAt: String?
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(SyncTimeStamp.getSingleModelQuery, values: [model.stringName]) {
+                while result.next() {
+                    lastSyncedAt = result.string(forColumn: "last_synced_at")
+                }
+            }
+        }
+
+        if lastSyncedAt?.count == 0 {
+            return nil
+        }
+
+        return lastSyncedAt
     }
 
     // MARK: - Storing
@@ -135,6 +173,7 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(OrderPosition.creationQuery, values: nil)
                 try database.executeUpdate(CheckIn.creationQuery, values: nil)
                 try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
+                try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
             } catch {
                 print("db init failed: \(error.localizedDescription)")
             }
