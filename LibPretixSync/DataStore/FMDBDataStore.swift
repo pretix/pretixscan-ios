@@ -112,7 +112,28 @@ public class FMDBDataStore: DataStore {
     // MARK: - Retrieving
     // Return all `OrderPosition`s matching the given query
     public func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition] {
-        // TODO
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        var searchResults = [OrderPosition]()
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(QueuedRedemptionRequest.numberOfRequestsQuery, values: []) {
+                while result.next() {
+                    if let nextResult = OrderPosition.from(result: result) {
+                        searchResults.append(nextResult)
+                    }
+                }
+            }
+        }
+
+        // Todo: populate with checkIns
+
+        return searchResults
+    }
+
+    private func getCheckIns(for orderPosition: OrderPosition) -> [CheckIn] {
+        // TODO: implement
         return []
     }
 

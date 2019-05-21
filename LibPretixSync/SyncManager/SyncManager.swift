@@ -219,6 +219,7 @@ public class SyncManager {
     }
 
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
-        
+        print(dataStore.searchOrderPositions("lu", in: event))
+        print(dataStore.searchOrderPositions("winsm", in: event))
     }
 }

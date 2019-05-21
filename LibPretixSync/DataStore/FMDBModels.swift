@@ -71,6 +71,38 @@ extension OrderPosition: FMDBModel {
         ("id", "order", "positionid", "item", "variation", "price", "attendee_name", "attendee_email", "secret", "pseudonymization_id")
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
+
+    public static var searchQuery = """
+        SELECT * FROM "\(OrderPosition.stringName)"
+        LEFT JOIN "\(Order.stringName)'"
+        ON "\(OrderPosition.stringName)"."order" = "\(Order.stringName)"."code"
+        LEFT JOIN "\(Item.stringName)"
+        ON "\(OrderPosition.stringName)"."item" = "\(Item.stringName)"."id"
+        WHERE "attendee_name" LIKE "%?%"
+        OR "attendee_email" LIKE "%?%"
+        OR "email" LIKE "%?%"
+        OR "code" LIKE "%?%";
+    """
+
+    public static func from(result: FMResultSet) -> OrderPosition? {
+        let identifier = Int(result.int(forColumn: "id"))
+        guard let order = result.string(forColumn: "order") else { return nil }
+        let positionid = Int(result.int(forColumn: "positionid"))
+        let item = Int(result.int(forColumn: "item"))
+        let variation = Int(result.int(forColumn: "variation"))
+        guard let price = result.string(forColumn: "price") else { return nil }
+        let attendee_name = result.string(forColumn: "attendee_name")
+        let attendee_email = result.string(forColumn: "attendee_email")
+        guard let secret = result.string(forColumn: "secret") else { return nil }
+        guard let pseudonymization_id = result.string(forColumn: "pseudonymization_id") else { return nil }
+
+        let orderPosition = OrderPosition(
+            identifier: identifier, order: order, positionid: positionid, item: item,
+            variation: variation, price: price, attendeeName: attendee_name,
+            attendeeEmail: attendee_email, secret: secret,
+            pseudonymizationId: pseudonymization_id, checkins: [])
+        return orderPosition
+    }
 }
 
 extension CheckIn: FMDBModel {
