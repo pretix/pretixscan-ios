@@ -129,19 +129,55 @@ public class FMDBDataStore: DataStore {
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
     public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
-        // TODO
-        return 0
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        var count = 0
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(QueuedRedemptionRequest.numberOfRequestsQuery, values: []) {
+                while result.next() {
+                    count = Int(result.int(forColumn: "COUNT(*)"))
+                }
+            }
+        }
+
+        return count
     }
 
     /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
     public func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest? {
-        // TODO
-        return nil
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        var redemptionRequest: QueuedRedemptionRequest?
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(QueuedRedemptionRequest.retrieveOneRequestQuery, values: []) {
+                while result.next() {
+                    redemptionRequest = QueuedRedemptionRequest.from(result: result)
+                }
+            }
+        }
+
+        return redemptionRequest
     }
 
     /// Remove a `QeuedRedemptionRequest` instance from the database
     public func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event) {
-        // TODO
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        // Drop and recreate the sync times table
+        queue.inDatabase { database in
+            do {
+                try database.executeUpdate(QueuedRedemptionRequest.deleteOneRequestQuery,
+                    values: [queuedRedemptionRequest.redemptionRequest.nonce])
+            } catch {
+                print("db operation failed: \(error.localizedDescription)")
+            }
+        }
     }
 
     private var currentDataBaseQueue: FMDatabaseQueue?
@@ -326,8 +362,8 @@ private extension FMDBDataStore {
     func store(_ records: [QueuedRedemptionRequest], in queue: FMDatabaseQueue) {
         queue.inDatabase { database in
             for record in records {
-                let event = record.event.slug
-                let check_in_list = record.checkInList.identifier as Int
+                let event_id = record.eventSlug
+                let check_in_list_id = record.checkInListIdentifier as Int
                 let secret = record.secret
                 let questions_supported = record.redemptionRequest.questionsSupported.toInt()
                 let datetime = record.redemptionRequest.date?.toJSONString()
@@ -336,8 +372,8 @@ private extension FMDBDataStore {
                 let nonce = record.redemptionRequest.nonce
 
                 do {
-                    try database.executeUpdate(Order.insertQuery, values: [
-                        event, check_in_list, secret, questions_supported, datetime as Any, force,
+                    try database.executeUpdate(QueuedRedemptionRequest.insertQuery, values: [
+                        event_id, check_in_list_id, secret, questions_supported, datetime as Any, force,
                         ignore_unpaid, nonce])
                 } catch {
                     print(error)
@@ -348,19 +384,19 @@ private extension FMDBDataStore {
 }
 
 // MARK: Type conversions to and from Sqlite
-fileprivate extension Bool {
+extension Bool {
     func toInt() -> Int {
         return self ? 1 : 0
     }
 }
 
-fileprivate extension Int {
+extension Int {
     func toBool() -> Bool {
         return self > 0
     }
 }
 
-fileprivate extension Model {
+extension Model {
     func toJSONString() -> String? {
         if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
             return String(data: data, encoding: .utf8)
@@ -370,10 +406,21 @@ fileprivate extension Model {
     }
 }
 
-fileprivate extension Date {
+extension Date {
     func toJSONString() -> String? {
         if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
             return String(data: data, encoding: .utf8)
+        }
+
+        return nil
+    }
+
+    static func from(jsonString: String?) -> Date? {
+        guard let jsonString = jsonString else { return nil }
+
+        if let data = jsonString.data(using: .utf8),
+            let date = try? JSONDecoder.iso8601withFractionsDecoder.decode(Date.self, from: data) {
+            return date
         }
 
         return nil

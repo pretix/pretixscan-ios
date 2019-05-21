@@ -16,16 +16,16 @@ public struct QueuedRedemptionRequest: Model {
     public static var stringName = "queued_redemption_requests"
 
     public let redemptionRequest: RedemptionRequest
-    public let event: Event
-    public let checkInList: CheckInList
+    public let eventSlug: String
+    public let checkInListIdentifier: Identifier
     public let secret: String
 }
 
 extension QueuedRedemptionRequest: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(redemptionRequest)
-        hasher.combine(event)
-        hasher.combine(checkInList)
+        hasher.combine(eventSlug)
+        hasher.combine(checkInListIdentifier)
         hasher.combine(secret)
     }
 }

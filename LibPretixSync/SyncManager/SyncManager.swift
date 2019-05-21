@@ -141,7 +141,7 @@ public class SyncManager {
 
     private func populateQueues(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
         populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-        populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
     private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
@@ -218,7 +218,7 @@ public class SyncManager {
 
     }
 
-    private func populateUploadQueue(event: Event, checkInList: CheckInList) {
-
+    private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        
     }
 }

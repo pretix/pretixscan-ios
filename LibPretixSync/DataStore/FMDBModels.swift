@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FMDB
 
 // MARK: - Protocol
 public protocol FMDBModel: Model {
@@ -192,4 +193,34 @@ extension QueuedRedemptionRequest: FMDBModel {
         "datetime", "force", "ignore_unpaid", "nonce")
         VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     """
+
+    public static var numberOfRequestsQuery = """
+        SELECT COUNT(*) FROM "\(stringName)";
+    """
+
+    public static var retrieveOneRequestQuery = """
+        SELECT * FROM "\(stringName)" LIMIT 1;
+    """
+
+    public static var deleteOneRequestQuery = """
+        DELETE FROM "\(stringName)" WHERE nonce=?;
+    """
+
+    public static func from(result: FMResultSet) -> QueuedRedemptionRequest? {
+        guard let event = result.string(forColumn: "event") else { return nil }
+        let check_in_list = result.int(forColumn: "check_in_list")
+        guard let secret = result.string(forColumn: "secret") else { return nil }
+        let questions_supported = result.bool(forColumn: "questions_supported")
+        let datetime = Date.from(jsonString: result.string(forColumn: "datetime"))
+        let force = result.bool(forColumn: "force")
+        let ignore_unpaid = result.bool(forColumn: "ignore_unpaid")
+        guard let nonce = result.string(forColumn: "nonce") else { return nil }
+
+        let redemptionRequest = RedemptionRequest(questionsSupported: questions_supported,
+            date: datetime, force: force, ignoreUnpaid: ignore_unpaid, nonce: nonce)
+        let queuedRedemptionRequest = QueuedRedemptionRequest(redemptionRequest: redemptionRequest,
+            eventSlug: event, checkInListIdentifier: Int(check_in_list), secret: secret)
+
+        return queuedRedemptionRequest
+    }
 }
