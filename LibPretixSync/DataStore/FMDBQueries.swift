@@ -141,9 +141,12 @@ extension Order: FMDBModel {
     """
 }
 
-extension RedemptionRequest: FMDBModel {
+extension QueuedRedemptionRequest: FMDBModel {
     public static var creationQuery = """
         CREATE TABLE IF NOT EXISTS "\(stringName)" (
+            "event"    TEXT NOT NULL,
+            "check_in_list"    INTEGER NOT NULL,
+            "secret"    TEXT NOT NULL,
             "questions_supported"    INTEGER,
             "datetime"    TEXT,
             "force"    INTEGER,
@@ -155,25 +158,8 @@ extension RedemptionRequest: FMDBModel {
 
     public static var insertQuery = """
         REPLACE INTO "\(stringName)"
-        ("questions_supported","datetime","force","ignore_unpaid","nonce")
-        VALUES (?,?,?,?,?);
-    """
-}
-
-extension QueuedRedemptionRequest: FMDBModel {
-    public static var creationQuery = """
-        CREATE TABLE IF NOT EXISTS "\(stringName)" (
-            "redemption_request"    TEXT NOT NULL UNIQUE,
-            "event"    TEXT NOT NULL,
-            "check_in_list"    INTEGER NOT NULL,
-            "secret"    TEXT NOT NULL,
-            PRIMARY KEY("redemption_request")
-        );
-    """
-
-    public static var insertQuery = """
-        REPLACE INTO "\(stringName)"
-        ("redemption_request","event","check_in_list","secret")
-        VALUES (?,?,?,?);
+        ("event", "check_in_list", "secret", "questions_supported",
+        "datetime", "force", "ignore_unpaid", "nonce")
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     """
 }

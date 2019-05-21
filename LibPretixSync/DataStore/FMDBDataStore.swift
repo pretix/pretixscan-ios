@@ -134,7 +134,6 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(Order.creationQuery, values: nil)
                 try database.executeUpdate(OrderPosition.creationQuery, values: nil)
                 try database.executeUpdate(CheckIn.creationQuery, values: nil)
-                try database.executeUpdate(RedemptionRequest.creationQuery, values: nil)
                 try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
             } catch {
                 print("db init failed: \(error.localizedDescription)")
@@ -286,37 +285,21 @@ private extension FMDBDataStore {
     }
 
     func store(_ records: [QueuedRedemptionRequest], in queue: FMDatabaseQueue) {
-        for record in records {
-            store([record.redemptionRequest], in: queue)
-
-            queue.inDatabase { database in
-                let redemption_request = record.redemptionRequest.nonce
+        queue.inDatabase { database in
+            for record in records {
                 let event = record.event.slug
                 let check_in_list = record.checkInList.identifier as Int
                 let secret = record.secret
+                let questions_supported = record.redemptionRequest.questionsSupported.toInt()
+                let datetime = record.redemptionRequest.date?.toJSONString()
+                let force = record.redemptionRequest.force.toInt()
+                let ignore_unpaid = record.redemptionRequest.ignoreUnpaid.toInt()
+                let nonce = record.redemptionRequest.nonce
 
                 do {
                     try database.executeUpdate(Order.insertQuery, values: [
-                        redemption_request, event, check_in_list, secret])
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-
-    func store(_ records: [RedemptionRequest], in queue: FMDatabaseQueue) {
-        queue.inDatabase { database in
-            for record in records {
-                let questions_supported = record.questionsSupported.toInt()
-                let datetime = record.date?.toJSONString()
-                let force = record.force.toInt()
-                let ignore_unpaid = record.ignoreUnpaid.toInt()
-                let nonce = record.nonce
-
-                do {
-                    try database.executeUpdate(RedemptionRequest.insertQuery, values: [
-                        questions_supported, datetime as Any, force, ignore_unpaid, nonce])
+                        event, check_in_list, secret, questions_supported, datetime as Any, force,
+                        ignore_unpaid, nonce])
                 } catch {
                     print(error)
                 }
