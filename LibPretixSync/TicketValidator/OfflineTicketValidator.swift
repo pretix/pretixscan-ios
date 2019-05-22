@@ -67,23 +67,14 @@ public class OfflineTicketValidator: TicketValidator {
         }
 
         // Redeem using DataStore
+        // A QueuedRedemptionRequest will automatically be generated
         let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, in: event, in: checkInList)
         if let response = response {
             completionHandler(response, nil)
         } else {
             completionHandler(nil, APIError.notFound)
         }
-
-        // Queue Upload
-        let redemptionRequest = RedemptionRequest(
-            questionsSupported: false,
-            date: Date(), force: force, ignoreUnpaid: ignoreUnpaid,
-            nonce: NonceGenerator.nonce())
-        let queuedRedemptionRequest = QueuedRedemptionRequest(redemptionRequest: redemptionRequest,
-            eventSlug: event.slug, checkInListIdentifier: checkInList.identifier, secret: secret)
-        let redemptionQeue: [QueuedRedemptionRequest] = [queuedRedemptionRequest]
-        configStore.dataStore?.store(redemptionQeue, for: event)
-
+        
         configStore.syncManager.beginSyncing()
     }
 }

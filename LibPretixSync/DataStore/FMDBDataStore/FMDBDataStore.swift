@@ -132,13 +132,7 @@ public class FMDBDataStore: DataStore {
         // Populate with checkIns
         var foundOrderPositions = [OrderPosition]()
         for orderPosition in searchResults {
-            let populatedOrderPosition = OrderPosition(
-                identifier: orderPosition.identifier, order: orderPosition.order,
-                positionid: orderPosition.positionid, item: orderPosition.item,
-                variation: orderPosition.variation, price: orderPosition.price,
-                attendeeName: orderPosition.attendeeName, attendeeEmail: orderPosition.attendeeEmail,
-                secret: orderPosition.secret, pseudonymizationId: orderPosition.pseudonymizationId,
-                checkins: getCheckIns(for: orderPosition, in: event))
+            let populatedOrderPosition = orderPosition.adding(checkIns: getCheckIns(for: orderPosition, in: event))
             foundOrderPositions.append(populatedOrderPosition)
         }
 
@@ -168,12 +162,49 @@ public class FMDBDataStore: DataStore {
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
-    ///
-    /// - See `RedemptionResponse` for the response returned in the completion handler.
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
         -> RedemptionResponse? {
-        // TODO
-        return nil
+            guard let queue = databaseQueue(with: event) else {
+                fatalError("Could not create database queue")
+            }
+
+            guard let orderPosition = OrderPosition.get(secret: secret, in: queue) else {
+                return nil
+            }
+
+            let checkIns = getCheckIns(for: orderPosition, in: event).filter {
+                $0.listID == checkInList.identifier
+            }
+
+            let orderPositionWithCheckins = orderPosition.adding(checkIns: checkIns)
+
+            // Check for previous check ins
+            if checkIns.count > 0 {
+                // Attendee is already checked in
+                return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPositionWithCheckins)
+            }
+
+            // Store a queued redemption request
+            let checkInDate = Date()
+            let redemptionRequest = RedemptionRequest(
+                questionsSupported: false,
+                date: checkInDate, force: force, ignoreUnpaid: ignoreUnpaid,
+                nonce: NonceGenerator.nonce())
+            let queuedRedemptionRequest = QueuedRedemptionRequest(
+                redemptionRequest: redemptionRequest,
+                eventSlug: event.slug,
+                checkInListIdentifier: checkInList.identifier,
+                secret: secret)
+
+            QueuedRedemptionRequest.store([queuedRedemptionRequest], in: queue)
+
+            // Save a check in to check the attendee in
+            // This checkin will later be overwritten (or duplicated) by one synced down from the server
+            let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate)
+            CheckIn.store([checkIn], for: orderPositionWithCheckins, in: queue)
+
+            // Return a positive redemption response
+            return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPositionWithCheckins)
     }
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore

@@ -34,7 +34,8 @@ extension OrderPosition: FMDBModel {
     """
 
     public static let searchQuery = """
-    SELECT "\(OrderPosition.stringName)".id AS orderpositionid, * FROM "\(OrderPosition.stringName)"
+    SELECT "\(OrderPosition.stringName)".id AS orderpositionid, "\(OrderPosition.stringName)".secret AS orderpositionsecret, *
+    FROM "\(OrderPosition.stringName)"
     LEFT JOIN "\(Order.stringName)"
     ON "\(OrderPosition.stringName)"."order" = "\(Order.stringName)"."code"
     LEFT JOIN "\(Item.stringName)"
@@ -43,6 +44,12 @@ extension OrderPosition: FMDBModel {
     OR "attendee_email" LIKE ?
     OR "email" LIKE ?
     OR "code" LIKE ?;
+    """
+
+    public static let getBySecretQuery =  """
+    SELECT "\(OrderPosition.stringName)".id AS orderpositionid, "\(OrderPosition.stringName)".secret AS orderpositionsecret, *
+    FROM "\(stringName)"
+    WHERE secret = ?;
     """
 
     public static func from(result: FMResultSet) -> OrderPosition? {
@@ -54,7 +61,7 @@ extension OrderPosition: FMDBModel {
         guard let price = result.string(forColumn: "price") else { return nil }
         let attendee_name = result.string(forColumn: "attendee_name")
         let attendee_email = result.string(forColumn: "attendee_email")
-        guard let secret = result.string(forColumn: "secret") else { return nil }
+        guard let secret = result.string(forColumn: "orderpositionsecret") else { return nil }
         guard let pseudonymization_id = result.string(forColumn: "pseudonymization_id") else { return nil }
 
         let orderPosition = OrderPosition(
@@ -62,6 +69,20 @@ extension OrderPosition: FMDBModel {
             variation: variation, price: price, attendeeName: attendee_name,
             attendeeEmail: attendee_email, secret: secret,
             pseudonymizationId: pseudonymization_id, checkins: [])
+        return orderPosition
+    }
+
+    static func get(secret: String, in queue: FMDatabaseQueue) -> OrderPosition? {
+        var orderPosition: OrderPosition?
+
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(getBySecretQuery, values: [secret]) {
+                while result.next() {
+                    orderPosition = from(result: result)
+                }
+            }
+        }
+
         return orderPosition
     }
 
@@ -90,5 +111,11 @@ extension OrderPosition: FMDBModel {
                 }
             }
         }
+    }
+
+    func adding(checkIns newCheckIns: [CheckIn]) -> OrderPosition {
+        return OrderPosition(identifier: identifier, order: order, positionid: positionid, item: item, variation: variation, price: price,
+                             attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
+                             pseudonymizationId: pseudonymizationId, checkins: newCheckIns)
     }
 }
