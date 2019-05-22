@@ -5,7 +5,6 @@
 //  Created by Daniel Jilg on 11.04.19.
 //  Copyright © 2019 rami.io. All rights reserved.
 //
-// swiftlint:disable identifier_name
 
 import Foundation
 import FMDB
@@ -77,32 +76,32 @@ public class FMDBDataStore: DataStore {
         }
 
         if let items = resources as? [Item] {
-            store(items, in: queue)
+            Item.store(items, in: queue)
             return
         }
 
         if let itemCategories = resources as? [ItemCategory] {
-            store(itemCategories, in: queue)
+            ItemCategory.store(itemCategories, in: queue)
             return
         }
 
         if let subEvents = resources as? [SubEvent] {
-            store(subEvents, in: queue)
+            SubEvent.store(subEvents, in: queue)
             return
         }
 
         if let orders = resources as? [Order] {
-            store(orders, in: queue)
+            Order.store(orders, in: queue)
             return
         }
 
         if let orderPositions = resources as? [OrderPosition] {
-            store(orderPositions, in: queue)
+            OrderPosition.store(orderPositions, in: queue)
             return
         }
 
         if let queuedRedemptionRequests = resources as? [QueuedRedemptionRequest] {
-            store(queuedRedemptionRequests, in: queue)
+            QueuedRedemptionRequest.store(queuedRedemptionRequests, in: queue)
             return
         }
 
@@ -270,207 +269,5 @@ public class FMDBDataStore: DataStore {
         currentDataBaseQueueEvent = event
 
         return queue
-    }
-}
-
-// MARK: - Storing
-private extension FMDBDataStore {
-    func store(_ items: [Item], in queue: FMDatabaseQueue) {
-        queue.inDatabase { database in
-            for item in items {
-                let identifier = item.identifier as Int
-                let name = item.name.toJSONString()
-                let internal_name = item.internalName
-                let default_price = item.defaultPrice as String
-                let category = item.categoryIdentifier as Int?
-                let active = item.active.toInt()
-                let description = item.description?.toJSONString()
-                let position = item.position
-                let checkin_attention = item.checkInAttention.toInt()
-                let json = item.toJSONString()
-
-                do {
-                    try database.executeUpdate(Item.insertQuery, values: [
-                        identifier, name as Any, internal_name as Any, default_price,
-                        category as Any, active, description as Any,
-                        position, checkin_attention, json as Any])
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-
-    func store(_ itemCategories: [ItemCategory], in queue: FMDatabaseQueue) {
-        queue.inDatabase { database in
-            for itemCategory in itemCategories {
-                let identifier = itemCategory.identifier as Int
-                let name = itemCategory.name.toJSONString()
-                let internal_name = itemCategory.internalName
-                let description = itemCategory.description?.toJSONString()
-                let position = itemCategory.position
-                let is_addon = itemCategory.isAddon
-
-                do {
-                    try database.executeUpdate(ItemCategory.insertQuery, values: [
-                        identifier, name as Any, internal_name as Any, description as Any, position, is_addon])
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-
-    func store(_ records: [SubEvent], in queue: FMDatabaseQueue) {
-        queue.inDatabase { database in
-            for record in records {
-                let identifier = record.identifier as Int
-                let name = record.name.toJSONString()
-                let event = record.event
-                let json = record.toJSONString()
-
-                do {
-                    try database.executeUpdate(SubEvent.insertQuery, values: [
-                        identifier, name as Any, event, json as Any])
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-
-    func store(_ records: [Order], in queue: FMDatabaseQueue) {
-        for record in records {
-            if let positions = record.positions {
-                store(positions, in: queue)
-            }
-
-            queue.inDatabase { database in
-                let code = record.code
-                let status = record.status.rawValue
-                let secret = record.secret
-                let email = record.email
-                let checkin_attention = record.checkInAttention?.toInt()
-                let require_approval = record.requireApproval?.toInt()
-                let json = record.toJSONString()
-
-                do {
-                    try database.executeUpdate(Order.insertQuery, values: [
-                        code, status, secret, email as Any, checkin_attention as Any,
-                        require_approval as Any, json as Any])
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-
-    func store(_ records: [OrderPosition], in queue: FMDatabaseQueue) {
-        for record in records {
-            store(record.checkins, for: record, in: queue)
-
-            queue.inDatabase { database in
-                let identifier = record.identifier as Int
-                let order = record.order
-                let positionid = record.positionid
-                let item = record.item
-                let variation = record.variation
-                let price = record.price as String
-                let attendee_name = record.attendeeName
-                let attendee_email = record.attendeeEmail
-                let secret = record.secret
-                let pseudonymization_id = record.pseudonymizationId
-
-                do {
-                    try database.executeUpdate(OrderPosition.insertQuery, values: [
-                        identifier, order, positionid, item, variation as Any, price,
-                        attendee_name as Any, attendee_email as Any, secret, pseudonymization_id])
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-
-    func store(_ records: [CheckIn], for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
-        queue.inDatabase { database in
-
-            for record in records {
-                let list = record.listID as Int
-                let order_position = orderPosition.identifier as Int
-                let date = database.stringFromDate(record.date)
-
-                do {
-                    try database.executeUpdate(CheckIn.insertQuery, values: [
-                        list, order_position, date as Any])
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-
-    func store(_ records: [QueuedRedemptionRequest], in queue: FMDatabaseQueue) {
-        queue.inDatabase { database in
-            for record in records {
-                let event_id = record.eventSlug
-                let check_in_list_id = record.checkInListIdentifier as Int
-                let secret = record.secret
-                let questions_supported = record.redemptionRequest.questionsSupported.toInt()
-                let datetime = database.stringFromDate(record.redemptionRequest.date)
-                let force = record.redemptionRequest.force.toInt()
-                let ignore_unpaid = record.redemptionRequest.ignoreUnpaid.toInt()
-                let nonce = record.redemptionRequest.nonce
-
-                do {
-                    try database.executeUpdate(QueuedRedemptionRequest.insertQuery, values: [
-                        event_id, check_in_list_id, secret, questions_supported, datetime as Any, force,
-                        ignore_unpaid, nonce])
-                } catch {
-                    print(error)
-                }
-            }
-        }
-    }
-}
-
-// MARK: Type conversions to and from Sqlite
-extension Bool {
-    func toInt() -> Int {
-        return self ? 1 : 0
-    }
-}
-
-extension Model {
-    func toJSONString() -> String? {
-        if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
-            return String(data: data, encoding: .utf8)
-        }
-
-        return nil
-    }
-}
-
-extension FMDatabase {
-    /// FMDB does not allow us to set a global date formatting string, so we'll have to set it
-    /// multiple times. This convenience function makes that easier.
-    func setupDateFormat() {
-        guard !hasDateFormatter() else {
-            return
-        }
-        setDateFormat(FMDatabase.storeableDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"))
-    }
-
-    /// Wrwapper for FMDatabase.string(from:) that sets up the correct date formatter and accepts nil values
-    func stringFromDate(_ date: Date?) -> String? {
-        guard let date = date else { return nil }
-        setupDateFormat()
-        return string(from: date)
-    }
-
-    func dateFromString(_ string: String?) -> Date? {
-        guard let string = string else { return nil }
-        setupDateFormat()
-        return date(from: string)
     }
 }
