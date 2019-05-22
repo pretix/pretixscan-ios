@@ -106,6 +106,7 @@ public class SyncManager {
                 return
         }
 
+        configStore.dataStore?.invalidateLastSynced(in: event)
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
@@ -219,6 +220,5 @@ public class SyncManager {
     }
 
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
-        
     }
 }

@@ -43,7 +43,7 @@
 		DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A012256722100710EFA /* NotifcationManager.swift */; };
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
 		DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */; };
-		DC3CA583228DCF870003D6D3 /* FMDBModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3CA582228DCF870003D6D3 /* FMDBModels.swift */; };
+		DC3CA583228DCF870003D6D3 /* FMDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3CA582228DCF870003D6D3 /* FMDBModel.swift */; };
 		DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */; };
 		DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C42285816D00C08817 /* SubEvent.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
@@ -107,6 +107,15 @@
 		DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
 		DCC00041223BEAF300236424 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00040223BEAF300236424 /* EventTests.swift */; };
 		DCC00042223BEB3B00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
+		DCC5D84D2295687E00DAEFA0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D84C2295687E00DAEFA0 /* Extensions.swift */; };
+		DCC5D84F2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D84E2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift */; };
+		DCC5D8512295694100DAEFA0 /* FMDBOrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D8502295694100DAEFA0 /* FMDBOrderPosition.swift */; };
+		DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D8522295696600DAEFA0 /* FMDBCheckIn.swift */; };
+		DCC5D8552295697C00DAEFA0 /* FMDBItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D8542295697C00DAEFA0 /* FMDBItem.swift */; };
+		DCC5D8572295699000DAEFA0 /* FMDBItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D8562295699000DAEFA0 /* FMDBItemCategory.swift */; };
+		DCC5D859229569A100DAEFA0 /* FMDBSubEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D858229569A100DAEFA0 /* FMDBSubEvent.swift */; };
+		DCC5D85B229569B000DAEFA0 /* FMDBOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D85A229569B000DAEFA0 /* FMDBOrder.swift */; };
+		DCC5D85D229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D85C229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift */; };
 		DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CA224AB1A400DC0200 /* Icon.swift */; };
 		DCDD82CD224AB25900DC0200 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CC224AB25900DC0200 /* Color.swift */; };
 		DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */; };
@@ -177,7 +186,7 @@
 		DC2F4A012256722100710EFA /* NotifcationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationManager.swift; sourceTree = "<group>"; };
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
 		DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryDataStore.swift; sourceTree = "<group>"; };
-		DC3CA582228DCF870003D6D3 /* FMDBModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBModels.swift; sourceTree = "<group>"; };
+		DC3CA582228DCF870003D6D3 /* FMDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBModel.swift; sourceTree = "<group>"; };
 		DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		DC7DD5C42285816D00C08817 /* SubEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubEvent.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
@@ -225,6 +234,15 @@
 		DCC0003B223BE31F00236424 /* MultiLingualString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualString.swift; sourceTree = "<group>"; };
 		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
 		DCC00040223BEAF300236424 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
+		DCC5D84C2295687E00DAEFA0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DCC5D84E2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBSyncTimeStamp.swift; sourceTree = "<group>"; };
+		DCC5D8502295694100DAEFA0 /* FMDBOrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBOrderPosition.swift; sourceTree = "<group>"; };
+		DCC5D8522295696600DAEFA0 /* FMDBCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBCheckIn.swift; sourceTree = "<group>"; };
+		DCC5D8542295697C00DAEFA0 /* FMDBItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBItem.swift; sourceTree = "<group>"; };
+		DCC5D8562295699000DAEFA0 /* FMDBItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBItemCategory.swift; sourceTree = "<group>"; };
+		DCC5D858229569A100DAEFA0 /* FMDBSubEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBSubEvent.swift; sourceTree = "<group>"; };
+		DCC5D85A229569B000DAEFA0 /* FMDBOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBOrder.swift; sourceTree = "<group>"; };
+		DCC5D85C229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBQueuedRedemptionRequest.swift; sourceTree = "<group>"; };
 		DCDD82CA224AB1A400DC0200 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		DCDD82CC224AB25900DC0200 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListStatus.swift; sourceTree = "<group>"; };
@@ -435,8 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				DC8467A6225B99590013F647 /* DataStore.swift */,
-				DC0052E7225FB02B002D985B /* FMDBDataStore.swift */,
-				DC3CA582228DCF870003D6D3 /* FMDBModels.swift */,
+				DCC5D84B2295686000DAEFA0 /* FMDBDataStore */,
 				DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */,
 			);
 			path = DataStore;
@@ -512,6 +529,24 @@
 				DC227F2022536B5B00314448 /* AppCoordinator.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		DCC5D84B2295686000DAEFA0 /* FMDBDataStore */ = {
+			isa = PBXGroup;
+			children = (
+				DC0052E7225FB02B002D985B /* FMDBDataStore.swift */,
+				DC3CA582228DCF870003D6D3 /* FMDBModel.swift */,
+				DCC5D84C2295687E00DAEFA0 /* Extensions.swift */,
+				DCC5D84E2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift */,
+				DCC5D85A229569B000DAEFA0 /* FMDBOrder.swift */,
+				DCC5D8502295694100DAEFA0 /* FMDBOrderPosition.swift */,
+				DCC5D8522295696600DAEFA0 /* FMDBCheckIn.swift */,
+				DCC5D8562295699000DAEFA0 /* FMDBItemCategory.swift */,
+				DCC5D8542295697C00DAEFA0 /* FMDBItem.swift */,
+				DCC5D858229569A100DAEFA0 /* FMDBSubEvent.swift */,
+				DCC5D85C229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift */,
+			);
+			path = FMDBDataStore;
 			sourceTree = "<group>";
 		};
 		DCDD82DB224BCBEB00DC0200 /* CheckIn Status */ = {
@@ -789,6 +824,8 @@
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */,
 				DCEEF11F22799FD600BCAF82 /* QeuedRedemptionRequest.swift in Sources */,
+				DCC5D85D229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift in Sources */,
+				DCC5D8512295694100DAEFA0 /* FMDBOrderPosition.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
@@ -817,6 +854,7 @@
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
 				DC0052EA2260D385002D985B /* Model.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
+				DCC5D8552295697C00DAEFA0 /* FMDBItem.swift in Sources */,
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
@@ -829,24 +867,30 @@
 				DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */,
 				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
 				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
+				DCC5D85B229569B000DAEFA0 /* FMDBOrder.swift in Sources */,
+				DCC5D859229569A100DAEFA0 /* FMDBSubEvent.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
 				DC8467BD225CF4000013F647 /* Item.swift in Sources */,
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
-				DC3CA583228DCF870003D6D3 /* FMDBModels.swift in Sources */,
+				DC3CA583228DCF870003D6D3 /* FMDBModel.swift in Sources */,
+				DCC5D8572295699000DAEFA0 /* FMDBItemCategory.swift in Sources */,
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				DC8467C0225CF4000013F647 /* ItemBundle.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
+				DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */,
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
 				DC8467BC225CF4000013F647 /* Locale.swift in Sources */,
 				DC8467BF225CF4000013F647 /* ItemAddon.swift in Sources */,
+				DCC5D84F2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift in Sources */,
 				DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */,
 				DCDD82D6224BCBA000DC0200 /* CheckInStatusOverviewTableViewCell.swift in Sources */,
+				DCC5D84D2295687E00DAEFA0 /* Extensions.swift in Sources */,
 				DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */,
 				DCDD82D8224BCBC600DC0200 /* SimpleCheckInStatusItemTableViewCell.swift in Sources */,
 				DCB35B9B2249402300860385 /* TicketStatusViewController.swift in Sources */,
