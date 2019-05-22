@@ -184,3 +184,7 @@ class PartialOrderDownloader: PartialDownloader<Order> {
 class SubEventsDownloader: FullDownloader<SubEvent> {
     let model = SubEvent.self
 }
+
+class QueuedRedemptionRequestsUploader: APIClientOperation {
+
+}
