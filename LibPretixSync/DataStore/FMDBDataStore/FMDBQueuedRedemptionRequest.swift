@@ -37,7 +37,7 @@ extension QueuedRedemptionRequest: FMDBModel {
     """
 
     public static var retrieveOneRequestQuery = """
-    SELECT * FROM "\(stringName)" LIMIT 1;
+    SELECT * FROM "\(stringName)" ORDER BY RANDOM() LIMIT 1;
     """
 
     public static var deleteOneRequestQuery = """

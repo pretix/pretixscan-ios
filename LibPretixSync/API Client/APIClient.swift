@@ -279,8 +279,8 @@ public extension APIClient {
     }
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
-    func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, completionHandler: @escaping (RedemptionResponse?, Error?) -> Void)
-        -> URLSessionDataTask? {
+    func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil,
+                    completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
@@ -292,7 +292,7 @@ public extension APIClient {
 
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: false,
-                date: nil, force: force, ignoreUnpaid: ignoreUnpaid,
+                date: date, force: force, ignoreUnpaid: ignoreUnpaid,
                 nonce: NonceGenerator.nonce())
             urlRequest.httpBody = try jsonEncoder.encode(redemptionRequest)
 
