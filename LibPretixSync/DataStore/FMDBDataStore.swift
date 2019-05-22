@@ -155,7 +155,7 @@ public class FMDBDataStore: DataStore {
         queue.inDatabase { database in
             if let result = try? database.executeQuery(CheckIn.retrieveByOrderPositionQuery, values: [orderPosition.identifier]) {
                 while result.next() {
-                    if let nextCheckin = CheckIn.from(result: result) {
+                    if let nextCheckin = CheckIn.from(result: result, in: database) {
                         checkIns.append(nextCheckin)
                     }
                 }
@@ -205,7 +205,7 @@ public class FMDBDataStore: DataStore {
         queue.inDatabase { database in
             if let result = try? database.executeQuery(QueuedRedemptionRequest.retrieveOneRequestQuery, values: []) {
                 while result.next() {
-                    redemptionRequest = QueuedRedemptionRequest.from(result: result)
+                    redemptionRequest = QueuedRedemptionRequest.from(result: result, in: database)
                 }
             }
         }
@@ -393,12 +393,12 @@ private extension FMDBDataStore {
     }
 
     func store(_ records: [CheckIn], for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
-        // TODO: Check for duplicates
         queue.inDatabase { database in
+
             for record in records {
                 let list = record.listID as Int
                 let order_position = orderPosition.identifier as Int
-                let date = record.date.toJSONString()
+                let date = database.stringFromDate(record.date)
 
                 do {
                     try database.executeUpdate(CheckIn.insertQuery, values: [
@@ -417,7 +417,7 @@ private extension FMDBDataStore {
                 let check_in_list_id = record.checkInListIdentifier as Int
                 let secret = record.secret
                 let questions_supported = record.redemptionRequest.questionsSupported.toInt()
-                let datetime = record.redemptionRequest.date?.toJSONString()
+                let datetime = database.stringFromDate(record.redemptionRequest.date)
                 let force = record.redemptionRequest.force.toInt()
                 let ignore_unpaid = record.redemptionRequest.ignoreUnpaid.toInt()
                 let nonce = record.redemptionRequest.nonce
@@ -451,26 +451,26 @@ extension Model {
     }
 }
 
-extension Date {
-    func toJSONString() -> String? {
-        // TODO: This always returns nil
-        // TODO: use https://ccgus.github.io/fmdb/html/Classes/FMDatabase.html#//api/name/dateFromString:
-        if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
-            return String(data: data, encoding: .utf8)
+extension FMDatabase {
+    /// FMDB does not allow us to set a global date formatting string, so we'll have to set it
+    /// multiple times. This convenience function makes that easier.
+    func setupDateFormat() {
+        guard !hasDateFormatter() else {
+            return
         }
-
-        return nil
+        setDateFormat(FMDatabase.storeableDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"))
     }
 
-    static func from(jsonString: String?) -> Date? {
-        // TODO: use https://ccgus.github.io/fmdb/html/Classes/FMDatabase.html#//api/name/dateFromString:
-        guard let jsonString = jsonString else { return nil }
+    /// Wrwapper for FMDatabase.string(from:) that sets up the correct date formatter and accepts nil values
+    func stringFromDate(_ date: Date?) -> String? {
+        guard let date = date else { return nil }
+        setupDateFormat()
+        return string(from: date)
+    }
 
-        if let data = jsonString.data(using: .utf8),
-            let date = try? JSONDecoder.iso8601withFractionsDecoder.decode(Date.self, from: data) {
-            return date
-        }
-
-        return nil
+    func dateFromString(_ string: String?) -> Date? {
+        guard let string = string else { return nil }
+        setupDateFormat()
+        return date(from: string)
     }
 }

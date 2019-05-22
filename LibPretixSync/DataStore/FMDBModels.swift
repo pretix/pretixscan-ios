@@ -108,9 +108,10 @@ extension OrderPosition: FMDBModel {
 extension CheckIn: FMDBModel {
     public static var creationQuery = """
         CREATE TABLE IF NOT EXISTS "\(stringName)" (
-            "list"    INTEGER,
-            "order_position"    INTEGER,
-            "date"    TEXT
+            "list"    INTEGER NOT NULL,
+            "order_position"    INTEGER  NOT NULL,
+            "date"    TEXT  NOT NULL,
+            UNIQUE("list", "order_position", "date") ON CONFLICT REPLACE
         );
     """
 
@@ -122,9 +123,12 @@ extension CheckIn: FMDBModel {
         SELECT * FROM "\(stringName)" WHERE order_position=?;
     """
 
-    public static func from(result: FMResultSet) -> CheckIn? {
+    public static func from(result: FMResultSet, in database: FMDatabase) -> CheckIn? {
+        guard let date = database.dateFromString(result.string(forColumn: "date")) else {
+            print("Date Parsing error in Checkin.from")
+            return nil
+        }
         let list = Identifier(result.int(forColumn: "list"))
-        guard let date = Date.from(jsonString: result.string(forColumn: "date")) else { return nil }
         return CheckIn(listID: list, date: date)
     }
 }
@@ -248,12 +252,13 @@ extension QueuedRedemptionRequest: FMDBModel {
         DELETE FROM "\(stringName)" WHERE nonce=?;
     """
 
-    public static func from(result: FMResultSet) -> QueuedRedemptionRequest? {
+    public static func from(result: FMResultSet, in database: FMDatabase) -> QueuedRedemptionRequest? {
         guard let event = result.string(forColumn: "event") else { return nil }
         let check_in_list = result.int(forColumn: "check_in_list")
         guard let secret = result.string(forColumn: "secret") else { return nil }
         let questions_supported = result.bool(forColumn: "questions_supported")
-        let datetime = Date.from(jsonString: result.string(forColumn: "datetime"))
+        let datetime = database.dateFromString(result.string(forColumn: "datetime"))
+
         let force = result.bool(forColumn: "force")
         let ignore_unpaid = result.bool(forColumn: "ignore_unpaid")
         guard let nonce = result.string(forColumn: "nonce") else { return nil }
