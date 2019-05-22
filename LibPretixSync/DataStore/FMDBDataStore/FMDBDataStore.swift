@@ -226,6 +226,9 @@ public class FMDBDataStore: DataStore {
     }
 
     /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
+    ///
+    /// This implementation will deliberately return a random instance each time, in order to not block the upload queue with
+    /// a malformed request forever.
     public func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest? {
         guard let queue = databaseQueue(with: event) else {
             fatalError("Could not create database queue")

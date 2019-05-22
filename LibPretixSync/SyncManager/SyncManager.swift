@@ -220,5 +220,20 @@ public class SyncManager {
     }
 
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        let uploader = QueuedRedemptionRequestsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        uploader.completionBlock = {
+            if let error = uploader.error {
+                print("Queued Redemption Request came back with error: \(error)")
+            }
+            if let errorReason = uploader.errorReason {
+                print("Queued Redemption Request came back with error: \(errorReason)")
+            }
+
+            if uploader.shouldRepeat {
+                self.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            }
+        }
+
+        uploadQeuue.addOperation(uploader)
     }
 }

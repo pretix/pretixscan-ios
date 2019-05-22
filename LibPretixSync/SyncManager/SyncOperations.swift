@@ -19,7 +19,7 @@ class APIClientOperation: Operation {
     var error: Error?
 
     // MARK: - Private Properties
-    private var urSessionTask: URLSessionTask?
+    fileprivate var urlSessionTask: URLSessionTask?
 
     // MARK: - KVO Property Management
     private var _executing = false
@@ -79,7 +79,7 @@ class APIClientOperation: Operation {
             isExecuting = false
         }
 
-        urSessionTask?.cancel()
+        urlSessionTask?.cancel()
     }
 }
 
@@ -96,7 +96,7 @@ class FullDownloader<T: Model>: APIClientOperation {
             completeOperation()
         }
 
-        let task = apiClient.getTask(T.self, lastUpdated: nil) { result in
+        urlSessionTask = apiClient.getTask(T.self, lastUpdated: nil) { result in
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
@@ -122,7 +122,7 @@ class FullDownloader<T: Model>: APIClientOperation {
             }
 
         }
-        task?.resume()
+        urlSessionTask?.resume()
     }
 }
 
@@ -135,7 +135,7 @@ class PartialDownloader<T: Model>: APIClientOperation {
         isExecuting = true
         let lastUpdated = dataStore.lastSyncTime(of: T.self, in: event)
 
-        let task = apiClient.getTask(T.self, lastUpdated: lastUpdated) { result in
+        urlSessionTask = apiClient.getTask(T.self, lastUpdated: lastUpdated) { result in
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
@@ -161,7 +161,7 @@ class PartialDownloader<T: Model>: APIClientOperation {
             }
 
         }
-        task?.resume()
+        urlSessionTask?.resume()
     }
 }
 
@@ -183,4 +183,63 @@ class PartialOrderDownloader: PartialDownloader<Order> {
 
 class SubEventsDownloader: FullDownloader<SubEvent> {
     let model = SubEvent.self
+}
+
+class QueuedRedemptionRequestsUploader: APIClientOperation {
+    var errorReason: RedemptionResponse.ErrorReason?
+    var shouldRepeat = true
+
+    override func start() {
+        if isCancelled {
+            completeOperation()
+        }
+
+        isExecuting = true
+
+        guard let nextRedemptionRequest = dataStore.getRedemptionRequest(in: event) else {
+            // No more queued redemption requests, so we don't need to do anything, and not add more uploads to the queue
+            self.shouldRepeat = false
+            self.completeOperation()
+            return
+        }
+
+        urlSessionTask = apiClient.redeemTask(
+            secret: nextRedemptionRequest.secret,
+            force: nextRedemptionRequest.redemptionRequest.force,
+            ignoreUnpaid: nextRedemptionRequest.redemptionRequest.ignoreUnpaid) { result, error in
+                // Handle HTTP errors
+                // When HTTP errors occur, we do not want to remove the queued redemption request, since it probably didn't reach the server
+                if let error = error {
+                    self.error = error
+
+                    if let apiError = error as? APIError {
+                        switch apiError {
+                        case .forbidden, .notFound:
+                            // This is probably a malformed request and will never go through.
+                            // Continue on and let the queued request be deleted.
+                            break
+                        default:
+                            self.completeOperation()
+                            return
+                        }
+                    } else {
+                        self.completeOperation()
+                        return
+                    }
+                }
+
+                // Response Errors
+                // Response errors mean the server has received our request correctly and has declined it for some reason
+                // (e.g. already checked in). In that case, we can't do anything, because the check in happened in the past.
+                self.errorReason = result?.errorReason
+
+                // Done, delete the queued redemption request
+                self.dataStore.delete(nextRedemptionRequest, in: self.event)
+
+                // The instantiator of this class should queue more operations in the completion block.
+                self.shouldRepeat = true
+                self.completeOperation()
+        }
+        urlSessionTask?.resume()
+    }
 }
