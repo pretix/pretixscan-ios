@@ -106,6 +106,7 @@ public class SyncManager {
                 return
         }
 
+        configStore.dataStore?.invalidateLastSynced(in: event)
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
