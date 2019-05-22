@@ -115,7 +115,7 @@ public class FMDBDataStore: DataStore {
             fatalError("Could not create database queue")
         }
 
-        let queryPlaceholder = "\"%\(query)%\""
+        let queryPlaceholder = "\"%\(query.trimmingCharacters(in: .whitespacesAndNewlines))%\""
         let fullQuery = OrderPosition.searchQuery.replacingOccurrences(of: "?", with: queryPlaceholder)
 
         var searchResults = [OrderPosition]()

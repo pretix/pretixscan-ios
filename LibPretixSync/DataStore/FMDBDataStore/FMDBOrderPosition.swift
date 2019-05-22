@@ -34,7 +34,7 @@ extension OrderPosition: FMDBModel {
     """
 
     public static let searchQuery = """
-    SELECT * FROM "\(OrderPosition.stringName)"
+    SELECT "\(OrderPosition.stringName)".id AS orderpositionid, * FROM "\(OrderPosition.stringName)"
     LEFT JOIN "\(Order.stringName)"
     ON "\(OrderPosition.stringName)"."order" = "\(Order.stringName)"."code"
     LEFT JOIN "\(Item.stringName)"
@@ -46,7 +46,7 @@ extension OrderPosition: FMDBModel {
     """
 
     public static func from(result: FMResultSet) -> OrderPosition? {
-        let identifier = Int(result.int(forColumn: "id"))
+        let identifier = Int(result.int(forColumn: "orderpositionid"))
         guard let order = result.string(forColumn: "order") else { return nil }
         let positionid = Int(result.int(forColumn: "positionid"))
         let item = Int(result.int(forColumn: "item"))
