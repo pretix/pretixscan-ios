@@ -9,9 +9,8 @@
 import UIKit
 
 class SyncStatusViewController: UIViewController {
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var progressView: UIProgressView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +26,7 @@ class SyncStatusViewController: UIViewController {
     @objc
     func syncBegan(_ notification: Notification) {
         DispatchQueue.main.async {
-            self.titleLabel.text = "Syncing..."
-            self.activityIndicator.startAnimating()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
         }
     }
 
@@ -37,8 +35,8 @@ class SyncStatusViewController: UIViewController {
         let lastSyncDate = notification.userInfo?[SyncManager.NotificationKeys.lastSyncDate] as? Date
 
         DispatchQueue.main.async {
-            self.titleLabel.text = "Syncing Done: \(lastSyncDate ?? Date())"
-            self.activityIndicator.stopAnimating()
+            self.detailLabel.text = "Syncing Done: \(lastSyncDate ?? Date())"
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
 
