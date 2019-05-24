@@ -20,15 +20,25 @@ public class FMDBDataStore: DataStore {
             fatalError("Could not create database queue")
         }
 
-        // Drop and recreate the sync times table
+        // Drop and recreate all tables to thoroughly clean the db
+        // This includes the SyncTimestamp table
         queue.inDatabase { database in
             do {
+                try database.executeUpdate(ItemCategory.destructionQuery, values: nil)
+                try database.executeUpdate(Item.destructionQuery, values: nil)
+                try database.executeUpdate(SubEvent.destructionQuery, values: nil)
+                try database.executeUpdate(Order.destructionQuery, values: nil)
+                try database.executeUpdate(OrderPosition.destructionQuery, values: nil)
+                try database.executeUpdate(CheckIn.destructionQuery, values: nil)
+                try database.executeUpdate(QueuedRedemptionRequest.destructionQuery, values: nil)
                 try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
-                try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
             } catch {
-                print("db operation failed: \(error.localizedDescription)")
+                print("db init failed: \(error.localizedDescription)")
             }
         }
+
+        // Recreate the database
+        _ = databaseQueue(with: event, recreate: true)
     }
 
     /// Store timestamps of the last syncs
@@ -266,9 +276,10 @@ public class FMDBDataStore: DataStore {
     private var currentDataBaseQueue: FMDatabaseQueue?
     private var currentDataBaseQueueEvent: Event?
 
-    func databaseQueue(with event: Event) -> FMDatabaseQueue? {
+    func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue? {
         // If we're dealing with the same database as last time, keep it open
-        if currentDataBaseQueueEvent == event, let queue = currentDataBaseQueue {
+        // except in case the caller specifically asked us to recreate the DB.
+        if currentDataBaseQueueEvent == event, let queue = currentDataBaseQueue, !recreate {
             return queue
         }
 
