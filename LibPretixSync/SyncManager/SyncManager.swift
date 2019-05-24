@@ -60,6 +60,7 @@ public class SyncManager {
     public static var syncBeganNotification: Notification.Name { return Notification.Name("SyncManagerSyncBegan") }
     public static var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
     public static var syncEndedNotification: Notification.Name { return Notification.Name("SyncManagerSyncEnded") }
+    public static var uploadStatusNotification: Notification.Name { return Notification.Name("SyncManagerUploadStatus") }
 
     /// Notifications sent out by SyncManager
     ///
@@ -221,6 +222,14 @@ public class SyncManager {
             downloadQueue.addOperation(downloader)
         }
 
+        // And Now Our Sync Has Ended.
+        // Send out a Notification Raven to inform every one
+        downloadQueue.addOperation {
+            NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: self, userInfo:nil)
+        }
+
+        // Queue in the next Sync in 5 minutes
+        // TODO
     }
 
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
