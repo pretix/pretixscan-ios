@@ -209,7 +209,7 @@ public class SyncManager {
                 if downloader.isCancelled { return }
                 if let error = downloader.error { print(error) }
                 DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: fullOrderKey)
+                    self.downloadsInProgress.removeValue(forKey: Order.stringName)
                 }
             }
 
