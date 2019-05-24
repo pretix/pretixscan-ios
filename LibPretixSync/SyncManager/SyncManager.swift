@@ -50,6 +50,10 @@ public class SyncManager {
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
+        syncTimer = Timer.scheduledTimer(
+            timeInterval: 5 * 60,
+            target: self, selector: #selector(beginSyncing),
+            userInfo: nil, repeats: true)
     }
 
     // MARK: - Notifications
@@ -111,7 +115,7 @@ public class SyncManager {
     }
 
     /// Trigger a sync process, which will check for new data from the server
-    public func beginSyncing() {
+    @objc public func beginSyncing() {
         guard let event = configStore.event,
             let checkInList = configStore.checkInList,
             let apiClient = configStore.apiClient,
