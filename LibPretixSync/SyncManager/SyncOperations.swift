@@ -84,6 +84,9 @@ class APIClientOperation: Operation {
 }
 
 class FullDownloader<T: Model>: APIClientOperation {
+    // TODO: Fix a bug where previous downloads seem to be ignored
+    // TODO: Fix a bug where finish notifications are sent out of order
+
     override func start() {
         if isCancelled {
             completeOperation()
