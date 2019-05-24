@@ -46,14 +46,10 @@ import Foundation
 /// ```
 public class SyncManager {
     private let configStore: ConfigStore
-    private var syncTimer: Timer?
+    private let timeBetweenSyncs: TimeInterval = 5 * 60
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
-        syncTimer = Timer.scheduledTimer(
-            timeInterval: 5 * 60,
-            target: self, selector: #selector(beginSyncing),
-            userInfo: nil, repeats: true)
     }
 
     // MARK: - Notifications
@@ -225,11 +221,16 @@ public class SyncManager {
         // And Now Our Sync Has Ended.
         // Send out a Notification Raven to inform every one
         downloadQueue.addOperation {
-            NotificationCenter.default.post(name: SyncManager.syncEndedNotification, object: self, userInfo:nil)
+            NotificationCenter.default.post(
+                name: SyncManager.syncEndedNotification, object: self, userInfo: [SyncManager.NotificationKeys.lastSyncDate: Date()])
         }
 
         // Queue in the next Sync in 5 minutes
-        // TODO
+        downloadQueue.addOperation {
+            DispatchQueue.main.asyncAfter(deadline: .now() + self.timeBetweenSyncs) {
+                self.beginSyncing()
+            }
+        }
     }
 
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
