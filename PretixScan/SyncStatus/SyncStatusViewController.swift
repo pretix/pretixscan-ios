@@ -32,6 +32,7 @@ class SyncStatusViewController: UIViewController {
 
     @objc
     func syncEnded(_ notification: Notification) {
+        print("sync ended")
         let lastSyncDate = notification.userInfo?[SyncManager.NotificationKeys.lastSyncDate] as? Date
 
         DispatchQueue.main.async {
@@ -44,6 +45,7 @@ class SyncStatusViewController: UIViewController {
 
     @objc
     func syncDownloadStatusUpdate(_ notification: Notification) {
+        print("sync updated")
         let model: String = notification.userInfo?[SyncManager.NotificationKeys.model] as? String ?? "No Model"
         let loadedAmount = notification.userInfo?[SyncManager.NotificationKeys.loadedAmount] as? Int ?? 0
         let totalAmount = notification.userInfo?[SyncManager.NotificationKeys.totalAmount] as? Int ?? 0
@@ -59,6 +61,8 @@ class SyncStatusViewController: UIViewController {
 
         DispatchQueue.main.async {
             self.detailLabel.text = "\(model) updated, added \(previouslyLoadedAmount + loadedAmount)/\(totalAmount)."
+            let progress = Float(previouslyLoadedAmount + loadedAmount) / Float(totalAmount)
+            self.progressView.setProgress(progress, animated: true)
         }
     }
 }
