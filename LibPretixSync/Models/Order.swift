@@ -79,7 +79,7 @@ public struct Order: Model {
     public enum Status: String, Codable, Equatable {
         case pending = "n"
         case paid = "p"
-        case expored = "e"
+        case expired = "e"
         case cancelled = "c"
     }
 }
