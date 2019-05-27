@@ -79,3 +79,6 @@ iOSInjectionProject/
 
 /docs
 .DS_Store
+
+# AppCode
+.idea/
