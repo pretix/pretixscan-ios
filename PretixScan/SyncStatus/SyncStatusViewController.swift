@@ -9,8 +9,9 @@
 import UIKit
 
 class SyncStatusViewController: UIViewController {
-    @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet private weak var detailLabel: UILabel!
+    @IBOutlet private weak var progressView: UIProgressView!
+    private var updateTimer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,8 @@ class SyncStatusViewController: UIViewController {
                                                name: SyncManager.syncBeganNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncEnded(_:)),
                                                name: SyncManager.syncEndedNotification, object: nil)
+
+        updateTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in self.updateStatusDisplay() }
     }
 
     @objc
@@ -63,5 +66,8 @@ class SyncStatusViewController: UIViewController {
             let progress = Float(previouslyLoadedAmount + loadedAmount) / Float(totalAmount)
             self.progressView.setProgress(progress, animated: true)
         }
+    }
+
+    private func updateStatusDisplay() {
     }
 }
