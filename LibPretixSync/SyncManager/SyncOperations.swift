@@ -84,11 +84,10 @@ class APIClientOperation: Operation {
 }
 
 class FullDownloader<T: Model>: APIClientOperation {
-    // TODO: Fix a bug where finish notifications are sent out of order
-
     override func start() {
         if isCancelled {
             completeOperation()
+            return
         }
 
         isExecuting = true
@@ -96,6 +95,7 @@ class FullDownloader<T: Model>: APIClientOperation {
         if dataStore.lastSyncTime(of: T.self, in: event) != nil {
             // full sync already happened, we don't need to do anything
             completeOperation()
+            return
         }
 
         urlSessionTask = apiClient.getTask(T.self, lastUpdated: nil) { result in
@@ -136,11 +136,11 @@ class PartialDownloader<T: Model>: APIClientOperation {
     override func start() {
         if isCancelled {
             completeOperation()
+            return
         }
 
         isExecuting = true
 
-        // TODO: This seems to not be updated
         let lastUpdated = dataStore.lastSyncTime(of: T.self, in: event)
 
         urlSessionTask = apiClient.getTask(T.self, lastUpdated: lastUpdated) { result in
