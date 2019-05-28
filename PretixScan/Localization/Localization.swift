@@ -118,4 +118,10 @@ struct Localization {
         static let CouldNotCreateNonce = NSLocalizedString("Could not create Nonce", comment: "")
         static let TicketNotFound = NSLocalizedString("The ticket was not found for the current event", comment: "")
     }
+
+    struct SyncStatusViewController {
+        static let SyncingDone = NSLocalizedString("Syncing Done ", comment: "")
+        static let LessThanAMinute = NSLocalizedString("less than a minute ", comment: "time interval")
+        static let LastSyncXAgo = NSLocalizedString("Last Sync %@ ago ", comment: "e.g. Last Sync [12 minutes] ago")
+    }
 }

@@ -83,11 +83,11 @@ class SyncStatusViewController: UIViewController {
         case .syncEnded(let lastSyncDate):
             if let lastSyncDate = lastSyncDate {
                 let lastSyncTimeInterval = -lastSyncDate.timeIntervalSinceNow
-                let timeIntervalString = lastSyncTimeInterval < 60 ? "less than a minute ago" :
-                    "\(dateFormatter.string(from: lastSyncTimeInterval)!) ago"
-                detailLabel.text = "Last Sync \(timeIntervalString)"
+                let timeIntervalString = lastSyncTimeInterval < 60 ? Localization.SyncStatusViewController.LessThanAMinute :
+                    "\(dateFormatter.string(from: lastSyncTimeInterval)!)"
+                detailLabel.text = String.localizedStringWithFormat(Localization.SyncStatusViewController.LastSyncXAgo, timeIntervalString)
             } else {
-                detailLabel.text = "Syncing Done"
+                detailLabel.text = Localization.SyncStatusViewController.SyncingDone
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
