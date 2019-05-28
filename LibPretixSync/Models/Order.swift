@@ -17,7 +17,7 @@ public struct Order: Model {
 
     /// If `true`, this order was created when the event was in test mode.
     /// Only orders in test mode can be deleted.
-    public let testMode: Bool
+    public let testMode: Bool = false
 
     /// The secret contained in the link sent to the customer
     public let secret: String
