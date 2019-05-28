@@ -84,7 +84,6 @@ class APIClientOperation: Operation {
 }
 
 class FullDownloader<T: Model>: APIClientOperation {
-    // TODO: Fix a bug where previous downloads seem to be ignored
     // TODO: Fix a bug where finish notifications are sent out of order
 
     override func start() {
@@ -136,6 +135,8 @@ class PartialDownloader<T: Model>: APIClientOperation {
         }
 
         isExecuting = true
+
+        // TODO: This seems to not be updated
         let lastUpdated = dataStore.lastSyncTime(of: T.self, in: event)
 
         urlSessionTask = apiClient.getTask(T.self, lastUpdated: lastUpdated) { result in

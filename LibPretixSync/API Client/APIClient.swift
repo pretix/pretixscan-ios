@@ -118,7 +118,7 @@ public extension APIClient {
                 allowedCharacterSet.remove("+")
                 queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
             }
-            
+
             let ifFullFetch = lastUpdated == nil
             if ifFullFetch {
                 queryItems.append(URLQueryItem(name: "ordering", value: "datetime"))

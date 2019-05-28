@@ -170,6 +170,8 @@ public class SyncManager {
         }
         // Cleanup should only happen once all other operations are finished
         allSyncOperations.forEach { cleanUpOperation.addDependency($0) }
+
+        downloadQueue.addOperation(cleanUpOperation)
     }
 
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {

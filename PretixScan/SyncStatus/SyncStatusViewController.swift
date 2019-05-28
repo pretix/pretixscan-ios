@@ -45,7 +45,6 @@ class SyncStatusViewController: UIViewController {
 
     @objc
     func syncDownloadStatusUpdate(_ notification: Notification) {
-        print("sync updated")
         let model: String = notification.userInfo?[SyncManager.NotificationKeys.model] as? String ?? "No Model"
         let loadedAmount = notification.userInfo?[SyncManager.NotificationKeys.loadedAmount] as? Int ?? 0
         let totalAmount = notification.userInfo?[SyncManager.NotificationKeys.totalAmount] as? Int ?? 0
