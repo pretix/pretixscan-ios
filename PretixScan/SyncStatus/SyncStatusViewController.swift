@@ -13,6 +13,12 @@ class SyncStatusViewController: UIViewController {
     @IBOutlet private weak var progressView: UIProgressView!
     private var updateTimer: Timer?
     private var previouslyLoadedAmounts = [String: Int]()
+    private lazy var dateFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.minute]
+        return formatter
+    }()
 
     private enum SyncStatus {
         case neverSynced
@@ -21,9 +27,7 @@ class SyncStatusViewController: UIViewController {
     }
     private var currentSyncStatus: SyncStatus = .neverSynced {
         didSet {
-            DispatchQueue.main.async {
-                self.updateStatusDisplay()
-            }
+            DispatchQueue.main.async { self.updateStatusDisplay() }
         }
     }
 
@@ -77,7 +81,14 @@ class SyncStatusViewController: UIViewController {
             let progress = Float(loaded) / Float(total)
             self.progressView.setProgress(progress, animated: true)
         case .syncEnded(let lastSyncDate):
-            self.detailLabel.text = "Syncing Done: \(lastSyncDate ?? Date())"
+            if let lastSyncDate = lastSyncDate {
+                let lastSyncTimeInterval = -lastSyncDate.timeIntervalSinceNow
+                let timeIntervalString = lastSyncTimeInterval < 60 ? "less than a minute ago" :
+                    "\(dateFormatter.string(from: lastSyncTimeInterval)!) ago"
+                detailLabel.text = "Last Sync \(timeIntervalString)"
+            } else {
+                detailLabel.text = "Syncing Done"
+            }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
