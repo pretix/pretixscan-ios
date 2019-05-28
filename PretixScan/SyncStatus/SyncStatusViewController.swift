@@ -9,8 +9,27 @@
 import UIKit
 
 class SyncStatusViewController: UIViewController {
-    @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet private weak var detailLabel: UILabel!
+    @IBOutlet private weak var progressView: UIProgressView!
+    private var updateTimer: Timer?
+    private var previouslyLoadedAmounts = [String: Int]()
+    private lazy var dateFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.minute]
+        return formatter
+    }()
+
+    private enum SyncStatus {
+        case neverSynced
+        case syncing(model: String, loaded: Int, total: Int)
+        case syncEnded(lastSyncDate: Date?)
+    }
+    private var currentSyncStatus: SyncStatus = .neverSynced {
+        didSet {
+            DispatchQueue.main.async { self.updateStatusDisplay() }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,27 +40,18 @@ class SyncStatusViewController: UIViewController {
                                                name: SyncManager.syncBeganNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncEnded(_:)),
                                                name: SyncManager.syncEndedNotification, object: nil)
+
+        updateTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in self.updateStatusDisplay() }
     }
 
     @objc
     func syncBegan(_ notification: Notification) {
-        DispatchQueue.main.async {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        }
     }
 
     @objc
     func syncEnded(_ notification: Notification) {
-        print("sync ended")
-        let lastSyncDate = notification.userInfo?[SyncManager.NotificationKeys.lastSyncDate] as? Date
-
-        DispatchQueue.main.async {
-            self.detailLabel.text = "Syncing Done: \(lastSyncDate ?? Date())"
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        }
+        currentSyncStatus = .syncEnded(lastSyncDate: notification.userInfo?[SyncManager.NotificationKeys.lastSyncDate] as? Date)
     }
-
-    var previouslyLoadedAmounts = [String: Int]()
 
     @objc
     func syncDownloadStatusUpdate(_ notification: Notification) {
@@ -58,10 +68,28 @@ class SyncStatusViewController: UIViewController {
             previouslyLoadedAmounts[model] = previouslyLoadedAmount + loadedAmount
         }
 
-        DispatchQueue.main.async {
-            self.detailLabel.text = "\(model) updated, added \(previouslyLoadedAmount + loadedAmount)/\(totalAmount)."
-            let progress = Float(previouslyLoadedAmount + loadedAmount) / Float(totalAmount)
+        currentSyncStatus = .syncing(model: model, loaded: previouslyLoadedAmount + loadedAmount, total: totalAmount)
+    }
+
+    private func updateStatusDisplay() {
+        switch currentSyncStatus {
+        case .neverSynced:
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        case .syncing(let model, let loaded, let total):
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            self.detailLabel.text = "\(model) updated, added \(loaded)/\(total)."
+            let progress = Float(loaded) / Float(total)
             self.progressView.setProgress(progress, animated: true)
+        case .syncEnded(let lastSyncDate):
+            if let lastSyncDate = lastSyncDate {
+                let lastSyncTimeInterval = -lastSyncDate.timeIntervalSinceNow
+                let timeIntervalString = lastSyncTimeInterval < 60 ? Localization.SyncStatusViewController.LessThanAMinute :
+                    "\(dateFormatter.string(from: lastSyncTimeInterval)!)"
+                detailLabel.text = String.localizedStringWithFormat(Localization.SyncStatusViewController.LastSyncXAgo, timeIntervalString)
+            } else {
+                detailLabel.text = Localization.SyncStatusViewController.SyncingDone
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
 }
