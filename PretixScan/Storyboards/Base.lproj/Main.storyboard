@@ -31,13 +31,13 @@
                                 </connections>
                             </containerView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pe6-kW-uIS">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <items/>
                             </toolbar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HfT-YN-00D">
-                                <rect key="frame" x="18" y="545" width="339" height="60"/>
+                                <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="imr-ZD-Apc"/>
+                                    <constraint firstAttribute="height" constant="40" id="imr-ZD-Apc"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="QsL-QO-AD4" kind="embed" id="pxQ-aq-4Id"/>
@@ -47,15 +47,16 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="pe6-kW-uIS" secondAttribute="trailing" id="0l0-y5-1HA"/>
-                            <constraint firstItem="HfT-YN-00D" firstAttribute="leading" secondItem="08w-Xa-JKK" secondAttribute="leading" constant="18" id="0mw-LF-Gxf"/>
+                            <constraint firstItem="HfT-YN-00D" firstAttribute="leading" secondItem="08w-Xa-JKK" secondAttribute="leading" id="0mw-LF-Gxf"/>
                             <constraint firstAttribute="bottom" secondItem="pe6-kW-uIS" secondAttribute="bottom" id="5wG-7f-srX"/>
-                            <constraint firstItem="pe6-kW-uIS" firstAttribute="top" secondItem="HfT-YN-00D" secondAttribute="bottom" constant="18" id="BHC-IA-U4f"/>
                             <constraint firstAttribute="bottom" secondItem="08w-Xa-JKK" secondAttribute="bottom" id="JmO-Bi-7dL"/>
+                            <constraint firstItem="HfT-YN-00D" firstAttribute="top" secondItem="pe6-kW-uIS" secondAttribute="top" id="Kx0-3f-fCO"/>
                             <constraint firstItem="08w-Xa-JKK" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="UpP-gq-biE"/>
+                            <constraint firstItem="BMQ-N5-fdF" firstAttribute="bottom" secondItem="HfT-YN-00D" secondAttribute="bottom" id="X2o-ra-Ne3"/>
                             <constraint firstItem="pe6-kW-uIS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZOx-U9-Z8M"/>
                             <constraint firstAttribute="trailing" secondItem="08w-Xa-JKK" secondAttribute="trailing" id="dmH-wo-Hgo"/>
                             <constraint firstItem="08w-Xa-JKK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qCw-xQ-8Co"/>
-                            <constraint firstItem="08w-Xa-JKK" firstAttribute="trailing" secondItem="HfT-YN-00D" secondAttribute="trailing" constant="18" id="zGQ-AC-63J"/>
+                            <constraint firstItem="08w-Xa-JKK" firstAttribute="trailing" secondItem="HfT-YN-00D" secondAttribute="trailing" id="zGQ-AC-63J"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BMQ-N5-fdF"/>
                     </view>
@@ -1120,46 +1121,39 @@
         <scene sceneID="xDZ-Nb-52v">
             <objects>
                 <viewController id="QsL-QO-AD4" customClass="SyncStatusViewController" customModule="pretixSCAN" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Q6L-cA-sdm">
-                        <rect key="frame" x="0.0" y="0.0" width="339" height="60"/>
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Q6L-cA-sdm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="X4t-1M-6gw">
-                                <rect key="frame" x="303" y="20" width="20" height="20"/>
-                            </activityIndicatorView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Gpe-tf-SPL">
-                                <rect key="frame" x="18" y="12" width="267" height="36"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="KRZ-Zy-MKs">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2.5"/>
+                            </progressView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Gpe-tf-SPL">
+                                <rect key="frame" x="18" y="12" width="339" height="16"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ri8-Go-UE1">
-                                        <rect key="frame" x="0.0" y="0.0" width="267" height="19.5"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4g-G7-Yqb">
-                                        <rect key="frame" x="0.0" y="19.5" width="267" height="16.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="J4g-G7-Yqb">
+                                        <rect key="frame" x="0.0" y="0.0" width="339" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Gpe-tf-SPL" secondAttribute="trailing" constant="18" id="0vy-VC-HYC"/>
                             <constraint firstItem="Gpe-tf-SPL" firstAttribute="top" secondItem="Q6L-cA-sdm" secondAttribute="top" constant="12" id="4vr-tz-gyO"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Gpe-tf-SPL" secondAttribute="bottom" constant="12" id="75p-Q7-2oj"/>
-                            <constraint firstItem="X4t-1M-6gw" firstAttribute="leading" secondItem="Gpe-tf-SPL" secondAttribute="trailing" constant="18" id="abr-ge-c24"/>
-                            <constraint firstAttribute="trailing" secondItem="X4t-1M-6gw" secondAttribute="trailing" constant="16" id="dyV-IE-fsa"/>
+                            <constraint firstItem="KRZ-Zy-MKs" firstAttribute="top" secondItem="Q6L-cA-sdm" secondAttribute="top" id="Jai-H0-cup"/>
+                            <constraint firstItem="KRZ-Zy-MKs" firstAttribute="leading" secondItem="Q6L-cA-sdm" secondAttribute="leading" id="Rcz-bs-Iq5"/>
+                            <constraint firstAttribute="trailing" secondItem="KRZ-Zy-MKs" secondAttribute="trailing" id="aLB-aC-l8h"/>
                             <constraint firstItem="Gpe-tf-SPL" firstAttribute="leading" secondItem="Q6L-cA-sdm" secondAttribute="leading" constant="18" id="pwV-Dh-lGr"/>
-                            <constraint firstItem="X4t-1M-6gw" firstAttribute="centerY" secondItem="Q6L-cA-sdm" secondAttribute="centerY" id="zm5-l9-tBv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Jhz-Kk-zes"/>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="X4t-1M-6gw" id="fW1-dp-vs5"/>
                         <outlet property="detailLabel" destination="J4g-G7-Yqb" id="hXv-5G-sGr"/>
-                        <outlet property="titleLabel" destination="ri8-Go-UE1" id="WXc-tZ-0ur"/>
+                        <outlet property="progressView" destination="KRZ-Zy-MKs" id="3D7-7f-9RF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3E6-UU-BZs" userLabel="First Responder" sceneMemberID="firstResponder"/>

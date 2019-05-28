@@ -46,20 +46,17 @@ import Foundation
 /// ```
 public class SyncManager {
     private let configStore: ConfigStore
-    private var syncTimer: Timer?
+    private let timeBetweenSyncs: TimeInterval = 5 * 60
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
-        syncTimer = Timer.scheduledTimer(
-            timeInterval: 5 * 60,
-            target: self, selector: #selector(beginSyncing),
-            userInfo: nil, repeats: true)
     }
 
     // MARK: - Notifications
     public static var syncBeganNotification: Notification.Name { return Notification.Name("SyncManagerSyncBegan") }
     public static var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
     public static var syncEndedNotification: Notification.Name { return Notification.Name("SyncManagerSyncEnded") }
+    public static var uploadStatusNotification: Notification.Name { return Notification.Name("SyncManagerUploadStatus") }
 
     /// Notifications sent out by SyncManager
     ///
@@ -128,7 +125,6 @@ public class SyncManager {
     }
 
     // MARK: - Queues
-    private lazy var downloadsInProgress: [String: Operation] = [:]
     private lazy var downloadQueue: OperationQueue = {
         var queue = OperationQueue()
         queue.name = "Download Queue"
@@ -136,7 +132,6 @@ public class SyncManager {
         return queue
     }()
 
-    private lazy var uploadsInProgress: [String: Operation] = [:]
     private lazy var uploadQeuue: OperationQueue = {
         var queue = OperationQueue()
         queue.name = "Upload Queue"
@@ -150,77 +145,33 @@ public class SyncManager {
     }
 
     private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
-        if downloadsInProgress[ItemCategory.stringName] == nil {
-            let downloader = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-            downloader.completionBlock = {
-                if downloader.isCancelled { return }
-                if let error = downloader.error { print(error) }
-                DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: downloader.model.stringName)
-                }
+        let itemCategories = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        let items = ItemsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        let subEvents = SubEventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        let fullOrders = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        let partialOrders = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        partialOrders.addDependency(fullOrders)
+
+        let allSyncOperations = [itemCategories, items, subEvents, fullOrders, partialOrders]
+        allSyncOperations.forEach { downloadQueue.addOperation($0) }
+
+        // Cleanup
+        let cleanUpOperation = BlockOperation {
+            // Send out a Notification Raven to inform every one
+            NotificationCenter.default.post(
+                name: SyncManager.syncEndedNotification,
+                object: self,
+                userInfo: [SyncManager.NotificationKeys.lastSyncDate: Date()])
+
+            // Queue in the next Sync in 5 minutes
+            DispatchQueue.main.asyncAfter(deadline: .now() + self.timeBetweenSyncs) {
+                self.beginSyncing()
             }
-
-            downloadsInProgress[downloader.model.stringName] = downloader
-            downloadQueue.addOperation(downloader)
         }
+        // Cleanup should only happen once all other operations are finished
+        allSyncOperations.forEach { cleanUpOperation.addDependency($0) }
 
-        if downloadsInProgress[Item.stringName] == nil {
-            let downloader = ItemsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-            downloader.completionBlock = {
-                if downloader.isCancelled { return }
-                if let error = downloader.error { print(error) }
-                DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: downloader.model.stringName)
-                }
-            }
-
-            downloadsInProgress[downloader.model.stringName] = downloader
-            downloadQueue.addOperation(downloader)
-        }
-
-        if downloadsInProgress[SubEvent.stringName] == nil {
-            let downloader = SubEventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-            downloader.completionBlock = {
-                if downloader.isCancelled { return }
-                if let error = downloader.error { print(error) }
-                DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: downloader.model.stringName)
-                }
-            }
-
-            downloadsInProgress[downloader.model.stringName] = downloader
-            downloadQueue.addOperation(downloader)
-        }
-
-        let fullOrderKey = Order.stringName + "-full"
-        if downloadsInProgress[fullOrderKey] == nil {
-            let downloader = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-            downloader.completionBlock = {
-                if downloader.isCancelled { return }
-                if let error = downloader.error { print(error) }
-                DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: fullOrderKey)
-                }
-            }
-
-            downloadsInProgress[fullOrderKey] = downloader
-            downloadQueue.addOperation(downloader)
-        }
-
-        if downloadsInProgress[Order.stringName] == nil {
-            let downloader = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-            downloader.completionBlock = {
-                if downloader.isCancelled { return }
-                if let error = downloader.error { print(error) }
-                DispatchQueue.main.async {
-                    self.downloadsInProgress.removeValue(forKey: Order.stringName)
-                }
-            }
-
-            downloadsInProgress[Order.stringName] = downloader
-            downloadQueue.addOperation(downloader)
-        }
-
+        downloadQueue.addOperation(cleanUpOperation)
     }
 
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
