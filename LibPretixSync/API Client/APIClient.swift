@@ -118,10 +118,14 @@ public extension APIClient {
                 allowedCharacterSet.remove("+")
                 queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
             }
-            let isFirstGet = lastUpdated == nil
-            if isFirstGet {
-                queryItems.append(URLQueryItem(name: "ordering", value: "datetime_desc"))
+            
+            let ifFullFetch = lastUpdated == nil
+            if ifFullFetch {
+                queryItems.append(URLQueryItem(name: "ordering", value: "datetime"))
+            } else {
+                queryItems.append(URLQueryItem(name: "ordering", value: "-last_modified"))
             }
+
             for filter in filters {
                 queryItems.append(URLQueryItem(name: filter.key, value: filter.value))
             }
