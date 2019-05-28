@@ -147,6 +147,7 @@ class PartialDownloader<T: Model>: APIClientOperation {
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
+                let isFirstPage = pagedList.previous == nil
 
                 // Notify Listeners
                 NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
@@ -158,9 +159,12 @@ class PartialDownloader<T: Model>: APIClientOperation {
                 // Store Data
                 self.dataStore.store(pagedList.results, for: self.event)
 
+                if isFirstPage, let generatedAt = pagedList.generatedAt {
+                    self.dataStore.setLastSyncTime(generatedAt, of: T.self, in: self.event)
+                }
+
                 if isLastPage {
                     // We are done
-                    self.dataStore.setLastSyncTime(pagedList.generatedAt ?? "", of: T.self, in: self.event)
                     self.completeOperation()
                 }
             case .failure(let error):

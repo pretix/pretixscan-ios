@@ -114,8 +114,6 @@ public extension APIClient {
             var queryItems = [URLQueryItem]()
             queryItems.append(URLQueryItem(name: "page", value: "\(page)"))
             if lastUpdated != nil {
-                var allowedCharacterSet = CharacterSet.urlQueryAllowed
-                allowedCharacterSet.remove("+")
                 queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
             }
 
@@ -133,11 +131,12 @@ public extension APIClient {
 
             // Fix a missing feature in URLComponents where the "+" is not encoded correctly
             // https://www.djackson.org/why-we-do-not-use-urlcomponents/
-            urlComponents!.percentEncodedQuery = urlComponents!.percentEncodedQuery!
+            let percentEncodedURLQuery = urlComponents!.percentEncodedQuery!
                 // manually encode + into percent encoding
                 .replacingOccurrences(of: "+", with: "%2B")
                 // optional, probably unnecessary: convert percent-encoded spaces into +
                 .replacingOccurrences(of: "%20", with: "+")
+            urlComponents!.percentEncodedQuery = percentEncodedURLQuery
 
             guard let urlComponentsURL = urlComponents?.url else {
                 throw APIError.couldNotCreateURL
