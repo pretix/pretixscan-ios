@@ -118,4 +118,11 @@ extension OrderPosition: FMDBModel {
             price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret, pseudonymizationId: pseudonymizationId,
             checkins: newCheckIns)
     }
+
+    func adding(item: Item) -> OrderPosition {
+        return OrderPosition(
+            identifier: identifier, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item, variation: variation,
+            price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret, pseudonymizationId: pseudonymizationId,
+            checkins: checkins)
+    }
 }
