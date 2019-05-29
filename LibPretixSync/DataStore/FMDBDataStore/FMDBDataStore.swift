@@ -181,7 +181,6 @@ public class FMDBDataStore: DataStore {
                 while result.next() {
                     if let foundItem = Item.from(result: result, in: database) {
                         item = foundItem
-                        return
                     }
                 }
             }
