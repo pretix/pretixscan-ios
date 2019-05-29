@@ -143,6 +143,7 @@ public class FMDBDataStore: DataStore {
         var foundOrderPositions = [OrderPosition]()
         for orderPosition in searchResults {
             let populatedOrderPosition = orderPosition.adding(checkIns: getCheckIns(for: orderPosition, in: event))
+                .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
             foundOrderPositions.append(populatedOrderPosition)
         }
 

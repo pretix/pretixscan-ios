@@ -119,7 +119,7 @@ extension OrderPosition: FMDBModel {
             checkins: newCheckIns)
     }
 
-    func adding(item: Item) -> OrderPosition {
+    func adding(item: Item?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item, variation: variation,
             price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret, pseudonymizationId: pseudonymizationId,
