@@ -36,7 +36,24 @@ public class OnlineTicketValidator: TicketValidator {
 
     /// Search all OrderPositions within a CheckInList
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        configStore.apiClient?.getSearchResults(query: query, completionHandler: completionHandler)
+        configStore.apiClient?.getSearchResults(query: query) { orderPositions, error in
+            guard let orderPositions = orderPositions else {
+                completionHandler(nil, error)
+                return
+            }
+
+            var enhancedOrderPositions = [OrderPosition]()
+            for orderPosition in orderPositions {
+                if let event =  self.configStore.event,
+                    let item = self.configStore.dataStore?.getItem(by: orderPosition.itemIdentifier, in: event) {
+                    enhancedOrderPositions.append(orderPosition.adding(item: item))
+                } else {
+                    enhancedOrderPositions.append(orderPosition)
+                }
+
+            }
+            completionHandler(enhancedOrderPositions, error)
+        }
     }
 
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
