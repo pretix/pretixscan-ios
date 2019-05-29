@@ -81,7 +81,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             return
         }
 
-        productNameLabel.text = "\(redemptionResponse.position?.itemIdentifier ?? 0)"
+        productNameLabel.text = "\(redemptionResponse.position?.item?.name.description ?? "🎟")"
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
         orderIDLabel.text = redemptionResponse.position?.order
 

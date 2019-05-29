@@ -209,6 +209,7 @@ public class FMDBDataStore: DataStore {
             }
 
             let orderPositionWithCheckins = orderPosition.adding(checkIns: checkIns)
+                .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
 
             // Check for previous check ins
             if checkIns.count > 0 {
