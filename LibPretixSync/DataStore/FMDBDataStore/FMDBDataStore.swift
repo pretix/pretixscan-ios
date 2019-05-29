@@ -169,6 +169,27 @@ public class FMDBDataStore: DataStore {
         return checkIns
     }
 
+    public func getItem(by identifier: Identifier, in event: Event) -> Item? {
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        var item: Item?
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(Item.searchByIdentifierQuery, values: [identifier]) {
+                while result.next() {
+                    if let foundItem = Item.from(result: result, in: database) {
+                        item = foundItem
+                        return
+                    }
+                }
+            }
+
+        }
+
+        return item
+    }
+
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
