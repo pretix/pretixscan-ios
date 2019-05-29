@@ -40,36 +40,39 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
     }
 
+    fileprivate func showError() {
+        resetToEmpty()
+
+        productNameLabel.text = self.error?.localized
+
+        if let apiError = error as? APIError {
+            switch apiError {
+            case .notFound:
+                productNameLabel.text = Localization.Errors.TicketNotFound
+            default:
+                productNameLabel.text = self.error?.localized
+            }
+        }
+
+        let newBackgroundColor = Color.error
+        iconLabel.text = Icon.error
+        ticketStatusLabel.text = Localization.TicketStatusViewController.Error
+        productNameLabel.text = self.error?.localized
+        appCoordinator?.performHapticNotification(ofType: .error)
+
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
+            self.backgroundColorView.backgroundColor = newBackgroundColor
+            self.view.layoutIfNeeded()
+        })
+    }
+
     private func updateMain() {
         if configuration != nil, redemptionResponse == nil, beganRedeeming == false {
             redeem()
         }
 
         guard error == nil else {
-            resetToEmpty()
-
-            productNameLabel.text = self.error?.localized
-
-            if let apiError = error as? APIError {
-                switch apiError {
-                case .notFound:
-                    productNameLabel.text = Localization.Errors.TicketNotFound
-                default:
-                    productNameLabel.text = self.error?.localized
-                }
-            }
-
-            let newBackgroundColor = Color.error
-            iconLabel.text = Icon.error
-            ticketStatusLabel.text = Localization.TicketStatusViewController.Error
-            productNameLabel.text = self.error?.localized
-            appCoordinator?.performHapticNotification(ofType: .error)
-
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
-                self.backgroundColorView.backgroundColor = newBackgroundColor
-                self.view.layoutIfNeeded()
-            })
-
+            showError()
             return
         }
 
