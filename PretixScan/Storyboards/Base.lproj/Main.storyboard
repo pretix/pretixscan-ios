@@ -1131,7 +1131,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Gpe-tf-SPL">
                                 <rect key="frame" x="18" y="12" width="339" height="16"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="J4g-G7-Yqb">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="J4g-G7-Yqb">
                                         <rect key="frame" x="0.0" y="0.0" width="339" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1150,6 +1150,7 @@
                             <constraint firstAttribute="trailing" secondItem="KRZ-Zy-MKs" secondAttribute="trailing" id="aLB-aC-l8h"/>
                             <constraint firstItem="Gpe-tf-SPL" firstAttribute="leading" secondItem="Q6L-cA-sdm" secondAttribute="leading" constant="18" id="pwV-Dh-lGr"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="BaX-Zm-Mwc"/>
                     </view>
                     <connections>
                         <outlet property="detailLabel" destination="J4g-G7-Yqb" id="hXv-5G-sGr"/>
