@@ -5,6 +5,7 @@
 //  Created by Daniel Jilg on 14.03.19.
 //  Copyright © 2019 rami.io. All rights reserved.
 //
+// swiftlint:disable file_length
 
 import Foundation
 
@@ -110,34 +111,7 @@ public extension APIClient {
                 url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.stringName)/")
             }
 
-            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            var queryItems = [URLQueryItem]()
-            queryItems.append(URLQueryItem(name: "page", value: "\(page)"))
-            if lastUpdated != nil {
-                queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
-            }
-
-            let ifFullFetch = lastUpdated == nil
-            if ifFullFetch {
-                queryItems.append(URLQueryItem(name: "ordering", value: "datetime"))
-            } else {
-                queryItems.append(URLQueryItem(name: "ordering", value: "-last_modified"))
-            }
-
-            for filter in filters {
-                queryItems.append(URLQueryItem(name: filter.key, value: filter.value))
-            }
-            urlComponents?.queryItems = queryItems
-
-            // Fix a missing feature in URLComponents where the "+" is not encoded correctly
-            // https://www.djackson.org/why-we-do-not-use-urlcomponents/
-            let percentEncodedURLQuery = urlComponents!.percentEncodedQuery!
-                // manually encode + into percent encoding
-                .replacingOccurrences(of: "+", with: "%2B")
-                // optional, probably unnecessary: convert percent-encoded spaces into +
-                .replacingOccurrences(of: "%20", with: "+")
-            urlComponents!.percentEncodedQuery = percentEncodedURLQuery
-
+            let urlComponents = createURLComponents(url: url, page: page, lastUpdated: lastUpdated, filters: filters)
             guard let urlComponentsURL = urlComponents?.url else {
                 throw APIError.couldNotCreateURL
             }
@@ -175,6 +149,38 @@ public extension APIClient {
             completionHandler(.failure(error))
             return nil
         }
+    }
+
+    private func createURLComponents(url: URL, page: Int, lastUpdated: String?, filters: [String: String] = [:]) -> URLComponents? {
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        var queryItems = [URLQueryItem]()
+        queryItems.append(URLQueryItem(name: "page", value: "\(page)"))
+        if lastUpdated != nil {
+            queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
+        }
+
+        let isFullFetch = lastUpdated == nil
+        if isFullFetch {
+            queryItems.append(URLQueryItem(name: "ordering", value: "datetime"))
+        } else {
+            queryItems.append(URLQueryItem(name: "ordering", value: "-last_modified"))
+        }
+
+        for filter in filters {
+            queryItems.append(URLQueryItem(name: filter.key, value: filter.value))
+        }
+        urlComponents?.queryItems = queryItems
+
+        // Fix a missing feature in URLComponents where the "+" is not encoded correctly
+        // https://www.djackson.org/why-we-do-not-use-urlcomponents/
+        let percentEncodedURLQuery = urlComponents!.percentEncodedQuery!
+            // manually encode + into percent encoding
+            .replacingOccurrences(of: "+", with: "%2B")
+            // optional, probably unnecessary: convert percent-encoded spaces into +
+            .replacingOccurrences(of: "%20", with: "+")
+        urlComponents!.percentEncodedQuery = percentEncodedURLQuery
+
+        return urlComponents
     }
 }
 
