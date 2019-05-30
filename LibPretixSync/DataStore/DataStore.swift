@@ -34,6 +34,8 @@ public protocol DataStore: class {
 
     func getItem(by identifier: Identifier, in event: Event) -> Item?
 
+    func getOrder(by code: String, in event: Event) -> Order?
+
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found

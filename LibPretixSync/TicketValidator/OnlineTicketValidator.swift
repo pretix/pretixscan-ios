@@ -46,7 +46,10 @@ public class OnlineTicketValidator: TicketValidator {
             for orderPosition in orderPositions {
                 if let event =  self.configStore.event,
                     let item = self.configStore.dataStore?.getItem(by: orderPosition.itemIdentifier, in: event) {
-                    enhancedOrderPositions.append(orderPosition.adding(item: item))
+                    enhancedOrderPositions.append(
+                        orderPosition.adding(item: item)
+                            .adding(order: self.configStore.dataStore?.getOrder(by: orderPosition.orderCode, in: event))
+                    )
                 } else {
                     enhancedOrderPositions.append(orderPosition)
                 }
@@ -62,23 +65,20 @@ public class OnlineTicketValidator: TicketValidator {
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { redemptionResponse, error in
-            guard let redemptionResponse = redemptionResponse else {
+            guard var redemptionResponse = redemptionResponse else {
                 completionHandler(nil, error)
                 return
             }
 
-            guard let position = redemptionResponse.position else {
+            guard var position = redemptionResponse.position else {
                 completionHandler(redemptionResponse, error)
                 return
             }
 
-            if let event = self.configStore.event,
-                let item = self.configStore.dataStore?.getItem(by: position.itemIdentifier, in: event) {
-                let newOrderPosition = position.adding(item: item)
-                let newRedemptionResponse = RedemptionResponse(
-                    status: redemptionResponse.status, errorReason: redemptionResponse.errorReason, position: newOrderPosition)
-                completionHandler(newRedemptionResponse, error)
-                return
+            if let event = self.configStore.event {
+                position = position.adding(order: self.configStore.dataStore?.getOrder(by: position.orderCode, in: event))
+                position = position.adding(item: self.configStore.dataStore?.getItem(by: position.itemIdentifier, in: event))
+                redemptionResponse.position = position
             }
 
             completionHandler(redemptionResponse, error)
