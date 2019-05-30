@@ -36,7 +36,24 @@ public class OnlineTicketValidator: TicketValidator {
 
     /// Search all OrderPositions within a CheckInList
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        configStore.apiClient?.getSearchResults(query: query, completionHandler: completionHandler)
+        configStore.apiClient?.getSearchResults(query: query) { orderPositions, error in
+            guard let orderPositions = orderPositions else {
+                completionHandler(nil, error)
+                return
+            }
+
+            var enhancedOrderPositions = [OrderPosition]()
+            for orderPosition in orderPositions {
+                if let event =  self.configStore.event,
+                    let item = self.configStore.dataStore?.getItem(by: orderPosition.itemIdentifier, in: event) {
+                    enhancedOrderPositions.append(orderPosition.adding(item: item))
+                } else {
+                    enhancedOrderPositions.append(orderPosition)
+                }
+
+            }
+            completionHandler(enhancedOrderPositions, error)
+        }
     }
 
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
@@ -44,7 +61,28 @@ public class OnlineTicketValidator: TicketValidator {
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, completionHandler: completionHandler)
+        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { redemptionResponse, error in
+            guard let redemptionResponse = redemptionResponse else {
+                completionHandler(nil, error)
+                return
+            }
+
+            guard let position = redemptionResponse.position else {
+                completionHandler(redemptionResponse, error)
+                return
+            }
+
+            if let event = self.configStore.event,
+                let item = self.configStore.dataStore?.getItem(by: position.itemIdentifier, in: event) {
+                let newOrderPosition = position.adding(item: item)
+                let newRedemptionResponse = RedemptionResponse(
+                    status: redemptionResponse.status, errorReason: redemptionResponse.errorReason, position: newOrderPosition)
+                completionHandler(newRedemptionResponse, error)
+                return
+            }
+
+            completionHandler(redemptionResponse, error)
+        }
     }
 
     public func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {

@@ -32,6 +32,8 @@ public protocol DataStore: class {
     // Return all `OrderPosition`s matching the given query
     func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition]
 
+    func getItem(by identifier: Identifier, in event: Event) -> Item?
+
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found

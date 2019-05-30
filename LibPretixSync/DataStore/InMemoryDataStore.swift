@@ -59,12 +59,8 @@ public class InMemoryDataStore: DataStore {
     }
 
     // MARK: - Retrieving
-    public func getEvents() -> [Event] {
-        return Array(events)
-    }
-
-    public func getCheckInLists(for event: Event) -> [CheckInList] {
-        return Array(dataStore(for: event).checkInLists)
+    public func getItem(by identifier: Identifier, in event: Event) -> Item? {
+        return nil
     }
 
     public func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition] {

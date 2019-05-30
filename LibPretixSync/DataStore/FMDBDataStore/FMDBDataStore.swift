@@ -143,6 +143,7 @@ public class FMDBDataStore: DataStore {
         var foundOrderPositions = [OrderPosition]()
         for orderPosition in searchResults {
             let populatedOrderPosition = orderPosition.adding(checkIns: getCheckIns(for: orderPosition, in: event))
+                .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
             foundOrderPositions.append(populatedOrderPosition)
         }
 
@@ -169,6 +170,26 @@ public class FMDBDataStore: DataStore {
         return checkIns
     }
 
+    public func getItem(by identifier: Identifier, in event: Event) -> Item? {
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        var item: Item?
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(Item.searchByIdentifierQuery, values: [identifier]) {
+                while result.next() {
+                    if let foundItem = Item.from(result: result, in: database) {
+                        item = foundItem
+                    }
+                }
+            }
+
+        }
+
+        return item
+    }
+
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
@@ -187,6 +208,7 @@ public class FMDBDataStore: DataStore {
             }
 
             let orderPositionWithCheckins = orderPosition.adding(checkIns: checkIns)
+                .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
 
             // Check for previous check ins
             if checkIns.count > 0 {

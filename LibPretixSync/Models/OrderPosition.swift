@@ -23,7 +23,10 @@ public struct OrderPosition: Model {
     public let positionid: Identifier
 
     /// ID of the purchased item
-    public let item: Identifier
+    public let itemIdentifier: Identifier
+
+    /// The purchased `Item`. (May be nil if not pre-fetched by the database). Fall back on `itemIdentifier` in that case)
+    public var item: Item?
 
     /// ID of the purchased variation (if any)
     public let variation: Identifier?
@@ -55,7 +58,7 @@ public struct OrderPosition: Model {
         case identifier = "id"
         case order
         case positionid
-        case item
+        case itemIdentifier = "item"
         case variation
         case price
         case attendeeName = "attendee_name"
