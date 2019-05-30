@@ -73,7 +73,7 @@ public class InMemoryDataStore: DataStore {
                     return (
                         (orderPosition.attendeeName ?? "").contains(query) ||
                         (orderPosition.attendeeEmail ?? "").contains(query) ||
-                        orderPosition.order.contains(query)
+                        orderPosition.orderCode.contains(query)
                     )
                 })
             }
