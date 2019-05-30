@@ -33,6 +33,7 @@ class SearchResultTableViewCell: UITableViewCell {
         secretLabel.text = orderPosition.secret
         statusLabel.text = orderPosition.checkins.count > 0 ?
             Localization.SearchResultsTableViewCell.Redeemed : Localization.SearchResultsTableViewCell.Valid
+        statusLabel.text = "\(orderPosition.order?.status.rawValue ?? "") & \(statusLabel.text ?? "") "
         statusBackgroundView.backgroundColor = orderPosition.checkins.count > 0 ? Color.warning : Color.okay
     }
 }
