@@ -256,7 +256,10 @@ public extension APIClient {
                 "/checkinlists/\(checkInList.identifier)/positions/")
 
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-            urlComponents?.queryItems = [URLQueryItem(name: "search", value: query)]
+            urlComponents?.queryItems = [
+                URLQueryItem(name: "search", value: query),
+                URLQueryItem(name: "ignore_status", value: "true")
+            ]
             guard let urlComponentsURL = urlComponents?.url else {
                 throw APIError.couldNotCreateURL
             }
