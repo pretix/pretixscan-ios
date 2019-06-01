@@ -132,6 +132,7 @@
 		DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF121227AFC4600BCAF82 /* SyncStatusViewController.swift */; };
 		DCEEF12A227DBD9F00BCAF82 /* SyncOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
+		DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF8A44E22A267910020E0DE /* LocalizedEnums.swift */; };
 		E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -258,6 +259,7 @@
 		DCEEF121227AFC4600BCAF82 /* SyncStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatusViewController.swift; sourceTree = "<group>"; };
 		DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncOperations.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
+		DCF8A44E22A267910020E0DE /* LocalizedEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedEnums.swift; sourceTree = "<group>"; };
 		FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -445,6 +447,7 @@
 			children = (
 				DCAAFF39223970090059C000 /* Localization.swift */,
 				DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */,
+				DCF8A44E22A267910020E0DE /* LocalizedEnums.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -656,7 +659,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DC07357122392474008326F7 /* Build configuration list for PBXProject "pretixSCAN" */;
+			buildConfigurationList = DC07357122392474008326F7 /* Build configuration list for PBXProject "PretixScan" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -838,6 +841,7 @@
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				DC8467AE225BCA6A0013F647 /* Order.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
+				DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */,
 				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
 				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
@@ -1169,7 +1173,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DC07357122392474008326F7 /* Build configuration list for PBXProject "pretixSCAN" */ = {
+		DC07357122392474008326F7 /* Build configuration list for PBXProject "PretixScan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC07359122392476008326F7 /* Debug */,

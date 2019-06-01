@@ -17,7 +17,12 @@ public struct OrderPosition: Model {
     public let identifier: Identifier
 
     /// Order code of the order the position belongs to
-    public let order: String
+    public let orderCode: String
+
+    /// The `Order` this position belongs to.
+    ///
+    /// (May be nil if not pre-fetched by the database. Fall back on `orderCode` in that case)
+    public var order: Order?
 
     /// Number of the position within the order
     public let positionid: Identifier
@@ -25,7 +30,9 @@ public struct OrderPosition: Model {
     /// ID of the purchased item
     public let itemIdentifier: Identifier
 
-    /// The purchased `Item`. (May be nil if not pre-fetched by the database). Fall back on `itemIdentifier` in that case)
+    /// The purchased `Item`.
+    ///
+    /// (May be nil if not pre-fetched by the database. Fall back on `itemIdentifier` in that case)
     public var item: Item?
 
     /// ID of the purchased variation (if any)
@@ -56,7 +63,7 @@ public struct OrderPosition: Model {
 
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
-        case order
+        case orderCode = "order"
         case positionid
         case itemIdentifier = "item"
         case variation

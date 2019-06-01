@@ -15,7 +15,7 @@ import Foundation
 public struct RedemptionResponse: Codable, Equatable {
     public let status: Status
     public let errorReason: ErrorReason?
-    public let position: OrderPosition?
+    public var position: OrderPosition?
 
     public enum Status: String, Codable {
         case redeemed = "ok"

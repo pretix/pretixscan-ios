@@ -63,6 +63,10 @@ public class InMemoryDataStore: DataStore {
         return nil
     }
 
+    public func getOrder(by code: String, in event: Event) -> Order? {
+        return nil
+    }
+
     public func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition] {
         var searchResult = [OrderPosition]()
         for order in dataStore(for: event).orders {
@@ -73,7 +77,7 @@ public class InMemoryDataStore: DataStore {
                     return (
                         (orderPosition.attendeeName ?? "").contains(query) ||
                         (orderPosition.attendeeEmail ?? "").contains(query) ||
-                        orderPosition.order.contains(query)
+                        orderPosition.orderCode.contains(query)
                     )
                 })
             }

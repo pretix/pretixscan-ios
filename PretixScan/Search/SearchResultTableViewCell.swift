@@ -28,11 +28,12 @@ class SearchResultTableViewCell: UITableViewCell {
         }
 
         orderCodeLabel.text = "\(orderPosition.attendeeName ?? "--")"
-        orderIDLabel.text = orderPosition.order
+        orderIDLabel.text = orderPosition.orderCode
         ticketType.text = "\(orderPosition.item?.name.description ?? "\(orderPosition.itemIdentifier)")"
         secretLabel.text = orderPosition.secret
         statusLabel.text = orderPosition.checkins.count > 0 ?
             Localization.SearchResultsTableViewCell.Redeemed : Localization.SearchResultsTableViewCell.Valid
+        statusLabel.text = "\(orderPosition.order?.status.localizedDescription() ?? "") & \(statusLabel.text ?? "") "
         statusBackgroundView.backgroundColor = orderPosition.checkins.count > 0 ? Color.warning : Color.okay
     }
 }

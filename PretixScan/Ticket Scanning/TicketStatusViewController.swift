@@ -83,7 +83,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
         productNameLabel.text = "\(redemptionResponse.position?.item?.name.description ?? "🎟")"
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
-        orderIDLabel.text = redemptionResponse.position?.order
+        orderIDLabel.text = "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
 
         var newBackgroundColor = Color.grayBackground
         self.activityIndicator.stopAnimating()
