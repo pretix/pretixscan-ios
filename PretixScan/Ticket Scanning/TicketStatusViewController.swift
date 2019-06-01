@@ -31,6 +31,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     @IBOutlet private weak var attendeeNameLabel: UILabel!
     @IBOutlet private weak var orderIDLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var blinkerView: BlinkerView!
 
     // MARK: - Updating
     private func update() {
@@ -81,37 +82,29 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             return
         }
 
+        let needsAttention = (redemptionResponse.position?.order?.checkInAttention == true)
+            || (redemptionResponse.position?.item?.checkInAttention == true)
+
         productNameLabel.text = "\(redemptionResponse.position?.item?.name.description ?? "🎟")"
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
-        orderIDLabel.text = "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
+        orderIDLabel.text =
+        "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
 
         var newBackgroundColor = Color.grayBackground
+        blinkerView.isHidden = true
         self.activityIndicator.stopAnimating()
 
         switch redemptionResponse.status {
         case .redeemed:
             newBackgroundColor = Color.okay
-            iconLabel.text = Icon.okay
-            ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
-            appCoordinator?.performHapticNotification(ofType: .success)
+            updateToRedeemed(needsAttention: needsAttention)
+
         case .incomplete:
             newBackgroundColor = Color.warning
-            iconLabel.text = Icon.warning
-            ticketStatusLabel.text = Localization.TicketStatusViewController.IncompleteInformation
-            appCoordinator?.performHapticNotification(ofType: .warning)
+            updateToIncomplete()
+
         case .error:
-            if redemptionResponse.errorReason == .alreadyRedeemed {
-                newBackgroundColor = Color.warning
-                iconLabel.text = Icon.warning
-                ticketStatusLabel.text = Localization.TicketStatusViewController.TicketAlreadyRedeemed
-                appCoordinator?.performHapticNotification(ofType: .warning)
-            } else {
-                newBackgroundColor = Color.error
-                iconLabel.text = Icon.error
-                ticketStatusLabel.text = Localization.TicketStatusViewController.InvalidTicket
-                productNameLabel.text = redemptionResponse.errorReason.map { $0.rawValue }
-                appCoordinator?.performHapticNotification(ofType: .error)
-            }
+            newBackgroundColor = updateToError(redemptionResponse)
         }
 
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
@@ -151,6 +144,43 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 }
             }
         }
+    }
+
+    private func updateToRedeemed(needsAttention: Bool) {
+        iconLabel.text = Icon.okay
+        ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+        appCoordinator?.performHapticNotification(ofType: .success)
+
+        if needsAttention {
+            blinkerView.isHidden = false
+            ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+            iconLabel.text = Icon.attention
+            appCoordinator?.performHapticNotification(ofType: .warning)
+        }
+    }
+
+    private func updateToIncomplete() {
+        iconLabel.text = Icon.warning
+        ticketStatusLabel.text = Localization.TicketStatusViewController.IncompleteInformation
+        appCoordinator?.performHapticNotification(ofType: .warning)
+    }
+
+    private func updateToError(_ redemptionResponse: RedemptionResponse) -> UIColor {
+        var newBackgroundColor = UIColor.blue
+        if redemptionResponse.errorReason == .alreadyRedeemed {
+            newBackgroundColor = Color.warning
+            iconLabel.text = Icon.warning
+            ticketStatusLabel.text = Localization.TicketStatusViewController.TicketAlreadyRedeemed
+            appCoordinator?.performHapticNotification(ofType: .warning)
+        } else {
+            newBackgroundColor = Color.error
+            iconLabel.text = Icon.error
+            ticketStatusLabel.text = Localization.TicketStatusViewController.InvalidTicket
+            productNameLabel.text = redemptionResponse.errorReason.map { $0.rawValue }
+            appCoordinator?.performHapticNotification(ofType: .error)
+        }
+
+        return newBackgroundColor
     }
 
     // MARK: - View Lifecycle

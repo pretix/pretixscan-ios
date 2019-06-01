@@ -14,4 +14,5 @@ struct Icon {
     static let warning = ""
     static let okay = ""
     static let loading = ""
+    static let attention = ""
 }

@@ -22,6 +22,7 @@ struct Localization {
         static let InvalidTicket = NSLocalizedString("Invalid Ticket", comment: "")
         static let Error = NSLocalizedString("Error", comment: "")
         static let IncompleteInformation = NSLocalizedString("Incomplete Information", comment: "")
+        static let NeedsAttention = NSLocalizedString("Valid Ticket, but needs attention", comment: "")
     }
 
     struct WelcomeViewController {

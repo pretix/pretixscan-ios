@@ -133,6 +133,7 @@
 		DCEEF12A227DBD9F00BCAF82 /* SyncOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */; };
 		DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF6E35223925EF009E7078 /* ConfigStore.swift */; };
 		DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF8A44E22A267910020E0DE /* LocalizedEnums.swift */; };
+		DCF8A45122A26C5E0020E0DE /* BlinkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */; };
 		E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -260,6 +261,7 @@
 		DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncOperations.swift; sourceTree = "<group>"; };
 		DCEF6E35223925EF009E7078 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 		DCF8A44E22A267910020E0DE /* LocalizedEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedEnums.swift; sourceTree = "<group>"; };
+		DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkerView.swift; sourceTree = "<group>"; };
 		FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -409,6 +411,7 @@
 			children = (
 				DCB35B9A2249402300860385 /* TicketStatusViewController.swift */,
 				DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */,
+				DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */,
 			);
 			path = "Ticket Scanning";
 			sourceTree = "<group>";
@@ -850,6 +853,7 @@
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
+				DCF8A45122A26C5E0020E0DE /* BlinkerView.swift in Sources */,
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
 				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,

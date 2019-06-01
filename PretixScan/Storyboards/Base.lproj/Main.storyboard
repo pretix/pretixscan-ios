@@ -123,6 +123,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hin-1O-uRs">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="366"/>
                                 <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHE-AY-7kO" customClass="BlinkerView" customModule="pretixSCAN" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="366"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-ON-nVd">
                                         <rect key="frame" x="20" y="80" width="260" height="197.5"/>
                                         <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="80"/>
@@ -149,11 +153,15 @@
                                     <constraint firstItem="8LH-ON-nVd" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="9NE-nK-3UX"/>
                                     <constraint firstItem="Rcg-Oi-qF2" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="9gI-K5-oxO"/>
                                     <constraint firstItem="8LH-ON-nVd" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="top" constant="80" id="9st-1n-2KA"/>
+                                    <constraint firstItem="gHE-AY-7kO" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" id="EMP-5c-Rdb"/>
                                     <constraint firstAttribute="trailing" secondItem="8LH-ON-nVd" secondAttribute="trailing" constant="20" id="Jjz-QW-y0F"/>
                                     <constraint firstItem="Rcg-Oi-qF2" firstAttribute="top" secondItem="8LH-ON-nVd" secondAttribute="bottom" constant="14.5" id="Luu-i6-0xa"/>
                                     <constraint firstAttribute="trailing" secondItem="Rcg-Oi-qF2" secondAttribute="trailing" constant="20" id="cQ5-57-AJd"/>
+                                    <constraint firstAttribute="bottom" secondItem="gHE-AY-7kO" secondAttribute="bottom" id="k8o-fM-Hn4"/>
+                                    <constraint firstItem="gHE-AY-7kO" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="top" id="nzZ-xN-X4f"/>
                                     <constraint firstItem="hTu-Kg-YZG" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="rVm-m4-dFt"/>
                                     <constraint firstItem="hTu-Kg-YZG" firstAttribute="top" secondItem="Rcg-Oi-qF2" secondAttribute="bottom" id="snu-pN-VlS"/>
+                                    <constraint firstAttribute="trailing" secondItem="gHE-AY-7kO" secondAttribute="trailing" id="yYv-3E-TlC"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -184,6 +192,7 @@
                         <outlet property="activityIndicator" destination="TVc-eH-wzS" id="mkk-PW-kdP"/>
                         <outlet property="attendeeNameLabel" destination="ArE-vk-H54" id="yy8-Bz-nZL"/>
                         <outlet property="backgroundColorView" destination="hin-1O-uRs" id="QiY-LE-qKn"/>
+                        <outlet property="blinkerView" destination="gHE-AY-7kO" id="6B3-vb-WZM"/>
                         <outlet property="iconLabel" destination="8LH-ON-nVd" id="55e-j1-4Q1"/>
                         <outlet property="orderIDLabel" destination="4Xn-UT-Ort" id="k4R-jW-fxJ"/>
                         <outlet property="productNameLabel" destination="hTu-Kg-YZG" id="tpy-wC-I4r"/>
