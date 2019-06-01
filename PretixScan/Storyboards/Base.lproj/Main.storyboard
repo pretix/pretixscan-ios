@@ -145,9 +145,40 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYM-cq-3Sl">
+                                        <rect key="frame" x="18" y="18" width="264" height="137.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="Bxz-4S-5Zv">
+                                                <rect key="frame" x="18" y="39" width="228" height="68.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWJ-Dq-H12">
+                                                        <rect key="frame" x="0.0" y="0.0" width="228" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tMQ-9g-ftv">
+                                                        <rect key="frame" x="0.0" y="38.5" width="228" height="30"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <connections>
+                                                            <action selector="redeemUnpaidTicket:" destination="YdL-xT-kVF" eventType="touchUpInside" id="7gc-N6-SXp"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="0.74631382042253525" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Bxz-4S-5Zv" secondAttribute="bottom" constant="30" id="1An-rj-WkB"/>
+                                            <constraint firstItem="Bxz-4S-5Zv" firstAttribute="leading" secondItem="pYM-cq-3Sl" secondAttribute="leading" constant="18" id="34u-y9-ahY"/>
+                                            <constraint firstAttribute="trailing" secondItem="Bxz-4S-5Zv" secondAttribute="trailing" constant="18" id="Gka-VF-ovb"/>
+                                            <constraint firstItem="Bxz-4S-5Zv" firstAttribute="top" secondItem="pYM-cq-3Sl" secondAttribute="top" constant="39" id="fPW-NQ-Y5I"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.62514378230000001" green="0.14160739580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="pYM-cq-3Sl" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="top" constant="18" id="1nq-gh-jSz"/>
                                     <constraint firstAttribute="trailing" secondItem="hTu-Kg-YZG" secondAttribute="trailing" constant="20" id="3DH-MM-XAL"/>
                                     <constraint firstAttribute="bottom" secondItem="hTu-Kg-YZG" secondAttribute="bottom" constant="20" id="5Gn-cs-tiK"/>
                                     <constraint firstItem="8LH-ON-nVd" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="9NE-nK-3UX"/>
@@ -158,10 +189,12 @@
                                     <constraint firstItem="Rcg-Oi-qF2" firstAttribute="top" secondItem="8LH-ON-nVd" secondAttribute="bottom" constant="14.5" id="Luu-i6-0xa"/>
                                     <constraint firstAttribute="trailing" secondItem="Rcg-Oi-qF2" secondAttribute="trailing" constant="20" id="cQ5-57-AJd"/>
                                     <constraint firstAttribute="bottom" secondItem="gHE-AY-7kO" secondAttribute="bottom" id="k8o-fM-Hn4"/>
+                                    <constraint firstAttribute="trailing" secondItem="pYM-cq-3Sl" secondAttribute="trailing" constant="18" id="lut-eb-BkR"/>
                                     <constraint firstItem="gHE-AY-7kO" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="top" id="nzZ-xN-X4f"/>
                                     <constraint firstItem="hTu-Kg-YZG" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="rVm-m4-dFt"/>
                                     <constraint firstItem="hTu-Kg-YZG" firstAttribute="top" secondItem="Rcg-Oi-qF2" secondAttribute="bottom" id="snu-pN-VlS"/>
                                     <constraint firstAttribute="trailing" secondItem="gHE-AY-7kO" secondAttribute="trailing" id="yYv-3E-TlC"/>
+                                    <constraint firstItem="pYM-cq-3Sl" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="18" id="zH4-Zc-0rt"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -197,6 +230,9 @@
                         <outlet property="orderIDLabel" destination="4Xn-UT-Ort" id="k4R-jW-fxJ"/>
                         <outlet property="productNameLabel" destination="hTu-Kg-YZG" id="tpy-wC-I4r"/>
                         <outlet property="ticketStatusLabel" destination="Rcg-Oi-qF2" id="Cb4-JW-I4Z"/>
+                        <outlet property="unpaidNoticeButton" destination="tMQ-9g-ftv" id="wbw-iz-Kcy"/>
+                        <outlet property="unpaidNoticeContainerView" destination="pYM-cq-3Sl" id="5ly-kv-I3A"/>
+                        <outlet property="unpaidNoticeLabel" destination="MWJ-Dq-H12" id="Pzl-UT-sjn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rdg-ts-dAk" userLabel="First Responder" sceneMemberID="firstResponder"/>

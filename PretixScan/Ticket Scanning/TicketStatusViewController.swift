@@ -33,6 +33,10 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var blinkerView: BlinkerView!
 
+    @IBOutlet weak var unpaidNoticeContainerView: UIView!
+    @IBOutlet weak var unpaidNoticeLabel: UILabel!
+    @IBOutlet weak var unpaidNoticeButton: UIButton!
+
     // MARK: - Updating
     private func update() {
         guard isViewLoaded else { return }
@@ -68,6 +72,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func updateMain() {
+        unpaidNoticeContainerView.isHidden = true
+
         if configuration != nil, redemptionResponse == nil, beganRedeeming == false {
             redeem()
         }
@@ -176,11 +182,25 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             newBackgroundColor = Color.error
             iconLabel.text = Icon.error
             ticketStatusLabel.text = Localization.TicketStatusViewController.InvalidTicket
-            productNameLabel.text = redemptionResponse.errorReason.map { $0.rawValue }
+            productNameLabel.text = redemptionResponse.errorReason?.localizedDescription()
             appCoordinator?.performHapticNotification(ofType: .error)
+
+            if redemptionResponse.errorReason == .unpaid && configStore?.checkInList?.includePending == true {
+                unpaidNoticeContainerView.layer.cornerRadius = Style.cornerRadius
+                unpaidNoticeContainerView.isHidden = false
+                unpaidNoticeLabel.text = Localization.TicketStatusViewController.UnpaidContinueText
+                unpaidNoticeButton.setTitle(Localization.TicketStatusViewController.UnpaidContinueButtonTitle, for: . normal)
+            }
         }
 
         return newBackgroundColor
+    }
+
+    // MARK: - Actions
+    @IBAction func redeemUnpaidTicket(_ sender: Any) {
+        guard let configuration = configuration else { return }
+        self.dismiss(animated: true, completion: nil)
+        appCoordinator?.redeem(secret: configuration.secret, force: configuration.force, ignoreUnpaid: true)
     }
 
     // MARK: - View Lifecycle

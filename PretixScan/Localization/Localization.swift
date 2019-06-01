@@ -23,6 +23,8 @@ struct Localization {
         static let Error = NSLocalizedString("Error", comment: "")
         static let IncompleteInformation = NSLocalizedString("Incomplete Information", comment: "")
         static let NeedsAttention = NSLocalizedString("Valid Ticket, but needs attention", comment: "")
+        static let UnpaidContinueText = NSLocalizedString("This ticket has not been paid for, do you still want to check it in?", comment: "")
+        static let UnpaidContinueButtonTitle = NSLocalizedString("Check In Unpaid", comment: "")
     }
 
     struct WelcomeViewController {
