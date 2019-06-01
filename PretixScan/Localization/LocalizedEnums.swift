@@ -22,3 +22,16 @@ extension Order.Status {
         }
     }
 }
+
+extension RedemptionResponse.ErrorReason {
+    func localizedDescription() -> String {
+        switch self {
+        case .unpaid:
+            return NSLocalizedString("Unpaid", comment: "Ticket is Unpaid")
+        case .alreadyRedeemed:
+            return NSLocalizedString("Already Redeemed", comment: "Ticket is already redeemed")
+        case .product:
+            return NSLocalizedString("Product", comment: "Ticket is Unpaid")
+        }
+    }
+}
