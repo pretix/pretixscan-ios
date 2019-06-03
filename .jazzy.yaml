@@ -3,7 +3,7 @@ author_url: http://pretix.eu
 github_url: https://github.com/pretix
 copyright: '© 2019 [rami.io](http://rami.io)'
 
-module: PretixScan
+module: pretixSCAN
 module_version: 1.0a
 
 theme: fullwidth
