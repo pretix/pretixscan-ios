@@ -162,6 +162,16 @@ public class DefaultsConfigStore: ConfigStore {
         }
     }
 
+    public var shouldAutoSync: Bool {
+        get {
+            return _shouldAutoSync
+        }
+        set {
+            _shouldAutoSync = newValue
+            valueChanged(.shouldAutoSync)
+        }
+    }
+
     private var _welcomeScreenIsConfirmed: Bool = false
     private var _apiBaseURL: URL?
     private var _apiToken: String?
@@ -177,6 +187,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _event: Event?
     private var _checkInList: CheckInList?
     private var _asyncModeEnabled: Bool = false
+    private var _shouldAutoSync: Bool = true
 
     private let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
     private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
