@@ -40,6 +40,20 @@ class NotificationManager {
                     }
                     return view
                 }
+            } else if value == .shouldAutoSync {
+                SwiftMessages.hideAll()
+                SwiftMessages.show {
+                    let view = MessageView.viewFromNib(layout: .statusLine)
+                    view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
+                    view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+
+                    if self.configStore.shouldAutoSync {
+                        view.configureContent(body: Localization.NotificationManager.ShouldAutoSyncOn)
+                    } else {
+                        view.configureContent(body: Localization.NotificationManager.ShouldAutoSyncOff)
+                    }
+                    return view
+                }
             }
         }
     }

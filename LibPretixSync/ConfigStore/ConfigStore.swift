@@ -45,6 +45,8 @@ public protocol ConfigStore {
     /// Updates the `ticketValidator` property.
     var asyncModeEnabled: Bool { get set }
 
+    var shouldAutoSync: Bool { get set }
+
     // MARK: - Device
     /// The name that was specified for this device in the Pretix Organizer Backend
     var deviceName: String? { get set }
@@ -82,4 +84,5 @@ public enum ConfigStoreValue: String {
     case event
     case checkInList
     case asyncModeEnabled
+    case shouldAutoSync
 }

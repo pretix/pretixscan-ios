@@ -75,6 +75,6 @@ public class OfflineTicketValidator: TicketValidator {
             completionHandler(nil, APIError.notFound)
         }
 
-        configStore.syncManager.beginSyncing()
+        configStore.syncManager.beginSyncingIfAutoSync()
     }
 }

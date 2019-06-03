@@ -15,4 +15,6 @@ struct Icon {
     static let okay = ""
     static let loading = ""
     static let attention = ""
+    static let enabled = ""
+    static let disabled = ""
 }

@@ -85,6 +85,7 @@ struct Localization {
         static let AboutSectionTitle = NSLocalizedString("About this App", comment: "")
         static let ConfigurationSectionTitle = NSLocalizedString("Configuration", comment: "")
         static let LicensesSectionTitle = NSLocalizedString("Libraries and Licenses", comment: "")
+        static let ShouldAutoSync = NSLocalizedString("Sync every few minutes", comment: "")
         static let BeginSyncing = NSLocalizedString("Sync Now", comment: "")
         static let ForceSync = NSLocalizedString("Force Complete Resync", comment: "")
         static let Version = NSLocalizedString("App Version", comment: "")
@@ -102,6 +103,8 @@ struct Localization {
         static let SyncModeOnline = NSLocalizedString("Sync Mode Switched to Online", comment: "")
         static let SyncModeOffline = NSLocalizedString("Sync Mode Switched to Offline", comment: "")
         static let Reset = NSLocalizedString("All Contents and Settings were deleted", comment: "")
+        static let ShouldAutoSyncOn = NSLocalizedString("Automatic Syncing is now enabled", comment: "")
+        static let ShouldAutoSyncOff = NSLocalizedString("Automatic Syncing is now disabled", comment: "")
     }
 
     struct Errors {
@@ -124,7 +127,7 @@ struct Localization {
 
     struct SyncStatusViewController {
         static let SyncingDone = NSLocalizedString("Syncing Done ", comment: "")
-        static let LessThanAMinute = NSLocalizedString("less than a minute ", comment: "time interval")
+        static let LessThanAMinute = NSLocalizedString("less than a minute", comment: "time interval")
         static let LastSyncXAgo = NSLocalizedString("Last Sync %@ ago ", comment: "e.g. Last Sync [12 minutes] ago")
     }
 }

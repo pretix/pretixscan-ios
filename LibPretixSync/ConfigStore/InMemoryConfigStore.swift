@@ -75,6 +75,7 @@ public class InMemoryConfigStore: ConfigStore {
     }
 
     public var asyncModeEnabled: Bool = false { didSet { valueChanged(.asyncModeEnabled) } }
+    public var shouldAutoSync: Bool = true { didSet { valueChanged(.shouldAutoSync) } }
 
     public func factoryReset() {
         welcomeScreenIsConfirmed = false
