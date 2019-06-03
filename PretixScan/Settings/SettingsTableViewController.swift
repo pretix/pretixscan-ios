@@ -12,6 +12,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
 
     @IBOutlet weak var versionCell: UITableViewCell!
+    @IBOutlet weak var shouldAutoSyncCell: UITableViewCell!
     @IBOutlet weak var beginSyncingCell: UITableViewCell!
     @IBOutlet weak var forceSyncCell: UITableViewCell!
     @IBOutlet weak var resetContentCell: UITableViewCell!
@@ -25,6 +26,9 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        shouldAutoSyncCell.textLabel?.text = Localization.SettingsTableViewController.ShouldAutoSync
+        shouldAutoSyncCell.detailTextLabel?.text = configStore?.shouldAutoSync == true ? Icon.enabled : Icon.disabled
 
         beginSyncingCell.textLabel?.text = Localization.SettingsTableViewController.BeginSyncing
         forceSyncCell.textLabel?.text = Localization.SettingsTableViewController.ForceSync
@@ -44,7 +48,9 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        if indexPath == tableView.indexPath(for: forceSyncCell) {
+        if indexPath == tableView.indexPath(for: shouldAutoSyncCell) {
+            toggleShouldAutoSync()
+        } else if indexPath == tableView.indexPath(for: forceSyncCell) {
             forceSync()
         } else if indexPath == tableView.indexPath(for: beginSyncingCell) {
             beginSyncing()
@@ -69,6 +75,14 @@ class SettingsTableViewController: UITableViewController, Configurable {
     }
 
     // MARK: - Actions
+    func toggleShouldAutoSync() {
+        guard var configStore = configStore else { return }
+        let previousValue = configStore.shouldAutoSync
+        configStore.shouldAutoSync = !previousValue
+
+        shouldAutoSyncCell.detailTextLabel?.text = configStore.shouldAutoSync == true ? Icon.enabled : Icon.disabled
+    }
+
     func beginSyncing() {
         configStore?.syncManager.beginSyncing()
     }
