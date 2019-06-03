@@ -103,6 +103,8 @@ struct Localization {
         static let SyncModeOnline = NSLocalizedString("Sync Mode Switched to Online", comment: "")
         static let SyncModeOffline = NSLocalizedString("Sync Mode Switched to Offline", comment: "")
         static let Reset = NSLocalizedString("All Contents and Settings were deleted", comment: "")
+        static let ShouldAutoSyncOn = NSLocalizedString("Automatic Syncing is now enabled", comment: "")
+        static let ShouldAutoSyncOff = NSLocalizedString("Automatic Syncing is now disabled", comment: "")
     }
 
     struct Errors {
