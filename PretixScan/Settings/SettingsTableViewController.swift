@@ -81,6 +81,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
         configStore.shouldAutoSync = !previousValue
 
         shouldAutoSyncCell.detailTextLabel?.text = configStore.shouldAutoSync == true ? Icon.enabled : Icon.disabled
+
+        configStore.syncManager.beginSyncingIfAutoSync()
     }
 
     func beginSyncing() {
