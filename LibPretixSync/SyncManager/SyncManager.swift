@@ -111,6 +111,13 @@ public class SyncManager {
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
+    /// Trigger a sync process, which will check for new data from the server, but only if auto sync is enabled
+    public func beginSyncingIfAutoSync() {
+        if configStore.shouldAutoSync {
+            beginSyncing()
+        }
+    }
+
     /// Trigger a sync process, which will check for new data from the server
     @objc public func beginSyncing() {
         guard let event = configStore.event,
@@ -164,8 +171,10 @@ public class SyncManager {
                 userInfo: [SyncManager.NotificationKeys.lastSyncDate: Date()])
 
             // Queue in the next Sync in 5 minutes
-            DispatchQueue.main.asyncAfter(deadline: .now() + self.timeBetweenSyncs) {
-                self.beginSyncing()
+            if self.configStore.shouldAutoSync {
+                DispatchQueue.main.asyncAfter(deadline: .now() + self.timeBetweenSyncs) {
+                    self.beginSyncingIfAutoSync()
+                }
             }
         }
         // Cleanup should only happen once all other operations are finished
