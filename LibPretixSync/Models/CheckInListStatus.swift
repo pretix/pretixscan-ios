@@ -28,6 +28,7 @@ public struct CheckInListStatus: Codable, Equatable {
 
     /// An item to be checked in, e.g. "Student Ticket", "Regular Ticket", or "T-Shirt"
     public struct Item: Codable, Equatable {
+        // TODO: Check if we can remove this and replace it with the global `Item` model
         public let name: String
         public let identifier: Identifier
         public let checkinCount: Int
