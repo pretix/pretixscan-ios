@@ -29,17 +29,23 @@ custom_categories:
     - FMDBDataStore
     - SyncManager
     - APIClient
+    - QueuedRedemptionRequest
+
+  - name: Server Communication
+    children:
+    - DeviceInitializationResponseError
+    - DeviceInitializationRequest
+    - DeviceInitializationResponse
 
   - name: Models
     children:
     - Model
     - Event
+    - SubEvent
     - CheckInList
     - CheckIn
     - OrderPosition
     - Handshake
-    - DeviceInitializationRequest
-    - DeviceInitializationResponse
     - RedemptionRequest
     - RedemptionResponse
     - Locale
