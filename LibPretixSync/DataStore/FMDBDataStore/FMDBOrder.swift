@@ -37,6 +37,9 @@ extension Order: FMDBModel {
 
     static func store(_ records: [Order], in queue: FMDatabaseQueue) {
         for record in records {
+            // Remove old sub-positions
+            OrderPosition.removeOrderPositions(for: record, in: queue)
+
             if let positions = record.positions {
                 OrderPosition.store(positions, in: queue)
             }
