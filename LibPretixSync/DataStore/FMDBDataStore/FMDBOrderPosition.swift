@@ -11,7 +11,7 @@ import Foundation
 import FMDB
 
 extension OrderPosition: FMDBModel {
-    public static var creationQuery = """
+    static var creationQuery = """
     CREATE TABLE IF NOT EXISTS "\(stringName)" (
     "id"    INTEGER NOT NULL UNIQUE,
     "order"    TEXT,
@@ -27,13 +27,13 @@ extension OrderPosition: FMDBModel {
     );
     """
 
-    public static var insertQuery = """
+    static var insertQuery = """
     REPLACE INTO "\(stringName)"
     ("id", "order", "positionid", "item", "variation", "price", "attendee_name", "attendee_email", "secret", "pseudonymization_id")
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
 
-    public static let searchQuery = """
+    static let searchQuery = """
     SELECT "\(OrderPosition.stringName)".id AS orderpositionid, "\(OrderPosition.stringName)".secret AS orderpositionsecret, *
     FROM "\(OrderPosition.stringName)"
     LEFT JOIN "\(Order.stringName)"
@@ -46,13 +46,13 @@ extension OrderPosition: FMDBModel {
     OR "code" LIKE ?;
     """
 
-    public static let getBySecretQuery =  """
+    static let getBySecretQuery =  """
     SELECT "\(OrderPosition.stringName)".id AS orderpositionid, "\(OrderPosition.stringName)".secret AS orderpositionsecret, *
     FROM "\(stringName)"
     WHERE secret = ?;
     """
 
-    public static func from(result: FMResultSet) -> OrderPosition? {
+    static func from(result: FMResultSet) -> OrderPosition? {
         let identifier = Int(result.int(forColumn: "orderpositionid"))
         guard let order = result.string(forColumn: "order") else { return nil }
         let positionid = Int(result.int(forColumn: "positionid"))

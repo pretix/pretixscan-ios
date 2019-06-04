@@ -93,12 +93,18 @@ public extension APIClient {
 // MARK: - Retrieving Items
 public extension APIClient {
 
+    /// Retrieve the specified model from the server and call the completion handler for each page.
+    ///
+    /// @see `getTask`
     func get<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?,
                        completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) {
         let task = getTask(model, page: page, lastUpdated: lastUpdated, completionHandler: completionHandler)
         task?.resume()
     }
 
+    /// Returns a task that retrieves the specified model from the server and calls the completion handler for each page, once run.
+    ///
+    /// @see `get`
     func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, event: Event? = nil, filters: [String: String] = [:],
                            completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
         do {
@@ -205,7 +211,7 @@ public extension APIClient {
         task?.resume()
     }
 
-    // Returns a list of all subevents
+    /// Returns a list of all subevents in the completionHandler
     func getSubEvents(event: Event, completionHandler: @escaping ([SubEvent]?, Error?) -> Void) {
         var results = [SubEvent]()
 

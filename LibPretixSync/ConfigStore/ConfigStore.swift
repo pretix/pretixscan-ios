@@ -45,6 +45,7 @@ public protocol ConfigStore {
     /// Updates the `ticketValidator` property.
     var asyncModeEnabled: Bool { get set }
 
+    /// If `true` the app will schedule a new sync process a few minutes after the previous one completed.
     var shouldAutoSync: Bool { get set }
 
     // MARK: - Device
@@ -67,7 +68,7 @@ public protocol ConfigStore {
     /// The CheckInList to scan against
     var checkInList: CheckInList? { get }
 
-    // Set both event and checkinlist
+    /// Set both event and checkinlist
     func set(event: Event, checkInList: CheckInList)
 }
 
@@ -79,10 +80,21 @@ extension ConfigStore {
 
 /// Value Keys to be used for notifications
 public enum ConfigStoreValue: String {
+    /// The API token has changed
     case apiToken
+
+    /// The Organizer slug has changed
     case organizerSlug
+
+    /// The event has changed
     case event
+
+    /// The checkin list has changed
     case checkInList
+
+    /// Async Mode has been toggled
     case asyncModeEnabled
+
+    /// Should auto sync has been toggled
     case shouldAutoSync
 }

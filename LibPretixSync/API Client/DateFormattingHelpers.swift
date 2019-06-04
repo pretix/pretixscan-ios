@@ -43,7 +43,7 @@ extension JSONEncoder.DateEncodingStrategy {
 }
 
 extension JSONEncoder {
-    public static let iso8601withFractionsEncoder: JSONEncoder = {
+    static let iso8601withFractionsEncoder: JSONEncoder = {
         let jsonEncoder = JSONEncoder()
         jsonEncoder.dateEncodingStrategy = .iso8601withFractions
         return jsonEncoder

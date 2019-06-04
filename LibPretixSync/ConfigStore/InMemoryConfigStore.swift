@@ -94,6 +94,7 @@ public class InMemoryConfigStore: ConfigStore {
     }
 
     // MARK: - Debugging
+    /// If `true` the In Memory Config Store will print out all state changes to the console
     public var debug: Bool = false {
         didSet {
             if debug {

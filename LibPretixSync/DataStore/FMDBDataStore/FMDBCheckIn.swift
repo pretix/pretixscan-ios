@@ -11,7 +11,7 @@ import Foundation
 import FMDB
 
 extension CheckIn: FMDBModel {
-    public static var creationQuery = """
+    static var creationQuery = """
     CREATE TABLE IF NOT EXISTS "\(stringName)" (
     "list"    INTEGER NOT NULL,
     "order_position"    INTEGER  NOT NULL,
@@ -20,15 +20,15 @@ extension CheckIn: FMDBModel {
     );
     """
 
-    public static var insertQuery = """
+    static var insertQuery = """
     REPLACE INTO "\(stringName)"("list","order_position","date") VALUES (?,?,?);
     """
 
-    public static let retrieveByOrderPositionQuery = """
+    static let retrieveByOrderPositionQuery = """
     SELECT * FROM "\(stringName)" WHERE order_position=?;
     """
 
-    public static func from(result: FMResultSet, in database: FMDatabase) -> CheckIn? {
+    static func from(result: FMResultSet, in database: FMDatabase) -> CheckIn? {
         guard let date = database.dateFromString(result.string(forColumn: "date")) else {
             print("Date Parsing error in Checkin.from")
             return nil
