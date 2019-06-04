@@ -8,13 +8,29 @@
 
 import Foundation
 
+/// The country code for a `MultilingualString`
 public enum Locale: String, Codable, Equatable {
+    /// English
     case english = "en"
+
+    /// German
     case german = "de"
+
+    /// German Informal
     case germanInformal = "de-informal"
+
+    /// Spanish
     case spanish = "es"
+
+    /// French
     case french = "fr"
+
+    /// Dutch Formal
     case dutch = "nl"
+
+    /// Dutch Informal
     case dutchInformal = "nl-informal"
+
+    /// Turkish
     case turkish = "tr"
 }

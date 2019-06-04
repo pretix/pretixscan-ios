@@ -24,6 +24,7 @@ public struct Event: Model {
     /// The event’s start date
     public let dateFrom: Date?
 
+    /// `True` if the event has sub events
     public let hasSubEvents: Bool
 
     private enum CodingKeys: String, CodingKey {

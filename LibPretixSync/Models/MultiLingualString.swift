@@ -15,13 +15,28 @@ public struct MultiLingualString: Model {
     public static var humanReadableName = "Multi Lingual String"
     public static var stringName = ""
 
+    /// English Representation
     public let english: String?
+
+    /// German Representation
     public let german: String?
+
+    /// German Informal Representation
     public let germanInformal: String?
+
+    /// Spanish Representation
     public let spanish: String?
+
+    /// French Representation
     public let french: String?
+
+    /// Dutch Representation
     public let dutch: String?
+
+    /// Dutch informal representation
     public let dutchInformal: String?
+
+    /// Turkish Representation
     public let turkish: String?
 
     private enum CodingKeys: String, CodingKey {

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// An entity that can be synced with the API or stored locally
 public protocol Model: Codable, Hashable {
     /// A human name for the model, used in logging and UI
     static var humanReadableName: String { get }
