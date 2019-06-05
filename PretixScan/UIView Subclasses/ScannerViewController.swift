@@ -9,6 +9,11 @@
 import AVFoundation
 import UIKit
 
+/// Generic ViewController Superclass to scan barcodes and QR codes.
+///
+/// To subclass:
+/// - subclass and override the `found()` method to know what to do with found QR Codes
+/// - set `shouldScan` to `true` to start scanning, to `false` to stop scanning after you found something
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     /// Period between scans when the timer will not fire
     var gracePeriod: TimeInterval = 2

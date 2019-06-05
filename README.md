@@ -1,76 +1,54 @@
-# pretixSCAN for iOS
-
-# Architecture
-
-- Configurable and ConfiguredNavigationController: If a UIViewController is marked as implementing the Configurable protocol it will automatially get assigned a ConfigStore when it gets pushed.
-- AppCoordinator: One Class, ValidateTicketViewController, is implementing the appcoordinator protocol. Classes that are marked as appCoordinatorReceiver will get their appcoordinator property set. Use AppCoordinator for anything that needs to be a singleton 
-
-## Storyboards
-- The app uses storbyboards and segues for navigation. Segue identifiers are in Segues.swift
-
-## ScannerViewController
-- subclass and override the found() method
-- set shouldScan to true
-
+# LibPretixSync
+Library containing all business logic for interacting with pretix.
 
 ## Models
-A collection of enum based models and parsing code to and from JSON
+Communcation with the API, and caching data in the `DataStore` is based on the `Model` protocol: A collection of enum based models and parsing code to and from JSON. See  `Model` for a detailed description.  
 
 ## ConfigStore (Protocol)
-Holds key-value pairs for configuration. Creates and holds an APIClient per instance
+Holds key-value pairs for configuration. Passed around in the app as the source of truth for configuration, and also for accessing any other manager entities. See  `ConfigStore` for a detailed description.  
 
-Optional: Notifications when configuration changes
-
-## APIClient (Protocol)
-Manages requests to and responses from the Pretix REST API. Needs to be initialised with configStore.
-
-----
-Everything above the line is decided and implemented, everything below is a draft.
-
-## AppDelegate
-- initialises ConfigStore
-- initialises TicketValidator
-- initialises DataStore
-
-## SyncManager (Protocol)
-Manages a queue of changes to be uploaded to the API.
-
-- requires a DataStore and an APIClient
-
-- Has sub-objects for queueing uploads and managing downloads
-- will periodically try to upload the queue to the server 
-- will periodically try to download all (or all new) server data
+Provides these manager entities: 
+- `DataStore`
+- `APIClient`
+- `TicketValidator` (switched based on the `asyncModeEnabled` property)
+- `SyncManager`
 
 ## DataStore (Protocol)
-Database 
-- Optional: Notifications when data changes
+Abstracts all local data caching and sends notifications when data changes.
+
+## APIClient (Protocol)
+Manages requests to and responses from the Pretix REST API. 
 
 ## TicketValidator (Protocol)
-Exposes methods to check the validity of tickets and show event status.
+Exposes methods to check the validity of tickets and show event status. `ConfigStore` will intantiate a fitting implementation of `TicketValidator` depending on the   `asyncModeEnabled` property. This might be `OnlineTicketValidator`, which uses the APIClient directly to check the validity of tickets and does not add anything to DataStore's queue, but instead throws errors if no network available, or `AsyncTicketValidator`, which uses the DataStore to check the validity of tickets, and adds new checkins to DataStore's upload queue.
 
-- requires a ConfigStore instance
+## SyncManager (Protocol)
+Downloads all data from the API using `APIClient` and peridically updates the data using incremental updates. Manages a queue of changes to be uploaded to the API.
 
-### Protocol methods
-- check(ticketid, List of Answers, ignore_unpaid);
-- search(query)
-- status() 
+# pretixSCAN for iOS
+The actual app that uses LibPretixSync
 
-### OnlineTicketValidator
-Uses the APIClient directly to check the validity of tickets.
+## AppDelegate and AppCoordinator
+Initialises a `ConfigStore` instance and passes it on to `ValidateTicketViewController`, which is the root view controller for the application.   `ValidateTicketViewController` will pass the instance on to any sub view controllers that request them using the `Configurable` protocol.
 
-- does not add anything to DataStore's queue, but instead throws errors if no network available
+`ValidateTicketViewController` is implementing the `AppCoordinator` protocol. Classes that are marked as `AppCoordinatorReceiver` will get their `appcoordinator` property set. Use `AppCoordinator` for anything that needs to be a singleton. 
 
-### AsyncTicketValidator
-Uses the DataStore to check the validity of tickets. 
+## Storyboards
+The app uses storbyboards and segues for navigation. Segue identifiers, in case you need to trigger segues manually, are in `Segues.swift`. but most segues should be triggered by the storyboard. 
 
-- adds new information to DataStore's upload queue
-- tries to init sync every now and then
+## Passing around `ConfigStore`
+`Configurable` and `ConfiguredNavigationController`: If a UIViewController is marked as implementing the Configurable protocol it will automatially get assigned a ConfigStore when it gets pushed from `ValidateTicketViewController`.
 
 # Tests
-Mostly just parsing tests
+Unit Tests are available to make sure models parse correctly.
 
 # Rebranding 
-TBD
+To rebrand the application:
+
+- Change the Name via project settings
+- Replace the App Icon in `Assets.xcassets`
+- Update `Storyboards/LaunchScreen.storyboard`
+- Update the Colors in `Color.swift`
 
 # Building Documentation
 To build the HTML documentation, install [jazzy](https://github.com/realm/jazzy) by running `sudo gem install jazzy` (requirements: current macOS and Xcode is installed). Documentation will be auto-generated each time the project is built. You can also run `jazzy` manually from the project root folder. Find generated documentation files in the `docs/` directory. Documentation configuration lives in `.jazzy.yml`.
