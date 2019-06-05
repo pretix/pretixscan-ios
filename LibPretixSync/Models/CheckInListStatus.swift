@@ -11,8 +11,13 @@ import Foundation
 
 /// Collection of Status information for a CheckIn-List, such as the number of checked-in attendees
 public struct CheckInListStatus: Codable, Equatable {
+    /// The amount of checked-in attendees
     public let checkinCount: Int
+
+    /// The amount of order positions sold, meaning the amount of attendees to expect
     public let positionCount: Int
+
+    /// The items to be checked in
     public let items: [Item]
 
     private enum CodingKeys: String, CodingKey {
@@ -23,6 +28,7 @@ public struct CheckInListStatus: Codable, Equatable {
 
     /// An item to be checked in, e.g. "Student Ticket", "Regular Ticket", or "T-Shirt"
     public struct Item: Codable, Equatable {
+        // TODO: Check if we can remove this and replace it with the global `Item` model
         public let name: String
         public let identifier: Identifier
         public let checkinCount: Int

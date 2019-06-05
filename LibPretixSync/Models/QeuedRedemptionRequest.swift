@@ -15,9 +15,16 @@ public struct QueuedRedemptionRequest: Model {
     public static var humanReadableName = "Queued Redemption Request"
     public static var stringName = "queued_redemption_requests"
 
+    /// The redemption requet to upload to the server
     public let redemptionRequest: RedemptionRequest
+
+    /// The slug of the event this request belongs to
     public let eventSlug: String
+
+    /// The identifier of the check-in-olist this request belongs to
     public let checkInListIdentifier: Identifier
+
+    /// The order position secret, identifying the attendee to checki in
     public let secret: String
 }
 

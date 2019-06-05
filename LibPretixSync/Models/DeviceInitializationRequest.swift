@@ -25,10 +25,19 @@ import Foundation
 ///     "software_version": "4.0.0"
 /// }
 public struct DeviceInitializationRequest: Codable, Equatable {
+    /// The token as taken from the website or QR code
     public let token: String
+
+    /// The hardware manufacturer
     public let hardwareBrand: String
+
+    /// The device model
     public let hardwareModel: String
+
+    /// The software manufacturer
     public let softwareBrand: String
+
+    /// The software version
     public let softwareVersion: String
 
     private enum CodingKeys: String, CodingKey {

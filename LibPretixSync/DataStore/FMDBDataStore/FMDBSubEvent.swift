@@ -10,7 +10,7 @@ import Foundation
 import FMDB
 
 extension SubEvent: FMDBModel {
-    public static var creationQuery = """
+    static var creationQuery = """
     CREATE TABLE IF NOT EXISTS "\(stringName)" (
     "id"    INTEGER NOT NULL UNIQUE,
     "name"    TEXT,
@@ -20,7 +20,7 @@ extension SubEvent: FMDBModel {
     );
     """
 
-    public static var insertQuery = """
+    static var insertQuery = """
     REPLACE INTO "\(stringName)"("id","name","event","json") VALUES (?,?,?,?);
     """
 

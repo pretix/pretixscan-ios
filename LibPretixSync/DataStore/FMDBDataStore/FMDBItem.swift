@@ -11,7 +11,7 @@ import Foundation
 import FMDB
 
 extension Item: FMDBModel {
-    public static var creationQuery = """
+    static var creationQuery = """
     CREATE TABLE IF NOT EXISTS "\(stringName)" (
     "id"    INTEGER NOT NULL UNIQUE,
     "name"    TEXT,
@@ -27,7 +27,7 @@ extension Item: FMDBModel {
     );
     """
 
-    public static var insertQuery = """
+    static var insertQuery = """
     REPLACE INTO \"\(stringName)\"(
     "id","name","internal_name","default_price",
     "category","active","description","position",
@@ -35,11 +35,11 @@ extension Item: FMDBModel {
     ) VALUES (?,?,?,?,?,?,?,?,?,?);
     """
 
-    public static var searchByIdentifierQuery = """
+    static var searchByIdentifierQuery = """
     SELECT * FROM "\(stringName)" WHERE id=?;
     """
 
-    public static func from(result: FMResultSet, in database: FMDatabase) -> Item? {
+    static func from(result: FMResultSet, in database: FMDatabase) -> Item? {
         let json = result.string(forColumn: "json")
         guard let jsonData = json?.data(using: .utf8),
             let item = try? JSONDecoder.iso8601withFractionsDecoder.decode(Item.self, from: jsonData) else { return nil }

@@ -10,17 +10,20 @@ import Foundation
 import FMDB
 
 // MARK: - Protocol
-public protocol FMDBModel: Model {
+protocol FMDBModel: Model {
     static var creationQuery: String { get }
     static var destructionQuery: String { get }
     static var insertQuery: String { get }
 }
 
-public extension FMDBModel {
+extension FMDBModel {
     static var destructionQuery: String { return "DROP TABLE IF EXISTS \"\(stringName)\"" }
 }
 
 public extension Model {
+    /// Returns the model's representation as a String containing JSON.
+    ///
+    /// You should use `JSONDecoder.iso8601withFractionsDecoder` to decode the string again.
     func toJSONString() -> String? {
         if let data = try? JSONEncoder.iso8601withFractionsEncoder.encode(self) {
             return String(data: data, encoding: .utf8)

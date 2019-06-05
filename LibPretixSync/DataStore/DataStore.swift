@@ -29,11 +29,13 @@ public protocol DataStore: class {
     func store<T: Model>(_ resources: [T], for event: Event)
 
     // MARK: - Retrieving
-    // Return all `OrderPosition`s matching the given query
+    /// Return all `OrderPosition`s matching the given query
     func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition]
 
+    /// Retrieve an `Item` instance with the specified identifier, is such an Item exists
     func getItem(by identifier: Identifier, in event: Event) -> Item?
 
+    /// Retrieve an `Order` instance with the specified identifier, is such an Order exists
     func getOrder(by code: String, in event: Event) -> Order?
 
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList

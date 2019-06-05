@@ -11,7 +11,7 @@ import Foundation
 import FMDB
 
 extension ItemCategory: FMDBModel {
-    public static var creationQuery = """
+    static var creationQuery = """
     CREATE TABLE IF NOT EXISTS "\(stringName)" (
     "id"    INTEGER NOT NULL UNIQUE,
     "name"    TEXT,
@@ -23,7 +23,7 @@ extension ItemCategory: FMDBModel {
     );
     """
 
-    public static var insertQuery = """
+    static var insertQuery = """
     REPLACE INTO "\(stringName)"
     ("id", "name", "internal_name", "description", "position", "is_addon")
     VALUES (?, ?, ?, ?, ?, ?);

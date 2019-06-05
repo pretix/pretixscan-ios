@@ -11,7 +11,7 @@ import Foundation
 import FMDB
 
 extension QueuedRedemptionRequest: FMDBModel {
-    public static var creationQuery = """
+    static var creationQuery = """
     CREATE TABLE IF NOT EXISTS "\(stringName)" (
     "event"    TEXT NOT NULL,
     "check_in_list"    INTEGER NOT NULL,
@@ -25,26 +25,26 @@ extension QueuedRedemptionRequest: FMDBModel {
     );
     """
 
-    public static var insertQuery = """
+    static var insertQuery = """
     REPLACE INTO "\(stringName)"
     ("event", "check_in_list", "secret", "questions_supported",
     "datetime", "force", "ignore_unpaid", "nonce")
     VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     """
 
-    public static var numberOfRequestsQuery = """
+    static var numberOfRequestsQuery = """
     SELECT COUNT(*) FROM "\(stringName)";
     """
 
-    public static var retrieveOneRequestQuery = """
+    static var retrieveOneRequestQuery = """
     SELECT * FROM "\(stringName)" ORDER BY RANDOM() LIMIT 1;
     """
 
-    public static var deleteOneRequestQuery = """
+    static var deleteOneRequestQuery = """
     DELETE FROM "\(stringName)" WHERE nonce=?;
     """
 
-    public static func from(result: FMResultSet, in database: FMDatabase) -> QueuedRedemptionRequest? {
+    static func from(result: FMResultSet, in database: FMDatabase) -> QueuedRedemptionRequest? {
         guard let event = result.string(forColumn: "event") else { return nil }
         let check_in_list = result.int(forColumn: "check_in_list")
         guard let secret = result.string(forColumn: "secret") else { return nil }

@@ -30,16 +30,23 @@ custom_categories:
     - SyncManager
     - APIClient
 
+  - name: Server Communication
+    children:
+    - PagedList
+    - DeviceInitializationResponseError
+    - DeviceInitializationRequest
+    - DeviceInitializationResponse
+    - QueuedRedemptionRequest
+
   - name: Models
     children:
     - Model
     - Event
+    - SubEvent
     - CheckInList
     - CheckIn
     - OrderPosition
     - Handshake
-    - DeviceInitializationRequest
-    - DeviceInitializationResponse
     - RedemptionRequest
     - RedemptionResponse
     - Locale
@@ -52,5 +59,4 @@ custom_categories:
     - Order
     - Identifier
     - Money
-    - PagedList
     - MultiLingualString

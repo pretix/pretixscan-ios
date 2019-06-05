@@ -14,10 +14,10 @@ struct SyncTimeStamp: FMDBModel {
     public static let humanReadableName = "Sync Timestamp"
     public static let stringName = "sync_timestamps"
 
-    public let model: String
-    public let lastSyncedAt: String
+    let model: String
+    let lastSyncedAt: String
 
-    public static var creationQuery = """
+    static var creationQuery = """
     CREATE TABLE IF NOT EXISTS "\(stringName)" (
     "model"    TEXT NOT NULL UNIQUE,
     "last_synced_at"    TEXT,
@@ -25,13 +25,13 @@ struct SyncTimeStamp: FMDBModel {
     );
     """
 
-    public static var insertQuery = """
+    static var insertQuery = """
     REPLACE INTO "\(stringName)"
     ("model", "last_synced_at")
     VALUES (?, ?);
     """
 
-    public static var getSingleModelQuery = """
+    static var getSingleModelQuery = """
     SELECT * FROM \(stringName) WHERE model=?;
     """
 }

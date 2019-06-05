@@ -29,7 +29,7 @@ public struct CheckInList: Model {
     public let name: String
 
     /// If `true`, the check-in lists contains tickets of all products in this event. The
-    // `limitProducts` field is ignored in this case.
+    /// `limitProducts` field is ignored in this case.
     public let allProducts: Bool
 
     /// List of item IDs to include in this list.
