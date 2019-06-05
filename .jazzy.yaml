@@ -29,13 +29,14 @@ custom_categories:
     - FMDBDataStore
     - SyncManager
     - APIClient
-    - QueuedRedemptionRequest
 
   - name: Server Communication
     children:
+    - PagedList
     - DeviceInitializationResponseError
     - DeviceInitializationRequest
     - DeviceInitializationResponse
+    - QueuedRedemptionRequest
 
   - name: Models
     children:
@@ -58,5 +59,4 @@ custom_categories:
     - Order
     - Identifier
     - Money
-    - PagedList
     - MultiLingualString
