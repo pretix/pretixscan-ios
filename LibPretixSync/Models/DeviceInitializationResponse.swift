@@ -28,10 +28,19 @@ import Foundation
 ///     "name": "Bar"
 /// }
 public struct DeviceInitializationResponse: Codable, Equatable {
+    /// The organizer this device now belongs to
     public let organizer: String
+
+    /// A deviceID given to this device by the server
     public let deviceID: Identifier
+
+    ///
     public let uniqueSerial: String
+
+    /// An API token for further API Communication
     public let apiToken: String
+
+    /// A name given to this device by an administartor
     public let name: String
 
     private enum CodingKeys: String, CodingKey {
@@ -43,6 +52,8 @@ public struct DeviceInitializationResponse: Codable, Equatable {
     }
 }
 
+/// An Error returned by `DeviceInitializationResponse`
 public struct DeviceInitializationResponseError: Codable, Equatable {
+    /// A list of error messages from the server about device initialization
     public let token: [String]
 }
