@@ -53,9 +53,18 @@ public class SyncManager {
     }
 
     // MARK: - Notifications
+    /// Notification being sent out once a sync process has started
     public static var syncBeganNotification: Notification.Name { return Notification.Name("SyncManagerSyncBegan") }
+
+    /// Notification being sent out every time the status of the sync process updates.
+    ///
+    /// @see `NotificationKeys` for the attached dictionary.
     public static var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
+
+    /// Notification being sent out once a sync process has ended
     public static var syncEndedNotification: Notification.Name { return Notification.Name("SyncManagerSyncEnded") }
+
+    /// Notification being sent out every time the status of a queued upload process changes.
     public static var uploadStatusNotification: Notification.Name { return Notification.Name("SyncManagerUploadStatus") }
 
     /// Notifications sent out by SyncManager

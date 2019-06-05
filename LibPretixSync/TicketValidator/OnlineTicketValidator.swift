@@ -14,6 +14,7 @@ import Foundation
 public class OnlineTicketValidator: TicketValidator {
     private let configStore: ConfigStore
 
+    /// Initialize with a configstore
     public init(configStore: ConfigStore) {
         self.configStore = configStore
     }
