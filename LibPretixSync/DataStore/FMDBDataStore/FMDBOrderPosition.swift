@@ -52,6 +52,14 @@ extension OrderPosition: FMDBModel {
     WHERE secret = ?;
     """
 
+    static let getByOrderQuery = """
+    SELECT * FROM "\(stringName)" WHERE "order"=?;
+    """
+
+    static let deleteByOrderQuery = """
+    DELETE FROM "\(stringName)" WHERE "order"=?;
+    """
+
     static func from(result: FMResultSet) -> OrderPosition? {
         let identifier = Int(result.int(forColumn: "orderpositionid"))
         guard let order = result.string(forColumn: "order") else { return nil }
@@ -108,6 +116,33 @@ extension OrderPosition: FMDBModel {
                 } catch {
                     print(error)
                 }
+            }
+        }
+    }
+
+    static func removeOrderPositions(for order: Order, in queue: FMDatabaseQueue) {
+        // Remove checkins by all affected order positions
+        var orderPositionsToDelete = [OrderPosition]()
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(OrderPosition.getByOrderQuery, values: [order.code]) {
+                while result.next() {
+                    if let orderPosition = OrderPosition.from(result: result) {
+                        orderPositionsToDelete.append(orderPosition)
+                    }
+                }
+            }
+        }
+
+        for orderPositionToDelete in orderPositionsToDelete {
+            CheckIn.deleteCheckIns(for: orderPositionToDelete, in: queue)
+        }
+
+        // Remove the actual order positions
+        queue.inDatabase { database in
+            do {
+                try database.executeUpdate(OrderPosition.deleteByOrderQuery, values: [order.code])
+            } catch {
+                print(error)
             }
         }
     }

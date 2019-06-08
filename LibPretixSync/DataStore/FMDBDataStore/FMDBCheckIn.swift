@@ -28,6 +28,10 @@ extension CheckIn: FMDBModel {
     SELECT * FROM "\(stringName)" WHERE order_position=?;
     """
 
+    public static let deleteByOrderPositionQuery = """
+    DELETE FROM "\(stringName)" WHERE order_position=?;
+    """
+
     static func from(result: FMResultSet, in database: FMDatabase) -> CheckIn? {
         guard let date = database.dateFromString(result.string(forColumn: "date")) else {
             print("Date Parsing error in Checkin.from")
@@ -37,9 +41,22 @@ extension CheckIn: FMDBModel {
         return CheckIn(listID: list, date: date)
     }
 
-    static func store(_ records: [CheckIn], for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
+    static func deleteCheckIns(for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
         queue.inDatabase { database in
+            do {
+                try database.executeUpdate(CheckIn.deleteByOrderPositionQuery, values: [orderPosition.identifier])
+            } catch {
+                print(error)
+            }
+        }
+    }
 
+    static func store(_ records: [CheckIn], for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
+        // Remove existing checkins, in case something was deleted or overwritten
+        deleteCheckIns(for: orderPosition, in: queue)
+
+        // Store new checkins
+        queue.inDatabase { database in
             for record in records {
                 let list = record.listID as Int
                 let order_position = orderPosition.identifier as Int
