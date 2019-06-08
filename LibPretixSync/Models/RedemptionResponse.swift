@@ -22,6 +22,10 @@ public struct RedemptionResponse: Codable, Equatable {
     /// The `OrderPosition` being redeemed
     public var position: OrderPosition?
 
+    /// If the ticket has already been redeemed, this field might contain the last CheckIn
+    public var lastCheckIn: CheckIn?
+
+    // MARK: - Enums
     /// Possible values for the Response Status
     public enum Status: String, Codable {
         /// The ticket has been successfully redeemed and the attendee should be let in
@@ -50,5 +54,6 @@ public struct RedemptionResponse: Codable, Equatable {
         case status
         case errorReason = "reason"
         case position
+        case lastCheckIn
     }
 }

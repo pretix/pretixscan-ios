@@ -152,7 +152,7 @@ public class FMDBDataStore: DataStore {
         return foundOrderPositions
     }
 
-    private func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {
+    public func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {
         guard let queue = databaseQueue(with: event) else {
             fatalError("Could not create database queue")
         }
@@ -167,6 +167,18 @@ public class FMDBDataStore: DataStore {
                 }
             }
 
+        }
+
+        return checkIns
+    }
+
+    public func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn] {
+        guard let checkInList = checkInList else {
+            return []
+        }
+
+        let checkIns = getCheckIns(for: orderPosition, in: event).filter {
+            $0.listID == checkInList.identifier
         }
 
         return checkIns
@@ -224,10 +236,7 @@ public class FMDBDataStore: DataStore {
             guard let orderPosition = OrderPosition.get(secret: secret, in: queue) else {
                 return nil
             }
-
-            let checkIns = getCheckIns(for: orderPosition, in: event).filter {
-                $0.listID == checkInList.identifier
-            }
+            let checkIns = getCheckIns(for: orderPosition, in: checkInList, in: event)
 
             let orderPositionWithCheckins = orderPosition.adding(checkIns: checkIns)
                 .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
@@ -236,7 +245,8 @@ public class FMDBDataStore: DataStore {
             // Check for previous check ins
             if checkIns.count > 0 {
                 // Attendee is already checked in
-                return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPositionWithCheckins)
+                return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPositionWithCheckins,
+                                          lastCheckIn: nil)
             }
 
             // Store a queued redemption request
@@ -259,7 +269,7 @@ public class FMDBDataStore: DataStore {
             CheckIn.store([checkIn], for: orderPositionWithCheckins, in: queue)
 
             // Return a positive redemption response
-            return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPositionWithCheckins)
+            return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPositionWithCheckins, lastCheckIn: nil)
     }
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
