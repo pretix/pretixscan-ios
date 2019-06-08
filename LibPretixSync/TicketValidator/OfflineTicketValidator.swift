@@ -100,7 +100,7 @@ public class OfflineTicketValidator: TicketValidator {
                     $0.listID == checkInList.identifier
                 }.first
             }
-            
+
             completionHandler(response, nil)
         } else {
             completionHandler(nil, APIError.notFound)
