@@ -41,7 +41,7 @@ extension CheckIn: FMDBModel {
         return CheckIn(listID: list, date: date)
     }
 
-    static func removeCheckIns(for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
+    static func deleteCheckIns(for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
         queue.inDatabase { database in
             do {
                 try database.executeUpdate(CheckIn.deleteByOrderPositionQuery, values: [orderPosition.identifier])
@@ -52,11 +52,11 @@ extension CheckIn: FMDBModel {
     }
 
     static func store(_ records: [CheckIn], for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
-        queue.inDatabase { database in
-            // Remove existing checkins, in case something was deleted or overwritten
-            removeCheckIns(for: orderPosition, in: queue)
+        // Remove existing checkins, in case something was deleted or overwritten
+        deleteCheckIns(for: orderPosition, in: queue)
 
-            // Store new checkins
+        // Store new checkins
+        queue.inDatabase { database in
             for record in records {
                 let list = record.listID as Int
                 let order_position = orderPosition.identifier as Int
