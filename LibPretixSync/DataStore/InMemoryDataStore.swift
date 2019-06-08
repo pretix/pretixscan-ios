@@ -14,6 +14,7 @@ import Foundation
 ///
 /// - Note: See `DataStore` for function level documentation.
 public class InMemoryDataStore: DataStore {
+
     // MARK: - Last Synced
     public func invalidateLastSynced(in event: Event) {
         dataStore(for: event).lastSynced = [String: String]()
@@ -67,6 +68,14 @@ public class InMemoryDataStore: DataStore {
         return nil
     }
 
+    public func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {
+        return []
+    }
+
+    public func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn] {
+        return []
+    }
+
     public func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition] {
         var searchResult = [OrderPosition]()
         for order in dataStore(for: event).orders {
@@ -90,7 +99,7 @@ public class InMemoryDataStore: DataStore {
         for order in dataStore(for: event).orders {
             guard let positions = order.positions else { continue }
             for orderPosition in positions where orderPosition.secret == secret {
-                return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition)
+                return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition, lastCheckIn: nil)
             }
         }
 

@@ -71,16 +71,35 @@ public class OnlineTicketValidator: TicketValidator {
                 return
             }
 
+            guard let checkInList = self.configStore.checkInList else {
+                completionHandler(redemptionResponse, error)
+                return
+            }
+
             guard var position = redemptionResponse.position else {
                 completionHandler(redemptionResponse, error)
                 return
             }
 
+            guard let dataStore = self.configStore.dataStore else {
+                print("Could not retrieve datastore!")
+                completionHandler(redemptionResponse, error)
+                return
+            }
+
             if let event = self.configStore.event {
-                position = position.adding(order: self.configStore.dataStore?.getOrder(by: position.orderCode, in: event))
-                position = position.adding(item: self.configStore.dataStore?.getItem(by: position.itemIdentifier, in: event))
+                position = position.adding(order: dataStore.getOrder(by: position.orderCode, in: event))
+                position = position.adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
+
+                let checkIns = dataStore.getCheckIns(for: position, in: self.configStore.checkInList, in: event)
+                position = position.adding(checkIns: checkIns)
+
                 redemptionResponse.position = position
             }
+
+            redemptionResponse.lastCheckIn = redemptionResponse.position?.checkins.filter {
+                $0.listID == checkInList.identifier
+            }.first
 
             completionHandler(redemptionResponse, error)
         }

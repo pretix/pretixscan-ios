@@ -38,6 +38,12 @@ public protocol DataStore: class {
     /// Retrieve an `Order` instance with the specified identifier, is such an Order exists
     func getOrder(by code: String, in event: Event) -> Order?
 
+    /// Retrieve all CheckIns for the specified `OrderPosition`
+    func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn]
+
+    /// Retrieve all CheckIns for the specified `OrderPosition` in the specified `CheckInList`
+    func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn]
+
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found

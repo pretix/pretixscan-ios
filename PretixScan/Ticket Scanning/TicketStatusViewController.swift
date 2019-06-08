@@ -178,6 +178,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             iconLabel.text = Icon.warning
             ticketStatusLabel.text = Localization.TicketStatusViewController.TicketAlreadyRedeemed
             appCoordinator?.performHapticNotification(ofType: .warning)
+            print(redemptionResponse.lastCheckIn)
         } else {
             newBackgroundColor = Color.error
             iconLabel.text = Icon.error

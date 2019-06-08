@@ -70,7 +70,37 @@ public class OfflineTicketValidator: TicketValidator {
         // Redeem using DataStore
         // A QueuedRedemptionRequest will automatically be generated
         let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, in: event, in: checkInList)
-        if let response = response {
+        if var response = response {
+            guard var position = response.position else {
+                completionHandler(response, nil)
+                return
+            }
+
+            guard let checkInList = self.configStore.checkInList else {
+                completionHandler(response, nil)
+                return
+            }
+
+            guard let dataStore = self.configStore.dataStore else {
+                print("Could not retrieve datastore!")
+                completionHandler(response, nil)
+                return
+            }
+
+            if let event = self.configStore.event {
+                position = position.adding(order: dataStore.getOrder(by: position.orderCode, in: event))
+                position = position.adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
+
+                let checkIns = dataStore.getCheckIns(for: position, in: self.configStore.checkInList, in: event)
+                position = position.adding(checkIns: checkIns)
+
+                response.position = position
+
+                response.lastCheckIn = position.checkins.filter {
+                    $0.listID == checkInList.identifier
+                }.first
+            }
+            
             completionHandler(response, nil)
         } else {
             completionHandler(nil, APIError.notFound)
