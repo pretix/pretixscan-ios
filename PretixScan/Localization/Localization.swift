@@ -71,6 +71,14 @@ struct Localization {
         static let Valid = NSLocalizedString("Valid", comment: "")
     }
 
+    struct SearchHeaderView {
+        static let NotEnoughCharacters = NSLocalizedString("Search will begin after you have typed at least 3 characters.", comment: "")
+        static let Loading = NSLocalizedString("Loading Search", comment: "")
+        static let NoResults = NSLocalizedString("Found No Results", comment: "")
+        static let OneResult = NSLocalizedString("Found one Result", comment: "")
+        static let NResults = NSLocalizedString("Found %d Results", comment: "Placeholder is an integer")
+    }
+
     struct CheckInStatusTableViewController {
         static let Title = NSLocalizedString("Statistics", comment: "")
     }
