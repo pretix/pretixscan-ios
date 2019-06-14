@@ -77,8 +77,10 @@ class SearchHeaderView: UIView {
                 label.text = Localization.SearchHeaderView.NoResults
             case 1:
                 label.text = Localization.SearchHeaderView.OneResult
-            default:
+            case 2...50:
                 label.text = String.localizedStringWithFormat(Localization.SearchHeaderView.NResults, results)
+            default:
+                label.text = String.localizedStringWithFormat(Localization.SearchHeaderView.TooManyResults, results)
             }
             loadingIndicator.stopAnimating()
         }

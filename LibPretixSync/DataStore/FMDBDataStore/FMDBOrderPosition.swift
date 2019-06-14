@@ -43,7 +43,8 @@ extension OrderPosition: FMDBModel {
     WHERE "attendee_name" LIKE ?
     OR "attendee_email" LIKE ?
     OR "email" LIKE ?
-    OR "code" LIKE ?;
+    OR "code" LIKE ?
+    LIMIT 51;
     """
 
     static let getBySecretQuery =  """
