@@ -29,6 +29,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
     }
 
+    private var avCaptureDevice: AVCaptureDevice?
+
     private var lastFoundAt: Date = Date.distantPast
     private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 
@@ -41,7 +43,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         view.backgroundColor = UIColor.darkGray
         captureSession = AVCaptureSession()
 
-        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+        avCaptureDevice = AVCaptureDevice.default(for: .video)
+        guard let videoCaptureDevice = avCaptureDevice else { return }
         let videoInput: AVCaptureDeviceInput
 
         do {
@@ -138,6 +141,32 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             }, completion: { _ in
                 flashingView.removeFromSuperview()
             })
+        }
+    }
+
+    /// Toggle the Flashlight on and off if possible
+    ///
+    /// https://stackoverflow.com/a/27334447/54547
+    func toggleFlash() {
+        guard let device = avCaptureDevice else { return }
+        guard device.hasTorch else { return }
+
+        do {
+            try device.lockForConfiguration()
+
+            if (device.torchMode == AVCaptureDevice.TorchMode.on) {
+                device.torchMode = AVCaptureDevice.TorchMode.off
+            } else {
+                do {
+                    try device.setTorchModeOn(level: 1.0)
+                } catch {
+                    print(error)
+                }
+            }
+
+            device.unlockForConfiguration()
+        } catch {
+            print(error)
         }
     }
 
