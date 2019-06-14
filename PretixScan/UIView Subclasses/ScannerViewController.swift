@@ -29,13 +29,14 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
     }
 
-    private var avCaptureDevice: AVCaptureDevice?
-
     private var lastFoundAt: Date = Date.distantPast
     private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 
+    private var avCaptureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession!
     private var previewLayer: AVCaptureVideoPreviewLayer!
+
+    private var tapGestureRecognizer: UITapGestureRecognizer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +77,10 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
+
+        // Tap Gestures
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleFlash))
+        view.addGestureRecognizer(tapGestureRecognizer!)
     }
 
     func failed() {
@@ -147,15 +152,15 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     /// Toggle the Flashlight on and off if possible
     ///
     /// https://stackoverflow.com/a/27334447/54547
-    func toggleFlash() {
+    @objc func toggleFlash() {
         guard let device = avCaptureDevice else { return }
         guard device.hasTorch else { return }
 
         do {
             try device.lockForConfiguration()
 
-            if (device.torchMode == AVCaptureDevice.TorchMode.on) {
-                device.torchMode = AVCaptureDevice.TorchMode.off
+            if device.torchMode == .on {
+                device.torchMode = .off
             } else {
                 do {
                     try device.setTorchModeOn(level: 1.0)
@@ -170,6 +175,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
     }
 
+    // Override this method in yuor subclass
     func found(code: String) {
         print(code)
     }
