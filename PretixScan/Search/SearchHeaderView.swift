@@ -1,5 +1,5 @@
 //
-//  SearchFooterView.swift
+//  SearchHeaderView.swift
 //  PretixScan
 //
 //  Created by Daniel Jilg on 20.03.19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchFooterView: UIView {
+class SearchHeaderView: UIView {
     enum Status {
         case notEnoughCharacters
         case loading
@@ -29,6 +29,8 @@ class SearchFooterView: UIView {
     }
 
     private func configureView() {
+        backgroundColor = Color.grayBackground
+
         label.textAlignment = .center
         label.textColor = UIColor.gray
         label.numberOfLines = 0
@@ -37,10 +39,14 @@ class SearchFooterView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
-        label.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
-        label.bottomAnchor.constraint(greaterThanOrEqualToSystemSpacingBelow: self.bottomAnchor, multiplier: 1)
+        label.topAnchor.constraint(greaterThanOrEqualTo: self.topAnchor, constant: 10).isActive = true
+        label.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -10).isActive = true
         label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20).isActive = true
         label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
+        label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+
+        let searchHeaderViewFrame = CGRect(x: 0, y: 0, width: frame.width, height: 72)
+        frame = searchHeaderViewFrame
     }
 
     private func updateStatus() {

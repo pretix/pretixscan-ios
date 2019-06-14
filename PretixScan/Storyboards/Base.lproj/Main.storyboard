@@ -727,7 +727,7 @@
                                                 <constraint firstAttribute="height" constant="180" id="TZa-L7-sKX"/>
                                             </constraints>
                                             <prototypes>
-                                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="itemVariantCell" id="Ak7-42-dkG" customClass="ItemVariationTableViewCell" customModule="pretixSCAN" customModuleProvider="target">
+                                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="itemVariantCell" id="Ak7-42-dkG" customClass="ItemVariationTableViewCell" customModule="pretixSCAN" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="28" width="359" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ak7-42-dkG" id="WRY-Fp-aY7">
@@ -735,7 +735,7 @@
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8vH-QM-X03">
-                                                                <rect key="frame" x="20" y="0.0" width="311" height="44.5"/>
+                                                                <rect key="frame" x="20" y="0.0" width="536" height="44.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Standard Ticket" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pSb-Eq-YtA">
                                                                         <rect key="frame" x="0.0" y="12" width="121" height="20.5"/>
@@ -744,7 +744,7 @@
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13/15" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBc-Kw-sZh">
-                                                                        <rect key="frame" x="270" y="12" width="41" height="20.5"/>
+                                                                        <rect key="frame" x="495" y="12" width="41" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -1145,11 +1145,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="73J-6r-Oil"/>
                     <connections>
-                        <outlet property="searchFooterView" destination="8BM-Qa-NtS" id="zh8-PS-qhN"/>
+                        <outlet property="searchHeaderView" destination="8BM-Qa-NtS" id="zh8-PS-qhN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sbc-Sc-MKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8BM-Qa-NtS" customClass="SearchFooterView" customModule="pretixSCAN" customModuleProvider="target">
+                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8BM-Qa-NtS" customClass="SearchHeaderView" customModule="pretixSCAN" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -13,7 +13,7 @@ class SearchResultsTableViewController: UITableViewController {
     var appCoordinator: AppCoordinator?
 
     // MARK: - Private Properties
-    @IBOutlet private var searchFooterView: SearchFooterView!
+    @IBOutlet private var searchHeaderView: SearchHeaderView!
     private var numberOfSearches = 0
     private var results = [OrderPosition]()
 
@@ -21,7 +21,7 @@ class SearchResultsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localization.SearchOrderPositionsTableViewController.Title
-        tableView.tableFooterView = searchFooterView
+        tableView.tableHeaderView = searchHeaderView
     }
 
     // MARK: - Table view data source
@@ -54,7 +54,7 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
         guard searchText.count > 2 else {
-            searchFooterView.status = .notEnoughCharacters
+            searchHeaderView.status = .notEnoughCharacters
             results = []
             tableView.reloadData()
             return
@@ -62,7 +62,7 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
 
         let nextSearchNumber = numberOfSearches + 1
 
-        searchFooterView.status = .loading
+        searchHeaderView.status = .loading
         deferredSearch(query: searchText) { (orders, error) in
             DispatchQueue.main.async {
                 // Protect against old slow searches overwriting new fast searches
@@ -72,7 +72,7 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
                 self.presentErrorAlert(ifError: error)
                 self.results = orders ?? []
                 self.tableView.reloadData()
-                self.searchFooterView.status = .searchCompleted(results: self.results.count)
+                self.searchHeaderView.status = .searchCompleted(results: self.results.count)
             }
         }
     }

@@ -23,7 +23,7 @@
 		DC1D6FBC2240FA46008A9E06 /* OrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB42240F689008A9E06 /* OrderPosition.swift */; };
 		DC1D6FBD2240FA49008A9E06 /* CheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB62240F82B008A9E06 /* CheckIn.swift */; };
 		DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FBE22416268008A9E06 /* SearchResultsTableViewController.swift */; };
-		DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC022424CA9008A9E06 /* SearchFooterView.swift */; };
+		DC1D6FC122424CA9008A9E06 /* SearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC022424CA9008A9E06 /* SearchHeaderView.swift */; };
 		DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC22242589B008A9E06 /* SearchResultTableViewCell.swift */; };
 		DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */; };
 		DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */; };
@@ -169,7 +169,7 @@
 		DC1D6FB62240F82B008A9E06 /* CheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIn.swift; sourceTree = "<group>"; };
 		DC1D6FBA2240FA16008A9E06 /* OrderPositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPositionTests.swift; sourceTree = "<group>"; };
 		DC1D6FBE22416268008A9E06 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
-		DC1D6FC022424CA9008A9E06 /* SearchFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFooterView.swift; sourceTree = "<group>"; };
+		DC1D6FC022424CA9008A9E06 /* SearchHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeaderView.swift; sourceTree = "<group>"; };
 		DC1D6FC22242589B008A9E06 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		DC1D6FC622425B02008A9E06 /* ConnectDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectDeviceViewController.swift; sourceTree = "<group>"; };
 		DC1D6FC722425B02008A9E06 /* SelectCheckInListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCheckInListTableViewController.swift; sourceTree = "<group>"; };
@@ -388,7 +388,7 @@
 			children = (
 				DC1D6FBE22416268008A9E06 /* SearchResultsTableViewController.swift */,
 				DC1D6FC22242589B008A9E06 /* SearchResultTableViewCell.swift */,
-				DC1D6FC022424CA9008A9E06 /* SearchFooterView.swift */,
+				DC1D6FC022424CA9008A9E06 /* SearchHeaderView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -869,7 +869,7 @@
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DC8467A7225B99590013F647 /* DataStore.swift in Sources */,
 				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
-				DC1D6FC122424CA9008A9E06 /* SearchFooterView.swift in Sources */,
+				DC1D6FC122424CA9008A9E06 /* SearchHeaderView.swift in Sources */,
 				DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */,
 				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
 				DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */,
