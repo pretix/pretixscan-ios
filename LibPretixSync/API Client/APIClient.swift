@@ -293,7 +293,13 @@ public extension APIClient {
                 completionHandler(pagedListResult.list?.results, pagedListResult.error)
             }
             previousSearchTask?.cancel()
-            task.resume()
+
+            // Wait a short while before firing off the request to see if there are
+            // further requests coming (i.e. the user is still typing)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                task.resume()
+            }
+
             previousSearchTask = task
 
         } catch {
