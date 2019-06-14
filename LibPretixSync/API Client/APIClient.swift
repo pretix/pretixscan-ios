@@ -26,6 +26,9 @@ public class APIClient {
     private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
     private let session = URLSession.shared
 
+    /// A previously fired off search task, so we cancel it if a new task is fired before this one is completed.
+    private var previousSearchTask: URLSessionDataTask?
+
     // MARK: - Initialization
     init(configStore: ConfigStore) {
         self.configStore = configStore
@@ -253,6 +256,8 @@ public extension APIClient {
     }
 
     /// Search all OrderPositions within a CheckInList
+    ///
+    /// Note: Firing off a search query will invalidate all previous queries
     func getSearchResults(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         do {
             let organizer = try getOrganizerSlug()
@@ -273,6 +278,13 @@ public extension APIClient {
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
+                    if let error = error as NSError? {
+                        if error.code == NSURLErrorCancelled {
+                            // The task was cancelled, send no completionHandler
+                            return
+                        }
+                    }
+
                     completionHandler(nil, error)
                     return
                 }
@@ -280,7 +292,15 @@ public extension APIClient {
                 let pagedListResult: (list: PagedList<OrderPosition>?, error: Error?) = self.pagedList(from: data!)
                 completionHandler(pagedListResult.list?.results, pagedListResult.error)
             }
-            task.resume()
+            previousSearchTask?.cancel()
+
+            // Wait a short while before firing off the request to see if there are
+            // further requests coming (i.e. the user is still typing)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                task.resume()
+            }
+
+            previousSearchTask = task
 
         } catch {
             completionHandler(nil, error)
