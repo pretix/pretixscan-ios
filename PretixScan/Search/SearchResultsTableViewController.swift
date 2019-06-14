@@ -55,6 +55,8 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
         guard let searchText = searchController.searchBar.text else { return }
         guard searchText.count > 2 else {
             searchFooterView.status = .notEnoughCharacters
+            results = []
+            tableView.reloadData()
             return
         }
 
@@ -68,7 +70,7 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
 
                 // Update Results
                 self.presentErrorAlert(ifError: error)
-                self.results = orders ?? [OrderPosition]()
+                self.results = orders ?? []
                 self.tableView.reloadData()
                 self.searchFooterView.status = .searchCompleted(results: self.results.count)
             }
