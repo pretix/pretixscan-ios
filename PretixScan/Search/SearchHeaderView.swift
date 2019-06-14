@@ -16,7 +16,7 @@ class SearchHeaderView: UIView {
     }
 
     var status: Status = .notEnoughCharacters { didSet { updateStatus() } }
-    
+
     private let label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -66,13 +66,20 @@ class SearchHeaderView: UIView {
     private func updateStatus() {
         switch status {
         case .notEnoughCharacters:
-            label.text = "Search will begin after you have typed at least 3 characters."
+            label.text = Localization.SearchHeaderView.NotEnoughCharacters
             loadingIndicator.stopAnimating()
         case .loading:
-            label.text = "Loading Search"
+            label.text = Localization.SearchHeaderView.Loading
             loadingIndicator.startAnimating()
         case let .searchCompleted(results):
-            label.text = "Found \(results) results"
+            switch results {
+            case 0:
+                label.text = Localization.SearchHeaderView.NoResults
+            case 1:
+                label.text = Localization.SearchHeaderView.OneResult
+            default:
+                label.text = String.localizedStringWithFormat(Localization.SearchHeaderView.NResults, results)
+            }
             loadingIndicator.stopAnimating()
         }
     }
