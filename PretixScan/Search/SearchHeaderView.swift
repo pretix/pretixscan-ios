@@ -16,7 +16,21 @@ class SearchHeaderView: UIView {
     }
 
     var status: Status = .notEnoughCharacters { didSet { updateStatus() } }
-    private let label: UILabel = UILabel()
+    
+    private let label: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = UIColor.gray
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .gray)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = Color.primary
+        return indicator
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,11 +45,7 @@ class SearchHeaderView: UIView {
     private func configureView() {
         backgroundColor = Color.grayBackground
 
-        label.textAlignment = .center
-        label.textColor = UIColor.gray
-        label.numberOfLines = 0
         addSubview(label)
-
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
@@ -45,6 +55,10 @@ class SearchHeaderView: UIView {
         label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
         label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
 
+        addSubview(loadingIndicator)
+        loadingIndicator.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 18).isActive = true
+        loadingIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+
         let searchHeaderViewFrame = CGRect(x: 0, y: 0, width: frame.width, height: 72)
         frame = searchHeaderViewFrame
     }
@@ -53,10 +67,13 @@ class SearchHeaderView: UIView {
         switch status {
         case .notEnoughCharacters:
             label.text = "Search will begin after you have typed at least 3 characters."
+            loadingIndicator.stopAnimating()
         case .loading:
             label.text = "Loading Search"
+            loadingIndicator.startAnimating()
         case let .searchCompleted(results):
             label.text = "Found \(results) results"
+            loadingIndicator.stopAnimating()
         }
     }
 }
