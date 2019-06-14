@@ -125,31 +125,33 @@ public class FMDBDataStore: DataStore {
             fatalError("Could not create database queue")
         }
 
-        let queryPlaceholder = "\"%\(query.trimmingCharacters(in: .whitespacesAndNewlines))%\""
-        let fullQuery = OrderPosition.searchQuery.replacingOccurrences(of: "?", with: queryPlaceholder)
+        DispatchQueue.main.async {
+            let queryPlaceholder = "\"%\(query.trimmingCharacters(in: .whitespacesAndNewlines))%\""
+            let fullQuery = OrderPosition.searchQuery.replacingOccurrences(of: "?", with: queryPlaceholder)
 
-        var searchResults = [OrderPosition]()
-        queue.inDatabase { database in
-            if let result = try? database.executeQuery(fullQuery, values: []) {
-                while result.next() {
-                    if let nextResult = OrderPosition.from(result: result) {
-                        searchResults.append(nextResult)
+            var searchResults = [OrderPosition]()
+            queue.inDatabase { database in
+                if let result = try? database.executeQuery(fullQuery, values: []) {
+                    while result.next() {
+                        if let nextResult = OrderPosition.from(result: result) {
+                            searchResults.append(nextResult)
+                        }
                     }
                 }
             }
-        }
 
-        // Populate with checkIns
-        var foundOrderPositions = [OrderPosition]()
-        for orderPosition in searchResults {
-            let populatedOrderPosition = orderPosition
-                .adding(checkIns: getCheckIns(for: orderPosition, in: event))
-                .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
-                .adding(order: getOrder(by: orderPosition.orderCode, in: event))
-            foundOrderPositions.append(populatedOrderPosition)
-        }
+            // Populate with checkIns
+            var foundOrderPositions = [OrderPosition]()
+            for orderPosition in searchResults {
+                let populatedOrderPosition = orderPosition
+                    .adding(checkIns: self.getCheckIns(for: orderPosition, in: event))
+                    .adding(item: self.getItem(by: orderPosition.itemIdentifier, in: event))
+                    .adding(order: self.getOrder(by: orderPosition.orderCode, in: event))
+                foundOrderPositions.append(populatedOrderPosition)
+            }
 
-        completionHandler(foundOrderPositions, nil)
+            completionHandler(foundOrderPositions, nil)
+        }
     }
 
     public func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {
