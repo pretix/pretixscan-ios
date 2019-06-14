@@ -120,7 +120,7 @@ public class FMDBDataStore: DataStore {
 
     // MARK: - Retrieving
     // Return all `OrderPosition`s matching the given query
-    public func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition] {
+    public func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         guard let queue = databaseQueue(with: event) else {
             fatalError("Could not create database queue")
         }
@@ -149,7 +149,7 @@ public class FMDBDataStore: DataStore {
             foundOrderPositions.append(populatedOrderPosition)
         }
 
-        return foundOrderPositions
+        completionHandler(foundOrderPositions, nil)
     }
 
     public func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {

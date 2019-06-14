@@ -48,8 +48,7 @@ public class OfflineTicketValidator: TicketValidator {
             completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
             return
         }
-        let foundOrderPositions = configStore.dataStore?.searchOrderPositions(query, in: event)
-        completionHandler(foundOrderPositions, nil)
+        configStore.dataStore?.searchOrderPositions(query, in: event, completionHandler: completionHandler)
     }
 
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList

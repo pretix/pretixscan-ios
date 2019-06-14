@@ -76,7 +76,7 @@ public class InMemoryDataStore: DataStore {
         return []
     }
 
-    public func searchOrderPositions(_ query: String, in event: Event) -> [OrderPosition] {
+    public func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         var searchResult = [OrderPosition]()
         for order in dataStore(for: event).orders {
             if let email = order.email, email.contains(query), let positions = order.positions {
@@ -91,7 +91,7 @@ public class InMemoryDataStore: DataStore {
                 })
             }
         }
-        return searchResult
+        completionHandler(searchResult, nil)
     }
 
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
