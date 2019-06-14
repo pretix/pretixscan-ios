@@ -77,6 +77,7 @@ struct Localization {
         static let NoResults = NSLocalizedString("Found No Results", comment: "")
         static let OneResult = NSLocalizedString("Found one Result", comment: "")
         static let NResults = NSLocalizedString("Found %d Results", comment: "Placeholder is an integer")
+        static let TooManyResults = NSLocalizedString("Found too many results, keep typing", comment: "")
     }
 
     struct CheckInStatusTableViewController {
