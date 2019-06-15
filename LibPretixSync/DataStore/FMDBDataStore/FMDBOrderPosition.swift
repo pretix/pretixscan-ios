@@ -22,6 +22,7 @@ extension OrderPosition: FMDBModel {
     "attendee_name"    TEXT,
     "attendee_email"    TEXT,
     "secret"    TEXT,
+    "subevent"    INTEGER,
     "pseudonymization_id"    TEXT,
     PRIMARY KEY("id")
     );
@@ -29,8 +30,9 @@ extension OrderPosition: FMDBModel {
 
     static var insertQuery = """
     REPLACE INTO "\(stringName)"
-    ("id", "order", "positionid", "item", "variation", "price", "attendee_name", "attendee_email", "secret", "pseudonymization_id")
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    ("id", "order", "positionid", "item", "variation", "price", "attendee_name", "attendee_email",
+    "secret", "subevent", "pseudonymization_id")
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
 
     static let searchQuery = """
@@ -71,12 +73,13 @@ extension OrderPosition: FMDBModel {
         let attendee_name = result.string(forColumn: "attendee_name")
         let attendee_email = result.string(forColumn: "attendee_email")
         guard let secret = result.string(forColumn: "orderpositionsecret") else { return nil }
+        let subevent = Int(result.int(forColumn: "subevent"))
         guard let pseudonymization_id = result.string(forColumn: "pseudonymization_id") else { return nil }
 
         let orderPosition = OrderPosition(
             identifier: identifier, orderCode: order, order: nil, positionid: positionid, itemIdentifier: item, item: nil,
             variation: variation, price: price, attendeeName: attendee_name, attendeeEmail: attendee_email, secret: secret,
-            pseudonymizationId: pseudonymization_id, checkins: [])
+            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [])
         return orderPosition
     }
 
@@ -108,12 +111,13 @@ extension OrderPosition: FMDBModel {
                 let attendee_name = record.attendeeName
                 let attendee_email = record.attendeeEmail
                 let secret = record.secret
+                let subevent = record.subEvent as Int?
                 let pseudonymization_id = record.pseudonymizationId
 
                 do {
                     try database.executeUpdate(OrderPosition.insertQuery, values: [
                         identifier, order, positionid, item, variation as Any, price,
-                        attendee_name as Any, attendee_email as Any, secret, pseudonymization_id])
+                        attendee_name as Any, attendee_email as Any, secret, subevent as Any, pseudonymization_id])
                 } catch {
                     print(error)
                 }
@@ -152,20 +156,20 @@ extension OrderPosition: FMDBModel {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            pseudonymizationId: pseudonymizationId, checkins: newCheckIns)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns)
     }
 
     func adding(item: Item?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            pseudonymizationId: pseudonymizationId, checkins: checkins)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins)
     }
 
     func adding(order: Order?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            pseudonymizationId: pseudonymizationId, checkins: checkins)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins)
     }
 }
