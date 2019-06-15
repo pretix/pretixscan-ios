@@ -222,7 +222,6 @@ public class DefaultsConfigStore: ConfigStore {
     func loadFromDefaults() {
         _welcomeScreenIsConfirmed = defaults.bool(forKey: key(.welcomeScreenIsConfirmed))
         _apiBaseURL = defaults.url(forKey: key(.apiBaseURL))
-        _apiToken = defaults.string(forKey: key(.apiToken))
         _deviceName = defaults.string(forKey: key(.deviceName))
         _organizerSlug = defaults.string(forKey: key(.organizerSlug))
         _deviceID = defaults.integer(forKey: key(.deviceID))
@@ -239,13 +238,14 @@ public class DefaultsConfigStore: ConfigStore {
             _checkInList = try? jsonDecoder.decode(CheckInList.self, from: checkinListData)
         }
 
-        // APIClient should auto-initialize once the other values are given
+        // Retrieve API Token from KeyChain
+        guard let apiBaseURL = _apiBaseURL?.absoluteString else { return }
+        _apiToken = Keychain.get(account: apiBaseURL, service: apiBaseURL)
     }
 
     func saveToDefaults() {
         save(_welcomeScreenIsConfirmed, forKey: .welcomeScreenIsConfirmed)
         save(_apiBaseURL, forKey: .apiBaseURL)
-        save(_apiToken, forKey: .apiToken)
         save(_deviceName, forKey: .deviceName)
         save(_organizerSlug, forKey: .organizerSlug)
         save(_deviceID, forKey: .deviceID)
@@ -255,6 +255,10 @@ public class DefaultsConfigStore: ConfigStore {
         save(try? jsonEncoder.encode(_checkInList), forKey: .checkInList)
 
         defaults.synchronize()
+
+        // Save api token into keychain
+        guard let apiToken = _apiToken, let apiBaseURL = _apiBaseURL?.absoluteString else { return }
+        Keychain.set(password: apiToken, account: apiBaseURL, service: apiBaseURL)
     }
 
     private func save(_ value: Bool?, forKey key: Keys) {
