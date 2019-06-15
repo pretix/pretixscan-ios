@@ -58,3 +58,9 @@ To check for linting errors, install [swiftlint](https://github.com/realm/swiftl
 
 # License 
 TBD
+
+# Licences for used Libraries
+
+- FMDB [MIT Licence](https://github.com/ccgus/fmdb/blob/master/LICENSE.txt)
+- SwiftMessages [MIT License](https://github.com/SwiftKickMobile/SwiftMessages/blob/master/LICENSE.md)
+- Tink Keychain [MIT Licence](https://github.com/tink-ab/Keychain/blob/master/LICENSE)
