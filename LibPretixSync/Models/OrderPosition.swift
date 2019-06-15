@@ -50,6 +50,9 @@ public struct OrderPosition: Model {
     /// Secret code printed on the tickets for validation
     public let secret: String
 
+    /// ID of the date inside an event series this position belongs to, if any
+    public let subEvent: Identifier?
+
     /// A random ID, e.g. for use in lead scanning apps
     public let pseudonymizationId: String
 
@@ -71,6 +74,7 @@ public struct OrderPosition: Model {
         case attendeeName = "attendee_name"
         case attendeeEmail = "attendee_email"
         case secret
+        case subEvent = "subevent"
         case pseudonymizationId = "pseudonymization_id"
         case checkins
     }
