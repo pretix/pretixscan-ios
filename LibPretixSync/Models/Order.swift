@@ -32,7 +32,7 @@ public struct Order: Model {
     public let salesChannel: String?
 
     /// Time of order creation
-    public let createdAt: Date?
+    public let createdAt: String?
 
     /// The order will expire, if it is still pending by this time
     public let expiresAt: Date?

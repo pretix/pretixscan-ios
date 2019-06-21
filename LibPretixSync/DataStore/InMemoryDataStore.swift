@@ -28,6 +28,13 @@ public class InMemoryDataStore: DataStore {
         return dataStore(for: event).lastSynced[model.stringName]
     }
 
+    public func setLastSyncCreationTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
+    }
+
+    public func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String? {
+        return nil
+    }
+
     // MARK: - Storing
     public func store<T: Model>(_ resources: [T], for event: Event) {
         if let events = resources as? [Event] {
