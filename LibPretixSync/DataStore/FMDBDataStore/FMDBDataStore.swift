@@ -78,6 +78,41 @@ public class FMDBDataStore: DataStore {
         return lastSyncedAt
     }
 
+    public func setLastSyncCreationTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        queue.inDatabase { database in
+            do {
+                try database.executeUpdate(SyncTimeStamp.insertQuery, values: [model.stringName + "partial", dateString])
+            } catch {
+                print(error)
+            }
+        }
+    }
+
+    public func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String? {
+        guard let queue = databaseQueue(with: event) else {
+            fatalError("Could not create database queue")
+        }
+
+        var lastSyncedAt: String?
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(SyncTimeStamp.getSingleModelQuery, values: [model.stringName + "partial"]) {
+                while result.next() {
+                    lastSyncedAt = result.string(forColumn: "last_synced_at")
+                }
+            }
+        }
+
+        if lastSyncedAt?.count == 0 {
+            return nil
+        }
+
+        return lastSyncedAt
+    }
+
     // MARK: - Storing
     /// Store a list of `Model`s related to an `Event`
     public func store<T>(_ resources: [T], for event: Event) where T: Model {

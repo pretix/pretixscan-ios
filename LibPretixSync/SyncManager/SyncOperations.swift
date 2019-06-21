@@ -100,7 +100,10 @@ class FullDownloader<T: Model>: APIClientOperation {
 
         var firstPageGeneratedAt: String?
 
-        urlSessionTask = apiClient.getTask(T.self, lastUpdated: nil) { result in
+        let lastSyncCreationTime = dataStore.lastSyncCreationTime(of: T.self, in: event)
+        let filters = lastSyncCreationTime != nil ? ["created_since": lastSyncCreationTime!] : [:]
+
+        urlSessionTask = apiClient.getTask(T.self, page: 1, lastUpdated: nil, event: event, filters: filters) { result in
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
@@ -115,6 +118,10 @@ class FullDownloader<T: Model>: APIClientOperation {
 
                 // Store Data
                 self.dataStore.store(pagedList.results, for: self.event)
+
+                if let pagedList = pagedList as? PagedList<Order>, let creationTimeOfLastObject = pagedList.results.last?.createdAt {
+                    self.dataStore.setLastSyncCreationTime(creationTimeOfLastObject, of: T.self, in: self.event)
+                }
 
                 if isFirstPage, let generatedAt = pagedList.generatedAt {
                     firstPageGeneratedAt = generatedAt

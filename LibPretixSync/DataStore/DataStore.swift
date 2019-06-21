@@ -24,6 +24,12 @@ public protocol DataStore: class {
     /// Retrieve timestamps of the last syncs
     func lastSyncTime<T: Model>(of model: T.Type, in event: Event) -> String?
 
+    /// Store timestamp for the last partially cleared full sync
+    func setLastSyncCreationTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event)
+
+    /// Retrieve timestamp for the last partially cleared full sync
+    func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String?
+
     // MARK: - Storing
     /// Store a list of `Model`s related to an `Event`
     func store<T: Model>(_ resources: [T], for event: Event)
