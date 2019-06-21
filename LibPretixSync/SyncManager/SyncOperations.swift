@@ -98,6 +98,8 @@ class FullDownloader<T: Model>: APIClientOperation {
             return
         }
 
+        var firstPageGeneratedAt: String?
+
         urlSessionTask = apiClient.getTask(T.self, lastUpdated: nil) { result in
             switch result {
             case .success(let pagedList):
@@ -115,11 +117,14 @@ class FullDownloader<T: Model>: APIClientOperation {
                 self.dataStore.store(pagedList.results, for: self.event)
 
                 if isFirstPage, let generatedAt = pagedList.generatedAt {
-                    self.dataStore.setLastSyncTime(generatedAt, of: T.self, in: self.event)
+                    firstPageGeneratedAt = generatedAt
                 }
 
                 if isLastPage {
-                    // We are done
+                    if let firstPageGeneratedAt = firstPageGeneratedAt {
+                        self.dataStore.setLastSyncTime(firstPageGeneratedAt, of: T.self, in: self.event)
+                    }
+
                     self.completeOperation()
                 }
             case .failure(let error):
@@ -143,6 +148,8 @@ class PartialDownloader<T: Model>: APIClientOperation {
 
         let lastUpdated = dataStore.lastSyncTime(of: T.self, in: event)
 
+        var firstPageGeneratedAt: String?
+
         urlSessionTask = apiClient.getTask(T.self, lastUpdated: lastUpdated) { result in
             switch result {
             case .success(let pagedList):
@@ -160,11 +167,14 @@ class PartialDownloader<T: Model>: APIClientOperation {
                 self.dataStore.store(pagedList.results, for: self.event)
 
                 if isFirstPage, let generatedAt = pagedList.generatedAt {
-                    self.dataStore.setLastSyncTime(generatedAt, of: T.self, in: self.event)
+                    firstPageGeneratedAt = generatedAt
                 }
 
                 if isLastPage {
-                    // We are done
+                    if let firstPageGeneratedAt = firstPageGeneratedAt {
+                        self.dataStore.setLastSyncTime(firstPageGeneratedAt, of: T.self, in: self.event)
+                    }
+
                     self.completeOperation()
                 }
             case .failure(let error):
