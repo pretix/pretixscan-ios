@@ -18,6 +18,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
     @IBOutlet weak var resetContentCell: UITableViewCell!
     @IBOutlet weak var offlineModeCell: UITableViewCell!
     @IBOutlet weak var swiftMessagesLicenseCell: UITableViewCell!
+    @IBOutlet weak var fmdbLicenseCell: UITableViewCell!
+    @IBOutlet weak var tinkKeyChainLicenseCell: UITableViewCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +46,12 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
         swiftMessagesLicenseCell.textLabel?.text = "SwiftMessages"
         swiftMessagesLicenseCell.detailTextLabel?.text = Localization.SettingsTableViewController.MITLicense
+
+        fmdbLicenseCell.textLabel?.text = "FMDB"
+        fmdbLicenseCell.detailTextLabel?.text = Localization.SettingsTableViewController.MITLicense
+
+        tinkKeyChainLicenseCell.textLabel?.text = "Tink Keychain"
+        tinkKeyChainLicenseCell.detailTextLabel?.text = Localization.SettingsTableViewController.MITLicense
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -60,6 +68,10 @@ class SettingsTableViewController: UITableViewController, Configurable {
             configStoreFactoryReset()
         } else if indexPath == tableView.indexPath(for: swiftMessagesLicenseCell) {
             showSwiftMessagesLicense()
+        } else if indexPath == tableView.indexPath(for: fmdbLicenseCell) {
+            showFMDBLicense()
+        } else if indexPath == tableView.indexPath(for: tinkKeyChainLicenseCell) {
+            showTinkKeyChainLicense()
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -116,5 +128,13 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     func showSwiftMessagesLicense() {
         UIApplication.shared.open(URL(string: "https://github.com/SwiftKickMobile/SwiftMessages/blob/master/LICENSE.md")!, options: [:])
+    }
+
+    func showFMDBLicense() {
+        UIApplication.shared.open(URL(string: "https://github.com/ccgus/fmdb/blob/master/LICENSE.txt")!, options: [:])
+    }
+
+    func showTinkKeyChainLicense() {
+        UIApplication.shared.open(URL(string: "https://github.com/tink-ab/Keychain/blob/master/LICENSE")!, options: [:])
     }
 }
