@@ -33,6 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             notificationManager = NotificationManager(configStore: configStore)
         }
 
+        // Setup Appearance
+        UIButton.appearance().tintColor = Color.buttons
+        UIProgressView.appearance().tintColor = Color.buttons
+        UIActivityIndicatorView.appearance().tintColor = Color.buttons
+
         return true
     }
 
