@@ -16,9 +16,7 @@ public class FMDBDataStore: DataStore {
     // MARK: Metadata
     /// Remove all Sync Times and pretend nothing was ever synced
     public func invalidateLastSynced(in event: Event) {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         // Drop and recreate all tables to thoroughly clean the db
         // This includes the SyncTimestamp table
@@ -43,9 +41,7 @@ public class FMDBDataStore: DataStore {
 
     /// Store timestamps of the last syncs
     public func setLastSyncTime<T>(_ dateString: String, of model: T.Type, in event: Event) where T: Model {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         queue.inDatabase { database in
             do {
@@ -58,9 +54,7 @@ public class FMDBDataStore: DataStore {
 
     /// Retrieve timestamps of the last syncs
     public func lastSyncTime<T>(of model: T.Type, in event: Event) -> String? where T: Model {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         var lastSyncedAt: String?
         queue.inDatabase { database in
@@ -79,9 +73,7 @@ public class FMDBDataStore: DataStore {
     }
 
     public func setLastSyncCreationTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         queue.inDatabase { database in
             do {
@@ -93,9 +85,7 @@ public class FMDBDataStore: DataStore {
     }
 
     public func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String? {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         var lastSyncedAt: String?
         queue.inDatabase { database in
@@ -116,9 +106,7 @@ public class FMDBDataStore: DataStore {
     // MARK: - Storing
     /// Store a list of `Model`s related to an `Event`
     public func store<T>(_ resources: [T], for event: Event) where T: Model {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         if let items = resources as? [Item] {
             Item.store(items, in: queue)
@@ -156,9 +144,7 @@ public class FMDBDataStore: DataStore {
     // MARK: - Retrieving
     // Return all `OrderPosition`s matching the given query
     public func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         DispatchQueue.main.async {
             let queryPlaceholder = "\"%\(query.trimmingCharacters(in: .whitespacesAndNewlines))%\""
@@ -190,9 +176,7 @@ public class FMDBDataStore: DataStore {
     }
 
     public func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         var checkIns = [CheckIn]()
         queue.inDatabase { database in
@@ -222,9 +206,7 @@ public class FMDBDataStore: DataStore {
     }
 
     public func getItem(by identifier: Identifier, in event: Event) -> Item? {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         var item: Item?
         queue.inDatabase { database in
@@ -242,9 +224,7 @@ public class FMDBDataStore: DataStore {
     }
 
     public func getOrder(by code: String, in event: Event) -> Order? {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         var order: Order?
         queue.inDatabase { database in
@@ -266,9 +246,7 @@ public class FMDBDataStore: DataStore {
     /// Will return `nil` if no orderposition with the specified secret is found
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
         -> RedemptionResponse? {
-            guard let queue = databaseQueue(with: event) else {
-                fatalError("Could not create database queue")
-            }
+            let queue = databaseQueue(with: event)
 
             guard let orderPosition = OrderPosition.get(secret: secret, in: queue) else {
                 return nil
@@ -311,9 +289,7 @@ public class FMDBDataStore: DataStore {
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
     public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         var count = 0
         queue.inDatabase { database in
@@ -332,9 +308,7 @@ public class FMDBDataStore: DataStore {
     /// This implementation will deliberately return a random instance each time, in order to not block the upload queue with
     /// a malformed request forever.
     public func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest? {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         var redemptionRequest: QueuedRedemptionRequest?
         queue.inDatabase { database in
@@ -350,9 +324,7 @@ public class FMDBDataStore: DataStore {
 
     /// Remove a `QeuedRedemptionRequest` instance from the database
     public func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event) {
-        guard let queue = databaseQueue(with: event) else {
-            fatalError("Could not create database queue")
-        }
+        let queue = databaseQueue(with: event)
 
         // Drop and recreate the sync times table
         queue.inDatabase { database in
@@ -368,7 +340,7 @@ public class FMDBDataStore: DataStore {
     private var currentDataBaseQueue: FMDatabaseQueue?
     private var currentDataBaseQueueEvent: Event?
 
-    func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue? {
+    func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {
         // If we're dealing with the same database as last time, keep it open
         // except in case the caller specifically asked us to recreate the DB.
         if currentDataBaseQueueEvent == event, let queue = currentDataBaseQueue, !recreate {
@@ -405,6 +377,6 @@ public class FMDBDataStore: DataStore {
         currentDataBaseQueue = queue
         currentDataBaseQueueEvent = event
 
-        return queue
+        return queue!
     }
 }
