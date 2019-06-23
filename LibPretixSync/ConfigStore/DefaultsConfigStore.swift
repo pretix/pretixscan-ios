@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Sentry
 
 /// ConfigStore implementation that stores configuration in UserDefaults.
 ///
@@ -150,6 +151,8 @@ public class DefaultsConfigStore: ConfigStore {
     public func set(event: Event, checkInList: CheckInList) {
         self.event = event
         self.checkInList = checkInList
+
+        Client.shared?.tags = ["event": event.slug, "checkInList": "\(checkInList.identifier)"]
     }
 
     public var asyncModeEnabled: Bool {

@@ -90,6 +90,7 @@
 		DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF50223ACAC60059C000 /* HttpMethods.swift */; };
 		DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF54223AE6E20059C000 /* Errors.swift */; };
 		DCAAFF57223AF14B0059C000 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF56223AF14B0059C000 /* UIViewController.swift */; };
+		DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAC199922BF7E5B0019B53F /* EventLogger.swift */; };
 		DCB35B8C2248E8E300860385 /* fa-solid-900.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */; };
 		DCB35B8E2248EB5800860385 /* RedemptionRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */; };
 		DCB35B8F2248EB8400860385 /* RedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */; };
@@ -224,6 +225,7 @@
 		DCAAFF50223ACAC60059C000 /* HttpMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethods.swift; sourceTree = "<group>"; };
 		DCAAFF54223AE6E20059C000 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		DCAAFF56223AF14B0059C000 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		DCAC199922BF7E5B0019B53F /* EventLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLogger.swift; sourceTree = "<group>"; };
 		DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-solid-900.ttf"; sourceTree = "<group>"; };
 		DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionRequestTests.swift; sourceTree = "<group>"; };
 		DCB35B902248F31400860385 /* RedemptionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionResponse.swift; sourceTree = "<group>"; };
@@ -518,6 +520,14 @@
 			path = "API Client";
 			sourceTree = "<group>";
 		};
+		DCAC199822BF7E490019B53F /* EventLogging */ = {
+			isa = PBXGroup;
+			children = (
+				DCAC199922BF7E5B0019B53F /* EventLogger.swift */,
+			);
+			path = EventLogging;
+			sourceTree = "<group>";
+		};
 		DCB35B9E2249407300860385 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +581,7 @@
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
 			isa = PBXGroup;
 			children = (
+				DCAC199822BF7E490019B53F /* EventLogging */,
 				DCEF6E322239255B009E7078 /* ConfigStore */,
 				DC1D6FAF2240ECE6008A9E06 /* TicketValidator */,
 				DCAAFF45223AB62B0059C000 /* API Client */,
@@ -813,6 +824,7 @@
 			files = (
 				DC8467C8225CF52B0013F647 /* TypeAliases.swift in Sources */,
 				DC227F2A2253E0AE00314448 /* LoadingIndicator.swift in Sources */,
+				DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */,
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
 				DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */,
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
