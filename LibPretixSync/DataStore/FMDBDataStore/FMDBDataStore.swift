@@ -5,6 +5,7 @@
 //  Created by Daniel Jilg on 11.04.19.
 //  Copyright © 2019 rami.io. All rights reserved.
 //
+// swiftlint:disable force_try
 
 import Foundation
 import FMDB
@@ -31,7 +32,8 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(QueuedRedemptionRequest.destructionQuery, values: nil)
                 try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
             } catch {
-                print("db init failed: \(error.localizedDescription)")
+                EventLogger.log(event: "db init failed: \(error.localizedDescription)",
+                    category: .database, level: .fatal, type: .error)
             }
         }
 
@@ -47,7 +49,7 @@ public class FMDBDataStore: DataStore {
             do {
                 try database.executeUpdate(SyncTimeStamp.insertQuery, values: [model.stringName, dateString])
             } catch {
-                print(error)
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
     }
@@ -79,7 +81,7 @@ public class FMDBDataStore: DataStore {
             do {
                 try database.executeUpdate(SyncTimeStamp.insertQuery, values: [model.stringName + "partial", dateString])
             } catch {
-                print(error)
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
     }
@@ -138,7 +140,7 @@ public class FMDBDataStore: DataStore {
             return
         }
 
-        print("Don't know how to store \(T.humanReadableName)")
+        EventLogger.log(event: "Don't know how to store \(T.humanReadableName)", category: .offlineDownload, level: .warning, type: .fault)
     }
 
     // MARK: - Retrieving
@@ -332,7 +334,7 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(QueuedRedemptionRequest.deleteOneRequestQuery,
                     values: [queuedRedemptionRequest.redemptionRequest.nonce])
             } catch {
-                print("db operation failed: \(error.localizedDescription)")
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
     }
@@ -351,10 +353,10 @@ public class FMDBDataStore: DataStore {
         currentDataBaseQueue?.close()
 
         // ... and open a new queue
-        let fileURL = try? FileManager.default
+        let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(event.slug).sqlite")
-        print("Opening Database \(fileURL?.path ?? "ERROR")")
+        print("Opening Database \(fileURL.path)")
         let queue = FMDatabaseQueue(url: fileURL)
 
         // Configure the queue
@@ -369,7 +371,7 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
                 try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
             } catch {
-                print("db init failed: \(error.localizedDescription)")
+               EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
 

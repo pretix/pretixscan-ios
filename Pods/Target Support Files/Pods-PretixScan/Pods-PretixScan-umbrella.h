@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_PretixScanVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_PretixScanVersionString[];
+FOUNDATION_EXPORT double Pods_pretixSCANVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_pretixSCANVersionString[];
 

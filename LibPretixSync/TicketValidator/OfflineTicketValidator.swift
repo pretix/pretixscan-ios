@@ -81,7 +81,7 @@ public class OfflineTicketValidator: TicketValidator {
             }
 
             guard let dataStore = self.configStore.dataStore else {
-                print("Could not retrieve datastore!")
+                EventLogger.log(event: "Could not retrieve datastore!", category: .configuration, level: .fatal, type: .error)
                 completionHandler(response, nil)
                 return
             }

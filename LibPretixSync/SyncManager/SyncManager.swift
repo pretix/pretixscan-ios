@@ -112,7 +112,8 @@ public class SyncManager {
             let checkInList = configStore.checkInList,
             let apiClient = configStore.apiClient,
             let dataStore = configStore.dataStore else {
-                print("SyncStore will not work unless event, checkinList, dataStore and APIclient are set")
+                EventLogger.log(event: "SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
+                                category: .configuration, level: .warning, type: .default)
                 return
         }
 
@@ -133,7 +134,8 @@ public class SyncManager {
             let checkInList = configStore.checkInList,
             let apiClient = configStore.apiClient,
             let dataStore = configStore.dataStore else {
-            print("SyncStore will not work unless event, checkinList, dataStore and APIclient are set")
+                EventLogger.log(event: "SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
+                                category: .configuration, level: .warning, type: .default)
             return
         }
 
@@ -196,10 +198,12 @@ public class SyncManager {
         let uploader = QueuedRedemptionRequestsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         uploader.completionBlock = {
             if let error = uploader.error {
-                print("Queued Redemption Request came back with error: \(error)")
+                EventLogger.log(event: "Queued Redemption Request came back with error: \(error)",
+                    category: .offlineUpload, level: .error, type: .error)
             }
             if let errorReason = uploader.errorReason {
-                print("Queued Redemption Request came back with error: \(errorReason)")
+                EventLogger.log(event: "Queued Redemption Request came back with error: \(errorReason)",
+                    category: .offlineUpload, level: .error, type: .error)
             }
 
             if uploader.shouldRepeat {

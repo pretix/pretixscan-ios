@@ -80,7 +80,7 @@ extension QueuedRedemptionRequest: FMDBModel {
                         event_id, check_in_list_id, secret, questions_supported, datetime as Any, force,
                         ignore_unpaid, nonce])
                 } catch {
-                    print(error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }
             }
         }

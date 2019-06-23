@@ -1,11 +1,12 @@
 platform :ios, '12.1'
 
-target 'PretixScan' do
+target 'pretixSCAN' do
   use_frameworks!
 
   # Pods for PretixScan
   pod 'SwiftMessages', :inhibit_warnings => true
   pod 'FMDB'
+  pod 'Sentry'
 
   pre_install do |installer|
     installer.analysis_result.specifications.each do |s|
