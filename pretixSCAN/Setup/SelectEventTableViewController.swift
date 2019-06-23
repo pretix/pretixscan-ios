@@ -102,10 +102,10 @@ class SelectEventTableViewController: UITableViewController, Configurable {
         let cell = tableView.dequeueReusableCell(withIdentifier: SelectEventTableViewController.reuseIdentifier, for: indexPath)
 
         if let subEvent = subEvent(for: indexPath) {
-            cell.textLabel?.text = " " +  subEvent.name.description
+            cell.textLabel?.text = " " +  (subEvent.name.representation(in: Locale.current) ?? "(subevent)")
             cell.detailTextLabel?.text = " " + dateFormatter.string(from: subEvent.dateFrom)
         } else if let event = event(for: indexPath) {
-            cell.textLabel?.text = event.name.description
+            cell.textLabel?.text = event.name.representation(in: Locale.current)
             if let date = event.dateFrom {
                 cell.detailTextLabel?.text = dateFormatter.string(from: date)
             }

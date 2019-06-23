@@ -1,6 +1,6 @@
 //
 //  Locale.swift
-//  PretixScanTests
+//  PretixScan
 //
 //  Created by Daniel Jilg on 08.04.19.
 //  Copyright © 2019 rami.io. All rights reserved.
@@ -9,7 +9,7 @@
 import Foundation
 
 /// The country code for a `MultilingualString`
-public enum Locale: String, Codable, Equatable {
+public enum RegionCode: String, Codable, Equatable {
     /// English
     case english = "en"
 

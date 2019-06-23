@@ -91,7 +91,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         let needsAttention = (redemptionResponse.position?.order?.checkInAttention == true)
             || (redemptionResponse.position?.item?.checkInAttention == true)
 
-        productNameLabel.text = "\(redemptionResponse.position?.item?.name.description ?? "🎟")"
+        productNameLabel.text = "\(redemptionResponse.position?.item?.name.representation(in: Locale.current) ?? "🎟")"
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
         orderIDLabel.text =
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"

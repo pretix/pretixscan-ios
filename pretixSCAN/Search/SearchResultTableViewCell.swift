@@ -29,7 +29,7 @@ class SearchResultTableViewCell: UITableViewCell {
 
         orderCodeLabel.text = "\(orderPosition.attendeeName ?? "--")"
         orderIDLabel.text = orderPosition.orderCode
-        ticketType.text = "\(orderPosition.item?.name.description ?? "\(orderPosition.itemIdentifier)")"
+        ticketType.text = "\(orderPosition.item?.name.representation(in: Locale.current) ?? "\(orderPosition.itemIdentifier)")"
         secretLabel.text = orderPosition.secret
         statusLabel.text = orderPosition.checkins.count > 0 ?
             Localization.SearchResultsTableViewCell.Redeemed : Localization.SearchResultsTableViewCell.Valid

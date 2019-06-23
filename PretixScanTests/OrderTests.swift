@@ -34,7 +34,7 @@ class OrderTests: XCTestCase {
     """.data(using: .utf8)!
 
     let exampleObject = Order(
-        code: "YFVJA", status: .paid, testMode: false, secret: "24p7qnkvapqplr57", email: nil, locale: .english,
+        code: "YFVJA", status: .paid, secret: "24p7qnkvapqplr57", email: nil, locale: .english,
         salesChannel: "resellers", createdAt: nil, expiresAt: nil, lastModifiedAt: nil,
         total: "250.00", comment: "", checkInAttention: nil, positions: [], requireApproval: false)
 

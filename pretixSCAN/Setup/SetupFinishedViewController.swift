@@ -34,7 +34,7 @@ class SetupFinishedViewController: UIViewController, Configurable {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        eventLabel.text = configStore?.event?.name.description ?? "No Event"
+        eventLabel.text = configStore?.event?.name.representation(in: Locale.current) ?? "No Event"
         checkInListLabel.text = configStore?.checkInList?.name ?? "No CheckInList"
     }
 

@@ -105,9 +105,9 @@ class ItemTests: XCTestCase {
         hasVariations: true,
         variations: [
             ItemVariation(identifier: 6423, name: MultiLingualString.german("S"),
-                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString.empty(), position: 0),
+                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 0),
             ItemVariation(identifier: 6424, name: MultiLingualString.german("M"),
-                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString.empty(), position: 1)
+                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 1)
         ],
         addons: [],
         bundles: []
