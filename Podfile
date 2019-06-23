@@ -1,6 +1,6 @@
 platform :ios, '12.1'
 
-target 'PretixScan' do
+target 'pretixSCAN' do
   use_frameworks!
 
   # Pods for PretixScan

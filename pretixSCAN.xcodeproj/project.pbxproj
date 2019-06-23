@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		91CCDCAF6BD0E373EC1C6934 /* Pods_PretixScan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */; };
+		409D06597D8995ABD3C2606B /* Pods_pretixSCAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19C23358B478B81FC4A9090 /* Pods_pretixSCAN.framework */; };
+		48B9A461E0CB52BDDA566BD2 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */; };
 		DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E7225FB02B002D985B /* FMDBDataStore.swift */; };
 		DC0052EA2260D385002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
 		DC0052EB2260D437002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
@@ -135,7 +136,6 @@
 		DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF8A44E22A267910020E0DE /* LocalizedEnums.swift */; };
 		DCF8A45122A26C5E0020E0DE /* BlinkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */; };
 		DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFAFD8022B54E010042F9F1 /* Keychain.swift */; };
-		E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,11 +149,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F8337068DC28D5BB74F8AD9 /* Pods-PretixScanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.release.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.release.xcconfig"; sourceTree = "<group>"; };
-		21519C9F8BA4033B8E89C05F /* Pods-PretixScan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScan.debug.xcconfig"; path = "Target Support Files/Pods-PretixScan/Pods-PretixScan.debug.xcconfig"; sourceTree = "<group>"; };
-		BDF1F626BB1093C36D3971D4 /* Pods-PretixScan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScan.release.xcconfig"; path = "Target Support Files/Pods-PretixScan/Pods-PretixScan.release.xcconfig"; sourceTree = "<group>"; };
-		D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.debug.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F3B006E501159B61EC31A90 /* Pods-PretixScanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.debug.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5AEE3DBAA5CEAFBF067EB16C /* Pods-PretixScanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.release.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.release.xcconfig"; sourceTree = "<group>"; };
+		8A87E68C45A17BFF5E94F2F0 /* Pods-pretixSCAN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.release.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.release.xcconfig"; sourceTree = "<group>"; };
+		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
 		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
 		DC0052E92260D385002D985B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		DC07357622392474008326F7 /* pretixSCAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pretixSCAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,7 +264,7 @@
 		DCF8A44E22A267910020E0DE /* LocalizedEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedEnums.swift; sourceTree = "<group>"; };
 		DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkerView.swift; sourceTree = "<group>"; };
 		DCFAFD8022B54E010042F9F1 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
-		FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E19C23358B478B81FC4A9090 /* Pods_pretixSCAN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pretixSCAN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,7 +272,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91CCDCAF6BD0E373EC1C6934 /* Pods_PretixScan.framework in Frameworks */,
+				409D06597D8995ABD3C2606B /* Pods_pretixSCAN.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,29 +280,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9868185F74A414F3652D330 /* Pods_PretixScanTests.framework in Frameworks */,
+				48B9A461E0CB52BDDA566BD2 /* Pods_PretixScanTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		28A432BB3FF806F2EDB1FE73 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				FC5C0DF507D9E4D055B4377E /* Pods_PretixScan.framework */,
-				09C215A8771288BF250B5EC1 /* Pods_PretixScanTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		A6C5D16AFBC1EE32D87B8211 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				21519C9F8BA4033B8E89C05F /* Pods-PretixScan.debug.xcconfig */,
-				BDF1F626BB1093C36D3971D4 /* Pods-PretixScan.release.xcconfig */,
-				D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */,
-				1F8337068DC28D5BB74F8AD9 /* Pods-PretixScanTests.release.xcconfig */,
+				1F3B006E501159B61EC31A90 /* Pods-PretixScanTests.debug.xcconfig */,
+				5AEE3DBAA5CEAFBF067EB16C /* Pods-PretixScanTests.release.xcconfig */,
+				B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */,
+				8A87E68C45A17BFF5E94F2F0 /* Pods-pretixSCAN.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -312,11 +303,11 @@
 			children = (
 				DCAAFF28223929B60059C000 /* README.md */,
 				DCEF6E31223924F2009E7078 /* LibPretixSync */,
-				DC07357822392474008326F7 /* PretixScan */,
+				DC07357822392474008326F7 /* pretixSCAN */,
 				DC07358D22392476008326F7 /* PretixScanTests */,
 				DC07357722392474008326F7 /* Products */,
 				A6C5D16AFBC1EE32D87B8211 /* Pods */,
-				28A432BB3FF806F2EDB1FE73 /* Frameworks */,
+				EC2132A7F9D83BF80D49289C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -329,7 +320,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		DC07357822392474008326F7 /* PretixScan */ = {
+		DC07357822392474008326F7 /* pretixSCAN */ = {
 			isa = PBXGroup;
 			children = (
 				DCAAFF3222394BE80059C000 /* Storyboards */,
@@ -352,7 +343,7 @@
 				DCB35B9E2249407300860385 /* Utilities */,
 				DC2F4A012256722100710EFA /* NotifcationManager.swift */,
 			);
-			path = PretixScan;
+			path = pretixSCAN;
 			sourceTree = "<group>";
 		};
 		DC07358D22392476008326F7 /* PretixScanTests */ = {
@@ -601,6 +592,15 @@
 			path = ConfigStore;
 			sourceTree = "<group>";
 		};
+		EC2132A7F9D83BF80D49289C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */,
+				E19C23358B478B81FC4A9090 /* Pods_pretixSCAN.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -608,13 +608,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "pretixSCAN" */;
 			buildPhases = (
-				AE76B1F69530806A3340C94A /* [CP] Check Pods Manifest.lock */,
+				D6EA785B345438D9BE792271 /* [CP] Check Pods Manifest.lock */,
 				DC07357222392474008326F7 /* Sources */,
 				DCAAFF2D2239342B0059C000 /* Run Linter */,
 				DC07357322392474008326F7 /* Frameworks */,
 				DC07357422392474008326F7 /* Resources */,
-				1521320A5643DCDD8F3FCE3E /* [CP] Embed Pods Frameworks */,
 				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
+				5B161C7B5F7A7C34D1998F64 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -629,7 +629,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC07359622392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScanTests" */;
 			buildPhases = (
-				7D01100A24E5CD559246DCC9 /* [CP] Check Pods Manifest.lock */,
+				5D6A3CD25BF02E28FB965C72 /* [CP] Check Pods Manifest.lock */,
 				DC07358622392476008326F7 /* Sources */,
 				DC07358722392476008326F7 /* Frameworks */,
 				DC07358822392476008326F7 /* Resources */,
@@ -665,7 +665,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DC07357122392474008326F7 /* Build configuration list for PBXProject "PretixScan" */;
+			buildConfigurationList = DC07357122392474008326F7 /* Build configuration list for PBXProject "pretixSCAN" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -707,31 +707,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1521320A5643DCDD8F3FCE3E /* [CP] Embed Pods Frameworks */ = {
+		5B161C7B5F7A7C34D1998F64 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PretixScan/Pods-PretixScan-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PretixScan/Pods-PretixScan-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7D01100A24E5CD559246DCC9 /* [CP] Check Pods Manifest.lock */ = {
+		5D6A3CD25BF02E28FB965C72 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -753,7 +746,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AE76B1F69530806A3340C94A /* [CP] Check Pods Manifest.lock */ = {
+		D6EA785B345438D9BE792271 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -768,7 +761,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PretixScan-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-pretixSCAN-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1098,7 +1091,7 @@
 		};
 		DC07359422392476008326F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 21519C9F8BA4033B8E89C05F /* Pods-PretixScan.debug.xcconfig */;
+			baseConfigurationReference = B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1117,7 +1110,7 @@
 		};
 		DC07359522392476008326F7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BDF1F626BB1093C36D3971D4 /* Pods-PretixScan.release.xcconfig */;
+			baseConfigurationReference = 8A87E68C45A17BFF5E94F2F0 /* Pods-pretixSCAN.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1136,7 +1129,7 @@
 		};
 		DC07359722392476008326F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D28DFC6AAE75B94ADDD0D1CC /* Pods-PretixScanTests.debug.xcconfig */;
+			baseConfigurationReference = 1F3B006E501159B61EC31A90 /* Pods-PretixScanTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1152,13 +1145,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pretixSCAN.temp_caseinsensitive_rename.app/pretixSCAN.temp_caseinsensitive_rename";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pretixSCAN.app/pretixSCAN";
 			};
 			name = Debug;
 		};
 		DC07359822392476008326F7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F8337068DC28D5BB74F8AD9 /* Pods-PretixScanTests.release.xcconfig */;
+			baseConfigurationReference = 5AEE3DBAA5CEAFBF067EB16C /* Pods-PretixScanTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1174,14 +1167,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pretixSCAN.temp_caseinsensitive_rename.app/pretixSCAN.temp_caseinsensitive_rename";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pretixSCAN.app/pretixSCAN";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DC07357122392474008326F7 /* Build configuration list for PBXProject "PretixScan" */ = {
+		DC07357122392474008326F7 /* Build configuration list for PBXProject "pretixSCAN" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DC07359122392476008326F7 /* Debug */,
