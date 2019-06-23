@@ -202,8 +202,10 @@ public class SyncManager {
                     category: .offlineUpload, level: .error, type: .error)
             }
             if let errorReason = uploader.errorReason {
-                EventLogger.log(event: "Queued Redemption Request came back with error: \(errorReason)",
-                    category: .offlineUpload, level: .error, type: .error)
+                // If error reason is set, we are not dealing with a system error;
+                // instead, the server has responded that this ticket should not be redeemed.
+                // Therefore, do not log the error and spam Sentry, just print it out for debug.
+                print("Queued Redemption Request came back with errorReason: \(errorReason)")
             }
 
             if uploader.shouldRepeat {

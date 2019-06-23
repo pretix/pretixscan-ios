@@ -17,11 +17,9 @@ public class FMDBDataStore: DataStore {
     // MARK: Metadata
     /// Remove all Sync Times and pretend nothing was ever synced
     public func invalidateLastSynced(in event: Event) {
-        let queue = databaseQueue(with: event)
-
         // Drop and recreate all tables to thoroughly clean the db
         // This includes the SyncTimestamp table
-        queue.inDatabase { database in
+        databaseQueue(with: event).inDatabase { database in
             do {
                 try database.executeUpdate(ItemCategory.destructionQuery, values: nil)
                 try database.executeUpdate(Item.destructionQuery, values: nil)
@@ -43,9 +41,7 @@ public class FMDBDataStore: DataStore {
 
     /// Store timestamps of the last syncs
     public func setLastSyncTime<T>(_ dateString: String, of model: T.Type, in event: Event) where T: Model {
-        let queue = databaseQueue(with: event)
-
-        queue.inDatabase { database in
+        databaseQueue(with: event).inDatabase { database in
             do {
                 try database.executeUpdate(SyncTimeStamp.insertQuery, values: [model.stringName, dateString])
             } catch {
@@ -56,10 +52,8 @@ public class FMDBDataStore: DataStore {
 
     /// Retrieve timestamps of the last syncs
     public func lastSyncTime<T>(of model: T.Type, in event: Event) -> String? where T: Model {
-        let queue = databaseQueue(with: event)
-
         var lastSyncedAt: String?
-        queue.inDatabase { database in
+        databaseQueue(with: event).inDatabase { database in
             if let result = try? database.executeQuery(SyncTimeStamp.getSingleModelQuery, values: [model.stringName]) {
                 while result.next() {
                     lastSyncedAt = result.string(forColumn: "last_synced_at")
@@ -67,17 +61,11 @@ public class FMDBDataStore: DataStore {
             }
         }
 
-        if lastSyncedAt?.count == 0 {
-            return nil
-        }
-
-        return lastSyncedAt
+        return lastSyncedAt?.count == 0 ? nil : lastSyncedAt
     }
 
     public func setLastSyncCreationTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
-        let queue = databaseQueue(with: event)
-
-        queue.inDatabase { database in
+        databaseQueue(with: event).inDatabase { database in
             do {
                 try database.executeUpdate(SyncTimeStamp.insertQuery, values: [model.stringName + "partial", dateString])
             } catch {
@@ -87,10 +75,8 @@ public class FMDBDataStore: DataStore {
     }
 
     public func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String? {
-        let queue = databaseQueue(with: event)
-
         var lastSyncedAt: String?
-        queue.inDatabase { database in
+        databaseQueue(with: event).inDatabase { database in
             if let result = try? database.executeQuery(SyncTimeStamp.getSingleModelQuery, values: [model.stringName + "partial"]) {
                 while result.next() {
                     lastSyncedAt = result.string(forColumn: "last_synced_at")
@@ -98,11 +84,7 @@ public class FMDBDataStore: DataStore {
             }
         }
 
-        if lastSyncedAt?.count == 0 {
-            return nil
-        }
-
-        return lastSyncedAt
+        return lastSyncedAt?.count == 0 ? nil : lastSyncedAt
     }
 
     // MARK: - Storing
@@ -178,18 +160,13 @@ public class FMDBDataStore: DataStore {
     }
 
     public func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {
-        let queue = databaseQueue(with: event)
-
         var checkIns = [CheckIn]()
-        queue.inDatabase { database in
+        databaseQueue(with: event).inDatabase { database in
             if let result = try? database.executeQuery(CheckIn.retrieveByOrderPositionQuery, values: [orderPosition.identifier]) {
                 while result.next() {
-                    if let nextCheckin = CheckIn.from(result: result, in: database) {
-                        checkIns.append(nextCheckin)
-                    }
+                    if let nextCheckin = CheckIn.from(result: result, in: database) { checkIns.append(nextCheckin) }
                 }
             }
-
         }
 
         return checkIns
@@ -278,7 +255,7 @@ public class FMDBDataStore: DataStore {
                 checkInListIdentifier: checkInList.identifier,
                 secret: secret)
 
-            QueuedRedemptionRequest.store([queuedRedemptionRequest], in: queue)
+            QueuedRedemptionRequest.store([queuedRedemptionRequest], in: uploadDataBaseQueue)
 
             // Save a check in to check the attendee in
             // This checkin will later be overwritten (or duplicated) by one synced down from the server
@@ -291,10 +268,8 @@ public class FMDBDataStore: DataStore {
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
     public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
-        let queue = databaseQueue(with: event)
-
         var count = 0
-        queue.inDatabase { database in
+        uploadDataBaseQueue.inDatabase { database in
             if let result = try? database.executeQuery(QueuedRedemptionRequest.numberOfRequestsQuery, values: []) {
                 while result.next() {
                     count = Int(result.int(forColumn: "COUNT(*)"))
@@ -310,10 +285,8 @@ public class FMDBDataStore: DataStore {
     /// This implementation will deliberately return a random instance each time, in order to not block the upload queue with
     /// a malformed request forever.
     public func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest? {
-        let queue = databaseQueue(with: event)
-
         var redemptionRequest: QueuedRedemptionRequest?
-        queue.inDatabase { database in
+        uploadDataBaseQueue.inDatabase { database in
             if let result = try? database.executeQuery(QueuedRedemptionRequest.retrieveOneRequestQuery, values: []) {
                 while result.next() {
                     redemptionRequest = QueuedRedemptionRequest.from(result: result, in: database)
@@ -326,10 +299,7 @@ public class FMDBDataStore: DataStore {
 
     /// Remove a `QeuedRedemptionRequest` instance from the database
     public func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event) {
-        let queue = databaseQueue(with: event)
-
-        // Drop and recreate the sync times table
-        queue.inDatabase { database in
+        uploadDataBaseQueue.inDatabase { database in
             do {
                 try database.executeUpdate(QueuedRedemptionRequest.deleteOneRequestQuery,
                     values: [queuedRedemptionRequest.redemptionRequest.nonce])
@@ -339,10 +309,28 @@ public class FMDBDataStore: DataStore {
         }
     }
 
+    private lazy var uploadDataBaseQueue: FMDatabaseQueue = {
+        let fileURL = try! FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("queuedRedemptionRequests.sqlite")
+        print("Opening Database \(fileURL.path)")
+        let queue = FMDatabaseQueue(url: fileURL)
+
+        queue?.inDatabase { database in
+            do {
+                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
+            } catch {
+                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return queue!
+    }()
+
     private var currentDataBaseQueue: FMDatabaseQueue?
     private var currentDataBaseQueueEvent: Event?
 
-    func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {
+    private func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {
         // If we're dealing with the same database as last time, keep it open
         // except in case the caller specifically asked us to recreate the DB.
         if currentDataBaseQueueEvent == event, let queue = currentDataBaseQueue, !recreate {
@@ -368,7 +356,6 @@ public class FMDBDataStore: DataStore {
                 try database.executeUpdate(Order.creationQuery, values: nil)
                 try database.executeUpdate(OrderPosition.creationQuery, values: nil)
                 try database.executeUpdate(CheckIn.creationQuery, values: nil)
-                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
                 try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
             } catch {
                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
