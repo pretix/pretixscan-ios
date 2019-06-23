@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Sentry
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
         ) -> Bool {
+
+        // Create a Sentry client and start crash handler
+        do {
+            Client.shared = try Client(dsn: "https://b5aaf76ba03b4e778cd8370a85557263@errors.rami.io/20")
+            try Client.shared?.startCrashHandler()
+        } catch let error {
+            print("\(error)")
+            // Wrong DSN or KSCrash not installed
+        }
 
         // Prevent display sleep for the entire app
         // We never want the app to turn itself off

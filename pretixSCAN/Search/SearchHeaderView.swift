@@ -77,7 +77,7 @@ class SearchHeaderView: UIView {
                 label.text = Localization.SearchHeaderView.NoResults
             case 1:
                 label.text = Localization.SearchHeaderView.OneResult
-            case 2...50:
+            case 2...49:
                 label.text = String.localizedStringWithFormat(Localization.SearchHeaderView.NResults, results)
             default:
                 label.text = String.localizedStringWithFormat(Localization.SearchHeaderView.TooManyResults, results)

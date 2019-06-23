@@ -6,6 +6,7 @@ target 'pretixSCAN' do
   # Pods for PretixScan
   pod 'SwiftMessages', :inhibit_warnings => true
   pod 'FMDB'
+  pod 'Sentry'
 
   pre_install do |installer|
     installer.analysis_result.specifications.each do |s|
