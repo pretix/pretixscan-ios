@@ -235,7 +235,9 @@ class QueuedRedemptionRequestsUploader: APIClientOperation {
         urlSessionTask = apiClient.redeemTask(
             secret: nextRedemptionRequest.secret,
             force: nextRedemptionRequest.redemptionRequest.force,
-            ignoreUnpaid: nextRedemptionRequest.redemptionRequest.ignoreUnpaid) { result, error in
+            ignoreUnpaid: nextRedemptionRequest.redemptionRequest.ignoreUnpaid,
+            eventSlug: nextRedemptionRequest.eventSlug,
+            checkInListIdentifier: nextRedemptionRequest.checkInListIdentifier) { result, error in
                 // Handle HTTP errors
                 // When HTTP errors occur, we do not want to remove the queued redemption request, since it probably didn't reach the server
                 if let error = error {

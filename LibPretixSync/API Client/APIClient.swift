@@ -317,14 +317,15 @@ public extension APIClient {
     }
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
-    func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil,
+    func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil, eventSlug: String? = nil,
+                    checkInListIdentifier: Identifier? = nil,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
             let checkInList = try getCheckInList()
-            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
-                "/checkinlists/\(checkInList.identifier)/positions/\(secret)/redeem/")
+            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(eventSlug ?? event.slug)" +
+                "/checkinlists/\(checkInListIdentifier ?? checkInList.identifier)/positions/\(secret)/redeem/")
             var urlRequest = try createURLRequest(for: urlPath)
             urlRequest.httpMethod = HttpMethod.POST
 
