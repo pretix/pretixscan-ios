@@ -25,7 +25,7 @@ class ItemCategoryTests: XCTestCase {
     """.data(using: .utf8)!
 
     let exampleObject = ItemCategory(identifier: 3280, name: MultiLingualString.english("Tickets"),
-                                     internalName: nil, description: MultiLingualString.empty(), position: 0, isAddon: false)
+                                     internalName: nil, description: MultiLingualString(), position: 0, isAddon: false)
 
     func testParsingAll() {
         XCTAssertNoThrow(try jsonDecoder.decode(ItemCategory.self, from: exampleJSON))

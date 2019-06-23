@@ -89,6 +89,8 @@
 		DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF54223AE6E20059C000 /* Errors.swift */; };
 		DCAAFF57223AF14B0059C000 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF56223AF14B0059C000 /* UIViewController.swift */; };
 		DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAC199922BF7E5B0019B53F /* EventLogger.swift */; };
+		DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAC199B22BFB51A0019B53F /* RegionCode.swift */; };
+		DCAC199D22BFB60E0019B53F /* RegionCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAC199B22BFB51A0019B53F /* RegionCode.swift */; };
 		DCB35B8C2248E8E300860385 /* fa-solid-900.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */; };
 		DCB35B8E2248EB5800860385 /* RedemptionRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */; };
 		DCB35B8F2248EB8400860385 /* RedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */; };
@@ -223,6 +225,7 @@
 		DCAAFF54223AE6E20059C000 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		DCAAFF56223AF14B0059C000 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		DCAC199922BF7E5B0019B53F /* EventLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLogger.swift; sourceTree = "<group>"; };
+		DCAC199B22BFB51A0019B53F /* RegionCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionCode.swift; sourceTree = "<group>"; };
 		DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fa-solid-900.ttf"; sourceTree = "<group>"; };
 		DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionRequestTests.swift; sourceTree = "<group>"; };
 		DCB35B902248F31400860385 /* RedemptionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionResponse.swift; sourceTree = "<group>"; };
@@ -500,6 +503,7 @@
 				DC8467B8225CF2630013F647 /* ItemAddon.swift */,
 				DC8467BA225CF3D70013F647 /* ItemBundle.swift */,
 				DC8467CD225D08D10013F647 /* ItemCategory.swift */,
+				DCAC199B22BFB51A0019B53F /* RegionCode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -883,6 +887,7 @@
 				DCC5D85B229569B000DAEFA0 /* FMDBOrder.swift in Sources */,
 				DCC5D859229569A100DAEFA0 /* FMDBSubEvent.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
+				DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
 				DC8467BD225CF4000013F647 /* Item.swift in Sources */,
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
@@ -935,6 +940,7 @@
 				DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */,
 				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
+				DCAC199D22BFB60E0019B53F /* RegionCode.swift in Sources */,
 				DC8467C4225CF4020013F647 /* ItemAddon.swift in Sources */,
 				DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */,
 				DCB35B9922490D5200860385 /* DateFormattingHelpers.swift in Sources */,

@@ -26,7 +26,7 @@ public struct Order: Model {
     public let email: String?
 
     /// The locale used for communication with this customer
-    public let locale: Locale?
+    public let locale: RegionCode?
 
     /// Channel this sale was created through, such as `"web"`.
     public let salesChannel: String?

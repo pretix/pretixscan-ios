@@ -49,8 +49,8 @@ class OrderPositionTests: XCTestCase {
     """.data(using: .utf8)!
 
     let exampleObject = OrderPosition(
-        identifier: 1842899, order: "RDTBG", positionid: 1, item: 25643, variation: nil, price: "250.00",
-        attendeeName: "Daniel Jilg", attendeeEmail: nil, secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y",
+        identifier: 1842899, orderCode: "RDTBG", order: nil, positionid: 1, itemIdentifier: 25643, item: nil, variation: nil,
+        price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil, secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
         pseudonymizationId: "DAC7ULNMUB", checkins: []
     )
 
