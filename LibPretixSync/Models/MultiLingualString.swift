@@ -27,14 +27,31 @@ public enum MultiLingualStringLanguage: String {
 /// @see `MultiLingualString`, `MultiLingualStringLanguage`
 public typealias MultiLingualString = [String: String]
 
-/// MARK: - Getting a String Representation
+// MARK: - Creation
+extension MultiLingualString {
+    /// Create a new `MultiLingualString` with the given value as english representation
+    static func english(_ newStringValue: String) -> MultiLingualString {
+        var newMultiLingualString = MultiLingualString()
+        newMultiLingualString[MultiLingualStringLanguage.english.rawValue] = newStringValue
+        return newMultiLingualString
+    }
+
+    /// Create a new `MultiLingualString` with the given value as german representation
+    static func german(_ newStringValue: String) -> MultiLingualString {
+        var newMultiLingualString = MultiLingualString()
+        newMultiLingualString[MultiLingualStringLanguage.german.rawValue] = newStringValue
+        return newMultiLingualString
+    }
+}
+
+// MARK: - Getting a String Representation
 /// A String equal that contains various translations.
 ///
 /// Use the `representation(in:)` methods to retrieve a specific representation or use `anyRepresentation()` to
 /// get a representation that will prioritize english, then german, then other languages.
 extension MultiLingualString {
     /// Return a representation of the string with the given locale
-    public func representation(in locale: Locale) -> String? {
+    public func representation(in locale: Foundation.Locale) -> String? {
         guard let regionCode = locale.regionCode else { return anyRepresentation() }
         return representation(in: regionCode)
     }
@@ -74,7 +91,7 @@ extension MultiLingualString {
     }
 }
 
-/// MARK: - Storing as JSON
+// MARK: - Storing as JSON
 public extension MultiLingualString {
     /// Returns the MultiLingualString's representation as a String containing JSON.
     ///
