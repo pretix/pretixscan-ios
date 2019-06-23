@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Sentry
 
 /// Uses the APIClient directly to check the validity of tickets.
 ///

@@ -36,7 +36,7 @@ extension SubEvent: FMDBModel {
                     try database.executeUpdate(SubEvent.insertQuery, values: [
                         identifier, name as Any, event, json as Any])
                 } catch {
-                    print(error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }
             }
         }

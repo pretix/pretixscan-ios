@@ -84,7 +84,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
 
     func failed() {
-        print("Failed to create Capture Session")
+        EventLogger.log(event: "Failed to create Capture Session", category: .avCaptureDevice, level: .error, type: .fault)
         captureSession = nil
     }
 
@@ -165,13 +165,13 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
                 do {
                     try device.setTorchModeOn(level: 1.0)
                 } catch {
-                    print(error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .avCaptureDevice, level: .error, type: .fault)
                 }
             }
 
             device.unlockForConfiguration()
         } catch {
-            print(error)
+            EventLogger.log(event: "\(error.localizedDescription)", category: .avCaptureDevice, level: .error, type: .fault)
         }
     }
 

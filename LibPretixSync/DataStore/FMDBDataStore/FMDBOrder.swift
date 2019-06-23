@@ -58,7 +58,7 @@ extension Order: FMDBModel {
                         code, status, secret, email as Any, checkin_attention as Any,
                         require_approval as Any, json as Any])
                 } catch {
-                    print(error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }
             }
         }

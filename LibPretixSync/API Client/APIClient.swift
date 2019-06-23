@@ -41,7 +41,7 @@ public extension APIClient {
     func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
         guard let baseURL = configStore.apiBaseURL else {
             let message = "Please set the APIClient's configStore.apiBaseURL property before calling this function."
-            print(message)
+            EventLogger.log(event: message, category: .configuration, level: .warning, type: .default)
             completionHandler(APIError.notConfigured(message: message))
             return
         }

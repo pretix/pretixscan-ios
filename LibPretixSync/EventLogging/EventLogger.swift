@@ -34,5 +34,10 @@ public struct EventLogger {
     public enum Category: String {
         case configuration
         case network
+        case offlineUpload
+        case offlineDownload
+        case database
+        case avCaptureDevice
+        case parsing
     }
 }

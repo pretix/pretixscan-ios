@@ -43,7 +43,7 @@ extension ItemCategory: FMDBModel {
                     try database.executeUpdate(ItemCategory.insertQuery, values: [
                         identifier, name as Any, internal_name as Any, description as Any, position, is_addon])
                 } catch {
-                    print(error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }
             }
         }

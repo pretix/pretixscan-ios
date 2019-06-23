@@ -119,7 +119,7 @@ extension OrderPosition: FMDBModel {
                         identifier, order, positionid, item, variation as Any, price,
                         attendee_name as Any, attendee_email as Any, secret, subevent as Any, pseudonymization_id])
                 } catch {
-                    print(error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }
             }
         }
@@ -147,7 +147,7 @@ extension OrderPosition: FMDBModel {
             do {
                 try database.executeUpdate(OrderPosition.deleteByOrderQuery, values: [order.code])
             } catch {
-                print(error)
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
     }
