@@ -30,17 +30,60 @@ public typealias MultiLingualString = [String: String]
 // MARK: - Creation
 extension MultiLingualString {
     /// Create a new `MultiLingualString` with the given value as english representation
-    static func english(_ newStringValue: String) -> MultiLingualString {
+    public static func english(_ newStringValue: String) -> MultiLingualString {
         var newMultiLingualString = MultiLingualString()
         newMultiLingualString[MultiLingualStringLanguage.english.rawValue] = newStringValue
         return newMultiLingualString
     }
 
     /// Create a new `MultiLingualString` with the given value as german representation
-    static func german(_ newStringValue: String) -> MultiLingualString {
+    public static func german(_ newStringValue: String) -> MultiLingualString {
         var newMultiLingualString = MultiLingualString()
         newMultiLingualString[MultiLingualStringLanguage.german.rawValue] = newStringValue
         return newMultiLingualString
+    }
+}
+
+// MARK: - Custom Getters and Setters
+extension MultiLingualString {
+    public var english: String? {
+        get { return self[MultiLingualStringLanguage.english.rawValue] }
+        set { self[MultiLingualStringLanguage.english.rawValue] = newValue }
+    }
+
+    public var german: String? {
+        get { return self[MultiLingualStringLanguage.german.rawValue] }
+        set { self[MultiLingualStringLanguage.german.rawValue] = newValue }
+    }
+
+    public var germanInformal: String? {
+        get { return self[MultiLingualStringLanguage.germanInformal.rawValue] }
+        set { self[MultiLingualStringLanguage.germanInformal.rawValue] = newValue }
+    }
+
+    public var dutch: String? {
+        get { return self[MultiLingualStringLanguage.dutch.rawValue] }
+        set { self[MultiLingualStringLanguage.dutch.rawValue] = newValue }
+    }
+
+    public var dutchInformal: String? {
+        get { return self[MultiLingualStringLanguage.dutchInformal.rawValue] }
+        set { self[MultiLingualStringLanguage.dutchInformal.rawValue] = newValue }
+    }
+
+    public var spanish: String? {
+        get { return self[MultiLingualStringLanguage.spanish.rawValue] }
+        set { self[MultiLingualStringLanguage.spanish.rawValue] = newValue }
+    }
+
+    public var french: String? {
+        get { return self[MultiLingualStringLanguage.french.rawValue] }
+        set { self[MultiLingualStringLanguage.french.rawValue] = newValue }
+    }
+
+    public var turkish: String? {
+        get { return self[MultiLingualStringLanguage.turkish.rawValue] }
+        set { self[MultiLingualStringLanguage.turkish.rawValue] = newValue }
     }
 }
 
