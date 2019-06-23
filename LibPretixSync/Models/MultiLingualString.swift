@@ -9,7 +9,7 @@
 import Foundation
 
 /// A key for `MultiLingualString`
-public enum MultiLingualStringLanguage: String {
+public enum LanguageCode: String {
     case english = "en"
     case german = "de"
     case germanInformal = "de-informal"
@@ -32,14 +32,14 @@ extension MultiLingualString {
     /// Create a new `MultiLingualString` with the given value as english representation
     public static func english(_ newStringValue: String) -> MultiLingualString {
         var newMultiLingualString = MultiLingualString()
-        newMultiLingualString[MultiLingualStringLanguage.english.rawValue] = newStringValue
+        newMultiLingualString[LanguageCode.english.rawValue] = newStringValue
         return newMultiLingualString
     }
 
     /// Create a new `MultiLingualString` with the given value as german representation
     public static func german(_ newStringValue: String) -> MultiLingualString {
         var newMultiLingualString = MultiLingualString()
-        newMultiLingualString[MultiLingualStringLanguage.german.rawValue] = newStringValue
+        newMultiLingualString[LanguageCode.german.rawValue] = newStringValue
         return newMultiLingualString
     }
 }
@@ -47,43 +47,43 @@ extension MultiLingualString {
 // MARK: - Custom Getters and Setters
 extension MultiLingualString {
     public var english: String? {
-        get { return self[MultiLingualStringLanguage.english.rawValue] }
-        set { self[MultiLingualStringLanguage.english.rawValue] = newValue }
+        get { return self[LanguageCode.english.rawValue] }
+        set { self[LanguageCode.english.rawValue] = newValue }
     }
 
     public var german: String? {
-        get { return self[MultiLingualStringLanguage.german.rawValue] }
-        set { self[MultiLingualStringLanguage.german.rawValue] = newValue }
+        get { return self[LanguageCode.german.rawValue] }
+        set { self[LanguageCode.german.rawValue] = newValue }
     }
 
     public var germanInformal: String? {
-        get { return self[MultiLingualStringLanguage.germanInformal.rawValue] }
-        set { self[MultiLingualStringLanguage.germanInformal.rawValue] = newValue }
+        get { return self[LanguageCode.germanInformal.rawValue] }
+        set { self[LanguageCode.germanInformal.rawValue] = newValue }
     }
 
     public var dutch: String? {
-        get { return self[MultiLingualStringLanguage.dutch.rawValue] }
-        set { self[MultiLingualStringLanguage.dutch.rawValue] = newValue }
+        get { return self[LanguageCode.dutch.rawValue] }
+        set { self[LanguageCode.dutch.rawValue] = newValue }
     }
 
     public var dutchInformal: String? {
-        get { return self[MultiLingualStringLanguage.dutchInformal.rawValue] }
-        set { self[MultiLingualStringLanguage.dutchInformal.rawValue] = newValue }
+        get { return self[LanguageCode.dutchInformal.rawValue] }
+        set { self[LanguageCode.dutchInformal.rawValue] = newValue }
     }
 
     public var spanish: String? {
-        get { return self[MultiLingualStringLanguage.spanish.rawValue] }
-        set { self[MultiLingualStringLanguage.spanish.rawValue] = newValue }
+        get { return self[LanguageCode.spanish.rawValue] }
+        set { self[LanguageCode.spanish.rawValue] = newValue }
     }
 
     public var french: String? {
-        get { return self[MultiLingualStringLanguage.french.rawValue] }
-        set { self[MultiLingualStringLanguage.french.rawValue] = newValue }
+        get { return self[LanguageCode.french.rawValue] }
+        set { self[LanguageCode.french.rawValue] = newValue }
     }
 
     public var turkish: String? {
-        get { return self[MultiLingualStringLanguage.turkish.rawValue] }
-        set { self[MultiLingualStringLanguage.turkish.rawValue] = newValue }
+        get { return self[LanguageCode.turkish.rawValue] }
+        set { self[LanguageCode.turkish.rawValue] = newValue }
     }
 }
 
@@ -94,23 +94,23 @@ extension MultiLingualString {
 /// get a representation that will prioritize english, then german, then other languages.
 extension MultiLingualString {
     /// Return a representation of the string with the given locale
-    public func representation(in locale: Foundation.Locale) -> String? {
-        guard let regionCode = locale.regionCode else { return anyRepresentation() }
-        return representation(in: regionCode)
+    public func representation(in locale: Locale?) -> String? {
+        guard let languageCode = locale?.languageCode else { return anyRepresentation() }
+        return representation(in: languageCode)
     }
 
     /// Return a representation of the string with the region code as `MultiLingualStringLanguage`.
-    public func representation(in regionCode: MultiLingualStringLanguage) -> String? {
-        return representation(in: regionCode.rawValue)
+    public func representation(in languageCode: LanguageCode) -> String? {
+        return representation(in: languageCode.rawValue)
     }
 
     /// Return a representation of the string with the given ISO639-2 code
-    public func representation(in regionCode: String) -> String? {
-        if let representation = self[regionCode] {
+    public func representation(in languageCode: String) -> String? {
+        if let representation = self[languageCode] {
             return representation
         }
 
-        if let representation = self["\(regionCode)-informal"] {
+        if let representation = self["\(languageCode)-informal"] {
             return representation
         }
 
@@ -122,7 +122,7 @@ extension MultiLingualString {
     /// Will try known languages first, then pick any other languages. Will only return `nil`
     /// if not a single language is saved inside the MultiLingualString.
     public func anyRepresentation() -> String? {
-        let languageCodes: [MultiLingualStringLanguage] = [.english, .german, .germanInformal, .spanish,
+        let languageCodes: [LanguageCode] = [.english, .german, .germanInformal, .spanish,
                                                             .french, .dutch, .dutchInformal, .turkish]
         for languageCode in languageCodes {
             if let representation = self[languageCode.rawValue] {
