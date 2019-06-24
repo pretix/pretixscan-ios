@@ -220,7 +220,7 @@ public class FMDBDataStore: DataStore {
         return order
     }
 
-    public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event) -> Result<CheckInListStatus, Error> {
+    public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error> {
         let queue = databaseQueue(with: event)
 
         // Get CheckIn Count

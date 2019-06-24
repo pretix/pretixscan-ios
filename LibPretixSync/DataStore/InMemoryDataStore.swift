@@ -83,7 +83,7 @@ public class InMemoryDataStore: DataStore {
         return []
     }
 
-    public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event) -> Result<CheckInListStatus, Error> {
+    public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error> {
         let status = CheckInListStatus(checkinCount: 0, positionCount: 0, items: [])
         return .success(status)
     }
