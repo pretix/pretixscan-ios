@@ -28,6 +28,7 @@ class PrimaryButton: UIButton {
     private func setup() {
         backgroundColor = Color.primary
         tintColor = Color.primaryText
+        setTitleColor(Color.primaryText, for: .normal)
         layer.cornerRadius = Style.cornerRadius
         titleLabel?.font = UIFont.systemFont(ofSize: 17)
         contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
