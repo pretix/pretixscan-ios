@@ -19,13 +19,13 @@ public protocol DataStore: class {
     func invalidateLastSynced(in event: Event)
 
     /// Store timestamps of the last syncs
-    func setLastSyncTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event)
+    func setLastSyncModifiedTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event)
 
     /// Retrieve timestamps of the last syncs
     func lastSyncTime<T: Model>(of model: T.Type, in event: Event) -> String?
 
     /// Store timestamp for the last partially cleared full sync
-    func setLastSyncCreationTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event)
+    func setLastSyncCreatedTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event)
 
     /// Retrieve timestamp for the last partially cleared full sync
     func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String?

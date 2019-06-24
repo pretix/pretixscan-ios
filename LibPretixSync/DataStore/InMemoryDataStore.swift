@@ -20,7 +20,7 @@ public class InMemoryDataStore: DataStore {
         dataStore(for: event).lastSynced = [String: String]()
     }
 
-    public func setLastSyncTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
+    public func setLastSyncModifiedTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
         dataStore(for: event).lastSynced[model.stringName] = dateString
     }
 
@@ -28,7 +28,7 @@ public class InMemoryDataStore: DataStore {
         return dataStore(for: event).lastSynced[model.stringName]
     }
 
-    public func setLastSyncCreationTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
+    public func setLastSyncCreatedTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
     }
 
     public func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String? {

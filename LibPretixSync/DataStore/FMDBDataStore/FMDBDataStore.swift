@@ -40,7 +40,7 @@ public class FMDBDataStore: DataStore {
     }
 
     /// Store timestamps of the last syncs
-    public func setLastSyncTime<T>(_ dateString: String, of model: T.Type, in event: Event) where T: Model {
+    public func setLastSyncModifiedTime<T>(_ dateString: String, of model: T.Type, in event: Event) where T: Model {
         databaseQueue(with: event).inDatabase { database in
             do {
                 try database.executeUpdate(SyncTimeStamp.insertQuery, values: [model.stringName, dateString])
@@ -64,7 +64,7 @@ public class FMDBDataStore: DataStore {
         return lastSyncedAt?.count == 0 ? nil : lastSyncedAt
     }
 
-    public func setLastSyncCreationTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
+    public func setLastSyncCreatedTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
         databaseQueue(with: event).inDatabase { database in
             do {
                 try database.executeUpdate(SyncTimeStamp.insertQuery, values: [model.stringName + "partial", dateString])

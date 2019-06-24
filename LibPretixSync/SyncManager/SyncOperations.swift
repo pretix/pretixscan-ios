@@ -121,11 +121,11 @@ class FullDownloader<T: Model>: APIClientOperation {
                 self.dataStore.store(pagedList.results, for: self.event)
 
                 if let pagedList = pagedList as? PagedList<Order>, let creationTimeOfLastObject = pagedList.results.last?.createdAt {
-                    self.dataStore.setLastSyncCreationTime(creationTimeOfLastObject, of: T.self, in: self.event)
+                    self.dataStore.setLastSyncCreatedTime(creationTimeOfLastObject, of: T.self, in: self.event)
                 }
 
                 if isFirstPage, let generatedAt = pagedList.generatedAt, self.dataStore.lastSyncTime(of: T.self, in: self.event) == nil {
-                    self.dataStore.setLastSyncTime(generatedAt, of: T.self, in: self.event)
+                    self.dataStore.setLastSyncModifiedTime(generatedAt, of: T.self, in: self.event)
                 }
 
                 if isLastPage {
@@ -181,7 +181,7 @@ class PartialDownloader<T: Model>: APIClientOperation {
 
                 if isLastPage {
                     if let firstPageGeneratedAt = firstPageGeneratedAt {
-                        self.dataStore.setLastSyncTime(firstPageGeneratedAt, of: T.self, in: self.event)
+                        self.dataStore.setLastSyncModifiedTime(firstPageGeneratedAt, of: T.self, in: self.event)
                     }
 
                     self.completeOperation()
