@@ -50,6 +50,9 @@ public protocol DataStore: class {
     /// Retrieve all CheckIns for the specified `OrderPosition` in the specified `CheckInList`
     func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn]
 
+    /// Retrieve Statistics for the currently selected CheckInList
+    func getCheckInListStatus() -> Result<CheckInListStatus, Error>
+
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found

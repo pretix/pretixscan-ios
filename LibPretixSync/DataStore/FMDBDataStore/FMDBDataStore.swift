@@ -220,6 +220,11 @@ public class FMDBDataStore: DataStore {
         return order
     }
 
+    public func getCheckInListStatus() -> Result<CheckInListStatus, Error> {
+        let status = CheckInListStatus(checkinCount: 0, positionCount: 0, items: [])
+        return .success(status)
+    }
+
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found

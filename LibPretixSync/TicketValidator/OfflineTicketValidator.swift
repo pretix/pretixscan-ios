@@ -39,7 +39,15 @@ public class OfflineTicketValidator: TicketValidator {
 
     /// Retrieve Statistics for the currently selected CheckInList
     public func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
-        configStore.apiClient?.getCheckInListStatus(completionHandler: completionHandler)
+        DispatchQueue.global().async {
+            guard let result = self.configStore.dataStore?.getCheckInListStatus() else { return }
+            switch result {
+            case .success(let checkInListStatus):
+                completionHandler(checkInListStatus, nil)
+            case .failure(let error):
+                completionHandler(nil, error)
+            }
+        }
     }
 
     /// Search all OrderPositions within a CheckInList
