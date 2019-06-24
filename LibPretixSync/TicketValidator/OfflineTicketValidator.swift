@@ -39,8 +39,13 @@ public class OfflineTicketValidator: TicketValidator {
 
     /// Retrieve Statistics for the currently selected CheckInList
     public func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
+        guard let event = configStore.event, let checkInList = configStore.checkInList else {
+            completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
+            return
+        }
+
         DispatchQueue.global().async {
-            guard let result = self.configStore.dataStore?.getCheckInListStatus() else { return }
+            guard let result = self.configStore.dataStore?.getCheckInListStatus(checkInList, in: event) else { return }
             switch result {
             case .success(let checkInListStatus):
                 completionHandler(checkInListStatus, nil)
