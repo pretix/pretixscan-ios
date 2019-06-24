@@ -16,7 +16,7 @@ struct Color {
     static let whiteBackground = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     static let error = #colorLiteral(red: 0.8258044124, green: 0.3749413788, blue: 0.3758454323, alpha: 1)
     static let warning = #colorLiteral(red: 0.9982002378, green: 0.7056498528, blue: 0.1012035981, alpha: 1)
-    static let okay = #colorLiteral(red: 0.3154402673, green: 0.6320772767, blue: 0.4040964842, alpha: 1)+
+    static let okay = #colorLiteral(red: 0.3154402673, green: 0.6320772767, blue: 0.4040964842, alpha: 1)
     static let buttons = #colorLiteral(red: 0.4978353977, green: 0.3521931767, blue: 0.567596674, alpha: 1)
 }
 
