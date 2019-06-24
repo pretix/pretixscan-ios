@@ -14,6 +14,7 @@ class APIClientOperation: Operation {
     let event: Event
     let checkInList: CheckInList
     let dataStore: DataStore
+    let disableTestMode: Bool
 
     /// If not nil, the error that occurred during fetch
     var error: Error?
@@ -47,11 +48,12 @@ class APIClientOperation: Operation {
         }
     }
 
-    init(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+    init(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList, disableTestMode: Bool = false) {
         self.apiClient = apiClient
         self.event = event
         self.checkInList = checkInList
         self.dataStore = dataStore
+        self.disableTestMode = disableTestMode
     }
 
     // MARK: - Management Methods
@@ -100,8 +102,15 @@ class FullDownloader<T: Model>: APIClientOperation {
 
         var firstPageGeneratedAt: String?
 
-        let lastSyncCreationTime = dataStore.lastSyncCreationTime(of: T.self, in: event)
-        let filters = lastSyncCreationTime != nil ? ["created_since": lastSyncCreationTime!] : [:]
+        var filters = [String: String]()
+
+        if disableTestMode {
+            filters["testMode"] = "false"
+        }
+
+        if let lastSyncCreationTime = dataStore.lastSyncCreationTime(of: T.self, in: event) {
+            filters["created_since"] = lastSyncCreationTime
+        }
 
         urlSessionTask = apiClient.getTask(T.self, page: 1, lastUpdated: nil, event: event, filters: filters) { result in
             switch result {
@@ -157,7 +166,12 @@ class PartialDownloader<T: Model>: APIClientOperation {
 
         var firstPageGeneratedAt: String?
 
-        urlSessionTask = apiClient.getTask(T.self, lastUpdated: lastUpdated) { result in
+        var filters = [String: String]()
+        if disableTestMode {
+            filters["testMode"] = "false"
+        }
+
+        urlSessionTask = apiClient.getTask(T.self, lastUpdated: lastUpdated, filters: filters) { result in
             switch result {
             case .success(let pagedList):
                 let isLastPage = pagedList.next == nil
