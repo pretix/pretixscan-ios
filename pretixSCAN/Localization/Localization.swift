@@ -131,7 +131,7 @@ struct Localization {
         static let UnknownStatusCode = NSLocalizedString("The server returned an unkown status code: ", comment: "")
         static let CouldNotCreateURL = NSLocalizedString("Could not create URL", comment: "")
         static let CouldNotCreateNonce = NSLocalizedString("Could not create Nonce", comment: "")
-        static let TicketNotFound = NSLocalizedString("The ticket was not found for the current event", comment: "")
+        static let TicketNotFound = NSLocalizedString("This is not a ticket, or not a ticket for this event.", comment: "")
     }
 
     struct SyncStatusViewController {

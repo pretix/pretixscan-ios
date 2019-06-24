@@ -48,21 +48,20 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     fileprivate func showError() {
         resetToEmpty()
 
-        productNameLabel.text = self.error?.localized
+        productNameLabel.text = Localization.TicketStatusViewController.InvalidTicket
 
         if let apiError = error as? APIError {
             switch apiError {
             case .notFound:
-                productNameLabel.text = Localization.Errors.TicketNotFound
+                orderIDLabel.text = Localization.Errors.TicketNotFound
             default:
-                productNameLabel.text = self.error?.localized
+                orderIDLabel.text = self.error?.localized
             }
         }
 
         let newBackgroundColor = Color.error
         iconLabel.text = Icon.error
         ticketStatusLabel.text = Localization.TicketStatusViewController.Error
-        productNameLabel.text = self.error?.localized
         appCoordinator?.performHapticNotification(ofType: .error)
 
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
@@ -72,6 +71,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func updateMain() {
+
+        self.activityIndicator.stopAnimating()
         unpaidNoticeContainerView.isHidden = true
 
         if configuration != nil, redemptionResponse == nil, beganRedeeming == false {
@@ -98,7 +99,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
         var newBackgroundColor = Color.grayBackground
         blinkerView.isHidden = true
-        self.activityIndicator.stopAnimating()
 
         switch redemptionResponse.status {
         case .redeemed:
