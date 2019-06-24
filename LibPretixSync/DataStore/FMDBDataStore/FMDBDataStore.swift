@@ -130,7 +130,7 @@ public class FMDBDataStore: DataStore {
     public func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         let queue = databaseQueue(with: event)
 
-        DispatchQueue.main.async {
+        DispatchQueue.global().async {
             let queryPlaceholder = "\"%\(query.trimmingCharacters(in: .whitespacesAndNewlines))%\""
             let fullQuery = OrderPosition.searchQuery.replacingOccurrences(of: "?", with: queryPlaceholder)
 
