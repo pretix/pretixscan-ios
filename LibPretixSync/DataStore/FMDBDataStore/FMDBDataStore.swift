@@ -241,9 +241,23 @@ public class FMDBDataStore: DataStore {
         for item in itemsForCheckInList {
             let itemCheckInCount = CheckIn.countCheckIns(of: item.identifier, for: checkInList, in: queue)
             let itemPositionsCount = OrderPosition.countOrderPositions(of: item.identifier, for: checkInList, in: queue)
+
+            var variations = [CheckInListStatus.Item.Variation]()
+            for variation in item.variations {
+                let variationCheckInCount = CheckIn.countCheckIns(of: item.identifier, variation: variation.identifier,
+                                                                  for: checkInList, in: queue)
+                let variationPositionsCount = OrderPosition.countOrderPositions(of: item.identifier, variation: variation.identifier,
+                                                                                for: checkInList, in: queue)
+                let variationItem = CheckInListStatus.Item.Variation(value: variation.name.representation(in: Locale.current) ?? "🎟",
+                                                                     identifier: variation.identifier, checkinCount: variationCheckInCount,
+                                                                     positionCount: variationPositionsCount)
+                variations.append(variationItem)
+            }
+
             let checkInListStatusItem = CheckInListStatus.Item(name: item.name.representation(in: Locale.current) ?? "🎟",
                                                                identifier: item.identifier, checkinCount: itemCheckInCount,
-                                                               admission: false, positionCount: itemPositionsCount, variations: nil)
+                                                               admission: false, positionCount: itemPositionsCount,
+                                                               variations: variations)
             checkInListStatusItems.append(checkInListStatusItem)
         }
 

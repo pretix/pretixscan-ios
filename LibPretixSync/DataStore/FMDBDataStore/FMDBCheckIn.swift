@@ -88,11 +88,14 @@ extension CheckIn: FMDBModel {
         }
     }
 
-    static func countCheckIns(of itemID: Int? = nil, for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
+    static func countCheckIns(of itemID: Int? = nil, variation variationID: Int? = nil,
+                              for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
+
         var resultCount = 0
         let preQuery = list.includePending ? CheckIn.countCheckInsQueryWithPending : CheckIn.countCheckInsQueryWithoutPending
         let itemFilter = itemID == nil ? "" : "\nAND \(OrderPosition.stringName).item = \(itemID!)"
-        let query = preQuery + itemFilter
+        let variationFilter = variationID == nil ? "" : "\nAND \(OrderPosition.stringName).variation = \(variationID!)"
+        let query = preQuery + itemFilter + variationFilter
 
         queue.inDatabase { database in
             do {
