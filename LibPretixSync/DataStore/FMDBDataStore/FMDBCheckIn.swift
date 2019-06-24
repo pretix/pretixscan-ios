@@ -34,7 +34,7 @@ extension CheckIn: FMDBModel {
 
     static func from(result: FMResultSet, in database: FMDatabase) -> CheckIn? {
         guard let date = database.dateFromString(result.string(forColumn: "date")) else {
-            print("Date Parsing error in Checkin.from")
+            EventLogger.log(event: "Date Parsing error in Checkin.from", category: .parsing, level: .warning, type: .fault)
             return nil
         }
         let list = Identifier(result.int(forColumn: "list"))
@@ -46,7 +46,7 @@ extension CheckIn: FMDBModel {
             do {
                 try database.executeUpdate(CheckIn.deleteByOrderPositionQuery, values: [orderPosition.identifier])
             } catch {
-                print(error)
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
     }
@@ -66,7 +66,7 @@ extension CheckIn: FMDBModel {
                     try database.executeUpdate(CheckIn.insertQuery, values: [
                         list, order_position, date as Any])
                 } catch {
-                    print(error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }
             }
         }

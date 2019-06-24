@@ -26,13 +26,13 @@ public struct Order: Model {
     public let email: String?
 
     /// The locale used for communication with this customer
-    public let locale: Locale?
+    public let locale: RegionCode?
 
     /// Channel this sale was created through, such as `"web"`.
     public let salesChannel: String?
 
     /// Time of order creation
-    public let createdAt: Date?
+    public let createdAt: String?
 
     /// The order will expire, if it is still pending by this time
     public let expiresAt: Date?

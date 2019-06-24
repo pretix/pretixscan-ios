@@ -66,7 +66,7 @@ extension Item: FMDBModel {
                         category as Any, active, description as Any,
                         position, checkin_attention, json as Any])
                 } catch {
-                    print(error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }
             }
         }

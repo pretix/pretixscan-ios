@@ -41,7 +41,7 @@ public extension APIClient {
     func initialize(_ initializationRequest: DeviceInitializationRequest, completionHandler: @escaping (Error?) -> Void) {
         guard let baseURL = configStore.apiBaseURL else {
             let message = "Please set the APIClient's configStore.apiBaseURL property before calling this function."
-            print(message)
+            EventLogger.log(event: message, category: .configuration, level: .warning, type: .default)
             completionHandler(APIError.notConfigured(message: message))
             return
         }
@@ -317,14 +317,15 @@ public extension APIClient {
     }
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
-    func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil,
+    func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil, eventSlug: String? = nil,
+                    checkInListIdentifier: Identifier? = nil,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
             let event = try getEvent()
             let checkInList = try getCheckInList()
-            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
-                "/checkinlists/\(checkInList.identifier)/positions/\(secret)/redeem/")
+            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(eventSlug ?? event.slug)" +
+                "/checkinlists/\(checkInListIdentifier ?? checkInList.identifier)/positions/\(secret)/redeem/")
             var urlRequest = try createURLRequest(for: urlPath)
             urlRequest.httpMethod = HttpMethod.POST
 
