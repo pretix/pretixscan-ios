@@ -97,7 +97,7 @@ class FullDownloader<T: Model>: APIClientOperation {
         var filters = [String: String]()
 
         if disableTestMode {
-            filters["testMode"] = "false"
+            filters["testmode"] = "false"
         }
 
         if let lastSyncCreationTime = dataStore.lastSyncCreationTime(of: T.self, in: event) {
@@ -156,7 +156,7 @@ class PartialDownloader<T: Model>: APIClientOperation {
 
         var filters = [String: String]()
         if disableTestMode {
-            filters["testMode"] = "false"
+            filters["testmode"] = "false"
         }
 
         urlSessionTask = apiClient.getTask(T.self, lastUpdated: lastUpdated, filters: filters) { result in
