@@ -218,7 +218,10 @@ public extension APIClient {
     func getSubEvents(event: Event, completionHandler: @escaping ([SubEvent]?, Error?) -> Void) {
         var results = [SubEvent]()
 
-        let task = getTask(SubEvent.self, lastUpdated: nil, event: event) { result in
+        let eightHoursAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
+        let endsAfter = Formatter.iso8601.string(from: eightHoursAgo)
+
+        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter]) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
