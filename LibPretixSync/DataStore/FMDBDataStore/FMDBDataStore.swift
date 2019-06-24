@@ -229,14 +229,25 @@ public class FMDBDataStore: DataStore {
         // Get Positions Count
         let positionsCount = OrderPosition.countOrderPositions(for: checkInList, in: queue)
 
-        // TODO: Loop through items
-        var items = [CheckInListStatus.Item]()
-        let itemIDs = checkInList.allProducts ? Item.getAllItemIDs(in: queue) : checkInList.limitProducts
-        for itemID in itemIDs {
-            
+        // Get Items for CheckInList
+        let allItems = Item.getAllItems(in: queue)
+        var itemsForCheckInList = allItems
+        if let limitProducts = checkInList.limitProducts, checkInList.allProducts == false {
+            itemsForCheckInList = allItems.filter { return limitProducts.contains($0.identifier) }
         }
 
-        var status = CheckInListStatus(checkinCount: checkInCount, positionCount: positionsCount, items: items)
+        // Loop through items
+        var checkInListStatusItems = [CheckInListStatus.Item]()
+        for item in itemsForCheckInList {
+            let itemCheckInCount = CheckIn.countCheckIns(of: item.identifier, for: checkInList, in: queue)
+            let itemPositionsCount = OrderPosition.countOrderPositions(of: item.identifier, for: checkInList, in: queue)
+            let checkInListStatusItem = CheckInListStatus.Item(name: item.name.representation(in: Locale.current) ?? "🎟",
+                                                               identifier: item.identifier, checkinCount: itemCheckInCount,
+                                                               admission: false, positionCount: itemPositionsCount, variations: nil)
+            checkInListStatusItems.append(checkInListStatusItem)
+        }
+
+        let status = CheckInListStatus(checkinCount: checkInCount, positionCount: positionsCount, items: checkInListStatusItems)
         return .success(status)
     }
 

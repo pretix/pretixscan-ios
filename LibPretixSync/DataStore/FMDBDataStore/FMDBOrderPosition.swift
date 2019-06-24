@@ -164,9 +164,13 @@ extension OrderPosition: FMDBModel {
         }
     }
 
-    static func countOrderPositions(for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
+    static func countOrderPositions(of itemID: Int? = nil, for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
         var resultCount = 0
-        let query = list.includePending ? OrderPosition.countOrderPositionsQueryWithPending : OrderPosition.countOrderPositionsQueryWithoutPending
+
+        let preQuery = list.includePending ? OrderPosition.countOrderPositionsQueryWithPending : OrderPosition.countOrderPositionsQueryWithoutPending
+        let itemFilter = itemID == nil ? "" : "\nAND \(OrderPosition.stringName).item = \(itemID!)"
+        let query = preQuery + itemFilter
+
         queue.inDatabase { database in
             do {
                 let result = try database.executeQuery(query, values: [])

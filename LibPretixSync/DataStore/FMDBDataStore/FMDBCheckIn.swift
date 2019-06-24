@@ -88,9 +88,12 @@ extension CheckIn: FMDBModel {
         }
     }
 
-    static func countCheckIns(for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
+    static func countCheckIns(of itemID: Int? = nil, for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
         var resultCount = 0
-        let query = list.includePending ? CheckIn.countCheckInsQueryWithPending : CheckIn.countCheckInsQueryWithoutPending
+        let preQuery = list.includePending ? CheckIn.countCheckInsQueryWithPending : CheckIn.countCheckInsQueryWithoutPending
+        let itemFilter = itemID == nil ? "" : "\nAND \(OrderPosition.stringName).item = \(itemID!)"
+        let query = preQuery + itemFilter
+
         queue.inDatabase { database in
             do {
                 let result = try database.executeQuery(query, values: [list.identifier])

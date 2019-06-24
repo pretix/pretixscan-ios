@@ -22,7 +22,7 @@ extension Item: FMDBModel {
     "description"    TEXT,
     "position"    INTEGER,
     "checkin_attention"    INTEGER,
-    "json"    INTEGER,
+    "json"    TEXT,
     PRIMARY KEY("id")
     );
     """
@@ -39,8 +39,8 @@ extension Item: FMDBModel {
     SELECT * FROM "\(stringName)" WHERE id=?;
     """
 
-    static var allItemIDsQuery = """
-    SELECT id FROM "\(stringName)";
+    static var allItemsQuery = """
+    SELECT * FROM "\(stringName)";
     """
 
     static func from(result: FMResultSet, in database: FMDatabase) -> Item? {
@@ -76,14 +76,16 @@ extension Item: FMDBModel {
         }
     }
 
-    static func getAllItemIDs(in queue: FMDatabaseQueue) -> [Int] {
-        var results = [Int]()
+    static func getAllItems(in queue: FMDatabaseQueue) -> [Item] {
+        var results = [Item]()
 
         queue.inDatabase { database in
             do {
-                let result = try database.executeQuery(allItemIDsQuery, values: [])
+                let result = try database.executeQuery(allItemsQuery, values: [])
                 while result.next() {
-                    results.append(Int(result.int(forColumn: "id")))
+                    if let itemFromResult = Item.from(result: result, in: database) {
+                        results.append(itemFromResult)
+                    }
                 }
 
             } catch {
