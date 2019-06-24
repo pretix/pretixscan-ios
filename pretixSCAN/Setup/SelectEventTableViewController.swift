@@ -95,15 +95,15 @@ class SelectEventTableViewController: UITableViewController, Configurable {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let event = events?[section] else { return 0 }
         guard let subEventsCount = subEvents?[event]?.count else { return 1 }
-        return subEventsCount + 1
+        return subEventsCount
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SelectEventTableViewController.reuseIdentifier, for: indexPath)
 
         if let subEvent = subEvent(for: indexPath) {
-            cell.textLabel?.text = " " +  (subEvent.name.representation(in: Locale.current) ?? "(subevent)")
-            cell.detailTextLabel?.text = " " + dateFormatter.string(from: subEvent.dateFrom)
+            cell.textLabel?.text = subEvent.name.representation(in: Locale.current)
+            cell.detailTextLabel?.text = dateFormatter.string(from: subEvent.dateFrom)
         } else if let event = event(for: indexPath) {
             cell.textLabel?.text = event.name.representation(in: Locale.current)
             if let date = event.dateFrom {
@@ -121,12 +121,11 @@ class SelectEventTableViewController: UITableViewController, Configurable {
     }
 
     private func subEvent(for indexPath: IndexPath) -> SubEvent? {
-        guard indexPath.row > 0 else { return nil }
         guard let events = events else { return nil }
         guard events.count > indexPath.section else { return nil }
         let event = events[indexPath.section]
 
-        return subEvents?[event]?[indexPath.row - 1]
+        return subEvents?[event]?[indexPath.row]
     }
 
     // MARK: View Communication
