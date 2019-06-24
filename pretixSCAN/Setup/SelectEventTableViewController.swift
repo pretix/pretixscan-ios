@@ -94,7 +94,7 @@ class SelectEventTableViewController: UITableViewController, Configurable {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let event = events?[section] else { return 0 }
-        guard let subEventsCount = subEvents?[event]?.count else { return 1 }
+        guard let subEventsCount = subEvents?[event]?.count else { return 0 }
         return subEventsCount
     }
 
