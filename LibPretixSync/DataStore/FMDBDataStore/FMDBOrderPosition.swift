@@ -94,6 +94,10 @@ extension OrderPosition: FMDBModel {
             }
         }
 
+        if let orderCode = orderPosition?.orderCode {
+            orderPosition?.order = Order.getOrder(by: orderCode, in: queue)
+        }
+
         return orderPosition
     }
 

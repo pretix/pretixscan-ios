@@ -35,6 +35,22 @@ extension Order: FMDBModel {
     SELECT * FROM "\(stringName)" WHERE code=?;
     """
 
+    static func getOrder(by code: String, in queue: FMDatabaseQueue) -> Order? {
+        var order: Order?
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(Order.searchByCodeQuery, values: [code]) {
+                while result.next() {
+                    if let foundItem = Order.from(result: result, in: database) {
+                        order = foundItem
+                    }
+                }
+            }
+
+        }
+
+        return order
+    }
+
     static func store(_ records: [Order], in queue: FMDatabaseQueue) {
         for record in records {
             // Remove old sub-positions
