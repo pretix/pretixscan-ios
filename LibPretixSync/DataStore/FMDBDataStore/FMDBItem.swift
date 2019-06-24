@@ -39,6 +39,10 @@ extension Item: FMDBModel {
     SELECT * FROM "\(stringName)" WHERE id=?;
     """
 
+    static var allItemIDsQuery = """
+    SELECT id FROM "\(stringName)";
+    """
+
     static func from(result: FMResultSet, in database: FMDatabase) -> Item? {
         let json = result.string(forColumn: "json")
         guard let jsonData = json?.data(using: .utf8),
@@ -70,5 +74,23 @@ extension Item: FMDBModel {
                 }
             }
         }
+    }
+
+    static func getAllItemIDs(in queue: FMDatabaseQueue) -> [Int] {
+        var results = [Int]()
+
+        queue.inDatabase { database in
+            do {
+                let result = try database.executeQuery(allItemIDsQuery, values: [])
+                while result.next() {
+                    results.append(Int(result.int(forColumn: "id")))
+                }
+
+            } catch {
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return results
     }
 }

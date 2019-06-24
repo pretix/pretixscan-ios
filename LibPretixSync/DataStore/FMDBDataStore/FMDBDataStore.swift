@@ -231,6 +231,10 @@ public class FMDBDataStore: DataStore {
 
         // TODO: Loop through items
         var items = [CheckInListStatus.Item]()
+        let itemIDs = checkInList.allProducts ? Item.getAllItemIDs(in: queue) : checkInList.limitProducts
+        for itemID in itemIDs {
+            
+        }
 
         var status = CheckInListStatus(checkinCount: checkInCount, positionCount: positionsCount, items: items)
         return .success(status)
