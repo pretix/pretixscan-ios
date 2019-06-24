@@ -221,11 +221,13 @@ public class FMDBDataStore: DataStore {
     }
 
     public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event) -> Result<CheckInListStatus, Error> {
-        // Get CheckIn Count
-        let checkInCount = CheckIn.countCheckIns(for: checkInList, in: databaseQueue(with: event))
+        let queue = databaseQueue(with: event)
 
-        // TODO: Get Positions Count
-        let positionsCount = 0
+        // Get CheckIn Count
+        let checkInCount = CheckIn.countCheckIns(for: checkInList, in: queue)
+
+        // Get Positions Count
+        let positionsCount = OrderPosition.countOrderPositions(for: checkInList, in: queue)
 
         // TODO: Loop through items
         var items = [CheckInListStatus.Item]()

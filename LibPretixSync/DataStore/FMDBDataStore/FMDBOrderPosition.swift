@@ -63,6 +63,18 @@ extension OrderPosition: FMDBModel {
     DELETE FROM "\(stringName)" WHERE "order"=?;
     """
 
+    static let countOrderPositionsQueryWithPending = """
+    SELECT COUNT(*) FROM "\(OrderPosition.stringName)"
+    LEFT JOIN "\(Order.stringName)" ON "\(Order.stringName)".code = "\(OrderPosition.stringName)"."order"
+    WHERE "\(Order.stringName)".status IN ("p", "n")
+    """
+
+    static let countOrderPositionsQueryWithoutPending = """
+    SELECT COUNT(*) FROM "\(OrderPosition.stringName)"
+    LEFT JOIN "\(Order.stringName)" ON "\(Order.stringName)".code = "\(OrderPosition.stringName)"."order"
+    WHERE "\(Order.stringName)".status IN ("p")
+    """
+
     static func from(result: FMResultSet) -> OrderPosition? {
         let identifier = Int(result.int(forColumn: "orderpositionid"))
         guard let order = result.string(forColumn: "order") else { return nil }
@@ -150,6 +162,24 @@ extension OrderPosition: FMDBModel {
                 EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
+    }
+
+    static func countOrderPositions(for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
+        var resultCount = 0
+        let query = list.includePending ? OrderPosition.countOrderPositionsQueryWithPending : OrderPosition.countOrderPositionsQueryWithoutPending
+        queue.inDatabase { database in
+            do {
+                let result = try database.executeQuery(query, values: [])
+                while result.next() {
+                    resultCount = Int(result.int(forColumn: "COUNT(*)"))
+                }
+
+            } catch {
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return resultCount
     }
 
     func adding(checkIns newCheckIns: [CheckIn]) -> OrderPosition {
