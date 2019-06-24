@@ -72,6 +72,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func updateMain() {
+
+        self.activityIndicator.stopAnimating()
         unpaidNoticeContainerView.isHidden = true
 
         if configuration != nil, redemptionResponse == nil, beganRedeeming == false {
@@ -98,7 +100,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
         var newBackgroundColor = Color.grayBackground
         blinkerView.isHidden = true
-        self.activityIndicator.stopAnimating()
 
         switch redemptionResponse.status {
         case .redeemed:
