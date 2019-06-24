@@ -106,11 +106,13 @@ extension MultiLingualString {
 
     /// Return a representation of the string with the given ISO639-2 code
     public func representation(in languageCode: String) -> String? {
-        if let representation = self[languageCode] {
+        if let representation = self[languageCode],
+            representation.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0 {
             return representation
         }
 
-        if let representation = self["\(languageCode)-informal"] {
+        if let representation = self["\(languageCode)-informal"],
+            representation.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0 {
             return representation
         }
 
@@ -125,7 +127,8 @@ extension MultiLingualString {
         let languageCodes: [LanguageCode] = [.english, .german, .germanInformal, .spanish,
                                                             .french, .dutch, .dutchInformal, .turkish]
         for languageCode in languageCodes {
-            if let representation = self[languageCode.rawValue] {
+            if let representation = self[languageCode.rawValue],
+                representation.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0 {
                 return representation
             }
         }
