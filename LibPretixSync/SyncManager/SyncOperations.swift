@@ -94,14 +94,6 @@ class FullDownloader<T: Model>: APIClientOperation {
 
         isExecuting = true
 
-        if dataStore.lastSyncTime(of: T.self, in: event) != nil {
-            // full sync already happened, we don't need to do anything
-            completeOperation()
-            return
-        }
-
-        var firstPageGeneratedAt: String?
-
         var filters = [String: String]()
 
         if disableTestMode {
@@ -132,15 +124,11 @@ class FullDownloader<T: Model>: APIClientOperation {
                     self.dataStore.setLastSyncCreationTime(creationTimeOfLastObject, of: T.self, in: self.event)
                 }
 
-                if isFirstPage, let generatedAt = pagedList.generatedAt {
-                    firstPageGeneratedAt = generatedAt
+                if isFirstPage, let generatedAt = pagedList.generatedAt, self.dataStore.lastSyncTime(of: T.self, in: self.event) == nil {
+                    self.dataStore.setLastSyncTime(generatedAt, of: T.self, in: self.event)
                 }
 
                 if isLastPage {
-                    if let firstPageGeneratedAt = firstPageGeneratedAt {
-                        self.dataStore.setLastSyncTime(firstPageGeneratedAt, of: T.self, in: self.event)
-                    }
-
                     self.completeOperation()
                 }
             case .failure(let error):
