@@ -39,6 +39,22 @@ extension Item: FMDBModel {
     SELECT * FROM "\(stringName)" WHERE id=?;
     """
 
+    static func getItem(by identifier: Identifier, in queue: FMDatabaseQueue) -> Item? {
+        var item: Item?
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery(Item.searchByIdentifierQuery, values: [identifier]) {
+                while result.next() {
+                    if let foundItem = Item.from(result: result, in: database) {
+                        item = foundItem
+                    }
+                }
+            }
+
+        }
+
+        return item
+    }
+
     static func from(result: FMResultSet, in database: FMDatabase) -> Item? {
         let json = result.string(forColumn: "json")
         guard let jsonData = json?.data(using: .utf8),

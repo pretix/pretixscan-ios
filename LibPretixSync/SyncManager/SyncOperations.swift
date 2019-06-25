@@ -236,7 +236,7 @@ class QueuedRedemptionRequestsUploader: APIClientOperation {
 
         urlSessionTask = apiClient.redeemTask(
             secret: nextRedemptionRequest.secret,
-            force: nextRedemptionRequest.redemptionRequest.force,
+            force: true,
             ignoreUnpaid: nextRedemptionRequest.redemptionRequest.ignoreUnpaid,
             eventSlug: nextRedemptionRequest.eventSlug,
             checkInListIdentifier: nextRedemptionRequest.checkInListIdentifier) { result, error in
