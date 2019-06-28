@@ -240,6 +240,10 @@ public class FMDBDataStore: DataStore {
                 .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
 
+            // Check if this ticket is for the correct sub event
+            guard orderPosition.subEvent == checkInList.subEvent else {
+                return nil
+            }
 
             // Check for order status
             if ![.paid, .pending].contains(orderPosition.order!.status) {
