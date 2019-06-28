@@ -30,4 +30,17 @@ extension FMResultSet {
 
         return Int(int(forColumn: column))
     }
+
+    func isNull(column: String) -> Bool {
+        let value = self.object(forColumn: column)
+        if (value as? NSNull) != nil {
+            return true
+        } else {
+            return (value == nil)
+        }
+    }
+
+    func has(column: String) -> Bool {
+        return self.columnNameToIndexMap[column] != nil
+    }
 }
