@@ -78,4 +78,43 @@ public struct OrderPosition: Model {
         case pseudonymizationId = "pseudonymization_id"
         case checkins
     }
+
+    /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.
+    ///
+    /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
+    ///       `redeem` function as an example.
+    public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
+        -> RedemptionResponse? {
+        // Check if this ticket is for the correct sub event
+        guard self.subEvent == checkInList.subEvent else {
+            return nil
+        }
+
+        // Check for products
+        if !checkInList.allProducts {
+            guard let limitProducts = checkInList.limitProducts, limitProducts.contains(self.itemIdentifier) else {
+                return RedemptionResponse(status: .error, errorReason: .product, position: self, lastCheckIn: nil)
+            }
+        }
+
+        // Check for order status
+        if ![.paid, .pending].contains(self.order!.status) {
+            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil)
+        }
+
+        let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
+        if self.order!.status == .pending, !shouldIgnoreUnpaid {
+            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil)
+        }
+
+        // Check for previous check ins
+        if self.checkins.count > 0, !force {
+            // Attendee is already checked in
+            return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: self,
+                                      lastCheckIn: self.checkins.last)
+        }
+
+        // Return a positive redemption response
+        return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil)
+    }
 }

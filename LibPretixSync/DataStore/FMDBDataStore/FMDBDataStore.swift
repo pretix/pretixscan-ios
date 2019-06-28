@@ -255,8 +255,8 @@ public class FMDBDataStore: DataStore {
                 .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
 
-            guard let redemptionResponse = createRedemptionResponse(orderPosition: orderPosition, force: force, ignoreUnpaid: ignoreUnpaid,
-                                                                    in: event, in: checkInList) else { return nil }
+            guard let redemptionResponse = orderPosition.createRedemptionResponse(force: force, ignoreUnpaid: ignoreUnpaid,
+                                                                                  in: event, in: checkInList) else { return nil }
             guard redemptionResponse.status == .redeemed else { return redemptionResponse }
 
             // Store a queued redemption request

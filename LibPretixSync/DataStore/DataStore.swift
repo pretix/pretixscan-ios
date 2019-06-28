@@ -61,17 +61,6 @@ public protocol DataStore: class {
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList) -> RedemptionResponse?
 
-    /// Create a RedemptionResponse from the provided data
-    ///
-    /// Contains all the logic to decide wether a certain OrderPosition is able to be checked into a CheckInList.
-    ///
-    /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
-    ///       `redeem` function as an example.
-    ///
-    /// @Note The DataStore protocol provides a default implementation of this method.
-    func createRedemptionResponse(orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool,
-                                  in event: Event, in checkInList: CheckInList) -> RedemptionResponse?
-
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
     func numberOfRedemptionRequestsInQueue(in event: Event) -> Int
 
@@ -80,41 +69,4 @@ public protocol DataStore: class {
 
     /// Remove a `QeuedRedemptionRequest` instance from the database
     func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event)
-}
-
-extension DataStore {
-    public func createRedemptionResponse(orderPosition: OrderPosition, force: Bool, ignoreUnpaid: Bool,
-                                         in event: Event, in checkInList: CheckInList) -> RedemptionResponse? {
-        // Check if this ticket is for the correct sub event
-        guard orderPosition.subEvent == checkInList.subEvent else {
-            return nil
-        }
-
-        // Check for products
-        if !checkInList.allProducts {
-            guard let limitProducts = checkInList.limitProducts, limitProducts.contains(orderPosition.itemIdentifier) else {
-                return RedemptionResponse(status: .error, errorReason: .product, position: orderPosition, lastCheckIn: nil)
-            }
-        }
-
-        // Check for order status
-        if ![.paid, .pending].contains(orderPosition.order!.status) {
-            return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
-        }
-
-        let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
-        if orderPosition.order!.status == .pending, !shouldIgnoreUnpaid {
-            return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
-        }
-
-        // Check for previous check ins
-        if orderPosition.checkins.count > 0, !force {
-            // Attendee is already checked in
-            return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPosition,
-                                      lastCheckIn: orderPosition.checkins.last)
-        }
-
-        // Return a positive redemption response
-        return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition, lastCheckIn: nil)
-    }
 }
