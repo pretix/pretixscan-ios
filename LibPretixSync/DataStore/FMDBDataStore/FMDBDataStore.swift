@@ -210,6 +210,16 @@ public class FMDBDataStore: DataStore {
                 .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: orderPosition.orderCode, in: event))
 
+            // Check for order status
+            if ![.paid, .pending].contains(orderPosition.order!.status) {
+                return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
+            }
+
+            let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
+            if orderPosition.order!.status == .pending, !shouldIgnoreUnpaid {
+                return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
+            }
+
             // Check for previous check ins
             if checkIns.count > 0, !force {
                 // Attendee is already checked in
@@ -217,14 +227,6 @@ public class FMDBDataStore: DataStore {
                                           lastCheckIn: nil)
             }
 
-            // Check for order status
-            if ![.paid, .pending].contains(orderPosition.order!.status) {
-                return RedemptionResponse(status: .error, errorReason: .product, position: orderPosition, lastCheckIn: nil)
-            }
-
-            if orderPosition.order!.status == .pending, !ignoreUnpaid {
-                return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
-            }
 
             // Store a queued redemption request
             let checkInDate = Date()
