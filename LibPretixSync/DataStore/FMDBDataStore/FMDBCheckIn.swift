@@ -32,6 +32,22 @@ extension CheckIn: FMDBModel {
     DELETE FROM "\(stringName)" WHERE order_position=?;
     """
 
+    public static let countCheckInsQueryWithPending = """
+    SELECT COUNT(*) FROM "\(CheckIn.stringName)"
+    LEFT JOIN "\(OrderPosition.stringName)" ON "\(OrderPosition.stringName)".id = "\(CheckIn.stringName)".order_position
+    LEFT JOIN "\(Order.stringName)" ON "\(Order.stringName)".code = "\(OrderPosition.stringName)"."order"
+    WHERE "\(Order.stringName)".status IN ("n", "p")
+    AND "\(CheckIn.stringName)".list = ?
+    """
+
+    public static let countCheckInsQueryWithoutPending = """
+    SELECT COUNT(*) FROM "\(CheckIn.stringName)"
+    LEFT JOIN "\(OrderPosition.stringName)" ON "\(OrderPosition.stringName)".id = "\(CheckIn.stringName)".order_position
+    LEFT JOIN "\(Order.stringName)" ON "\(Order.stringName)".code = "\(OrderPosition.stringName)"."order"
+    WHERE "\(Order.stringName)".status IN ("p")
+    AND "\(CheckIn.stringName)".list = ?
+    """
+
     static func from(result: FMResultSet, in database: FMDatabase) -> CheckIn? {
         guard let date = database.dateFromString(result.string(forColumn: "date")) else {
             EventLogger.log(event: "Date Parsing error in Checkin.from", category: .parsing, level: .warning, type: .fault)
@@ -70,5 +86,30 @@ extension CheckIn: FMDBModel {
                 }
             }
         }
+    }
+
+    static func countCheckIns(of itemID: Int? = nil, variation variationID: Int? = nil,
+                              for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
+
+        var resultCount = 0
+        let preQuery = list.includePending ? CheckIn.countCheckInsQueryWithPending : CheckIn.countCheckInsQueryWithoutPending
+        let itemFilter = itemID == nil ? "" : "\nAND \(OrderPosition.stringName).item = \(itemID!)"
+        let variationFilter = variationID == nil ? "" : "\nAND \(OrderPosition.stringName).variation = \(variationID!)"
+        let subEventFilter = list.subEvent == nil ? "" : "\nAND \(OrderPosition.stringName).subevent = \(list.subEvent!)"
+        let query = preQuery + itemFilter + variationFilter + subEventFilter
+
+        queue.inDatabase { database in
+            do {
+                let result = try database.executeQuery(query, values: [list.identifier])
+                while result.next() {
+                    resultCount = Int(result.int(forColumn: "COUNT(*)"))
+                }
+
+            } catch {
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return resultCount
     }
 }

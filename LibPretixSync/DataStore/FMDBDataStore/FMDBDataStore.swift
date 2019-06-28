@@ -6,6 +6,7 @@
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 // swiftlint:disable force_try
+// swiftlint:disable file_length
 
 import Foundation
 import FMDB
@@ -17,23 +18,7 @@ public class FMDBDataStore: DataStore {
     // MARK: Metadata
     /// Remove all Sync Times and pretend nothing was ever synced
     public func invalidateLastSynced(in event: Event) {
-        // Drop and recreate all tables to thoroughly clean the db
-        // This includes the SyncTimestamp table
-        databaseQueue(with: event).inDatabase { database in
-            do {
-                try database.executeUpdate(ItemCategory.destructionQuery, values: nil)
-                try database.executeUpdate(Item.destructionQuery, values: nil)
-                try database.executeUpdate(SubEvent.destructionQuery, values: nil)
-                try database.executeUpdate(Order.destructionQuery, values: nil)
-                try database.executeUpdate(OrderPosition.destructionQuery, values: nil)
-                try database.executeUpdate(CheckIn.destructionQuery, values: nil)
-                try database.executeUpdate(QueuedRedemptionRequest.destructionQuery, values: nil)
-                try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
-            } catch {
-                EventLogger.log(event: "db init failed: \(error.localizedDescription)",
-                    category: .database, level: .fatal, type: .error)
-            }
-        }
+        dropAllTables(with: event)
 
         // Recreate the database
         _ = databaseQueue(with: event, recreate: true)
@@ -130,7 +115,7 @@ public class FMDBDataStore: DataStore {
     public func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         let queue = databaseQueue(with: event)
 
-        DispatchQueue.main.async {
+        DispatchQueue.global().async {
             let queryPlaceholder = "\"%\(query.trimmingCharacters(in: .whitespacesAndNewlines))%\""
             let fullQuery = OrderPosition.searchQuery.replacingOccurrences(of: "?", with: queryPlaceholder)
 
@@ -194,6 +179,51 @@ public class FMDBDataStore: DataStore {
         return Order.getOrder(by: code, in: queue)
     }
 
+    public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error> {
+        let queue = databaseQueue(with: event)
+
+        // Get CheckIn Count
+        let checkInCount = CheckIn.countCheckIns(for: checkInList, in: queue)
+
+        // Get Positions Count
+        let positionsCount = OrderPosition.countOrderPositions(for: checkInList, in: queue)
+
+        // Get Items for CheckInList
+        let allItems = Item.getAllItems(in: queue)
+        var itemsForCheckInList = allItems
+        if let limitProducts = checkInList.limitProducts, checkInList.allProducts == false {
+            itemsForCheckInList = allItems.filter { return limitProducts.contains($0.identifier) }
+        }
+
+        // Loop through items
+        var checkInListStatusItems = [CheckInListStatus.Item]()
+        for item in itemsForCheckInList {
+            let itemCheckInCount = CheckIn.countCheckIns(of: item.identifier, for: checkInList, in: queue)
+            let itemPositionsCount = OrderPosition.countOrderPositions(of: item.identifier, for: checkInList, in: queue)
+
+            var variations = [CheckInListStatus.Item.Variation]()
+            for variation in item.variations {
+                let variationCheckInCount = CheckIn.countCheckIns(of: item.identifier, variation: variation.identifier,
+                                                                  for: checkInList, in: queue)
+                let variationPositionsCount = OrderPosition.countOrderPositions(of: item.identifier, variation: variation.identifier,
+                                                                                for: checkInList, in: queue)
+                let variationItem = CheckInListStatus.Item.Variation(value: variation.name.representation(in: Locale.current) ?? "🎟",
+                                                                     identifier: variation.identifier, checkinCount: variationCheckInCount,
+                                                                     positionCount: variationPositionsCount)
+                variations.append(variationItem)
+            }
+
+            let checkInListStatusItem = CheckInListStatus.Item(name: item.name.representation(in: Locale.current) ?? "🎟",
+                                                               identifier: item.identifier, checkinCount: itemCheckInCount,
+                                                               admission: false, positionCount: itemPositionsCount,
+                                                               variations: variations)
+            checkInListStatusItems.append(checkInListStatusItem)
+        }
+
+        let status = CheckInListStatus(checkinCount: checkInCount, positionCount: positionsCount, items: checkInListStatusItems)
+        return .success(status)
+    }
+
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
@@ -226,7 +256,6 @@ public class FMDBDataStore: DataStore {
                 return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPositionWithCheckins,
                                           lastCheckIn: nil)
             }
-
 
             // Store a queued redemption request
             let checkInDate = Date()
@@ -293,7 +322,6 @@ public class FMDBDataStore: DataStore {
             }
         }
     }
-
     private lazy var uploadDataBaseQueue: FMDatabaseQueue = {
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -314,8 +342,30 @@ public class FMDBDataStore: DataStore {
 
     private var currentDataBaseQueue: FMDatabaseQueue?
     private var currentDataBaseQueueEvent: Event?
+}
 
-    private func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {
+private extension FMDBDataStore {
+    /// Drop and recreate all tables to thoroughly clean the db
+    /// This includes the SyncTimestamp table
+    func dropAllTables(with event: Event) {
+        databaseQueue(with: event).inDatabase { database in
+            do {
+                try database.executeUpdate(ItemCategory.destructionQuery, values: nil)
+                try database.executeUpdate(Item.destructionQuery, values: nil)
+                try database.executeUpdate(SubEvent.destructionQuery, values: nil)
+                try database.executeUpdate(Order.destructionQuery, values: nil)
+                try database.executeUpdate(OrderPosition.destructionQuery, values: nil)
+                try database.executeUpdate(CheckIn.destructionQuery, values: nil)
+                try database.executeUpdate(QueuedRedemptionRequest.destructionQuery, values: nil)
+                try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
+            } catch {
+                EventLogger.log(event: "db init failed: \(error.localizedDescription)",
+                    category: .database, level: .fatal, type: .error)
+            }
+        }
+    }
+
+    func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {
         // If we're dealing with the same database as last time, keep it open
         // except in case the caller specifically asked us to recreate the DB.
         if currentDataBaseQueueEvent == event, let queue = currentDataBaseQueue, !recreate {

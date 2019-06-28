@@ -63,6 +63,18 @@ extension OrderPosition: FMDBModel {
     DELETE FROM "\(stringName)" WHERE "order"=?;
     """
 
+    static let countOrderPositionsQueryWithPending = """
+    SELECT COUNT(*) FROM "\(OrderPosition.stringName)"
+    LEFT JOIN "\(Order.stringName)" ON "\(Order.stringName)".code = "\(OrderPosition.stringName)"."order"
+    WHERE "\(Order.stringName)".status IN ("p", "n")
+    """
+
+    static let countOrderPositionsQueryWithoutPending = """
+    SELECT COUNT(*) FROM "\(OrderPosition.stringName)"
+    LEFT JOIN "\(Order.stringName)" ON "\(Order.stringName)".code = "\(OrderPosition.stringName)"."order"
+    WHERE "\(Order.stringName)".status IN ("p")
+    """
+
     static func from(result: FMResultSet) -> OrderPosition? {
         let identifier = Int(result.int(forColumn: "orderpositionid"))
         guard let order = result.string(forColumn: "order") else { return nil }
@@ -154,6 +166,32 @@ extension OrderPosition: FMDBModel {
                 EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
+    }
+
+    static func countOrderPositions(of itemID: Int? = nil, variation variationID: Int? = nil,
+                                    for list: CheckInList, in queue: FMDatabaseQueue) -> Int {
+        var resultCount = 0
+
+        let preQuery = list.includePending ?
+            OrderPosition.countOrderPositionsQueryWithPending : OrderPosition.countOrderPositionsQueryWithoutPending
+        let itemFilter = itemID == nil ? "" : "\nAND \(OrderPosition.stringName).item = \(itemID!)"
+        let variationFilter = variationID == nil ? "" : "\nAND \(OrderPosition.stringName).variation = \(variationID!)"
+        let subEventFilter = list.subEvent == nil ? "" : "\nAND \(OrderPosition.stringName).subevent = \(list.subEvent!)"
+        let query = preQuery + itemFilter + variationFilter + subEventFilter
+
+        queue.inDatabase { database in
+            do {
+                let result = try database.executeQuery(query, values: [])
+                while result.next() {
+                    resultCount = Int(result.int(forColumn: "COUNT(*)"))
+                }
+
+            } catch {
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return resultCount
     }
 
     func adding(checkIns newCheckIns: [CheckIn]) -> OrderPosition {
