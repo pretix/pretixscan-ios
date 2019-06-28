@@ -171,38 +171,12 @@ public class FMDBDataStore: DataStore {
 
     public func getItem(by identifier: Identifier, in event: Event) -> Item? {
         let queue = databaseQueue(with: event)
-
-        var item: Item?
-        queue.inDatabase { database in
-            if let result = try? database.executeQuery(Item.searchByIdentifierQuery, values: [identifier]) {
-                while result.next() {
-                    if let foundItem = Item.from(result: result, in: database) {
-                        item = foundItem
-                    }
-                }
-            }
-
-        }
-
-        return item
+        return Item.getItem(by: identifier, in: queue)
     }
 
     public func getOrder(by code: String, in event: Event) -> Order? {
         let queue = databaseQueue(with: event)
-
-        var order: Order?
-        queue.inDatabase { database in
-            if let result = try? database.executeQuery(Order.searchByCodeQuery, values: [code]) {
-                while result.next() {
-                    if let foundItem = Order.from(result: result, in: database) {
-                        order = foundItem
-                    }
-                }
-            }
-
-        }
-
-        return order
+        return Order.getOrder(by: code, in: queue)
     }
 
     public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error> {
@@ -266,8 +240,18 @@ public class FMDBDataStore: DataStore {
                 .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: orderPosition.orderCode, in: event))
 
+            // Check for order status
+            if ![.paid, .pending].contains(orderPosition.order!.status) {
+                return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
+            }
+
+            let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
+            if orderPosition.order!.status == .pending, !shouldIgnoreUnpaid {
+                return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
+            }
+
             // Check for previous check ins
-            if checkIns.count > 0 {
+            if checkIns.count > 0, !force {
                 // Attendee is already checked in
                 return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPositionWithCheckins,
                                           lastCheckIn: nil)
