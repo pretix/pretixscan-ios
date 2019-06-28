@@ -36,7 +36,8 @@ public protocol DataStore: class {
 
     // MARK: - Retrieving
     /// Return all `OrderPosition`s matching the given query
-    func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
+    func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
+                              completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
 
     /// Retrieve an `Item` instance with the specified identifier, is such an Item exists
     func getItem(by identifier: Identifier, in event: Event) -> Item?

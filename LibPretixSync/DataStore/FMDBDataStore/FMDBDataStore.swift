@@ -112,7 +112,8 @@ public class FMDBDataStore: DataStore {
 
     // MARK: - Retrieving
     // Return all `OrderPosition`s matching the given query
-    public func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
+    public func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
+                                     completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         let queue = databaseQueue(with: event)
 
         DispatchQueue.global().async {
@@ -140,7 +141,21 @@ public class FMDBDataStore: DataStore {
                 foundOrderPositions.append(populatedOrderPosition)
             }
 
-            completionHandler(foundOrderPositions, nil)
+            // Filter positions without the correct product
+            let filteredOrderPositions = foundOrderPositions.filter { orderPosition in
+                if !checkInList.allProducts {
+                    return checkInList.limitProducts?.contains(orderPosition.itemIdentifier) == true
+                }
+
+                return true
+            }
+
+            // Filter positions without the correct sub event
+            .filter { orderPosition in
+                return orderPosition.subEvent == checkInList.subEvent
+            }
+
+            completionHandler(filteredOrderPositions, nil)
         }
     }
 

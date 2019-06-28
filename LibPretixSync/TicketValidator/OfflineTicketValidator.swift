@@ -57,11 +57,11 @@ public class OfflineTicketValidator: TicketValidator {
 
     /// Search all OrderPositions within a CheckInList
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        guard let event = configStore.event else {
+        guard let event = configStore.event, let checkInList = configStore.checkInList else {
             completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
             return
         }
-        configStore.dataStore?.searchOrderPositions(query, in: event, completionHandler: completionHandler)
+        configStore.dataStore?.searchOrderPositions(query, in: event, checkInList: checkInList, completionHandler: completionHandler)
     }
 
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
