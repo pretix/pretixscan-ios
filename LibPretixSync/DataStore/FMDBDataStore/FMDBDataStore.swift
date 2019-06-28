@@ -112,7 +112,8 @@ public class FMDBDataStore: DataStore {
 
     // MARK: - Retrieving
     // Return all `OrderPosition`s matching the given query
-    public func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
+    public func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
+                                     completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         let queue = databaseQueue(with: event)
 
         DispatchQueue.global().async {
@@ -140,7 +141,21 @@ public class FMDBDataStore: DataStore {
                 foundOrderPositions.append(populatedOrderPosition)
             }
 
-            completionHandler(foundOrderPositions, nil)
+            // Filter positions without the correct product
+            let filteredOrderPositions = foundOrderPositions.filter { orderPosition in
+                if !checkInList.allProducts {
+                    return checkInList.limitProducts?.contains(orderPosition.itemIdentifier) == true
+                }
+
+                return true
+            }
+
+            // Filter positions without the correct sub event
+            .filter { orderPosition in
+                return orderPosition.subEvent == checkInList.subEvent
+            }
+
+            completionHandler(filteredOrderPositions, nil)
         }
     }
 
@@ -231,14 +246,19 @@ public class FMDBDataStore: DataStore {
         -> RedemptionResponse? {
             let queue = databaseQueue(with: event)
 
-            guard let orderPosition = OrderPosition.get(secret: secret, in: queue) else {
+            // Retrieve OrderPosition and its CheckIns
+            guard let tempOrderPosition = OrderPosition.get(secret: secret, in: queue) else {
                 return nil
             }
-            let checkIns = getCheckIns(for: orderPosition, in: checkInList, in: event)
+            let checkIns = getCheckIns(for: tempOrderPosition, in: checkInList, in: event)
+            let orderPosition = tempOrderPosition.adding(checkIns: checkIns)
+                .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
+                .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
 
-            let orderPositionWithCheckins = orderPosition.adding(checkIns: checkIns)
-                .adding(item: getItem(by: orderPosition.itemIdentifier, in: event))
-                .adding(order: getOrder(by: orderPosition.orderCode, in: event))
+            // Check if this ticket is for the correct sub event
+            guard orderPosition.subEvent == checkInList.subEvent else {
+                return nil
+            }
 
             // Check for order status
             if ![.paid, .pending].contains(orderPosition.order!.status) {
@@ -253,8 +273,15 @@ public class FMDBDataStore: DataStore {
             // Check for previous check ins
             if checkIns.count > 0, !force {
                 // Attendee is already checked in
-                return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPositionWithCheckins,
-                                          lastCheckIn: nil)
+                return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPosition,
+                                          lastCheckIn: checkIns.last)
+            }
+
+            // Check for products
+            if !checkInList.allProducts {
+                guard let limitProducts = checkInList.limitProducts, limitProducts.contains(orderPosition.itemIdentifier) else {
+                    return RedemptionResponse(status: .error, errorReason: .product, position: orderPosition, lastCheckIn: nil)
+                }
             }
 
             // Store a queued redemption request
@@ -274,10 +301,10 @@ public class FMDBDataStore: DataStore {
             // Save a check in to check the attendee in
             // This checkin will later be overwritten (or duplicated) by one synced down from the server
             let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate)
-            CheckIn.store([checkIn], for: orderPositionWithCheckins, in: queue)
+            CheckIn.store([checkIn], for: orderPosition, in: queue)
 
             // Return a positive redemption response
-            return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPositionWithCheckins, lastCheckIn: nil)
+            return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition, lastCheckIn: nil)
     }
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore

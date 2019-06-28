@@ -76,16 +76,16 @@ extension OrderPosition: FMDBModel {
     """
 
     static func from(result: FMResultSet) -> OrderPosition? {
-        let identifier = Int(result.int(forColumn: "orderpositionid"))
+        let identifier = result.nonNullableInt(forColumn: "orderpositionid")
         guard let order = result.string(forColumn: "order") else { return nil }
-        let positionid = Int(result.int(forColumn: "positionid"))
-        let item = Int(result.int(forColumn: "item"))
-        let variation = Int(result.int(forColumn: "variation"))
+        let positionid = result.nonNullableInt(forColumn: "positionid")
+        let item = result.nonNullableInt(forColumn: "item")
+        let variation = result.nullableInt(forColumn: "variation")
         guard let price = result.string(forColumn: "price") else { return nil }
         let attendee_name = result.string(forColumn: "attendee_name")
         let attendee_email = result.string(forColumn: "attendee_email")
         guard let secret = result.string(forColumn: "orderpositionsecret") else { return nil }
-        let subevent = Int(result.int(forColumn: "subevent"))
+        let subevent = result.nullableInt(forColumn: "subevent")
         guard let pseudonymization_id = result.string(forColumn: "pseudonymization_id") else { return nil }
 
         let orderPosition = OrderPosition(

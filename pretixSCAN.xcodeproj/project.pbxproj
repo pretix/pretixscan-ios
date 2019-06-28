@@ -109,6 +109,7 @@
 		DCC0003F223BE77200236424 /* MultiLingualString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC0003B223BE31F00236424 /* MultiLingualString.swift */; };
 		DCC00041223BEAF300236424 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00040223BEAF300236424 /* EventTests.swift */; };
 		DCC00042223BEB3B00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
+		DCC5710922C6353A008A4397 /* FMResultSet+NullableColumns.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5710822C6353A008A4397 /* FMResultSet+NullableColumns.swift */; };
 		DCC5D84D2295687E00DAEFA0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D84C2295687E00DAEFA0 /* Extensions.swift */; };
 		DCC5D84F2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D84E2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift */; };
 		DCC5D8512295694100DAEFA0 /* FMDBOrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D8502295694100DAEFA0 /* FMDBOrderPosition.swift */; };
@@ -239,6 +240,7 @@
 		DCC0003B223BE31F00236424 /* MultiLingualString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualString.swift; sourceTree = "<group>"; };
 		DCC0003D223BE6D700236424 /* MultiLingualStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLingualStringTests.swift; sourceTree = "<group>"; };
 		DCC00040223BEAF300236424 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
+		DCC5710822C6353A008A4397 /* FMResultSet+NullableColumns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FMResultSet+NullableColumns.swift"; sourceTree = "<group>"; };
 		DCC5D84C2295687E00DAEFA0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DCC5D84E2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBSyncTimeStamp.swift; sourceTree = "<group>"; };
 		DCC5D8502295694100DAEFA0 /* FMDBOrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBOrderPosition.swift; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 				DCC5D8542295697C00DAEFA0 /* FMDBItem.swift */,
 				DCC5D858229569A100DAEFA0 /* FMDBSubEvent.swift */,
 				DCC5D85C229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift */,
+				DCC5710822C6353A008A4397 /* FMResultSet+NullableColumns.swift */,
 			);
 			path = FMDBDataStore;
 			sourceTree = "<group>";
@@ -889,6 +892,7 @@
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
+				DCC5710922C6353A008A4397 /* FMResultSet+NullableColumns.swift in Sources */,
 				DC8467BD225CF4000013F647 /* Item.swift in Sources */,
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
