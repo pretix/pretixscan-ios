@@ -6,6 +6,7 @@
 //  Copyright © 2019 rami.io. All rights reserved.
 //
 // swiftlint:disable force_try
+// swiftlint:disable file_length
 
 import Foundation
 import FMDB
@@ -17,23 +18,7 @@ public class FMDBDataStore: DataStore {
     // MARK: Metadata
     /// Remove all Sync Times and pretend nothing was ever synced
     public func invalidateLastSynced(in event: Event) {
-        // Drop and recreate all tables to thoroughly clean the db
-        // This includes the SyncTimestamp table
-        databaseQueue(with: event).inDatabase { database in
-            do {
-                try database.executeUpdate(ItemCategory.destructionQuery, values: nil)
-                try database.executeUpdate(Item.destructionQuery, values: nil)
-                try database.executeUpdate(SubEvent.destructionQuery, values: nil)
-                try database.executeUpdate(Order.destructionQuery, values: nil)
-                try database.executeUpdate(OrderPosition.destructionQuery, values: nil)
-                try database.executeUpdate(CheckIn.destructionQuery, values: nil)
-                try database.executeUpdate(QueuedRedemptionRequest.destructionQuery, values: nil)
-                try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
-            } catch {
-                EventLogger.log(event: "db init failed: \(error.localizedDescription)",
-                    category: .database, level: .fatal, type: .error)
-            }
-        }
+        dropAllTables(with: event)
 
         // Recreate the database
         _ = databaseQueue(with: event, recreate: true)
@@ -353,7 +338,6 @@ public class FMDBDataStore: DataStore {
             }
         }
     }
-
     private lazy var uploadDataBaseQueue: FMDatabaseQueue = {
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -374,8 +358,30 @@ public class FMDBDataStore: DataStore {
 
     private var currentDataBaseQueue: FMDatabaseQueue?
     private var currentDataBaseQueueEvent: Event?
+}
 
-    private func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {
+private extension FMDBDataStore {
+    /// Drop and recreate all tables to thoroughly clean the db
+    /// This includes the SyncTimestamp table
+    func dropAllTables(with event: Event) {
+        databaseQueue(with: event).inDatabase { database in
+            do {
+                try database.executeUpdate(ItemCategory.destructionQuery, values: nil)
+                try database.executeUpdate(Item.destructionQuery, values: nil)
+                try database.executeUpdate(SubEvent.destructionQuery, values: nil)
+                try database.executeUpdate(Order.destructionQuery, values: nil)
+                try database.executeUpdate(OrderPosition.destructionQuery, values: nil)
+                try database.executeUpdate(CheckIn.destructionQuery, values: nil)
+                try database.executeUpdate(QueuedRedemptionRequest.destructionQuery, values: nil)
+                try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
+            } catch {
+                EventLogger.log(event: "db init failed: \(error.localizedDescription)",
+                    category: .database, level: .fatal, type: .error)
+            }
+        }
+    }
+
+    func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {
         // If we're dealing with the same database as last time, keep it open
         // except in case the caller specifically asked us to recreate the DB.
         if currentDataBaseQueueEvent == event, let queue = currentDataBaseQueue, !recreate {

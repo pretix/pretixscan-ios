@@ -45,7 +45,6 @@ public class OfflineTicketValidator: TicketValidator {
         }
 
         DispatchQueue.global().async {
-            // TODO: Set SubEvent
             guard let result = self.configStore.dataStore?.getCheckInListStatus(checkInList, in: event, subEvent: nil) else { return }
             switch result {
             case .success(let checkInListStatus):
