@@ -10,6 +10,16 @@ import Foundation
 import FMDB
 
 extension FMResultSet {
+    func nonNullableInt(forColumn column: String) -> Int {
+        if let value = nullableInt(forColumn: column) {
+            return value
+        }
+
+        EventLogger.log(event: "Expected an Int value from Database column \(column), got nil instead!", category: .database,
+                        level: .error, type: .error)
+        return 0
+    }
+
     func nullableInt(forColumn column: String) -> Int? {
         let value = self.object(forColumn: column)
         if (value as? NSNull) != nil {
