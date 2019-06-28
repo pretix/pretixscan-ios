@@ -76,7 +76,14 @@ extension OrderPosition: FMDBModel {
     """
 
     static func from(result: FMResultSet) -> OrderPosition? {
-        let identifier = result.nonNullableInt(forColumn: "orderpositionid")
+        let identifier = result.has(column: "orderpositionid")
+            ? result.nonNullableInt(forColumn: "orderpositionid")
+            : result.nonNullableInt(forColumn: "id")
+
+        let secret = result.has(column: "orderpositionsecret")
+            ? result.string(forColumn: "orderpositionsecret")
+            : result.string(forColumn: "secret")
+
         guard let order = result.string(forColumn: "order") else { return nil }
         let positionid = result.nonNullableInt(forColumn: "positionid")
         let item = result.nonNullableInt(forColumn: "item")
@@ -84,13 +91,12 @@ extension OrderPosition: FMDBModel {
         guard let price = result.string(forColumn: "price") else { return nil }
         let attendee_name = result.string(forColumn: "attendee_name")
         let attendee_email = result.string(forColumn: "attendee_email")
-        guard let secret = result.string(forColumn: "orderpositionsecret") else { return nil }
         let subevent = result.nullableInt(forColumn: "subevent")
         guard let pseudonymization_id = result.string(forColumn: "pseudonymization_id") else { return nil }
 
         let orderPosition = OrderPosition(
             identifier: identifier, orderCode: order, order: nil, positionid: positionid, itemIdentifier: item, item: nil,
-            variation: variation, price: price, attendeeName: attendee_name, attendeeEmail: attendee_email, secret: secret,
+            variation: variation, price: price, attendeeName: attendee_name, attendeeEmail: attendee_email, secret: secret!,
             subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [])
         return orderPosition
     }
