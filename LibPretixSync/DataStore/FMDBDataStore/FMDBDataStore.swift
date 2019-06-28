@@ -255,34 +255,9 @@ public class FMDBDataStore: DataStore {
                 .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
 
-            // Check if this ticket is for the correct sub event
-            guard orderPosition.subEvent == checkInList.subEvent else {
-                return nil
-            }
-
-            // Check for order status
-            if ![.paid, .pending].contains(orderPosition.order!.status) {
-                return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
-            }
-
-            let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
-            if orderPosition.order!.status == .pending, !shouldIgnoreUnpaid {
-                return RedemptionResponse(status: .error, errorReason: .unpaid, position: orderPosition, lastCheckIn: nil)
-            }
-
-            // Check for previous check ins
-            if checkIns.count > 0, !force {
-                // Attendee is already checked in
-                return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPosition,
-                                          lastCheckIn: checkIns.last)
-            }
-
-            // Check for products
-            if !checkInList.allProducts {
-                guard let limitProducts = checkInList.limitProducts, limitProducts.contains(orderPosition.itemIdentifier) else {
-                    return RedemptionResponse(status: .error, errorReason: .product, position: orderPosition, lastCheckIn: nil)
-                }
-            }
+            guard let redemptionResponse = orderPosition.createRedemptionResponse(force: force, ignoreUnpaid: ignoreUnpaid,
+                                                                                  in: event, in: checkInList) else { return nil }
+            guard redemptionResponse.status == .redeemed else { return redemptionResponse }
 
             // Store a queued redemption request
             let checkInDate = Date()
@@ -303,8 +278,8 @@ public class FMDBDataStore: DataStore {
             let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate)
             CheckIn.store([checkIn], for: orderPosition, in: queue)
 
-            // Return a positive redemption response
-            return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition, lastCheckIn: nil)
+            // return the redeemed request
+            return redemptionResponse
     }
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
