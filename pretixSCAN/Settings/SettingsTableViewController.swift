@@ -79,8 +79,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionTitles = [
-            Localization.SettingsTableViewController.AboutSectionTitle,
             Localization.SettingsTableViewController.ConfigurationSectionTitle,
+            Localization.SettingsTableViewController.AboutSectionTitle,
             Localization.SettingsTableViewController.LicensesSectionTitle
         ]
         return sectionTitles[section]
