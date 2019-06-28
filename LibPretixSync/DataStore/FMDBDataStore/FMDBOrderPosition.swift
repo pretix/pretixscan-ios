@@ -172,7 +172,8 @@ extension OrderPosition: FMDBModel {
             OrderPosition.countOrderPositionsQueryWithPending : OrderPosition.countOrderPositionsQueryWithoutPending
         let itemFilter = itemID == nil ? "" : "\nAND \(OrderPosition.stringName).item = \(itemID!)"
         let variationFilter = variationID == nil ? "" : "\nAND \(OrderPosition.stringName).variation = \(variationID!)"
-        let query = preQuery + itemFilter + variationFilter
+        let subEventFilter = list.subEvent == nil ? "" : "\nAND \(OrderPosition.stringName).subevent = \(list.subEvent!)"
+        let query = preQuery + itemFilter + variationFilter + subEventFilter
 
         queue.inDatabase { database in
             do {
