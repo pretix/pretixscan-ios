@@ -257,6 +257,12 @@ public class FMDBDataStore: DataStore {
                 return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: orderPosition,
                                           lastCheckIn: checkIns.last)
             }
+
+            // Check for products
+            if !checkInList.allProducts {
+                guard let limitProducts = checkInList.limitProducts, limitProducts.contains(orderPosition.itemIdentifier) else {
+                    return RedemptionResponse(status: .error, errorReason: .product, position: orderPosition, lastCheckIn: nil)
+                }
             }
 
             // Store a queued redemption request
