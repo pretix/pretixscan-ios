@@ -37,7 +37,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     @IBOutlet weak var unpaidNoticeLabel: UILabel!
     @IBOutlet weak var unpaidNoticeButton: UIButton!
     @IBOutlet weak var unpaidNoticeCancelButton: UIButton!
-    
+
     // MARK: - Updating
     private func update() {
         guard isViewLoaded else { return }

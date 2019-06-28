@@ -16,7 +16,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     @IBOutlet weak var beginSyncingCell: UITableViewCell!
     @IBOutlet weak var forceSyncCell: UITableViewCell!
     @IBOutlet weak var resetContentCell: UITableViewCell!
-    @IBOutlet weak var offlineModeCell: UITableViewCell!
+    @IBOutlet weak var offlineModeCell: SettingsTableViewExplanationCell!
     @IBOutlet weak var swiftMessagesLicenseCell: UITableViewCell!
     @IBOutlet weak var fmdbLicenseCell: UITableViewCell!
     @IBOutlet weak var tinkKeyChainLicenseCell: UITableViewCell!
@@ -40,9 +40,10 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
         resetContentCell.textLabel?.text = Localization.SettingsTableViewController.PerformFactoryReset
 
-        offlineModeCell.textLabel?.text = Localization.SettingsTableViewController.SyncMode
-        offlineModeCell.detailTextLabel?.text = configStore?.asyncModeEnabled == true ?
+        offlineModeCell.valueLabel?.text = configStore?.asyncModeEnabled == true ?
             Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
+        offlineModeCell.titleLabel?.text = Localization.SettingsTableViewController.SyncMode
+        offlineModeCell.explanationLabel.text = Localization.SettingsTableViewController.SyncModeExplanation
 
         swiftMessagesLicenseCell.textLabel?.text = "SwiftMessages"
         swiftMessagesLicenseCell.detailTextLabel?.text = Localization.SettingsTableViewController.MITLicense
@@ -79,8 +80,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionTitles = [
-            Localization.SettingsTableViewController.AboutSectionTitle,
             Localization.SettingsTableViewController.ConfigurationSectionTitle,
+            Localization.SettingsTableViewController.AboutSectionTitle,
             Localization.SettingsTableViewController.LicensesSectionTitle
         ]
         return sectionTitles[section]
