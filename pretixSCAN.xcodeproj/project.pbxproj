@@ -45,6 +45,7 @@
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
 		DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */; };
 		DC3CA583228DCF870003D6D3 /* FMDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3CA582228DCF870003D6D3 /* FMDBModel.swift */; };
+		DC667FFB22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC667FFA22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift */; };
 		DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */; };
 		DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C42285816D00C08817 /* SubEvent.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
@@ -192,6 +193,7 @@
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
 		DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryDataStore.swift; sourceTree = "<group>"; };
 		DC3CA582228DCF870003D6D3 /* FMDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBModel.swift; sourceTree = "<group>"; };
+		DC667FFA22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewExplanationCell.swift; sourceTree = "<group>"; };
 		DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		DC7DD5C42285816D00C08817 /* SubEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubEvent.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			isa = PBXGroup;
 			children = (
 				DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */,
+				DC667FFA22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -893,6 +896,7 @@
 				DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
 				DCC5710922C6353A008A4397 /* FMResultSet+NullableColumns.swift in Sources */,
+				DC667FFB22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift in Sources */,
 				DC8467BD225CF4000013F647 /* Item.swift in Sources */,
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,

@@ -104,6 +104,7 @@ struct Localization {
         static let CancelReset = NSLocalizedString("Do Nothing", comment: "")
         static let ConfirmReset = NSLocalizedString("Delete Everything", comment: "")
         static let SyncMode = NSLocalizedString("Sync Mode", comment: "")
+        static let SyncModeExplanation = NSLocalizedString("In online mode, the app will confirm any check-ins in real-time with the server. In offline mode, the app will work locally and only synchronize it's data with the server every couple of minutes. When working with multiple devices, this can potentially mean that a ticket can be used multiple times. Choose offline mode if you have an unreliable internet connection but can tolerate such situations.", comment: "")
         static let SyncModeOnline = NSLocalizedString("Online", comment: "")
         static let SyncModeOffline = NSLocalizedString("Offline", comment: "")
         static let MITLicense = NSLocalizedString("MIT License", comment: "")
