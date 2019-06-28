@@ -85,7 +85,7 @@ extension OrderPosition: FMDBModel {
         let attendee_name = result.string(forColumn: "attendee_name")
         let attendee_email = result.string(forColumn: "attendee_email")
         guard let secret = result.string(forColumn: "orderpositionsecret") else { return nil }
-        let subevent = Int(result.int(forColumn: "subevent"))
+        let subevent = result.nullableInt(forColumn: "subevent")
         guard let pseudonymization_id = result.string(forColumn: "pseudonymization_id") else { return nil }
 
         let orderPosition = OrderPosition(
