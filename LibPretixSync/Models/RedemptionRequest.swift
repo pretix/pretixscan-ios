@@ -53,14 +53,16 @@ public struct RedemptionRequest: Model {
     // If questions are supported/required, you may/must supply a mapping of question IDs to their
     // respective answers. The answers should always be strings. In case of (multiple-)choice-type
     // answers, the string should contain the (comma-separated) IDs of the selected options.
-    // public let answers
+    public let answers: [String: String]?
 
-    init(questionsSupported: Bool = true, date: Date?, force: Bool = false, ignoreUnpaid: Bool, nonce: String) {
+    init(questionsSupported: Bool = true, date: Date?, force: Bool = false, ignoreUnpaid: Bool, nonce: String,
+         answers: [String: String]? = nil) {
         self.questionsSupported = questionsSupported
         self.date = date
         self.force = force
         self.ignoreUnpaid = ignoreUnpaid
         self.nonce = nonce
+        self.answers = answers
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -69,6 +71,7 @@ public struct RedemptionRequest: Model {
         case force
         case ignoreUnpaid = "ignore_unpaid"
         case nonce
+        case answers
 
     }
 }
