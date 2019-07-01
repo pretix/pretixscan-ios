@@ -39,16 +39,29 @@ public class OfflineTicketValidator: TicketValidator {
 
     /// Retrieve Statistics for the currently selected CheckInList
     public func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
-        configStore.apiClient?.getCheckInListStatus(completionHandler: completionHandler)
+        guard let event = configStore.event, let checkInList = configStore.checkInList else {
+            completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
+            return
+        }
+
+        DispatchQueue.global().async {
+            guard let result = self.configStore.dataStore?.getCheckInListStatus(checkInList, in: event, subEvent: nil) else { return }
+            switch result {
+            case .success(let checkInListStatus):
+                completionHandler(checkInListStatus, nil)
+            case .failure(let error):
+                completionHandler(nil, error)
+            }
+        }
     }
 
     /// Search all OrderPositions within a CheckInList
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        guard let event = configStore.event else {
+        guard let event = configStore.event, let checkInList = configStore.checkInList else {
             completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
             return
         }
-        configStore.dataStore?.searchOrderPositions(query, in: event, completionHandler: completionHandler)
+        configStore.dataStore?.searchOrderPositions(query, in: event, checkInList: checkInList, completionHandler: completionHandler)
     }
 
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList

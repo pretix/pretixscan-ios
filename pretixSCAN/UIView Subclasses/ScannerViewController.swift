@@ -34,7 +34,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
     private var avCaptureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession!
+    private var previewLayerIsInitialized = false
     private var previewLayer: AVCaptureVideoPreviewLayer!
+    private var metadataOutput: AVCaptureMetadataOutput = AVCaptureMetadataOutput()
 
     private var tapGestureRecognizer: UITapGestureRecognizer?
 
@@ -61,8 +63,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             return
         }
 
-        let metadataOutput = AVCaptureMetadataOutput()
-
         if captureSession.canAddOutput(metadataOutput) {
             captureSession.addOutput(metadataOutput)
 
@@ -77,6 +77,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
+        previewLayerIsInitialized = true
 
         // Tap Gestures
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleFlash))
@@ -98,6 +99,33 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopScanning()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard previewLayerIsInitialized else {
+            return
+        }
+
+        super.viewDidLayoutSubviews()
+        previewLayer.removeFromSuperlayer()
+        previewLayer.frame = view.layer.bounds
+        view.layer.addSublayer(previewLayer)
+
+        if previewLayer.connection?.isVideoOrientationSupported == true {
+            switch UIApplication.shared.statusBarOrientation {
+
+            case .unknown, .portraitUpsideDown, .portrait:
+                previewLayer.connection?.videoOrientation = .portrait
+            case .landscapeLeft:
+                previewLayer.connection?.videoOrientation = .landscapeLeft
+            case .landscapeRight:
+                previewLayer.connection?.videoOrientation = .landscapeRight
+            @unknown default:
+                previewLayer.connection?.videoOrientation = .portrait
+            }
+        }
     }
 
     private func startScanning() {

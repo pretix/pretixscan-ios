@@ -39,6 +39,8 @@ class SearchResultsTableViewController: UITableViewController {
 
         let result = results[indexPath.row]
         cell.orderPosition = result
+        cell.event = appCoordinator?.getConfigStore().event
+        cell.checkInList = appCoordinator?.getConfigStore().checkInList
         return cell
     }
 

@@ -15,6 +15,9 @@ import Foundation
 ///         For performance reasons, implementations might do a comparison first and not update unchanged items.
 public protocol DataStore: class {
     // MARK: Metadata
+    /// Delete all data regarding an event, except queued redemption requests.
+    func resetDataStore(for event: Event)
+
     /// Remove all Sync Times and pretend nothing was ever synced
     func invalidateLastSynced(in event: Event)
 
@@ -36,7 +39,8 @@ public protocol DataStore: class {
 
     // MARK: - Retrieving
     /// Return all `OrderPosition`s matching the given query
-    func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
+    func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
+                              completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
 
     /// Retrieve an `Item` instance with the specified identifier, is such an Item exists
     func getItem(by identifier: Identifier, in event: Event) -> Item?
@@ -50,6 +54,10 @@ public protocol DataStore: class {
     /// Retrieve all CheckIns for the specified `OrderPosition` in the specified `CheckInList`
     func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn]
 
+    /// Retrieve Statistics for the currently selected CheckInList
+    func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error>
+
+    // MARK: - Redemption Requests
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found

@@ -14,6 +14,10 @@ import Foundation
 ///
 /// - Note: See `DataStore` for function level documentation.
 public class InMemoryDataStore: DataStore {
+    /// Delete all data regarding an event, except queued redemption requests.
+    public func resetDataStore(for event: Event) {
+        inMemoryEventDataStores[event.slug] = nil
+    }
 
     // MARK: - Last Synced
     public func invalidateLastSynced(in event: Event) {
@@ -83,7 +87,13 @@ public class InMemoryDataStore: DataStore {
         return []
     }
 
-    public func searchOrderPositions(_ query: String, in event: Event, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
+    public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error> {
+        let status = CheckInListStatus(checkinCount: 0, positionCount: 0, items: [])
+        return .success(status)
+    }
+
+    public func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
+                                     completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         var searchResult = [OrderPosition]()
         for order in dataStore(for: event).orders {
             if let email = order.email, email.contains(query), let positions = order.positions {

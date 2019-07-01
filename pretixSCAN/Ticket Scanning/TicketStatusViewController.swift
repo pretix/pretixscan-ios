@@ -36,6 +36,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     @IBOutlet weak var unpaidNoticeContainerView: UIView!
     @IBOutlet weak var unpaidNoticeLabel: UILabel!
     @IBOutlet weak var unpaidNoticeButton: UIButton!
+    @IBOutlet weak var unpaidNoticeCancelButton: UIButton!
 
     // MARK: - Updating
     private func update() {
@@ -93,6 +94,10 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             || (redemptionResponse.position?.item?.checkInAttention == true)
 
         productNameLabel.text = "\(redemptionResponse.position?.item?.name.representation(in: Locale.current) ?? "🎟")"
+        if let variationName = redemptionResponse.position?.calculatedVariation?.name.representation(in: Locale.current) {
+            productNameLabel.text = (productNameLabel.text ?? "") + " – \(variationName)"
+        }
+
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
         orderIDLabel.text =
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
@@ -197,6 +202,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 unpaidNoticeContainerView.isHidden = false
                 unpaidNoticeLabel.text = Localization.TicketStatusViewController.UnpaidContinueText
                 unpaidNoticeButton.setTitle(Localization.TicketStatusViewController.UnpaidContinueButtonTitle, for: . normal)
+                unpaidNoticeCancelButton.setTitle(Localization.TicketStatusViewController.UnpaidCancelButtonTitle, for: . normal)
             }
         }
 

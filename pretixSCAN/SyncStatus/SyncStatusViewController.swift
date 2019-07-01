@@ -40,6 +40,8 @@ class SyncStatusViewController: UIViewController {
                                                name: SyncManager.syncBeganNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncEnded(_:)),
                                                name: SyncManager.syncEndedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(syncReset(_:)),
+                                               name: SyncManager.syncStatusResetNotification, object: nil)
 
         updateTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in self.updateStatusDisplay() }
     }
@@ -71,9 +73,15 @@ class SyncStatusViewController: UIViewController {
         currentSyncStatus = .syncing(model: model, loaded: previouslyLoadedAmount + loadedAmount, total: totalAmount)
     }
 
+    @objc
+    func syncReset(_ notification: Notification) {
+        currentSyncStatus = .neverSynced
+    }
+
     private func updateStatusDisplay() {
         switch currentSyncStatus {
         case .neverSynced:
+            detailLabel.text = Localization.SyncStatusViewController.NeverSynced
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         case .syncing(let model, let loaded, let total):
             UIApplication.shared.isNetworkActivityIndicatorVisible = true

@@ -22,7 +22,7 @@ extension Item: FMDBModel {
     "description"    TEXT,
     "position"    INTEGER,
     "checkin_attention"    INTEGER,
-    "json"    INTEGER,
+    "json"    TEXT,
     PRIMARY KEY("id")
     );
     """
@@ -37,6 +37,10 @@ extension Item: FMDBModel {
 
     static var searchByIdentifierQuery = """
     SELECT * FROM "\(stringName)" WHERE id=?;
+    """
+
+    static var allItemsQuery = """
+    SELECT * FROM "\(stringName)";
     """
 
     static func getItem(by identifier: Identifier, in queue: FMDatabaseQueue) -> Item? {
@@ -86,5 +90,25 @@ extension Item: FMDBModel {
                 }
             }
         }
+    }
+
+    static func getAllItems(in queue: FMDatabaseQueue) -> [Item] {
+        var results = [Item]()
+
+        queue.inDatabase { database in
+            do {
+                let result = try database.executeQuery(allItemsQuery, values: [])
+                while result.next() {
+                    if let itemFromResult = Item.from(result: result, in: database) {
+                        results.append(itemFromResult)
+                    }
+                }
+
+            } catch {
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return results
     }
 }
