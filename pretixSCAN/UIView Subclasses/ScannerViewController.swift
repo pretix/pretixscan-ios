@@ -34,6 +34,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
     private var avCaptureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession!
+    private var previewLayerIsInitialized = false
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private var metadataOutput: AVCaptureMetadataOutput = AVCaptureMetadataOutput()
 
@@ -76,6 +77,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer)
+        previewLayerIsInitialized = true
 
         // Tap Gestures
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleFlash))
@@ -100,6 +102,12 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
 
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard previewLayerIsInitialized else {
+            return
+        }
+
         super.viewDidLayoutSubviews()
         previewLayer.removeFromSuperlayer()
         previewLayer.frame = view.layer.bounds
