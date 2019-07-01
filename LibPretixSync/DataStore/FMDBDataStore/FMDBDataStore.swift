@@ -16,12 +16,32 @@ import FMDB
 /// - Note: See `DataStore` for function level documentation.
 public class FMDBDataStore: DataStore {
     // MARK: Metadata
-    /// Remove all Sync Times and pretend nothing was ever synced
-    public func invalidateLastSynced(in event: Event) {
+
+    /// Delete all data regarding an event, except queued redemption requests.
+    public func resetDataStore(for event: Event) {
         deleteDatabase(for: event)
 
         // Recreate the database
         _ = databaseQueue(with: event, recreate: true)
+
+        // Send out notification
+        NotificationCenter.default.post(name: SyncManager.syncStatusResetNotification, object: nil)
+    }
+
+    /// Remove all Sync Times and pretend nothing was ever synced
+    public func invalidateLastSynced(in event: Event) {
+        // Drop Sync Times Database
+        databaseQueue(with: event).inDatabase { database in
+            do {
+                try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
+                try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
+            } catch {
+                EventLogger.log(event: error.localizedDescription, category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        // Send out notification
+        NotificationCenter.default.post(name: SyncManager.syncStatusResetNotification, object: nil)
     }
 
     /// Store timestamps of the last syncs
@@ -349,6 +369,7 @@ public class FMDBDataStore: DataStore {
 private extension FMDBDataStore {
     /// Delete the database file
     func deleteDatabase(for event: Event) {
+        databaseQueue(with: event).close()
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(event.slug).sqlite")
