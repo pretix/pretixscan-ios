@@ -35,7 +35,12 @@ class SearchResultTableViewCell: UITableViewCell {
 
         orderCodeLabel.text = "\(orderPosition.attendeeName ?? "--")"
         orderIDLabel.text = orderPosition.orderCode
-        ticketType.text = "\(orderPosition.item?.name.representation(in: Locale.current) ?? "\(orderPosition.itemIdentifier)")"
+        ticketType.text = orderPosition.item?.name.representation(in: Locale.current) ?? "\(orderPosition.itemIdentifier)"
+
+        if let variationName = orderPosition.calculatedVariation?.name.representation(in: Locale.current) {
+            ticketType.text = (ticketType.text ?? "") + " – \(variationName)"
+        }
+
         secretLabel.text = orderPosition.secret
 
         guard let redemptionResponse = orderPosition.createRedemptionResponse(force: false, ignoreUnpaid: false,

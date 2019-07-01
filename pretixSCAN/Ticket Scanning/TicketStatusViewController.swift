@@ -94,6 +94,10 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             || (redemptionResponse.position?.item?.checkInAttention == true)
 
         productNameLabel.text = "\(redemptionResponse.position?.item?.name.representation(in: Locale.current) ?? "🎟")"
+        if let variationName = redemptionResponse.position?.calculatedVariation?.name.representation(in: Locale.current) {
+            productNameLabel.text = (productNameLabel.text ?? "") + " – \(variationName)"
+        }
+
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
         orderIDLabel.text =
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"

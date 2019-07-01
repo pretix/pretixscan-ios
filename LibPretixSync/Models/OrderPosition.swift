@@ -64,6 +64,11 @@ public struct OrderPosition: Model {
         return checkins.count > 0
     }
 
+    public var calculatedVariation: ItemVariation? {
+        guard let variationIdentifier = variation else { return nil }
+        return item?.variations.filter({ $0.identifier == variationIdentifier }).first
+    }
+
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
         case orderCode = "order"
