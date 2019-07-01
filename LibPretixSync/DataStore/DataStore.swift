@@ -15,6 +15,9 @@ import Foundation
 ///         For performance reasons, implementations might do a comparison first and not update unchanged items.
 public protocol DataStore: class {
     // MARK: Metadata
+    /// Delete all data regarding an event, except queued redemption requests.
+    func resetDataStore(for event: Event)
+
     /// Remove all Sync Times and pretend nothing was ever synced
     func invalidateLastSynced(in event: Event)
 
@@ -54,6 +57,7 @@ public protocol DataStore: class {
     /// Retrieve Statistics for the currently selected CheckInList
     func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error>
 
+    // MARK: - Redemption Requests
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found

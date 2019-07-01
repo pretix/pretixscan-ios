@@ -16,12 +16,32 @@ import FMDB
 /// - Note: See `DataStore` for function level documentation.
 public class FMDBDataStore: DataStore {
     // MARK: Metadata
-    /// Remove all Sync Times and pretend nothing was ever synced
-    public func invalidateLastSynced(in event: Event) {
-        dropAllTables(with: event)
+
+    /// Delete all data regarding an event, except queued redemption requests.
+    public func resetDataStore(for event: Event) {
+        deleteDatabase(for: event)
 
         // Recreate the database
         _ = databaseQueue(with: event, recreate: true)
+
+        // Send out notification
+        NotificationCenter.default.post(name: SyncManager.syncStatusResetNotification, object: nil)
+    }
+
+    /// Remove all Sync Times and pretend nothing was ever synced
+    public func invalidateLastSynced(in event: Event) {
+        // Drop Sync Times Database
+        databaseQueue(with: event).inDatabase { database in
+            do {
+                try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
+                try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
+            } catch {
+                EventLogger.log(event: error.localizedDescription, category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        // Send out notification
+        NotificationCenter.default.post(name: SyncManager.syncStatusResetNotification, object: nil)
     }
 
     /// Store timestamps of the last syncs
@@ -347,24 +367,13 @@ public class FMDBDataStore: DataStore {
 }
 
 private extension FMDBDataStore {
-    /// Drop and recreate all tables to thoroughly clean the db
-    /// This includes the SyncTimestamp table
-    func dropAllTables(with event: Event) {
-        databaseQueue(with: event).inDatabase { database in
-            do {
-                try database.executeUpdate(ItemCategory.destructionQuery, values: nil)
-                try database.executeUpdate(Item.destructionQuery, values: nil)
-                try database.executeUpdate(SubEvent.destructionQuery, values: nil)
-                try database.executeUpdate(Order.destructionQuery, values: nil)
-                try database.executeUpdate(OrderPosition.destructionQuery, values: nil)
-                try database.executeUpdate(CheckIn.destructionQuery, values: nil)
-                try database.executeUpdate(QueuedRedemptionRequest.destructionQuery, values: nil)
-                try database.executeUpdate(SyncTimeStamp.destructionQuery, values: nil)
-            } catch {
-                EventLogger.log(event: "db init failed: \(error.localizedDescription)",
-                    category: .database, level: .fatal, type: .error)
-            }
-        }
+    /// Delete the database file
+    func deleteDatabase(for event: Event) {
+        databaseQueue(with: event).close()
+        let fileURL = try! FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("\(event.slug).sqlite")
+        try! FileManager.default.removeItem(at: fileURL)
     }
 
     func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {

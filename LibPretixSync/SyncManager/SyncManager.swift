@@ -67,6 +67,11 @@ public class SyncManager {
     /// Notification being sent out every time the status of a queued upload process changes.
     public static var uploadStatusNotification: Notification.Name { return Notification.Name("SyncManagerUploadStatus") }
 
+    /// Notification being sent out if the sync status is reset
+    ///
+    /// DataStore implementations are responsible for sending this notification
+    public static var syncStatusResetNotification: Notification.Name { return Notification.Name("SyncManagerSyncReset") }
+
     /// Notifications sent out by SyncManager
     ///
     /// Usage example:
@@ -117,7 +122,7 @@ public class SyncManager {
                 return
         }
 
-        configStore.dataStore?.invalidateLastSynced(in: event)
+        configStore.dataStore?.resetDataStore(for: event)
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
