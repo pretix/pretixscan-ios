@@ -31,4 +31,6 @@ public extension Model {
 
         return nil
     }
+
+    // TODO: Create toJSONString
 }

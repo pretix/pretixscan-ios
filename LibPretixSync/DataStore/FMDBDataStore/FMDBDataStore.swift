@@ -127,6 +127,11 @@ public class FMDBDataStore: DataStore {
             return
         }
 
+        if let questions = resources as? [Question] {
+            Question.store(questions, in: queue)
+            return
+        }
+
         EventLogger.log(event: "Don't know how to store \(T.humanReadableName)", category: .offlineDownload, level: .warning, type: .fault)
     }
 
@@ -403,6 +408,7 @@ private extension FMDBDataStore {
                 try database.executeUpdate(OrderPosition.creationQuery, values: nil)
                 try database.executeUpdate(CheckIn.creationQuery, values: nil)
                 try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
+                try database.executeUpdate(Question.creationQuery, values: nil)
             } catch {
                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
