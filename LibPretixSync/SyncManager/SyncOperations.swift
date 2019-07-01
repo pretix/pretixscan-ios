@@ -246,6 +246,10 @@ class CheckInListsDownloader: FullDownloader<CheckInList> {
     }
 }
 
+class QuestionsDownloader: FullDownloader<Question> {
+    let model = Question.self
+}
+
 class QueuedRedemptionRequestsUploader: APIClientOperation {
     var errorReason: RedemptionResponse.ErrorReason?
     var shouldRepeat = true
