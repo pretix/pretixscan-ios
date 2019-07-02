@@ -265,8 +265,19 @@ public class FMDBDataStore: DataStore {
     }
 
     public func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {
-        // TODO
-        return .success([])
+        var questions = [Question]()
+
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: [item.identifier]) {
+                while result.next() {
+                    if let question = Question.from(result: result, in: database) {
+                        questions.append(question)
+                    }
+                }
+            }
+        }
+
+        return .success(questions)
     }
 
     // MARK: - Checking In
