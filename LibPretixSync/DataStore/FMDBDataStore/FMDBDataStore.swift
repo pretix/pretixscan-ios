@@ -15,6 +15,27 @@ import FMDB
 ///
 /// - Note: See `DataStore` for function level documentation.
 public class FMDBDataStore: DataStore {
+    private lazy var uploadDataBaseQueue: FMDatabaseQueue = {
+        let fileURL = try! FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("queuedRedemptionRequests.sqlite")
+        print("Opening Database \(fileURL.path)")
+        let queue = FMDatabaseQueue(url: fileURL)
+
+        queue?.inDatabase { database in
+            do {
+                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
+            } catch {
+                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return queue!
+    }()
+
+    private var currentDataBaseQueue: FMDatabaseQueue?
+    private var currentDataBaseQueueEvent: Event?
+
     // MARK: Metadata
 
     /// Delete all data regarding an event, except queued redemption requests.
@@ -134,8 +155,10 @@ public class FMDBDataStore: DataStore {
 
         EventLogger.log(event: "Don't know how to store \(T.humanReadableName)", category: .offlineDownload, level: .warning, type: .fault)
     }
+}
 
-    // MARK: - Retrieving
+// MARK: - Retrieving
+extension FMDBDataStore {
     // Return all `OrderPosition`s matching the given query
     public func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
                                      completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
@@ -279,8 +302,10 @@ public class FMDBDataStore: DataStore {
 
         return .success(questions)
     }
+}
 
-    // MARK: - Checking In
+// MARK: - Checking In
+extension FMDBDataStore {
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
@@ -323,8 +348,10 @@ public class FMDBDataStore: DataStore {
             // return the redeemed request
             return redemptionResponse
     }
+}
 
-    // MARK: - Queueing
+// MARK: - Queueing
+extension FMDBDataStore {
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
     public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
         var count = 0
@@ -367,26 +394,6 @@ public class FMDBDataStore: DataStore {
             }
         }
     }
-    private lazy var uploadDataBaseQueue: FMDatabaseQueue = {
-        let fileURL = try! FileManager.default
-            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("queuedRedemptionRequests.sqlite")
-        print("Opening Database \(fileURL.path)")
-        let queue = FMDatabaseQueue(url: fileURL)
-
-        queue?.inDatabase { database in
-            do {
-                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
-            } catch {
-                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
-            }
-        }
-
-        return queue!
-    }()
-
-    private var currentDataBaseQueue: FMDatabaseQueue?
-    private var currentDataBaseQueueEvent: Event?
 }
 
 // MARK: - Database File Management
