@@ -264,6 +264,12 @@ public class FMDBDataStore: DataStore {
         return .success(status)
     }
 
+    public func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {
+        // TODO
+        return .success([])
+    }
+
+    // MARK: - Checking In
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
@@ -307,6 +313,7 @@ public class FMDBDataStore: DataStore {
             return redemptionResponse
     }
 
+    // MARK: - Queueing
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
     public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
         var count = 0
@@ -371,6 +378,7 @@ public class FMDBDataStore: DataStore {
     private var currentDataBaseQueueEvent: Event?
 }
 
+// MARK: - Database File Management
 private extension FMDBDataStore {
     /// Delete the database file
     func deleteDatabase(for event: Event) {

@@ -35,6 +35,10 @@ public class OnlineTicketValidator: TicketValidator {
         configStore.apiClient?.getCheckinLists(event: event, completionHandler: completionHandler)
     }
 
+    public func getQuestions(for item: Item, event: Event, completionHandler: @escaping ([Question]?, Error?) -> Void) {
+        // TODO
+    }
+
     /// Search all OrderPositions within a CheckInList
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         configStore.apiClient?.getSearchResults(query: query) { orderPositions, error in

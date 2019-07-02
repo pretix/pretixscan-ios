@@ -17,6 +17,7 @@ extension Question: FMDBModel {
         "question"    TEXT NOT NULL,
         "type"    TEXT NOT NULL,
         "required"    INTEGER,
+        "position" INTEGER,
         "identifier"    TEXT,
         "ask_during_checkin"    INTEGER,
         "dependency_question"    TEXT,
@@ -27,9 +28,13 @@ extension Question: FMDBModel {
 
     static var insertQuery = """
     REPLACE INTO "\(stringName)"
-    ("id", "question", "type", "required",
+    ("id", "question", "type", "required", "position",
     "identifier", "ask_during_checkin", "dependency_question", "dependency_value", "json")
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    """
+
+    static let checkInQuestionsWithItemQuery = """
+    SELECT * FROM "\(stringName)" WHERE ask_during_checkin=1 ORDER BY position;
     """
 
     static func from(result: FMResultSet, in database: FMDatabase) -> Question? {
@@ -46,6 +51,7 @@ extension Question: FMDBModel {
                 let question = record.question.toJSONString()
                 let type = record.type.rawValue
                 let required = record.isRequired
+                let position = record.position
                 let identifer = record.stringIdentifier
                 let ask_during_checkin = record.askDuringCheckIn
                 let dependency_question = record.dependencyQuestion
@@ -54,10 +60,10 @@ extension Question: FMDBModel {
 
                 do {
                     try database.executeUpdate(Question.insertQuery, values: [
-                        id, question as Any, type, required, identifer, ask_during_checkin,
+                        id, question as Any, type, required, position, identifer, ask_during_checkin,
                         dependency_question as Any, dependency_value as Any, json])
                 } catch {
-                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+                    EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .error, type: .error)
                 }
             }
         }

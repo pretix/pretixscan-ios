@@ -37,6 +37,10 @@ public class OfflineTicketValidator: TicketValidator {
         configStore.apiClient?.getCheckinLists(event: event, completionHandler: completionHandler)
     }
 
+    public func getQuestions(for item: Item, event: Event, completionHandler: @escaping ([Question]?, Error?) -> Void) {
+        // TODO
+    }
+
     /// Retrieve Statistics for the currently selected CheckInList
     public func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
         guard let event = configStore.event, let checkInList = configStore.checkInList else {

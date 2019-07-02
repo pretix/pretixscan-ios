@@ -27,6 +27,9 @@ public protocol TicketValidator {
     /// Retrieve Statistics for the currently selected CheckInList
     func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void)
 
+    /// Questions that should be answered for the current item
+    func getQuestions(for item: Item, event: Event, completionHandler: @escaping ([Question]?, Error?) -> Void)
+
     // MARK: - Search
     /// Search all OrderPositions within a CheckInList
     func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)

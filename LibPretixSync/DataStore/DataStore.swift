@@ -57,6 +57,9 @@ public protocol DataStore: class {
     /// Retrieve Statistics for the currently selected CheckInList
     func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error>
 
+    /// Retrieve Questions that should be answered for the specified Item
+    func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error>
+
     // MARK: - Redemption Requests
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
