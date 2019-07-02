@@ -59,6 +59,8 @@ public struct OrderPosition: Model {
     /// List of check-ins with this ticket
     public let checkins: [CheckIn]
 
+    // TODO: Add Answers 
+
     /// Ticket has already been used
     public var isRedeemed: Bool {
         return checkins.count > 0
@@ -88,7 +90,8 @@ public struct OrderPosition: Model {
     ///
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
     ///       `redeem` function as an example.
-    public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
+    public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList,
+                                         with questions: [Question]? = nil)
         -> RedemptionResponse? {
         // Check if this ticket is for the correct sub event
         guard self.subEvent == checkInList.subEvent else {
@@ -118,6 +121,10 @@ public struct OrderPosition: Model {
             return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: self,
                                       lastCheckIn: self.checkins.last)
         }
+
+        // Check for open Questions
+        // TODO: prefill order position with existing answers
+
 
         // Return a positive redemption response
         return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil)

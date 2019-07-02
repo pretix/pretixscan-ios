@@ -293,7 +293,7 @@ extension FMDBDataStore {
         databaseQueue(with: event).inDatabase { database in
             if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: [item.identifier]) {
                 while result.next() {
-                    if let question = Question.from(result: result, in: database) {
+                    if let question = Question.from(result: result, in: database), question.items.contains(item.identifier) {
                         questions.append(question)
                     }
                 }
@@ -322,8 +322,11 @@ extension FMDBDataStore {
                 .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
 
-            guard let redemptionResponse = orderPosition.createRedemptionResponse(force: force, ignoreUnpaid: ignoreUnpaid,
-                                                                                  in: event, in: checkInList) else { return nil }
+            let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
+            guard let redemptionResponse = orderPosition.createRedemptionResponse(
+                force: force, ignoreUnpaid: ignoreUnpaid,
+                in: event, in: checkInList, with: questions) else { return nil }
+
             guard redemptionResponse.status == .redeemed else { return redemptionResponse }
 
             // Store a queued redemption request

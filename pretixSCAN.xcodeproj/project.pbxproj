@@ -94,6 +94,7 @@
 		DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAC199922BF7E5B0019B53F /* EventLogger.swift */; };
 		DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAC199B22BFB51A0019B53F /* RegionCode.swift */; };
 		DCAC199D22BFB60E0019B53F /* RegionCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAC199B22BFB51A0019B53F /* RegionCode.swift */; };
+		DCAF1A6F22CBAD31009896F1 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC667FFE22C75E26002EF1C1 /* Question.swift */; };
 		DCB35B8C2248E8E300860385 /* fa-solid-900.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */; };
 		DCB35B8E2248EB5800860385 /* RedemptionRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B8D2248EB5800860385 /* RedemptionRequestTests.swift */; };
 		DCB35B8F2248EB8400860385 /* RedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FCA22427B2D008A9E06 /* RedemptionRequest.swift */; };
@@ -938,6 +939,7 @@
 				DC8467B0225BD7F70013F647 /* OrderTests.swift in Sources */,
 				DCB35B922248F65000860385 /* RedemptionResponse.swift in Sources */,
 				DC1D6FBC2240FA46008A9E06 /* OrderPosition.swift in Sources */,
+				DCAF1A6F22CBAD31009896F1 /* Question.swift in Sources */,
 				DC23BA4E223FD34800ED7713 /* CheckInList.swift in Sources */,
 				DCDD82D2224BBDAB00DC0200 /* CheckInListStatus.swift in Sources */,
 				DC8467C2225CF4020013F647 /* Item.swift in Sources */,
