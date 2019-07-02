@@ -59,7 +59,8 @@ public struct OrderPosition: Model {
     /// List of check-ins with this ticket
     public let checkins: [CheckIn]
 
-    // TODO: Add Answers 
+    /// Answers to user-defined questions
+    public let answers: [Answer] = []
 
     /// Ticket has already been used
     public var isRedeemed: Bool {
@@ -124,7 +125,6 @@ public struct OrderPosition: Model {
 
         // Check for open Questions
         // TODO: prefill order position with existing answers
-
 
         // Return a positive redemption response
         return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil)
