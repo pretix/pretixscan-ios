@@ -97,7 +97,7 @@ extension OrderPosition: FMDBModel {
         let orderPosition = OrderPosition(
             identifier: identifier, orderCode: order, order: nil, positionid: positionid, itemIdentifier: item, item: nil,
             variation: variation, price: price, attendeeName: attendee_name, attendeeEmail: attendee_email, secret: secret!,
-            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [])
+            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [], answers: [])
         return orderPosition
     }
 
@@ -204,20 +204,27 @@ extension OrderPosition: FMDBModel {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns, answers: answers)
     }
 
     func adding(item: Item?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers)
     }
 
     func adding(order: Order?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers)
+    }
+
+    func adding(answers: [Answer]?) -> OrderPosition {
+        return OrderPosition(
+            identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
+            variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers ?? [])
     }
 }

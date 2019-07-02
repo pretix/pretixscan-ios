@@ -322,6 +322,8 @@ extension FMDBDataStore {
                 .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
 
+            // TODO: prefill order position with existing answers
+
             let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
             guard let redemptionResponse = orderPosition.createRedemptionResponse(
                 force: force, ignoreUnpaid: ignoreUnpaid,

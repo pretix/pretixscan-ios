@@ -60,7 +60,7 @@ public struct OrderPosition: Model {
     public let checkins: [CheckIn]
 
     /// Answers to user-defined questions
-    public let answers: [Answer] = []
+    public var answers: [Answer]
 
     /// Ticket has already been used
     public var isRedeemed: Bool {
@@ -85,6 +85,7 @@ public struct OrderPosition: Model {
         case subEvent = "subevent"
         case pseudonymizationId = "pseudonymization_id"
         case checkins
+        case answers
     }
 
     /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.
@@ -123,7 +124,6 @@ public struct OrderPosition: Model {
         }
 
         // Check for open Questions
-        // TODO: prefill order position with existing answers
         let answerQuestionIDs = answers.map { return $0.question }
         let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }
         if unansweredQuestions.count > 0 {
