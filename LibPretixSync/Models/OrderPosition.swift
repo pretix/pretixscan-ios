@@ -92,8 +92,7 @@ public struct OrderPosition: Model {
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
     ///       `redeem` function as an example.
     public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList,
-                                         with questions: [Question]? = nil)
-        -> RedemptionResponse? {
+                                         with questions: [Question] = []) -> RedemptionResponse? {
         // Check if this ticket is for the correct sub event
         guard self.subEvent == checkInList.subEvent else {
             return nil
@@ -125,6 +124,11 @@ public struct OrderPosition: Model {
 
         // Check for open Questions
         // TODO: prefill order position with existing answers
+        let answerQuestionIDs = answers.map { return $0.question }
+        let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }
+        if unansweredQuestions.count > 0 {
+            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil)
+        }
 
         // Return a positive redemption response
         return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil)
