@@ -23,7 +23,7 @@ public struct RedemptionRequest: Model {
     /// set this to `false`. In that case, questions will just be ignored. Defaults
     /// to `true` in the API, but set to false until this app implements questions
     /// handling.
-    public var questionsSupported: Bool = false
+    public var questionsSupported: Bool = true
 
     /// Specifies the datetime of the check-in.
     ///

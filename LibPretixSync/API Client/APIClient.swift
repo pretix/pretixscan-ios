@@ -333,7 +333,7 @@ public extension APIClient {
             urlRequest.httpMethod = HttpMethod.POST
 
             let redemptionRequest = RedemptionRequest(
-                questionsSupported: false,
+                questionsSupported: true,
                 date: date, force: force, ignoreUnpaid: ignoreUnpaid,
                 nonce: NonceGenerator.nonce())
             urlRequest.httpBody = try jsonEncoder.encode(redemptionRequest)

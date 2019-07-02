@@ -287,7 +287,7 @@ public class FMDBDataStore: DataStore {
             // Store a queued redemption request
             let checkInDate = Date()
             let redemptionRequest = RedemptionRequest(
-                questionsSupported: false,
+                questionsSupported: true,
                 date: checkInDate, force: force, ignoreUnpaid: ignoreUnpaid,
                 nonce: NonceGenerator.nonce())
             let queuedRedemptionRequest = QueuedRedemptionRequest(
