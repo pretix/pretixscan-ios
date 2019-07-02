@@ -117,10 +117,11 @@ class FullDownloader<T: Model>: APIClientOperation {
                     SyncManager.NotificationKeys.totalAmount: pagedList.count,
                     SyncManager.NotificationKeys.isLastPage: isLastPage])
 
-                // Store Data
-                self.dataStore.store(pagedList.results, for: self.event)
+                // Handle Data
+                self.handle(data: pagedList.results)
 
                 if let pagedList = pagedList as? PagedList<Order>, let creationTimeOfLastObject = pagedList.results.last?.createdAt {
+                    // Special case for Full Downloading Order objects: Save the creation time, to use for partial syncs
                     self.dataStore.setLastSyncCreatedTime(creationTimeOfLastObject, of: T.self, in: self.event)
                 }
 
@@ -138,6 +139,11 @@ class FullDownloader<T: Model>: APIClientOperation {
 
         }
         urlSessionTask?.resume()
+    }
+
+    /// Deal with the generated data. You can override this in subclasses.
+    func handle(data: [T]) {
+        self.dataStore.store(data, for: self.event)
     }
 }
 
@@ -214,6 +220,30 @@ class PartialOrderDownloader: PartialDownloader<Order> {
 
 class SubEventsDownloader: FullDownloader<SubEvent> {
     let model = SubEvent.self
+}
+
+class EventsDownloader: FullDownloader<Event> {
+    let model = Event.self
+    var configStore: ConfigStore?
+
+    override func handle(data: [Event]) {
+        guard let currentEvent = configStore?.event, let currentCheckInList = configStore?.checkInList else { return }
+        for event in data where event == currentEvent {
+            configStore?.set(event: event, checkInList: currentCheckInList)
+        }
+    }
+}
+
+class CheckInListsDownloader: FullDownloader<CheckInList> {
+    let model = CheckInList.self
+    var configStore: ConfigStore?
+
+    override func handle(data: [CheckInList]) {
+        guard let currentEvent = configStore?.event, let currentCheckInList = configStore?.checkInList else { return }
+        for checkInList in data where checkInList == currentCheckInList {
+            configStore?.set(event: currentEvent, checkInList: checkInList)
+        }
+    }
 }
 
 class QueuedRedemptionRequestsUploader: APIClientOperation {
