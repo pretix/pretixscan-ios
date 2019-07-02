@@ -38,7 +38,17 @@ public class OfflineTicketValidator: TicketValidator {
     }
 
     public func getQuestions(for item: Item, event: Event, completionHandler: @escaping ([Question]?, Error?) -> Void) {
-        // TODO
+        guard let questions = configStore.dataStore?.getQuestions(for: item, in: event) else {
+            completionHandler(nil, APIError.notFound)
+            return
+        }
+
+        switch questions {
+        case .failure(let error):
+            completionHandler(nil, error)
+        case .success(let resultQuestions):
+            completionHandler(resultQuestions, nil)
+        }
     }
 
     /// Retrieve Statistics for the currently selected CheckInList
