@@ -176,6 +176,9 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="149.5" height="48"/>
                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 <state key="normal" title="Button"/>
+                                                                <connections>
+                                                                    <action selector="tap:" destination="YdL-xT-kVF" eventType="touchUpInside" id="IGt-h2-5Si"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tMQ-9g-ftv">
                                                                 <rect key="frame" x="150.5" y="0.0" width="149.5" height="48"/>

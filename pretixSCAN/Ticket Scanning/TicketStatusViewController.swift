@@ -72,9 +72,14 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func updateMain() {
-
+        self.view.clipsToBounds = true
         self.activityIndicator.stopAnimating()
+
         unpaidNoticeContainerView.isHidden = true
+        unpaidNoticeContainerView.layer.cornerRadius = Style.cornerRadius
+        unpaidNoticeLabel.text = Localization.TicketStatusViewController.UnpaidContinueText
+        unpaidNoticeButton.setTitle(Localization.TicketStatusViewController.UnpaidContinueButtonTitle, for: . normal)
+        unpaidNoticeCancelButton.setTitle(Localization.TicketStatusViewController.UnpaidCancelButtonTitle, for: . normal)
 
         if configuration != nil, redemptionResponse == nil, beganRedeeming == false {
             redeem()
@@ -198,11 +203,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             appCoordinator?.performHapticNotification(ofType: .error)
 
             if redemptionResponse.errorReason == .unpaid && configStore?.checkInList?.includePending == true {
-                unpaidNoticeContainerView.layer.cornerRadius = Style.cornerRadius
                 unpaidNoticeContainerView.isHidden = false
-                unpaidNoticeLabel.text = Localization.TicketStatusViewController.UnpaidContinueText
-                unpaidNoticeButton.setTitle(Localization.TicketStatusViewController.UnpaidContinueButtonTitle, for: . normal)
-                unpaidNoticeCancelButton.setTitle(Localization.TicketStatusViewController.UnpaidCancelButtonTitle, for: . normal)
             }
         }
 
