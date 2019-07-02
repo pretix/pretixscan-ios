@@ -109,7 +109,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     func toggleOfflineMode() {
         if var configStore = configStore {
             configStore.asyncModeEnabled = !(configStore.asyncModeEnabled)
-            offlineModeCell.detailTextLabel?.text = configStore.asyncModeEnabled ?
+            offlineModeCell.valueLabel?.text = configStore.asyncModeEnabled ?
                 Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
         }
     }
