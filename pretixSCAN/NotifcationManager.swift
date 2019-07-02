@@ -24,35 +24,37 @@ class NotificationManager {
 
     @objc
     func configStoreChanged(_ notification: Notification) {
-        if let value = notification.userInfo?["value"] as? ConfigStoreValue {
+        DispatchQueue.main.async {
+            if let value = notification.userInfo?["value"] as? ConfigStoreValue {
 
-            if value == .asyncModeEnabled {
-                SwiftMessages.hideAll()
-                SwiftMessages.show {
-                    let view = MessageView.viewFromNib(layout: .statusLine)
-                    view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
-                    view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+                if value == .asyncModeEnabled {
+                    SwiftMessages.hideAll()
+                    SwiftMessages.show {
+                        let view = MessageView.viewFromNib(layout: .statusLine)
+                        view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
+                        view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
-                    if self.configStore.asyncModeEnabled {
-                        view.configureContent(body: Localization.NotificationManager.SyncModeOffline)
-                    } else {
-                        view.configureContent(body: Localization.NotificationManager.SyncModeOnline)
+                        if self.configStore.asyncModeEnabled {
+                            view.configureContent(body: Localization.NotificationManager.SyncModeOffline)
+                        } else {
+                            view.configureContent(body: Localization.NotificationManager.SyncModeOnline)
+                        }
+                        return view
                     }
-                    return view
-                }
-            } else if value == .shouldAutoSync {
-                SwiftMessages.hideAll()
-                SwiftMessages.show {
-                    let view = MessageView.viewFromNib(layout: .statusLine)
-                    view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
-                    view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+                } else if value == .shouldAutoSync {
+                    SwiftMessages.hideAll()
+                    SwiftMessages.show {
+                        let view = MessageView.viewFromNib(layout: .statusLine)
+                        view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
+                        view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
-                    if self.configStore.shouldAutoSync {
-                        view.configureContent(body: Localization.NotificationManager.ShouldAutoSyncOn)
-                    } else {
-                        view.configureContent(body: Localization.NotificationManager.ShouldAutoSyncOff)
+                        if self.configStore.shouldAutoSync {
+                            view.configureContent(body: Localization.NotificationManager.ShouldAutoSyncOn)
+                        } else {
+                            view.configureContent(body: Localization.NotificationManager.ShouldAutoSyncOff)
+                        }
+                        return view
                     }
-                    return view
                 }
             }
         }

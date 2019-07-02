@@ -129,10 +129,12 @@ extension ValidateTicketViewController {
     }
 
     @objc private func setupEventButton() {
-        eventButton.title = Localization.ValidateTicketViewController.NoEvent
-        if let eventName = configStore.event?.name.representation(in: Locale.current),
-            let checkInListName = configStore.checkInList?.name {
-            eventButton.title = "\(eventName): \(checkInListName)"
+        DispatchQueue.main.async {
+            self.eventButton.title = Localization.ValidateTicketViewController.NoEvent
+            if let eventName = self.configStore.event?.name.representation(in: Locale.current),
+                let checkInListName = self.configStore.checkInList?.name {
+                self.eventButton.title = "\(eventName): \(checkInListName)"
+            }
         }
     }
 }
