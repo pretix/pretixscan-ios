@@ -39,7 +39,7 @@
 "Last Sync %@ ago " = "Letzte Synchronisierung vor %@ ";
 "Last Sync: Never " = "Noch nicht synchronisiert ";
 /* time interval */
-"less than a minute" = "weniger alas eine MInute";
+"less than a minute" = "weniger als eine Minute";
 "Libraries and Licenses" = "Bibliotheken und Lizenzen";
 "Loading Search" = "Suche wird geladen";
 "Manual Setup" = "Manuelle Einrichtung";
