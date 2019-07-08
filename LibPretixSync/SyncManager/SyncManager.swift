@@ -122,7 +122,7 @@ public class SyncManager {
                 return
         }
 
-        configStore.dataStore?.resetDataStore(for: event)
+        configStore.dataStore?.destroyDataStore(for: event, recreate: true)
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 

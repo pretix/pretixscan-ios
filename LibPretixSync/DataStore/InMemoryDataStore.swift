@@ -15,8 +15,12 @@ import Foundation
 /// - Note: See `DataStore` for function level documentation.
 public class InMemoryDataStore: DataStore {
     /// Delete all data regarding an event, except queued redemption requests.
-    public func resetDataStore(for event: Event) {
+    public func destroyDataStore(for event: Event, recreate: Bool) {
         inMemoryEventDataStores[event.slug] = nil
+    }
+
+    public func destroyDataStoreForUploads() {
+        // happens automatically with destroyDataStore(for:) in this implementation
     }
 
     // MARK: - Last Synced

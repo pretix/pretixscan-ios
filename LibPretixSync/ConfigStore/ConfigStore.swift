@@ -65,6 +65,9 @@ public protocol ConfigStore {
     /// The currently managed event
     var event: Event? { get }
 
+    /// All Events that are synced into a local database
+    var allManagedEvents: [Event] { get }
+
     /// The CheckInList to scan against
     var checkInList: CheckInList? { get }
 
@@ -88,6 +91,9 @@ public enum ConfigStoreValue: String {
 
     /// The event has changed
     case event
+
+    /// The value for allManagedEvents has changed
+    case allManagedEvents
 
     /// The checkin list has changed
     case checkInList

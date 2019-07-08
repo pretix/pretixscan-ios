@@ -72,12 +72,23 @@ public class InMemoryConfigStore: ConfigStore {
     public func set(event: Event, checkInList: CheckInList) {
         self.event = event
         self.checkInList = checkInList
+        allManagedEvents.append(event)
     }
+
+    /// All Events that are synced into a local database
+    public private(set) var allManagedEvents: [Event] = []
 
     public var asyncModeEnabled: Bool = false { didSet { valueChanged(.asyncModeEnabled) } }
     public var shouldAutoSync: Bool = true { didSet { valueChanged(.shouldAutoSync) } }
 
     public func factoryReset() {
+        for event in allManagedEvents {
+            dataStore?.destroyDataStore(for: event, recreate: false)
+        }
+
+        dataStore?.destroyDataStoreForUploads()
+        storedDataStore = nil
+
         welcomeScreenIsConfirmed = false
         apiBaseURL = nil
         apiToken = nil
@@ -88,6 +99,7 @@ public class InMemoryConfigStore: ConfigStore {
         deviceUniqueSerial = nil
         event = nil
         checkInList = nil
+        allManagedEvents = []
         asyncModeEnabled = false
 
         NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
