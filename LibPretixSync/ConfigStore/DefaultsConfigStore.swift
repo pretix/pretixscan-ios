@@ -199,15 +199,13 @@ public class DefaultsConfigStore: ConfigStore {
         loadFromDefaults()
     }
 
-    private func valueChanged(_ value: ConfigStoreValue? = nil) {
-        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
-        saveToDefaults()
-    }
-
     public func factoryReset() {
         for event in allManagedEvents {
             dataStore?.destroyDataStore(for: event, recreate: false)
         }
+
+        dataStore?.destroyDataStoreForUploads()
+        _dataStore = nil
 
         _welcomeScreenIsConfirmed = false
         _apiBaseURL = nil
@@ -225,8 +223,15 @@ public class DefaultsConfigStore: ConfigStore {
         saveToDefaults()
         NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
     }
+}
 
-    func loadFromDefaults() {
+private extension DefaultsConfigStore {
+    private func valueChanged(_ value: ConfigStoreValue? = nil) {
+        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
+        saveToDefaults()
+    }
+
+    private func loadFromDefaults() {
         _welcomeScreenIsConfirmed = defaults.bool(forKey: key(.welcomeScreenIsConfirmed))
         _apiBaseURL = defaults.url(forKey: key(.apiBaseURL))
         _deviceName = defaults.string(forKey: key(.deviceName))
@@ -254,7 +259,7 @@ public class DefaultsConfigStore: ConfigStore {
         _apiToken = Keychain.get(account: apiBaseURL, service: apiBaseURL)
     }
 
-    func saveToDefaults() {
+    private func saveToDefaults() {
         save(_welcomeScreenIsConfirmed, forKey: .welcomeScreenIsConfirmed)
         save(_apiBaseURL, forKey: .apiBaseURL)
         save(_deviceName, forKey: .deviceName)

@@ -19,6 +19,10 @@ public class InMemoryDataStore: DataStore {
         inMemoryEventDataStores[event.slug] = nil
     }
 
+    public func destroyDataStoreForUploads() {
+        // happens automatically with destroyDataStore(for:) in this implementation
+    }
+
     // MARK: - Last Synced
     public func invalidateLastSynced(in event: Event) {
         dataStore(for: event).lastSynced = [String: String]()

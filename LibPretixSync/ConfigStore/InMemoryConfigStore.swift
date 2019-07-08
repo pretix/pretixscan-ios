@@ -86,6 +86,9 @@ public class InMemoryConfigStore: ConfigStore {
             dataStore?.destroyDataStore(for: event, recreate: false)
         }
 
+        dataStore?.destroyDataStoreForUploads()
+        storedDataStore = nil
+
         welcomeScreenIsConfirmed = false
         apiBaseURL = nil
         apiToken = nil
