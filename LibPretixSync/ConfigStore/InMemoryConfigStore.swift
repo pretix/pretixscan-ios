@@ -82,6 +82,10 @@ public class InMemoryConfigStore: ConfigStore {
     public var shouldAutoSync: Bool = true { didSet { valueChanged(.shouldAutoSync) } }
 
     public func factoryReset() {
+        for event in allManagedEvents {
+            dataStore?.destroyDataStore(for: event, recreate: false)
+        }
+
         welcomeScreenIsConfirmed = false
         apiBaseURL = nil
         apiToken = nil
@@ -92,6 +96,7 @@ public class InMemoryConfigStore: ConfigStore {
         deviceUniqueSerial = nil
         event = nil
         checkInList = nil
+        allManagedEvents = []
         asyncModeEnabled = false
 
         NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)

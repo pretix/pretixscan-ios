@@ -16,7 +16,7 @@ import Foundation
 public protocol DataStore: class {
     // MARK: Metadata
     /// Delete all data regarding an event, except queued redemption requests.
-    func resetDataStore(for event: Event)
+    func destroyDataStore(for event: Event, recreate: Bool)
 
     /// Remove all Sync Times and pretend nothing was ever synced
     func invalidateLastSynced(in event: Event)

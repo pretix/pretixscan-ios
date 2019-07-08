@@ -18,11 +18,13 @@ public class FMDBDataStore: DataStore {
     // MARK: Metadata
 
     /// Delete all data regarding an event, except queued redemption requests.
-    public func resetDataStore(for event: Event) {
+    public func destroyDataStore(for event: Event, recreate: Bool) {
         deleteDatabase(for: event)
 
-        // Recreate the database
-        _ = databaseQueue(with: event, recreate: true)
+        if recreate {
+            // Recreate the database
+            _ = databaseQueue(with: event, recreate: true)
+        }
 
         // Send out notification
         NotificationCenter.default.post(name: SyncManager.syncStatusResetNotification, object: nil)
@@ -373,7 +375,15 @@ private extension FMDBDataStore {
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(event.slug).sqlite")
-        try! FileManager.default.removeItem(at: fileURL)
+
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch let error {
+            EventLogger.log(
+                event: "Could not delete Database file: \(error.localizedDescription)",
+                category: .database, level: .warning, type: .error)
+        }
+
     }
 
     func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {

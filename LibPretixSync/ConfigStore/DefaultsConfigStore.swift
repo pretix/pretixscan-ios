@@ -135,7 +135,7 @@ public class DefaultsConfigStore: ConfigStore {
         if !allManagedEvents.contains(event) {
             self.allManagedEvents.append(event)
         }
-        
+
         self.event = event
         self.checkInList = checkInList
 
@@ -205,6 +205,10 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public func factoryReset() {
+        for event in allManagedEvents {
+            dataStore?.destroyDataStore(for: event, recreate: false)
+        }
+
         _welcomeScreenIsConfirmed = false
         _apiBaseURL = nil
         _apiToken = nil
@@ -215,6 +219,7 @@ public class DefaultsConfigStore: ConfigStore {
         _deviceUniqueSerial = nil
         _event = nil
         _checkInList = nil
+        _allManagedEvents = []
         _asyncModeEnabled = false
 
         saveToDefaults()
