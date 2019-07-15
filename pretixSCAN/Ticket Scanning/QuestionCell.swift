@@ -158,7 +158,47 @@ class MultiLineStringQuestionCell: QuestionCell, UITextViewDelegate {
 
 class BoolQuestionCell: QuestionCell {
     override class var reuseIdentifier: String { return "BoolQuestionCell" }
-    // TODO
+
+    let secondaryStackView: UIStackView = {
+        let secondaryStackView = UIStackView()
+        secondaryStackView.axis = .horizontal
+        secondaryStackView.distribution = .fillEqually
+        secondaryStackView.spacing = 8
+        secondaryStackView.translatesAutoresizingMaskIntoConstraints = false
+        return secondaryStackView
+    }()
+
+    let onButton: ChoiceButton = {
+        let onButton = ChoiceButton()
+        onButton.setTitle("1", for: .normal)
+        return onButton
+    }()
+
+    let offButton: ChoiceButton = {
+        let offButton = ChoiceButton()
+        offButton.setTitle("0", for: .normal)
+        return offButton
+    }()
+
+    override func setup() {
+        super.setup()
+        mainStackView.addArrangedSubview(secondaryStackView)
+        secondaryStackView.addArrangedSubview(onButton)
+        secondaryStackView.addArrangedSubview(offButton)
+
+        onButton.addTarget(self, action: #selector(selected(sender:)), for: .touchUpInside)
+        offButton.addTarget(self, action: #selector(selected(sender:)), for: .touchUpInside)
+    }
+
+    @IBAction func selected(sender: UIButton) {
+        [onButton, offButton].forEach { $0.isSelected = false }
+        sender.isSelected = true
+
+        if let question = question {
+            delegate?.update(answer: Answer(question: question.identifier, answer: onButton.isSelected ? "true" : "false",
+                                            questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+        }
+    }
 }
 
 class SingleChoiceQuestionCell: QuestionCell {
