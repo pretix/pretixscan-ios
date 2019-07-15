@@ -17,6 +17,8 @@ class QuestionsTableViewController: UITableViewController, Configurable {
         super.viewDidLoad()
         tableView.allowsSelection = false
 
+        title = Localization.QuestionsTableViewController.Title
+
         for cellType in [
             NumberQuestionCell.self, OneLineStringQuestionCell.self, MultiLineStringQuestionCell.self, BoolQuestionCell.self,
             SingleChoiceQuestionCell.self, MultipleChoiceQuestionCell.self, FileUploadQuestionCell.self, DateQuestionCell.self,

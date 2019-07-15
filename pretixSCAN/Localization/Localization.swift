@@ -142,4 +142,8 @@ struct Localization {
         static let LessThanAMinute = NSLocalizedString("less than a minute", comment: "time interval")
         static let LastSyncXAgo = NSLocalizedString("Last Sync %@ ago ", comment: "e.g. Last Sync [12 minutes] ago")
     }
+
+    struct QuestionsTableViewController {
+        static let Title = NSLocalizedString("Questions", comment: "Title for the List of Questions")
+    }
 }

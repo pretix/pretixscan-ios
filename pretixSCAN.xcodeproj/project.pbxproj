@@ -42,6 +42,7 @@
 		DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */; };
 		DC2A605E22DCD84300E7A6EA /* QuestionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A605D22DCD84300E7A6EA /* QuestionsTableViewController.swift */; };
 		DC2A606022DCD90600E7A6EA /* QuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A605F22DCD90600E7A6EA /* QuestionCell.swift */; };
+		DC2A606222DD07F900E7A6EA /* PaddingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A606122DD07F900E7A6EA /* PaddingView.swift */; };
 		DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */; };
 		DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */; };
 		DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A012256722100710EFA /* NotifcationManager.swift */; };
@@ -201,6 +202,7 @@
 		DC23BA51223FEB2700ED7713 /* SetupFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupFinishedViewController.swift; sourceTree = "<group>"; };
 		DC2A605D22DCD84300E7A6EA /* QuestionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsTableViewController.swift; sourceTree = "<group>"; };
 		DC2A605F22DCD90600E7A6EA /* QuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCell.swift; sourceTree = "<group>"; };
+		DC2A606122DD07F900E7A6EA /* PaddingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingView.swift; sourceTree = "<group>"; };
 		DC2F49FC22565FFE00710EFA /* FontAwesomeBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontAwesomeBarButtonItem.swift; sourceTree = "<group>"; };
 		DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		DC2F4A012256722100710EFA /* NotifcationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationManager.swift; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 				DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */,
 				DC2A605D22DCD84300E7A6EA /* QuestionsTableViewController.swift */,
 				DC2A605F22DCD90600E7A6EA /* QuestionCell.swift */,
+				DC2A606122DD07F900E7A6EA /* PaddingView.swift */,
 			);
 			path = "Ticket Scanning";
 			sourceTree = "<group>";
@@ -907,6 +910,7 @@
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */,
 				DCAF1A7122CBAD67009896F1 /* Answer.swift in Sources */,
+				DC2A606222DD07F900E7A6EA /* PaddingView.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
