@@ -13,7 +13,7 @@ import FMDB
 extension Question: FMDBModel {
     static var creationQuery = """
     CREATE TABLE IF NOT EXISTS "\(stringName)" (
-        "id"    INTEGER NOT NULL,
+        "id"    INTEGER UNIQUE NOT NULL,
         "question"    TEXT NOT NULL,
         "type"    TEXT NOT NULL,
         "required"    INTEGER,
