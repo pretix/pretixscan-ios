@@ -204,7 +204,7 @@ class BoolQuestionCell: QuestionCell {
 class SingleChoiceQuestionCell: QuestionCell {
     override class var reuseIdentifier: String { return "SingleChoiceQuestionCell" }
 
-    private var buttons: [ChoiceButton] = []
+    var buttons: [ChoiceButton] = []
 
     let secondaryStackView: UIStackView = {
         let secondaryStackView = UIStackView()
@@ -255,9 +255,20 @@ class SingleChoiceQuestionCell: QuestionCell {
     }
 }
 
-class MultipleChoiceQuestionCell: QuestionCell {
+class MultipleChoiceQuestionCell: SingleChoiceQuestionCell {
     override class var reuseIdentifier: String { return "MultipleChoiceQuestionCell" }
-    // TODO
+
+    override func selected(sender: UIButton) {
+        sender.isSelected.toggle()
+
+        if let question = question {
+            var allTags = ""
+            buttons.filter({ return $0.isSelected }).map({ return "\($0.tag)," }).forEach({ allTags += $0 })
+
+            delegate?.update(answer: Answer(question: question.identifier, answer: allTags,
+                questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+        }
+    }
 }
 
 class FileUploadQuestionCell: QuestionCell {
