@@ -117,7 +117,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
         case .incomplete:
             newBackgroundColor = Color.warning
-            updateToIncomplete()
+            updateToIncomplete(redemptionResponse)
 
         case .error:
             newBackgroundColor = updateToError(redemptionResponse)
@@ -175,10 +175,18 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
     }
 
-    private func updateToIncomplete() {
-        iconLabel.text = Icon.warning
-        ticketStatusLabel.text = Localization.TicketStatusViewController.IncompleteInformation
-        appCoordinator?.performHapticNotification(ofType: .warning)
+    private func updateToIncomplete(_ redemptionResponse: RedemptionResponse) {
+        let questionsController = createQuestionsController()
+        questionsController.questions = redemptionResponse.questions ?? []
+        let navigationController = UINavigationController(rootViewController: questionsController)
+        navigationController.navigationBar.prefersLargeTitles = true
+
+        // TODO: Fix graphical glitch here
+        present(navigationController, animated: true, completion: nil)
+//
+//        iconLabel.text = Icon.warning
+//        ticketStatusLabel.text = Localization.TicketStatusViewController.IncompleteInformation
+//        appCoordinator?.performHapticNotification(ofType: .warning)
     }
 
     private func updateToError(_ redemptionResponse: RedemptionResponse) -> UIColor {
@@ -208,6 +216,16 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
 
         return newBackgroundColor
+    }
+
+    private func createQuestionsController() -> QuestionsTableViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "questions")
+        guard let questionsController = viewController as? QuestionsTableViewController else {
+            fatalError("Could not get get questions view controller from Storyboard")
+        }
+        questionsController.configStore = configStore
+        return questionsController
     }
 
     // MARK: - Actions
