@@ -259,3 +259,36 @@
 
 /* No comment provided by engineer. */
 "You can now start scanning" = "You can now start scanning";
+
+/* Question Type Label */
+"BoolQuestionCell" = "Yes or No";
+
+/* Question Type Label */
+"NumberQuestionCell" = "Enter A Number";
+
+/* Question Type Label */
+"MultiLineStringQuestionCell" = "Enter Text";
+
+/* Question Type Label */
+"SingleChoiceQuestionCell" = "Pick One";
+
+/* Question Type Label */
+"MultipleChoiceQuestionCell" = "Pick All That Apply";
+
+/* Question Type Label */
+"TimeQuestionCell" = "Enter a time";
+
+/* Question Type Label */
+"FileUploadQuestionCell" = "Upload a File";
+
+/* Question Type Label */
+"DateQuestionCell" = "Enter a Date";
+
+/* Question Type Label */
+"DateTimeQuestionCell" = "Enter a Date and A Time";
+
+/* Question Type Label */
+"CountryCodeQuestionCell" = "Enter a Country";
+
+/* Question Type Label */
+"OneLineStringQuestionCell" = "Enter Text";
