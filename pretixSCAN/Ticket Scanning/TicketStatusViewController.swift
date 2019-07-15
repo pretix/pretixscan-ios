@@ -219,11 +219,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func createQuestionsController() -> QuestionsTableViewController {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "questions")
-        guard let questionsController = viewController as? QuestionsTableViewController else {
-            fatalError("Could not get get questions view controller from Storyboard")
-        }
+        let questionsController = QuestionsTableViewController(style: .plain)
         questionsController.configStore = configStore
         return questionsController
     }

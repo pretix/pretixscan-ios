@@ -15,6 +15,14 @@ class QuestionsTableViewController: UITableViewController, Configurable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        for cellType in [
+            NumberQuestionCell.self, OneLineStringQuestionCell.self, MultiLineStringQuestionCell.self, BoolQuestionCell.self,
+            SingleChoiceQuestionCell.self, MultipleChoiceQuestionCell.self, FileUploadQuestionCell.self, DateQuestionCell.self,
+            TimeQuestionCell.self, DateTimeQuestionCell.self, CountryCodeQuestionCell.self
+        ] {
+            tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+        }
     }
 
     // MARK: - Table view data source

@@ -14,12 +14,47 @@ class QuestionCell: UITableViewCell {
 
     var question: Question? { didSet { update() }}
 
+    private let mainStackView = UIStackView()
+    private let questionTypeLabel = UILabel()
+    private let questionTextLabel = UILabel()
+
     // MARK: View Lifecycle
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setup()
     }
 
-    private func update() {}
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+
+    private func setup() {
+        // Main Stack View
+        mainStackView.axis = .vertical
+        mainStackView.spacing = 8
+
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(mainStackView)
+        mainStackView.topAnchor.constraint(equalToSystemSpacingBelow: contentView.topAnchor, multiplier: 1).isActive = true
+        contentView.bottomAnchor.constraint(equalToSystemSpacingBelow: mainStackView.bottomAnchor, multiplier: 1).isActive = true
+        mainStackView.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 1).isActive = true
+        contentView.trailingAnchor.constraint(equalToSystemSpacingAfter: mainStackView.trailingAnchor, multiplier: 1).isActive = true
+
+        // Question Type Label
+        questionTypeLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        questionTypeLabel.textColor = Color.secondary
+        questionTypeLabel.text = reuseIdentifier?.uppercased()
+        mainStackView.addArrangedSubview(questionTypeLabel)
+
+        // Question Text Label
+        questionTextLabel.numberOfLines = 0
+        mainStackView.addArrangedSubview(questionTextLabel)
+    }
+
+    private func update() {
+        questionTextLabel.text = question?.question.representation(in: Locale.current)
+    }
 }
 
 class NumberQuestionCell: QuestionCell {
