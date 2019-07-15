@@ -127,7 +127,8 @@ public struct OrderPosition: Model {
         let answerQuestionIDs = answers.map { return $0.question }
         let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }
         if unansweredQuestions.count > 0 {
-            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil, questions: nil)
+            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
+                                      questions: unansweredQuestions)
         }
 
         // Return a positive redemption response

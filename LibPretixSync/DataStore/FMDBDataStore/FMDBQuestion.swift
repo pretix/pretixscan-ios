@@ -34,7 +34,7 @@ extension Question: FMDBModel {
     """
 
     static let checkInQuestionsWithItemQuery = """
-    SELECT * FROM "\(stringName)" WHERE ask_during_checkin=? ORDER BY position;
+    SELECT * FROM "\(stringName)" WHERE ask_during_checkin=1 ORDER BY position;
     """
 
     static func from(result: FMResultSet, in database: FMDatabase) -> Question? {

@@ -311,7 +311,7 @@ extension FMDBDataStore {
         var questions = [Question]()
 
         databaseQueue(with: event).inDatabase { database in
-            if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: [item.identifier]) {
+            if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: []) {
                 while result.next() {
                     if let question = Question.from(result: result, in: database), question.items.contains(item.identifier) {
                         questions.append(question)
