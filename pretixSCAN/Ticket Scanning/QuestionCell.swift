@@ -132,9 +132,28 @@ class OneLineStringQuestionCell: QuestionCell, UITextFieldDelegate {
     }
 }
 
-class MultiLineStringQuestionCell: QuestionCell {
+class MultiLineStringQuestionCell: QuestionCell, UITextViewDelegate {
     override class var reuseIdentifier: String { return "MultiLineStringQuestionCell" }
-    // TODO
+
+    let textView: UITextView = {
+        let textView = UITextView()
+        textView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        return textView
+    }()
+
+    override func setup() {
+        super.setup()
+        mainStackView.addArrangedSubview(PaddingView(enclosing: textView))
+    }
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if let question = question, let textFieldText = textView.text {
+            delegate?.update(answer: Answer(question: question.identifier, answer: textFieldText, questionStringIdentifier: nil,
+                                            options: [], optionStringIdentifiers: []))
+        }
+
+        return true
+    }
 }
 
 class BoolQuestionCell: QuestionCell {
