@@ -25,6 +25,9 @@ public struct RedemptionResponse: Codable, Equatable {
     /// If the ticket has already been redeemed, this field might contain the last CheckIn
     public var lastCheckIn: CheckIn?
 
+    /// If the ticket is incomplete, a list of questions that need to be answered
+    public let questions: [Question]?
+
     // MARK: - Enums
     /// Possible values for the Response Status
     public enum Status: String, Codable {
@@ -55,5 +58,6 @@ public struct RedemptionResponse: Codable, Equatable {
         case errorReason = "reason"
         case position
         case lastCheckIn
+        case questions
     }
 }

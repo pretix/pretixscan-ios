@@ -102,35 +102,35 @@ public struct OrderPosition: Model {
         // Check for products
         if !checkInList.allProducts {
             guard let limitProducts = checkInList.limitProducts, limitProducts.contains(self.itemIdentifier) else {
-                return RedemptionResponse(status: .error, errorReason: .product, position: self, lastCheckIn: nil)
+                return RedemptionResponse(status: .error, errorReason: .product, position: self, lastCheckIn: nil, questions: nil)
             }
         }
 
         // Check for order status
         if ![.paid, .pending].contains(self.order!.status) {
-            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil)
+            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil)
         }
 
         let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
         if self.order!.status == .pending, !shouldIgnoreUnpaid {
-            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil)
+            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil)
         }
 
         // Check for previous check ins
         if self.checkins.count > 0, !force {
             // Attendee is already checked in
             return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: self,
-                                      lastCheckIn: self.checkins.last)
+                                      lastCheckIn: self.checkins.last, questions: nil)
         }
 
         // Check for open Questions
         let answerQuestionIDs = answers.map { return $0.question }
         let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }
         if unansweredQuestions.count > 0 {
-            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil)
+            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil, questions: nil)
         }
 
         // Return a positive redemption response
-        return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil)
+        return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil, questions: nil)
     }
 }
