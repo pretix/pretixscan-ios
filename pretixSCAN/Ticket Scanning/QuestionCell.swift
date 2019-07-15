@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol QuestionCellDelegate: class {
+    func update(answer: Answer)
+}
+
 class QuestionCell: UITableViewCell {
     // MARK: Properties
     class var reuseIdentifier: String { return "QuestionCell" }
 
     var question: Question? { didSet { update() }}
+    weak var delegate: QuestionCellDelegate?
 
     let mainStackView: UIStackView = {
         let mainStackView = UIStackView()
@@ -90,16 +95,41 @@ class NumberQuestionCell: QuestionCell, UITextFieldDelegate {
             let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
 
             // only allow 14 or less digits
-            return updatedText.count <= 14
+            let allowEdit = updatedText.count <= 14
+
+            if let question = question, allowEdit {
+                let answer = Answer(question: question.identifier, answer: updatedText, questionStringIdentifier: nil,
+                                options: [], optionStringIdentifiers: [])
+                delegate?.update(answer: answer)
+            }
+            return allowEdit
+
         } else {
             return false
         }
     }
 }
 
-class OneLineStringQuestionCell: QuestionCell {
+class OneLineStringQuestionCell: QuestionCell, UITextFieldDelegate {
     override class var reuseIdentifier: String { return "OneLineStringQuestionCell" }
-    // TODO
+
+    let textField: UITextField = {
+        let textField = UITextField()
+        return textField
+    }()
+
+    override func setup() {
+        super.setup()
+        mainStackView.addArrangedSubview(PaddingView(enclosing: textField))
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let question = question, let textFieldText = textField.text {
+            delegate?.update(answer: Answer(question: question.identifier, answer: textFieldText, questionStringIdentifier: nil,
+                                            options: [], optionStringIdentifiers: []))
+        }
+        return true
+    }
 }
 
 class MultiLineStringQuestionCell: QuestionCell {
