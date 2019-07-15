@@ -274,7 +274,6 @@ class MultipleChoiceQuestionCell: SingleChoiceQuestionCell {
 class FileUploadQuestionCell: QuestionCell {
     override class var reuseIdentifier: String { return "FileUploadQuestionCell" }
     let noticeLabel: UILabel = {
-
         let noticeLabel = UILabel()
         noticeLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
         noticeLabel.textColor = Color.secondary
@@ -291,7 +290,26 @@ class FileUploadQuestionCell: QuestionCell {
 
 class DateQuestionCell: QuestionCell {
     override class var reuseIdentifier: String { return "DateQuestionCell" }
-    // TODO
+
+    let datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = UIDatePicker.Mode.date
+        return datePicker
+    }()
+
+    override func setup() {
+        super.setup()
+        mainStackView.addArrangedSubview(datePicker)
+        datePicker.addTarget(self, action: #selector(dateUpdated(sender:)), for: .valueChanged)
+    }
+
+    @IBAction func dateUpdated(sender: UIDatePicker) {
+        if let question = question {
+            let dateString = DateFormatter.iso8601.string(from: sender.date)
+            delegate?.update(answer: Answer(question: question.identifier, answer: dateString,
+                questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+        }
+    }
 }
 
 class TimeQuestionCell: QuestionCell {
