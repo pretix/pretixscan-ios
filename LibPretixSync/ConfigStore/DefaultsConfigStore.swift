@@ -28,13 +28,12 @@ public class DefaultsConfigStore: ConfigStore {
         case deviceUniqueSerial
         case event
         case checkInList
+        case allManagedEvents
         case asyncModeEnabled
     }
 
     public var welcomeScreenIsConfirmed: Bool {
-        get {
-            return _welcomeScreenIsConfirmed
-        }
+        get { return _welcomeScreenIsConfirmed }
         set {
             _welcomeScreenIsConfirmed = newValue
             valueChanged()
@@ -42,9 +41,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public var apiBaseURL: URL? {
-        get {
-            return _apiBaseURL
-        }
+        get { return _apiBaseURL }
         set {
             _apiBaseURL = newValue
             valueChanged()
@@ -52,9 +49,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public var apiToken: String? {
-        get {
-            return _apiToken
-        }
+        get { return _apiToken }
         set {
             _apiToken = newValue
             valueChanged(.apiToken)
@@ -89,9 +84,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public var deviceName: String? {
-        get {
-            return _deviceName
-        }
+        get { return _deviceName }
         set {
             _deviceName = newValue
             valueChanged()
@@ -99,9 +92,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public var organizerSlug: String? {
-        get {
-            return _organizerSlug
-        }
+        get { return _organizerSlug }
         set {
             _organizerSlug = newValue
             valueChanged(.organizerSlug)
@@ -109,9 +100,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public var deviceID: Int? {
-        get {
-            return _deviceID
-        }
+        get { return _deviceID }
         set {
             _deviceID = newValue
             valueChanged()
@@ -119,9 +108,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public var deviceUniqueSerial: String? {
-        get {
-            return _deviceUniqueSerial
-        }
+        get { return _deviceUniqueSerial }
         set {
             _deviceUniqueSerial = newValue
             valueChanged()
@@ -129,9 +116,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public private(set) var event: Event? {
-        get {
-            return _event
-        }
+        get { return _event }
         set {
             _event = newValue
             valueChanged(.event)
@@ -139,9 +124,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public private(set) var checkInList: CheckInList? {
-        get {
-            return _checkInList
-        }
+        get { return _checkInList }
         set {
             _checkInList = newValue
             valueChanged(.checkInList)
@@ -149,10 +132,25 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public func set(event: Event, checkInList: CheckInList) {
+        if !allManagedEvents.contains(event) {
+            self.allManagedEvents.append(event)
+        }
+
         self.event = event
         self.checkInList = checkInList
 
         Client.shared?.tags = ["event": event.slug, "checkInList": "\(checkInList.identifier)"]
+    }
+
+    /// All Events that are synced into a local database
+    public private(set) var allManagedEvents: [Event] {
+        get {
+            return _allManagedEvents
+        }
+        set {
+            _allManagedEvents = newValue
+            valueChanged(.allManagedEvents)
+        }
     }
 
     public var asyncModeEnabled: Bool {
@@ -189,6 +187,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _deviceUniqueSerial: String?
     private var _event: Event?
     private var _checkInList: CheckInList?
+    private var _allManagedEvents: [Event] = []
     private var _asyncModeEnabled: Bool = false
     private var _shouldAutoSync: Bool = true
 
@@ -200,12 +199,14 @@ public class DefaultsConfigStore: ConfigStore {
         loadFromDefaults()
     }
 
-    private func valueChanged(_ value: ConfigStoreValue? = nil) {
-        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
-        saveToDefaults()
-    }
-
     public func factoryReset() {
+        for event in allManagedEvents {
+            dataStore?.destroyDataStore(for: event, recreate: false)
+        }
+
+        dataStore?.destroyDataStoreForUploads()
+        _dataStore = nil
+
         _welcomeScreenIsConfirmed = false
         _apiBaseURL = nil
         _apiToken = nil
@@ -216,13 +217,21 @@ public class DefaultsConfigStore: ConfigStore {
         _deviceUniqueSerial = nil
         _event = nil
         _checkInList = nil
+        _allManagedEvents = []
         _asyncModeEnabled = false
 
         saveToDefaults()
         NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
     }
+}
 
-    func loadFromDefaults() {
+private extension DefaultsConfigStore {
+    private func valueChanged(_ value: ConfigStoreValue? = nil) {
+        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
+        saveToDefaults()
+    }
+
+    private func loadFromDefaults() {
         _welcomeScreenIsConfirmed = defaults.bool(forKey: key(.welcomeScreenIsConfirmed))
         _apiBaseURL = defaults.url(forKey: key(.apiBaseURL))
         _deviceName = defaults.string(forKey: key(.deviceName))
@@ -236,6 +245,10 @@ public class DefaultsConfigStore: ConfigStore {
             _event = try? jsonDecoder.decode(Event.self, from: eventData)
         }
 
+        if let allManagedEventsData = defaults.data(forKey: key(.allManagedEvents)) {
+            _allManagedEvents = (try? jsonDecoder.decode([Event].self, from: allManagedEventsData)) ?? []
+        }
+
         // CheckInList
         if let checkinListData = defaults.data(forKey: key(.checkInList)) {
             _checkInList = try? jsonDecoder.decode(CheckInList.self, from: checkinListData)
@@ -246,7 +259,7 @@ public class DefaultsConfigStore: ConfigStore {
         _apiToken = Keychain.get(account: apiBaseURL, service: apiBaseURL)
     }
 
-    func saveToDefaults() {
+    private func saveToDefaults() {
         save(_welcomeScreenIsConfirmed, forKey: .welcomeScreenIsConfirmed)
         save(_apiBaseURL, forKey: .apiBaseURL)
         save(_deviceName, forKey: .deviceName)
@@ -256,6 +269,7 @@ public class DefaultsConfigStore: ConfigStore {
         save(_asyncModeEnabled, forKey: .asyncModeEnabled)
         save(try? jsonEncoder.encode(_event), forKey: .event)
         save(try? jsonEncoder.encode(_checkInList), forKey: .checkInList)
+        save(try? jsonEncoder.encode(_allManagedEvents), forKey: .allManagedEvents)
 
         defaults.synchronize()
 

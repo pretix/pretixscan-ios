@@ -38,12 +38,32 @@ public class FMDBDataStore: DataStore {
 
     // MARK: Metadata
 
+    public func destroyDataStoreForUploads() {
+        uploadDataBaseQueue.close()
+        let fileURL = try! FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("queuedRedemptionRequests.sqlite")
+
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch let error {
+            EventLogger.log(
+                event: "Could not delete Database file: \(error.localizedDescription)",
+                category: .database, level: .warning, type: .error)
+        }
+
+        // Always recreate
+        uploadDataBaseQueue = createUploadDataBaseQueue()
+    }
+
     /// Delete all data regarding an event, except queued redemption requests.
-    public func resetDataStore(for event: Event) {
+    public func destroyDataStore(for event: Event, recreate: Bool) {
         deleteDatabase(for: event)
 
-        // Recreate the database
-        _ = databaseQueue(with: event, recreate: true)
+        if recreate {
+            // Recreate the database
+            _ = databaseQueue(with: event, recreate: true)
+        }
 
         // Send out notification
         NotificationCenter.default.post(name: SyncManager.syncStatusResetNotification, object: nil)
@@ -403,13 +423,39 @@ extension FMDBDataStore {
 
 // MARK: - Database File Management
 private extension FMDBDataStore {
+    private func createUploadDataBaseQueue() -> FMDatabaseQueue {
+        let fileURL = try! FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("queuedRedemptionRequests.sqlite")
+        print("Opening Database \(fileURL.path)")
+        let queue = FMDatabaseQueue(url: fileURL)
+
+        queue?.inDatabase { database in
+            do {
+                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
+            } catch {
+                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return queue!
+    }
+
     /// Delete the database file
     func deleteDatabase(for event: Event) {
         databaseQueue(with: event).close()
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(event.slug).sqlite")
-        try! FileManager.default.removeItem(at: fileURL)
+
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch let error {
+            EventLogger.log(
+                event: "Could not delete Database file: \(error.localizedDescription)",
+                category: .database, level: .warning, type: .error)
+        }
+
     }
 
     func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {

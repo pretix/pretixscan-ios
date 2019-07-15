@@ -1,0 +1,98 @@
+"About this App" = "Über diese App";
+"All Contents and Settings were deleted" = "Alle Daten und Einstellungen wurden gelöscht";
+/* Ticket is already redeemed */
+"Already Redeemed" = "Bereits gescannt";
+"Already Scanned" = "Bereits gescannt";
+"App Version" = "App-Version";
+"Automatic Syncing is now disabled" = "Automatische Synchronisierung ist nun deaktiviert";
+"Automatic Syncing is now enabled" = "Automatische Synchronisierung ist nun aktiviert";
+"Cancel" = "Abbrechen";
+/* Order Cancelled */
+"Cancelled" = "Storniert";
+"Check In Unpaid" = "Unbezahlt einchecken";
+"Checked In" = "Eingecheckt";
+"Configuration" = "Konfiguration";
+"Connect" = "Verbinden";
+"Connect Device" = "Gerät verbinden";
+"Continue" = "Weiter";
+"Could not create Nonce" = "Nonce konnte nicht erstellt werden";
+"Could not create URL" = "URL konnte nicht erstellt werden";
+"Delete Everything" = "Alle löschen";
+"Do Nothing" = "Nichts tun";
+"Enter Connection Details" = "Verbindungsdetails eingeben";
+"Error" = "Fehler";
+/* Order Expired */
+"Expired" = "abgelaufen";
+"Force Complete Resync" = "Vollständige Synchronisierung erzwingen";
+/* Placeholder is an integer */
+"Found %d Results" = "%d Ergebnisse gefunden";
+"Found No Results" = "Keine Ergebnisse gefunden";
+"Found one Result" = "Ein Ergebnis gefunden";
+"Found too many results, keep typing" = "Zu viele Ergebnisse gefunden, bitte tippen Sie mehr Buchstaben ein";
+"I understand that personal data of attendees of my connected events will be stored on this device and I will secure the device properly." = "Ich verstehe, dass personenbezogene Daten zu den Teilnehmern meiner Veranstaltungen auf diesem Gerät gespeichert werden und sichere das Gerät angemessen.";
+"In online mode, the app will confirm any check-ins in real-time with the server. In offline mode, the app will work locally and only synchronize it's data with the server every couple of minutes. When working with multiple devices, this can potentially mean that a ticket can be used multiple times. Choose offline mode if you have an unreliable internet connection but can tolerate such situations." = "Im Online-Modus prüft die App jeden Scan direkt in Echtzeit mit dem Server. Im Offline-Modus trifft die App alle Entscheidungen autonom und synchronisiert sich alle paar Minuten mit dem Server. Wenn Sie mit mehreren Geräten arbeiten, kann das heißen, dass ein Ticket mehrfach gescannt werden kann. Wählen Sie den Offline-Modus z.B. wenn SIe eine unzuverlässige Internetverbindung haben und mit solchen Situationen leben können.";
+"Incomplete Information" = "Unvollständige Information";
+"Initialization Token already used" = "Dieser Token wurde bereits benutzt";
+"Instead of scanning a QR code, you can read these details off your screen." = "Statt einen QR-Code zu scannen, können Sie die Verbindungsdaten auch manuell eingeben.";
+"Invalid Ticket" = "Ungültiges Ticket";
+/* e.g. Last Sync [12 minutes] ago */
+"Last Sync %@ ago " = "Letzte Synchronisierung vor %@ ";
+"Last Sync: Never " = "Noch nicht synchronisiert ";
+/* time interval */
+"less than a minute" = "weniger als eine Minute";
+"Libraries and Licenses" = "Bibliotheken und Lizenzen";
+"Loading Search" = "Suche wird geladen";
+"Manual Setup" = "Manuelle Einrichtung";
+"MIT License" = "MIT-Lizenz";
+/* e.g. do not check in unpaid ticket */
+"No" = "Nein";
+"No Event" = "Keine Veranstaltung";
+"Offline" = "Offline";
+"OK" = "OK";
+"Online" = "Online";
+/* Order Paid */
+"Paid" = "bezahlt";
+/* Order Pending */
+"Pending" = "ausstehend";
+"pretixSCAN" = "pretixSCAN";
+"pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix." = "pretixSCAN ist eine App für den Veranstaltungseinlass mit der Sie Tickets scannen können, die Sie mit pretix verkauft haben.";
+/* Ticket is Unpaid */
+"Product" = "Produkt";
+"Reset Contents and Settings" = "Daten löschen und Einstellungen zurücksetzen";
+"Search" = "Suchen";
+"Search will begin after you have typed at least 3 characters." = "Suche beginnt nachdem Sie mindestens drei Buchstaben getippt haben.";
+"Select Check-In List" = "Check-In-Liste auswählen";
+"Select Event" = "Veranstaltung auswählen";
+"Settings" = "Einstellungen";
+"Setup Complete" = "Einrichtung vollständig";
+"Start Scanning" = "Loslegen!";
+"Statistics" = "Statistiken";
+"Sync every few minutes" = "Alle paar Minuten synchronisieren";
+"Sync Mode" = "Synchronisations-Modus";
+"Sync Mode Switched to Offline" = "Synchronisations-Modus ist nun offline";
+"Sync Mode Switched to Online" = "Synchronisations-Modus ist nun online";
+"Sync Now" = "Jetzt synchronisieren";
+"Syncing Done " = "Synchronisierung erledigt ";
+"System URL" = "System-Adresse";
+"The resource was not found on the server" = "Die Ressource wurde auf dem Server nicht gefunden";
+"The server refused to handle our request" = "Der Server hat die Anfrage der App abgelehnt";
+"The server returned a non HTTP response" = "Der Server hat keine HTTP-Antwort zurückgegeben";
+"The server returned an empty response" = "Der Server hat eine leere Antwort zurückgegeben";
+"The server returned an unkown status code: " = "Der Server hat einen unerwarteten Status-Code zurückgegeben: ";
+"This feature cannot be used at the moment: " = "Diese Funktion kann momentan nicht benutzt werden: ";
+"This is not a ticket, or not a ticket for this event." = "Dies ist kein Ticket, oder ein Ticket für eine andere Veranstaltung.";
+"This ticket has not been paid for, do you still want to check it in?" = "Dieses Ticket wurde noch nicht bezahlt, wollen Sie es trotzdem einchecken?";
+"This will delete event data from the device and log you out. Do you want to continue?" = "Dies löscht alle Daten von Ihrem Gerät und meldet das Gerät ab. Wollen Sie fortfahren?";
+"Ticket Already Used" = "Ticket bereits benutzt";
+"To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan." = "Um loszulegen, erstellen Sie ein neues Gerät im Abschnitt \"Geräte\" Ihres Veranstalterkontos im pretix-Backend. Sie erhalten dann einen Konfigurations-QR-Code, den Sie hier scannen können.";
+"Token" = "Token";
+"Total Tickets Sold" = "Tickets verkauft insgesamt";
+/* Ticket is Unpaid */
+"Unpaid" = "Unbezahlt";
+"Valid" = "Gültig";
+"Valid Ticket" = "Gültiges Ticket";
+"Valid Ticket, but needs attention" = "Gültiges Ticket, erfordert Aufmerksamkeit";
+"Welcome" = "Willkommen";
+"You are forbidden from accessing this resource" = "Sie dürfen auf diese Ressource nicht zugreifen";
+"You are not authorized to access this resource" = "Sie haben keine Zugriffsrechte auf diese Ressource";
+"You can now start scanning" = "Sie können nun beginnen, Tickets zu scannen";

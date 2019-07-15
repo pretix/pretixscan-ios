@@ -1,0 +1,261 @@
+
+/* No comment provided by engineer. */
+"About this App" = "About this App";
+
+/* No comment provided by engineer. */
+"All Contents and Settings were deleted" = "All Contents and Settings were deleted";
+
+/* Ticket is already redeemed */
+"Already Redeemed" = "Already Redeemed";
+
+/* No comment provided by engineer. */
+"Already Scanned" = "Already Scanned";
+
+/* No comment provided by engineer. */
+"App Version" = "App Version";
+
+/* No comment provided by engineer. */
+"Automatic Syncing is now disabled" = "Automatic Syncing is now disabled";
+
+/* No comment provided by engineer. */
+"Automatic Syncing is now enabled" = "Automatic Syncing is now enabled";
+
+/* No comment provided by engineer. */
+"Cancel" = "Cancel";
+
+/* Order Cancelled */
+"Cancelled" = "Cancelled";
+
+/* No comment provided by engineer. */
+"Check In Unpaid" = "Check In Unpaid";
+
+/* No comment provided by engineer. */
+"Checked In" = "Checked In";
+
+/* No comment provided by engineer. */
+"Configuration" = "Configuration";
+
+/* No comment provided by engineer. */
+"Connect" = "Connect";
+
+/* No comment provided by engineer. */
+"Connect Device" = "Connect Device";
+
+/* No comment provided by engineer. */
+"Continue" = "Continue";
+
+/* No comment provided by engineer. */
+"Could not create Nonce" = "Could not create Nonce";
+
+/* No comment provided by engineer. */
+"Could not create URL" = "Could not create URL";
+
+/* No comment provided by engineer. */
+"Delete Everything" = "Delete Everything";
+
+/* No comment provided by engineer. */
+"Do Nothing" = "Do Nothing";
+
+/* No comment provided by engineer. */
+"Enter Connection Details" = "Enter Connection Details";
+
+/* No comment provided by engineer. */
+"Error" = "Error";
+
+/* Order Expired */
+"Expired" = "Expired";
+
+/* No comment provided by engineer. */
+"Force Complete Resync" = "Force Complete Resync";
+
+/* Placeholder is an integer */
+"Found %d Results" = "Found %d Results";
+
+/* No comment provided by engineer. */
+"Found No Results" = "Found No Results";
+
+/* No comment provided by engineer. */
+"Found one Result" = "Found one Result";
+
+/* No comment provided by engineer. */
+"Found too many results, keep typing" = "Found too many results, keep typing";
+
+/* No comment provided by engineer. */
+"I understand that personal data of attendees of my connected events will be stored on this device and I will secure the device properly." = "I understand that personal data of attendees of my connected events will be stored on this device and I will secure the device properly.";
+
+/* No comment provided by engineer. */
+"In online mode, the app will confirm any check-ins in real-time with the server. In offline mode, the app will work locally and only synchronize it's data with the server every couple of minutes. When working with multiple devices, this can potentially mean that a ticket can be used multiple times. Choose offline mode if you have an unreliable internet connection but can tolerate such situations." = "In online mode, the app will confirm any check-ins in real-time with the server. In offline mode, the app will work locally and only synchronize it's data with the server every couple of minutes. When working with multiple devices, this can potentially mean that a ticket can be used multiple times. Choose offline mode if you have an unreliable internet connection but can tolerate such situations.";
+
+/* No comment provided by engineer. */
+"Incomplete Information" = "Incomplete Information";
+
+/* No comment provided by engineer. */
+"Initialization Token already used" = "Initialization Token already used";
+
+/* No comment provided by engineer. */
+"Instead of scanning a QR code, you can read these details off your screen." = "Instead of scanning a QR code, you can read these details off your screen.";
+
+/* No comment provided by engineer. */
+"Invalid Ticket" = "Invalid Ticket";
+
+/* e.g. Last Sync [12 minutes] ago */
+"Last Sync %@ ago " = "Last Sync %@ ago ";
+
+/* No comment provided by engineer. */
+"Last Sync: Never " = "Last Sync: Never ";
+
+/* time interval */
+"less than a minute" = "less than a minute";
+
+/* No comment provided by engineer. */
+"Libraries and Licenses" = "Libraries and Licenses";
+
+/* No comment provided by engineer. */
+"Loading Search" = "Loading Search";
+
+/* No comment provided by engineer. */
+"Manual Setup" = "Manual Setup";
+
+/* No comment provided by engineer. */
+"MIT License" = "MIT License";
+
+/* e.g. do not check in unpaid ticket */
+"No" = "No";
+
+/* No comment provided by engineer. */
+"No Event" = "No Event";
+
+/* No comment provided by engineer. */
+"Offline" = "Offline";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Online" = "Online";
+
+/* Order Paid */
+"Paid" = "Paid";
+
+/* Order Pending */
+"Pending" = "Pending";
+
+/* No comment provided by engineer. */
+"pretixSCAN" = "pretixSCAN";
+
+/* No comment provided by engineer. */
+"pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix." = "pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix.";
+
+/* Ticket is Unpaid */
+"Product" = "Product";
+
+/* No comment provided by engineer. */
+"Reset Contents and Settings" = "Reset Contents and Settings";
+
+/* No comment provided by engineer. */
+"Search" = "Search";
+
+/* No comment provided by engineer. */
+"Search will begin after you have typed at least 3 characters." = "Search will begin after you have typed at least 3 characters.";
+
+/* No comment provided by engineer. */
+"Select Check-In List" = "Select Check-In List";
+
+/* No comment provided by engineer. */
+"Select Event" = "Select Event";
+
+/* No comment provided by engineer. */
+"Settings" = "Settings";
+
+/* No comment provided by engineer. */
+"Setup Complete" = "Setup Complete";
+
+/* No comment provided by engineer. */
+"Start Scanning" = "Start Scanning";
+
+/* No comment provided by engineer. */
+"Statistics" = "Statistics";
+
+/* No comment provided by engineer. */
+"Sync every few minutes" = "Sync every few minutes";
+
+/* No comment provided by engineer. */
+"Sync Mode" = "Sync Mode";
+
+/* No comment provided by engineer. */
+"Sync Mode Switched to Offline" = "Sync Mode Switched to Offline";
+
+/* No comment provided by engineer. */
+"Sync Mode Switched to Online" = "Sync Mode Switched to Online";
+
+/* No comment provided by engineer. */
+"Sync Now" = "Sync Now";
+
+/* No comment provided by engineer. */
+"Syncing Done " = "Syncing Done ";
+
+/* No comment provided by engineer. */
+"System URL" = "System URL";
+
+/* No comment provided by engineer. */
+"The resource was not found on the server" = "The resource was not found on the server";
+
+/* No comment provided by engineer. */
+"The server refused to handle our request" = "The server refused to handle our request";
+
+/* No comment provided by engineer. */
+"The server returned a non HTTP response" = "The server returned a non HTTP response";
+
+/* No comment provided by engineer. */
+"The server returned an empty response" = "The server returned an empty response";
+
+/* No comment provided by engineer. */
+"The server returned an unkown status code: " = "The server returned an unkown status code: ";
+
+/* No comment provided by engineer. */
+"This feature cannot be used at the moment: " = "This feature cannot be used at the moment: ";
+
+/* No comment provided by engineer. */
+"This is not a ticket, or not a ticket for this event." = "This is not a ticket, or not a ticket for this event.";
+
+/* No comment provided by engineer. */
+"This ticket has not been paid for, do you still want to check it in?" = "This ticket has not been paid for, do you still want to check it in?";
+
+/* No comment provided by engineer. */
+"This will delete event data from the device and log you out. Do you want to continue?" = "This will delete event data from the device and log you out. Do you want to continue?";
+
+/* No comment provided by engineer. */
+"Ticket Already Used" = "Ticket Already Used";
+
+/* No comment provided by engineer. */
+"To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan." = "To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan.";
+
+/* No comment provided by engineer. */
+"Token" = "Token";
+
+/* No comment provided by engineer. */
+"Total Tickets Sold" = "Total Tickets Sold";
+
+/* Ticket is Unpaid */
+"Unpaid" = "Unpaid";
+
+/* No comment provided by engineer. */
+"Valid" = "Valid";
+
+/* No comment provided by engineer. */
+"Valid Ticket" = "Valid Ticket";
+
+/* No comment provided by engineer. */
+"Valid Ticket, but needs attention" = "Valid Ticket, but needs attention";
+
+/* No comment provided by engineer. */
+"Welcome" = "Welcome";
+
+/* No comment provided by engineer. */
+"You are forbidden from accessing this resource" = "You are forbidden from accessing this resource";
+
+/* No comment provided by engineer. */
+"You are not authorized to access this resource" = "You are not authorized to access this resource";
+
+/* No comment provided by engineer. */
+"You can now start scanning" = "You can now start scanning";

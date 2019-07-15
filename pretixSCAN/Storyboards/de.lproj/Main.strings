@@ -1,0 +1,177 @@
+
+/* Class = "UILabel"; text = "Reset Content Section"; ObjectID = "2Qd-2I-y59"; */
+"2Qd-2I-y59.text" = "Reset Content Section";
+
+/* Class = "UILabel"; text = "Total Tickets"; ObjectID = "2wf-Xu-R2D"; */
+"2wf-Xu-R2D.text" = "Total Tickets";
+
+/* Class = "UILabel"; text = "Order ID"; ObjectID = "4Xn-UT-Ort"; */
+"4Xn-UT-Ort.text" = "Order ID";
+
+/* Class = "UILabel"; text = "title"; ObjectID = "6sD-aE-A7U"; */
+"6sD-aE-A7U.text" = "title";
+
+/* Class = "UILabel"; text = "Explanation"; ObjectID = "6sy-ib-gvc"; */
+"6sy-ib-gvc.text" = "Explanation";
+
+/* Class = "UILabel"; text = ""; ObjectID = "8LH-ON-nVd"; */
+"8LH-ON-nVd.text" = "";
+
+/* Class = "UILabel"; text = "Event"; ObjectID = "9H0-rB-JlM"; */
+"9H0-rB-JlM.text" = "Event";
+
+/* Class = "UILabel"; text = "Attendee Name"; ObjectID = "ArE-vk-H54"; */
+"ArE-vk-H54.text" = "Attendee Name";
+
+/* Class = "UILabel"; text = "T-Shirt"; ObjectID = "Bjf-de-jlQ"; */
+"Bjf-de-jlQ.text" = "T-Shirt";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "CCg-ST-jM3"; */
+"CCg-ST-jM3.text" = "Label";
+
+/* Class = "UILabel"; text = ""; ObjectID = "EW6-d9-gTY"; */
+"EW6-d9-gTY.text" = "";
+
+/* Class = "UILabel"; text = "Explanation"; ObjectID = "EeI-ky-AEf"; */
+"EeI-ky-AEf.text" = "Explanation";
+
+/* Class = "UILabel"; text = "Standard Ticket"; ObjectID = "FVe-qS-mto"; */
+"FVe-qS-mto.text" = "Standard Ticket";
+
+/* Class = "UITableViewSection"; headerTitle = "Section-1"; ObjectID = "FhN-HH-c6A"; */
+"FhN-HH-c6A.headerTitle" = "Section-1";
+
+/* Class = "UILabel"; text = "Explanation Text"; ObjectID = "IJo-PF-JTu"; */
+"IJo-PF-JTu.text" = "Explanation Text";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "IiG-V0-bYH"; */
+"IiG-V0-bYH.text" = "Title";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "J4g-G7-Yqb"; */
+"J4g-G7-Yqb.text" = "...";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "LtB-BS-T9K"; */
+"LtB-BS-T9K.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "MWJ-Dq-H12"; */
+"MWJ-Dq-H12.text" = "Label";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "NGP-eK-9Ee"; */
+"NGP-eK-9Ee.text" = "Detail";
+
+/* Class = "UILabel"; text = "Begin Sync Cell"; ObjectID = "PDl-8V-Pb7"; */
+"PDl-8V-Pb7.text" = "Begin Sync Cell";
+
+/* Class = "UILabel"; text = "Ticket Status"; ObjectID = "Rcg-Oi-qF2"; */
+"Rcg-Oi-qF2.text" = "Ticket Status";
+
+/* Class = "UILabel"; text = "Already Scanned"; ObjectID = "UQ4-l2-RY5"; */
+"UQ4-l2-RY5.text" = "Already Scanned";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "WDG-8r-iyh"; */
+"WDG-8r-iyh.text" = "Detail";
+
+/* Class = "UILabel"; text = "13/15"; ObjectID = "YEQ-c6-6ql"; */
+"YEQ-c6-6ql.text" = "13/15";
+
+/* Class = "UILabel"; text = "Checkmark Details"; ObjectID = "YKq-ou-VNF"; */
+"YKq-ou-VNF.text" = "Checkmark Details";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "YMs-a1-drh"; */
+"YMs-a1-drh.text" = "Title";
+
+/* Class = "UILabel"; text = "Check-In List"; ObjectID = "YNE-8y-Z73"; */
+"YNE-8y-Z73.text" = "Check-In List";
+
+/* Class = "UILabel"; text = "7681"; ObjectID = "aR7-Ob-y1k"; */
+"aR7-Ob-y1k.text" = "7681";
+
+/* Class = "UILabel"; text = "Force Sync Section"; ObjectID = "bCh-a5-Ubb"; */
+"bCh-a5-Ubb.text" = "Force Sync Section";
+
+/* Class = "UILabel"; text = "detail"; ObjectID = "bLM-4b-ITH"; */
+"bLM-4b-ITH.text" = "detail";
+
+/* Class = "UILabel"; text = "Order Code"; ObjectID = "bsu-B7-zD1"; */
+"bsu-B7-zD1.text" = "Order Code";
+
+/* Class = "UILabel"; text = "Order ID"; ObjectID = "c3P-hv-gDk"; */
+"c3P-hv-gDk.text" = "Order ID";
+
+/* Class = "UILabel"; text = "13/15"; ObjectID = "cBc-Kw-sZh"; */
+"cBc-Kw-sZh.text" = "13/15";
+
+/* Class = "UIBarButtonItem"; title = "Event Name"; ObjectID = "cOt-oc-Yuk"; */
+"cOt-oc-Yuk.title" = "Event Name";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "cgZ-BV-L6l"; */
+"cgZ-BV-L6l.text" = "Detail";
+
+/* Class = "UIButton"; normalTitle = "Dismiss button"; ObjectID = "enC-LR-18x"; */
+"enC-LR-18x.normalTitle" = "Dismiss button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "fh9-PP-IPs"; */
+"fh9-PP-IPs.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "fqP-6y-ZoK"; */
+"fqP-6y-ZoK.text" = "Status";
+
+/* Class = "UILabel"; text = "Ticket Type"; ObjectID = "gAy-dG-qdy"; */
+"gAy-dG-qdy.text" = "Ticket Type";
+
+/* Class = "UILabel"; text = "Product Name"; ObjectID = "hTu-Kg-YZG"; */
+"hTu-Kg-YZG.text" = "Product Name";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "hw5-UO-NCl"; */
+"hw5-UO-NCl.text" = "Title";
+
+/* Class = "UILabel"; text = "13/15"; ObjectID = "ing-Ts-hXo"; */
+"ing-Ts-hXo.text" = "13/15";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "lx9-VT-XNS"; */
+"lx9-VT-XNS.text" = "Detail";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "mWU-ti-ThS"; */
+"mWU-ti-ThS.text" = "Title";
+
+/* Class = "UITableViewSection"; headerTitle = "Section-2"; ObjectID = "mmw-8q-Bw9"; */
+"mmw-8q-Bw9.headerTitle" = "Section-2";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "mwu-dP-3TT"; */
+"mwu-dP-3TT.text" = "Detail";
+
+/* Class = "UILabel"; text = "Standard Ticket"; ObjectID = "pSb-Eq-YtA"; */
+"pSb-Eq-YtA.text" = "Standard Ticket";
+
+/* Class = "UITableViewSection"; headerTitle = "Section-3"; ObjectID = "pkT-AR-O1M"; */
+"pkT-AR-O1M.headerTitle" = "Section-3";
+
+/* Class = "UIBarButtonItem"; title = "Manual Setup Button"; ObjectID = "pwV-7H-1HG"; */
+"pwV-7H-1HG.title" = "Manual Setup Button";
+
+/* Class = "UILabel"; text = "125"; ObjectID = "rhH-fH-cyN"; */
+"rhH-fH-cyN.text" = "125";
+
+/* Class = "UIBarButtonItem"; title = ""; ObjectID = "s7g-wb-P9R"; */
+"s7g-wb-P9R.title" = "";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "tMQ-9g-ftv"; */
+"tMQ-9g-ftv.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "tfs-lP-aOu"; */
+"tfs-lP-aOu.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "ubh-pK-6TC"; */
+"ubh-pK-6TC.text" = "Title";
+
+/* Class = "UILabel"; text = "Secret"; ObjectID = "wG2-40-N99"; */
+"wG2-40-N99.text" = "Secret";
+
+/* Class = "UILabel"; text = "Auto Sync Cell"; ObjectID = "xgd-LD-ySf"; */
+"xgd-LD-ySf.text" = "Auto Sync Cell";
+
+/* Class = "UIBarButtonItem"; title = ""; ObjectID = "zBM-02-1lR"; */
+"zBM-02-1lR.title" = "";
+
+/* Class = "UILabel"; text = "About Section"; ObjectID = "zd4-5z-BJD"; */
+"zd4-5z-BJD.text" = "About Section";
