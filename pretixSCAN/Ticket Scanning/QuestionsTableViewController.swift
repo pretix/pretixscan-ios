@@ -15,6 +15,7 @@ class QuestionsTableViewController: UITableViewController, Configurable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.allowsSelection = false
 
         for cellType in [
             NumberQuestionCell.self, OneLineStringQuestionCell.self, MultiLineStringQuestionCell.self, BoolQuestionCell.self,

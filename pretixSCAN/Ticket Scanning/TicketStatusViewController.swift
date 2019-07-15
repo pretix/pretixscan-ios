@@ -118,6 +118,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         case .incomplete:
             newBackgroundColor = Color.warning
             updateToIncomplete(redemptionResponse)
+            return
 
         case .error:
             newBackgroundColor = updateToError(redemptionResponse)
@@ -155,8 +156,10 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 self.redemptionResponse = redemptionResponse
 
                 // Dismiss
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.presentationTime) {
-                    self.dismiss(animated: true, completion: nil)
+                if redemptionResponse?.status != .incomplete {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.presentationTime) {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
         }
@@ -183,10 +186,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
         // TODO: Fix graphical glitch here
         present(navigationController, animated: true, completion: nil)
-//
-//        iconLabel.text = Icon.warning
-//        ticketStatusLabel.text = Localization.TicketStatusViewController.IncompleteInformation
-//        appCoordinator?.performHapticNotification(ofType: .warning)
     }
 
     private func updateToError(_ redemptionResponse: RedemptionResponse) -> UIColor {
