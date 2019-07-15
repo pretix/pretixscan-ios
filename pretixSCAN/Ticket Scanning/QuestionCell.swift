@@ -209,7 +209,7 @@ class SingleChoiceQuestionCell: QuestionCell {
     let secondaryStackView: UIStackView = {
         let secondaryStackView = UIStackView()
         secondaryStackView.axis = .vertical
-        secondaryStackView.distribution = UIStackView.Distribution.fillProportionally
+        secondaryStackView.distribution = UIStackView.Distribution.fill
         secondaryStackView.spacing = 8
         secondaryStackView.translatesAutoresizingMaskIntoConstraints = false
         return secondaryStackView
@@ -273,7 +273,20 @@ class MultipleChoiceQuestionCell: SingleChoiceQuestionCell {
 
 class FileUploadQuestionCell: QuestionCell {
     override class var reuseIdentifier: String { return "FileUploadQuestionCell" }
-    // TODO
+    let noticeLabel: UILabel = {
+
+        let noticeLabel = UILabel()
+        noticeLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        noticeLabel.textColor = Color.secondary
+        noticeLabel.numberOfLines = 0
+        return noticeLabel
+    }()
+
+    override func setup() {
+        super.setup()
+        noticeLabel.text = Localization.QuestionsTableViewController.UploadNotPossibleNotice
+        mainStackView.addArrangedSubview(noticeLabel)
+    }
 }
 
 class DateQuestionCell: QuestionCell {

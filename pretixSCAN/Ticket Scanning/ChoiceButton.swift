@@ -28,10 +28,13 @@ class ChoiceButton: UIButton {
         layer.borderColor = Color.secondary.cgColor
         layer.borderWidth = 2
 
-        setContentCompressionResistancePriority(.required, for: .vertical)
-
-        titleLabel?.numberOfLines = 0
+        titleLabel?.numberOfLines = 2
+        titleLabel?.lineBreakMode = .byWordWrapping
         titleLabel?.setContentCompressionResistancePriority(.required, for: .vertical)
+
+        let height = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: titleLabel, attribute: .height,
+                                        multiplier: 1, constant: 20)
+        addConstraint(height)
     }
 
     private func update() {
