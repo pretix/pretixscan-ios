@@ -33,40 +33,45 @@ class QuestionsTableViewController: UITableViewController, Configurable {
     // swiftlint:disable force_cast
     // swiftlint:disable cyclomatic_complexity
     private func cell(for question: Question, indexPath: IndexPath) -> QuestionCell {
+        var returnCell: QuestionCell
+
         switch question.type {
         case .number:
             let cell = tableView.dequeueReusableCell(withIdentifier: NumberQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! NumberQuestionCell
+            returnCell = cell as! NumberQuestionCell
         case .oneLineString:
             let cell = tableView.dequeueReusableCell(withIdentifier: OneLineStringQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! OneLineStringQuestionCell
+            returnCell = cell as! OneLineStringQuestionCell
         case .multiLineString:
             let cell = tableView.dequeueReusableCell(withIdentifier: MultiLineStringQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! MultiLineStringQuestionCell
+            returnCell = cell as! MultiLineStringQuestionCell
         case .boolean:
             let cell = tableView.dequeueReusableCell(withIdentifier: BoolQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! BoolQuestionCell
+            returnCell = cell as! BoolQuestionCell
         case .choiceFromList:
             let cell = tableView.dequeueReusableCell(withIdentifier: SingleChoiceQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! SingleChoiceQuestionCell
+            returnCell = cell as! SingleChoiceQuestionCell
         case .multipleChoiceFromList:
             let cell = tableView.dequeueReusableCell(withIdentifier: MultipleChoiceQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! MultipleChoiceQuestionCell
+            returnCell = cell as! MultipleChoiceQuestionCell
         case .fileUpload:
             let cell = tableView.dequeueReusableCell(withIdentifier: FileUploadQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! FileUploadQuestionCell
+            returnCell = cell as! FileUploadQuestionCell
         case .date:
             let cell = tableView.dequeueReusableCell(withIdentifier: DateQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! DateQuestionCell
+            returnCell = cell as! DateQuestionCell
         case .time:
             let cell = tableView.dequeueReusableCell(withIdentifier: TimeQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! TimeQuestionCell
+            returnCell = cell as! TimeQuestionCell
         case .dateAndTime:
-            let cell = tableView.dequeueReusableCell(withIdentifier: DateTimeQuestionCell   .reuseIdentifier, for: indexPath)
-            return cell as! DateTimeQuestionCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: DateTimeQuestionCell.reuseIdentifier, for: indexPath)
+            returnCell = cell as! DateTimeQuestionCell
         case .countryCode:
             let cell = tableView.dequeueReusableCell(withIdentifier: CountryCodeQuestionCell.reuseIdentifier, for: indexPath)
-            return cell as! CountryCodeQuestionCell
+            returnCell = cell as! CountryCodeQuestionCell
         }
+
+        returnCell.question = question
+        return returnCell
     }
 }

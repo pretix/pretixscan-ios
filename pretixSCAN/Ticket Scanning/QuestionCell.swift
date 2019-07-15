@@ -9,15 +9,17 @@
 import UIKit
 
 class QuestionCell: UITableViewCell {
+    // MARK: Properties
     class var reuseIdentifier: String { return "QuestionCell" }
 
+    var question: Question? { didSet { update() }}
+
+    // MARK: View Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
+    private func update() {}
 }
 
 class NumberQuestionCell: QuestionCell {
