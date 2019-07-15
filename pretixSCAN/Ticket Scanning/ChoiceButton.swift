@@ -27,6 +27,11 @@ class ChoiceButton: UIButton {
         layer.cornerRadius = 4
         layer.borderColor = Color.secondary.cgColor
         layer.borderWidth = 2
+
+        setContentCompressionResistancePriority(.required, for: .vertical)
+
+        titleLabel?.numberOfLines = 0
+        titleLabel?.setContentCompressionResistancePriority(.required, for: .vertical)
     }
 
     private func update() {
