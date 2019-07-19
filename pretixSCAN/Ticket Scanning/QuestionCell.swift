@@ -63,7 +63,7 @@ class QuestionCell: UITableViewCell {
     }
 
     func update() {
-        questionTypeLabel.text = reuseIdentifier?.uppercased()
+        questionTypeLabel.text = NSLocalizedString(reuseIdentifier ?? "", comment: "").uppercased()
         questionTextLabel.text = question?.question.representation(in: Locale.current)
     }
 }
@@ -314,12 +314,50 @@ class DateQuestionCell: QuestionCell {
 
 class TimeQuestionCell: QuestionCell {
     override class var reuseIdentifier: String { return "TimeQuestionCell" }
-    // TODO
+
+    let datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = UIDatePicker.Mode.time
+        return datePicker
+    }()
+
+    override func setup() {
+        super.setup()
+        mainStackView.addArrangedSubview(datePicker)
+        datePicker.addTarget(self, action: #selector(dateUpdated(sender:)), for: .valueChanged)
+    }
+
+    @IBAction func dateUpdated(sender: UIDatePicker) {
+        if let question = question {
+            let dateString = DateFormatter.iso8601.string(from: sender.date)
+            delegate?.update(answer: Answer(question: question.identifier, answer: dateString,
+                                            questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+        }
+    }
 }
 
 class DateTimeQuestionCell: QuestionCell {
     override class var reuseIdentifier: String { return "DateTimeQuestionCell" }
-    // TODO
+
+    let datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = UIDatePicker.Mode.dateAndTime
+        return datePicker
+    }()
+
+    override func setup() {
+        super.setup()
+        mainStackView.addArrangedSubview(datePicker)
+        datePicker.addTarget(self, action: #selector(dateUpdated(sender:)), for: .valueChanged)
+    }
+
+    @IBAction func dateUpdated(sender: UIDatePicker) {
+        if let question = question {
+            let dateString = DateFormatter.iso8601.string(from: sender.date)
+            delegate?.update(answer: Answer(question: question.identifier, answer: dateString,
+                                            questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+        }
+    }
 }
 
 class CountryCodeQuestionCell: QuestionCell {
