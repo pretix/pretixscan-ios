@@ -104,7 +104,7 @@ public struct OrderPosition: Model {
 
         // Check for order status
         if ![.paid, .pending].contains(self.order!.status) {
-            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil)
+            return RedemptionResponse(status: .error, errorReason: .canceled, position: self, lastCheckIn: nil)
         }
 
         let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending

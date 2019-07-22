@@ -17,8 +17,8 @@ extension Order.Status {
             return NSLocalizedString("Paid", comment: "Order Paid")
         case .expired:
             return NSLocalizedString("Expired", comment: "Order Expired")
-        case .cancelled:
-            return NSLocalizedString("Cancelled", comment: "Order Cancelled")
+        case .canceled:
+            return NSLocalizedString("Canceled", comment: "Order Canceled")
         }
     }
 }
@@ -30,6 +30,8 @@ extension RedemptionResponse.ErrorReason {
             return NSLocalizedString("Unpaid", comment: "Ticket is Unpaid")
         case .alreadyRedeemed:
             return NSLocalizedString("Already Redeemed", comment: "Ticket is already redeemed")
+        case .canceled:
+            return NSLocalizedString("Canceled", comment: "Ticket has been canceled")
         case .product:
             return NSLocalizedString("Product", comment: "Ticket is Unpaid")
         }
