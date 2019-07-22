@@ -25,6 +25,10 @@ public struct RedemptionRequest: Model {
     /// handling.
     public var questionsSupported: Bool = false
 
+    /// Wether the current device supports the "canceled" state. This is always true
+    /// for this implementation.
+    public var canceledSupported: Bool = true
+
     /// Specifies the datetime of the check-in.
     ///
     /// If not supplied, the current time will be used.
@@ -65,6 +69,7 @@ public struct RedemptionRequest: Model {
 
     private enum CodingKeys: String, CodingKey {
         case questionsSupported = "questions_supported"
+        case canceledSupported = "canceled_supported"
         case date = "datetime"
         case force
         case ignoreUnpaid = "ignore_unpaid"

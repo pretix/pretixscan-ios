@@ -43,6 +43,9 @@ public struct RedemptionResponse: Codable, Equatable {
         /// The ticket was not yet paid
         case unpaid
 
+        /// The ticket order was canceled
+        case canceled
+
         /// The ticket was already used
         case alreadyRedeemed = "already_redeemed"
 
