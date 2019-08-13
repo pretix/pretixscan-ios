@@ -9,14 +9,16 @@
 import UIKit
 
 protocol QuestionCellDelegate: class {
-    func update(answer: Answer)
+    func answerUpdated(for indexPath: IndexPath?, newAnswer: Answer?)
 }
 
 class QuestionCell: UITableViewCell {
     // MARK: Properties
     class var reuseIdentifier: String { return "QuestionCell" }
 
+    var indexPath: IndexPath?
     var question: Question? { didSet { update() }}
+    var answer: Answer? { didSet { update() }}
     weak var delegate: QuestionCellDelegate?
 
     let mainStackView: UIStackView = {
@@ -100,7 +102,7 @@ class NumberQuestionCell: QuestionCell, UITextFieldDelegate {
             if let question = question, allowEdit {
                 let answer = Answer(question: question.identifier, answer: updatedText, questionStringIdentifier: nil,
                                 options: [], optionStringIdentifiers: [])
-                delegate?.update(answer: answer)
+                delegate?.answerUpdated(for: indexPath, newAnswer: answer)
             }
             return allowEdit
 
@@ -125,8 +127,9 @@ class OneLineStringQuestionCell: QuestionCell, UITextFieldDelegate {
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let question = question, let textFieldText = textField.text {
-            delegate?.update(answer: Answer(question: question.identifier, answer: textFieldText, questionStringIdentifier: nil,
-                                            options: [], optionStringIdentifiers: []))
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: textFieldText,
+                                                                      questionStringIdentifier: nil,
+                                                                      options: [], optionStringIdentifiers: []))
         }
         return true
     }
@@ -148,8 +151,9 @@ class MultiLineStringQuestionCell: QuestionCell, UITextViewDelegate {
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if let question = question, let textFieldText = textView.text {
-            delegate?.update(answer: Answer(question: question.identifier, answer: textFieldText, questionStringIdentifier: nil,
-                                            options: [], optionStringIdentifiers: []))
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: textFieldText,
+                                                                      questionStringIdentifier: nil,
+                                                                      options: [], optionStringIdentifiers: []))
         }
 
         return true
@@ -195,8 +199,10 @@ class BoolQuestionCell: QuestionCell {
         sender.isSelected = true
 
         if let question = question {
-            delegate?.update(answer: Answer(question: question.identifier, answer: onButton.isSelected ? "true" : "false",
-                                            questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier,
+                                                                      answer: onButton.isSelected ? "true" : "false",
+                                                                      questionStringIdentifier: nil, options: [],
+                                                                      optionStringIdentifiers: []))
         }
     }
 }
@@ -249,8 +255,8 @@ class SingleChoiceQuestionCell: QuestionCell {
         sender.isSelected = true
 
         if let question = question {
-            delegate?.update(answer: Answer(question: question.identifier, answer: "\(sender.tag)",
-                                            questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: "\(sender.tag)",
+                questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
         }
     }
 }
@@ -265,8 +271,9 @@ class MultipleChoiceQuestionCell: SingleChoiceQuestionCell {
             var allTags = ""
             buttons.filter({ return $0.isSelected }).map({ return "\($0.tag)," }).forEach({ allTags += $0 })
 
-            delegate?.update(answer: Answer(question: question.identifier, answer: allTags,
-                questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: allTags,
+                                                                      questionStringIdentifier: nil, options: [],
+                                                                      optionStringIdentifiers: []))
         }
     }
 }
@@ -306,8 +313,9 @@ class DateQuestionCell: QuestionCell {
     @IBAction func dateUpdated(sender: UIDatePicker) {
         if let question = question {
             let dateString = DateFormatter.iso8601.string(from: sender.date)
-            delegate?.update(answer: Answer(question: question.identifier, answer: dateString,
-                questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: dateString,
+                                                                      questionStringIdentifier: nil, options: [],
+                                                                      optionStringIdentifiers: []))
         }
     }
 }
@@ -330,8 +338,9 @@ class TimeQuestionCell: QuestionCell {
     @IBAction func dateUpdated(sender: UIDatePicker) {
         if let question = question {
             let dateString = DateFormatter.iso8601.string(from: sender.date)
-            delegate?.update(answer: Answer(question: question.identifier, answer: dateString,
-                                            questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: dateString,
+                                                                      questionStringIdentifier: nil, options: [],
+                                                                      optionStringIdentifiers: []))
         }
     }
 }
@@ -354,8 +363,9 @@ class DateTimeQuestionCell: QuestionCell {
     @IBAction func dateUpdated(sender: UIDatePicker) {
         if let question = question {
             let dateString = DateFormatter.iso8601.string(from: sender.date)
-            delegate?.update(answer: Answer(question: question.identifier, answer: dateString,
-                                            questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: dateString,
+                                                                      questionStringIdentifier: nil, options: [],
+                                                                      optionStringIdentifiers: []))
         }
     }
 }

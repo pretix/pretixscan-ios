@@ -8,10 +8,11 @@
 
 import UIKit
 
-class QuestionsTableViewController: UITableViewController, Configurable {
+class QuestionsTableViewController: UITableViewController, Configurable, QuestionCellDelegate {
     // MARK: Properties
     var configStore: ConfigStore?
-    var questions = [Question]()
+    var questions = [Question]() { didSet { answers = [Answer?](repeating: nil, count: questions.count) }}
+    var answers = [Answer?]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +39,12 @@ class QuestionsTableViewController: UITableViewController, Configurable {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return cell(for: questions[indexPath.row], indexPath: indexPath)
+        return cell(for: questions[indexPath.row], answer: answers[indexPath.row], indexPath: indexPath)
     }
 
     // swiftlint:disable force_cast
     // swiftlint:disable cyclomatic_complexity
-    private func cell(for question: Question, indexPath: IndexPath) -> QuestionCell {
+    private func cell(for question: Question, answer: Answer?, indexPath: IndexPath) -> QuestionCell {
         var returnCell: QuestionCell
 
         switch question.type {
@@ -82,7 +83,16 @@ class QuestionsTableViewController: UITableViewController, Configurable {
             returnCell = cell as! CountryCodeQuestionCell
         }
 
+        returnCell.delegate = self
+        returnCell.indexPath = indexPath
         returnCell.question = question
+        returnCell.answer = answer
         return returnCell
+    }
+
+    // MARK: - Question Cell Delegate
+    func answerUpdated(for indexPath: IndexPath?, newAnswer: Answer?) {
+        guard let indexPath = indexPath else { return }
+        answers[indexPath.row] = newAnswer
     }
 }
