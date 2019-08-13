@@ -17,6 +17,16 @@
 		DC07357F22392474008326F7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07357D22392474008326F7 /* Main.storyboard */; };
 		DC07358122392476008326F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC07358022392476008326F7 /* Assets.xcassets */; };
 		DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC07358222392476008326F7 /* LaunchScreen.storyboard */; };
+		DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F22F2302B8EA0044764A /* NumberQuestionCell.swift */; };
+		DC17F2322302B9080044764A /* OneLineStringQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F2312302B9080044764A /* OneLineStringQuestionCell.swift */; };
+		DC17F2342302B91B0044764A /* MultiLineStringQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F2332302B91B0044764A /* MultiLineStringQuestionCell.swift */; };
+		DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F2352302B9300044764A /* BoolQuestionCell.swift */; };
+		DC17F2382302B9480044764A /* SingleChoiceQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F2372302B9480044764A /* SingleChoiceQuestionCell.swift */; };
+		DC17F23A2302B9800044764A /* FileUploadQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F2392302B9800044764A /* FileUploadQuestionCell.swift */; };
+		DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F23B2302B99B0044764A /* DateQuestionCell.swift */; };
+		DC17F23E2302B9AE0044764A /* TimeQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F23D2302B9AE0044764A /* TimeQuestionCell.swift */; };
+		DC17F2402302B9C30044764A /* DateTimeQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F23F2302B9C30044764A /* DateTimeQuestionCell.swift */; };
+		DC17F2422302B9E10044764A /* CountryCodeQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC17F2412302B9E10044764A /* CountryCodeQuestionCell.swift */; };
 		DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */; };
 		DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */; };
 		DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D6FB42240F689008A9E06 /* OrderPosition.swift */; };
@@ -181,6 +191,16 @@
 		DC07358522392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC07358A22392476008326F7 /* PretixScanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PretixScanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC07359022392476008326F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DC17F22F2302B8EA0044764A /* NumberQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F2312302B9080044764A /* OneLineStringQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineStringQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F2332302B91B0044764A /* MultiLineStringQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineStringQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F2352302B9300044764A /* BoolQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F2372302B9480044764A /* SingleChoiceQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleChoiceQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F2392302B9800044764A /* FileUploadQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUploadQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F23B2302B99B0044764A /* DateQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F23D2302B9AE0044764A /* TimeQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F23F2302B9C30044764A /* DateTimeQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeQuestionCell.swift; sourceTree = "<group>"; };
+		DC17F2412302B9E10044764A /* CountryCodeQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeQuestionCell.swift; sourceTree = "<group>"; };
 		DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketValidator.swift; sourceTree = "<group>"; };
 		DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineTicketValidator.swift; sourceTree = "<group>"; };
 		DC1D6FB42240F689008A9E06 /* OrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPosition.swift; sourceTree = "<group>"; };
@@ -393,6 +413,24 @@
 			path = PretixScanTests;
 			sourceTree = "<group>";
 		};
+		DC17F22E2302B8D90044764A /* QuestionCells */ = {
+			isa = PBXGroup;
+			children = (
+				DC2A605F22DCD90600E7A6EA /* QuestionCell.swift */,
+				DC17F22F2302B8EA0044764A /* NumberQuestionCell.swift */,
+				DC17F2312302B9080044764A /* OneLineStringQuestionCell.swift */,
+				DC17F2332302B91B0044764A /* MultiLineStringQuestionCell.swift */,
+				DC17F2352302B9300044764A /* BoolQuestionCell.swift */,
+				DC17F2372302B9480044764A /* SingleChoiceQuestionCell.swift */,
+				DC17F2392302B9800044764A /* FileUploadQuestionCell.swift */,
+				DC17F23B2302B99B0044764A /* DateQuestionCell.swift */,
+				DC17F23D2302B9AE0044764A /* TimeQuestionCell.swift */,
+				DC17F23F2302B9C30044764A /* DateTimeQuestionCell.swift */,
+				DC17F2412302B9E10044764A /* CountryCodeQuestionCell.swift */,
+			);
+			path = QuestionCells;
+			sourceTree = "<group>";
+		};
 		DC1D6FAF2240ECE6008A9E06 /* TicketValidator */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,7 +471,7 @@
 				DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */,
 				DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */,
 				DC2A605D22DCD84300E7A6EA /* QuestionsTableViewController.swift */,
-				DC2A605F22DCD90600E7A6EA /* QuestionCell.swift */,
+				DC17F22E2302B8D90044764A /* QuestionCells */,
 				DC2A606122DD07F900E7A6EA /* PaddingView.swift */,
 				DC2A606322DD110D00E7A6EA /* ChoiceButton.swift */,
 			);
@@ -867,6 +905,7 @@
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
 				DCEEF12A227DBD9F00BCAF82 /* SyncOperations.swift in Sources */,
+				DC17F2322302B9080044764A /* OneLineStringQuestionCell.swift in Sources */,
 				DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */,
 				DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */,
 				DCB35B96224901BA00860385 /* CryptoHelpers.swift in Sources */,
@@ -876,6 +915,7 @@
 				DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */,
 				DCEEF11F22799FD600BCAF82 /* QeuedRedemptionRequest.swift in Sources */,
 				DCC5D85D229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift in Sources */,
+				DC17F2402302B9C30044764A /* DateTimeQuestionCell.swift in Sources */,
 				DCC5D8512295694100DAEFA0 /* FMDBOrderPosition.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */,
@@ -895,6 +935,7 @@
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
 				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
+				DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
@@ -902,7 +943,9 @@
 				DCF8A45122A26C5E0020E0DE /* BlinkerView.swift in Sources */,
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
+				DC17F23E2302B9AE0044764A /* TimeQuestionCell.swift in Sources */,
 				DC2A605E22DCD84300E7A6EA /* QuestionsTableViewController.swift in Sources */,
+				DC17F2342302B91B0044764A /* MultiLineStringQuestionCell.swift in Sources */,
 				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,
 				DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */,
 				DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */,
@@ -910,8 +953,10 @@
 				DC0052EA2260D385002D985B /* Model.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
 				DCC5D8552295697C00DAEFA0 /* FMDBItem.swift in Sources */,
+				DC17F2382302B9480044764A /* SingleChoiceQuestionCell.swift in Sources */,
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */,
+				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
 				DCAF1A7122CBAD67009896F1 /* Answer.swift in Sources */,
 				DC2A606222DD07F900E7A6EA /* PaddingView.swift in Sources */,
 				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
@@ -930,6 +975,8 @@
 				DCC5D859229569A100DAEFA0 /* FMDBSubEvent.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */,
+				DC17F23A2302B9800044764A /* FileUploadQuestionCell.swift in Sources */,
+				DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
 				DCC5710922C6353A008A4397 /* FMResultSet+NullableColumns.swift in Sources */,
 				DC667FFB22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift in Sources */,
@@ -945,6 +992,7 @@
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
 				DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */,
+				DC17F2422302B9E10044764A /* CountryCodeQuestionCell.swift in Sources */,
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
