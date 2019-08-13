@@ -20,6 +20,7 @@ class QuestionCell: UITableViewCell {
     var indexPath: IndexPath?
     var question: Question? { didSet { update() }}
     var answer: Answer? { didSet { update() }}
+    var shouldStandOut: Bool = false { didSet { update() }}
     weak var delegate: QuestionCellDelegate?
 
     let mainStackView: UIStackView = {
@@ -66,7 +67,13 @@ class QuestionCell: UITableViewCell {
     }
 
     func update() {
-        questionTypeLabel.text = NSLocalizedString(reuseIdentifier ?? "", comment: "").uppercased()
+        var labelText = NSLocalizedString(reuseIdentifier ?? "", comment: "").uppercased()
+        if question?.isRequired == true { labelText = labelText + "*" }
+        questionTypeLabel.text = labelText
         questionTextLabel.text = question?.question.representation(in: Locale.current)
+
+        UIView.animate(withDuration: 0.25) {
+            self.backgroundColor = self.shouldStandOut ? Color.warning : Color.whiteBackground
+        }
     }
 }

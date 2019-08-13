@@ -79,4 +79,13 @@ class MultipleChoiceQuestionCell: SingleChoiceQuestionCell {
                                                                       optionStringIdentifiers: []))
         }
     }
+
+    override func update() {
+        super.update()
+
+        let selectionList = answer?.answer.split(separator: ",") ?? []
+        for button in buttons {
+            button.isSelected = selectionList.contains("\(button.tag)")
+        }
+    }
 }

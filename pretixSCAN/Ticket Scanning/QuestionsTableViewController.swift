@@ -14,11 +14,18 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
     var questions = [Question]() { didSet { answers = [Answer?](repeating: nil, count: questions.count) }}
     var answers = [Answer?]()
 
+    var indexPathForAttention: IndexPath?
+    var lastCellForAttention: QuestionCell?
+
+    private var doneButton: UIBarButtonItem!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsSelection = false
 
         title = Localization.QuestionsTableViewController.Title
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveAndExit))
+        navigationItem.rightBarButtonItem = doneButton
 
         for cellType in [
             NumberQuestionCell.self, OneLineStringQuestionCell.self, MultiLineStringQuestionCell.self, BoolQuestionCell.self,
@@ -44,6 +51,7 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
 
     // swiftlint:disable force_cast
     // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable function_body_length
     private func cell(for question: Question, answer: Answer?, indexPath: IndexPath) -> QuestionCell {
         var returnCell: QuestionCell
 
@@ -87,6 +95,8 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
         returnCell.indexPath = indexPath
         returnCell.question = question
         returnCell.answer = answer
+        returnCell.shouldStandOut = indexPath == indexPathForAttention
+
         return returnCell
     }
 
@@ -94,5 +104,37 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
     func answerUpdated(for indexPath: IndexPath?, newAnswer: Answer?) {
         guard let indexPath = indexPath else { return }
         answers[indexPath.row] = newAnswer
+    }
+
+    // MARK: - Saving
+    @objc
+    func saveAndExit() {
+        indexPathForAttention = nil
+        lastCellForAttention?.shouldStandOut = false
+        lastCellForAttention = nil
+
+        // Check if all mandatory questions are filled out
+        for (question, answer) in zip(questions, answers) {
+            if question.isRequired && answer == nil {
+                missingAnswer(for: question)
+                return
+            }
+        }
+
+        // TODO: Collate Questions and Return them
+    }
+
+    private func missingAnswer(for question: Question) {
+        guard let indexOfQuestion = questions.firstIndex(of: question) else { return }
+        let indexPathForQuestion = IndexPath(row: indexOfQuestion, section: 0)
+        indexPathForAttention = indexPathForQuestion
+
+        if tableView.indexPathsForVisibleRows?.contains(indexPathForQuestion) == true {
+            lastCellForAttention = tableView.cellForRow(at: indexPathForQuestion) as? QuestionCell
+            lastCellForAttention?.shouldStandOut = true
+        }
+
+        tableView.scrollToRow(at: indexPathForQuestion, at: .top, animated: true)
+
     }
 }
