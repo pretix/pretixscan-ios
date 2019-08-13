@@ -127,7 +127,8 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
         }
 
         // Collate Questions and Return them
-        self.delegate?.receivedAnswers(answers.compactMap({$0}))
+        let answerList = answers.compactMap({$0})
+        self.delegate?.receivedAnswers(answerList)
 
         // Bye bye
         dismiss(animated: true)

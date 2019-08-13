@@ -43,6 +43,7 @@ class SingleChoiceQuestionCell: QuestionCell {
             let option = question.options[optionIndex]
             let optionButton = ChoiceButton()
             optionButton.setTitle(option.answer.representation(in: Locale.current), for: .normal)
+            optionButton.choiceID = option.identifier
             optionButton.tag = optionIndex
             buttons.append(optionButton)
             secondaryStackView.addArrangedSubview(optionButton)
@@ -57,8 +58,8 @@ class SingleChoiceQuestionCell: QuestionCell {
         buttons.forEach { $0.isSelected = false }
         sender.isSelected = true
 
-        if let question = question {
-            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: "\(sender.tag)",
+        if let question = question, let choiceButton = sender as? ChoiceButton, let choiceID = choiceButton.choiceID {
+            delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: "\(choiceID)",
                 questionStringIdentifier: nil, options: [], optionStringIdentifiers: []))
         }
     }
@@ -72,7 +73,9 @@ class MultipleChoiceQuestionCell: SingleChoiceQuestionCell {
 
         if let question = question {
             var allTags = ""
-            buttons.filter({ return $0.isSelected }).map({ return "\($0.tag)," }).forEach({ allTags += $0 })
+            buttons.filter({ return $0.isSelected })
+                .compactMap({ if let choiceID = $0.choiceID { return "\(choiceID)," } else { return nil } })
+                .forEach({ allTags += $0 })
             if allTags.count > 0 {
                 // Cut off the last comma
                 allTags = String(allTags.prefix(allTags.count - 1))

@@ -9,6 +9,8 @@
 import UIKit
 
 class ChoiceButton: UIButton {
+    var choiceID: Identifier?
+
     override var isSelected: Bool { didSet { update() }}
     override var isHighlighted: Bool { didSet { updateHighlight() }}
 
