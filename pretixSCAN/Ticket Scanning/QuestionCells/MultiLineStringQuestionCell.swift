@@ -28,13 +28,11 @@ class MultiLineStringQuestionCell: QuestionCell, UITextViewDelegate {
         textView.text = answer?.answer
     }
 
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textViewDidChange(_ textView: UITextView) {
         if let question = question, let textFieldText = textView.text {
             delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: textFieldText,
                                                                       questionStringIdentifier: nil,
                                                                       options: [], optionStringIdentifiers: []))
         }
-
-        return true
     }
 }

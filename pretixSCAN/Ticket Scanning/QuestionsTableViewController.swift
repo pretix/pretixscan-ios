@@ -8,15 +8,20 @@
 
 import UIKit
 
+protocol QuestionsTableViewControllerDelegate: class {
+    func receivedAnswers(_ answers: [Answer])
+}
+
 class QuestionsTableViewController: UITableViewController, Configurable, QuestionCellDelegate {
     // MARK: Properties
     var configStore: ConfigStore?
     var questions = [Question]() { didSet { answers = [Answer?](repeating: nil, count: questions.count) }}
-    var answers = [Answer?]()
 
-    var indexPathForAttention: IndexPath?
-    var lastCellForAttention: QuestionCell?
+    weak var delegate: QuestionsTableViewControllerDelegate?
 
+    private var answers = [Answer?]()
+    private var indexPathForAttention: IndexPath?
+    private var lastCellForAttention: QuestionCell?
     private var doneButton: UIBarButtonItem!
 
     override func viewDidLoad() {
@@ -121,7 +126,11 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
             }
         }
 
-        // TODO: Collate Questions and Return them
+        // Collate Questions and Return them
+        self.delegate?.receivedAnswers(answers.compactMap({$0}))
+
+        // Bye bye
+        dismiss(animated: true)
     }
 
     private func missingAnswer(for question: Question) {

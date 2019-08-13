@@ -73,6 +73,10 @@ class MultipleChoiceQuestionCell: SingleChoiceQuestionCell {
         if let question = question {
             var allTags = ""
             buttons.filter({ return $0.isSelected }).map({ return "\($0.tag)," }).forEach({ allTags += $0 })
+            if allTags.count > 0 {
+                // Cut off the last comma
+                allTags = String(allTags.prefix(allTags.count - 1))
+            }
 
             delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: allTags,
                                                                       questionStringIdentifier: nil, options: [],

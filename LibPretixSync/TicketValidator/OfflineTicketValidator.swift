@@ -81,7 +81,7 @@ public class OfflineTicketValidator: TicketValidator {
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [String: String]?,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         guard let event = configStore.event else {
             completionHandler(nil, APIError.notConfigured(message: "No Event is set"))

@@ -77,9 +77,10 @@ public class OnlineTicketValidator: TicketValidator {
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [String: String]? = nil,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { redemptionResponse, error in
+        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid,
+                                      answers: answers) { redemptionResponse, error in
             guard var redemptionResponse = redemptionResponse else {
                 completionHandler(nil, error)
                 return

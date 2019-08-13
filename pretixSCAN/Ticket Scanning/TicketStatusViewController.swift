@@ -14,6 +14,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     var configuration: Configuration? { didSet { update() } }
     var redemptionResponse: RedemptionResponse? { didSet { update() } }
 
+    /// If true, don't fire of any more requests
     private var beganRedeeming = false
     private var error: Error? { didSet { update() } }
 
@@ -21,6 +22,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         let secret: String
         var force: Bool
         var ignoreUnpaid: Bool
+        var answers: [String: String]?
     }
 
     private let presentationTime: TimeInterval = 5
@@ -150,7 +152,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             self.configStore?.ticketValidator?.redeem(
                 secret: configuration.secret,
                 force: configuration.force,
-                ignoreUnpaid: configuration.ignoreUnpaid
+                ignoreUnpaid: configuration.ignoreUnpaid,
+                answers: configuration.answers
             ) { (redemptionResponse, error) in
                 self.error = error
                 self.redemptionResponse = redemptionResponse
@@ -183,8 +186,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         questionsController.questions = redemptionResponse.questions ?? []
         let navigationController = UINavigationController(rootViewController: questionsController)
         navigationController.navigationBar.prefersLargeTitles = true
-
-        // TODO: Fix graphical glitch here
         present(navigationController, animated: true, completion: nil)
     }
 
@@ -220,6 +221,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     private func createQuestionsController() -> QuestionsTableViewController {
         let questionsController = QuestionsTableViewController(style: .plain)
         questionsController.configStore = configStore
+        questionsController.delegate = self
         return questionsController
     }
 
@@ -239,5 +241,17 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
     @IBAction func tap(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension TicketStatusViewController: QuestionsTableViewControllerDelegate {
+    func receivedAnswers(_ answers: [Answer]) {
+        var answerDict = [String: String]()
+        for answer in answers {
+            answerDict["\(answer.question)"] = answer.answer
+        }
+        redemptionResponse = nil
+        beganRedeeming = false
+        configuration?.answers = answerDict
     }
 }

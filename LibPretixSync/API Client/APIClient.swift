@@ -313,15 +313,17 @@ public extension APIClient {
     /// Check in an attendee, identified by their secret code, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, completionHandler: completionHandler) {
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [String: String]?,
+                completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+        if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
+                                 completionHandler: completionHandler) {
             task.resume()
         }
     }
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil, eventSlug: String? = nil,
-                    checkInListIdentifier: Identifier? = nil,
+                    checkInListIdentifier: Identifier? = nil, answers: [String: String]? = nil,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
@@ -335,7 +337,7 @@ public extension APIClient {
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: true,
                 date: date, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce())
+                nonce: NonceGenerator.nonce(), answers: answers)
             urlRequest.httpBody = try jsonEncoder.encode(redemptionRequest)
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in

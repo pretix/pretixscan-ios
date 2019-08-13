@@ -95,7 +95,7 @@ extension ValidateTicketViewController: AppCoordinator {
 
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
         let ticketStatusViewControllerConfiguration = TicketStatusViewController.Configuration(
-            secret: secret, force: force, ignoreUnpaid: ignoreUnpaid)
+            secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: nil)
         self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: ticketStatusViewControllerConfiguration)
     }
 }
