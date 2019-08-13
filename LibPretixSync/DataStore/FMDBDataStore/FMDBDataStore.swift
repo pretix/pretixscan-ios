@@ -7,6 +7,7 @@
 //
 // swiftlint:disable force_try
 // swiftlint:disable file_length
+// swiftlint:disable function_parameter_count
 
 import Foundation
 import FMDB
@@ -15,23 +16,7 @@ import FMDB
 ///
 /// - Note: See `DataStore` for function level documentation.
 public class FMDBDataStore: DataStore {
-    private lazy var uploadDataBaseQueue: FMDatabaseQueue = {
-        let fileURL = try! FileManager.default
-            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("queuedRedemptionRequests.sqlite")
-        print("Opening Database \(fileURL.path)")
-        let queue = FMDatabaseQueue(url: fileURL)
-
-        queue?.inDatabase { database in
-            do {
-                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
-            } catch {
-                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
-            }
-        }
-
-        return queue!
-    }()
+    private lazy var uploadDataBaseQueue: FMDatabaseQueue = { return createUploadDataBaseQueue() }()
 
     private var currentDataBaseQueue: FMDatabaseQueue?
     private var currentDataBaseQueueEvent: Event?
@@ -329,7 +314,8 @@ extension FMDBDataStore {
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
-    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                       in checkInList: CheckInList)
         -> RedemptionResponse? {
             let queue = databaseQueue(with: event)
 
@@ -341,8 +327,7 @@ extension FMDBDataStore {
             let orderPosition = tempOrderPosition.adding(checkIns: checkIns)
                 .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
-
-            // TODO: prefill order position with existing answers
+                .adding(answers: answers)
 
             let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
             guard let redemptionResponse = orderPosition.createRedemptionResponse(
@@ -356,7 +341,7 @@ extension FMDBDataStore {
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: true,
                 date: checkInDate, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce())
+                nonce: NonceGenerator.nonce(), answers: answers)
             let queuedRedemptionRequest = QueuedRedemptionRequest(
                 redemptionRequest: redemptionRequest,
                 eventSlug: event.slug,
@@ -426,7 +411,7 @@ private extension FMDBDataStore {
     private func createUploadDataBaseQueue() -> FMDatabaseQueue {
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("queuedRedemptionRequests.sqlite")
+            .appendingPathComponent("uploads.sqlite")
         print("Opening Database \(fileURL.path)")
         let queue = FMDatabaseQueue(url: fileURL)
 

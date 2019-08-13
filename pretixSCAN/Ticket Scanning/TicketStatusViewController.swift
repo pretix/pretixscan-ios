@@ -22,7 +22,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         let secret: String
         var force: Bool
         var ignoreUnpaid: Bool
-        var answers: [String: String]?
+        var answers: [Answer]?
     }
 
     private let presentationTime: TimeInterval = 5
@@ -246,12 +246,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
 extension TicketStatusViewController: QuestionsTableViewControllerDelegate {
     func receivedAnswers(_ answers: [Answer]) {
-        var answerDict = [String: String]()
-        for answer in answers {
-            answerDict["\(answer.question)"] = answer.answer
-        }
         redemptionResponse = nil
         beganRedeeming = false
-        configuration?.answers = answerDict
+        configuration?.answers = answers
     }
 }

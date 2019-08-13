@@ -56,13 +56,23 @@ public struct RedemptionRequest: Model {
     public let answers: [String: String]?
 
     init(questionsSupported: Bool = true, date: Date?, force: Bool = false, ignoreUnpaid: Bool, nonce: String,
-         answers: [String: String]? = nil) {
+         answers: [Answer]? = nil) {
         self.questionsSupported = questionsSupported
         self.date = date
         self.force = force
         self.ignoreUnpaid = ignoreUnpaid
         self.nonce = nonce
-        self.answers = answers
+
+        guard let answers = answers else {
+            self.answers = nil
+            return
+        }
+
+        var answerDict = [String: String]()
+        for answer in answers {
+            answerDict["\(answer.question)"] = answer.answer
+        }
+        self.answers = answerDict
     }
 
     private enum CodingKeys: String, CodingKey {

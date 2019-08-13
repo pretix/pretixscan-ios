@@ -21,6 +21,7 @@ extension QueuedRedemptionRequest: FMDBModel {
     "force"    INTEGER,
     "ignore_unpaid"    INTEGER,
     "nonce"    TEXT NOT NULL UNIQUE,
+    "json"    TEXT,
     PRIMARY KEY("nonce")
     );
     """
@@ -28,8 +29,8 @@ extension QueuedRedemptionRequest: FMDBModel {
     static var insertQuery = """
     REPLACE INTO "\(stringName)"
     ("event", "check_in_list", "secret", "questions_supported",
-    "datetime", "force", "ignore_unpaid", "nonce")
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+    "datetime", "force", "ignore_unpaid", "nonce", "json")
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
 
     static var numberOfRequestsQuery = """
@@ -45,21 +46,8 @@ extension QueuedRedemptionRequest: FMDBModel {
     """
 
     static func from(result: FMResultSet, in database: FMDatabase) -> QueuedRedemptionRequest? {
-        guard let event = result.string(forColumn: "event") else { return nil }
-        let check_in_list = result.int(forColumn: "check_in_list")
-        guard let secret = result.string(forColumn: "secret") else { return nil }
-        let questions_supported = result.bool(forColumn: "questions_supported")
-        let datetime = database.dateFromString(result.string(forColumn: "datetime"))
-
-        let force = result.bool(forColumn: "force")
-        let ignore_unpaid = result.bool(forColumn: "ignore_unpaid")
-        guard let nonce = result.string(forColumn: "nonce") else { return nil }
-
-        let redemptionRequest = RedemptionRequest(questionsSupported: questions_supported,
-                                                  date: datetime, force: force, ignoreUnpaid: ignore_unpaid, nonce: nonce)
-        let queuedRedemptionRequest = QueuedRedemptionRequest(redemptionRequest: redemptionRequest,
-                                                              eventSlug: event, checkInListIdentifier: Int(check_in_list), secret: secret)
-
+        guard let json = result.string(forColumn: "json"), let jsonData = json.data(using: .utf8) else { return nil }
+        let queuedRedemptionRequest = try? JSONDecoder.iso8601withFractionsDecoder.decode(QueuedRedemptionRequest.self, from: jsonData)
         return queuedRedemptionRequest
     }
 
@@ -74,11 +62,12 @@ extension QueuedRedemptionRequest: FMDBModel {
                 let force = record.redemptionRequest.force.toInt()
                 let ignore_unpaid = record.redemptionRequest.ignoreUnpaid.toInt()
                 let nonce = record.redemptionRequest.nonce
+                let json = record.toJSONString() ?? ""
 
                 do {
                     try database.executeUpdate(QueuedRedemptionRequest.insertQuery, values: [
                         event_id, check_in_list_id, secret, questions_supported, datetime as Any, force,
-                        ignore_unpaid, nonce])
+                        ignore_unpaid, nonce, json])
                 } catch {
                     EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }

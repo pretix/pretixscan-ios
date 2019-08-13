@@ -38,6 +38,6 @@ public protocol TicketValidator {
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [String: String]?,
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void)
 }

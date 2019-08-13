@@ -313,7 +313,7 @@ public extension APIClient {
     /// Check in an attendee, identified by their secret code, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [String: String]?,
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
                                  completionHandler: completionHandler) {
@@ -323,7 +323,7 @@ public extension APIClient {
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil, eventSlug: String? = nil,
-                    checkInListIdentifier: Identifier? = nil, answers: [String: String]? = nil,
+                    checkInListIdentifier: Identifier? = nil, answers: [Answer]? = nil,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()

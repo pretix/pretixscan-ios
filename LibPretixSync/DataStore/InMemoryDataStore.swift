@@ -5,8 +5,8 @@
 //  Created by Daniel Jilg on 15.04.19.
 //  Copyright © 2019 rami.io. All rights reserved.
 //
-
 // swiftlint:disable cyclomatic_complexity
+// swiftlint:disable function_parameter_count
 
 import Foundation
 
@@ -119,7 +119,8 @@ public class InMemoryDataStore: DataStore {
         completionHandler(searchResult, nil)
     }
 
-    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                       in checkInList: CheckInList)
         -> RedemptionResponse? {
         for order in dataStore(for: event).orders {
             guard let positions = order.positions else { continue }
