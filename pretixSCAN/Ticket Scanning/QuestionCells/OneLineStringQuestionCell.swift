@@ -21,6 +21,11 @@ class OneLineStringQuestionCell: QuestionCell, UITextFieldDelegate {
         mainStackView.addArrangedSubview(PaddingView(enclosing: textField))
     }
 
+    override func update() {
+        super.update()
+        textField.text = answer?.answer
+    }
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let question = question, let textFieldText = textField.text {
             delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: textFieldText,

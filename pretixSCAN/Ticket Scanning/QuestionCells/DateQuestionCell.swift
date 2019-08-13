@@ -23,6 +23,13 @@ class DateQuestionCell: QuestionCell {
         datePicker.addTarget(self, action: #selector(dateUpdated(sender:)), for: .valueChanged)
     }
 
+    override func update() {
+        super.update()
+
+        guard let dateString = answer?.answer, let date = DateFormatter.iso8601.date(from: dateString) else { return }
+        datePicker.date = date
+    }
+
     @IBAction func dateUpdated(sender: UIDatePicker) {
         if let question = question {
             let dateString = DateFormatter.iso8601.string(from: sender.date)

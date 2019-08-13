@@ -48,6 +48,8 @@ class SingleChoiceQuestionCell: QuestionCell {
             secondaryStackView.addArrangedSubview(optionButton)
 
             optionButton.addTarget(self, action: #selector(selected(sender:)), for: .touchUpInside)
+
+            if answer?.answer == "\(optionButton.tag)" { optionButton.isSelected = true }
         }
     }
 

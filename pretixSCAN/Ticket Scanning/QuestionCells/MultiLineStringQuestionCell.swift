@@ -20,6 +20,12 @@ class MultiLineStringQuestionCell: QuestionCell, UITextViewDelegate {
     override func setup() {
         super.setup()
         mainStackView.addArrangedSubview(PaddingView(enclosing: textView))
+        textView.delegate = self
+    }
+
+    override func update() {
+        super.update()
+        textView.text = answer?.answer
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

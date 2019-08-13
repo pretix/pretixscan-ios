@@ -42,6 +42,12 @@ class BoolQuestionCell: QuestionCell {
         offButton.addTarget(self, action: #selector(selected(sender:)), for: .touchUpInside)
     }
 
+    override func update() {
+        super.update()
+        onButton.isSelected = answer?.answer == "true"
+        offButton.isSelected = answer?.answer == "false"
+    }
+
     @IBAction func selected(sender: UIButton) {
         [onButton, offButton].forEach { $0.isSelected = false }
         sender.isSelected = true

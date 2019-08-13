@@ -8,7 +8,6 @@
 
 import UIKit
 
-class CountryCodeQuestionCell: QuestionCell {
+class CountryCodeQuestionCell: OneLineStringQuestionCell {
     override class var reuseIdentifier: String { return "CountryCodeQuestionCell" }
-    // TODO
 }
