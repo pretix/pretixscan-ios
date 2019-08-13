@@ -80,7 +80,7 @@ public struct Order: Model {
         case pending = "n"
         case paid = "p"
         case expired = "e"
-        case cancelled = "c"
+        case canceled = "c"
     }
 }
 

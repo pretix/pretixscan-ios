@@ -7,8 +7,8 @@
 "Automatic Syncing is now disabled" = "Automatische Synchronisierung ist nun deaktiviert";
 "Automatic Syncing is now enabled" = "Automatische Synchronisierung ist nun aktiviert";
 "Cancel" = "Abbrechen";
-/* Order Cancelled */
-"Cancelled" = "Storniert";
+/* Order Canceled */
+"Canceled" = "Storniert";
 "Check In Unpaid" = "Unbezahlt einchecken";
 "Checked In" = "Eingecheckt";
 "Configuration" = "Konfiguration";

@@ -23,8 +23,8 @@
 /* No comment provided by engineer. */
 "Cancel" = "Cancel";
 
-/* Order Cancelled */
-"Cancelled" = "Cancelled";
+/* Order Canceled */
+"Canceled" = "Canceled";
 
 /* No comment provided by engineer. */
 "Check In Unpaid" = "Check In Unpaid";
