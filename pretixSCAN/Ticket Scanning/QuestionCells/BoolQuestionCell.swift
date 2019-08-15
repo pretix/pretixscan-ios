@@ -61,6 +61,9 @@ class BoolQuestionCell: QuestionCell {
             animation.duration = 0.2
             animation.isAdditive = true
             sender.layer.add(animation, forKey: "shake")
+
+            delegate?.answerUpdated(for: indexPath, newAnswer: nil)
+            return
         }
 
         if let question = question {
