@@ -183,7 +183,19 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
     private func updateToIncomplete(_ redemptionResponse: RedemptionResponse) {
         let questionsController = createQuestionsController()
-        questionsController.questions = redemptionResponse.questions ?? []
+        let questions = redemptionResponse.questions ?? []
+        questionsController.questions = questions
+
+        if let answers = redemptionResponse.answers {
+            var mappedAnswers = [Answer?](repeating: nil, count: questions.count)
+            for (index, question) in questions.enumerated() {
+                if let answer = answers.filter({ $0.question == question.identifier }).first {
+                    mappedAnswers[index] = answer
+                }
+            }
+            questionsController.answers = mappedAnswers
+        }
+
         let navigationController = UINavigationController(rootViewController: questionsController)
         navigationController.navigationBar.prefersLargeTitles = true
         present(navigationController, animated: true, completion: nil)

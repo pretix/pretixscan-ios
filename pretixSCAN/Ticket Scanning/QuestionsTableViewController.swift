@@ -16,10 +16,10 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
     // MARK: Properties
     var configStore: ConfigStore?
     var questions = [Question]() { didSet { answers = [Answer?](repeating: nil, count: questions.count) }}
+    var answers = [Answer?]()
 
     weak var delegate: QuestionsTableViewControllerDelegate?
 
-    private var answers = [Answer?]()
     private var indexPathForAttention: IndexPath?
     private var lastCellForAttention: QuestionCell?
     private var doneButton: UIBarButtonItem!

@@ -125,7 +125,8 @@ public class InMemoryDataStore: DataStore {
         for order in dataStore(for: event).orders {
             guard let positions = order.positions else { continue }
             for orderPosition in positions where orderPosition.secret == secret {
-                return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition, lastCheckIn: nil, questions: nil)
+                return RedemptionResponse(status: .redeemed, errorReason: nil, position: orderPosition, lastCheckIn: nil, questions: nil,
+                                          answers: nil)
             }
         }
 
