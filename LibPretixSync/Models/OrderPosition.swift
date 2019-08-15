@@ -125,8 +125,9 @@ public struct OrderPosition: Model {
 
         // Check for open Questions
         let answerQuestionIDs = answers.map { return $0.question }
-        let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }.filter { $0.isRequired }
-        if unansweredQuestions.count > 0 {
+        let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }
+        let requiredUnansweredQuestions = unansweredQuestions.filter { $0.isRequired }
+        if requiredUnansweredQuestions.count > 0 {
             return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
                                       questions: unansweredQuestions)
         }
