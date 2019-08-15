@@ -21,6 +21,7 @@ class TimeQuestionCell: QuestionCell {
         super.setup()
         mainStackView.addArrangedSubview(datePicker)
         datePicker.addTarget(self, action: #selector(dateUpdated(sender:)), for: .valueChanged)
+        dateUpdated(sender: datePicker)
     }
 
     override func update() {

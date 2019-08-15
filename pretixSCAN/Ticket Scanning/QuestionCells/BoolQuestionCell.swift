@@ -22,13 +22,13 @@ class BoolQuestionCell: QuestionCell {
 
     let onButton: ChoiceButton = {
         let onButton = ChoiceButton()
-        onButton.setTitle("1", for: .normal)
+        onButton.setTitle(Localization.QuestionCells.booleanYes, for: .normal)
         return onButton
     }()
 
     let offButton: ChoiceButton = {
         let offButton = ChoiceButton()
-        offButton.setTitle("0", for: .normal)
+        offButton.setTitle(Localization.QuestionCells.booleanNo, for: .normal)
         return offButton
     }()
 
@@ -51,6 +51,17 @@ class BoolQuestionCell: QuestionCell {
     @IBAction func selected(sender: UIButton) {
         [onButton, offButton].forEach { $0.isSelected = false }
         sender.isSelected = true
+
+        // Don't allow "No" if the question is required
+        if question?.isRequired == true && sender == offButton {
+            sender.isSelected = false
+            let animation = CAKeyframeAnimation(keyPath: "position.x")
+            animation.values = [ 0, 5, -5, 5, 0 ]
+            animation.keyTimes = [ 0, NSNumber(value: (1 / 6.0)), NSNumber(value: (3 / 6.0)), NSNumber(value: (5 / 6.0)), 1 ]
+            animation.duration = 0.2
+            animation.isAdditive = true
+            sender.layer.add(animation, forKey: "shake")
+        }
 
         if let question = question {
             delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier,

@@ -69,6 +69,9 @@ class QuestionCell: UITableViewCell {
     func update() {
         var labelText = NSLocalizedString(reuseIdentifier ?? "", comment: "").uppercased()
         if question?.isRequired == true { labelText = labelText + "*" }
+        if question?.isRequired == true && question?.type == .boolean {
+            labelText = Localization.QuestionCells.requiredBooleanQuestion.uppercased()
+        }
         questionTypeLabel.text = labelText
         questionTextLabel.text = question?.question.representation(in: Locale.current)
 
