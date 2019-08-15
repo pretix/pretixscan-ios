@@ -17,11 +17,12 @@ class TimeQuestionCell: QuestionCell {
         return datePicker
     }()
 
+    override var delegate: QuestionCellDelegate? { didSet { dateUpdated(sender: datePicker) }}
+
     override func setup() {
         super.setup()
         mainStackView.addArrangedSubview(datePicker)
         datePicker.addTarget(self, action: #selector(dateUpdated(sender:)), for: .valueChanged)
-        dateUpdated(sender: datePicker)
     }
 
     override func update() {

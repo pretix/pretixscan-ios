@@ -17,6 +17,8 @@ class DateTimeQuestionCell: QuestionCell {
         return datePicker
     }()
 
+    override var delegate: QuestionCellDelegate? { didSet { dateUpdated(sender: datePicker) }}
+
     override func setup() {
         super.setup()
         mainStackView.addArrangedSubview(datePicker)
