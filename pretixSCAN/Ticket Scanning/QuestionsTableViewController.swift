@@ -10,6 +10,7 @@ import UIKit
 
 protocol QuestionsTableViewControllerDelegate: class {
     func receivedAnswers(_ answers: [Answer])
+    func cancelAnsweringCheckInQuestions()
 }
 
 class QuestionsTableViewController: UITableViewController, Configurable, QuestionCellDelegate {
@@ -23,14 +24,17 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
     private var indexPathForAttention: IndexPath?
     private var lastCellForAttention: QuestionCell?
     private var doneButton: UIBarButtonItem!
+    private var cancelButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsSelection = false
 
         title = Localization.QuestionsTableViewController.Title
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveAndExit))
+        doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(saveAndExit))
+        cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         navigationItem.rightBarButtonItem = doneButton
+        navigationItem.leftBarButtonItem = cancelButton
 
         for cellType in [
             NumberQuestionCell.self, OneLineStringQuestionCell.self, MultiLineStringQuestionCell.self, BoolQuestionCell.self,
@@ -145,6 +149,11 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
         }
 
         tableView.scrollToRow(at: indexPathForQuestion, at: .top, animated: true)
+    }
 
+    @objc
+    func cancel() {
+        dismiss(animated: true)
+        self.delegate?.cancelAnsweringCheckInQuestions()
     }
 }

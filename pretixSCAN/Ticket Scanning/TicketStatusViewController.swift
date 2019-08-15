@@ -262,4 +262,8 @@ extension TicketStatusViewController: QuestionsTableViewControllerDelegate {
         beganRedeeming = false
         configuration?.answers = answers
     }
+
+    func cancelAnsweringCheckInQuestions() {
+        dismiss(animated: true)
+    }
 }
