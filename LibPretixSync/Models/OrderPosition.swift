@@ -88,6 +88,15 @@ public struct OrderPosition: Model {
         case answers
     }
 
+    public func adding(order: Order) -> OrderPosition {
+        return OrderPosition(
+            identifier: self.identifier,
+            orderCode: self.orderCode, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
+            item: self.item, variation: self.variation, price: self.price, attendeeName: self.attendeeName,
+            attendeeEmail: self.attendeeEmail, secret: self.secret, subEvent: self.subEvent,
+            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers)
+    }
+
     /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.
     ///
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
@@ -105,6 +114,12 @@ public struct OrderPosition: Model {
                 return RedemptionResponse(status: .error, errorReason: .product, position: self, lastCheckIn: nil, questions: nil,
                                           answers: nil)
             }
+        }
+
+        // Make sure order is set
+        guard self.order != nil else {
+            print("OrderPosition.order set to nil. Aborting.")
+            return RedemptionResponse(status: .error, errorReason: nil, position: self, lastCheckIn: nil, questions: nil, answers: nil)
         }
 
         // Check for order status
