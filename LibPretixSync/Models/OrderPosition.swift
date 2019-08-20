@@ -140,6 +140,12 @@ public struct OrderPosition: Model {
                                       lastCheckIn: self.checkins.last, questions: nil, answers: nil)
         }
 
+        // Check if questions were never answered
+        if answers == nil && questions.count > 0 {
+            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
+                                      questions: questions, answers: answers)
+        }
+
         // Check for open Questions
         let answerQuestionIDs: [Identifier] = answers?.map { return $0.question } ?? []
         let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }

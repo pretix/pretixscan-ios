@@ -285,7 +285,7 @@ class OrderPositionTests: XCTestCase {
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
             pseudonymizationId: "DAC7ULNMUB", checkins: [],
-            answers: []) // TODO: Set answers array to nil
+            answers: nil)
         let optionalQuestion = Question(
             identifier: 3, question: MultiLingualString.english("Why?"), type: .oneLineString,
             isRequired: false, position: 3, items: [], stringIdentifier: "3",
@@ -293,10 +293,7 @@ class OrderPositionTests: XCTestCase {
             dependencyValue: nil)
         let incompleteErrorResponse = RedemptionResponse(
             status: .incomplete, errorReason: nil, position: orderPosition, lastCheckIn: nil,
-            questions: [optionalQuestion], answers: [])
-        let completeResponse = RedemptionResponse(
-            status: .redeemed, errorReason: nil, position: nil, lastCheckIn: nil,
-            questions: nil, answers: nil)
+            questions: [optionalQuestion], answers: nil)
 
         // No Questions Array given. We expect an "incomplete" response
         XCTAssertEqual(incompleteErrorResponse, orderPosition.createRedemptionResponse(
@@ -305,6 +302,9 @@ class OrderPositionTests: XCTestCase {
 
         // Empty Questions Array given. We expect the request to go through
         orderPosition.answers = []
+        let completeResponse = RedemptionResponse(
+            status: .redeemed, errorReason: nil, position: orderPosition, lastCheckIn: nil,
+            questions: nil, answers: nil)
         XCTAssertEqual(completeResponse, orderPosition.createRedemptionResponse(
             force: false, ignoreUnpaid: false, in: event, in: checkInList,
             with: [optionalQuestion]))
