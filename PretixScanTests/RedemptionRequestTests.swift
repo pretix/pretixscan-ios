@@ -17,6 +17,7 @@ class RedemptionRequestTests: XCTestCase {
           "force": false,
           "ignore_unpaid": false,
           "nonce": "Pvrk50vUzQd0DhdpNRL4I4OcXsvg70uA",
+          "canceled_supported":true,
           "questions_supported": false
         }
     """.filter { !" \n\t\r".contains($0) }).data(using: .utf8)!
