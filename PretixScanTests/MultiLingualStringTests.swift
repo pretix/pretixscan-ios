@@ -33,13 +33,13 @@ class MultiLingualStringTests: XCTestCase {
 
     let completeMultiLingualString: MultiLingualString = {
         var mls = MultiLingualString.english("Demo Conference")
-        mls[MultiLingualStringLanguage.german.rawValue] = "Demokonferenz"
-        mls[MultiLingualStringLanguage.germanInformal.rawValue] = "Du Demokonferenz"
-        mls[MultiLingualStringLanguage.spanish.rawValue] = "El Conferencio"
-        mls[MultiLingualStringLanguage.french.rawValue] = "Le Conférence Demo"
-        mls[MultiLingualStringLanguage.dutch.rawValue] = "Demo Konferentje"
-        mls[MultiLingualStringLanguage.dutchInformal.rawValue] = "De Demo Konferentje"
-        mls[MultiLingualStringLanguage.turkish.rawValue] = "Konferans"
+        mls.german = "Demokonferenz"
+        mls.germanInformal = "Du Demokonferenz"
+        mls.spanish = "El Conferencio"
+        mls.french = "Le Conférence Demo"
+        mls.dutch = "Demo Konferentje"
+        mls.dutchInformal = "De Demo Konferentje"
+        mls.turkish = "Konferans"
         return mls
     }()
 
