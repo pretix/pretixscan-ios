@@ -235,9 +235,18 @@ extension OrderPosition: FMDBModel {
     }
 
     func adding(answers: [Answer]?) -> OrderPosition {
+        // Take existing answers and overwrite with ones that have been updated
+        var mergedAnswers = [Identifier: Answer]()
+        for existingAnswer in self.answers ?? [] {
+            mergedAnswers[existingAnswer.question] = existingAnswer
+        }
+        for newAnswer in answers ?? [] {
+            mergedAnswers[newAnswer.question] = newAnswer
+        }
+
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers ?? [])
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: mergedAnswers.values.map { $0 })
     }
 }
