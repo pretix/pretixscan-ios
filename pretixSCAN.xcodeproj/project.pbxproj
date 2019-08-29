@@ -65,6 +65,7 @@
 		DC66800122CA09A0002EF1C1 /* FMDBQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66800022CA09A0002EF1C1 /* FMDBQuestion.swift */; };
 		DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */; };
 		DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C42285816D00C08817 /* SubEvent.swift */; };
+		DC8387BF2317AB9D001C9434 /* FMDBDataStoreMigrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8387BE2317AB9D001C9434 /* FMDBDataStoreMigrations.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
 		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
 		DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */; };
@@ -236,6 +237,7 @@
 		DC66800022CA09A0002EF1C1 /* FMDBQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBQuestion.swift; sourceTree = "<group>"; };
 		DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		DC7DD5C42285816D00C08817 /* SubEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubEvent.swift; sourceTree = "<group>"; };
+		DC8387BE2317AB9D001C9434 /* FMDBDataStoreMigrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStoreMigrations.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineTicketValidator.swift; sourceTree = "<group>"; };
@@ -615,6 +617,7 @@
 			isa = PBXGroup;
 			children = (
 				DC0052E7225FB02B002D985B /* FMDBDataStore.swift */,
+				DC8387BE2317AB9D001C9434 /* FMDBDataStoreMigrations.swift */,
 				DC3CA582228DCF870003D6D3 /* FMDBModel.swift */,
 				DCC5D84C2295687E00DAEFA0 /* Extensions.swift */,
 				DCC5D84E2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift */,
@@ -972,6 +975,7 @@
 				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
 				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
 				DCC5D85B229569B000DAEFA0 /* FMDBOrder.swift in Sources */,
+				DC8387BF2317AB9D001C9434 /* FMDBDataStoreMigrations.swift in Sources */,
 				DCC5D859229569A100DAEFA0 /* FMDBSubEvent.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */,

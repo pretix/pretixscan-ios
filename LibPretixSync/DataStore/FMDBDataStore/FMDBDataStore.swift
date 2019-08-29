@@ -458,28 +458,19 @@ private extension FMDBDataStore {
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(event.slug).sqlite")
         print("Opening Database \(fileURL.path)")
-        let queue = FMDatabaseQueue(url: fileURL)
-
-        // Configure the queue
-        queue?.inDatabase { database in
-            do {
-                try database.executeUpdate(ItemCategory.creationQuery, values: nil)
-                try database.executeUpdate(Item.creationQuery, values: nil)
-                try database.executeUpdate(SubEvent.creationQuery, values: nil)
-                try database.executeUpdate(Order.creationQuery, values: nil)
-                try database.executeUpdate(OrderPosition.creationQuery, values: nil)
-                try database.executeUpdate(CheckIn.creationQuery, values: nil)
-                try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
-                try database.executeUpdate(Question.creationQuery, values: nil)
-            } catch {
-               EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
-            }
+        guard let queue = FMDatabaseQueue(url: fileURL) else {
+            EventLogger.log(
+                event: "Could not create queue for database \(fileURL)",
+                category: .database, level: .warning, type: .error)
+            fatalError()
         }
+
+        migrate(queue: queue)
 
         // Cache the queue for later usage
         currentDataBaseQueue = queue
         currentDataBaseQueueEvent = event
 
-        return queue!
+        return queue
     }
 }
