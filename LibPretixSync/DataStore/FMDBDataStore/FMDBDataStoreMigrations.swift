@@ -48,9 +48,9 @@ extension FMDBDataStore {
     }
 
     private func migrate(database: FMDatabase, fromVersion: UInt32) throws {
-        for migration in migrations[Int(fromVersion)...] {
+        for migration in migrations[Int(fromVersion + 1)...] {
             print("Performing migration \(String(describing: migration.self))")
-            migration.performMigration()
+            migration.performMigration(database: database)
             print("Finished migration \(String(describing: migration.self))")
         }
     }
@@ -65,7 +65,7 @@ private let migrations: [FMDatabaseMigration] = [
 
 /// Abstract Database Migration. Override the performMigration method.
 private class FMDatabaseMigration {
-    func performMigration() { /* override in subclass */ }
+    func performMigration(database: FMDatabase) { /* override in subclass */ }
 }
 
 // Empty Placeholder Migration
@@ -73,7 +73,7 @@ private class ZeroToOneMigration: FMDatabaseMigration {}
 
 /// Migrate DB Version 1 to Version 2
 private class OneToTwoMigration: FMDatabaseMigration {
-    override func performMigration() {
-
+    override func performMigration(database: FMDatabase) {
+        database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD answers_json TEXT;")
     }
 }
