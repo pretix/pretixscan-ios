@@ -116,11 +116,9 @@ public class OfflineTicketValidator: TicketValidator {
 
             if let event = self.configStore.event {
                 position = position.adding(order: dataStore.getOrder(by: position.orderCode, in: event))
-                position = position.adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
-
-                let checkIns = dataStore.getCheckIns(for: position, in: self.configStore.checkInList, in: event)
-                position = position.adding(checkIns: checkIns)
-
+                    .adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
+                    .adding(checkIns: dataStore.getCheckIns(for: position, in: self.configStore.checkInList, in: event))
+                    .adding(answers: response.answers)
                 response.position = position
 
                 response.lastCheckIn = position.checkins.filter {
