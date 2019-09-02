@@ -330,7 +330,7 @@ extension FMDBDataStore {
                 .adding(answers: answers)
 
             let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
-            
+
             guard let redemptionResponse = orderPosition.createRedemptionResponse(
                 force: force, ignoreUnpaid: ignoreUnpaid,
                 in: event, in: checkInList, with: questions) else { return nil }

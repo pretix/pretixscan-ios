@@ -24,7 +24,6 @@ extension OrderPosition: FMDBModel {
     "secret"    TEXT,
     "subevent"    INTEGER,
     "pseudonymization_id"    TEXT,
-    "answers_json"    TEXT,
     PRIMARY KEY("id")
     );
     """

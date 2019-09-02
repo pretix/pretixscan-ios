@@ -21,20 +21,51 @@ extension FMDBDataStore {
     func migrate(queue: FMDatabaseQueue) {
         queue.inDatabase { database in
             do {
-                if database.userVersion == 0 {
-                    try initializeNew(database: database)
-                } else {
-                    try migrate(database: database, fromVersion: database.userVersion)
-                }
+                try migrate(database: database)
             } catch {
-                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+                EventLogger.log(event: "Migration Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
         }
     }
 
-    private func initializeNew(database: FMDatabase) throws {
-        print("Initializing new database...")
+    private func migrate(database: FMDatabase) throws {
+        print("Migrating Database...")
+        print("Current Database Version: \(database.userVersion)")
 
+        for migration in migrations {
+            let migrationName = "\(migration.fromVersion)-\(String(describing: type(of: migration)))"
+            guard migration.fromVersion >= database.userVersion else {
+                print("Skipping \(migrationName). Already applied.")
+                continue
+            }
+
+            print("Performing migration \(migrationName)...")
+            try migration.performMigration(database: database)
+            database.userVersion = migration.toVersion
+            print("Finished performing \(migrationName). Database is now at version \(database.userVersion)")
+        }
+        print("Finished Database Migrations")
+    }
+}
+
+/// List of all Migrations. Don't forget to add new migrations to this list.
+private let migrations: [FMDatabaseMigration] = [
+    InitialMigration(),
+    MigrationAddAnswersJSON()
+]
+
+/// A Database Migration. fromVersion should be 1 higher than toVersion.
+protocol FMDatabaseMigration: class {
+    var fromVersion: UInt32 { get }
+    var toVersion: UInt32 { get }
+    func performMigration(database: FMDatabase) throws
+}
+
+private class InitialMigration: FMDatabaseMigration {
+    var fromVersion: UInt32 = 0
+    var toVersion: UInt32 = 1
+
+    func performMigration(database: FMDatabase) throws {
         try database.executeUpdate(ItemCategory.creationQuery, values: nil)
         try database.executeUpdate(Item.creationQuery, values: nil)
         try database.executeUpdate(SubEvent.creationQuery, values: nil)
@@ -43,37 +74,15 @@ extension FMDBDataStore {
         try database.executeUpdate(CheckIn.creationQuery, values: nil)
         try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
         try database.executeUpdate(Question.creationQuery, values: nil)
-
-        database.userVersion = UInt32(migrations.count)
-    }
-
-    private func migrate(database: FMDatabase, fromVersion: UInt32) throws {
-        for migration in migrations[Int(fromVersion + 1)...] {
-            print("Performing migration \(String(describing: migration.self))")
-            migration.performMigration(database: database)
-            print("Finished migration \(String(describing: migration.self))")
-        }
     }
 }
-
-/// List of all Migrations.
-/// This array's `count` property equals the current newest migration version
-private let migrations: [FMDatabaseMigration] = [
-    ZeroToOneMigration(),
-    OneToTwoMigration()
-]
-
-/// Abstract Database Migration. Override the performMigration method.
-private class FMDatabaseMigration {
-    func performMigration(database: FMDatabase) { /* override in subclass */ }
-}
-
-// Empty Placeholder Migration
-private class ZeroToOneMigration: FMDatabaseMigration {}
 
 /// Migrate DB Version 1 to Version 2
-private class OneToTwoMigration: FMDatabaseMigration {
-    override func performMigration(database: FMDatabase) {
+private class MigrationAddAnswersJSON: FMDatabaseMigration {
+    var fromVersion: UInt32 = 1
+    var toVersion: UInt32 = 2
+
+    func performMigration(database: FMDatabase) throws {
         database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD answers_json TEXT;")
     }
 }
