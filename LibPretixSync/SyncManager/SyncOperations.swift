@@ -261,7 +261,7 @@ class QueuedRedemptionRequestsUploader: APIClientOperation {
 
         isExecuting = true
 
-        guard let nextRedemptionRequest = dataStore.getRedemptionRequest(in: event) else {
+        guard let nextQueuedRedemptionRequest = dataStore.getRedemptionRequest(in: event) else {
             // No more queued redemption requests, so we don't need to do anything, and not add more uploads to the queue
             self.shouldRepeat = false
             self.completeOperation()
@@ -269,11 +269,11 @@ class QueuedRedemptionRequestsUploader: APIClientOperation {
         }
 
         urlSessionTask = apiClient.redeemTask(
-            secret: nextRedemptionRequest.secret,
-            force: true,
-            ignoreUnpaid: nextRedemptionRequest.redemptionRequest.ignoreUnpaid,
-            eventSlug: nextRedemptionRequest.eventSlug,
-            checkInListIdentifier: nextRedemptionRequest.checkInListIdentifier) { result, error in
+            secret: nextQueuedRedemptionRequest.secret,
+            redemptionRequest: nextQueuedRedemptionRequest.redemptionRequest,
+            eventSlug: nextQueuedRedemptionRequest.eventSlug,
+            checkInListIdentifier: nextQueuedRedemptionRequest.checkInListIdentifier
+        ) { result, error in
                 // Handle HTTP errors
                 // When HTTP errors occur, we do not want to remove the queued redemption request, since it probably didn't reach the server
                 if let error = error {
@@ -301,7 +301,7 @@ class QueuedRedemptionRequestsUploader: APIClientOperation {
                 self.errorReason = result?.errorReason
 
                 // Done, delete the queued redemption request
-                self.dataStore.delete(nextRedemptionRequest, in: self.event)
+                self.dataStore.delete(nextQueuedRedemptionRequest, in: self.event)
 
                 // The instantiator of this class should queue more operations in the completion block.
                 self.shouldRepeat = true
