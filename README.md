@@ -37,7 +37,7 @@ The actual app that uses LibPretixSync
 ### AppDelegate and AppCoordinator
 Initialises a `ConfigStore` instance and passes it on to `ValidateTicketViewController`, which is the root view controller for the application.   `ValidateTicketViewController` will pass the instance on to any sub view controllers that request them using the `Configurable` protocol.
 
-`ValidateTicketViewController` is implementing the `AppCoordinator` protocol. Classes that are marked as `AppCoordinatorReceiver` will get their `appcoordinator` property set. Use `AppCoordinator` for anything that needs to be a singleton. 
+`ValidateTicketViewController` is implementing the `AppCoordinator` protocol. Classes that are marked as `AppCoordinatorReceiver` will get their `appcoordinator` property set when they are instantiated via a segue. Use the `appCoordinator` property for anything that needs to be a singleton, like getting to the `ConfigStore`.  
 
 ## Storyboards
 The app uses storbyboards and segues for navigation. Segue identifiers, in case you need to trigger segues manually, are in `Segues.swift`. but most segues should be triggered by the storyboard. 

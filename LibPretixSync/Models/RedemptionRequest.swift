@@ -23,7 +23,7 @@ public struct RedemptionRequest: Model {
     /// set this to `false`. In that case, questions will just be ignored. Defaults
     /// to `true` in the API, but set to false until this app implements questions
     /// handling.
-    public var questionsSupported: Bool = false
+    public var questionsSupported: Bool = true
 
     /// Wether the current device supports the "canceled" state. This is always true
     /// for this implementation.
@@ -57,14 +57,26 @@ public struct RedemptionRequest: Model {
     // If questions are supported/required, you may/must supply a mapping of question IDs to their
     // respective answers. The answers should always be strings. In case of (multiple-)choice-type
     // answers, the string should contain the (comma-separated) IDs of the selected options.
-    // public let answers
+    public let answers: [String: String]?
 
-    init(questionsSupported: Bool = true, date: Date?, force: Bool = false, ignoreUnpaid: Bool, nonce: String) {
+    init(questionsSupported: Bool = true, date: Date?, force: Bool = false, ignoreUnpaid: Bool, nonce: String,
+         answers: [Answer]? = nil) {
         self.questionsSupported = questionsSupported
         self.date = date
         self.force = force
         self.ignoreUnpaid = ignoreUnpaid
         self.nonce = nonce
+
+        guard let answers = answers else {
+            self.answers = nil
+            return
+        }
+
+        var answerDict = [String: String]()
+        for answer in answers {
+            answerDict["\(answer.question)"] = answer.answer
+        }
+        self.answers = answerDict
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -74,6 +86,7 @@ public struct RedemptionRequest: Model {
         case force
         case ignoreUnpaid = "ignore_unpaid"
         case nonce
+        case answers
 
     }
 }

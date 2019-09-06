@@ -37,6 +37,20 @@ public class OfflineTicketValidator: TicketValidator {
         configStore.apiClient?.getCheckinLists(event: event, completionHandler: completionHandler)
     }
 
+    public func getQuestions(for item: Item, event: Event, completionHandler: @escaping ([Question]?, Error?) -> Void) {
+        guard let questions = configStore.dataStore?.getQuestions(for: item, in: event) else {
+            completionHandler(nil, APIError.notFound)
+            return
+        }
+
+        switch questions {
+        case .failure(let error):
+            completionHandler(nil, error)
+        case .success(let resultQuestions):
+            completionHandler(resultQuestions, nil)
+        }
+    }
+
     /// Retrieve Statistics for the currently selected CheckInList
     public func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
         guard let event = configStore.event, let checkInList = configStore.checkInList else {
@@ -67,7 +81,7 @@ public class OfflineTicketValidator: TicketValidator {
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         guard let event = configStore.event else {
             completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
@@ -81,7 +95,8 @@ public class OfflineTicketValidator: TicketValidator {
 
         // Redeem using DataStore
         // A QueuedRedemptionRequest will automatically be generated
-        let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, in: event, in: checkInList)
+        let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
+                                                     in: event, in: checkInList)
         if var response = response {
             guard var position = response.position else {
                 completionHandler(response, nil)
@@ -101,11 +116,9 @@ public class OfflineTicketValidator: TicketValidator {
 
             if let event = self.configStore.event {
                 position = position.adding(order: dataStore.getOrder(by: position.orderCode, in: event))
-                position = position.adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
-
-                let checkIns = dataStore.getCheckIns(for: position, in: self.configStore.checkInList, in: event)
-                position = position.adding(checkIns: checkIns)
-
+                    .adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
+                    .adding(checkIns: dataStore.getCheckIns(for: position, in: self.configStore.checkInList, in: event))
+                    .adding(answers: response.answers)
                 response.position = position
 
                 response.lastCheckIn = position.checkins.filter {

@@ -5,6 +5,7 @@
 //  Created by Daniel Jilg on 08.04.19.
 //  Copyright © 2019 rami.io. All rights reserved.
 //
+// swiftlint:disable function_parameter_count
 
 import Foundation
 
@@ -60,13 +61,17 @@ public protocol DataStore: class {
     /// Retrieve Statistics for the currently selected CheckInList
     func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error>
 
+    /// Retrieve Questions that should be answered for the specified Item
+    func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error>
+
     // MARK: - Redemption Requests
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList) -> RedemptionResponse?
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                in checkInList: CheckInList) -> RedemptionResponse?
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
     func numberOfRedemptionRequestsInQueue(in event: Event) -> Int

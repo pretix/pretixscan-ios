@@ -59,6 +59,9 @@ public struct OrderPosition: Model {
     /// List of check-ins with this ticket
     public let checkins: [CheckIn]
 
+    /// Answers to user-defined questions
+    public var answers: [Answer]?
+
     /// Ticket has already been used
     public var isRedeemed: Bool {
         return checkins.count > 0
@@ -82,14 +85,24 @@ public struct OrderPosition: Model {
         case subEvent = "subevent"
         case pseudonymizationId = "pseudonymization_id"
         case checkins
+        case answers
+    }
+
+    public func adding(order: Order) -> OrderPosition {
+        return OrderPosition(
+            identifier: self.identifier,
+            orderCode: self.orderCode, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
+            item: self.item, variation: self.variation, price: self.price, attendeeName: self.attendeeName,
+            attendeeEmail: self.attendeeEmail, secret: self.secret, subEvent: self.subEvent,
+            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers)
     }
 
     /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.
     ///
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
     ///       `redeem` function as an example.
-    public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
-        -> RedemptionResponse? {
+    public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList,
+                                         with questions: [Question] = []) -> RedemptionResponse? {
         // Check if this ticket is for the correct sub event
         guard self.subEvent == checkInList.subEvent else {
             return nil
@@ -98,28 +111,60 @@ public struct OrderPosition: Model {
         // Check for products
         if !checkInList.allProducts {
             guard let limitProducts = checkInList.limitProducts, limitProducts.contains(self.itemIdentifier) else {
-                return RedemptionResponse(status: .error, errorReason: .product, position: self, lastCheckIn: nil)
+                return RedemptionResponse(status: .error, errorReason: .product, position: self, lastCheckIn: nil, questions: nil,
+                                          answers: nil)
             }
+        }
+
+        // Make sure order is set
+        guard self.order != nil else {
+            print("OrderPosition.order set to nil. Aborting.")
+            return RedemptionResponse(status: .error, errorReason: nil, position: self, lastCheckIn: nil, questions: nil, answers: nil)
         }
 
         // Check for order status
         if ![.paid, .pending].contains(self.order!.status) {
-            return RedemptionResponse(status: .error, errorReason: .canceled, position: self, lastCheckIn: nil)
+            return RedemptionResponse(status: .error, errorReason: .canceled, position: self, lastCheckIn: nil, questions: nil,
+                                      answers: nil)
         }
 
         let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
         if self.order!.status == .pending, !shouldIgnoreUnpaid {
-            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil)
+            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
         }
 
         // Check for previous check ins
         if self.checkins.count > 0, !force {
             // Attendee is already checked in
             return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: self,
-                                      lastCheckIn: self.checkins.last)
+                                      lastCheckIn: self.checkins.last, questions: nil, answers: nil)
+        }
+
+        // Check if questions were never answered
+        if answers == nil && questions.count > 0 {
+            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
+                                      questions: questions, answers: answers)
+        }
+
+        // Check for open Questions
+        let answerQuestionIDs: [Identifier] = answers?.map { return $0.question } ?? []
+        let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }
+        let requiredUnansweredQuestions = unansweredQuestions.filter { $0.isRequired }
+        if requiredUnansweredQuestions.count > 0 {
+            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
+                                      questions: unansweredQuestions, answers: answers)
+        }
+
+        // Check that Boolean Questions with `isRequired` are answered true
+        let booleanRequiredQuestions = questions.filter { $0.type == .boolean && $0.isRequired }
+        let booleanRequiredQuestionIDs = booleanRequiredQuestions.map { $0.identifier }
+        let badBools = answers?.filter { booleanRequiredQuestionIDs.contains($0.question) }.filter { $0.answer.lowercased() != "true" }
+        if badBools?.count ?? 0 > 0 {
+            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
+                                      questions: booleanRequiredQuestions, answers: answers)
         }
 
         // Return a positive redemption response
-        return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil)
+        return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil, questions: nil, answers: nil)
     }
 }

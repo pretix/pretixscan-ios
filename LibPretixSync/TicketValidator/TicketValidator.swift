@@ -27,6 +27,9 @@ public protocol TicketValidator {
     /// Retrieve Statistics for the currently selected CheckInList
     func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void)
 
+    /// Questions that should be answered for the current item
+    func getQuestions(for item: Item, event: Event, completionHandler: @escaping ([Question]?, Error?) -> Void)
+
     // MARK: - Search
     /// Search all OrderPositions within a CheckInList
     func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
@@ -35,6 +38,6 @@ public protocol TicketValidator {
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void)
 }

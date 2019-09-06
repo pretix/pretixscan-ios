@@ -35,6 +35,20 @@ public class OnlineTicketValidator: TicketValidator {
         configStore.apiClient?.getCheckinLists(event: event, completionHandler: completionHandler)
     }
 
+    public func getQuestions(for item: Item, event: Event, completionHandler: @escaping ([Question]?, Error?) -> Void) {
+        guard let questions = configStore.dataStore?.getQuestions(for: item, in: event) else {
+            completionHandler(nil, APIError.notFound)
+            return
+        }
+
+        switch questions {
+        case .failure(let error):
+            completionHandler(nil, error)
+        case .success(let resultQuestions):
+            completionHandler(resultQuestions, nil)
+        }
+    }
+
     /// Search all OrderPositions within a CheckInList
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         configStore.apiClient?.getSearchResults(query: query) { orderPositions, error in
@@ -63,9 +77,10 @@ public class OnlineTicketValidator: TicketValidator {
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool,
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]? = nil,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid) { redemptionResponse, error in
+        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid,
+                                      answers: answers) { redemptionResponse, error in
             guard var redemptionResponse = redemptionResponse else {
                 completionHandler(nil, error)
                 return

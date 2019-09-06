@@ -14,6 +14,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     var configuration: Configuration? { didSet { update() } }
     var redemptionResponse: RedemptionResponse? { didSet { update() } }
 
+    /// If true, don't fire of any more requests
     private var beganRedeeming = false
     private var error: Error? { didSet { update() } }
 
@@ -21,6 +22,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         let secret: String
         var force: Bool
         var ignoreUnpaid: Bool
+        var answers: [Answer]?
     }
 
     private let presentationTime: TimeInterval = 5
@@ -117,7 +119,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
         case .incomplete:
             newBackgroundColor = Color.warning
-            updateToIncomplete()
+            updateToIncomplete(redemptionResponse)
+            return
 
         case .error:
             newBackgroundColor = updateToError(redemptionResponse)
@@ -149,14 +152,17 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             self.configStore?.ticketValidator?.redeem(
                 secret: configuration.secret,
                 force: configuration.force,
-                ignoreUnpaid: configuration.ignoreUnpaid
+                ignoreUnpaid: configuration.ignoreUnpaid,
+                answers: configuration.answers
             ) { (redemptionResponse, error) in
                 self.error = error
                 self.redemptionResponse = redemptionResponse
 
                 // Dismiss
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.presentationTime) {
-                    self.dismiss(animated: true, completion: nil)
+                if redemptionResponse?.status != .incomplete {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + self.presentationTime) {
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
         }
@@ -175,10 +181,24 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
     }
 
-    private func updateToIncomplete() {
-        iconLabel.text = Icon.warning
-        ticketStatusLabel.text = Localization.TicketStatusViewController.IncompleteInformation
-        appCoordinator?.performHapticNotification(ofType: .warning)
+    private func updateToIncomplete(_ redemptionResponse: RedemptionResponse) {
+        let questionsController = createQuestionsController()
+        let questions = redemptionResponse.questions ?? []
+        questionsController.questions = questions
+
+        if let answers = redemptionResponse.answers {
+            var mappedAnswers = [Answer?](repeating: nil, count: questions.count)
+            for (index, question) in questions.enumerated() {
+                if let answer = answers.filter({ $0.question == question.identifier }).first {
+                    mappedAnswers[index] = answer
+                }
+            }
+            questionsController.answers = mappedAnswers
+        }
+
+        let navigationController = UINavigationController(rootViewController: questionsController)
+        navigationController.navigationBar.prefersLargeTitles = true
+        present(navigationController, animated: true, completion: nil)
     }
 
     private func updateToError(_ redemptionResponse: RedemptionResponse) -> UIColor {
@@ -210,6 +230,13 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         return newBackgroundColor
     }
 
+    private func createQuestionsController() -> QuestionsTableViewController {
+        let questionsController = QuestionsTableViewController(style: .plain)
+        questionsController.configStore = configStore
+        questionsController.delegate = self
+        return questionsController
+    }
+
     // MARK: - Actions
     @IBAction func redeemUnpaidTicket(_ sender: Any) {
         guard let configuration = configuration else { return }
@@ -226,5 +253,17 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
     @IBAction func tap(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension TicketStatusViewController: QuestionsTableViewControllerDelegate {
+    func receivedAnswers(_ answers: [Answer]) {
+        redemptionResponse = nil
+        beganRedeeming = false
+        configuration?.answers = answers
+    }
+
+    func cancelAnsweringCheckInQuestions() {
+        dismiss(animated: true)
     }
 }

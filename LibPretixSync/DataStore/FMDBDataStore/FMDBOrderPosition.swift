@@ -31,8 +31,8 @@ extension OrderPosition: FMDBModel {
     static var insertQuery = """
     REPLACE INTO "\(stringName)"
     ("id", "order", "positionid", "item", "variation", "price", "attendee_name", "attendee_email",
-    "secret", "subevent", "pseudonymization_id")
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    "secret", "subevent", "pseudonymization_id", "answers_json")
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
 
     static let searchQuery = """
@@ -93,11 +93,17 @@ extension OrderPosition: FMDBModel {
         let attendee_email = result.string(forColumn: "attendee_email")
         let subevent = result.nullableInt(forColumn: "subevent")
         guard let pseudonymization_id = result.string(forColumn: "pseudonymization_id") else { return nil }
+        let answersJSON = result.string(forColumn: "answers_json")
+
+        var answers: [Answer] = []
+        if let jsonData = answersJSON?.data(using: .utf8) {
+            answers = (try? JSONDecoder.iso8601withFractionsDecoder.decode([Answer].self, from: jsonData)) ?? []
+        }
 
         let orderPosition = OrderPosition(
             identifier: identifier, orderCode: order, order: nil, positionid: positionid, itemIdentifier: item, item: nil,
             variation: variation, price: price, attendeeName: attendee_name, attendeeEmail: attendee_email, secret: secret!,
-            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [])
+            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [], answers: answers)
         return orderPosition
     }
 
@@ -136,10 +142,16 @@ extension OrderPosition: FMDBModel {
                 let subevent = record.subEvent as Int?
                 let pseudonymization_id = record.pseudonymizationId
 
+                var answersJSON: String?
+                if let answers = record.answers, let answersData = try? JSONEncoder.iso8601withFractionsEncoder.encode(answers) {
+                    answersJSON = String(data: answersData, encoding: .utf8)
+                }
+
                 do {
                     try database.executeUpdate(OrderPosition.insertQuery, values: [
                         identifier, order, positionid, item, variation as Any, price,
-                        attendee_name as Any, attendee_email as Any, secret, subevent as Any, pseudonymization_id])
+                        attendee_name as Any, attendee_email as Any, secret, subevent as Any, pseudonymization_id,
+                        answersJSON as Any])
                 } catch {
                     EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }
@@ -204,20 +216,36 @@ extension OrderPosition: FMDBModel {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns, answers: answers)
     }
 
     func adding(item: Item?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers)
     }
 
     func adding(order: Order?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers)
+    }
+
+    func adding(answers: [Answer]?) -> OrderPosition {
+        // Take existing answers and overwrite with ones that have been updated
+        var mergedAnswers = [Identifier: Answer]()
+        for existingAnswer in self.answers ?? [] {
+            mergedAnswers[existingAnswer.question] = existingAnswer
+        }
+        for newAnswer in answers ?? [] {
+            mergedAnswers[newAnswer.question] = newAnswer
+        }
+
+        return OrderPosition(
+            identifier: identifier, orderCode: orderCode, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
+            variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: mergedAnswers.values.map { $0 })
     }
 }

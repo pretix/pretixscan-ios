@@ -96,3 +96,36 @@
 "You are forbidden from accessing this resource" = "Sie dürfen auf diese Ressource nicht zugreifen";
 "You are not authorized to access this resource" = "Sie haben keine Zugriffsrechte auf diese Ressource";
 "You can now start scanning" = "Sie können nun beginnen, Tickets zu scannen";
+
+/* Question Type Label */
+"BoolQuestionCell" = "Ja oder Nein";
+
+/* Question Type Label */
+"NumberQuestionCell" = "Geben Sie eine Zahl ein";
+
+/* Question Type Label */
+"MultiLineStringQuestionCell" = "Geben Sie Text ein";
+
+/* Question Type Label */
+"SingleChoiceQuestionCell" = "Eine Option auswählen";
+
+/* Question Type Label */
+"MultipleChoiceQuestionCell" = "Alle zutreffenden auswählen";
+
+/* Question Type Label */
+"TimeQuestionCell" = "Zeit Eingeben";
+
+/* Question Type Label */
+"FileUploadQuestionCell" = "Datei Hochladen";
+
+/* Question Type Label */
+"DateQuestionCell" = "Datum Eingeben";
+
+/* Question Type Label */
+"DateTimeQuestionCell" = "Datum und Uhrzeit eingeben";
+
+/* Question Type Label */
+"CountryCodeQuestionCell" = "Land Auswählen";
+
+/* Question Type Label */
+"OneLineStringQuestionCell" = "Geben Sie Text Ein";

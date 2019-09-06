@@ -7,6 +7,7 @@
 //
 // swiftlint:disable force_try
 // swiftlint:disable file_length
+// swiftlint:disable function_parameter_count
 
 import Foundation
 import FMDB
@@ -15,6 +16,11 @@ import FMDB
 ///
 /// - Note: See `DataStore` for function level documentation.
 public class FMDBDataStore: DataStore {
+    private lazy var uploadDataBaseQueue: FMDatabaseQueue = { return createUploadDataBaseQueue() }()
+
+    private var currentDataBaseQueue: FMDatabaseQueue?
+    private var currentDataBaseQueueEvent: Event?
+
     // MARK: Metadata
 
     public func destroyDataStoreForUploads() {
@@ -147,10 +153,17 @@ public class FMDBDataStore: DataStore {
             return
         }
 
+        if let questions = resources as? [Question] {
+            Question.store(questions, in: queue)
+            return
+        }
+
         EventLogger.log(event: "Don't know how to store \(T.humanReadableName)", category: .offlineDownload, level: .warning, type: .fault)
     }
+}
 
-    // MARK: - Retrieving
+// MARK: - Retrieving
+extension FMDBDataStore {
     // Return all `OrderPosition`s matching the given query
     public func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
                                      completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
@@ -279,10 +292,30 @@ public class FMDBDataStore: DataStore {
         return .success(status)
     }
 
+    public func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {
+        var questions = [Question]()
+
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: []) {
+                while result.next() {
+                    if let question = Question.from(result: result, in: database), question.items.contains(item.identifier) {
+                        questions.append(question)
+                    }
+                }
+            }
+        }
+
+        return .success(questions)
+    }
+}
+
+// MARK: - Checking In
+extension FMDBDataStore {
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
-    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList)
+    public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                       in checkInList: CheckInList)
         -> RedemptionResponse? {
             let queue = databaseQueue(with: event)
 
@@ -294,17 +327,22 @@ public class FMDBDataStore: DataStore {
             let orderPosition = tempOrderPosition.adding(checkIns: checkIns)
                 .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
+                .adding(answers: answers)
 
-            guard let redemptionResponse = orderPosition.createRedemptionResponse(force: force, ignoreUnpaid: ignoreUnpaid,
-                                                                                  in: event, in: checkInList) else { return nil }
+            let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
+
+            guard let redemptionResponse = orderPosition.createRedemptionResponse(
+                force: force, ignoreUnpaid: ignoreUnpaid,
+                in: event, in: checkInList, with: questions) else { return nil }
+
             guard redemptionResponse.status == .redeemed else { return redemptionResponse }
 
             // Store a queued redemption request
             let checkInDate = Date()
             let redemptionRequest = RedemptionRequest(
-                questionsSupported: false,
+                questionsSupported: true,
                 date: checkInDate, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce())
+                nonce: NonceGenerator.nonce(), answers: answers)
             let queuedRedemptionRequest = QueuedRedemptionRequest(
                 redemptionRequest: redemptionRequest,
                 eventSlug: event.slug,
@@ -321,7 +359,10 @@ public class FMDBDataStore: DataStore {
             // return the redeemed request
             return redemptionResponse
     }
+}
 
+// MARK: - Queueing
+extension FMDBDataStore {
     /// Return the number of QueuedRedemptionReqeusts in the DataStore
     public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
         var count = 0
@@ -364,19 +405,14 @@ public class FMDBDataStore: DataStore {
             }
         }
     }
-    private lazy var uploadDataBaseQueue: FMDatabaseQueue = {
-        return createUploadDataBaseQueue()
-    }()
-
-    private var currentDataBaseQueue: FMDatabaseQueue?
-    private var currentDataBaseQueueEvent: Event?
 }
 
+// MARK: - Database File Management
 private extension FMDBDataStore {
     private func createUploadDataBaseQueue() -> FMDatabaseQueue {
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("queuedRedemptionRequests.sqlite")
+            .appendingPathComponent("uploads.sqlite")
         print("Opening Database \(fileURL.path)")
         let queue = FMDatabaseQueue(url: fileURL)
 
@@ -423,27 +459,19 @@ private extension FMDBDataStore {
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(event.slug).sqlite")
         print("Opening Database \(fileURL.path)")
-        let queue = FMDatabaseQueue(url: fileURL)
-
-        // Configure the queue
-        queue?.inDatabase { database in
-            do {
-                try database.executeUpdate(ItemCategory.creationQuery, values: nil)
-                try database.executeUpdate(Item.creationQuery, values: nil)
-                try database.executeUpdate(SubEvent.creationQuery, values: nil)
-                try database.executeUpdate(Order.creationQuery, values: nil)
-                try database.executeUpdate(OrderPosition.creationQuery, values: nil)
-                try database.executeUpdate(CheckIn.creationQuery, values: nil)
-                try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
-            } catch {
-               EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
-            }
+        guard let queue = FMDatabaseQueue(url: fileURL) else {
+            EventLogger.log(
+                event: "Could not create queue for database \(fileURL)",
+                category: .database, level: .warning, type: .error)
+            fatalError()
         }
+
+        migrate(queue: queue)
 
         // Cache the queue for later usage
         currentDataBaseQueue = queue
         currentDataBaseQueueEvent = event
 
-        return queue!
+        return queue
     }
 }

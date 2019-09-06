@@ -181,8 +181,9 @@ public class SyncManager {
         let partialOrders = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event,
                                                    checkInList: checkInList, disableTestMode: true)
         partialOrders.addDependency(fullOrders)
+        let questions = QuestionsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
 
-        let allSyncOperations = [events, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders]
+        let allSyncOperations = [events, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders, questions]
         allSyncOperations.forEach { downloadQueue.addOperation($0) }
 
         // Cleanup

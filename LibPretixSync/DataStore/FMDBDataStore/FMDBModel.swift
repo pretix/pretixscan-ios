@@ -14,10 +14,14 @@ protocol FMDBModel: Model {
     static var creationQuery: String { get }
     static var destructionQuery: String { get }
     static var insertQuery: String { get }
+
+    /// Any queries that should be run to update the database model. Failures will be silently ignored.
+    static var updateQueries: [String] { get }
 }
 
 extension FMDBModel {
     static var destructionQuery: String { return "DROP TABLE IF EXISTS \"\(stringName)\"" }
+    static var updateQueries: [String] { return [] }
 }
 
 public extension Model {

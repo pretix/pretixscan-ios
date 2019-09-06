@@ -25,6 +25,16 @@ public struct RedemptionResponse: Codable, Equatable {
     /// If the ticket has already been redeemed, this field might contain the last CheckIn
     public var lastCheckIn: CheckIn?
 
+    /// If the ticket is incomplete, a list of questions that need to be answered
+    public let questions: [Question]?
+
+    /// A list of answers to be pre-filled.
+    ///
+    /// When answering questions, the request/respons cycle can go around a few times. The server will save the answers individually,
+    /// but we don't want to do that while in offline mode. So instead, we return the already provided answers in this array, so they
+    /// can be pre-filled in the UI, allowing the user to only answer the missing ones. 
+    public var answers: [Answer]?
+
     // MARK: - Enums
     /// Possible values for the Response Status
     public enum Status: String, Codable {
@@ -58,5 +68,6 @@ public struct RedemptionResponse: Codable, Equatable {
         case errorReason = "reason"
         case position
         case lastCheckIn
+        case questions
     }
 }

@@ -313,14 +313,30 @@ public extension APIClient {
     /// Check in an attendee, identified by their secret code, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, completionHandler: completionHandler) {
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
+                completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+        if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
+                                 completionHandler: completionHandler) {
             task.resume()
         }
     }
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil, eventSlug: String? = nil,
+                    checkInListIdentifier: Identifier? = nil, answers: [Answer]? = nil,
+                    completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
+
+            let redemptionRequest = RedemptionRequest(
+                questionsSupported: true,
+                date: date, force: force, ignoreUnpaid: ignoreUnpaid,
+                nonce: NonceGenerator.nonce(), answers: answers)
+
+        return redeemTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug,
+                          checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
+    }
+
+    /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
+    func redeemTask(secret: String, redemptionRequest: RedemptionRequest, eventSlug: String? = nil,
                     checkInListIdentifier: Identifier? = nil,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
         do {
@@ -331,11 +347,6 @@ public extension APIClient {
                 "/checkinlists/\(checkInListIdentifier ?? checkInList.identifier)/positions/\(secret)/redeem/")
             var urlRequest = try createURLRequest(for: urlPath)
             urlRequest.httpMethod = HttpMethod.POST
-
-            let redemptionRequest = RedemptionRequest(
-                questionsSupported: false,
-                date: date, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce())
             urlRequest.httpBody = try jsonEncoder.encode(redemptionRequest)
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in

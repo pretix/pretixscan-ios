@@ -82,6 +82,13 @@ public struct Order: Model {
         case expired = "e"
         case canceled = "c"
     }
+
+    static func stubOrder(code: String, status: Order.Status, secret: String) -> Order {
+        return Order(code: code, status: status, secret: secret, email: nil, locale: nil,
+                     salesChannel: nil, createdAt: nil, expiresAt: nil, lastModifiedAt: nil,
+                     total: nil, comment: nil, checkInAttention: nil, positions: nil,
+                     requireApproval: nil)
+    }
 }
 
 extension Order: Equatable {

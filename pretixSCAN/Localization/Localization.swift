@@ -142,4 +142,15 @@ struct Localization {
         static let LessThanAMinute = NSLocalizedString("less than a minute", comment: "time interval")
         static let LastSyncXAgo = NSLocalizedString("Last Sync %@ ago ", comment: "e.g. Last Sync [12 minutes] ago")
     }
+
+    struct QuestionsTableViewController {
+        static let Title = NSLocalizedString("Questions", comment: "Title for the List of Questions")
+        static let UploadNotPossibleNotice = NSLocalizedString("You need to upload a file here. Please do so from your computer", comment: "")
+    }
+
+    struct QuestionCells {
+        static let booleanYes = NSLocalizedString("Yes", comment: "Answer to a Boolean Check In Question")
+        static let booleanNo = NSLocalizedString("No", comment: "Answer to a Boolean Check In Question")
+        static let requiredBooleanQuestion = NSLocalizedString("You have to answer YES to check in", comment: "Note for a required boolean question")
+    }
 }
