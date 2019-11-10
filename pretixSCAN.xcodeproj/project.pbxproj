@@ -65,6 +65,7 @@
 		DC66800122CA09A0002EF1C1 /* FMDBQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66800022CA09A0002EF1C1 /* FMDBQuestion.swift */; };
 		DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */; };
 		DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7DD5C42285816D00C08817 /* SubEvent.swift */; };
+		DC82A5D523785FCB00F0650F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC82A5D423785FCB00F0650F /* Colors.xcassets */; };
 		DC8387BF2317AB9D001C9434 /* FMDBDataStoreMigrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8387BE2317AB9D001C9434 /* FMDBDataStoreMigrations.swift */; };
 		DC8467A7225B99590013F647 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A6225B99590013F647 /* DataStore.swift */; };
 		DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467A9225B99A50013F647 /* SyncManager.swift */; };
@@ -237,6 +238,7 @@
 		DC66800022CA09A0002EF1C1 /* FMDBQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBQuestion.swift; sourceTree = "<group>"; };
 		DC7DD5C222846B0B00C08817 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		DC7DD5C42285816D00C08817 /* SubEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubEvent.swift; sourceTree = "<group>"; };
+		DC82A5D423785FCB00F0650F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		DC8387BE2317AB9D001C9434 /* FMDBDataStoreMigrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStoreMigrations.swift; sourceTree = "<group>"; };
 		DC8467A6225B99590013F647 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		DC8467A9225B99A50013F647 /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				DC2F49FE2256669100710EFA /* Settings */,
 				DC227F282253A58E00314448 /* UIView Subclasses */,
 				DC07358022392476008326F7 /* Assets.xcassets */,
+				DC82A5D423785FCB00F0650F /* Colors.xcassets */,
 				DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */,
 				DC07358522392476008326F7 /* Info.plist */,
 				DCDD82CA224AB1A400DC0200 /* Icon.swift */,
@@ -783,6 +786,7 @@
 				DC07358122392476008326F7 /* Assets.xcassets in Resources */,
 				DCAAFF29223929B60059C000 /* README.md in Resources */,
 				DC07357F22392474008326F7 /* Main.storyboard in Resources */,
+				DC82A5D523785FCB00F0650F /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
