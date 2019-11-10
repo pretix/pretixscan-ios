@@ -76,7 +76,7 @@ class QuestionCell: UITableViewCell {
         questionTextLabel.text = question?.question.representation(in: Locale.current)
 
         UIView.animate(withDuration: 0.25) {
-            self.backgroundColor = self.shouldStandOut ? Color.warning : Color.whiteBackground
+            self.backgroundColor = self.shouldStandOut ? Color.warning : Color.defaultBackground
         }
     }
 }
