@@ -24,6 +24,7 @@ class ValidateTicketViewController: UIViewController {
         // ConfigStore
         setupConfigStore()
         beginObservingNotifications()
+        setupNavigationBarAppearance()
         setupSearchController()
     }
 
@@ -107,6 +108,16 @@ extension ValidateTicketViewController {
             fatalError("Could not get ConfigStore from AppDelegate")
         }
         self.configStore = configStore
+    }
+
+    private func setupNavigationBarAppearance() {
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithDefaultBackground()
+
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
     }
 
     private func setupSearchController() {
