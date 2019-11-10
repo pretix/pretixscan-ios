@@ -42,8 +42,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
     // MARK: - Updating
     private func update() {
-        guard isViewLoaded else { return }
         DispatchQueue.main.async {
+            guard self.isViewLoaded else { return }
             self.updateMain()
         }
     }

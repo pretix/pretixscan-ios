@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIButton.appearance().tintColor = Color.buttons
         UIProgressView.appearance().tintColor = Color.buttons
         UIActivityIndicatorView.appearance().tintColor = Color.buttons
+        UIView.appearance().tintColor = Color.buttons
 
         return true
     }
