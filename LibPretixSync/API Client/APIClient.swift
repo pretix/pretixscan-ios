@@ -209,7 +209,19 @@ public extension APIClient {
                 results += resultList.results
                 if resultList.next == nil {
                     // Last Page
-                    completionHandler(results, nil)
+                    let task = self.getTask(Event.self, lastUpdated: nil, filters: ["has_subevents": "true"]) { result in
+                        switch result {
+                        case .failure(let error):
+                            completionHandler(nil, error)
+                        case .success(let resultList):
+                            results += resultList.results
+                            if resultList.next == nil {
+                                // Last Page
+                                completionHandler(results, nil)
+                            }
+                        }
+                    }
+                    task?.resume()
                 }
             }
         }
