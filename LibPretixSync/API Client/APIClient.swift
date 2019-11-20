@@ -198,8 +198,10 @@ public extension APIClient {
     /// Returns a list of all events within a given organizer the authenticated user/token has access to.
     func getEvents(completionHandler: @escaping ([Event]?, Error?) -> Void) {
         var results = [Event]()
-
-        let task = getTask(Event.self, lastUpdated: nil, filters: ["is_past": "false"]) { result in
+        
+        let eightHoursAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
+        let endsAfter = Formatter.iso8601.string(from: eightHoursAgo)
+        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter]) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
