@@ -29,7 +29,7 @@ class SelectEventTableViewController: UITableViewController, Configurable {
 
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .none
+        dateFormatter.timeStyle = .short
         dateFormatter.dateStyle = .medium
         return dateFormatter
     }()
