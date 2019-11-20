@@ -201,7 +201,7 @@ public extension APIClient {
         
         let eightHoursAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
         let endsAfter = Formatter.iso8601.string(from: eightHoursAgo)
-        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter]) { result in
+        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter, "ordering": "date_from"]) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
@@ -223,7 +223,7 @@ public extension APIClient {
         let eightHoursAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
         let endsAfter = Formatter.iso8601.string(from: eightHoursAgo)
 
-        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter]) { result in
+        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter, "ordering": "date_from"]) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
