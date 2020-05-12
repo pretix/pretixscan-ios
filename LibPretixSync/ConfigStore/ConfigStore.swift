@@ -48,6 +48,9 @@ public protocol ConfigStore {
     /// If `true` the app will schedule a new sync process a few minutes after the previous one completed.
     var shouldAutoSync: Bool { get set }
 
+    /// Entry or exit
+    var scanMode: String { get set }
+
     // MARK: - Device
     /// The name that was specified for this device in the Pretix Organizer Backend
     var deviceName: String? { get set }
@@ -103,4 +106,6 @@ public enum ConfigStoreValue: String {
 
     /// Should auto sync has been toggled
     case shouldAutoSync
+    
+    case scanMode
 }

@@ -30,6 +30,7 @@ public class DefaultsConfigStore: ConfigStore {
         case checkInList
         case allManagedEvents
         case asyncModeEnabled
+        case scanMode
     }
 
     public var welcomeScreenIsConfirmed: Bool {
@@ -115,6 +116,14 @@ public class DefaultsConfigStore: ConfigStore {
         }
     }
 
+    public var scanMode: String {
+        get { return _scanMode }
+        set {
+            _scanMode = newValue
+            valueChanged()
+        }
+    }
+
     public private(set) var event: Event? {
         get { return _event }
         set {
@@ -185,6 +194,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _organizerSlug: String?
     private var _deviceID: Int?
     private var _deviceUniqueSerial: String?
+    private var _scanMode: String = "entry"
     private var _event: Event?
     private var _checkInList: CheckInList?
     private var _allManagedEvents: [Event] = []
@@ -215,6 +225,7 @@ public class DefaultsConfigStore: ConfigStore {
         _organizerSlug = nil
         _deviceID = nil
         _deviceUniqueSerial = nil
+        _scanMode = "entry"
         _event = nil
         _checkInList = nil
         _allManagedEvents = []
@@ -238,6 +249,7 @@ private extension DefaultsConfigStore {
         _organizerSlug = defaults.string(forKey: key(.organizerSlug))
         _deviceID = defaults.integer(forKey: key(.deviceID))
         _deviceUniqueSerial = defaults.string(forKey: key(.deviceUniqueSerial))
+        _scanMode = defaults.string(forKey: key(.scanMode)) ?? "entry"
         _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))
 
         // Event
@@ -265,6 +277,7 @@ private extension DefaultsConfigStore {
         save(_deviceName, forKey: .deviceName)
         save(_organizerSlug, forKey: .organizerSlug)
         save(_deviceID, forKey: .deviceID)
+        save(_scanMode, forKey: .scanMode)
         save(_deviceUniqueSerial, forKey: .deviceUniqueSerial)
         save(_asyncModeEnabled, forKey: .asyncModeEnabled)
         save(try? jsonEncoder.encode(_event), forKey: .event)

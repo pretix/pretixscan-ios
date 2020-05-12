@@ -334,7 +334,7 @@ extension FMDBDataStore {
 
             guard let redemptionResponse = orderPosition.createRedemptionResponse(
                 force: force, ignoreUnpaid: ignoreUnpaid,
-                in: event, in: checkInList, with: questions) else { return nil }
+                in: event, in: checkInList, as: type, with: questions) else { return nil }
 
             guard redemptionResponse.status == .redeemed else { return redemptionResponse }
 
