@@ -93,6 +93,16 @@ public extension APIClient {
     }
 }
 
+extension HTTPURLResponse {
+    func find(header: String) -> String? {
+        let keyValues = allHeaderFields.map { (String(describing: $0.key).lowercased(), String(describing: $0.value)) }
+        if let headerValue = keyValues.filter({ $0.0 == header.lowercased() }).first {
+            return headerValue.1
+        }
+        return nil
+    }
+}
+
 // MARK: - Retrieving Items
 public extension APIClient {
 
@@ -144,8 +154,8 @@ public extension APIClient {
 
                 do {
                     var pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
-                    pagedList.generatedAt = (response as? HTTPURLResponse)?.allHeaderFields["X-Page-Generated"] as? String
-                    pagedList.lastModified = (response as? HTTPURLResponse)?.allHeaderFields["Last-Modified"] as? String
+                    pagedList.generatedAt = (response as? HTTPURLResponse)?.find(header: "X-Page-Generated")
+                    pagedList.lastModified = (response as? HTTPURLResponse)?.find(header: "Last-Modified")
 
                     // Check if there are more pages to load
                     if (pageLimit != nil && page >= pageLimit!) {
