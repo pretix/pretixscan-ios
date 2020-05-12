@@ -148,22 +148,14 @@ public class SyncManager {
     }
 
     // MARK: - Queues
-    private lazy var downloadQueue: OperationQueue = {
+    private lazy var queue: OperationQueue = {
         var queue = OperationQueue()
         queue.name = "Download Queue"
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
 
-    private lazy var uploadQeuue: OperationQueue = {
-        var queue = OperationQueue()
-        queue.name = "Upload Queue"
-        queue.maxConcurrentOperationCount = 1
-        return queue
-    }()
-
     private func populateQueues(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
-        populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
@@ -184,7 +176,7 @@ public class SyncManager {
         let questions = QuestionsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
 
         let allSyncOperations = [events, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders, questions]
-        allSyncOperations.forEach { downloadQueue.addOperation($0) }
+        allSyncOperations.forEach { queue.addOperation($0) }
 
         // Cleanup
         let cleanUpOperation = BlockOperation {
@@ -204,7 +196,7 @@ public class SyncManager {
         // Cleanup should only happen once all other operations are finished
         allSyncOperations.forEach { cleanUpOperation.addDependency($0) }
 
-        downloadQueue.addOperation(cleanUpOperation)
+        queue.addOperation(cleanUpOperation)
     }
 
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
@@ -223,9 +215,11 @@ public class SyncManager {
 
             if uploader.shouldRepeat {
                 self.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            } else if (uploader.error == nil) {
+                self.populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             }
         }
 
-        uploadQeuue.addOperation(uploader)
+        queue.addOperation(uploader)
     }
 }

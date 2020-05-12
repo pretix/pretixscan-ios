@@ -48,6 +48,35 @@ extension FMDBDataStore {
         }
         print("Finished Database Migrations")
     }
+    
+    func migrateUploads(queue: FMDatabaseQueue) {
+        queue.inDatabase { database in
+            do {
+                try migrateUploads(database: database)
+            } catch {
+                EventLogger.log(event: "Migration Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+    }
+
+    private func migrateUploads(database: FMDatabase) throws {
+        print("Migrating Database...")
+        print("Current Database Version: \(database.userVersion)")
+
+        for migration in uploadMigrations {
+            let migrationName = "\(migration.fromVersion)-\(String(describing: type(of: migration)))"
+            guard migration.fromVersion >= database.userVersion else {
+                print("Skipping \(migrationName). Already applied.")
+                continue
+            }
+
+            print("Performing migration \(migrationName)...")
+            try migration.performMigration(database: database)
+            database.userVersion = migration.toVersion
+            print("Finished performing \(migrationName). Database is now at version \(database.userVersion)")
+        }
+        print("Finished Database Migrations")
+    }
 }
 
 /// List of all Migrations. Don't forget to add new migrations to this list.
@@ -56,12 +85,25 @@ private let migrations: [FMDatabaseMigration] = [
     MigrationAddAnswersJSON(),
     MigrationAddEntryType()
 ]
+private let uploadMigrations: [FMDatabaseMigration] = [
+    InitialUploadMigration(),
+    MigrationQueueAddEntryType()
+]
 
 /// A Database Migration. fromVersion should be 1 higher than toVersion.
 protocol FMDatabaseMigration: class {
     var fromVersion: UInt32 { get }
     var toVersion: UInt32 { get }
     func performMigration(database: FMDatabase) throws
+}
+
+private class InitialUploadMigration: FMDatabaseMigration {
+    var fromVersion: UInt32 = 0
+    var toVersion: UInt32 = 1
+
+    func performMigration(database: FMDatabase) throws {
+        try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
+    }
 }
 
 private class InitialMigration: FMDatabaseMigration {
@@ -90,12 +132,20 @@ private class MigrationAddAnswersJSON: FMDatabaseMigration {
     }
 }
 
-/// Migrate DB Version 1 to Version 2
 private class MigrationAddEntryType: FMDatabaseMigration {
     var fromVersion: UInt32 = 2
-    var toVersion: UInt32 = 3
+    var toVersion: UInt32 = 4
 
     func performMigration(database: FMDatabase) throws {
         database.executeStatements("ALTER TABLE \(CheckIn.stringName) ADD type TEXT DEFAULT 'entry';")
+    }
+}
+
+private class MigrationQueueAddEntryType: FMDatabaseMigration {
+    var fromVersion: UInt32 = 1
+    var toVersion: UInt32 = 4
+
+    func performMigration(database: FMDatabase) throws {
+        database.executeStatements("ALTER TABLE \(QueuedRedemptionRequest.stringName) ADD type TEXT DEFAULT 'entry';")
     }
 }

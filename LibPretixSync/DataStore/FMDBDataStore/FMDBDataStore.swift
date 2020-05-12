@@ -416,14 +416,8 @@ private extension FMDBDataStore {
             .appendingPathComponent("uploads.sqlite")
         print("Opening Database \(fileURL.path)")
         let queue = FMDatabaseQueue(url: fileURL)
-
-        queue?.inDatabase { database in
-            do {
-                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
-            } catch {
-                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
-            }
-        }
+        
+        migrateUploads(queue: queue!)
 
         return queue!
     }
