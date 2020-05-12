@@ -61,6 +61,9 @@ public struct RedemptionResponse: Codable, Equatable {
 
         /// The product is not available on this check in list
         case product
+
+        /// A custom rules has forbidden the scan
+        case rules
     }
 
     private enum CodingKeys: String, CodingKey {
