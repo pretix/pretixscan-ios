@@ -342,7 +342,7 @@ extension FMDBDataStore {
             let checkInDate = Date()
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: true,
-                date: checkInDate, force: force, ignoreUnpaid: ignoreUnpaid,
+                date: checkInDate, force: true, ignoreUnpaid: ignoreUnpaid,
                 nonce: NonceGenerator.nonce(), answers: answers, type: type)
             let queuedRedemptionRequest = QueuedRedemptionRequest(
                 redemptionRequest: redemptionRequest,
