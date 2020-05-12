@@ -205,7 +205,7 @@ extension FMDBDataStore {
 
             // Filter positions without the correct sub event
             .filter { orderPosition in
-                return orderPosition.subEvent == checkInList.subEvent
+                return checkInList.subEvent == nil || orderPosition.subEvent == checkInList.subEvent
             }
 
             completionHandler(filteredOrderPositions, nil)

@@ -48,7 +48,7 @@ class SelectCheckInListTableViewController: UITableViewController, Configurable 
 
             if let subEvent = self.subEvent {
                 let filteredCheckInLists = checkInLists?.filter {
-                    $0.subEvent == subEvent.identifier
+                    $0.subEvent == subEvent.identifier || $0.subEvent == nil
                 }
                 self.checkInLists = filteredCheckInLists
             } else {

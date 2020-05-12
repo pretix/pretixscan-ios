@@ -104,7 +104,7 @@ public struct OrderPosition: Model {
     public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList,
                                          with questions: [Question] = []) -> RedemptionResponse? {
         // Check if this ticket is for the correct sub event
-        guard self.subEvent == checkInList.subEvent else {
+        guard (checkInList.subEvent == nil || self.subEvent == checkInList.subEvent) else {
             return nil
         }
 
