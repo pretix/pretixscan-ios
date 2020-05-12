@@ -100,7 +100,13 @@ class FullDownloader<T: Model>: APIClientOperation {
             filters["testmode"] = "false"
         }
 
-        if let lastSyncCreationTime = dataStore.lastSyncCreationTime(of: T.self, in: event) {
+        let lastSyncCreationTime = dataStore.lastSyncCreationTime(of: T.self, in: event)
+        if (lastSyncCreationTime == "complete") {
+            if (dataStore.lastSyncTime(of: T.self, in: event) != nil) {
+                completeOperation()
+                return
+            }
+        } else if lastSyncCreationTime != nil {
             filters["created_since"] = lastSyncCreationTime
         }
 
@@ -125,11 +131,14 @@ class FullDownloader<T: Model>: APIClientOperation {
                     self.dataStore.setLastSyncCreatedTime(creationTimeOfLastObject, of: T.self, in: self.event)
                 }
 
-                if isFirstPage, let generatedAt = pagedList.generatedAt, self.dataStore.lastSyncTime(of: T.self, in: self.event) == nil {
+                if isFirstPage, let generatedAt = pagedList.generatedAt {
                     self.dataStore.setLastSyncModifiedTime(generatedAt, of: T.self, in: self.event)
                 }
 
                 if isLastPage {
+                    if pagedList as? PagedList<Order> != nil {
+                        self.dataStore.setLastSyncCreatedTime("complete", of: T.self, in: self.event)
+                    }
                     self.completeOperation()
                 }
             case .failure(let error):
