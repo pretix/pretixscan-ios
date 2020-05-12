@@ -39,5 +39,6 @@ public protocol TicketValidator {
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
+                as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void)
 }

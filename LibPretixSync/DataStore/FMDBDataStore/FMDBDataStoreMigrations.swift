@@ -15,6 +15,8 @@ extension FMDBDataStore {
     /// Database Version Meanings:
     /// - 0: Database not yet initialized
     /// - 1: Version of the database just before we introduced this migration feature
+    /// - 2: Answer-JSON
+    /// - 3: Entry type
     ///
     /// Further versions count up from there. See the `currentMigration` value for the current highest
     /// version and update it whenever you add migrations.
@@ -51,7 +53,8 @@ extension FMDBDataStore {
 /// List of all Migrations. Don't forget to add new migrations to this list.
 private let migrations: [FMDatabaseMigration] = [
     InitialMigration(),
-    MigrationAddAnswersJSON()
+    MigrationAddAnswersJSON(),
+    MigrationAddEntryType()
 ]
 
 /// A Database Migration. fromVersion should be 1 higher than toVersion.
@@ -84,5 +87,15 @@ private class MigrationAddAnswersJSON: FMDatabaseMigration {
 
     func performMigration(database: FMDatabase) throws {
         database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD answers_json TEXT;")
+    }
+}
+
+/// Migrate DB Version 1 to Version 2
+private class MigrationAddEntryType: FMDatabaseMigration {
+    var fromVersion: UInt32 = 2
+    var toVersion: UInt32 = 3
+
+    func performMigration(database: FMDatabase) throws {
+        database.executeStatements("ALTER TABLE \(CheckIn.stringName) ADD type TEXT DEFAULT 'entry';")
     }
 }

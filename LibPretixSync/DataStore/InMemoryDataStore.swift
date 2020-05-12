@@ -120,6 +120,7 @@ public class InMemoryDataStore: DataStore {
     }
 
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                       as type: String,
                        in checkInList: CheckInList)
         -> RedemptionResponse? {
         for order in dataStore(for: event).orders {

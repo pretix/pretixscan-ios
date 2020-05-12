@@ -58,14 +58,17 @@ public struct RedemptionRequest: Model {
     // respective answers. The answers should always be strings. In case of (multiple-)choice-type
     // answers, the string should contain the (comma-separated) IDs of the selected options.
     public let answers: [String: String]?
+    
+    public let type: String
 
     init(questionsSupported: Bool = true, date: Date?, force: Bool = false, ignoreUnpaid: Bool, nonce: String,
-         answers: [Answer]? = nil) {
+         answers: [Answer]? = nil, type: String) {
         self.questionsSupported = questionsSupported
         self.date = date
         self.force = force
         self.ignoreUnpaid = ignoreUnpaid
         self.nonce = nonce
+        self.type = type
 
         guard let answers = answers else {
             self.answers = nil
@@ -85,6 +88,7 @@ public struct RedemptionRequest: Model {
         case date = "datetime"
         case force
         case ignoreUnpaid = "ignore_unpaid"
+        case type
         case nonce
         case answers
 
@@ -97,5 +101,6 @@ extension RedemptionRequest: Hashable {
         hasher.combine(force)
         hasher.combine(ignoreUnpaid)
         hasher.combine(nonce)
+        hasher.combine(type)
     }
 }

@@ -315,6 +315,7 @@ extension FMDBDataStore {
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                       as type: String,
                        in checkInList: CheckInList)
         -> RedemptionResponse? {
             let queue = databaseQueue(with: event)
@@ -342,7 +343,7 @@ extension FMDBDataStore {
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: true,
                 date: checkInDate, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce(), answers: answers)
+                nonce: NonceGenerator.nonce(), answers: answers, type: type)
             let queuedRedemptionRequest = QueuedRedemptionRequest(
                 redemptionRequest: redemptionRequest,
                 eventSlug: event.slug,
@@ -353,7 +354,7 @@ extension FMDBDataStore {
 
             // Save a check in to check the attendee in
             // This checkin will later be overwritten (or duplicated) by one synced down from the server
-            let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate)
+            let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate, type: type)
             CheckIn.store([checkIn], for: orderPosition, in: queue)
 
             // return the redeemed request

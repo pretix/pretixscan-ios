@@ -153,7 +153,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 secret: configuration.secret,
                 force: configuration.force,
                 ignoreUnpaid: configuration.ignoreUnpaid,
-                answers: configuration.answers
+                answers: configuration.answers,
+                as: "entry"
             ) { (redemptionResponse, error) in
                 self.error = error
                 self.redemptionResponse = redemptionResponse

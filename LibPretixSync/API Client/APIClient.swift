@@ -333,9 +333,10 @@ public extension APIClient {
     /// Check in an attendee, identified by their secret code, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
+                                 as: type,
                                  completionHandler: completionHandler) {
             task.resume()
         }
@@ -343,13 +344,13 @@ public extension APIClient {
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil, eventSlug: String? = nil,
-                    checkInListIdentifier: Identifier? = nil, answers: [Answer]? = nil,
+                    checkInListIdentifier: Identifier? = nil, answers: [Answer]? = nil, as type: String,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
 
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: true,
                 date: date, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce(), answers: answers)
+                nonce: NonceGenerator.nonce(), answers: answers, type: type)
 
         return redeemTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug,
                           checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)

@@ -101,7 +101,7 @@ public struct OrderPosition: Model {
     ///
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
     ///       `redeem` function as an example.
-    public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList,
+    public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList, as type: String = "entry",
                                          with questions: [Question] = []) -> RedemptionResponse? {
         // Check if this ticket is for the correct sub event
         guard (checkInList.subEvent == nil || self.subEvent == checkInList.subEvent) else {
@@ -133,8 +133,19 @@ public struct OrderPosition: Model {
             return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
         }
 
+        let lastCheckin = self.checkins.sorted { (a, b) -> Bool in
+            return a.date < b.date
+        }.last
+        
+        let allow: Bool = (
+            type == "exit" ||
+            checkInList.allowMultipleEntries ||
+            lastCheckin == nil ||
+            (checkInList.allowEntryAfterExit && lastCheckin!.type == "exit")
+        )
+        
         // Check for previous check ins
-        if self.checkins.count > 0, !force {
+        if !allow && !force {
             // Attendee is already checked in
             return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: self,
                                       lastCheckIn: self.checkins.last, questions: nil, answers: nil)
