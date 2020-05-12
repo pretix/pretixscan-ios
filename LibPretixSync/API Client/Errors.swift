@@ -13,6 +13,7 @@ enum APIError: Error {
     case notConfigured(message: String)
     case emptyResponse
     case nonHTTPResponse
+    case unchanged // 304
     case badRequest // 400
     case unauthorized // 401
     case forbidden // 403

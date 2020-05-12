@@ -108,7 +108,7 @@ public extension APIClient {
     /// Returns a task that retrieves the specified model from the server and calls the completion handler for each page, once run.
     ///
     /// @see `get`
-    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, event: Event? = nil, filters: [String: String] = [:],
+    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, event: Event? = nil, filters: [String: String] = [:], ifModifiedSince: String? = nil,
                            completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void, pageLimit: Int? = nil) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
@@ -125,7 +125,11 @@ public extension APIClient {
                 throw APIError.couldNotCreateURL
             }
 
-            let urlRequest = try createURLRequest(for: urlComponentsURL)
+            var urlRequest = try createURLRequest(for: urlComponentsURL)
+            
+            if (ifModifiedSince != nil) {
+                urlRequest.addValue(ifModifiedSince!, forHTTPHeaderField: "If-Modified-Since")
+            }
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
@@ -141,6 +145,7 @@ public extension APIClient {
                 do {
                     var pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
                     pagedList.generatedAt = (response as? HTTPURLResponse)?.allHeaderFields["X-Page-Generated"] as? String
+                    pagedList.lastModified = (response as? HTTPURLResponse)?.allHeaderFields["Last-Modified"] as? String
 
                     // Check if there are more pages to load
                     if (pageLimit != nil && page >= pageLimit!) {
@@ -476,6 +481,7 @@ private extension APIClient {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("Device \(apiToken)", forHTTPHeaderField: "Authorization")
         urlRequest.httpBody = nil
+        urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         return urlRequest
     }
 
@@ -494,6 +500,8 @@ private extension APIClient {
 
         guard [200, 201, 400].contains(httpURLResponse.statusCode) else {
             switch httpURLResponse.statusCode {
+            case 304:
+                return APIError.unchanged
             case 401:
                 return APIError.unauthorized
             case 403:

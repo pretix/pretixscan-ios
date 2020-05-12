@@ -30,4 +30,9 @@ public struct PagedList<T: Codable>: Codable {
     ///
     /// Should be equal to the `X-Page-Generated` header. Hang on to this value to use it for incremental syncing.
     public var generatedAt: String?
+
+    /// An optional string representing the time when this page was last modified.
+    ///
+    /// Should be equal to the `Last-Modified` header. Hang on to this value to use it for incremental syncing.
+    public var lastModified: String?
 }

@@ -133,7 +133,12 @@ class FullDownloader<T: Model>: APIClientOperation {
                     self.completeOperation()
                 }
             case .failure(let error):
-                self.error = error
+                switch (error as? APIError) {
+                case .unchanged:
+                    break
+                default:
+                    self.error = error
+                }
                 self.completeOperation()
             }
 
@@ -202,11 +207,71 @@ class PartialDownloader<T: Model>: APIClientOperation {
     }
 }
 
-class ItemCategoriesDownloader: FullDownloader<ItemCategory> {
+class ConditionalDownloader<T: Model>: APIClientOperation {
+    private var lastModified: String?
+    
+    override func start() {
+        if isCancelled {
+            completeOperation()
+            return
+        }
+
+        isExecuting = true
+
+        var filters = [String: String]()
+
+        if disableTestMode {
+            filters["testmode"] = "false"
+        }
+        
+        let ifModifiedSince = dataStore.lastSyncTime(of: T.self, in: event)
+
+        urlSessionTask = apiClient.getTask(T.self, page: 1, lastUpdated: nil, event: event, filters: filters, ifModifiedSince: ifModifiedSince) { result in
+            switch result {
+            case .success(let pagedList):
+                let isLastPage = pagedList.next == nil
+                let isFirstPage = pagedList.previous == nil
+
+                // Notify Listeners
+                NotificationCenter.default.post(name: SyncManager.syncStatusUpdateNotification, object: self, userInfo: [
+                    SyncManager.NotificationKeys.model: T.self.humanReadableName,
+                    SyncManager.NotificationKeys.loadedAmount: pagedList.results.count,
+                    SyncManager.NotificationKeys.totalAmount: pagedList.count,
+                    SyncManager.NotificationKeys.isLastPage: isLastPage])
+
+                // Handle Data
+                self.handle(data: pagedList.results)
+
+                if isFirstPage, let lastModified = pagedList.lastModified {
+                    self.lastModified = lastModified
+                }
+
+                if isLastPage {
+                    if self.lastModified != nil {
+                        self.dataStore.setLastSyncModifiedTime(self.lastModified!, of: T.self, in: self.event)
+                    }
+                    self.completeOperation()
+                }
+            case .failure(let error):
+                self.error = error
+                self.completeOperation()
+            }
+
+        }
+        urlSessionTask?.resume()
+    }
+
+    /// Deal with the generated data. You can override this in subclasses.
+    func handle(data: [T]) {
+        self.dataStore.store(data, for: self.event)
+    }
+}
+
+class ItemCategoriesDownloader: ConditionalDownloader<ItemCategory> {
     let model = ItemCategory.self
 }
 
-class ItemsDownloader: FullDownloader<Item> {
+class ItemsDownloader: ConditionalDownloader<Item> {
     let model = Item.self
 }
 
@@ -218,7 +283,7 @@ class PartialOrderDownloader: PartialDownloader<Order> {
     let model = Order.self
 }
 
-class SubEventsDownloader: FullDownloader<SubEvent> {
+class SubEventsDownloader: ConditionalDownloader<SubEvent> {
     let model = SubEvent.self
 }
 
@@ -234,7 +299,7 @@ class EventsDownloader: FullDownloader<Event> {
     }
 }
 
-class CheckInListsDownloader: FullDownloader<CheckInList> {
+class CheckInListsDownloader: ConditionalDownloader<CheckInList> {
     let model = CheckInList.self
     var configStore: ConfigStore?
 
@@ -246,7 +311,7 @@ class CheckInListsDownloader: FullDownloader<CheckInList> {
     }
 }
 
-class QuestionsDownloader: FullDownloader<Question> {
+class QuestionsDownloader: ConditionalDownloader<Question> {
     let model = Question.self
 }
 
