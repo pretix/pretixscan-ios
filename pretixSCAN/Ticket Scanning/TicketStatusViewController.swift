@@ -170,10 +170,11 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func updateToRedeemed(needsAttention: Bool) {
-        iconLabel.text = Icon.okay
         if (configStore?.scanMode == "exit") {
+            iconLabel.text = Icon.exit
             ticketStatusLabel.text = Localization.TicketStatusViewController.ValidExit
         } else {
+            iconLabel.text = Icon.okay
             ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
         }
         appCoordinator?.performHapticNotification(ofType: .success)
