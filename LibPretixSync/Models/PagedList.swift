@@ -18,7 +18,7 @@ public struct PagedList<T: Codable>: Codable {
     public let count: Int
 
     /// The URL of the next page in the list, if this is not the last page
-    public let next: URL?
+    public var next: URL?
 
     /// The URL of the previous page in the list, if this is not the first page
     public let previous: URL?

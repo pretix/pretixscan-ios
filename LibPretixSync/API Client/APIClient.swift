@@ -109,7 +109,7 @@ public extension APIClient {
     ///
     /// @see `get`
     func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, event: Event? = nil, filters: [String: String] = [:],
-                           completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
+                           completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void, pageLimit: Int? = nil) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
             let url: URL
@@ -141,12 +141,18 @@ public extension APIClient {
                 do {
                     var pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
                     pagedList.generatedAt = (response as? HTTPURLResponse)?.allHeaderFields["X-Page-Generated"] as? String
-                    completionHandler(.success(pagedList))
 
                     // Check if there are more pages to load
+                    if (pageLimit != nil && page >= pageLimit!) {
+                        pagedList.next = nil
+                    }
+                    
+                    completionHandler(.success(pagedList))
+                    
                     if pagedList.next != nil {
                         self.getTask(model, page: page+1, lastUpdated: lastUpdated, event: event,
-                                     filters: filters, completionHandler: completionHandler)?.resume()
+                                     filters: filters, completionHandler: completionHandler,
+                                     pageLimit: pageLimit)?.resume()
                     }
                 } catch {
                     return completionHandler(.failure(error))
@@ -201,7 +207,7 @@ public extension APIClient {
         
         let eightHoursAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
         let endsAfter = Formatter.iso8601.string(from: eightHoursAgo)
-        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter, "ordering": "date_from"]) { result in
+        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter, "ordering": "date_from"], pageLimit: 5) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
@@ -235,7 +241,7 @@ public extension APIClient {
         let dayAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
         let endsAfter = Formatter.iso8601.string(from: dayAgo)
 
-        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter, "ordering": "date_from"]) { result in
+        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter, "ordering": "date_from"], pageLimit: 5) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
