@@ -17,4 +17,5 @@ struct Icon {
     static let attention = ""
     static let enabled = ""
     static let disabled = ""
+    static let exit = ""
 }

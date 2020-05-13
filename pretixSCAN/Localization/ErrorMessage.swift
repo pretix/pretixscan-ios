@@ -34,6 +34,8 @@ extension Error {
                 return Localization.Errors.CouldNotCreateURL
             case .couldNotCreateNonce:
                 return Localization.Errors.CouldNotCreateNonce
+            case .unchanged:
+                return "unchanged"
             }
         } else {
             return self.localizedDescription

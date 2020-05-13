@@ -19,7 +19,7 @@ class ValidateTicketViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = Bundle.main.infoDictionary!["CFBundleName"] as? String
+        self.title = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String
 
         // ConfigStore
         setupConfigStore()
@@ -145,6 +145,11 @@ extension ValidateTicketViewController {
             if let eventName = self.configStore.event?.name.representation(in: Locale.current),
                 let checkInListName = self.configStore.checkInList?.name {
                 self.eventButton.title = "\(eventName): \(checkInListName)"
+            }
+            if self.configStore.scanMode == "exit" {
+                self.title = (Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String ?? "") + " (" + Localization.SettingsTableViewController.Exit + ")"
+            } else {
+                self.title = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String
             }
         }
     }

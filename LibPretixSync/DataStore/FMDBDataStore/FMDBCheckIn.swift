@@ -21,7 +21,7 @@ extension CheckIn: FMDBModel {
     """
 
     static var insertQuery = """
-    REPLACE INTO "\(stringName)"("list","order_position","date") VALUES (?,?,?);
+    REPLACE INTO "\(stringName)"("list","order_position","date","type") VALUES (?,?,?,?);
     """
 
     static let retrieveByOrderPositionQuery = """
@@ -54,7 +54,7 @@ extension CheckIn: FMDBModel {
             return nil
         }
         let list = Identifier(result.int(forColumn: "list"))
-        return CheckIn(listID: list, date: date)
+        return CheckIn(listID: list, date: date, type: result.string(forColumn: "type") ?? "")
     }
 
     static func deleteCheckIns(for orderPosition: OrderPosition, in queue: FMDatabaseQueue) {
@@ -80,7 +80,7 @@ extension CheckIn: FMDBModel {
 
                 do {
                     try database.executeUpdate(CheckIn.insertQuery, values: [
-                        list, order_position, date as Any])
+                        list, order_position, date as Any, record.type])
                 } catch {
                     EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }

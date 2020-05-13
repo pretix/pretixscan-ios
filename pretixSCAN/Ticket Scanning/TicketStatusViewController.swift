@@ -153,7 +153,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 secret: configuration.secret,
                 force: configuration.force,
                 ignoreUnpaid: configuration.ignoreUnpaid,
-                answers: configuration.answers
+                answers: configuration.answers,
+                as: self.configStore?.scanMode ?? "entry"
             ) { (redemptionResponse, error) in
                 self.error = error
                 self.redemptionResponse = redemptionResponse
@@ -169,13 +170,22 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
 
     private func updateToRedeemed(needsAttention: Bool) {
-        iconLabel.text = Icon.okay
-        ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+        if (configStore?.scanMode == "exit") {
+            iconLabel.text = Icon.exit
+            ticketStatusLabel.text = Localization.TicketStatusViewController.ValidExit
+        } else {
+            iconLabel.text = Icon.okay
+            ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+        }
         appCoordinator?.performHapticNotification(ofType: .success)
 
         if needsAttention {
             blinkerView.isHidden = false
-            ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+            if (configStore?.scanMode == "exit") {
+                ticketStatusLabel.text = Localization.TicketStatusViewController.ValidExit
+            } else {
+                ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+            }
             iconLabel.text = Icon.attention
             appCoordinator?.performHapticNotification(ofType: .warning)
         }

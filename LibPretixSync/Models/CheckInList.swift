@@ -46,6 +46,10 @@ public struct CheckInList: Model {
 
     /// If `true`, the check-in list also contains tickets from orders in pending state.
     public let includePending: Bool
+    
+    public let allowEntryAfterExit: Bool
+    
+    public let allowMultipleEntries: Bool
 
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
@@ -56,6 +60,8 @@ public struct CheckInList: Model {
         case positionCount = "position_count"
         case checkinCount = "checkin_count"
         case includePending = "include_pending"
+        case allowEntryAfterExit = "allow_entry_after_exit"
+        case allowMultipleEntries = "allow_multiple_entries"
     }
 }
 

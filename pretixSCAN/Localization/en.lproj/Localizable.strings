@@ -20,6 +20,9 @@
 /* No comment provided by engineer. */
 "Automatic Syncing is now enabled" = "Automatic Syncing is now enabled";
 
+/* Question Type Label */
+"BoolQuestionCell" = "Yes or No";
+
 /* No comment provided by engineer. */
 "Cancel" = "Cancel";
 
@@ -50,6 +53,15 @@
 /* No comment provided by engineer. */
 "Could not create URL" = "Could not create URL";
 
+/* Question Type Label */
+"CountryCodeQuestionCell" = "Enter a Country";
+
+/* Question Type Label */
+"DateQuestionCell" = "Enter a Date";
+
+/* Question Type Label */
+"DateTimeQuestionCell" = "Enter a Date and A Time";
+
 /* No comment provided by engineer. */
 "Delete Everything" = "Delete Everything";
 
@@ -64,6 +76,9 @@
 
 /* Order Expired */
 "Expired" = "Expired";
+
+/* Question Type Label */
+"FileUploadQuestionCell" = "Upload a File";
 
 /* No comment provided by engineer. */
 "Force Complete Resync" = "Force Complete Resync";
@@ -119,17 +134,29 @@
 /* No comment provided by engineer. */
 "MIT License" = "MIT License";
 
+/* Question Type Label */
+"MultiLineStringQuestionCell" = "Enter Text";
+
+/* Question Type Label */
+"MultipleChoiceQuestionCell" = "Pick All That Apply";
+
 /* e.g. do not check in unpaid ticket */
 "No" = "No";
 
 /* No comment provided by engineer. */
 "No Event" = "No Event";
 
+/* Question Type Label */
+"NumberQuestionCell" = "Enter A Number";
+
 /* No comment provided by engineer. */
 "Offline" = "Offline";
 
 /* No comment provided by engineer. */
 "OK" = "OK";
+
+/* Question Type Label */
+"OneLineStringQuestionCell" = "Enter Text";
 
 /* No comment provided by engineer. */
 "Online" = "Online";
@@ -169,6 +196,9 @@
 
 /* No comment provided by engineer. */
 "Setup Complete" = "Setup Complete";
+
+/* Question Type Label */
+"SingleChoiceQuestionCell" = "Pick One";
 
 /* No comment provided by engineer. */
 "Start Scanning" = "Start Scanning";
@@ -227,6 +257,9 @@
 /* No comment provided by engineer. */
 "Ticket Already Used" = "Ticket Already Used";
 
+/* Question Type Label */
+"TimeQuestionCell" = "Enter a time";
+
 /* No comment provided by engineer. */
 "To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan." = "To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan.";
 
@@ -260,35 +293,29 @@
 /* No comment provided by engineer. */
 "You can now start scanning" = "You can now start scanning";
 
-/* Question Type Label */
-"BoolQuestionCell" = "Yes or No";
+/* No comment provided by engineer. */
+"Entry" = "Entry";
 
-/* Question Type Label */
-"NumberQuestionCell" = "Enter A Number";
+/* No comment provided by engineer. */
+"Exit" = "Exit";
 
-/* Question Type Label */
-"MultiLineStringQuestionCell" = "Enter Text";
+/* No comment provided by engineer. */
+"Exit stored" = "Exit stored";
 
-/* Question Type Label */
-"SingleChoiceQuestionCell" = "Pick One";
+/* Not allowed (custom rule) */
+"Not allowed" = "Not allowed";
 
-/* Question Type Label */
-"MultipleChoiceQuestionCell" = "Pick All That Apply";
+/* Title for the List of Questions */
+"Questions" = "Questions";
 
-/* Question Type Label */
-"TimeQuestionCell" = "Enter a time";
+/* No comment provided by engineer. */
+"Scan mode" = "Scan mode";
 
-/* Question Type Label */
-"FileUploadQuestionCell" = "Upload a File";
+/* Answer to a Boolean Check In Question */
+"Yes" = "Yes";
 
-/* Question Type Label */
-"DateQuestionCell" = "Enter a Date";
+/* Note for a required boolean question */
+"You have to answer YES to check in" = "You have to answer YES to check in";
 
-/* Question Type Label */
-"DateTimeQuestionCell" = "Enter a Date and A Time";
-
-/* Question Type Label */
-"CountryCodeQuestionCell" = "Enter a Country";
-
-/* Question Type Label */
-"OneLineStringQuestionCell" = "Enter Text";
+/* No comment provided by engineer. */
+"You need to upload a file here. Please do so from your computer" = "You need to upload a file here. Please do so from your computer";

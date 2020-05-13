@@ -56,6 +56,7 @@ public class InMemoryConfigStore: ConfigStore {
     // MARK: - Device
     public var deviceName: String? { didSet { valueChanged() } }
     public var organizerSlug: String? { didSet { valueChanged(.organizerSlug) } }
+    public var scanMode: String = "entry" { didSet { valueChanged(.scanMode) } }
     public var deviceID: Int? { didSet { valueChanged() } }
     public var deviceUniqueSerial: String? { didSet { valueChanged() } }
 

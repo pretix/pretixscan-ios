@@ -29,8 +29,8 @@ extension QueuedRedemptionRequest: FMDBModel {
     static var insertQuery = """
     REPLACE INTO "\(stringName)"
     ("event", "check_in_list", "secret", "questions_supported",
-    "datetime", "force", "ignore_unpaid", "nonce", "json")
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+    "datetime", "force", "ignore_unpaid", "nonce", "json", "type")
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
 
     static var numberOfRequestsQuery = """
@@ -38,7 +38,7 @@ extension QueuedRedemptionRequest: FMDBModel {
     """
 
     static var retrieveOneRequestQuery = """
-    SELECT * FROM "\(stringName)" ORDER BY RANDOM() LIMIT 1;
+    SELECT * FROM "\(stringName)" ORDER BY datetime ASC LIMIT 1;
     """
 
     static var deleteOneRequestQuery = """
@@ -63,11 +63,12 @@ extension QueuedRedemptionRequest: FMDBModel {
                 let ignore_unpaid = record.redemptionRequest.ignoreUnpaid.toInt()
                 let nonce = record.redemptionRequest.nonce
                 let json = record.toJSONString() ?? ""
+                let type = record.redemptionRequest.type
 
                 do {
                     try database.executeUpdate(QueuedRedemptionRequest.insertQuery, values: [
                         event_id, check_in_list_id, secret, questions_supported, datetime as Any, force,
-                        ignore_unpaid, nonce, json])
+                        ignore_unpaid, nonce, json, type])
                 } catch {
                     EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
                 }

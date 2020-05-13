@@ -71,6 +71,7 @@ public protocol DataStore: class {
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                as type: String,
                 in checkInList: CheckInList) -> RedemptionResponse?
 
     /// Return the number of QueuedRedemptionReqeusts in the DataStore

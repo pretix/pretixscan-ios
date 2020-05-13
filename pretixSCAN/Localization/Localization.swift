@@ -18,6 +18,7 @@ struct Localization {
 
     struct TicketStatusViewController {
         static let ValidTicket = NSLocalizedString("Valid Ticket", comment: "")
+        static let ValidExit = NSLocalizedString("Exit stored", comment: "")
         static let TicketAlreadyRedeemed = NSLocalizedString("Ticket Already Used", comment: "")
         static let InvalidTicket = NSLocalizedString("Invalid Ticket", comment: "")
         static let Error = NSLocalizedString("Error", comment: "")
@@ -96,6 +97,9 @@ struct Localization {
         static let ConfigurationSectionTitle = NSLocalizedString("Configuration", comment: "")
         static let LicensesSectionTitle = NSLocalizedString("Libraries and Licenses", comment: "")
         static let ShouldAutoSync = NSLocalizedString("Sync every few minutes", comment: "")
+        static let ScanMode = NSLocalizedString("Scan mode", comment: "")
+        static let Exit = NSLocalizedString("Exit", comment: "")
+        static let Entry = NSLocalizedString("Entry", comment: "")
         static let BeginSyncing = NSLocalizedString("Sync Now", comment: "")
         static let ForceSync = NSLocalizedString("Force Complete Resync", comment: "")
         static let Version = NSLocalizedString("App Version", comment: "")

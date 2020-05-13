@@ -205,7 +205,7 @@ extension FMDBDataStore {
 
             // Filter positions without the correct sub event
             .filter { orderPosition in
-                return orderPosition.subEvent == checkInList.subEvent
+                return checkInList.subEvent == nil || orderPosition.subEvent == checkInList.subEvent
             }
 
             completionHandler(filteredOrderPositions, nil)
@@ -315,6 +315,7 @@ extension FMDBDataStore {
     ///
     /// Will return `nil` if no orderposition with the specified secret is found
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                       as type: String,
                        in checkInList: CheckInList)
         -> RedemptionResponse? {
             let queue = databaseQueue(with: event)
@@ -333,7 +334,7 @@ extension FMDBDataStore {
 
             guard let redemptionResponse = orderPosition.createRedemptionResponse(
                 force: force, ignoreUnpaid: ignoreUnpaid,
-                in: event, in: checkInList, with: questions) else { return nil }
+                in: event, in: checkInList, as: type, with: questions) else { return nil }
 
             guard redemptionResponse.status == .redeemed else { return redemptionResponse }
 
@@ -341,8 +342,8 @@ extension FMDBDataStore {
             let checkInDate = Date()
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: true,
-                date: checkInDate, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce(), answers: answers)
+                date: checkInDate, force: true, ignoreUnpaid: ignoreUnpaid,
+                nonce: NonceGenerator.nonce(), answers: answers, type: type)
             let queuedRedemptionRequest = QueuedRedemptionRequest(
                 redemptionRequest: redemptionRequest,
                 eventSlug: event.slug,
@@ -353,7 +354,7 @@ extension FMDBDataStore {
 
             // Save a check in to check the attendee in
             // This checkin will later be overwritten (or duplicated) by one synced down from the server
-            let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate)
+            let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate, type: type)
             CheckIn.store([checkIn], for: orderPosition, in: queue)
 
             // return the redeemed request
@@ -415,14 +416,8 @@ private extension FMDBDataStore {
             .appendingPathComponent("uploads.sqlite")
         print("Opening Database \(fileURL.path)")
         let queue = FMDatabaseQueue(url: fileURL)
-
-        queue?.inDatabase { database in
-            do {
-                try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
-            } catch {
-                EventLogger.log(event: "DB Init Failed \(error.localizedDescription)", category: .database, level: .fatal, type: .error)
-            }
-        }
+        
+        migrateUploads(queue: queue!)
 
         return queue!
     }

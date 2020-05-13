@@ -175,3 +175,9 @@
 
 /* Class = "UILabel"; text = "About Section"; ObjectID = "zd4-5z-BJD"; */
 "zd4-5z-BJD.text" = "About Section";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "SrL-zU-nMc"; */
+"SrL-zU-nMc.text" = "";
+
+/* Class = "UILabel"; text = "Scan Mode Cell"; ObjectID = "vTt-yW-6gY"; */
+"vTt-yW-6gY.text" = "";

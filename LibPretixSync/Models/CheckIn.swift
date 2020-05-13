@@ -18,9 +18,12 @@ public struct CheckIn: Model {
 
     /// Time of check-in
     public let date: Date
+    
+    public let type: String
 
     private enum CodingKeys: String, CodingKey {
         case listID = "list"
         case date = "datetime"
+        case type = "type"
     }
 }

@@ -93,6 +93,16 @@ public extension APIClient {
     }
 }
 
+extension HTTPURLResponse {
+    func find(header: String) -> String? {
+        let keyValues = allHeaderFields.map { (String(describing: $0.key).lowercased(), String(describing: $0.value)) }
+        if let headerValue = keyValues.filter({ $0.0 == header.lowercased() }).first {
+            return headerValue.1
+        }
+        return nil
+    }
+}
+
 // MARK: - Retrieving Items
 public extension APIClient {
 
@@ -108,8 +118,8 @@ public extension APIClient {
     /// Returns a task that retrieves the specified model from the server and calls the completion handler for each page, once run.
     ///
     /// @see `get`
-    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, event: Event? = nil, filters: [String: String] = [:],
-                           completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void) -> URLSessionDataTask? {
+    func getTask<T: Model>(_ model: T.Type, page: Int = 1, lastUpdated: String?, event: Event? = nil, filters: [String: String] = [:], ifModifiedSince: String? = nil,
+                           completionHandler: @escaping (Result<PagedList<T>, Error>) -> Void, pageLimit: Int? = nil) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
             let url: URL
@@ -125,7 +135,11 @@ public extension APIClient {
                 throw APIError.couldNotCreateURL
             }
 
-            let urlRequest = try createURLRequest(for: urlComponentsURL)
+            var urlRequest = try createURLRequest(for: urlComponentsURL)
+            
+            if (ifModifiedSince != nil) {
+                urlRequest.addValue(ifModifiedSince!, forHTTPHeaderField: "If-Modified-Since")
+            }
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
@@ -140,13 +154,20 @@ public extension APIClient {
 
                 do {
                     var pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
-                    pagedList.generatedAt = (response as? HTTPURLResponse)?.allHeaderFields["X-Page-Generated"] as? String
-                    completionHandler(.success(pagedList))
+                    pagedList.generatedAt = (response as? HTTPURLResponse)?.find(header: "X-Page-Generated")
+                    pagedList.lastModified = (response as? HTTPURLResponse)?.find(header: "Last-Modified")
 
                     // Check if there are more pages to load
+                    if (pageLimit != nil && page >= pageLimit!) {
+                        pagedList.next = nil
+                    }
+                    
+                    completionHandler(.success(pagedList))
+                    
                     if pagedList.next != nil {
                         self.getTask(model, page: page+1, lastUpdated: lastUpdated, event: event,
-                                     filters: filters, completionHandler: completionHandler)?.resume()
+                                     filters: filters, completionHandler: completionHandler,
+                                     pageLimit: pageLimit)?.resume()
                     }
                 } catch {
                     return completionHandler(.failure(error))
@@ -201,7 +222,7 @@ public extension APIClient {
         
         let eightHoursAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
         let endsAfter = Formatter.iso8601.string(from: eightHoursAgo)
-        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter, "ordering": "date_from"]) { result in
+        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter, "ordering": "date_from"], pageLimit: 5) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
@@ -232,10 +253,10 @@ public extension APIClient {
     func getSubEvents(event: Event, completionHandler: @escaping ([SubEvent]?, Error?) -> Void) {
         var results = [SubEvent]()
 
-        let eightHoursAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
-        let endsAfter = Formatter.iso8601.string(from: eightHoursAgo)
+        let dayAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
+        let endsAfter = Formatter.iso8601.string(from: dayAgo)
 
-        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter, "ordering": "date_from"]) { result in
+        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter, "ordering": "date_from"], pageLimit: 5) { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
@@ -327,9 +348,10 @@ public extension APIClient {
     /// Check in an attendee, identified by their secret code, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
+                                 as: type,
                                  completionHandler: completionHandler) {
             task.resume()
         }
@@ -337,13 +359,13 @@ public extension APIClient {
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil, eventSlug: String? = nil,
-                    checkInListIdentifier: Identifier? = nil, answers: [Answer]? = nil,
+                    checkInListIdentifier: Identifier? = nil, answers: [Answer]? = nil, as type: String,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
 
             let redemptionRequest = RedemptionRequest(
                 questionsSupported: true,
                 date: date, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce(), answers: answers)
+                nonce: NonceGenerator.nonce(), answers: answers, type: type)
 
         return redeemTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug,
                           checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
@@ -469,6 +491,7 @@ private extension APIClient {
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("Device \(apiToken)", forHTTPHeaderField: "Authorization")
         urlRequest.httpBody = nil
+        urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         return urlRequest
     }
 
@@ -487,6 +510,8 @@ private extension APIClient {
 
         guard [200, 201, 400].contains(httpURLResponse.statusCode) else {
             switch httpURLResponse.statusCode {
+            case 304:
+                return APIError.unchanged
             case 401:
                 return APIError.unauthorized
             case 403:

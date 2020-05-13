@@ -13,6 +13,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var shouldAutoSyncCell: UITableViewCell!
+    @IBOutlet weak var scanModeCell: UITableViewCell!
     @IBOutlet weak var beginSyncingCell: UITableViewCell!
     @IBOutlet weak var forceSyncCell: UITableViewCell!
     @IBOutlet weak var resetContentCell: UITableViewCell!
@@ -28,6 +29,9 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        scanModeCell.textLabel?.text = Localization.SettingsTableViewController.ScanMode
+        scanModeCell.detailTextLabel?.text = configStore?.scanMode == "exit" ? Localization.SettingsTableViewController.Exit : Localization.SettingsTableViewController.Entry
 
         shouldAutoSyncCell.textLabel?.text = Localization.SettingsTableViewController.ShouldAutoSync
         shouldAutoSyncCell.detailTextLabel?.text = configStore?.shouldAutoSync == true ? Icon.enabled : Icon.disabled
@@ -59,6 +63,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
         if indexPath == tableView.indexPath(for: shouldAutoSyncCell) {
             toggleShouldAutoSync()
+        } else if indexPath == tableView.indexPath(for: scanModeCell) {
+            toggleScanMode()
         } else if indexPath == tableView.indexPath(for: forceSyncCell) {
             forceSync()
         } else if indexPath == tableView.indexPath(for: beginSyncingCell) {
@@ -86,8 +92,20 @@ class SettingsTableViewController: UITableViewController, Configurable {
         ]
         return sectionTitles[section]
     }
-
+    
     // MARK: - Actions
+    func toggleScanMode() {
+        guard var configStore = configStore else { return }
+        let previousValue = configStore.scanMode
+        if (previousValue == "exit") {
+            configStore.scanMode = "entry"
+        } else {
+            configStore.scanMode = "exit"
+        }
+
+        scanModeCell.detailTextLabel?.text = configStore.scanMode == "exit" ? Localization.SettingsTableViewController.Exit : Localization.SettingsTableViewController.Entry
+    }
+
     func toggleShouldAutoSync() {
         guard var configStore = configStore else { return }
         let previousValue = configStore.shouldAutoSync
