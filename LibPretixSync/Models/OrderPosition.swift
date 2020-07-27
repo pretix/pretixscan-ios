@@ -19,6 +19,9 @@ public struct OrderPosition: Model {
     /// Order code of the order the position belongs to
     public let orderCode: String
 
+    /// Status of the order (only set for live search in online mode)
+    public let orderStatus: Order.Status?
+
     /// The `Order` this position belongs to.
     ///
     /// (May be nil if not pre-fetched by the database. Fall back on `orderCode` in that case)
@@ -84,6 +87,7 @@ public struct OrderPosition: Model {
         case secret
         case subEvent = "subevent"
         case pseudonymizationId = "pseudonymization_id"
+        case orderStatus = "order__status"
         case checkins
         case answers
     }
@@ -91,7 +95,7 @@ public struct OrderPosition: Model {
     public func adding(order: Order) -> OrderPosition {
         return OrderPosition(
             identifier: self.identifier,
-            orderCode: self.orderCode, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
+            orderCode: self.orderCode,  orderStatus: order.status, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
             item: self.item, variation: self.variation, price: self.price, attendeeName: self.attendeeName,
             attendeeEmail: self.attendeeEmail, secret: self.secret, subEvent: self.subEvent,
             pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers)
@@ -115,21 +119,20 @@ public struct OrderPosition: Model {
                                           answers: nil)
             }
         }
-
-        // Make sure order is set
-        guard self.order != nil else {
-            print("OrderPosition.order set to nil. Aborting.")
-            return RedemptionResponse(status: .error, errorReason: nil, position: self, lastCheckIn: nil, questions: nil, answers: nil)
+        
+        var status = self.orderStatus
+        if self.order != nil {
+            status = self.order!.status
         }
 
         // Check for order status
-        if ![.paid, .pending].contains(self.order!.status) {
+        if ![.paid, .pending].contains(status) {
             return RedemptionResponse(status: .error, errorReason: .canceled, position: self, lastCheckIn: nil, questions: nil,
                                       answers: nil)
         }
 
         let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
-        if self.order!.status == .pending, !shouldIgnoreUnpaid {
+        if status == .pending, !shouldIgnoreUnpaid {
             return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
         }
 
