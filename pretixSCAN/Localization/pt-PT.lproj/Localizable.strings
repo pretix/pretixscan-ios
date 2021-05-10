@@ -1,0 +1,56 @@
+"Exit" = "Saída";
+/* Title for the List of Questions */
+"Questions" = "Questões";
+/* Answer to a Boolean Check In Question */
+"Yes" = "Sim";
+"Welcome" = "Bem-vindo";
+"Valid Ticket" = "Bilhete Válido";
+"Valid" = "Válido";
+"Token" = "Token";
+"System URL" = "URL do sistema";
+"Sync Now" = "Sincronizar Agora";
+"Statistics" = "Estatísticas";
+/* Question Type Label */
+"SingleChoiceQuestionCell" = "Escolha Um";
+"Settings" = "Definições";
+"Select Event" = "Selecionar Evento";
+"Search" = "Procurar";
+/* Ticket is Unpaid */
+"Product" = "Produto";
+"pretixSCAN" = "pretixSCAN";
+/* Order Pending */
+"Pending" = "Pendente";
+/* Order Paid */
+"Paid" = "Pago";
+"Online" = "Online";
+/* Question Type Label */
+"OneLineStringQuestionCell" = "Inserir Texto";
+"OK" = "OK";
+"Offline" = "Offline";
+/* Question Type Label */
+"NumberQuestionCell" = "Insira um número";
+"No Event" = "Nenhum Evento";
+/* e.g. do not check in unpaid ticket */
+"No" = "Não";
+/* Question Type Label */
+"MultiLineStringQuestionCell" = "Inserir Text";
+"MIT License" = "Licença MIT";
+"Invalid Ticket" = "Bilhete Inválido";
+"Incomplete Information" = "Informação Incompleta";
+/* Question Type Label */
+"FileUploadQuestionCell" = "Enviar Ficheiro";
+/* Order Expired */
+"Expired" = "Expirado";
+"Error" = "Erro";
+"Do Nothing" = "Não fazer nada";
+"Delete Everything" = "Apagar Tudo";
+/* Question Type Label */
+"DateTimeQuestionCell" = "Insira uma Data e uma Hora";
+/* Question Type Label */
+"DateQuestionCell" = "Insira uma Data";
+/* Question Type Label */
+"CountryCodeQuestionCell" = "Insira um País";
+"Continue" = "Continuar";
+"Configuration" = "Configuração";
+"App Version" = "Versão da App";
+"About this App" = "Sobre esta App";
