@@ -14,7 +14,7 @@ import Foundation
 /// - Note: All `store*` methods will completely overwrite all existing data, without any merging. This is because we expect data to
 ///         always come from the server, which has the canonical truth.
 ///         For performance reasons, implementations might do a comparison first and not update unchanged items.
-public protocol DataStore: class {
+public protocol DataStore: AnyObject {
     // MARK: Metadata
     /// Delete all data regarding an event, except queued redemption requests.
     func destroyDataStore(for event: Event, recreate: Bool)

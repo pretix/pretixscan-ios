@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol QuestionCellDelegate: class {
+protocol QuestionCellDelegate: AnyObject {
     func answerUpdated(for indexPath: IndexPath?, newAnswer: Answer?)
 }
 

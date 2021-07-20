@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol QuestionsTableViewControllerDelegate: class {
+protocol QuestionsTableViewControllerDelegate: AnyObject {
     func receivedAnswers(_ answers: [Answer])
     func cancelAnsweringCheckInQuestions()
 }

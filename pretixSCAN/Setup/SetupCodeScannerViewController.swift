@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SetupScannerViewControllerDelegate: class {
+protocol SetupScannerViewControllerDelegate: AnyObject {
     func initialize(token: String, url: URL)
 }
 
