@@ -257,6 +257,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             if #available(iOS 13.0, *) {
                 attachment.image = UIImage(systemName: "wifi.slash")
                 let imageString = NSMutableAttributedString(attachment: attachment)
+                imageString.append(NSAttributedString(string: " "))
                 let textString = NSAttributedString(string: Localization.TicketStatusViewController.OfflineValidation)
                 imageString.append(textString)
                 extraInformationLabel.attributedText = imageString
