@@ -27,6 +27,7 @@ struct Localization {
         static let UnpaidContinueText = NSLocalizedString("This ticket has not been paid for, do you still want to check it in?", comment: "")
         static let UnpaidContinueButtonTitle = NSLocalizedString("Check In Unpaid", comment: "")
         static let UnpaidCancelButtonTitle = NSLocalizedString("No", comment: "e.g. do not check in unpaid ticket")
+        static let OfflineValidation = NSLocalizedString("Offline validation", comment: "")
     }
 
     struct WelcomeViewController {

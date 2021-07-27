@@ -32,6 +32,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     @IBOutlet private weak var productNameLabel: UILabel!
     @IBOutlet private weak var attendeeNameLabel: UILabel!
     @IBOutlet private weak var orderIDLabel: UILabel!
+    @IBOutlet private weak var extraInformationLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var blinkerView: BlinkerView!
 
@@ -65,6 +66,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         let newBackgroundColor = Color.error
         iconLabel.text = Icon.error
         ticketStatusLabel.text = Localization.TicketStatusViewController.Error
+        toggleExtraInformationIfAvailable()
         appCoordinator?.performHapticNotification(ofType: .error)
 
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
@@ -139,6 +141,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         productNameLabel.text = nil
         attendeeNameLabel.text = nil
         orderIDLabel.text = nil
+        extraInformationLabel.text = nil
+        extraInformationLabel.attributedText = nil
     }
 
     private func redeem() {
@@ -236,8 +240,34 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 unpaidNoticeContainerView.isHidden = false
             }
         }
-
+        
+        toggleExtraInformationIfAvailable()
+        
         return newBackgroundColor
+    }
+    
+    private func toggleExtraInformationIfAvailable() {
+        updateExtraInformation(configStore?.ticketValidator?.isOnline == false ? .offlineValidation : .none)
+    }
+    
+    private func updateExtraInformation(_ extra: TicketStatusExtraInformation) {
+        switch extra {
+        case .offlineValidation:
+            let attachment = NSTextAttachment()
+            if #available(iOS 13.0, *) {
+                attachment.image = UIImage(systemName: "wifi.slash")
+                let imageString = NSMutableAttributedString(attachment: attachment)
+                let textString = NSAttributedString(string: Localization.TicketStatusViewController.OfflineValidation)
+                imageString.append(textString)
+                extraInformationLabel.attributedText = imageString
+            } else {
+                extraInformationLabel.text = Localization.TicketStatusViewController.OfflineValidation
+            }
+            extraInformationLabel.sizeToFit()
+            
+        case .none:
+            extraInformationLabel.text = nil
+        }
     }
 
     private func createQuestionsController() -> QuestionsTableViewController {

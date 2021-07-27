@@ -10,6 +10,10 @@ import Foundation
 
 /// Uses the `DataStore` provided by `ConfigStore` to attempt all operations without a network connection present.
 public class OfflineTicketValidator: TicketValidator {
+    public var isOnline: Bool {
+        return false
+    }
+    
     private let configStore: ConfigStore
 
     /// Initialize with a configstore
