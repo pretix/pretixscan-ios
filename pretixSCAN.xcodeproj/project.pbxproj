@@ -59,7 +59,6 @@
 		DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */; };
 		DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A012256722100710EFA /* NotifcationManager.swift */; };
 		DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */; };
-		DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */; };
 		DC3CA583228DCF870003D6D3 /* FMDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3CA582228DCF870003D6D3 /* FMDBModel.swift */; };
 		DC667FFB22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC667FFA22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift */; };
 		DC667FFF22C75E26002EF1C1 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC667FFE22C75E26002EF1C1 /* Question.swift */; };
@@ -92,7 +91,6 @@
 		DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */; };
 		DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC91EB32223FAFF300704F24 /* PagedList.swift */; };
 		DCAAFF29223929B60059C000 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DCAAFF28223929B60059C000 /* README.md */; };
-		DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */; };
 		DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */; };
 		DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF35223952350059C000 /* WelcomeViewController.swift */; };
 		DCAAFF3822396EC30059C000 /* Segues.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAFF3722396EC30059C000 /* Segues.swift */; };
@@ -233,7 +231,6 @@
 		DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		DC2F4A012256722100710EFA /* NotifcationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifcationManager.swift; sourceTree = "<group>"; };
 		DC2F4A04225781CF00710EFA /* TicketStatusSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusSegue.swift; sourceTree = "<group>"; };
-		DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryDataStore.swift; sourceTree = "<group>"; };
 		DC3CA582228DCF870003D6D3 /* FMDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBModel.swift; sourceTree = "<group>"; };
 		DC667FFA22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewExplanationCell.swift; sourceTree = "<group>"; };
 		DC667FFE22C75E26002EF1C1 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
@@ -259,7 +256,6 @@
 		DC91EB30223FA36A00704F24 /* SelectEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectEventTableViewController.swift; sourceTree = "<group>"; };
 		DC91EB32223FAFF300704F24 /* PagedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedList.swift; sourceTree = "<group>"; };
 		DCAAFF28223929B60059C000 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryConfigStore.swift; sourceTree = "<group>"; };
 		DCAAFF3022394BDD0059C000 /* ValidateTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateTicketViewController.swift; sourceTree = "<group>"; };
 		DCAAFF35223952350059C000 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		DCAAFF3722396EC30059C000 /* Segues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segues.swift; sourceTree = "<group>"; };
@@ -532,7 +528,6 @@
 			children = (
 				DC8467A6225B99590013F647 /* DataStore.swift */,
 				DCC5D84B2295686000DAEFA0 /* FMDBDataStore */,
-				DC3C9D382264B48400B3AE0E /* InMemoryDataStore.swift */,
 			);
 			path = DataStore;
 			sourceTree = "<group>";
@@ -678,7 +673,6 @@
 			isa = PBXGroup;
 			children = (
 				DCEF6E35223925EF009E7078 /* ConfigStore.swift */,
-				DCAAFF2E223946180059C000 /* InMemoryConfigStore.swift */,
 				DC227F2D22550B6600314448 /* DefaultsConfigStore.swift */,
 				DCFAFD8022B54E010042F9F1 /* Keychain.swift */,
 			);
@@ -928,7 +922,6 @@
 				DC17F2402302B9C30044764A /* DateTimeQuestionCell.swift in Sources */,
 				DCC5D8512295694100DAEFA0 /* FMDBOrderPosition.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
-				DC3C9D392264B48400B3AE0E /* InMemoryDataStore.swift in Sources */,
 				08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
@@ -970,7 +963,6 @@
 				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
 				DCAF1A7122CBAD67009896F1 /* Answer.swift in Sources */,
 				DC2A606222DD07F900E7A6EA /* PaddingView.swift in Sources */,
-				DCAAFF2F223946180059C000 /* InMemoryConfigStore.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
 				DC8467A7225B99590013F647 /* DataStore.swift in Sources */,
