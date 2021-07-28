@@ -262,7 +262,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 let textString = NSAttributedString(string: Localization.TicketStatusViewController.OfflineValidation)
                 imageString.append(textString)
                 if reason != .unknown {
-                    imageString.append(NSAttributedString(string: " \(reason.rawValue)"))
+                    imageString.append(NSAttributedString(string: " (\(reason.rawValue))"))
                 }
                 extraInformationLabel.attributedText = imageString
             } else {
