@@ -50,7 +50,7 @@ class OrderPositionTests: XCTestCase {
     """.data(using: .utf8)!
 
     let exampleObject = OrderPosition(
-        identifier: 1842899, orderCode: "RDTBG", order: nil, positionid: 1, itemIdentifier: 25643, item: nil, variation: nil,
+        identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: nil, positionid: 1, itemIdentifier: 25643, item: nil, variation: nil,
         price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil, secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
         pseudonymizationId: "DAC7ULNMUB", checkins: [], answers: []
     )
@@ -59,7 +59,7 @@ class OrderPositionTests: XCTestCase {
                       dateFrom: Date(), hasSubEvents: false)
     let checkInList = CheckInList(identifier: 1, name: "TestCheckInList", allProducts: true,
                                   limitProducts: nil, subEvent: nil, positionCount: 1,
-                                  checkinCount: 0, includePending: false)
+                                  checkinCount: 0, includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false)
 
     func testParsingAll() {
         XCTAssertNoThrow(try jsonDecoder.decode(OrderPosition.self, from: exampleJSON))
@@ -69,7 +69,7 @@ class OrderPositionTests: XCTestCase {
 
     func testAddingOrder() {
         let orderPosition1 = OrderPosition(
-            identifier: 1842899, orderCode: "RDTBG", order: nil, positionid: 1, itemIdentifier: 25643,
+            identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: nil, positionid: 1, itemIdentifier: 25643,
             item: nil, variation: nil, price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil, pseudonymizationId: "DAC7ULNMUB",
             checkins: [], answers: [])
@@ -79,7 +79,7 @@ class OrderPositionTests: XCTestCase {
                           checkInAttention: nil, positions: nil, requireApproval: nil)
 
         let orderPosition2 = OrderPosition(
-            identifier: 1842899, orderCode: "RDTBG", order: order, positionid: 1, itemIdentifier: 25643,
+            identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: order, positionid: 1, itemIdentifier: 25643,
             item: nil, variation: nil, price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil, pseudonymizationId: "DAC7ULNMUB",
             checkins: [], answers: [])
@@ -92,7 +92,7 @@ class OrderPositionTests: XCTestCase {
         let checkInListWithSubEvent = CheckInList(
             identifier: 1, name: "TestCheckInList", allProducts: true,
             limitProducts: nil, subEvent: 1, positionCount: 1,
-            checkinCount: 0, includePending: false)
+            checkinCount: 0, includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false)
         let eventWithSubEvents = Event(
             name: MultiLingualString.english("Test Event"),
             slug: "testevent",
@@ -113,7 +113,7 @@ class OrderPositionTests: XCTestCase {
             subEvent: nil,
             positionCount: 1,
             checkinCount: 0,
-            includePending: false)
+            includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false)
 
         let errorResponse = RedemptionResponse(
             status: .error,
@@ -187,7 +187,7 @@ class OrderPositionTests: XCTestCase {
             subEvent: nil,
             positionCount: 1,
             checkinCount: 0,
-            includePending: true)
+            includePending: true, allowEntryAfterExit: false, allowMultipleEntries: true)
 
         let unpaidOrder = Order.stubOrder(code: "ABC", status: .pending, secret: "ABC")
         let unpaidOrderPosition = exampleObject.adding(order: unpaidOrder)
@@ -208,9 +208,9 @@ class OrderPositionTests: XCTestCase {
     func testCreateRedemptionResponseAlreadyCheckedIn() {
         let order = Order.stubOrder(code: "ABC", status: .paid, secret: "ABC")
 
-        let lastCheckIn = CheckIn(listID: 1, date: Date())
+        let lastCheckIn = CheckIn(listID: 1, date: Date(), type: "entry")
         let alreadyCheckInOrderPosition = OrderPosition(
-            identifier: 1842899, orderCode: "RDTBG", order: order, positionid: 1,
+            identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: order, positionid: 1,
             itemIdentifier: 25643, item: nil, variation: nil,
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
@@ -230,7 +230,7 @@ class OrderPositionTests: XCTestCase {
         let order = Order.stubOrder(code: "ABC", status: .paid, secret: "ABC")
 
         let orderPosition = OrderPosition(
-            identifier: 1842899, orderCode: "RDTBG", order: order, positionid: 1,
+            identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: order, positionid: 1,
             itemIdentifier: 25643, item: nil, variation: nil,
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
@@ -256,7 +256,7 @@ class OrderPositionTests: XCTestCase {
     func testCreateRedemptionResponseBoolQuestions() {
         let order = Order.stubOrder(code: "ABC", status: .paid, secret: "ABC")
         let orderPosition = OrderPosition(
-            identifier: 1842899, orderCode: "RDTBG", order: order, positionid: 1,
+            identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: order, positionid: 1,
             itemIdentifier: 25643, item: nil, variation: nil,
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
@@ -280,7 +280,7 @@ class OrderPositionTests: XCTestCase {
     func testCreateRedemptionResponseEmptyQuestions() {
         let order = Order.stubOrder(code: "ABC", status: .paid, secret: "ABC")
         var orderPosition = OrderPosition(
-            identifier: 1842899, orderCode: "RDTBG", order: order, positionid: 1,
+            identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: order, positionid: 1,
             itemIdentifier: 25643, item: nil, variation: nil,
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
