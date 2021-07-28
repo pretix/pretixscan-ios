@@ -66,7 +66,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         let newBackgroundColor = Color.error
         iconLabel.text = Icon.error
         ticketStatusLabel.text = Localization.TicketStatusViewController.Error
-        toggleExtraInformationIfAvailable()
+        toggleExtraInformationIfAvailable(.unknown)
         appCoordinator?.performHapticNotification(ofType: .error)
 
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
@@ -241,16 +241,17 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             }
         }
         
-        toggleExtraInformationIfAvailable()
+        toggleExtraInformationIfAvailable(redemptionResponse._validationReason)
         
         return newBackgroundColor
     }
     
-    private func toggleExtraInformationIfAvailable() {
-        updateExtraInformation(configStore?.ticketValidator?.isOnline == false ? .offlineValidation : .none)
+    private func toggleExtraInformationIfAvailable(_ reason: TicketValidationReason) {
+        let extraInformation: TicketStatusExtraInformation = configStore?.ticketValidator?.isOnline == false ? .offlineValidation : .none
+        updateExtraInformation(extraInformation, reason)
     }
     
-    private func updateExtraInformation(_ extra: TicketStatusExtraInformation) {
+    private func updateExtraInformation(_ extra: TicketStatusExtraInformation, _ reason: TicketValidationReason) {
         switch extra {
         case .offlineValidation:
             let attachment = NSTextAttachment()
@@ -260,6 +261,9 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 imageString.append(NSAttributedString(string: " "))
                 let textString = NSAttributedString(string: Localization.TicketStatusViewController.OfflineValidation)
                 imageString.append(textString)
+                if reason != .unknown {
+                    imageString.append(NSAttributedString(string: " \(reason.rawValue)"))
+                }
                 extraInformationLabel.attributedText = imageString
             } else {
                 extraInformationLabel.text = Localization.TicketStatusViewController.OfflineValidation

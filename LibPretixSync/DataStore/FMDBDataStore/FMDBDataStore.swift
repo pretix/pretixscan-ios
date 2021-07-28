@@ -336,7 +336,7 @@ extension FMDBDataStore {
                 force: force, ignoreUnpaid: ignoreUnpaid,
                 in: event, in: checkInList, as: type, with: questions) else { return nil }
 
-            guard redemptionResponse.status == .redeemed else { return redemptionResponse }
+            guard redemptionResponse.status == .redeemed else { return redemptionResponse.with(reason: .notRedeemed) }
 
             // Store a queued redemption request
             let checkInDate = Date()
@@ -358,7 +358,7 @@ extension FMDBDataStore {
             CheckIn.store([checkIn], for: orderPosition, in: queue)
 
             // return the redeemed request
-            return redemptionResponse
+            return redemptionResponse.with(reason: .redeemedRequest)
     }
 }
 
