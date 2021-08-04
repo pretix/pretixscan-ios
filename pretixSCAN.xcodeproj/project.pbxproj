@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0803991926B1A6A80075BB3C /* TicketValidationReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0803991826B1A6A80075BB3C /* TicketValidationReason.swift */; };
 		08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */; };
 		409D06597D8995ABD3C2606B /* Pods_pretixSCAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19C23358B478B81FC4A9090 /* Pods_pretixSCAN.framework */; };
 		48B9A461E0CB52BDDA566BD2 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */; };
@@ -173,6 +174,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0803991826B1A6A80075BB3C /* TicketValidationReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketValidationReason.swift; sourceTree = "<group>"; };
 		08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusExtraInformation.swift; sourceTree = "<group>"; };
 		0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3B006E501159B61EC31A90 /* Pods-PretixScanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.debug.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 				DC2A606122DD07F900E7A6EA /* PaddingView.swift */,
 				DC2A606322DD110D00E7A6EA /* ChoiceButton.swift */,
 				08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */,
+				0803991826B1A6A80075BB3C /* TicketValidationReason.swift */,
 			);
 			path = "Ticket Scanning";
 			sourceTree = "<group>";
