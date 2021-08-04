@@ -982,6 +982,7 @@
 				DCC5D859229569A100DAEFA0 /* FMDBSubEvent.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */,
+				0803991926B1A6A80075BB3C /* TicketValidationReason.swift in Sources */,
 				DC17F23A2302B9800044764A /* FileUploadQuestionCell.swift in Sources */,
 				DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
