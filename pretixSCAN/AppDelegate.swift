@@ -23,13 +23,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ) -> Bool {
 
         // Create a Sentry client and start crash handler
-        do {
-            Client.shared = try Client(dsn: "https://b5aaf76ba03b4e778cd8370a85557263@errors.rami.io/20")
-            try Client.shared?.startCrashHandler()
-        } catch let error {
-            print("\(error)")
-            // Wrong DSN or KSCrash not installed
-        }
+        SentrySDK.start { options in
+                options.dsn = "https://b5aaf76ba03b4e778cd8370a85557263@errors.rami.io/20"
+                options.debug = false // Enabled debug when first installing is always helpful
+            }
+//
+//        do {
+//            Client.shared = try Client(dsn: "https://b5aaf76ba03b4e778cd8370a85557263@errors.rami.io/20")
+//            try Client.shared?.startCrashHandler()
+//        } catch let error {
+//            print("\(error)")
+//            // Wrong DSN or KSCrash not installed
+//        }
 
         // Prevent display sleep for the entire app
         // We never want the app to turn itself off

@@ -148,7 +148,9 @@ public class DefaultsConfigStore: ConfigStore {
         self.event = event
         self.checkInList = checkInList
 
-        Client.shared?.tags = ["event": event.slug, "checkInList": "\(checkInList.identifier)"]
+        SentrySDK.configureScope { scope in
+            scope.setTags(["event": event.slug, "checkInList": "\(checkInList.identifier)"])
+        }
     }
 
     /// All Events that are synced into a local database

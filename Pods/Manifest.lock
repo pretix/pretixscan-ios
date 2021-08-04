@@ -2,29 +2,38 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - Sentry (4.3.1):
-    - Sentry/Core (= 4.3.1)
-  - Sentry/Core (4.3.1)
+  - Sentry (7.1.4):
+    - Sentry/Core (= 7.1.4)
+  - Sentry/Core (7.1.4)
   - SwiftMessages (6.0.2):
     - SwiftMessages/App (= 6.0.2)
   - SwiftMessages/App (6.0.2)
 
 DEPENDENCIES:
   - FMDB
-  - Sentry
+  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `7.1.4`)
   - SwiftMessages
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - FMDB
-    - Sentry
     - SwiftMessages
+
+EXTERNAL SOURCES:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 7.1.4
+
+CHECKOUT OPTIONS:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 7.1.4
 
 SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  Sentry: 5267d493a398663538317e4dcc438c12c66202ed
+  Sentry: 1d3eb1a25f8c5333c88dd5603904a6d461cd9fcf
   SwiftMessages: 8b3cc68dba2f1c91aac1a74c90b10287aac35371
 
-PODFILE CHECKSUM: 4bf915948a55f0cbc974a44eb43c3d0606c9be69
+PODFILE CHECKSUM: 7b096a4f038f6d3e2f670bf85870fb5ccabafeb0
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.10.2
