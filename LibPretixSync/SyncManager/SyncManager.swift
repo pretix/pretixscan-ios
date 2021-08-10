@@ -117,7 +117,8 @@ public class SyncManager {
             let checkInList = configStore.checkInList,
             let apiClient = configStore.apiClient,
             let dataStore = configStore.dataStore else {
-                EventLogger.log(event: "SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
+                assertionFailure("event, checkinList, dataStore and APIclient should be set")
+                EventLogger.log(event: "forseSync: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
                                 category: .configuration, level: .warning, type: .default)
                 return
         }
@@ -139,7 +140,8 @@ public class SyncManager {
             let checkInList = configStore.checkInList,
             let apiClient = configStore.apiClient,
             let dataStore = configStore.dataStore else {
-                EventLogger.log(event: "SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
+                assertionFailure("event, checkinList, dataStore and APIclient should be set")
+                EventLogger.log(event: "beginSyncing: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
                                 category: .configuration, level: .warning, type: .default)
             return
         }
