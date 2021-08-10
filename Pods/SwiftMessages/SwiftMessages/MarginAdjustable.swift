@@ -33,20 +33,10 @@ public protocol MarginAdjustable {
     /// the additional margin is not added.
     var collapseLayoutMarginAdditions: Bool { get set }
 
+
+    /// Start margins from the safe area.
+    var respectSafeArea: Bool { get set }
+
     var bounceAnimationOffset: CGFloat { get set }
-
-    /**
-     Deprecated APIs
-     */
-
-    /// Top margin adjustment for status bar avoidance in pre-iOS 11+
-    @available(iOS, deprecated, message: "Now handled by `collapseLayoutMarginAdditions`")
-    var statusBarOffset: CGFloat { get set }
-    /// Safe area top adjustment in iOS 11+
-    @available(iOS, deprecated, message: "Use the `topLayoutMarginAddition` instead.")
-    var safeAreaTopOffset: CGFloat { get set }
-    /// Safe area bottom adjustment in iOS 11+
-    @available(iOS, deprecated, message: "Use the `bottomLayoutMarginAddition` instead.")
-    var safeAreaBottomOffset: CGFloat { get set }
 }
 

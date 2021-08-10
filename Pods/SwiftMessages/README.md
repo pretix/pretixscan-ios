@@ -14,7 +14,7 @@
 
 SwiftMessages is a very flexible view and view controller presentation library for iOS.
 
-Message views and view controllers can be displayed at the top, bottom, or center of the screen, over or under the status bar, or behind navigation bars and tab bars. There are interactive dismiss gestures including a fun, physics-based one. Multiple background dimming modes. And a lot more!
+Message views and view controllers can be displayed at the top, bottom, or center of the screen, or behind navigation bars and tab bars. There are interactive dismiss gestures including a fun, physics-based one. Multiple background dimming modes. And a lot more!
 
 In addition to the numerous configuration options, SwiftMessages provides several good-looking layouts and themes. But SwiftMessages is also designer-friendly, which means you can fully and easily customize the view:
 
@@ -48,6 +48,10 @@ And check out our blog post [Elegant Custom UIViewController Transitioning](http
 
 ## Installation
 
+### Swift Package Manager
+
+Go to `File | Swift Packages | Add Package Dependency...` in Xcode and search for "SwiftMessages". If multiple results are found, select the one owned by SwiftKick Mobile.
+
 ### CocoaPods
 
 Add the following line to your Podfile:
@@ -63,6 +67,8 @@ Add the following line to your Cartfile:
 ````ruby
 github "SwiftKickMobile/SwiftMessages"
 ````
+
+If the Carthage build fails, [try using the script](https://github.com/Carthage/Carthage/issues/3019).
 
 ### Manual
 
@@ -96,7 +102,7 @@ view.configureDropShadow()
 
 // Set message title, body, and icon. Here, we're overriding the default warning
 // image with an emoji character.
-let iconText = ["🤔", "😳", "🙄", "😶"].sm_random()!
+let iconText = ["🤔", "😳", "🙄", "😶"].randomElement()!
 view.configureContent(title: "Warning", body: "Consider yourself warned.", iconText: iconText)
 
 // Increase the external margin around the card. In general, the effect of this setting
@@ -129,9 +135,12 @@ var config = SwiftMessages.Config()
 // Slide up from the bottom.
 config.presentationStyle = .bottom
 
-// Display in a window at the specified window level: UIWindow.Level.statusBar
-// displays over the status bar while UIWindow.Level.normal displays under.
+// Display in a window at the specified window level.
 config.presentationContext = .window(windowLevel: .statusBar)
+
+Note that, as of iOS 13, it is no longer possible to cover the status bar
+regardless of the window level. A workaround is to hide the status bar instead.
+config.prefersStatusBarHidden = true
 
 // Disable the default auto-hiding behavior.
 config.duration = .forever
@@ -178,6 +187,17 @@ SwiftMessages provides excellent VoiceOver support out-of-the-box.
 * If the message is shown with a dim view using `config.dimMode`, elements below the dim view are not focusable until the message is hidden. If `config.dimMode.interactive == true`, the dim view itself will be focusable and read out "dismiss" followed by "button". The former text can be customized by setting the `config.dimModeAccessibilityLabel` property.
 
 See the `AccessibleMessage` protocol for implementing proper accessibility support in custom views.
+
+### Keyboard Avoidance
+
+The `KeyboardTrackingView` class can be used to cause the message view to avoid the keyboard by sliding up when the keyboard gets too close.
+
+````swift
+var config = SwiftMessages.defaultConfig
+config.keyboardTrackingView = KeyboardTrackingView()
+````
+
+You can incorporate `KeyboardTrackingView` into your app even when you're not using SwiftMessages. Install into your view hierarchy by pinning `KeyboardTrackingView` to the bottom, leading, and trailing edges of the screen. Then pin the bottom of your content that should avoid the keyboard to the top `KeyboardTrackingView`. Use an equality constraint to strictly track the keyboard or an inequality constraint to only move when the keyboard gets too close. `KeyboardTrackingView` works by observing keyboard notifications and adjusting its height to maintain its top edge above the keyboard, thereby pushing your content up. See the comments in `KeyboardTrackingView` for configuration options.
 
 ### Message Queueing
 
