@@ -518,6 +518,11 @@ private extension APIClient {
                 return APIError.forbidden
             case 404:
                 return APIError.notFound
+            case 429:
+                guard let retryAfter = httpURLResponse.find(header: "Retry-After"), let retryAfterSelconds = Int(retryAfter) else {
+                    return APIError.unknownStatusCode(statusCode: httpURLResponse.statusCode)
+                }
+                return APIError.retryAfter(seconds: retryAfterSelconds)
             default:
                 return APIError.unknownStatusCode(statusCode: httpURLResponse.statusCode)
             }
