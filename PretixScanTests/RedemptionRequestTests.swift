@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import pretixSCAN
 
 class RedemptionRequestTests: XCTestCase {
     let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder

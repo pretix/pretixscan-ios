@@ -8,6 +8,7 @@
 // swiftlint:disable type_body_length
 
 import XCTest
+@testable import pretixSCAN
 
 class OrderPositionTests: XCTestCase {
     let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder

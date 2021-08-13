@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import pretixSCAN
 
 class CheckinListTests: XCTestCase {
     let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
