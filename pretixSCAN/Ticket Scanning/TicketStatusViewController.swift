@@ -79,6 +79,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         self.view.clipsToBounds = true
         self.activityIndicator.stopAnimating()
 
+        iconLabel.isHidden = false
         unpaidNoticeContainerView.isHidden = true
         unpaidNoticeContainerView.layer.cornerRadius = Style.cornerRadius
         unpaidNoticeLabel.text = Localization.TicketStatusViewController.UnpaidContinueText
@@ -238,6 +239,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
 
             if redemptionResponse.errorReason == .unpaid && configStore?.checkInList?.includePending == true {
                 unpaidNoticeContainerView.isHidden = false
+                iconLabel.isHidden = true
             }
         }
         
