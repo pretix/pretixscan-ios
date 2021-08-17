@@ -35,11 +35,9 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     @IBOutlet private weak var extraInformationLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var blinkerView: BlinkerView!
-
-    @IBOutlet weak var unpaidNoticeContainerView: UIView!
-    @IBOutlet weak var unpaidNoticeLabel: UILabel!
-    @IBOutlet weak var unpaidNoticeButton: UIButton!
-    @IBOutlet weak var unpaidNoticeCancelButton: UIButton!
+    
+    @IBOutlet var checkInUnpaidButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var checkInUnpaidButton: UIButton!
 
     // MARK: - Updating
     private func update() {
@@ -80,12 +78,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         self.activityIndicator.stopAnimating()
 
         iconLabel.isHidden = false
-        unpaidNoticeContainerView.isHidden = true
-        unpaidNoticeContainerView.layer.cornerRadius = Style.cornerRadius
-        unpaidNoticeLabel.text = Localization.TicketStatusViewController.UnpaidContinueText
-        unpaidNoticeButton.setTitle(Localization.TicketStatusViewController.UnpaidContinueButtonTitle, for: . normal)
-        unpaidNoticeCancelButton.setTitle(Localization.TicketStatusViewController.UnpaidCancelButtonTitle, for: . normal)
-
+        setCheckInUnpaid(visible: false)
         if configuration != nil, redemptionResponse == nil, beganRedeeming == false {
             redeem()
         }
@@ -238,8 +231,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             appCoordinator?.performHapticNotification(ofType: .error)
 
             if redemptionResponse.errorReason == .unpaid && configStore?.checkInList?.includePending == true {
-                unpaidNoticeContainerView.isHidden = false
-                iconLabel.isHidden = true
+                setCheckInUnpaid(visible: true)
             }
         }
         
@@ -284,6 +276,17 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         return questionsController
     }
 
+    /// Configures the view to show or hide the check in unpaid button
+    private func setCheckInUnpaid(visible: Bool) {
+        checkInUnpaidButton.isHidden = !visible
+        // we need to move the content of the message up to make room for the checkInUnpaidButton
+        if visible {
+            checkInUnpaidButtonBottomConstraint.constant = 120
+        } else {
+            checkInUnpaidButtonBottomConstraint.constant = 30
+        }
+    }
+    
     // MARK: - Actions
     @IBAction func redeemUnpaidTicket(_ sender: Any) {
         guard let configuration = configuration else { return }
@@ -295,6 +298,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     override func viewDidLoad() {
         super.viewDidLoad()
         preferredContentSize = CGSize(width: 0, height: UIScreen.main.bounds.height * 0.50)
+        checkInUnpaidButton.setTitle(Localization.TicketStatusViewController.UnpaidContinueButtonTitle, for: . normal)
         update()
     }
 
