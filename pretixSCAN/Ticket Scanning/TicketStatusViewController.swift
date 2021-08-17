@@ -281,9 +281,9 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         checkInUnpaidButton.isHidden = !visible
         // we need to move the content of the message up to make room for the checkInUnpaidButton
         if visible {
-            checkInUnpaidButtonBottomConstraint.constant = 120
+            checkInUnpaidButtonBottomConstraint.constant = 90
         } else {
-            checkInUnpaidButtonBottomConstraint.constant = 30
+            checkInUnpaidButtonBottomConstraint.constant = 20
         }
     }
     
