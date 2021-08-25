@@ -29,7 +29,6 @@ class OneLineStringQuestionCell: QuestionCell, UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         if let question = question, let textFieldText = textField.text {
-            print("text field updating answer to \(textFieldText)")
             delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question.identifier, answer: textFieldText,
                                                                       questionStringIdentifier: nil,
                                                                       options: [], optionStringIdentifiers: []))
