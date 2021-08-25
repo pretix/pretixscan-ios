@@ -37,9 +37,17 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
         navigationItem.leftBarButtonItem = cancelButton
 
         for cellType in [
-            NumberQuestionCell.self, OneLineStringQuestionCell.self, MultiLineStringQuestionCell.self, BoolQuestionCell.self,
-            SingleChoiceQuestionCell.self, MultipleChoiceQuestionCell.self, FileUploadQuestionCell.self, DateQuestionCell.self,
-            TimeQuestionCell.self, DateTimeQuestionCell.self, CountryCodeQuestionCell.self
+            NumberQuestionCell.self,
+            OneLineStringQuestionCell.self,
+            MultiLineStringQuestionCell.self,
+            BoolQuestionCell.self,
+            SingleChoiceQuestionCell.self,
+            MultipleChoiceQuestionCell.self,
+            FileUploadQuestionCell.self,
+            DateQuestionCell.self,
+            TimeQuestionCell.self,
+            DateTimeQuestionCell.self,
+            CountryCodeQuestionCell.self
         ] {
             tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         }
