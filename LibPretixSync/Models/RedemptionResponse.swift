@@ -34,6 +34,9 @@ public struct RedemptionResponse: Codable, Equatable {
     /// but we don't want to do that while in offline mode. So instead, we return the already provided answers in this array, so they
     /// can be pre-filled in the UI, allowing the user to only answer the missing ones. 
     public var answers: [Answer]?
+    
+    /// When a negative redemption response is created the validation reason can optionally indicate the specific codepath resulting in the error code. This is being added to aid troubleshooting https://code.rami.io/pretix/pretixscan-ios/-/issues/62 and should only be used to aid debugging.
+    public var _validationReason: TicketValidationReason = .unknown
 
     // MARK: - Enums
     /// Possible values for the Response Status

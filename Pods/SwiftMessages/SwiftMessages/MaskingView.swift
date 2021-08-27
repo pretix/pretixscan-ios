@@ -11,6 +11,15 @@ import UIKit
 
 class MaskingView: PassthroughView {
 
+    func install(keyboardTrackingView: KeyboardTrackingView) {
+        self.keyboardTrackingView = keyboardTrackingView
+        keyboardTrackingView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(keyboardTrackingView)
+        keyboardTrackingView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        keyboardTrackingView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        keyboardTrackingView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+    }
+
     var accessibleElements: [NSObject] = []
 
     weak var backgroundView: UIView? {
@@ -36,7 +45,7 @@ class MaskingView: PassthroughView {
 
     override func index(ofAccessibilityElement element: Any) -> Int {
         guard let object = element as? NSObject else { return 0 }
-        return accessibleElements.index(of: object) ?? 0
+        return accessibleElements.firstIndex(of: object) ?? 0
     }
 
     init() {
@@ -47,5 +56,15 @@ class MaskingView: PassthroughView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         clipsToBounds = true
+    }
+
+    private var keyboardTrackingView: KeyboardTrackingView?
+
+    override func addSubview(_ view: UIView) {
+        super.addSubview(view)
+        guard let keyboardTrackingView = keyboardTrackingView,
+            view != keyboardTrackingView,
+            view != backgroundView else { return }
+        keyboardTrackingView.topAnchor.constraint(greaterThanOrEqualTo: view.bottomAnchor).with(priority: UILayoutPriority(250)).isActive = true
     }
 }

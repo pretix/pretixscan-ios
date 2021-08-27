@@ -131,3 +131,6 @@
 /* Note for a required boolean question */
 "You have to answer YES to check in" = "Sie müssen JA auswählen um die Person einzuchecken";
 "You need to upload a file here. Please do so from your computer" = "Sie müssen hier eine Datei hochladen, bitte tun Sie das am Computer";
+
+/* No comment provided by engineer. */
+"Offline validation" = "Offline-Prüfung";

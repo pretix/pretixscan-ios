@@ -222,7 +222,7 @@ public extension APIClient {
         
         let eightHoursAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
         let endsAfter = Formatter.iso8601.string(from: eightHoursAgo)
-        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter, "ordering": "date_from"], pageLimit: 5) { result in
+        let task = getTask(Event.self, lastUpdated: nil, filters: ["ends_after": endsAfter, "ordering": "date_from"], completionHandler:  { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
@@ -245,7 +245,7 @@ public extension APIClient {
                     task?.resume()
                 }
             }
-        }
+        }, pageLimit: 5)
         task?.resume()
     }
 
@@ -256,7 +256,7 @@ public extension APIClient {
         let dayAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
         let endsAfter = Formatter.iso8601.string(from: dayAgo)
 
-        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter, "ordering": "date_from"], pageLimit: 5) { result in
+        let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter, "ordering": "date_from"], completionHandler:  { result in
             switch result {
             case .failure(let error):
                 completionHandler(nil, error)
@@ -267,7 +267,7 @@ public extension APIClient {
                     completionHandler(results, nil)
                 }
             }
-        }
+        }, pageLimit: 5)
         task?.resume()
     }
 }
@@ -518,6 +518,11 @@ private extension APIClient {
                 return APIError.forbidden
             case 404:
                 return APIError.notFound
+            case 429:
+                guard let retryAfter = httpURLResponse.find(header: "Retry-After"), let retryAfterSelconds = Int(retryAfter) else {
+                    return APIError.unknownStatusCode(statusCode: httpURLResponse.statusCode)
+                }
+                return APIError.retryAfter(seconds: retryAfterSelconds)
             default:
                 return APIError.unknownStatusCode(statusCode: httpURLResponse.statusCode)
             }

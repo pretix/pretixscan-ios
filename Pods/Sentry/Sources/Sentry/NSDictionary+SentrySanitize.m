@@ -1,34 +1,38 @@
-//
-//  NSDictionary+SentrySanitize.m
-//  Sentry
-//
-//  Created by Daniel Griesser on 16/06/2017.
-//  Copyright © 2017 Sentry. All rights reserved.
-//
-
-#if __has_include(<Sentry/Sentry.h>)
-
-#import <Sentry/NSDictionary+SentrySanitize.h>
-#import <Sentry/NSDate+SentryExtras.h>
-
-#else
-#import "NSDictionary+SentrySanitize.h"
+#import "NSArray+SentrySanitize.h"
 #import "NSDate+SentryExtras.h"
-#endif
+#import "NSDictionary+SentrySanitize.h"
 
 @implementation NSDictionary (SentrySanitize)
 
-- (NSDictionary *)sentry_sanitize {
+- (NSDictionary *)sentry_sanitize
+{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    for (NSString *key in self.allKeys) {
-        if ([[self objectForKey:key] isKindOfClass:NSDictionary.class]) {
-            [dict setValue:[((NSDictionary *)[self objectForKey:key]) sentry_sanitize] forKey:key];
-        } else if ([[self objectForKey:key] isKindOfClass:NSDate.class]) {
-            [dict setValue:[((NSDate *)[self objectForKey:key]) sentry_toIso8601String] forKey:key];
-        } else if ([key hasPrefix:@"__sentry"]) {
-            continue; // We don't want to add __sentry variables
+    for (id rawKey in self.allKeys) {
+        id rawValue = [self objectForKey:rawKey];
+
+        NSString *stringKey;
+        if ([rawKey isKindOfClass:NSString.class]) {
+            stringKey = rawKey;
         } else {
-            [dict setValue:[self objectForKey:key] forKey:key];
+            stringKey = [rawKey description];
+        }
+
+        if ([stringKey hasPrefix:@"__sentry"]) {
+            continue; // We don't want to add __sentry variables
+        }
+
+        if ([rawValue isKindOfClass:NSString.class]) {
+            [dict setValue:rawValue forKey:stringKey];
+        } else if ([rawValue isKindOfClass:NSNumber.class]) {
+            [dict setValue:rawValue forKey:stringKey];
+        } else if ([rawValue isKindOfClass:NSDictionary.class]) {
+            [dict setValue:[(NSDictionary *)rawValue sentry_sanitize] forKey:stringKey];
+        } else if ([rawValue isKindOfClass:NSArray.class]) {
+            [dict setValue:[(NSArray *)rawValue sentry_sanitize] forKey:stringKey];
+        } else if ([rawValue isKindOfClass:NSDate.class]) {
+            [dict setValue:[(NSDate *)rawValue sentry_toIso8601String] forKey:stringKey];
+        } else {
+            [dict setValue:[rawValue description] forKey:stringKey];
         }
     }
     return dict;

@@ -12,6 +12,10 @@ import Foundation
 ///
 /// Does not add anything to DataStore's queue, but instead returns errors if no network available
 public class OnlineTicketValidator: TicketValidator {
+    public var isOnline: Bool {
+        return true
+    }
+    
     private let configStore: ConfigStore
 
     /// Initialize with a configstore

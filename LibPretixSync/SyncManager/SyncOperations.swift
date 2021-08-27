@@ -359,6 +359,12 @@ class QueuedRedemptionRequestsUploader: APIClientOperation {
                             // This is probably a malformed request and will never go through.
                             // Continue on and let the queued request be deleted.
                             break
+                        case .retryAfter(_):
+                            // The server has responsed with HTTP 429 requesting that we retry again later.
+                            // We should delay further processing with the requested time interval.
+                            self.shouldRepeat = true
+                            self.completeOperation()
+                            return
                         default:
                             self.completeOperation()
                             return

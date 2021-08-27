@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import pretixSCAN
 
 class HandshakeParsingTests: XCTestCase {
     let validHandshake = Handshake(url: URL(string: "https://pretix.eu")!, token: "kpp4jn8g2ynzonp6")

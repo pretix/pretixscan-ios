@@ -2,29 +2,44 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - Sentry (4.3.1):
-    - Sentry/Core (= 4.3.1)
-  - Sentry/Core (4.3.1)
-  - SwiftMessages (6.0.2):
-    - SwiftMessages/App (= 6.0.2)
-  - SwiftMessages/App (6.0.2)
+  - Sentry (7.1.4):
+    - Sentry/Core (= 7.1.4)
+  - Sentry/Core (7.1.4)
+  - SwiftMessages (9.0.3):
+    - SwiftMessages/App (= 9.0.3)
+  - SwiftMessages/App (9.0.3)
 
 DEPENDENCIES:
   - FMDB
-  - Sentry
-  - SwiftMessages
+  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `7.1.4`)
+  - SwiftMessages (from `https://github.com/SwiftKickMobile/SwiftMessages.git`, commit `7ef6043a9bd7e72308a27ef40645fd6df3942ba2`, branch `work/9.0.4`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - FMDB
-    - Sentry
-    - SwiftMessages
+
+EXTERNAL SOURCES:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 7.1.4
+  SwiftMessages:
+    :branch: work/9.0.4
+    :commit: 7ef6043a9bd7e72308a27ef40645fd6df3942ba2
+    :git: https://github.com/SwiftKickMobile/SwiftMessages.git
+
+CHECKOUT OPTIONS:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 7.1.4
+  SwiftMessages:
+    :commit: 7ef6043a9bd7e72308a27ef40645fd6df3942ba2
+    :git: https://github.com/SwiftKickMobile/SwiftMessages.git
 
 SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  Sentry: 5267d493a398663538317e4dcc438c12c66202ed
-  SwiftMessages: 8b3cc68dba2f1c91aac1a74c90b10287aac35371
+  Sentry: 1d3eb1a25f8c5333c88dd5603904a6d461cd9fcf
+  SwiftMessages: 077f19126c24033fe24042237ecc20261adb46e4
 
-PODFILE CHECKSUM: 4bf915948a55f0cbc974a44eb43c3d0606c9be69
+PODFILE CHECKSUM: 607a3ae0534aa20367cbac9196adefdd09322f39
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.10.2

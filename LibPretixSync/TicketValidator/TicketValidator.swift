@@ -41,4 +41,7 @@ public protocol TicketValidator {
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                 as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void)
+    
+    /// Indicates if the ticket validator instance uses online validation or local DataStore state validation.
+    var isOnline: Bool {get}
 }

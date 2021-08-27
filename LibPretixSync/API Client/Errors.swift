@@ -18,6 +18,7 @@ enum APIError: Error {
     case unauthorized // 401
     case forbidden // 403
     case notFound // 404
+    case retryAfter(seconds: Int) // 429
     case unknownStatusCode(statusCode: Int)
     case couldNotCreateURL
     case couldNotCreateNonce

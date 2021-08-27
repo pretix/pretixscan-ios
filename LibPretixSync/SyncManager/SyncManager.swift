@@ -117,7 +117,8 @@ public class SyncManager {
             let checkInList = configStore.checkInList,
             let apiClient = configStore.apiClient,
             let dataStore = configStore.dataStore else {
-                EventLogger.log(event: "SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
+                assertionFailure("event, checkinList, dataStore and APIclient should be set")
+                EventLogger.log(event: "forseSync: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
                                 category: .configuration, level: .warning, type: .default)
                 return
         }
@@ -139,7 +140,8 @@ public class SyncManager {
             let checkInList = configStore.checkInList,
             let apiClient = configStore.apiClient,
             let dataStore = configStore.dataStore else {
-                EventLogger.log(event: "SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
+                assertionFailure("event, checkinList, dataStore and APIclient should be set")
+                EventLogger.log(event: "beginSyncing: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
                                 category: .configuration, level: .warning, type: .default)
             return
         }
@@ -198,13 +200,18 @@ public class SyncManager {
 
         queue.addOperation(cleanUpOperation)
     }
-
-    private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+    
+    private func createQueuedRedemptionRequestsUploader(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) -> QueuedRedemptionRequestsUploader {
         let uploader = QueuedRedemptionRequestsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-        uploader.completionBlock = {
+        uploader.completionBlock = {[weak self] in
+            if case .retryAfter(let seconds) = uploader.error as? APIError, uploader.shouldRepeat {
+                print("Queued Redemption Request Received Retry-After \(seconds) seconds header. Postponing upload.")
+                self?.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList, delay: TimeInterval(seconds))
+                return
+            }
             if let error = uploader.error {
                 EventLogger.log(event: "Queued Redemption Request came back with error: \(error)",
-                    category: .offlineUpload, level: .error, type: .error)
+                                category: .offlineUpload, level: .error, type: .error)
             }
             if let errorReason = uploader.errorReason {
                 // If error reason is set, we are not dealing with a system error;
@@ -212,14 +219,26 @@ public class SyncManager {
                 // Therefore, do not log the error and spam Sentry, just print it out for debug.
                 print("Queued Redemption Request came back with errorReason: \(errorReason)")
             }
-
+            
             if uploader.shouldRepeat {
-                self.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+                self?.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             } else if (uploader.error == nil) {
-                self.populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+                self?.populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             }
         }
-
+        return uploader
+    }
+    
+    private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        let uploader = createQueuedRedemptionRequestsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        queue.addOperation(uploader)
+    }
+    
+    private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList, delay: TimeInterval) {
+        let delay = DelayedBlockOperation(delay: delay)
+        let uploader = createQueuedRedemptionRequestsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        uploader.addDependency(delay)
+        queue.addOperation(delay)
         queue.addOperation(uploader)
     }
 }

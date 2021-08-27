@@ -36,6 +36,8 @@ extension Error {
                 return Localization.Errors.CouldNotCreateNonce
             case .unchanged:
                 return "unchanged"
+            case .retryAfter(let seconds):
+                return String(format: Localization.Errors.RetryAfter, seconds)
             }
         } else {
             return self.localizedDescription

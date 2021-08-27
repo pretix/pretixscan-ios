@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import pretixSCAN
 
 class CheckinListTests: XCTestCase {
     let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
@@ -47,7 +48,9 @@ class CheckinListTests: XCTestCase {
         subEvent: nil,
         positionCount: 0,
         checkinCount: 0,
-        includePending: false
+        includePending: false,
+        allowEntryAfterExit: false,
+        allowMultipleEntries: false
     )
 
     let exampleCheckInListLimitProducts = CheckInList(
@@ -58,7 +61,9 @@ class CheckinListTests: XCTestCase {
         subEvent: nil,
         positionCount: 0,
         checkinCount: 0,
-        includePending: false
+        includePending: false,
+        allowEntryAfterExit: false,
+        allowMultipleEntries: false
     )
 
     func testParsingAllProducts() {

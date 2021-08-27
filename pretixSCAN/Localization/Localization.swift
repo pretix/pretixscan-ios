@@ -26,7 +26,7 @@ struct Localization {
         static let NeedsAttention = NSLocalizedString("Valid Ticket, but needs attention", comment: "")
         static let UnpaidContinueText = NSLocalizedString("This ticket has not been paid for, do you still want to check it in?", comment: "")
         static let UnpaidContinueButtonTitle = NSLocalizedString("Check In Unpaid", comment: "")
-        static let UnpaidCancelButtonTitle = NSLocalizedString("No", comment: "e.g. do not check in unpaid ticket")
+        static let OfflineValidation = NSLocalizedString("Offline validation", comment: "")
     }
 
     struct WelcomeViewController {
@@ -134,6 +134,7 @@ struct Localization {
         static let Unauthorized = NSLocalizedString("You are not authorized to access this resource", comment: "")
         static let Forbidden = NSLocalizedString("You are forbidden from accessing this resource", comment: "")
         static let NotFound = NSLocalizedString("The resource was not found on the server", comment: "")
+        static let RetryAfter = NSLocalizedString("The server is busy, please try again after @d seconds", comment: "")
         static let UnknownStatusCode = NSLocalizedString("The server returned an unkown status code: ", comment: "")
         static let CouldNotCreateURL = NSLocalizedString("Could not create URL", comment: "")
         static let CouldNotCreateNonce = NSLocalizedString("Could not create Nonce", comment: "")

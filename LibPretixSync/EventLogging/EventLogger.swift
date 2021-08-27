@@ -13,16 +13,16 @@ import Sentry
 /// Wrapper class that logs events to both Sentry and the System OS Log
 public struct EventLogger {
     /// Log an event
-    public static func log(event eventMessage: String, category: Category, level: SentrySeverity, type: OSLogType) {
+    public static func log(event eventMessage: String, category: Category, level: SentryLevel, type: OSLogType) {
         // Log to OS Log
         let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: category.rawValue)
         os_log(type, log: log, "%@", eventMessage)
-
+        
         // Log to Sentry
         let event = Sentry.Event(level: level)
-        event.message = eventMessage
+        event.message = SentryMessage(formatted: eventMessage)
         event.extra = ["category": category.rawValue, "type": type.rawValue]
-        Client.shared?.send(event: event)
+        SentrySDK.capture(event: event)
 
         // If fatal, crash
         if level == .fatal {

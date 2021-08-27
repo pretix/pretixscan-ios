@@ -32,13 +32,12 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     @IBOutlet private weak var productNameLabel: UILabel!
     @IBOutlet private weak var attendeeNameLabel: UILabel!
     @IBOutlet private weak var orderIDLabel: UILabel!
+    @IBOutlet private weak var extraInformationLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var blinkerView: BlinkerView!
-
-    @IBOutlet weak var unpaidNoticeContainerView: UIView!
-    @IBOutlet weak var unpaidNoticeLabel: UILabel!
-    @IBOutlet weak var unpaidNoticeButton: UIButton!
-    @IBOutlet weak var unpaidNoticeCancelButton: UIButton!
+    
+    @IBOutlet var checkInUnpaidButtonBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var checkInUnpaidButton: UIButton!
 
     // MARK: - Updating
     private func update() {
@@ -65,6 +64,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         let newBackgroundColor = Color.error
         iconLabel.text = Icon.error
         ticketStatusLabel.text = Localization.TicketStatusViewController.Error
+        toggleExtraInformationIfAvailable(.unknown)
         appCoordinator?.performHapticNotification(ofType: .error)
 
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
@@ -77,12 +77,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         self.view.clipsToBounds = true
         self.activityIndicator.stopAnimating()
 
-        unpaidNoticeContainerView.isHidden = true
-        unpaidNoticeContainerView.layer.cornerRadius = Style.cornerRadius
-        unpaidNoticeLabel.text = Localization.TicketStatusViewController.UnpaidContinueText
-        unpaidNoticeButton.setTitle(Localization.TicketStatusViewController.UnpaidContinueButtonTitle, for: . normal)
-        unpaidNoticeCancelButton.setTitle(Localization.TicketStatusViewController.UnpaidCancelButtonTitle, for: . normal)
-
+        iconLabel.isHidden = false
+        setCheckInUnpaid(visible: false)
         if configuration != nil, redemptionResponse == nil, beganRedeeming == false {
             redeem()
         }
@@ -139,6 +135,8 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         productNameLabel.text = nil
         attendeeNameLabel.text = nil
         orderIDLabel.text = nil
+        extraInformationLabel.text = nil
+        extraInformationLabel.attributedText = nil
     }
 
     private func redeem() {
@@ -233,11 +231,42 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             appCoordinator?.performHapticNotification(ofType: .error)
 
             if redemptionResponse.errorReason == .unpaid && configStore?.checkInList?.includePending == true {
-                unpaidNoticeContainerView.isHidden = false
+                setCheckInUnpaid(visible: true)
             }
         }
-
+        
+        toggleExtraInformationIfAvailable(redemptionResponse._validationReason)
+        
         return newBackgroundColor
+    }
+    
+    private func toggleExtraInformationIfAvailable(_ reason: TicketValidationReason) {
+        let extraInformation: TicketStatusExtraInformation = configStore?.ticketValidator?.isOnline == false ? .offlineValidation : .none
+        updateExtraInformation(extraInformation, reason)
+    }
+    
+    private func updateExtraInformation(_ extra: TicketStatusExtraInformation, _ reason: TicketValidationReason) {
+        switch extra {
+        case .offlineValidation:
+            let attachment = NSTextAttachment()
+            if #available(iOS 13.0, *) {
+                attachment.image = UIImage(systemName: "wifi.slash")?.withRenderingMode(.alwaysTemplate)
+                let imageString = NSMutableAttributedString(attachment: attachment)
+                imageString.append(NSAttributedString(string: " "))
+                let textString = NSAttributedString(string: Localization.TicketStatusViewController.OfflineValidation)
+                imageString.append(textString)
+                if reason != .unknown {
+                    imageString.append(NSAttributedString(string: " (\(reason.rawValue))"))
+                }
+                extraInformationLabel.attributedText = imageString
+            } else {
+                extraInformationLabel.text = Localization.TicketStatusViewController.OfflineValidation
+            }
+            extraInformationLabel.sizeToFit()
+            
+        case .none:
+            extraInformationLabel.text = nil
+        }
     }
 
     private func createQuestionsController() -> QuestionsTableViewController {
@@ -247,6 +276,17 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         return questionsController
     }
 
+    /// Configures the view to show or hide the check in unpaid button
+    private func setCheckInUnpaid(visible: Bool) {
+        checkInUnpaidButton.isHidden = !visible
+        // we need to move the content of the message up to make room for the checkInUnpaidButton
+        if visible {
+            checkInUnpaidButtonBottomConstraint.constant = 90
+        } else {
+            checkInUnpaidButtonBottomConstraint.constant = 20
+        }
+    }
+    
     // MARK: - Actions
     @IBAction func redeemUnpaidTicket(_ sender: Any) {
         guard let configuration = configuration else { return }
@@ -258,6 +298,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     override func viewDidLoad() {
         super.viewDidLoad()
         preferredContentSize = CGSize(width: 0, height: UIScreen.main.bounds.height * 0.50)
+        checkInUnpaidButton.setTitle(Localization.TicketStatusViewController.UnpaidContinueButtonTitle, for: . normal)
         update()
     }
 

@@ -10,37 +10,60 @@ import UIKit
 
 open class WindowViewController: UIViewController
 {
-    fileprivate var window: UIWindow?
-    
-    let windowLevel: UIWindow.Level
-    let config: SwiftMessages.Config
-    
     override open var shouldAutorotate: Bool {
         return config.shouldAutorotate
     }
-    
-    public init(windowLevel: UIWindow.Level?, config: SwiftMessages.Config)
-    {
-        self.windowLevel = windowLevel ?? UIWindow.Level.normal
+
+    convenience public init() {
+        self.init(config: SwiftMessages.Config())
+    }
+
+    public init(config: SwiftMessages.Config) {
         self.config = config
-        let window = PassthroughWindow(frame: UIScreen.main.bounds)
+        let view = PassthroughView()
+        let window = PassthroughWindow(hitTestView: view)
         self.window = window
         super.init(nibName: nil, bundle: nil)
-        self.view = PassthroughView()
+        self.view = view
         window.rootViewController = self
-        window.windowLevel = windowLevel ?? UIWindow.Level.normal
+        window.windowLevel = config.windowLevel ?? UIWindow.Level.normal
+        if #available(iOS 13, *) {
+            window.overrideUserInterfaceStyle = config.overrideUserInterfaceStyle
+        }
     }
-    
-    func install(becomeKey: Bool) {
+
+    func install() {
+        if #available(iOS 13, *) {
+            window?.windowScene = config.windowScene
+            #if !SWIFTMESSAGES_APP_EXTENSIONS
+            previousKeyWindow = UIWindow.keyWindow
+            #endif
+            show(
+                becomeKey: config.shouldBecomeKeyWindow,
+                frame: config.windowScene?.coordinateSpace.bounds
+            )
+        } else {
+            show(becomeKey: config.shouldBecomeKeyWindow)
+        }
+    }
+
+    private func show(becomeKey: Bool, frame: CGRect? = nil) {
         guard let window = window else { return }
+        window.frame = frame ?? UIScreen.main.bounds
         if becomeKey {
-            window.makeKeyAndVisible()            
+            window.makeKeyAndVisible()
         } else {
             window.isHidden = false
         }
     }
     
     func uninstall() {
+        if window?.isKeyWindow == true {
+            previousKeyWindow?.makeKey()
+        }
+        if #available(iOS 13, *) {
+            window?.windowScene = nil
+        }
         window?.isHidden = true
         window = nil
     }
@@ -52,10 +75,21 @@ open class WindowViewController: UIViewController
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return config.preferredStatusBarStyle ?? super.preferredStatusBarStyle
     }
+
+    open override var prefersStatusBarHidden: Bool {
+        return config.prefersStatusBarHidden ?? super.prefersStatusBarHidden
+    }
+
+    // MARK: - Variables
+
+    private var window: UIWindow?
+    private weak var previousKeyWindow: UIWindow?
+
+    let config: SwiftMessages.Config
 }
 
 extension WindowViewController {
-    static func newInstance(windowLevel: UIWindow.Level?, config: SwiftMessages.Config) -> WindowViewController {
-        return config.windowViewController?(windowLevel, config) ?? WindowViewController(windowLevel: windowLevel, config: config)
+    static func newInstance(config: SwiftMessages.Config) -> WindowViewController {
+        return config.windowViewController?(config) ?? WindowViewController(config: config)
     }
 }

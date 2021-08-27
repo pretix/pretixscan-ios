@@ -78,6 +78,7 @@ open class BaseView: UIView, BackgroundViewable, MarginAdjustable {
         contentView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -insets.bottom).isActive = true
         contentView.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: insets.left).isActive = true
         contentView.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: -insets.right).isActive = true
+        contentView.heightAnchor.constraint(equalToConstant: 350).with(priority: UILayoutPriority(rawValue: 200)).isActive = true
     }
 
     /**
@@ -96,10 +97,20 @@ open class BaseView: UIView, BackgroundViewable, MarginAdjustable {
         }
         addSubview(backgroundView)
         self.backgroundView = backgroundView
-        backgroundView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor, constant: insets.top).isActive = true
-        backgroundView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -insets.bottom).isActive = true
-        backgroundView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor, constant: insets.left).isActive = true
-        backgroundView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor, constant: -insets.right).isActive = true
+        backgroundView.centerXAnchor.constraint(equalTo: centerXAnchor).with(priority: UILayoutPriority(rawValue: 950)).isActive = true
+        backgroundView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor, constant: insets.top).with(priority: UILayoutPriority(rawValue: 900)).isActive = true
+        backgroundView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -insets.bottom).with(priority: UILayoutPriority(rawValue: 900)).isActive = true
+        backgroundView.heightAnchor.constraint(equalToConstant: 350).with(priority: UILayoutPriority(rawValue: 200)).isActive = true
+        layoutConstraints = [
+            backgroundView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor, constant: insets.left).with(priority: UILayoutPriority(rawValue: 900)),
+            backgroundView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor, constant: -insets.right).with(priority: UILayoutPriority(rawValue: 900)),
+        ]
+        regularWidthLayoutConstraints = [
+            backgroundView.leftAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leftAnchor, constant: insets.left).with(priority: UILayoutPriority(rawValue: 900)),
+            backgroundView.rightAnchor.constraint(lessThanOrEqualTo: layoutMarginsGuide.rightAnchor, constant: -insets.right).with(priority: UILayoutPriority(rawValue: 900)),
+            backgroundView.widthAnchor.constraint(lessThanOrEqualToConstant: 500).with(priority: UILayoutPriority(rawValue: 950)),
+            backgroundView.widthAnchor.constraint(equalToConstant: 500).with(priority: UILayoutPriority(rawValue: 200)),
+        ]
         installTapRecognizer()
     }
 
@@ -120,10 +131,20 @@ open class BaseView: UIView, BackgroundViewable, MarginAdjustable {
         }
         addSubview(backgroundView)
         self.backgroundView = backgroundView
-        backgroundView.topAnchor.constraint(equalTo: topAnchor, constant: insets.top).isActive = true
-        backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -insets.bottom).isActive = true
-        backgroundView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor, constant: insets.left).isActive = true
-        backgroundView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor, constant: -insets.right).isActive = true
+        backgroundView.centerXAnchor.constraint(equalTo: centerXAnchor).with(priority: UILayoutPriority(rawValue: 950)).isActive = true
+        backgroundView.topAnchor.constraint(equalTo: topAnchor, constant: insets.top).with(priority: UILayoutPriority(rawValue: 1000)).isActive = true
+        backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -insets.bottom).with(priority: UILayoutPriority(rawValue: 1000)).isActive = true
+        backgroundView.heightAnchor.constraint(equalToConstant: 350).with(priority: UILayoutPriority(rawValue: 200)).isActive = true
+        layoutConstraints = [
+            backgroundView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor, constant: insets.left).with(priority: UILayoutPriority(rawValue: 900)),
+            backgroundView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor, constant: -insets.right).with(priority: UILayoutPriority(rawValue: 900)),
+        ]
+        regularWidthLayoutConstraints = [
+            backgroundView.leftAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leftAnchor, constant: insets.left).with(priority: UILayoutPriority(rawValue: 900)),
+            backgroundView.rightAnchor.constraint(lessThanOrEqualTo: layoutMarginsGuide.rightAnchor, constant: -insets.right).with(priority: UILayoutPriority(rawValue: 900)),
+            backgroundView.widthAnchor.constraint(lessThanOrEqualToConstant: 500).with(priority: UILayoutPriority(rawValue: 950)),
+            backgroundView.widthAnchor.constraint(equalToConstant: 500).with(priority: UILayoutPriority(rawValue: 200)),
+        ]
         installTapRecognizer()
     }
 
@@ -189,6 +210,9 @@ open class BaseView: UIView, BackgroundViewable, MarginAdjustable {
         }
     }
 
+    /// Start margins from the safe area.
+    open var respectSafeArea: Bool = true
+
     /// IBInspectable access to layoutMarginAdditions.top
     @IBInspectable open var topLayoutMarginAddition: CGFloat = 0
 
@@ -204,15 +228,6 @@ open class BaseView: UIView, BackgroundViewable, MarginAdjustable {
     @IBInspectable open var collapseLayoutMarginAdditions: Bool = true
 
     @IBInspectable open var bounceAnimationOffset: CGFloat = 5
-     
-    /// Deprecated
-    @objc open var statusBarOffset: CGFloat = 0
-    
-    /// Deprecated
-    @objc  open var safeAreaTopOffset: CGFloat = 0
-
-    /// Deprecated
-    @objc  open var safeAreaBottomOffset: CGFloat = 0
 
     /*
      MARK: - Setting the height
@@ -234,7 +249,7 @@ open class BaseView: UIView, BackgroundViewable, MarginAdjustable {
             view.removeConstraint(existing)
             backgroundHeightConstraint = nil
         }
-        if let height = backgroundHeight {
+        if let height = backgroundHeight, let backgroundView = backgroundView {
             let constraint = NSLayoutConstraint(item: backgroundView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: height)
             backgroundView.addConstraint(constraint)
             backgroundHeightConstraint = constraint
@@ -243,32 +258,29 @@ open class BaseView: UIView, BackgroundViewable, MarginAdjustable {
 
     private var backgroundHeightConstraint: NSLayoutConstraint?
 
-    open override var intrinsicContentSize: CGSize {
-        if let preferredHeight = (self as InternalPreferredHeight).preferredHeight {
-            return CGSize(width: UIView.noIntrinsicMetric, height: preferredHeight)
+    /*
+     Mark: - Layout
+    */
+
+    open override func updateConstraints() {
+        super.updateConstraints()
+        let on: [NSLayoutConstraint]
+        let off: [NSLayoutConstraint]
+        switch traitCollection.horizontalSizeClass {
+        case .regular:
+            on = regularWidthLayoutConstraints
+            off = layoutConstraints
+        default:
+            on = layoutConstraints
+            off = regularWidthLayoutConstraints
         }
-        return super.intrinsicContentSize
+        on.forEach { $0.isActive = true }
+        off.forEach { $0.isActive = false }
     }
 
-    /**
-     An optional value that sets the message view's intrinsic content height.
-     This can be used as a way to specify a fixed height for the message view.
-     Note that this height is not guaranteed depending on anyt Auto Layout
-     constraints used within the message view.
-     */
-    @available(*, deprecated:4.2.0, message:"Use `backgroundHeight` instead to specify preferred height of the visible region of the message.")
-    open var preferredHeight: CGFloat? {
-        didSet {
-            setNeedsLayout()
-        }
-    }
+    private var layoutConstraints: [NSLayoutConstraint] = []
+    private var regularWidthLayoutConstraints: [NSLayoutConstraint] = []
 }
-
-// A workaround to prevent warning on deprecated property.
-private protocol InternalPreferredHeight {
-    var preferredHeight: CGFloat? { get }
-}
-extension BaseView: InternalPreferredHeight {}
 
 /*
  MARK: - Theming
@@ -328,4 +340,36 @@ extension BaseView {
         updateShadowPath()
     }
 }
-    
+
+/*
+ MARK: - Configuring the width
+
+ This extension provides a few convenience functions for configuring the
+ background view's width. You are encouraged to write your own such functions
+ if these don't exactly meet your needs.
+ */
+
+extension BaseView {
+
+    /**
+     A shortcut for configuring the left and right layout margins. For views that
+     have `backgroundView` as a subview of `MessageView`, the background view should
+     be pinned to the left and right `layoutMargins` in order for this configuration to work.
+     */
+    public func configureBackgroundView(sideMargin: CGFloat) {
+        layoutMargins.left = sideMargin
+        layoutMargins.right = sideMargin
+    }
+
+    /**
+     A shortcut for adding a width constraint to the `backgroundView`. When calling this
+     method, it is important to ensure that the width constraint doesn't conflict with
+     other constraints. The CardView.nib and TabView.nib layouts are compatible with
+     this method.
+     */
+    public func configureBackgroundView(width: CGFloat) {
+        guard let backgroundView = backgroundView else { return }
+        let constraint = NSLayoutConstraint(item: backgroundView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: width)
+        backgroundView.addConstraint(constraint)
+    }
+}

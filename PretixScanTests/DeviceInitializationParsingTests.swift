@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import pretixSCAN
 
 class DeviceInitializationParsingTests: XCTestCase {
     let validDeviceInitializationRequest = DeviceInitializationRequest(

@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import pretixSCAN
 
 class MultiLingualStringTests: XCTestCase {
     let completeJSON = """

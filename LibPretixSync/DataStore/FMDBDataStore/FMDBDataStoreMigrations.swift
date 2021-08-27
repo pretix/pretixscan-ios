@@ -91,7 +91,7 @@ private let uploadMigrations: [FMDatabaseMigration] = [
 ]
 
 /// A Database Migration. fromVersion should be 1 higher than toVersion.
-protocol FMDatabaseMigration: class {
+protocol FMDatabaseMigration: AnyObject {
     var fromVersion: UInt32 { get }
     var toVersion: UInt32 { get }
     func performMigration(database: FMDatabase) throws

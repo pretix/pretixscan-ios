@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import pretixSCAN
 
 class RedemptionRequestTests: XCTestCase {
     let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
@@ -42,7 +43,7 @@ class RedemptionRequestTests: XCTestCase {
         exampleObjectNoQuestions = RedemptionRequest(
             date: nil,
             ignoreUnpaid: false,
-            nonce: "Pvrk50vUzQd0DhdpNRL4I4OcXsvg70uA"
+            nonce: "Pvrk50vUzQd0DhdpNRL4I4OcXsvg70uA", type: "entry"
         )
         exampleObjectNoQuestions?.force = false
         exampleObjectNoQuestions?.questionsSupported = false
@@ -50,7 +51,7 @@ class RedemptionRequestTests: XCTestCase {
         exampleObject = RedemptionRequest(
             date: nil,
             ignoreUnpaid: false,
-            nonce: "Pvrk50vUzQd0DhdpNRL4I4OcXsvg70uA"
+            nonce: "Pvrk50vUzQd0DhdpNRL4I4OcXsvg70uA", type: "entry"
         )
         exampleObject?.force = false
         exampleObject?.questionsSupported = true

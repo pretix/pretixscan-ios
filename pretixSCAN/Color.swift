@@ -18,6 +18,9 @@ struct Color {
     static let okay = UIColor(named: "okay")!
     static let buttons = UIColor(named: "buttons")!
 
+    static let primaryGreen = UIColor(named: "primaryGreen")!
+    static let primaryGreenText = UIColor(named: "primaryGreenText")!
+    
     static var defaultBackground: UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.systemBackground
