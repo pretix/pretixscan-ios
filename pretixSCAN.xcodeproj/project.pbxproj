@@ -12,6 +12,7 @@
 		409D06597D8995ABD3C2606B /* Pods_pretixSCAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19C23358B478B81FC4A9090 /* Pods_pretixSCAN.framework */; };
 		48B9A461E0CB52BDDA566BD2 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */; };
 		641B4D2222CE641500162D1C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 641B4D2422CE641500162D1C /* Localizable.strings */; };
+		B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5014DB526E20DEB004C6604 /* Date+substract.swift */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
 		B5FC7E2326CBFEAD0040CD28 /* PrimaryGreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */; };
@@ -163,6 +164,7 @@
 		641B4D2322CE641500162D1C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		641B4D2522CE642C00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8A87E68C45A17BFF5E94F2F0 /* Pods-pretixSCAN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.release.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.release.xcconfig"; sourceTree = "<group>"; };
+		B5014DB526E20DEB004C6604 /* Date+substract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+substract.swift"; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
 		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
 		B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryGreenButton.swift; sourceTree = "<group>"; };
@@ -523,6 +525,7 @@
 				DC8467A9225B99A50013F647 /* SyncManager.swift */,
 				DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */,
 				B57FF6D326C66EBE001B9005 /* DelayOperation.swift */,
+				B5014DB526E20DEB004C6604 /* Date+substract.swift */,
 			);
 			path = SyncManager;
 			sourceTree = "<group>";
@@ -971,6 +974,7 @@
 				DC17F23A2302B9800044764A /* FileUploadQuestionCell.swift in Sources */,
 				DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
+				B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */,
 				DCC5710922C6353A008A4397 /* FMResultSet+NullableColumns.swift in Sources */,
 				DC667FFB22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift in Sources */,
 				DC8467BD225CF4000013F647 /* Item.swift in Sources */,

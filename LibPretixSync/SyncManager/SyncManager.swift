@@ -47,6 +47,7 @@ import Foundation
 public class SyncManager {
     private let configStore: ConfigStore
     private let timeBetweenSyncs: TimeInterval = 5 * 60
+    private var lastRequestedSync: Date? = nil
 
     init(configStore: ConfigStore) {
         self.configStore = configStore
@@ -127,9 +128,15 @@ public class SyncManager {
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
 
-    /// Trigger a sync process, which will check for new data from the server, but only if auto sync is enabled
+    /// Trigger a sync process, which will check for new data from the server, but only if auto sync is enabled. This method respects the `timeBetweenSyncs`.
     public func beginSyncingIfAutoSync() {
         if configStore.shouldAutoSync {
+            if let lastRequestedSync = lastRequestedSync {
+                if Date() - lastRequestedSync < timeBetweenSyncs {
+                    // ignoring request to sync before timeBetweenSyncs has elapsed
+                    return
+                }
+            }
             beginSyncing()
         }
     }
@@ -183,12 +190,17 @@ public class SyncManager {
         // Cleanup
         let cleanUpOperation = BlockOperation {
             // Send out a Notification Raven to inform every one
+            let moment = Date()
             NotificationCenter.default.post(
                 name: SyncManager.syncEndedNotification,
                 object: self,
                 userInfo: [SyncManager.NotificationKeys.lastSyncDate: Date()])
+            
+            DispatchQueue.main.async {[weak self] in
+                self?.lastRequestedSync = moment
+            }
 
-            // Queue in the next Sync in 5 minutes
+            // Queue in the next Sync
             if self.configStore.shouldAutoSync {
                 DispatchQueue.main.asyncAfter(deadline: .now() + self.timeBetweenSyncs) {
                     self.beginSyncingIfAutoSync()
