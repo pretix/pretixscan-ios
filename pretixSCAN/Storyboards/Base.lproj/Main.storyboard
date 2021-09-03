@@ -502,7 +502,6 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explanation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeI-ky-AEf">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
-                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kFQ-ir-nAp" customClass="GroupContainerView" customModule="pretixSCAN" customModuleProvider="target">
@@ -543,7 +542,7 @@
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qjF-Rf-4hM"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="mnu-KG-Ycf" secondAttribute="trailing" id="4YK-bH-6Ub"/>
                             <constraint firstItem="qjF-Rf-4hM" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mnu-KG-Ycf" secondAttribute="bottom" constant="20" id="Cwu-gJ-z9k"/>
@@ -603,13 +602,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="413-G6-ZIc">
                                                     <rect key="frame" x="0.0" y="1.3333333333333357" width="179.66666666666666" height="77.666666666666657"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7681" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aR7-Ob-y1k">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="7681" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aR7-Ob-y1k">
                                                             <rect key="frame" x="34.000000000000007" y="0.0" width="111.66666666666669" height="57.333333333333336"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="48"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Tickets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2wf-Xu-R2D">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Total Tickets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2wf-Xu-R2D">
                                                             <rect key="frame" x="41.666666666666657" y="57.33333333333335" width="96" height="20.333333333333336"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
