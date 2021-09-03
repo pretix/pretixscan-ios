@@ -1,4 +1,4 @@
-platform :ios, '12.1'
+platform :ios, '14.7'
 
 target 'pretixSCAN' do
   use_frameworks!
