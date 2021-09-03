@@ -26,7 +26,7 @@ extension UIViewController {
         containerView.layer.cornerRadius = Style.cornerRadius
 
         // Activity Indicator
-        let activityIndicator = UIActivityIndicatorView.init(style: .gray)
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.startAnimating()
 
         DispatchQueue.main.async {

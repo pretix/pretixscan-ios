@@ -26,7 +26,7 @@ class SearchHeaderView: UIView {
     }()
 
     private let loadingIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .gray)
+        let indicator = UIActivityIndicatorView(style: .medium)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.color = Color.primary
         return indicator

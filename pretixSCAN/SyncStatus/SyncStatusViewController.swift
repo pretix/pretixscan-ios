@@ -82,9 +82,7 @@ class SyncStatusViewController: UIViewController {
         switch currentSyncStatus {
         case .neverSynced:
             detailLabel.text = Localization.SyncStatusViewController.NeverSynced
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         case .syncing(let model, let loaded, let total):
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
             self.detailLabel.text = "\(model) updated, added \(loaded)/\(total)."
             let progress = Float(loaded) / Float(total)
             self.progressView.setProgress(progress, animated: true)
@@ -97,7 +95,6 @@ class SyncStatusViewController: UIViewController {
             } else {
                 detailLabel.text = Localization.SyncStatusViewController.SyncingDone
             }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
 }
