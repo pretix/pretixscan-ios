@@ -224,7 +224,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         if redemptionResponse.errorReason == .alreadyRedeemed {
             newBackgroundColor = Color.warning
             iconLabel.text = Icon.warning
-            ticketStatusLabel.text = Localization.TicketStatusViewController.TicketAlreadyRedeemed
+            setTicketStatus(status: Localization.TicketStatusViewController.TicketAlreadyRedeemed, with: redemptionResponse.position?.seat)
             appCoordinator?.performHapticNotification(ofType: .warning)
 
             if let lastCheckIn = redemptionResponse.lastCheckIn {
@@ -236,7 +236,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         } else {
             newBackgroundColor = Color.error
             iconLabel.text = Icon.error
-            ticketStatusLabel.text = Localization.TicketStatusViewController.InvalidTicket
+            setTicketStatus(status: Localization.TicketStatusViewController.InvalidTicket, with: redemptionResponse.position?.seat)
             productNameLabel.text = redemptionResponse.localizedErrorReason
             appCoordinator?.performHapticNotification(ofType: .error)
 
