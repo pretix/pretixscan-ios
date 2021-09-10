@@ -1,0 +1,46 @@
+{
+  "status": "error",
+  "reason": "rules",
+  "reason_explanation": "Minimum number of entries exceeded",
+  "require_attention": true,
+  "position": {
+    "id": 10915555,
+    "order": "TQTGK",
+    "positionid": 1,
+    "item": 25644,
+    "variation": null,
+    "price": "120.00",
+    "attendee_name": "",
+    "attendee_name_parts": { "_scheme": "full" },
+    "company": null,
+    "street": null,
+    "zipcode": null,
+    "city": null,
+    "country": null,
+    "state": null,
+    "attendee_email": null,
+    "voucher": null,
+    "tax_rate": "19.00",
+    "tax_value": "19.16",
+    "secret": "XYZ",
+    "addon_to": null,
+    "subevent": null,
+    "checkins": [],
+    "downloads": [
+      {
+        "output": "pdf",
+        "url": "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orderpositions/10915555/download/pdf/"
+      },
+      {
+        "output": "passbook",
+        "url": "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orderpositions/10915555/download/passbook/"
+      }
+    ],
+    "answers": [],
+    "tax_rule": 12107,
+    "pseudonymization_id": "W7WWMBUQMQ",
+    "seat": null,
+    "require_attention": true,
+    "order__status": "p"
+  }
+}

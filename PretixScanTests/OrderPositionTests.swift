@@ -118,6 +118,7 @@ class OrderPositionTests: XCTestCase {
 
         let errorResponse = RedemptionResponse(
             status: .error,
+            reasonExplanation: nil,
             errorReason: .product,
             position: exampleObject,
             lastCheckIn: nil,
@@ -134,6 +135,7 @@ class OrderPositionTests: XCTestCase {
 
         let cancelledResponse = RedemptionResponse(
             status: .error,
+            reasonExplanation: nil,
             errorReason: .canceled,
             position: cancelledOrderPosition,
             lastCheckIn: nil,
@@ -151,6 +153,7 @@ class OrderPositionTests: XCTestCase {
 
         let expiredResponse = RedemptionResponse(
             status: .error,
+            reasonExplanation: nil,
             errorReason: .canceled,
             position: expiredOrderPosition,
             lastCheckIn: nil,
@@ -168,6 +171,7 @@ class OrderPositionTests: XCTestCase {
 
         let unpaidResponse = RedemptionResponse(
             status: .error,
+            reasonExplanation: nil,
             errorReason: .unpaid,
             position: unpaidOrderPosition,
             lastCheckIn: nil,
@@ -195,6 +199,7 @@ class OrderPositionTests: XCTestCase {
 
         let redeemedResponse = RedemptionResponse(
             status: .redeemed,
+            reasonExplanation: nil,
             errorReason: nil,
             position: unpaidOrderPosition,
             lastCheckIn: nil,
@@ -218,7 +223,7 @@ class OrderPositionTests: XCTestCase {
             pseudonymizationId: "DAC7ULNMUB", checkins: [lastCheckIn],
             answers: [])
 
-        let errorResponse = RedemptionResponse(status: .error, errorReason: .alreadyRedeemed,
+        let errorResponse = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed,
                                                position: alreadyCheckInOrderPosition,
                                                lastCheckIn: lastCheckIn,
                                                questions: nil, answers: nil)
@@ -244,7 +249,9 @@ class OrderPositionTests: XCTestCase {
             askDuringCheckIn: true, isHidden: false, options: [], dependencyQuestion: nil,
             dependencyValue: nil)
 
-        let errorResponse = RedemptionResponse(status: .incomplete, errorReason: nil,
+        let errorResponse = RedemptionResponse(status: .incomplete,
+                                               reasonExplanation: nil,
+                                               errorReason: nil,
                                                position: orderPosition, lastCheckIn: nil,
                                                questions: [requiredQuestion],
                                                answers: [])
@@ -268,7 +275,9 @@ class OrderPositionTests: XCTestCase {
             type: .boolean, isRequired: true, position: 2, items: [], stringIdentifier: "q2",
             askDuringCheckIn: true, isHidden: false, options: [], dependencyQuestion: nil,
             dependencyValue: nil)
-        let boolErrorResponse = RedemptionResponse(status: .incomplete, errorReason: nil,
+        let boolErrorResponse = RedemptionResponse(status: .incomplete,
+                                                   reasonExplanation: nil,
+                                                   errorReason: nil,
                                                    position: orderPosition, lastCheckIn: nil,
                                                    questions: [requiredBoolQuestion],
                                                    answers: [])
@@ -293,7 +302,7 @@ class OrderPositionTests: XCTestCase {
             askDuringCheckIn: true, isHidden: false, options: [], dependencyQuestion: nil,
             dependencyValue: nil)
         let incompleteErrorResponse = RedemptionResponse(
-            status: .incomplete, errorReason: nil, position: orderPosition, lastCheckIn: nil,
+            status: .incomplete, reasonExplanation: nil, errorReason: nil, position: orderPosition, lastCheckIn: nil,
             questions: [optionalQuestion], answers: nil)
 
         // No Questions Array given. We expect an "incomplete" response
@@ -304,7 +313,7 @@ class OrderPositionTests: XCTestCase {
         // Empty Questions Array given. We expect the request to go through
         orderPosition.answers = []
         let completeResponse = RedemptionResponse(
-            status: .redeemed, errorReason: nil, position: orderPosition, lastCheckIn: nil,
+            status: .redeemed, reasonExplanation: nil, errorReason: nil, position: orderPosition, lastCheckIn: nil,
             questions: nil, answers: nil)
         XCTAssertEqual(completeResponse, orderPosition.createRedemptionResponse(
             force: false, ignoreUnpaid: false, in: event, in: checkInList,

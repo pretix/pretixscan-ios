@@ -76,4 +76,27 @@ class RedemptionResponseTests: XCTestCase {
         XCTAssertEqual(parsedInstance!.status, .error)
         XCTAssertEqual(parsedInstance!.errorReason, .unpaid)
     }
+    
+    func testResponseRulesParsing() {
+        let jsonResponse = testFileContents("errorRules", "json")
+        let redemptionResponse = try? jsonDecoder.decode(RedemptionResponse.self, from: jsonResponse)
+        guard let redemptionResponse = redemptionResponse else {
+            XCTFail("RedemptionResponse instance should be arranged")
+            return
+        }
+        
+        XCTAssertEqual(redemptionResponse.errorReason, .rules)
+        XCTAssertEqual(redemptionResponse.reasonExplanation, "Minimum number of entries exceeded")
+    }
+    
+    func testResponseErrorWithtRulesReason() {
+        let jsonResponse = testFileContents("errorRules", "json")
+        let redemptionResponse = try? jsonDecoder.decode(RedemptionResponse.self, from: jsonResponse)
+        guard let redemptionResponse = redemptionResponse else {
+            XCTFail("RedemptionResponse instance should be arranged")
+            return
+        }
+        
+        XCTAssertEqual(redemptionResponse.localizedErrorReason, "\(RedemptionResponse.ErrorReason.rules.localizedDescription()): Minimum number of entries exceeded")
+    }
 }

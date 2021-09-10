@@ -115,7 +115,7 @@ public struct OrderPosition: Model {
         // Check for products
         if !checkInList.allProducts {
             guard let limitProducts = checkInList.limitProducts, limitProducts.contains(self.itemIdentifier) else {
-                return RedemptionResponse(status: .error, errorReason: .product, position: self, lastCheckIn: nil, questions: nil,
+                return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, position: self, lastCheckIn: nil, questions: nil,
                                           answers: nil)
             }
         }
@@ -127,13 +127,13 @@ public struct OrderPosition: Model {
 
         // Check for order status
         if ![.paid, .pending].contains(status) {
-            return RedemptionResponse(status: .error, errorReason: .canceled, position: self, lastCheckIn: nil, questions: nil,
+            return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .canceled, position: self, lastCheckIn: nil, questions: nil,
                                       answers: nil)
         }
 
         let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
         if status == .pending, !shouldIgnoreUnpaid {
-            return RedemptionResponse(status: .error, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
+            return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
         }
 
         let lastCheckin = self.checkins.sorted { (a, b) -> Bool in
@@ -150,13 +150,13 @@ public struct OrderPosition: Model {
         // Check for previous check ins
         if !allow && !force {
             // Attendee is already checked in
-            return RedemptionResponse(status: .error, errorReason: .alreadyRedeemed, position: self,
+            return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed, position: self,
                                       lastCheckIn: self.checkins.last, questions: nil, answers: nil)
         }
 
         // Check if questions were never answered
         if answers == nil && questions.count > 0 {
-            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
+            return RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: self, lastCheckIn: nil,
                                       questions: questions, answers: answers)
         }
 
@@ -165,7 +165,7 @@ public struct OrderPosition: Model {
         let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }
         let requiredUnansweredQuestions = unansweredQuestions.filter { $0.isRequired }
         if requiredUnansweredQuestions.count > 0 {
-            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
+            return RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: self, lastCheckIn: nil,
                                       questions: unansweredQuestions, answers: answers)
         }
 
@@ -174,11 +174,11 @@ public struct OrderPosition: Model {
         let booleanRequiredQuestionIDs = booleanRequiredQuestions.map { $0.identifier }
         let badBools = answers?.filter { booleanRequiredQuestionIDs.contains($0.question) }.filter { $0.answer.lowercased() != "true" }
         if badBools?.count ?? 0 > 0 {
-            return RedemptionResponse(status: .incomplete, errorReason: nil, position: self, lastCheckIn: nil,
+            return RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: self, lastCheckIn: nil,
                                       questions: booleanRequiredQuestions, answers: answers)
         }
 
         // Return a positive redemption response
-        return RedemptionResponse(status: .redeemed, errorReason: nil, position: self, lastCheckIn: nil, questions: nil, answers: nil)
+        return RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, position: self, lastCheckIn: nil, questions: nil, answers: nil)
     }
 }

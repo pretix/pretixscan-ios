@@ -15,6 +15,9 @@ import Foundation
 public struct RedemptionResponse: Codable, Equatable {
     /// The server response to the redemption request
     public let status: Status
+    
+    /// In case of reason rules includes a human-readable description of the violated rules.
+    public let reasonExplanation: String?
 
     /// The reason for `status` being `error`, if applicable
     public let errorReason: ErrorReason?
@@ -75,5 +78,24 @@ public struct RedemptionResponse: Codable, Equatable {
         case position
         case lastCheckIn
         case questions
+        case reasonExplanation = "reason_explanation"
+    }
+}
+
+
+extension RedemptionResponse {
+    var localizedErrorReason: String {
+        guard let reason = self.errorReason else {
+            return ""
+        }
+        switch reason {
+        case .rules:
+            if let explanation = reasonExplanation {
+                return "\(reason.localizedDescription()): \(explanation)".trimmingCharacters(in: .whitespacesAndNewlines)
+            }
+            return reason.localizedDescription()
+        default:
+            return reason.localizedDescription()
+        }
     }
 }

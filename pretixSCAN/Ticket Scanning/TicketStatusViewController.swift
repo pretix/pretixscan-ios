@@ -227,7 +227,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             newBackgroundColor = Color.error
             iconLabel.text = Icon.error
             ticketStatusLabel.text = Localization.TicketStatusViewController.InvalidTicket
-            productNameLabel.text = redemptionResponse.errorReason?.localizedDescription()
+            productNameLabel.text = redemptionResponse.localizedErrorReason
             appCoordinator?.performHapticNotification(ofType: .error)
 
             if redemptionResponse.errorReason == .unpaid && configStore?.checkInList?.includePending == true {
