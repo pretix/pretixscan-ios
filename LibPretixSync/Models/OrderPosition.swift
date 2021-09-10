@@ -64,6 +64,9 @@ public struct OrderPosition: Model {
 
     /// Answers to user-defined questions
     public var answers: [Answer]?
+    
+    /// The assigned seat. Can be null.
+    public let seat: Seat?
 
     /// Ticket has already been used
     public var isRedeemed: Bool {
@@ -90,6 +93,7 @@ public struct OrderPosition: Model {
         case orderStatus = "order__status"
         case checkins
         case answers
+        case seat
     }
 
     public func adding(order: Order) -> OrderPosition {
@@ -98,7 +102,7 @@ public struct OrderPosition: Model {
             orderCode: self.orderCode,  orderStatus: order.status, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
             item: self.item, variation: self.variation, price: self.price, attendeeName: self.attendeeName,
             attendeeEmail: self.attendeeEmail, secret: self.secret, subEvent: self.subEvent,
-            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers)
+            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat)
     }
 
     /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.

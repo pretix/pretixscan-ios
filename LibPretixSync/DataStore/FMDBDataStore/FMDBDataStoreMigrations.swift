@@ -83,7 +83,8 @@ extension FMDBDataStore {
 private let migrations: [FMDatabaseMigration] = [
     InitialMigration(),
     MigrationAddAnswersJSON(),
-    MigrationAddEntryType()
+    MigrationAddEntryType(),
+    MigrationAddSeatJSON(),
 ]
 private let uploadMigrations: [FMDatabaseMigration] = [
     InitialUploadMigration(),
@@ -122,13 +123,25 @@ private class InitialMigration: FMDatabaseMigration {
     }
 }
 
-/// Migrate DB Version 1 to Version 2
+/// Migrate DB OrderPosition Version 1 to Version 2
 private class MigrationAddAnswersJSON: FMDatabaseMigration {
     var fromVersion: UInt32 = 1
     var toVersion: UInt32 = 2
 
     func performMigration(database: FMDatabase) throws {
         database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD answers_json TEXT;")
+    }
+}
+
+/// Migrate DB OrderPosition Version 2 to Version 3
+private class MigrationAddSeatJSON: FMDatabaseMigration {
+    var fromVersion: UInt32 = 4
+    var toVersion: UInt32 = 5
+
+    func performMigration(database: FMDatabase) throws {
+        database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD seat_id INTEGER;")
+        database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD seat_name TEXT;")
+        database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD seat_guid TEXT;")
     }
 }
 

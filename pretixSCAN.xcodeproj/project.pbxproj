@@ -17,6 +17,7 @@
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
 		B5B990A726EB50160029D614 /* errorRules.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B990A626EB50160029D614 /* errorRules.json */; };
 		B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */; };
+		B5B990AD26EB59F90029D614 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990AB26EB57960029D614 /* Seat.swift */; };
 		B5FC7E2326CBFEAD0040CD28 /* PrimaryGreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */; };
 		DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E7225FB02B002D985B /* FMDBDataStore.swift */; };
 		DC0052EA2260D385002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
@@ -170,6 +171,7 @@
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
 		B5B990A626EB50160029D614 /* errorRules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = errorRules.json; sourceTree = "<group>"; };
 		B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+testFileContents.swift"; sourceTree = "<group>"; };
+		B5B990AB26EB57960029D614 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
 		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
 		B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryGreenButton.swift; sourceTree = "<group>"; };
 		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
@@ -581,6 +583,7 @@
 				DCAC199B22BFB51A0019B53F /* RegionCode.swift */,
 				DC667FFE22C75E26002EF1C1 /* Question.swift */,
 				DCAF1A7022CBAD67009896F1 /* Answer.swift */,
+				B5B990AB26EB57960029D614 /* Seat.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1009,6 +1012,7 @@
 				DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
 				DC8467BF225CF4000013F647 /* ItemAddon.swift in Sources */,
+				B5B990AD26EB59F90029D614 /* Seat.swift in Sources */,
 				DCC5D84F2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift in Sources */,
 				DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */,
 				DCDD82D6224BCBA000DC0200 /* CheckInStatusOverviewTableViewCell.swift in Sources */,

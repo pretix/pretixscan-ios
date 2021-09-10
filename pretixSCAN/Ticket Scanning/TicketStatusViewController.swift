@@ -111,7 +111,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         switch redemptionResponse.status {
         case .redeemed:
             newBackgroundColor = Color.okay
-            updateToRedeemed(needsAttention: needsAttention)
+            updateToRedeemed(needsAttention: needsAttention, redemptionResponse.position?.seat)
 
         case .incomplete:
             newBackgroundColor = Color.warning
@@ -167,25 +167,35 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
     }
 
-    private func updateToRedeemed(needsAttention: Bool) {
-        if (configStore?.scanMode == "exit") {
+    private func updateToRedeemed(needsAttention: Bool, _ seat: Seat?) {
+        let exitMode = configStore?.scanMode == "exit"
+        
+        if (exitMode) {
             iconLabel.text = Icon.exit
-            ticketStatusLabel.text = Localization.TicketStatusViewController.ValidExit
+            setTicketStatus(status: Localization.TicketStatusViewController.ValidExit, with: seat)
         } else {
             iconLabel.text = Icon.okay
-            ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+            setTicketStatus(status: Localization.TicketStatusViewController.ValidTicket, with: seat)
         }
         appCoordinator?.performHapticNotification(ofType: .success)
 
         if needsAttention {
             blinkerView.isHidden = false
-            if (configStore?.scanMode == "exit") {
-                ticketStatusLabel.text = Localization.TicketStatusViewController.ValidExit
+            if (exitMode) {
+                setTicketStatus(status: Localization.TicketStatusViewController.ValidExit, with: seat)
             } else {
-                ticketStatusLabel.text = Localization.TicketStatusViewController.ValidTicket
+                setTicketStatus(status: Localization.TicketStatusViewController.ValidTicket, with: seat)
             }
             iconLabel.text = Icon.attention
             appCoordinator?.performHapticNotification(ofType: .warning)
+        }
+    }
+    
+    private func setTicketStatus(status: String, with seat: Seat?) {
+        if let seatName = seat?.name, seatName != "" {
+            ticketStatusLabel.text = "\(status)\n\(seatName)"
+        } else {
+            ticketStatusLabel.text = status
         }
     }
 
