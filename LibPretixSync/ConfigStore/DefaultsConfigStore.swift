@@ -73,6 +73,11 @@ public class DefaultsConfigStore: ConfigStore {
             return _offlineTicketValidator
         }
     }
+    
+    public var feedbackGenerator: FeedbackGenerator {
+        _feedbackGenerator.setMode(_asyncModeEnabled ? FeedbackMode.offline : FeedbackMode.online)
+        return _feedbackGenerator
+    }
 
     public var syncManager: SyncManager {
         _syncManager = _syncManager ?? SyncManager(configStore: self)
@@ -191,6 +196,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _offlineTicketValidator: OfflineTicketValidator?
     private var _onlineTicketValidator: OnlineTicketValidator?
     private var _syncManager: SyncManager?
+    private var _feedbackGenerator: FeedbackGenerator = ScanFeedbackGenerator()
     private var _dataStore: DataStore?
     private var _deviceName: String?
     private var _organizerSlug: String?

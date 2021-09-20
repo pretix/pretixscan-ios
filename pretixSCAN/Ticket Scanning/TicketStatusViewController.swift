@@ -13,6 +13,9 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     var configStore: ConfigStore?
     var configuration: Configuration? { didSet { update() } }
     var redemptionResponse: RedemptionResponse? { didSet { update() } }
+    var exitMode: Bool {
+        configStore?.scanMode == "exit"
+    }
 
     /// If true, don't fire of any more requests
     private var beganRedeeming = false
@@ -65,8 +68,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         iconLabel.text = Icon.error
         ticketStatusLabel.text = Localization.TicketStatusViewController.Error
         toggleExtraInformationIfAvailable(.unknown)
-        appCoordinator?.performHapticNotification(ofType: .error)
-
+        
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
             self.backgroundColorView.backgroundColor = newBackgroundColor
             self.view.layoutIfNeeded()
@@ -111,8 +113,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         switch redemptionResponse.status {
         case .redeemed:
             newBackgroundColor = Color.okay
-            updateToRedeemed(needsAttention: needsAttention, redemptionResponse.position?.seat)
-
+            updateToRedeemed(needsAttention: needsAttention, redemptionResponse.position?.seat, exitMode)
         case .incomplete:
             newBackgroundColor = Color.warning
             updateToIncomplete(redemptionResponse)
@@ -127,7 +128,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             self.view.layoutIfNeeded()
         })
     }
-
+    
     private func resetToEmpty() {
         backgroundColorView.backgroundColor = Color.grayBackground
         iconLabel.text = Icon.general
@@ -154,8 +155,16 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 answers: configuration.answers,
                 as: self.configStore?.scanMode ?? "entry"
             ) { (redemptionResponse, error) in
-                self.error = error
-                self.redemptionResponse = redemptionResponse
+                DispatchQueue.main.async {[weak self] in
+                    self?.error = error
+                    self?.redemptionResponse = redemptionResponse
+                    
+                    // Announce feedback if needed
+                    if self?.configuration?.ignoreUnpaid == true {
+                        return
+                    }
+                    self?.configStore?.feedbackGenerator.announce(redemptionResponse: redemptionResponse, error, self?.exitMode == true)
+                }
 
                 // Dismiss
                 if redemptionResponse?.status != .incomplete {
@@ -167,9 +176,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
     }
 
-    private func updateToRedeemed(needsAttention: Bool, _ seat: Seat?) {
-        let exitMode = configStore?.scanMode == "exit"
-        
+    private func updateToRedeemed(needsAttention: Bool, _ seat: Seat?, _ exitMode: Bool) {
         if (exitMode) {
             iconLabel.text = Icon.exit
             setTicketStatus(status: Localization.TicketStatusViewController.ValidExit, with: seat)
@@ -177,8 +184,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             iconLabel.text = Icon.okay
             setTicketStatus(status: Localization.TicketStatusViewController.ValidTicket, with: seat)
         }
-        appCoordinator?.performHapticNotification(ofType: .success)
-
+        
         if needsAttention {
             blinkerView.isHidden = false
             if (exitMode) {
@@ -187,7 +193,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 setTicketStatus(status: Localization.TicketStatusViewController.ValidTicket, with: seat)
             }
             iconLabel.text = Icon.attention
-            appCoordinator?.performHapticNotification(ofType: .warning)
         }
     }
     
@@ -225,7 +230,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             newBackgroundColor = Color.warning
             iconLabel.text = Icon.warning
             setTicketStatus(status: Localization.TicketStatusViewController.TicketAlreadyRedeemed, with: redemptionResponse.position?.seat)
-            appCoordinator?.performHapticNotification(ofType: .warning)
 
             if let lastCheckIn = redemptionResponse.lastCheckIn {
                 let dateFormatter = DateFormatter()
@@ -238,7 +242,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             iconLabel.text = Icon.error
             setTicketStatus(status: Localization.TicketStatusViewController.InvalidTicket, with: redemptionResponse.position?.seat)
             productNameLabel.text = redemptionResponse.localizedErrorReason
-            appCoordinator?.performHapticNotification(ofType: .error)
 
             if redemptionResponse.errorReason == .unpaid && configStore?.checkInList?.includePending == true {
                 setCheckInUnpaid(visible: true)

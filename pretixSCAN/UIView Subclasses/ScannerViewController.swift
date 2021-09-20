@@ -30,7 +30,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
 
     private var lastFoundAt: Date = Date.distantPast
-    private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 
     private var avCaptureDevice: AVCaptureDevice?
     private var captureSession: AVCaptureSession!
@@ -155,29 +154,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
         guard let stringValue = readableObject.stringValue else { return }
 
-        vibrate()
-        // flashView()
         found(code: stringValue)
-    }
-
-    func vibrate() {
-        selectionFeedbackGenerator.selectionChanged()
-    }
-
-    func flashView() {
-        if let window = self.view {
-
-            let flashingView = UIView(frame: window.bounds)
-            flashingView.backgroundColor = UIColor.white
-            flashingView.alpha = 1
-
-            window.addSubview(flashingView)
-            UIView.animate(withDuration: 1, animations: {
-                flashingView.alpha = 0.0
-            }, completion: { _ in
-                flashingView.removeFromSuperview()
-            })
-        }
     }
 
     /// Toggle the Flashlight on and off if possible

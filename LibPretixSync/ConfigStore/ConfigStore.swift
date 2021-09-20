@@ -28,6 +28,8 @@ public protocol ConfigStore {
 
     /// Creates or returns a singleton DataStore instance configured for this ConfigStore
     var dataStore: DataStore? { get }
+    
+    var feedbackGenerator: FeedbackGenerator { get }
 
     // MARK: - Welcome Screen
     /// Returns `true` if the warning screen has been accepted by the user

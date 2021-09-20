@@ -13,8 +13,17 @@
 		48B9A461E0CB52BDDA566BD2 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */; };
 		641B4D2222CE641500162D1C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 641B4D2422CE641500162D1C /* Localizable.strings */; };
 		B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5014DB526E20DEB004C6604 /* Date+substract.swift */; };
+		B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD326F8792700E10253 /* FeedbackPlayer.swift */; };
+		B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
+		B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */; };
+		B58CF83826F3104F00FADA2A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83726F3104F00FADA2A /* Logger.swift */; };
+		B58CF83B26F31BDC00FADA2A /* ScanFeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83A26F31BDC00FADA2A /* ScanFeedbackGenerator.swift */; };
+		B58CF84126F3302800FADA2A /* error.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83E26F32BFA00FADA2A /* error.m4a */; };
+		B58CF84226F3302800FADA2A /* exit.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83F26F32BFA00FADA2A /* exit.m4a */; };
+		B58CF84326F3302800FADA2A /* enter.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83D26F32BFA00FADA2A /* enter.m4a */; };
+		B58CF84426F3302800FADA2A /* beep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83C26F32BFA00FADA2A /* beep.m4a */; };
 		B5B990A726EB50160029D614 /* errorRules.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B990A626EB50160029D614 /* errorRules.json */; };
 		B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */; };
 		B5B990AD26EB59F90029D614 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990AB26EB57960029D614 /* Seat.swift */; };
@@ -168,7 +177,16 @@
 		641B4D2522CE642C00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8A87E68C45A17BFF5E94F2F0 /* Pods-pretixSCAN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.release.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.release.xcconfig"; sourceTree = "<group>"; };
 		B5014DB526E20DEB004C6604 /* Date+substract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+substract.swift"; sourceTree = "<group>"; };
+		B5251DD326F8792700E10253 /* FeedbackPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPlayer.swift; sourceTree = "<group>"; };
+		B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackHapticGenerator.swift; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
+		B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
+		B58CF83726F3104F00FADA2A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		B58CF83A26F31BDC00FADA2A /* ScanFeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanFeedbackGenerator.swift; sourceTree = "<group>"; };
+		B58CF83C26F32BFA00FADA2A /* beep.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = beep.m4a; sourceTree = "<group>"; };
+		B58CF83D26F32BFA00FADA2A /* enter.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = enter.m4a; sourceTree = "<group>"; };
+		B58CF83E26F32BFA00FADA2A /* error.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = error.m4a; sourceTree = "<group>"; };
+		B58CF83F26F32BFA00FADA2A /* exit.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = exit.m4a; sourceTree = "<group>"; };
 		B5B990A626EB50160029D614 /* errorRules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = errorRules.json; sourceTree = "<group>"; };
 		B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+testFileContents.swift"; sourceTree = "<group>"; };
 		B5B990AB26EB57960029D614 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
@@ -338,6 +356,28 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B58CF83926F31BCD00FADA2A /* FeedbackGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */,
+				B58CF83A26F31BDC00FADA2A /* ScanFeedbackGenerator.swift */,
+				B5251DD326F8792700E10253 /* FeedbackPlayer.swift */,
+				B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */,
+			);
+			path = FeedbackGenerator;
+			sourceTree = "<group>";
+		};
+		B58CF84026F3300A00FADA2A /* AudioFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B58CF83C26F32BFA00FADA2A /* beep.m4a */,
+				B58CF83D26F32BFA00FADA2A /* enter.m4a */,
+				B58CF83E26F32BFA00FADA2A /* error.m4a */,
+				B58CF83F26F32BFA00FADA2A /* exit.m4a */,
+			);
+			path = AudioFiles;
+			sourceTree = "<group>";
+		};
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +389,7 @@
 		DC07356D22392474008326F7 = {
 			isa = PBXGroup;
 			children = (
+				B58CF84026F3300A00FADA2A /* AudioFiles */,
 				DCAAFF28223929B60059C000 /* README.md */,
 				DCEF6E31223924F2009E7078 /* LibPretixSync */,
 				DC07357822392474008326F7 /* pretixSCAN */,
@@ -604,6 +645,7 @@
 			isa = PBXGroup;
 			children = (
 				DCAC199922BF7E5B0019B53F /* EventLogger.swift */,
+				B58CF83726F3104F00FADA2A /* Logger.swift */,
 			);
 			path = EventLogging;
 			sourceTree = "<group>";
@@ -611,6 +653,7 @@
 		DCB35B9E2249407300860385 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				B58CF83926F31BCD00FADA2A /* FeedbackGenerator */,
 				DC91EB27223F9F7D00704F24 /* ConfiguredNavigationController.swift */,
 				DCAAFF56223AF14B0059C000 /* UIViewController.swift */,
 				DCB35B9F2249408800860385 /* UIAlertController.swift */,
@@ -784,12 +827,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */,
+				B58CF84226F3302800FADA2A /* exit.m4a in Resources */,
 				641B4D2222CE641500162D1C /* Localizable.strings in Resources */,
 				DCB35B8C2248E8E300860385 /* fa-solid-900.ttf in Resources */,
+				B58CF84126F3302800FADA2A /* error.m4a in Resources */,
 				DC07358122392476008326F7 /* Assets.xcassets in Resources */,
 				DCAAFF29223929B60059C000 /* README.md in Resources */,
+				B58CF84426F3302800FADA2A /* beep.m4a in Resources */,
 				DC07357F22392474008326F7 /* Main.storyboard in Resources */,
 				DC82A5D523785FCB00F0650F /* Colors.xcassets in Resources */,
+				B58CF84326F3302800FADA2A /* enter.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -910,6 +957,7 @@
 			files = (
 				DC227F2A2253E0AE00314448 /* LoadingIndicator.swift in Sources */,
 				DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */,
+				B58CF83B26F31BDC00FADA2A /* ScanFeedbackGenerator.swift in Sources */,
 				B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */,
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
 				DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */,
@@ -955,6 +1003,7 @@
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
 				DCF8A45122A26C5E0020E0DE /* BlinkerView.swift in Sources */,
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
+				B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
 				DC17F23E2302B9AE0044764A /* TimeQuestionCell.swift in Sources */,
 				DC2A605E22DCD84300E7A6EA /* QuestionsTableViewController.swift in Sources */,
@@ -970,6 +1019,7 @@
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */,
 				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
+				B58CF83826F3104F00FADA2A /* Logger.swift in Sources */,
 				DCAF1A7122CBAD67009896F1 /* Answer.swift in Sources */,
 				DC2A606222DD07F900E7A6EA /* PaddingView.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
@@ -1000,11 +1050,13 @@
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC3CA583228DCF870003D6D3 /* FMDBModel.swift in Sources */,
 				DCC5D8572295699000DAEFA0 /* FMDBItemCategory.swift in Sources */,
+				B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */,
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC667FFF22C75E26002EF1C1 /* Question.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				DC8467C0225CF4000013F647 /* ItemBundle.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
+				B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */,
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
 				DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */,
 				DC17F2422302B9E10044764A /* CountryCodeQuestionCell.swift in Sources */,

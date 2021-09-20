@@ -14,7 +14,6 @@ import UIKit
 protocol AppCoordinator {
     func getConfigStore() -> ConfigStore
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool)
-    func performHapticNotification(ofType type: UINotificationFeedbackGenerator.FeedbackType)
 }
 
 /// Classes that are marked as appCoordinatorReceiver will get their appcoordinator

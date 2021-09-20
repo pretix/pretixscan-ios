@@ -15,8 +15,6 @@ class ValidateTicketViewController: UIViewController {
     private var searchController: UISearchController!
     private var ticketScannerViewController: TicketScannerViewController!
 
-    private let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String
@@ -86,15 +84,14 @@ extension ValidateTicketViewController {
 
 // MARK: - AppCoordinator
 extension ValidateTicketViewController: AppCoordinator {
-    func performHapticNotification(ofType type: UINotificationFeedbackGenerator.FeedbackType) {
-        notificationFeedbackGenerator.notificationOccurred(type)
-    }
-
     func getConfigStore() -> ConfigStore {
         return configStore
     }
 
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
+        if !ignoreUnpaid {
+            getConfigStore().feedbackGenerator.announce(.didScanQrCode)
+        }
         let ticketStatusViewControllerConfiguration = TicketStatusViewController.Configuration(
             secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: nil)
         self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: ticketStatusViewControllerConfiguration)
