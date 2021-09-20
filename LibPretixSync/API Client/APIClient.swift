@@ -392,11 +392,6 @@ public extension APIClient {
                 }
 
                 do {
-#if DEBUG
-                    if let debugData = data {
-                        print("📝 \(String(describing: String(data: debugData, encoding: .utf8)))")
-                    }
-#endif
                     let redemptionResponse = try self.jsonDecoder.decode(RedemptionResponse.self, from: data!)
                     completionHandler(redemptionResponse, nil)
                 } catch let jsonError {
