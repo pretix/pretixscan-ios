@@ -48,31 +48,31 @@ public class SyncManager {
     private let configStore: ConfigStore
     private let timeBetweenSyncs: TimeInterval = 5 * 60
     private var lastRequestedSync: Date? = nil
-
+    
     init(configStore: ConfigStore) {
         self.configStore = configStore
     }
-
+    
     // MARK: - Notifications
     /// Notification being sent out once a sync process has started
     public static var syncBeganNotification: Notification.Name { return Notification.Name("SyncManagerSyncBegan") }
-
+    
     /// Notification being sent out every time the status of the sync process updates.
     ///
     /// @see `NotificationKeys` for the attached dictionary.
     public static var syncStatusUpdateNotification: Notification.Name { return Notification.Name("SyncManagerSyncStatusUpdate") }
-
+    
     /// Notification being sent out once a sync process has ended
     public static var syncEndedNotification: Notification.Name { return Notification.Name("SyncManagerSyncEnded") }
-
+    
     /// Notification being sent out every time the status of a queued upload process changes.
     public static var uploadStatusNotification: Notification.Name { return Notification.Name("SyncManagerUploadStatus") }
-
+    
     /// Notification being sent out if the sync status is reset
     ///
     /// DataStore implementations are responsible for sending this notification
     public static var syncStatusResetNotification: Notification.Name { return Notification.Name("SyncManagerSyncReset") }
-
+    
     /// Notifications sent out by SyncManager
     ///
     /// Usage example:
@@ -95,39 +95,39 @@ public class SyncManager {
     public enum NotificationKeys: String {
         /// The Model that this notification is about, as a human readable String. E.g. "Order"
         case model
-
+        
         /// The amount of instances of the model that have been loaded in the last page.
         ///
         /// Note that you'll have to add those up yourself.
         case loadedAmount
-
+        
         /// The total amount of instances of the model on the server
         case totalAmount
-
+        
         /// The sync process for this model is completed with this notification
         case isLastPage
-
+        
         /// Sent in the syncingEnded notification, the last Date when the sync finished
         case lastSyncDate
     }
-
+    
     // MARK: - Syncing
     /// Force a complete redownload of all synced data
     public func forceSync() {
         guard let event = configStore.event,
-            let checkInList = configStore.checkInList,
-            let apiClient = configStore.apiClient,
-            let dataStore = configStore.dataStore else {
-                assertionFailure("event, checkinList, dataStore and APIclient should be set")
-                EventLogger.log(event: "forseSync: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
-                                category: .configuration, level: .warning, type: .default)
-                return
-        }
-
+              let checkInList = configStore.checkInList,
+              let apiClient = configStore.apiClient,
+              let dataStore = configStore.dataStore else {
+                  assertionFailure("event, checkinList, dataStore and APIclient should be set")
+                  EventLogger.log(event: "forseSync: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
+                                  category: .configuration, level: .warning, type: .default)
+                  return
+              }
+        
         configStore.dataStore?.destroyDataStore(for: event, recreate: true)
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
-
+    
     /// Trigger a sync process, which will check for new data from the server, but only if auto sync is enabled. This method respects the `timeBetweenSyncs`.
     public func beginSyncingIfAutoSync() {
         if configStore.shouldAutoSync {
@@ -140,22 +140,22 @@ public class SyncManager {
             beginSyncing()
         }
     }
-
+    
     /// Trigger a sync process, which will check for new data from the server
     @objc public func beginSyncing() {
         guard let event = configStore.event,
-            let checkInList = configStore.checkInList,
-            let apiClient = configStore.apiClient,
-            let dataStore = configStore.dataStore else {
-                assertionFailure("event, checkinList, dataStore and APIclient should be set")
-                EventLogger.log(event: "beginSyncing: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
-                                category: .configuration, level: .warning, type: .default)
-            return
-        }
-
+              let checkInList = configStore.checkInList,
+              let apiClient = configStore.apiClient,
+              let dataStore = configStore.dataStore else {
+                  assertionFailure("event, checkinList, dataStore and APIclient should be set")
+                  EventLogger.log(event: "beginSyncing: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
+                                  category: .configuration, level: .warning, type: .default)
+                  return
+              }
+        
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
-
+    
     // MARK: - Queues
     private lazy var queue: OperationQueue = {
         var queue = OperationQueue()
@@ -163,17 +163,17 @@ public class SyncManager {
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
-
+    
     private func populateQueues(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
         populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
-
+    
     private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
         let events = EventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         events.configStore = configStore
         let checkInLists = CheckInListsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         checkInLists.configStore = configStore
-
+        
         let itemCategories = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         let items = ItemsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         let subEvents = SubEventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
@@ -183,10 +183,10 @@ public class SyncManager {
                                                    checkInList: checkInList, disableTestMode: true)
         partialOrders.addDependency(fullOrders)
         let questions = QuestionsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-
+        
         let allSyncOperations = [events, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders, questions]
         allSyncOperations.forEach { queue.addOperation($0) }
-
+        
         // Cleanup
         let cleanUpOperation = BlockOperation {
             // Send out a Notification Raven to inform every one
@@ -199,7 +199,7 @@ public class SyncManager {
             DispatchQueue.main.async {[weak self] in
                 self?.lastRequestedSync = moment
             }
-
+            
             // Queue in the next Sync
             if self.configStore.shouldAutoSync {
                 DispatchQueue.main.asyncAfter(deadline: .now() + self.timeBetweenSyncs) {
@@ -209,7 +209,7 @@ public class SyncManager {
         }
         // Cleanup should only happen once all other operations are finished
         allSyncOperations.forEach { cleanUpOperation.addDependency($0) }
-
+        
         queue.addOperation(cleanUpOperation)
     }
     
@@ -222,8 +222,12 @@ public class SyncManager {
                 return
             }
             if let error = uploader.error {
-                EventLogger.log(event: "Queued Redemption Request came back with error: \(error)",
-                                category: .offlineUpload, level: .error, type: .error)
+                if let urlError = error as? URLError, urlError.code == URLError.Code.notConnectedToInternet {
+                    logger.debug("Queued Redemption Request failed while not connected to internet.")
+                } else {
+                    EventLogger.log(event: "Queued Redemption Request came back with error: \(error)",
+                                    category: .offlineUpload, level: .error, type: .error)
+                }
             }
             if let errorReason = uploader.errorReason {
                 // If error reason is set, we are not dealing with a system error;
