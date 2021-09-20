@@ -109,6 +109,7 @@
 "To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan." = "Um loszulegen, erstellen Sie ein neues Gerät im Abschnitt \"Geräte\" Ihres Veranstalterkontos im pretix-Backend. Sie erhalten dann einen Konfigurations-QR-Code, den Sie hier scannen können.";
 "Token" = "Token";
 "Total Tickets Sold" = "Tickets verkauft insgesamt";
+"Currently Attending" = "Aktuell Anwesend";
 /* Ticket is Unpaid */
 "Unpaid" = "Unbezahlt";
 "Valid" = "Gültig";

@@ -15,6 +15,7 @@
 		B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5014DB526E20DEB004C6604 /* Date+substract.swift */; };
 		B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD326F8792700E10253 /* FeedbackPlayer.swift */; };
 		B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */; };
+		B5251DDA26F8887100E10253 /* CheckInStatusLargerOverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD926F8887100E10253 /* CheckInStatusLargerOverviewCell.swift */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
 		B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */; };
@@ -179,6 +180,7 @@
 		B5014DB526E20DEB004C6604 /* Date+substract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+substract.swift"; sourceTree = "<group>"; };
 		B5251DD326F8792700E10253 /* FeedbackPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPlayer.swift; sourceTree = "<group>"; };
 		B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackHapticGenerator.swift; sourceTree = "<group>"; };
+		B5251DD926F8887100E10253 /* CheckInStatusLargerOverviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInStatusLargerOverviewCell.swift; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
 		B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		B58CF83726F3104F00FADA2A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -692,6 +694,7 @@
 				DCDD82D7224BCBC600DC0200 /* SimpleCheckInStatusItemTableViewCell.swift */,
 				DCDD82D9224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift */,
 				DCDD82DC224BDE7E00DC0200 /* ItemVariationTableViewCell.swift */,
+				B5251DD926F8887100E10253 /* CheckInStatusLargerOverviewCell.swift */,
 			);
 			path = "CheckIn Status";
 			sourceTree = "<group>";
@@ -1040,6 +1043,7 @@
 				DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */,
 				0803991926B1A6A80075BB3C /* TicketValidationReason.swift in Sources */,
 				DC17F23A2302B9800044764A /* FileUploadQuestionCell.swift in Sources */,
+				B5251DDA26F8887100E10253 /* CheckInStatusLargerOverviewCell.swift in Sources */,
 				DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
 				B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */,

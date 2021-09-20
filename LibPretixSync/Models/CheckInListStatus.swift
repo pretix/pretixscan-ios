@@ -16,6 +16,9 @@ public struct CheckInListStatus: Codable, Equatable {
 
     /// The amount of order positions sold, meaning the amount of attendees to expect
     public let positionCount: Int
+    
+    /// The number of attendees currently present on the venue
+    public let insideCount: Int
 
     /// The items to be checked in
     public let items: [Item]
@@ -23,6 +26,7 @@ public struct CheckInListStatus: Codable, Equatable {
     private enum CodingKeys: String, CodingKey {
         case checkinCount = "checkin_count"
         case positionCount = "position_count"
+        case insideCount = "inside_count"
         case items
     }
 

@@ -286,7 +286,8 @@ extension FMDBDataStore {
             checkInListStatusItems.append(checkInListStatusItem)
         }
 
-        let status = CheckInListStatus(checkinCount: checkInCount, positionCount: positionsCount, items: checkInListStatusItems)
+        /// The insideCount is not supported in offline mode, https://code.rami.io/pretix/pretixscan-ios/-/issues/69
+        let status = CheckInListStatus(checkinCount: checkInCount, positionCount: positionsCount, insideCount: -1, items: checkInListStatusItems)
         return .success(status)
     }
 

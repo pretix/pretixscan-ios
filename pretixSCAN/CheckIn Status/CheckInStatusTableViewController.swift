@@ -76,13 +76,25 @@ class CheckInStatusTableViewController: UITableViewController, Configurable {
         switch section {
 
         case .overview:
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: CheckInStatusOverviewTableViewCell.reuseIdentifier,
-                for: indexPath)
-            if let cell = cell as? CheckInStatusOverviewTableViewCell {
-                cell.checkInListStatus = self.checkInListStatus
+            if configStore?.asyncModeEnabled ?? true || checkInListStatus?.insideCount == -1 {
+                // online mode
+                let cell = tableView.dequeueReusableCell(
+                    withIdentifier: CheckInStatusOverviewTableViewCell.reuseIdentifier,
+                    for: indexPath)
+                if let cell = cell as? CheckInStatusOverviewTableViewCell {
+                    cell.checkInListStatus = self.checkInListStatus
+                }
+                return cell
+            } else {
+                // offline mode
+                let cell = tableView.dequeueReusableCell(
+                    withIdentifier: CheckInStatusLargerOverviewCell.reuseIdentifier,
+                    for: indexPath)
+                if let cell = cell as? CheckInStatusLargerOverviewCell {
+                    cell.checkInListStatus = self.checkInListStatus
+                }
+                return cell
             }
-            return cell
 
         case .detail:
             let item = checkInStatusItem(for: indexPath)

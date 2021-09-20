@@ -89,6 +89,7 @@ struct Localization {
     struct CheckInStatusOverviewTableViewCell {
         static let CheckInCountTitle = NSLocalizedString("Already Scanned", comment: "")
         static let PositionCountTitle = NSLocalizedString("Total Tickets Sold", comment: "")
+        static let InsideCountTitle = NSLocalizedString("Currently Attending", comment: "")
     }
 
     struct SettingsTableViewController {

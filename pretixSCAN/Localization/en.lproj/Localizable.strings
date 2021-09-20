@@ -269,6 +269,9 @@
 /* No comment provided by engineer. */
 "Total Tickets Sold" = "Total Tickets Sold";
 
+/* No comment provided by engineer. */
+"Currently Attending" = "Currently Attending";
+
 /* Ticket is Unpaid */
 "Unpaid" = "Unpaid";
 
