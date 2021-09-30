@@ -372,7 +372,7 @@ extension FMDBDataStore {
     ///
     /// This implementation will deliberately return a random instance each time, in order to not block the upload queue with
     /// a malformed request forever.
-    public func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest? {
+    public func getRedemptionRequest() -> QueuedRedemptionRequest? {
         var redemptionRequest: QueuedRedemptionRequest?
         uploadDataBaseQueue.inDatabase { database in
             if let result = try? database.executeQuery(QueuedRedemptionRequest.retrieveOneRequestQuery, values: []) {
@@ -386,7 +386,7 @@ extension FMDBDataStore {
     }
 
     /// Remove a `QeuedRedemptionRequest` instance from the database
-    public func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event) {
+    public func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest) {
         uploadDataBaseQueue.inDatabase { database in
             do {
                 try database.executeUpdate(QueuedRedemptionRequest.deleteOneRequestQuery,
@@ -396,6 +396,33 @@ extension FMDBDataStore {
             }
         }
     }
+    
+    public func getFailedCheckIn() -> (Int?, FailedCheckIn?) {
+        var rowId: Int? = nil
+        var item: FailedCheckIn? = nil
+        uploadDataBaseQueue.inDatabase { database in
+            if let result = try? database.executeQuery(FailedCheckIn.retrieveOneQuery, values: []) {
+                while result.next() {
+                    rowId = Int(result.int(forColumn: "rowid"))
+                    item = FailedCheckIn.from(result: result, in: database)
+                }
+            }
+        }
+
+        return (rowId, item)
+    }
+    
+    public func delete(failedCheckInRowId: Int) {
+        uploadDataBaseQueue.inDatabase { database in
+            do {
+                try database.executeUpdate(FailedCheckIn.deleteOneQuery,
+                    values: [failedCheckInRowId])
+            } catch {
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+    }
+    
 }
 
 // MARK: - Database File Management

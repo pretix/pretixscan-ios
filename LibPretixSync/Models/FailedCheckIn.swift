@@ -8,6 +8,55 @@
 
 import Foundation
 
+struct FailedCheckInRequest: Codable {
+    public let errorReason: String
+    
+    /// The raw barcode you scanned. Required.
+    public let rawBarcode: String
+    
+    /// Date and time of the scan. Optional.
+    public let dateTime: Date?
+    
+    /// Type of scan, defaults to "entry".
+    public let scanType: String
+    
+    /// Internal ID of an order position you matched. Optional.
+    public let position: Int?
+    
+    /// Internal ID of an item you matched.
+    public let rawItem: Int?
+    
+    /// Internal ID of an item variation you matched.
+    public let rawVariation: Int?
+    
+    /// Internal ID of an event series date you matched.
+    public let rawSubEvent: Int?
+    
+    private enum CodingKeys: String, CodingKey {
+        case errorReason = "error_reason"
+        case rawBarcode = "raw_barcode"
+        case dateTime = "datetime"
+        case scanType = "type"
+        case position
+        case rawItem = "raw_item"
+        case rawVariation = "raw_variation"
+        case rawSubEvent = "raw_subevent"
+    }
+}
+
+extension FailedCheckInRequest {
+    init(_ failedChecked: FailedCheckIn) {
+        errorReason = failedChecked.errorReason
+        rawBarcode = failedChecked.rawBarcode
+        dateTime = failedChecked.dateTime
+        scanType = failedChecked.scanType
+        position = failedChecked.position
+        rawItem = failedChecked.rawItem
+        rawVariation = failedChecked.rawVariation
+        rawSubEvent = failedChecked.rawSubEvent
+    }
+}
+
 public struct FailedCheckIn: Model {
     public static var humanReadableName = "Failed Check-In"
     public static var stringName = "failed_checkins"

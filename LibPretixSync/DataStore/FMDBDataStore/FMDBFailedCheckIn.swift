@@ -30,6 +30,14 @@ extension FailedCheckIn: FMDBModel {
     (event_slug, list_identifier, error_reason, raw_barcode, date, scan_type, position, raw_item, raw_variation, raw_sub_event) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
     
+    static var retrieveOneQuery = """
+    SELECT rowid, * FROM "\(stringName)" ORDER BY date ASC LIMIT 1;
+    """
+    
+    static var deleteOneQuery = """
+    DELETE FROM "\(stringName)" WHERE rowid=?;
+    """
+    
     static func store(_ records: [FailedCheckIn], in queue: FMDatabaseQueue) {
         queue.inDatabase { database in
             for record in records {
@@ -51,5 +59,35 @@ extension FailedCheckIn: FMDBModel {
                 }
             }
         }
+    }
+    
+    static func from(result: FMResultSet, in database: FMDatabase) -> FailedCheckIn? {
+        guard let eventSlug = result.string(forColumn: "event_slug") else {
+            logger.debug("Missing event_slug for \(humanReadableName).")
+            return nil
+        }
+        
+        guard let errorReason = result.string(forColumn: "error_reason") else {
+            logger.debug("Missing error_reason for \(humanReadableName).")
+            return nil
+        }
+        
+        guard let rawBarcode = result.string(forColumn: "raw_barcode") else {
+            logger.debug("Missing raw_barcode for \(humanReadableName).")
+            return nil
+        }
+        
+        guard let scanType = result.string(forColumn: "scan_type") else {
+            logger.debug("Missing scan_type for \(humanReadableName).")
+            return nil
+        }
+        
+        let position = result.isNull(column: "position") ? nil : Int(result.int(forColumn: "position"))
+        let rawItem = result.isNull(column: "raw_item") ? nil : Int(result.int(forColumn: "raw_item"))
+        let rawVariation = result.isNull(column: "raw_variation") ? nil : Int(result.int(forColumn: "raw_variation"))
+        let rawSubEvent = result.isNull(column: "raw_sub_event") ? nil : Int(result.int(forColumn: "raw_sub_event"))
+        
+        
+        return FailedCheckIn(eventSlug: eventSlug, checkInListIdentifier: Identifier(result.int(forColumn: "list_identifier")), errorReason: errorReason, rawBarcode: rawBarcode, dateTime: result.date(forColumn: "date"), scanType: scanType, position: position, rawItem: rawItem, rawVariation: rawVariation, rawSubEvent: rawSubEvent)
     }
 }

@@ -37,6 +37,8 @@
 		B5FA77932705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77922705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift */; };
 		B5FA77952705BE25000E1644 /* 04_MigrationAddEntryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77942705BE25000E1644 /* 04_MigrationAddEntryType.swift */; };
 		B5FA77972705BE61000E1644 /* 05_MigrationAddSeatJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */; };
+		B5FA779A2705C40E000E1644 /* QueuedRedemptionRequestsUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77992705C40E000E1644 /* QueuedRedemptionRequestsUploader.swift */; };
+		B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA779B2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift */; };
 		B5FC7E2326CBFEAD0040CD28 /* PrimaryGreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */; };
 		DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E7225FB02B002D985B /* FMDBDataStore.swift */; };
 		DC0052EA2260D385002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
@@ -211,6 +213,8 @@
 		B5FA77922705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 02_MigrationAddAnswersJSON.swift; sourceTree = "<group>"; };
 		B5FA77942705BE25000E1644 /* 04_MigrationAddEntryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 04_MigrationAddEntryType.swift; sourceTree = "<group>"; };
 		B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 05_MigrationAddSeatJSON.swift; sourceTree = "<group>"; };
+		B5FA77992705C40E000E1644 /* QueuedRedemptionRequestsUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuedRedemptionRequestsUploader.swift; sourceTree = "<group>"; };
+		B5FA779B2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueFailedCheckInsUploader.swift; sourceTree = "<group>"; };
 		B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryGreenButton.swift; sourceTree = "<group>"; };
 		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
 		DC0052E92260D385002D985B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -436,6 +440,15 @@
 			path = Event;
 			sourceTree = "<group>";
 		};
+		B5FA77982705C407000E1644 /* Uploaders */ = {
+			isa = PBXGroup;
+			children = (
+				B5FA77992705C40E000E1644 /* QueuedRedemptionRequestsUploader.swift */,
+				B5FA779B2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift */,
+			);
+			path = Uploaders;
+			sourceTree = "<group>";
+		};
 		DC07356D22392474008326F7 = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +642,7 @@
 		DC8467A8225B99960013F647 /* SyncManager */ = {
 			isa = PBXGroup;
 			children = (
+				B5FA77982705C407000E1644 /* Uploaders */,
 				DC8467A9225B99A50013F647 /* SyncManager.swift */,
 				DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */,
 				B57FF6D326C66EBE001B9005 /* DelayOperation.swift */,
@@ -1057,6 +1071,7 @@
 				DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */,
 				B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
+				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
@@ -1118,6 +1133,7 @@
 				B5FA778E2705BDB0000E1644 /* 06_CreateFailedCheckInsTableMigration.swift in Sources */,
 				DC8467C0225CF4000013F647 /* ItemBundle.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
+				B5FA779A2705C40E000E1644 /* QueuedRedemptionRequestsUploader.swift in Sources */,
 				B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */,
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
 				DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */,

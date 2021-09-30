@@ -372,6 +372,31 @@ public extension APIClient {
     }
 
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
+    func failedCheckInTask(_ failedCheckIn: FailedCheckIn,
+                    completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
+        do {
+            let organizer = try getOrganizerSlug()
+            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(failedCheckIn.eventSlug)" +
+                                           "/checkinlists/\(failedCheckIn.checkInListIdentifier)/failed_checkins/")
+            var urlRequest = try createURLRequest(for: urlPath)
+            urlRequest.httpMethod = HttpMethod.POST
+            urlRequest.httpBody = try jsonEncoder.encode(FailedCheckInRequest(failedCheckIn))
+
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(error)
+                } else {
+                    completionHandler(nil)
+                }
+            }
+            return task
+        } catch {
+            completionHandler(error)
+            return nil
+        }
+    }
+    
+    /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func redeemTask(secret: String, redemptionRequest: RedemptionRequest, eventSlug: String? = nil,
                     checkInListIdentifier: Identifier? = nil,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {

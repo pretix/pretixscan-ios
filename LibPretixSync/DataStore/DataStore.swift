@@ -18,52 +18,52 @@ public protocol DataStore: AnyObject {
     // MARK: Metadata
     /// Delete all data regarding an event, except queued redemption requests.
     func destroyDataStore(for event: Event, recreate: Bool)
-
+    
     /// Delete all data about queued redemption requests
     func destroyDataStoreForUploads()
-
+    
     /// Remove all Sync Times and pretend nothing was ever synced
     func invalidateLastSynced(in event: Event)
-
+    
     /// Store timestamps of the last syncs
     func setLastSyncModifiedTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event)
-
+    
     /// Retrieve timestamps of the last syncs
     func lastSyncTime<T: Model>(of model: T.Type, in event: Event) -> String?
-
+    
     /// Store timestamp for the last partially cleared full sync
     func setLastSyncCreatedTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event)
-
+    
     /// Retrieve timestamp for the last partially cleared full sync
     func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String?
-
+    
     // MARK: - Storing
     /// Store a list of `Model`s related to an `Event`
     func store<T: Model>(_ resources: [T], for event: Event)
-
+    
     // MARK: - Retrieving
     /// Return all `OrderPosition`s matching the given query
     func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
                               completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
-
+    
     /// Retrieve an `Item` instance with the specified identifier, is such an Item exists
     func getItem(by identifier: Identifier, in event: Event) -> Item?
-
+    
     /// Retrieve an `Order` instance with the specified identifier, is such an Order exists
     func getOrder(by code: String, in event: Event) -> Order?
-
+    
     /// Retrieve all CheckIns for the specified `OrderPosition`
     func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn]
-
+    
     /// Retrieve all CheckIns for the specified `OrderPosition` in the specified `CheckInList`
     func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn]
-
+    
     /// Retrieve Statistics for the currently selected CheckInList
     func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error>
-
+    
     /// Retrieve Questions that should be answered for the specified Item
     func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error>
-
+    
     // MARK: - Redemption Requests
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
@@ -73,10 +73,19 @@ public protocol DataStore: AnyObject {
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
                 as type: String,
                 in checkInList: CheckInList) -> RedemptionResponse?
-
+    
     /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
-    func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest?
-
+    func getRedemptionRequest() -> QueuedRedemptionRequest?
+    
     /// Remove a `QeuedRedemptionRequest` instance from the database
-    func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest, in event: Event)
+    func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest)
+    
+    
+    // MARK: - Failed Check-Ins
+    
+    /// Return a `FailedCheckIn` instance that has not yet been uploaded to the server
+    func getFailedCheckIn() -> (Int?, FailedCheckIn?)
+    
+    /// Remove a `FailedCheckIn` instance from the database
+    func delete(failedCheckInRowId: Int)
 }

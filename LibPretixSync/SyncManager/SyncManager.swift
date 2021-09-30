@@ -239,10 +239,41 @@ public class SyncManager {
             if uploader.shouldRepeat {
                 self?.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             } else if (uploader.error == nil) {
+                self?.populateFailedCheckInQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            }
+        }
+        return uploader
+    }
+    
+    private func createFailedCheckInsUploader(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) -> QueueFailedCheckInsUploader {
+        let uploader = QueueFailedCheckInsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        uploader.completionBlock = {[weak self] in
+            if case .retryAfter(let seconds) = uploader.error as? APIError, uploader.shouldRepeat {
+                print("Queued Redemption Request Received Retry-After \(seconds) seconds header. Postponing upload.")
+                self?.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList, delay: TimeInterval(seconds))
+                return
+            }
+            if let error = uploader.error {
+                if let urlError = error as? URLError, urlError.code == URLError.Code.notConnectedToInternet {
+                    logger.debug("Queued Redemption Request failed while not connected to internet.")
+                } else {
+                    EventLogger.log(event: "Queued Failed Check-In came back with error: \(error)",
+                                    category: .offlineUpload, level: .error, type: .error)
+                }
+            }
+         
+            if uploader.shouldRepeat {
+                self?.populateFailedCheckInQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            } else if (uploader.error == nil) {
                 self?.populateDownloadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
             }
         }
         return uploader
+    }
+    
+    private func populateFailedCheckInQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        let uploader = createFailedCheckInsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        queue.addOperation(uploader)
     }
     
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
