@@ -409,7 +409,7 @@
 		B5FA77872705BCF8000E1644 /* Migrations */ = {
 			isa = PBXGroup;
 			children = (
-				B5FA778F2705BDD7000E1644 /* Conference */,
+				B5FA778F2705BDD7000E1644 /* Event */,
 				B5FA77882705BD0C000E1644 /* Uploads */,
 			);
 			path = Migrations;
@@ -425,7 +425,7 @@
 			path = Uploads;
 			sourceTree = "<group>";
 		};
-		B5FA778F2705BDD7000E1644 /* Conference */ = {
+		B5FA778F2705BDD7000E1644 /* Event */ = {
 			isa = PBXGroup;
 			children = (
 				B5FA77902705BDEC000E1644 /* 01_InitialMigration.swift */,
@@ -433,7 +433,7 @@
 				B5FA77942705BE25000E1644 /* 04_MigrationAddEntryType.swift */,
 				B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */,
 			);
-			path = Conference;
+			path = Event;
 			sourceTree = "<group>";
 		};
 		DC07356D22392474008326F7 = {
