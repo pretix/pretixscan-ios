@@ -14,7 +14,8 @@ public protocol FeedbackGenerator: AnyObject {
     /// Generate feedback based on the provided redemption reponse and request error
     func announce(redemptionResponse: RedemptionResponse?, _ error: Error?, _ exitMode: Bool)
     /// Change the mode of the feedback generator. Use this method to toggle between offline and online announcements
-    func setMode(_ mode: FeedbackMode)
+    func setMode(_ mode: FeedbackMode) -> Self
+    func setPlaySounds( _ playSounds: Bool) -> Self
 }
 
 

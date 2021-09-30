@@ -21,6 +21,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     @IBOutlet weak var swiftMessagesLicenseCell: UITableViewCell!
     @IBOutlet weak var fmdbLicenseCell: UITableViewCell!
     @IBOutlet weak var tinkKeyChainLicenseCell: UITableViewCell!
+    @IBOutlet weak var playSoundsCell: UITableViewCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,10 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
         shouldAutoSyncCell.textLabel?.text = Localization.SettingsTableViewController.ShouldAutoSync
         shouldAutoSyncCell.detailTextLabel?.text = configStore?.shouldAutoSync == true ? Icon.enabled : Icon.disabled
-
+       
+        playSoundsCell.textLabel?.text = Localization.SettingsTableViewController.PlaySounds
+        playSoundsCell.detailTextLabel?.text = configStore?.shouldPlaySounds == true ? Icon.enabled : Icon.disabled
+        
         beginSyncingCell.textLabel?.text = Localization.SettingsTableViewController.BeginSyncing
         forceSyncCell.textLabel?.text = Localization.SettingsTableViewController.ForceSync
 
@@ -79,6 +83,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
             showFMDBLicense()
         } else if indexPath == tableView.indexPath(for: tinkKeyChainLicenseCell) {
             showTinkKeyChainLicense()
+        } else if indexPath == tableView.indexPath(for: playSoundsCell) {
+            toggleShouldPlaySounds()
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -87,6 +93,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionTitles = [
             Localization.SettingsTableViewController.ConfigurationSectionTitle,
+            Localization.SettingsTableViewController.UserInterfaceSectionTitle,
             Localization.SettingsTableViewController.AboutSectionTitle,
             Localization.SettingsTableViewController.LicensesSectionTitle
         ]
@@ -116,6 +123,11 @@ class SettingsTableViewController: UITableViewController, Configurable {
         configStore.syncManager.beginSyncingIfAutoSync()
     }
 
+    func toggleShouldPlaySounds() {
+        configStore?.shouldPlaySounds.toggle()
+        playSoundsCell.detailTextLabel?.text = configStore?.shouldPlaySounds == true ? Icon.enabled : Icon.disabled
+    }
+    
     func beginSyncing() {
         configStore?.syncManager.beginSyncing()
     }

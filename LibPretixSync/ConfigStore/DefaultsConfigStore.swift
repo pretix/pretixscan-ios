@@ -31,6 +31,7 @@ public class DefaultsConfigStore: ConfigStore {
         case allManagedEvents
         case asyncModeEnabled
         case scanMode
+        case shouldPlaySounds
     }
 
     public var welcomeScreenIsConfirmed: Bool {
@@ -75,8 +76,9 @@ public class DefaultsConfigStore: ConfigStore {
     }
     
     public var feedbackGenerator: FeedbackGenerator {
-        _feedbackGenerator.setMode(_asyncModeEnabled ? FeedbackMode.offline : FeedbackMode.online)
         return _feedbackGenerator
+            .setMode(_asyncModeEnabled ? FeedbackMode.offline : FeedbackMode.online)
+            .setPlaySounds(shouldPlaySounds)
     }
 
     public var syncManager: SyncManager {
@@ -152,6 +154,8 @@ public class DefaultsConfigStore: ConfigStore {
 
         self.event = event
         self.checkInList = checkInList
+        
+        saveToDefaults()
 
         SentrySDK.configureScope { scope in
             scope.setTags(["event": event.slug, "checkInList": "\(checkInList.identifier)"])
@@ -186,6 +190,12 @@ public class DefaultsConfigStore: ConfigStore {
         set {
             _shouldAutoSync = newValue
             valueChanged(.shouldAutoSync)
+        }
+    }
+    
+    public var shouldPlaySounds: Bool = false {
+        didSet {
+            save(shouldPlaySounds, forKey: .shouldPlaySounds)
         }
     }
 
@@ -251,6 +261,7 @@ private extension DefaultsConfigStore {
     }
 
     private func loadFromDefaults() {
+        logger.debug("💾 Loading user defaults")
         _welcomeScreenIsConfirmed = defaults.bool(forKey: key(.welcomeScreenIsConfirmed))
         _apiBaseURL = defaults.url(forKey: key(.apiBaseURL))
         _deviceName = defaults.string(forKey: key(.deviceName))
@@ -259,7 +270,7 @@ private extension DefaultsConfigStore {
         _deviceUniqueSerial = defaults.string(forKey: key(.deviceUniqueSerial))
         _scanMode = defaults.string(forKey: key(.scanMode)) ?? "entry"
         _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))
-
+        shouldPlaySounds = defaults.bool(forKey: key(.shouldPlaySounds))
         // Event
         if let eventData = defaults.data(forKey: key(.event)) {
             _event = try? jsonDecoder.decode(Event.self, from: eventData)
@@ -280,6 +291,7 @@ private extension DefaultsConfigStore {
     }
 
     private func saveToDefaults() {
+        logger.debug("💾 Saving user defaults")
         save(_welcomeScreenIsConfirmed, forKey: .welcomeScreenIsConfirmed)
         save(_apiBaseURL, forKey: .apiBaseURL)
         save(_deviceName, forKey: .deviceName)

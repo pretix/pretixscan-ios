@@ -12,6 +12,7 @@ import AVFoundation
 /// Coordinates user feedback like playing a sound or vibration (haptic feedback)
 final class ScanFeedbackGenerator: FeedbackGenerator {
     private var mode: FeedbackMode
+    private var playSounds: Bool = false
     private var player: FeedbackPlayer = FeedbackAudioPlayer()
     private var hapticGenerator: FeedbackHapticGenerator = FeedbackNotificationGenerator()
     
@@ -30,8 +31,14 @@ final class ScanFeedbackGenerator: FeedbackGenerator {
     }
     
     
-    func setMode(_ mode: FeedbackMode) {
+    func setMode(_ mode: FeedbackMode) -> Self {
         self.mode = mode
+        return self
+    }
+    
+    func setPlaySounds(_ playSounds: Bool) -> Self {
+        self.playSounds = playSounds
+        return self
     }
     
     private func performHapticNotification(ofType type: UINotificationFeedbackGenerator.FeedbackType) {
@@ -68,18 +75,26 @@ final class ScanFeedbackGenerator: FeedbackGenerator {
         switch type {
         case .didScanQrCode:
             if mode == .online {
-                player.playAudio(.beep)
+                playSound(.beep)
             }
         case .validEntry:
             performHapticNotification(ofType: .success)
-            player.playAudio(.enter)
+            playSound(.enter)
         case .validExit:
             performHapticNotification(ofType: .success)
-            player.playAudio(.exit)
+            playSound(.exit)
         case .invalid:
             performHapticNotification(ofType: .error)
-            player.playAudio(.error)
+            playSound(.error)
         }
+    }
+    
+    func playSound(_ file: AudioFile) {
+        if !playSounds {
+            logger.debug("Skipping audio playback")
+            return
+        }
+        player.playAudio(file)
     }
 }
 

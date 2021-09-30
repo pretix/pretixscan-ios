@@ -51,6 +51,12 @@
 /* time interval */
 "less than a minute" = "weniger als eine Minute";
 "Libraries and Licenses" = "Bibliotheken und Lizenzen";
+/* No comment provided by engineer. */
+"User interface" = "Benutzeroberfläche";
+
+/* No comment provided by engineer. */
+"Play sounds" = "Signaltöne abspielen";
+
 "Loading Search" = "Suche wird geladen";
 "Manual Setup" = "Manuelle Einrichtung";
 "MIT License" = "MIT-Lizenz";
