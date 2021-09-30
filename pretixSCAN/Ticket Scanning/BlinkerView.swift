@@ -22,8 +22,8 @@ class BlinkerView: UIView {
     }
 
     func commonInit() {
-        blinkTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            self.alpha = self.alpha == 0 ? 1 : 0
+        blinkTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) {[weak self] _ in
+            self?.alpha = self?.alpha == 0 ? 1 : 0
         }
     }
 }
