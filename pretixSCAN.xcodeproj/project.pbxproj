@@ -28,6 +28,15 @@
 		B5B990A726EB50160029D614 /* errorRules.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B990A626EB50160029D614 /* errorRules.json */; };
 		B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */; };
 		B5B990AD26EB59F90029D614 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990AB26EB57960029D614 /* Seat.swift */; };
+		B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77832705A829000E1644 /* FailedCheckIn.swift */; };
+		B5FA77862705B553000E1644 /* FMDBFailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */; };
+		B5FA778A2705BD31000E1644 /* 01_InitialUploadMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77892705BD31000E1644 /* 01_InitialUploadMigration.swift */; };
+		B5FA778C2705BD62000E1644 /* 04_MigrationQueueAddEntryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA778B2705BD62000E1644 /* 04_MigrationQueueAddEntryType.swift */; };
+		B5FA778E2705BDB0000E1644 /* 06_CreateFailedCheckInsTableMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA778D2705BDB0000E1644 /* 06_CreateFailedCheckInsTableMigration.swift */; };
+		B5FA77912705BDEC000E1644 /* 01_InitialMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77902705BDEC000E1644 /* 01_InitialMigration.swift */; };
+		B5FA77932705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77922705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift */; };
+		B5FA77952705BE25000E1644 /* 04_MigrationAddEntryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77942705BE25000E1644 /* 04_MigrationAddEntryType.swift */; };
+		B5FA77972705BE61000E1644 /* 05_MigrationAddSeatJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */; };
 		B5FC7E2326CBFEAD0040CD28 /* PrimaryGreenButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */; };
 		DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E7225FB02B002D985B /* FMDBDataStore.swift */; };
 		DC0052EA2260D385002D985B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0052E92260D385002D985B /* Model.swift */; };
@@ -193,6 +202,15 @@
 		B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+testFileContents.swift"; sourceTree = "<group>"; };
 		B5B990AB26EB57960029D614 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
 		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
+		B5FA77832705A829000E1644 /* FailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedCheckIn.swift; sourceTree = "<group>"; };
+		B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBFailedCheckIn.swift; sourceTree = "<group>"; };
+		B5FA77892705BD31000E1644 /* 01_InitialUploadMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 01_InitialUploadMigration.swift; sourceTree = "<group>"; };
+		B5FA778B2705BD62000E1644 /* 04_MigrationQueueAddEntryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 04_MigrationQueueAddEntryType.swift; sourceTree = "<group>"; };
+		B5FA778D2705BDB0000E1644 /* 06_CreateFailedCheckInsTableMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 06_CreateFailedCheckInsTableMigration.swift; sourceTree = "<group>"; };
+		B5FA77902705BDEC000E1644 /* 01_InitialMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 01_InitialMigration.swift; sourceTree = "<group>"; };
+		B5FA77922705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 02_MigrationAddAnswersJSON.swift; sourceTree = "<group>"; };
+		B5FA77942705BE25000E1644 /* 04_MigrationAddEntryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 04_MigrationAddEntryType.swift; sourceTree = "<group>"; };
+		B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 05_MigrationAddSeatJSON.swift; sourceTree = "<group>"; };
 		B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryGreenButton.swift; sourceTree = "<group>"; };
 		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
 		DC0052E92260D385002D985B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -386,6 +404,36 @@
 				B5B990A626EB50160029D614 /* errorRules.json */,
 			);
 			path = Examples;
+			sourceTree = "<group>";
+		};
+		B5FA77872705BCF8000E1644 /* Migrations */ = {
+			isa = PBXGroup;
+			children = (
+				B5FA778F2705BDD7000E1644 /* Conference */,
+				B5FA77882705BD0C000E1644 /* Uploads */,
+			);
+			path = Migrations;
+			sourceTree = "<group>";
+		};
+		B5FA77882705BD0C000E1644 /* Uploads */ = {
+			isa = PBXGroup;
+			children = (
+				B5FA77892705BD31000E1644 /* 01_InitialUploadMigration.swift */,
+				B5FA778B2705BD62000E1644 /* 04_MigrationQueueAddEntryType.swift */,
+				B5FA778D2705BDB0000E1644 /* 06_CreateFailedCheckInsTableMigration.swift */,
+			);
+			path = Uploads;
+			sourceTree = "<group>";
+		};
+		B5FA778F2705BDD7000E1644 /* Conference */ = {
+			isa = PBXGroup;
+			children = (
+				B5FA77902705BDEC000E1644 /* 01_InitialMigration.swift */,
+				B5FA77922705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift */,
+				B5FA77942705BE25000E1644 /* 04_MigrationAddEntryType.swift */,
+				B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */,
+			);
+			path = Conference;
 			sourceTree = "<group>";
 		};
 		DC07356D22392474008326F7 = {
@@ -627,6 +675,7 @@
 				DC667FFE22C75E26002EF1C1 /* Question.swift */,
 				DCAF1A7022CBAD67009896F1 /* Answer.swift */,
 				B5B990AB26EB57960029D614 /* Seat.swift */,
+				B5FA77832705A829000E1644 /* FailedCheckIn.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -668,6 +717,7 @@
 		DCC5D84B2295686000DAEFA0 /* FMDBDataStore */ = {
 			isa = PBXGroup;
 			children = (
+				B5FA77872705BCF8000E1644 /* Migrations */,
 				DC0052E7225FB02B002D985B /* FMDBDataStore.swift */,
 				DC8387BE2317AB9D001C9434 /* FMDBDataStoreMigrations.swift */,
 				DC3CA582228DCF870003D6D3 /* FMDBModel.swift */,
@@ -682,6 +732,7 @@
 				DCC5D85C229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift */,
 				DCC5710822C6353A008A4397 /* FMResultSet+NullableColumns.swift */,
 				DC66800022CA09A0002EF1C1 /* FMDBQuestion.swift */,
+				B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */,
 			);
 			path = FMDBDataStore;
 			sourceTree = "<group>";
@@ -959,6 +1010,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC227F2A2253E0AE00314448 /* LoadingIndicator.swift in Sources */,
+				B5FA778C2705BD62000E1644 /* 04_MigrationQueueAddEntryType.swift in Sources */,
 				DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */,
 				B58CF83B26F31BDC00FADA2A /* ScanFeedbackGenerator.swift in Sources */,
 				B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */,
@@ -967,6 +1019,7 @@
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
 				DCEEF12A227DBD9F00BCAF82 /* SyncOperations.swift in Sources */,
+				B5FA77912705BDEC000E1644 /* 01_InitialMigration.swift in Sources */,
 				DC17F2322302B9080044764A /* OneLineStringQuestionCell.swift in Sources */,
 				DC7DD5C322846B0B00C08817 /* ErrorMessage.swift in Sources */,
 				DC23BA52223FEB2700ED7713 /* SetupFinishedViewController.swift in Sources */,
@@ -986,16 +1039,19 @@
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */,
 				DCB35BA02249408800860385 /* UIAlertController.swift in Sources */,
+				B5FA77972705BE61000E1644 /* 05_MigrationAddSeatJSON.swift in Sources */,
 				DC227F232253700900314448 /* SetupCodeScannerViewController.swift in Sources */,
 				DCDD82CD224AB25900DC0200 /* Color.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
+				B5FA77952705BE25000E1644 /* 04_MigrationAddEntryType.swift in Sources */,
 				DC8467AE225BCA6A0013F647 /* Order.swift in Sources */,
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
 				DC66800122CA09A0002EF1C1 /* FMDBQuestion.swift in Sources */,
 				DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */,
 				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
+				B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */,
 				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
 				DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */,
@@ -1034,6 +1090,7 @@
 				DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */,
 				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
 				DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */,
+				B5FA77862705B553000E1644 /* FMDBFailedCheckIn.swift in Sources */,
 				DC1D6FB32240EE7A008A9E06 /* OnlineTicketValidator.swift in Sources */,
 				DC1D6FC822425B02008A9E06 /* ConnectDeviceViewController.swift in Sources */,
 				DCC5D85B229569B000DAEFA0 /* FMDBOrder.swift in Sources */,
@@ -1058,6 +1115,7 @@
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC667FFF22C75E26002EF1C1 /* Question.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
+				B5FA778E2705BDB0000E1644 /* 06_CreateFailedCheckInsTableMigration.swift in Sources */,
 				DC8467C0225CF4000013F647 /* ItemBundle.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */,
@@ -1075,7 +1133,9 @@
 				DCC5D84D2295687E00DAEFA0 /* Extensions.swift in Sources */,
 				DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */,
 				DCDD82D8224BCBC600DC0200 /* SimpleCheckInStatusItemTableViewCell.swift in Sources */,
+				B5FA77932705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift in Sources */,
 				DCB35B9B2249402300860385 /* TicketStatusViewController.swift in Sources */,
+				B5FA778A2705BD31000E1644 /* 01_InitialUploadMigration.swift in Sources */,
 				DC227F2122536B5B00314448 /* AppCoordinator.swift in Sources */,
 				DC2A606422DD110D00E7A6EA /* ChoiceButton.swift in Sources */,
 			);

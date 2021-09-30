@@ -88,6 +88,7 @@ public class OfflineTicketValidator: TicketValidator {
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                        as type: String,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+        
         guard let event = configStore.event else {
             completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
             return
@@ -98,6 +99,22 @@ public class OfflineTicketValidator: TicketValidator {
             return
         }
 
+        
+        redeem(checkInList, event, secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, completionHandler: {[weak self] (response, error) in
+            
+            if let failedCheckIn = FailedCheckIn(response: response, error: error, event.slug, checkInList.identifier, type, secret, event) {
+                logger.debug("Recording FailedCheckIn for upload")
+                self?.configStore.dataStore?.store([failedCheckIn], for: event)
+            }
+            
+            completionHandler(response, error)
+        })
+    }
+    
+    func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
+                       as type: String,
+                       completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+        
         // Redeem using DataStore
         // A QueuedRedemptionRequest will automatically be generated
         let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,

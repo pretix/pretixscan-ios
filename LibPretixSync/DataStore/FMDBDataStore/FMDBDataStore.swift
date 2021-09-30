@@ -147,12 +147,17 @@ public class FMDBDataStore: DataStore {
         }
 
         if let queuedRedemptionRequests = resources as? [QueuedRedemptionRequest] {
-            QueuedRedemptionRequest.store(queuedRedemptionRequests, in: queue)
+            QueuedRedemptionRequest.store(queuedRedemptionRequests, in: uploadDataBaseQueue)
             return
         }
 
         if let questions = resources as? [Question] {
             Question.store(questions, in: queue)
+            return
+        }
+        
+        if let failedCheckIns = resources as? [FailedCheckIn] {
+            FailedCheckIn.store(failedCheckIns, in: uploadDataBaseQueue)
             return
         }
 

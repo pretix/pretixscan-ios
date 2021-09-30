@@ -29,18 +29,18 @@ extension FMDBDataStore {
             }
         }
     }
-
+    
     private func migrate(database: FMDatabase) throws {
         print("Migrating Database...")
         print("Current Database Version: \(database.userVersion)")
-
+        
         for migration in migrations {
             let migrationName = "\(migration.fromVersion)-\(String(describing: type(of: migration)))"
             guard migration.fromVersion >= database.userVersion else {
                 print("Skipping \(migrationName). Already applied.")
                 continue
             }
-
+            
             print("Performing migration \(migrationName)...")
             try migration.performMigration(database: database)
             database.userVersion = migration.toVersion
@@ -58,18 +58,18 @@ extension FMDBDataStore {
             }
         }
     }
-
+    
     private func migrateUploads(database: FMDatabase) throws {
         print("Migrating Database...")
         print("Current Database Version: \(database.userVersion)")
-
+        
         for migration in uploadMigrations {
             let migrationName = "\(migration.fromVersion)-\(String(describing: type(of: migration)))"
             guard migration.fromVersion >= database.userVersion else {
                 print("Skipping \(migrationName). Already applied.")
                 continue
             }
-
+            
             print("Performing migration \(migrationName)...")
             try migration.performMigration(database: database)
             database.userVersion = migration.toVersion
@@ -86,9 +86,11 @@ private let migrations: [FMDatabaseMigration] = [
     MigrationAddEntryType(),
     MigrationAddSeatJSON(),
 ]
+
 private let uploadMigrations: [FMDatabaseMigration] = [
     InitialUploadMigration(),
-    MigrationQueueAddEntryType()
+    MigrationQueueAddEntryType(),
+    CreateFailedCheckInsTableMigration()
 ]
 
 /// A Database Migration. fromVersion should be 1 higher than toVersion.
@@ -96,69 +98,4 @@ protocol FMDatabaseMigration: AnyObject {
     var fromVersion: UInt32 { get }
     var toVersion: UInt32 { get }
     func performMigration(database: FMDatabase) throws
-}
-
-private class InitialUploadMigration: FMDatabaseMigration {
-    var fromVersion: UInt32 = 0
-    var toVersion: UInt32 = 1
-
-    func performMigration(database: FMDatabase) throws {
-        try database.executeUpdate(QueuedRedemptionRequest.creationQuery, values: nil)
-    }
-}
-
-private class InitialMigration: FMDatabaseMigration {
-    var fromVersion: UInt32 = 0
-    var toVersion: UInt32 = 1
-
-    func performMigration(database: FMDatabase) throws {
-        try database.executeUpdate(ItemCategory.creationQuery, values: nil)
-        try database.executeUpdate(Item.creationQuery, values: nil)
-        try database.executeUpdate(SubEvent.creationQuery, values: nil)
-        try database.executeUpdate(Order.creationQuery, values: nil)
-        try database.executeUpdate(OrderPosition.creationQuery, values: nil)
-        try database.executeUpdate(CheckIn.creationQuery, values: nil)
-        try database.executeUpdate(SyncTimeStamp.creationQuery, values: nil)
-        try database.executeUpdate(Question.creationQuery, values: nil)
-    }
-}
-
-/// Migrate DB OrderPosition Version 1 to Version 2
-private class MigrationAddAnswersJSON: FMDatabaseMigration {
-    var fromVersion: UInt32 = 1
-    var toVersion: UInt32 = 2
-
-    func performMigration(database: FMDatabase) throws {
-        database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD answers_json TEXT;")
-    }
-}
-
-/// Migrate DB OrderPosition Version 2 to Version 3
-private class MigrationAddSeatJSON: FMDatabaseMigration {
-    var fromVersion: UInt32 = 4
-    var toVersion: UInt32 = 5
-
-    func performMigration(database: FMDatabase) throws {
-        database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD seat_id INTEGER;")
-        database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD seat_name TEXT;")
-        database.executeStatements("ALTER TABLE \(OrderPosition.stringName) ADD seat_guid TEXT;")
-    }
-}
-
-private class MigrationAddEntryType: FMDatabaseMigration {
-    var fromVersion: UInt32 = 2
-    var toVersion: UInt32 = 4
-
-    func performMigration(database: FMDatabase) throws {
-        database.executeStatements("ALTER TABLE \(CheckIn.stringName) ADD type TEXT DEFAULT 'entry';")
-    }
-}
-
-private class MigrationQueueAddEntryType: FMDatabaseMigration {
-    var fromVersion: UInt32 = 1
-    var toVersion: UInt32 = 4
-
-    func performMigration(database: FMDatabase) throws {
-        database.executeStatements("ALTER TABLE \(QueuedRedemptionRequest.stringName) ADD type TEXT DEFAULT 'entry';")
-    }
 }
