@@ -33,10 +33,6 @@ extension QueuedRedemptionRequest: FMDBModel {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
 
-    static var numberOfRequestsQuery = """
-    SELECT COUNT(*) FROM "\(stringName)";
-    """
-
     static var retrieveOneRequestQuery = """
     SELECT * FROM "\(stringName)" ORDER BY datetime ASC LIMIT 1;
     """

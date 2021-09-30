@@ -74,9 +74,6 @@ public protocol DataStore: AnyObject {
                 as type: String,
                 in checkInList: CheckInList) -> RedemptionResponse?
 
-    /// Return the number of QueuedRedemptionReqeusts in the DataStore
-    func numberOfRedemptionRequestsInQueue(in event: Event) -> Int
-
     /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
     func getRedemptionRequest(in event: Event) -> QueuedRedemptionRequest?
 

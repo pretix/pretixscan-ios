@@ -368,20 +368,6 @@ extension FMDBDataStore {
 
 // MARK: - Queueing
 extension FMDBDataStore {
-    /// Return the number of QueuedRedemptionReqeusts in the DataStore
-    public func numberOfRedemptionRequestsInQueue(in event: Event) -> Int {
-        var count = 0
-        uploadDataBaseQueue.inDatabase { database in
-            if let result = try? database.executeQuery(QueuedRedemptionRequest.numberOfRequestsQuery, values: []) {
-                while result.next() {
-                    count = Int(result.int(forColumn: "COUNT(*)"))
-                }
-            }
-        }
-
-        return count
-    }
-
     /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
     ///
     /// This implementation will deliberately return a random instance each time, in order to not block the upload queue with
