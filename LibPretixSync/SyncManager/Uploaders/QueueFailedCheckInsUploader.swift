@@ -33,7 +33,13 @@ final class QueueFailedCheckInsUploader: APIClientOperation {
                 
                 if let apiError = error as? APIError {
                     switch apiError {
-                    case .forbidden, .notFound:
+                    case .notFound:
+                        // Probably running outdated server where this feature is not available.
+                        self.error = nil
+                        self.shouldRepeat = false
+                        self.completeOperation()
+                        return
+                    case .forbidden:
                         // This is probably a malformed request and will never go through.
                         // Continue on and let the queued request be deleted.
                         break
