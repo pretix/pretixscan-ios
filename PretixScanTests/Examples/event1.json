@@ -1,0 +1,28 @@
+{
+  "name": {
+    "en": "Large Testevent 0"
+  },
+  "slug": "demo",
+  "live": true,
+  "testmode": false,
+  "currency": "EUR",
+  "date_from": "2020-01-01T10:00:00Z",
+  "date_to": "2020-01-01T14:00:00Z",
+  "date_admission": "2020-01-01T09:00:00Z",
+  "is_public": true,
+  "presale_start": null,
+  "presale_end": null,
+  "location": {},
+  "has_subevents": false,
+  "meta_data": {},
+  "timezone": "Asia/Tokyo",
+  "plugins": [
+    "pretix.plugins.banktransfer",
+    "pretix.plugins.stripe",
+    "pretix.plugins.badges",
+    "pretix.plugins.ticketoutputpdf"
+  ],
+  "valid_keys": {
+    "pretix_sig1": ["LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUNvd0JRWURLMlZ3QXlFQTdBRDcvdkZBMzNFc1k0ejJQSHI3aVpQc1o4bjVkaDBhalA4Z3l6Tm1tSXM9Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo="]
+  }
+}

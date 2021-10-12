@@ -53,7 +53,7 @@ class CheckListStatusTests: XCTestCase {
         }
     """.data(using: .utf8)!
 
-    let exampleObject = CheckInListStatus(checkinCount: 17, positionCount: 42, items: [
+    let exampleObject = CheckInListStatus(checkinCount: 17, positionCount: 42, insideCount: 0, items: [
         CheckInListStatus.Item(
             name: "T-Shirt",
             identifier: 1,

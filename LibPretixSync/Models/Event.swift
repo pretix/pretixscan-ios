@@ -26,12 +26,15 @@ public struct Event: Model {
 
     /// `True` if the event has sub events
     public let hasSubEvents: Bool
+    
+    public let validKeys: EventValidKeys?
 
     private enum CodingKeys: String, CodingKey {
         case name
         case slug
         case dateFrom = "date_from"
         case hasSubEvents = "has_subevents"
+        case validKeys = "valid_keys"
     }
 }
 
