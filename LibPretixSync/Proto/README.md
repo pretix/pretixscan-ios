@@ -4,6 +4,9 @@ To install the necessary tools on macOS, open a Terminal to this folder and run 
 
 # Generate swift files
 
+If the proto signature changes in the future, perform the following steps to recreate the swift models:
+
+
 1. If `pretix_sig1.pb.swift` is already part of the project, remove the file. (Right click > Delete > **Remove Reference**)
 
 
