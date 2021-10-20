@@ -17,7 +17,7 @@ import Sentry
 public class DefaultsConfigStore: ConfigStore {
     private var defaults: UserDefaults
 
-    private enum Keys: String {
+    private enum Keys: String, CaseIterable {
         case welcomeScreenIsConfirmed
         case apiBaseURL
         case apiToken
@@ -32,6 +32,7 @@ public class DefaultsConfigStore: ConfigStore {
         case asyncModeEnabled
         case scanMode
         case shouldPlaySounds
+        case shouldDownloadOrders
     }
 
     public var welcomeScreenIsConfirmed: Bool {
@@ -198,6 +199,12 @@ public class DefaultsConfigStore: ConfigStore {
             save(shouldPlaySounds, forKey: .shouldPlaySounds)
         }
     }
+    
+    public var shouldDownloadOrders: Bool = false {
+        didSet {
+            save(shouldDownloadOrders, forKey: .shouldDownloadOrders)
+        }
+    }
 
     private var _welcomeScreenIsConfirmed: Bool = false
     private var _apiBaseURL: URL?
@@ -224,6 +231,7 @@ public class DefaultsConfigStore: ConfigStore {
 
     init(defaults: UserDefaults) {
         self.defaults = defaults
+        registerInitialValues()
         loadFromDefaults()
     }
 
@@ -248,6 +256,8 @@ public class DefaultsConfigStore: ConfigStore {
         _checkInList = nil
         _allManagedEvents = []
         _asyncModeEnabled = false
+        shouldPlaySounds = true
+        shouldDownloadOrders = true
 
         saveToDefaults()
         NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
@@ -258,6 +268,14 @@ private extension DefaultsConfigStore {
     private func valueChanged(_ value: ConfigStoreValue? = nil) {
         NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
         saveToDefaults()
+    }
+    
+    private func registerInitialValues() {
+        defaults.register(defaults: [
+            Keys.shouldPlaySounds.rawValue: true,
+            Keys.shouldDownloadOrders.rawValue: true,
+            Keys.scanMode.rawValue: "entry",
+            Keys.asyncModeEnabled.rawValue: false])
     }
 
     private func loadFromDefaults() {
@@ -271,6 +289,7 @@ private extension DefaultsConfigStore {
         _scanMode = defaults.string(forKey: key(.scanMode)) ?? "entry"
         _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))
         shouldPlaySounds = defaults.bool(forKey: key(.shouldPlaySounds))
+        shouldDownloadOrders = defaults.bool(forKey: key(.shouldDownloadOrders))
         // Event
         if let eventData = defaults.data(forKey: key(.event)) {
             _event = try? jsonDecoder.decode(Event.self, from: eventData)

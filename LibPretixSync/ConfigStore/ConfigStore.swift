@@ -50,6 +50,9 @@ public protocol ConfigStore {
     /// If `true` the app will schedule a new sync process a few minutes after the previous one completed.
     var shouldAutoSync: Bool { get set }
     
+    /// If `true` the app will download and store full order information.
+    var shouldDownloadOrders: Bool { get set }
+    
     /// If `true`, the app feedback generator generates audible notifications
     var shouldPlaySounds: Bool { get set }
 
@@ -116,4 +119,6 @@ public enum ConfigStoreValue: String {
     
     /// Indicates if the app feedback generator generates audible notifications
     case shouldPlaySounds
+    
+    case shouldDownloadOrders
 }
