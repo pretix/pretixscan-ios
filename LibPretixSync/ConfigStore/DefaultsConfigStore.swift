@@ -243,6 +243,8 @@ public class DefaultsConfigStore: ConfigStore {
         dataStore?.destroyDataStoreForUploads()
         _dataStore = nil
 
+        purgeAllSettings()
+        
         _welcomeScreenIsConfirmed = false
         _apiBaseURL = nil
         _apiToken = nil
@@ -268,6 +270,13 @@ private extension DefaultsConfigStore {
     private func valueChanged(_ value: ConfigStoreValue? = nil) {
         NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
         saveToDefaults()
+    }
+    
+    private func purgeAllSettings() {
+        for key in Keys.allCases {
+            defaults.removeObject(forKey: key.rawValue)
+        }
+        defaults.synchronize()
     }
     
     private func registerInitialValues() {
