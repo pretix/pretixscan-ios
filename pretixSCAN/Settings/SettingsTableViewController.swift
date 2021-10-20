@@ -13,6 +13,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var shouldAutoSyncCell: UITableViewCell!
+    @IBOutlet weak var shouldDownloadOrdersCell: UITableViewCell!
     @IBOutlet weak var scanModeCell: UITableViewCell!
     @IBOutlet weak var beginSyncingCell: UITableViewCell!
     @IBOutlet weak var forceSyncCell: UITableViewCell!
@@ -36,6 +37,9 @@ class SettingsTableViewController: UITableViewController, Configurable {
 
         shouldAutoSyncCell.textLabel?.text = Localization.SettingsTableViewController.ShouldAutoSync
         shouldAutoSyncCell.detailTextLabel?.text = configStore?.shouldAutoSync == true ? Icon.enabled : Icon.disabled
+        
+        shouldDownloadOrdersCell.textLabel?.text = Localization.SettingsTableViewController.DownloadOrders
+        shouldDownloadOrdersCell.detailTextLabel?.text = configStore?.shouldDownloadOrders == true ? Icon.enabled : Icon.disabled
        
         playSoundsCell.textLabel?.text = Localization.SettingsTableViewController.PlaySounds
         playSoundsCell.detailTextLabel?.text = configStore?.shouldPlaySounds == true ? Icon.enabled : Icon.disabled
@@ -85,6 +89,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
             showTinkKeyChainLicense()
         } else if indexPath == tableView.indexPath(for: playSoundsCell) {
             toggleShouldPlaySounds()
+        } else if indexPath == tableView.indexPath(for: shouldDownloadOrdersCell) {
+            toggleShouldDownloadOrders()
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -113,6 +119,12 @@ class SettingsTableViewController: UITableViewController, Configurable {
         scanModeCell.detailTextLabel?.text = configStore.scanMode == "exit" ? Localization.SettingsTableViewController.Exit : Localization.SettingsTableViewController.Entry
     }
 
+    func toggleShouldDownloadOrders() {
+        guard var configStore = configStore else { return }
+        configStore.shouldDownloadOrders.toggle()
+        shouldDownloadOrdersCell.detailTextLabel?.text = configStore.shouldDownloadOrders == true ? Icon.enabled : Icon.disabled
+    }
+    
     func toggleShouldAutoSync() {
         guard var configStore = configStore else { return }
         let previousValue = configStore.shouldAutoSync

@@ -57,6 +57,9 @@
 /* No comment provided by engineer. */
 "Play sounds" = "Signaltöne abspielen";
 
+/* No comment provided by engineer. */
+"Download Orders" = "Bestellungen herunterladen";
+
 "Loading Search" = "Suche wird geladen";
 "Manual Setup" = "Manuelle Einrichtung";
 "MIT License" = "MIT-Lizenz";

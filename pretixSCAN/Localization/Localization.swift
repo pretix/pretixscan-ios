@@ -115,6 +115,7 @@ struct Localization {
         static let SyncModeOnline = NSLocalizedString("Online", comment: "")
         static let SyncModeOffline = NSLocalizedString("Offline", comment: "")
         static let MITLicense = NSLocalizedString("MIT License", comment: "")
+        static let DownloadOrders = NSLocalizedString("Download Orders", comment: "")
     }
 
     struct NotificationManager {
