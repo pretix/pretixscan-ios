@@ -171,6 +171,9 @@ public class SyncManager {
     private func populateDownloadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
         let events = EventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         events.configStore = configStore
+        let revokedSecrets = RevokedSecretDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        revokedSecrets.addDependency(events)
+        
         let checkInLists = CheckInListsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         checkInLists.configStore = configStore
         
@@ -184,7 +187,7 @@ public class SyncManager {
         partialOrders.addDependency(fullOrders)
         let questions = QuestionsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         
-        let allSyncOperations = [events, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders, questions]
+        let allSyncOperations = [events, revokedSecrets, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders, questions]
         allSyncOperations.forEach { queue.addOperation($0) }
         
         // Cleanup

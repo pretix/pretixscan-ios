@@ -79,14 +79,16 @@ extension FMDBDataStore {
     }
 }
 
-/// List of all Migrations. Don't forget to add new migrations to this list.
+/// List of event Migrations. Don't forget to add new migrations to this list.
 private let migrations: [FMDatabaseMigration] = [
     InitialMigration(),
     MigrationAddAnswersJSON(),
     MigrationAddEntryType(),
     MigrationAddSeatJSON(),
+    MigrationAddRevokedSecret()
 ]
 
+/// List of upload Migrations. Don't forget to add new migrations to this list.
 private let uploadMigrations: [FMDatabaseMigration] = [
     InitialUploadMigration(),
     MigrationQueueAddEntryType(),

@@ -292,6 +292,10 @@ class PartialOrderDownloader: PartialDownloader<Order> {
     let model = Order.self
 }
 
+class RevokedSecretDownloader: FullDownloader<RevokedSecret> {
+    let model = RevokedSecret.self
+}
+
 class SubEventsDownloader: ConditionalDownloader<SubEvent> {
     let model = SubEvent.self
 }

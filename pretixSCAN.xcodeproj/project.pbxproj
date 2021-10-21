@@ -36,6 +36,9 @@
 		B5BD3E432715CE19003FEB74 /* SignedTicketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */; };
 		B5BD3E452715D3ED003FEB74 /* EventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */; };
 		B5BD3E472715D4B0003FEB74 /* event1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5BD3E462715D4B0003FEB74 /* event1.json */; };
+		B5DBB0CB2721B6EF00FFBE23 /* RevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */; };
+		B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */; };
+		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
 		B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77832705A829000E1644 /* FailedCheckIn.swift */; };
 		B5FA77862705B553000E1644 /* FMDBFailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */; };
 		B5FA778A2705BD31000E1644 /* 01_InitialUploadMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77892705BD31000E1644 /* 01_InitialUploadMigration.swift */; };
@@ -220,6 +223,9 @@
 		B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedTicketData.swift; sourceTree = "<group>"; };
 		B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKeys.swift; sourceTree = "<group>"; };
 		B5BD3E462715D4B0003FEB74 /* event1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = event1.json; sourceTree = "<group>"; };
+		B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokedSecret.swift; sourceTree = "<group>"; };
+		B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBRevokedSecret.swift; sourceTree = "<group>"; };
+		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
 		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
 		B5FA77832705A829000E1644 /* FailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedCheckIn.swift; sourceTree = "<group>"; };
 		B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBFailedCheckIn.swift; sourceTree = "<group>"; };
@@ -469,6 +475,7 @@
 				B5FA77922705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift */,
 				B5FA77942705BE25000E1644 /* 04_MigrationAddEntryType.swift */,
 				B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */,
+				B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -725,6 +732,7 @@
 				B5B990AB26EB57960029D614 /* Seat.swift */,
 				B5FA77832705A829000E1644 /* FailedCheckIn.swift */,
 				B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */,
+				B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -782,6 +790,7 @@
 				DCC5710822C6353A008A4397 /* FMResultSet+NullableColumns.swift */,
 				DC66800022CA09A0002EF1C1 /* FMDBQuestion.swift */,
 				B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */,
+				B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */,
 			);
 			path = FMDBDataStore;
 			sourceTree = "<group>";
@@ -1067,6 +1076,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5DBB0CB2721B6EF00FFBE23 /* RevokedSecret.swift in Sources */,
 				DC227F2A2253E0AE00314448 /* LoadingIndicator.swift in Sources */,
 				B5FA778C2705BD62000E1644 /* 04_MigrationQueueAddEntryType.swift in Sources */,
 				DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */,
@@ -1116,6 +1126,7 @@
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
 				DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */,
 				B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */,
+				B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
@@ -1133,6 +1144,7 @@
 				DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */,
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
 				DC0052EA2260D385002D985B /* Model.swift in Sources */,
+				B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
 				DCC5D8552295697C00DAEFA0 /* FMDBItem.swift in Sources */,
 				DC17F2382302B9480044764A /* SingleChoiceQuestionCell.swift in Sources */,

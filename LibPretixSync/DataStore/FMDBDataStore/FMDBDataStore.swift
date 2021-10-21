@@ -160,6 +160,10 @@ public class FMDBDataStore: DataStore {
             FailedCheckIn.store(failedCheckIns, in: uploadDataBaseQueue)
             return
         }
+        
+        if let revokedSecrets = resources as? [RevokedSecret] {
+            RevokedSecret.store(revokedSecrets, eventSlug: event.slug, in: queue)
+        }
 
         EventLogger.log(event: "Don't know how to store \(T.humanReadableName)", category: .offlineDownload, level: .warning, type: .fault)
     }
