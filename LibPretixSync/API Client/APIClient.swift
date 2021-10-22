@@ -130,6 +130,7 @@ public extension APIClient {
                 url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.stringName)/")
             }
 
+            logger.debug("API task for url '\(url.absoluteString)'")
             let urlComponents = createURLComponents(url: url, page: page, lastUpdated: lastUpdated, filters: filters)
             guard let urlComponentsURL = urlComponents?.url else {
                 throw APIError.couldNotCreateURL

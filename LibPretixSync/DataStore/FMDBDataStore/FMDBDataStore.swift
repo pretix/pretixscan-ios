@@ -163,6 +163,12 @@ public class FMDBDataStore: DataStore {
         
         if let revokedSecrets = resources as? [RevokedSecret] {
             RevokedSecret.store(revokedSecrets, eventSlug: event.slug, in: queue)
+            return
+        }
+        
+        if let validKeys = resources as? [EventValidKey] {
+            EventValidKey.store(validKeys, eventSlug: event.slug, in: queue)
+            return
         }
 
         EventLogger.log(event: "Don't know how to store \(T.humanReadableName)", category: .offlineDownload, level: .warning, type: .fault)

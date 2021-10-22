@@ -36,6 +36,9 @@
 		B5BD3E432715CE19003FEB74 /* SignedTicketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */; };
 		B5BD3E452715D3ED003FEB74 /* EventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */; };
 		B5BD3E472715D4B0003FEB74 /* event1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5BD3E462715D4B0003FEB74 /* event1.json */; };
+		B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255E92723187F0064652F /* FMDBEventValidKey.swift */; };
+		B5D255EC272318F50064652F /* EventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255EB272318F50064652F /* EventValidKey.swift */; };
+		B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */; };
 		B5DBB0CB2721B6EF00FFBE23 /* RevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */; };
 		B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */; };
 		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
@@ -223,6 +226,9 @@
 		B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedTicketData.swift; sourceTree = "<group>"; };
 		B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKeys.swift; sourceTree = "<group>"; };
 		B5BD3E462715D4B0003FEB74 /* event1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = event1.json; sourceTree = "<group>"; };
+		B5D255E92723187F0064652F /* FMDBEventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBEventValidKey.swift; sourceTree = "<group>"; };
+		B5D255EB272318F50064652F /* EventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKey.swift; sourceTree = "<group>"; };
+		B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 08_MigrationAddEventValidKeys.swift; sourceTree = "<group>"; };
 		B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBRevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
@@ -476,6 +482,7 @@
 				B5FA77942705BE25000E1644 /* 04_MigrationAddEntryType.swift */,
 				B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */,
 				B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */,
+				B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -733,6 +740,7 @@
 				B5FA77832705A829000E1644 /* FailedCheckIn.swift */,
 				B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */,
 				B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */,
+				B5D255EB272318F50064652F /* EventValidKey.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -791,6 +799,7 @@
 				DC66800022CA09A0002EF1C1 /* FMDBQuestion.swift */,
 				B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */,
 				B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */,
+				B5D255E92723187F0064652F /* FMDBEventValidKey.swift */,
 			);
 			path = FMDBDataStore;
 			sourceTree = "<group>";
@@ -1124,6 +1133,7 @@
 				B5BD3E3F2715C469003FEB74 /* TicketInformation.swift in Sources */,
 				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
+				B5D255EC272318F50064652F /* EventValidKey.swift in Sources */,
 				DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */,
 				B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */,
 				B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */,
@@ -1150,6 +1160,7 @@
 				DC17F2382302B9480044764A /* SingleChoiceQuestionCell.swift in Sources */,
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */,
+				B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */,
 				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
 				B58CF83826F3104F00FADA2A /* Logger.swift in Sources */,
 				DCAF1A7122CBAD67009896F1 /* Answer.swift in Sources */,
@@ -1198,6 +1209,7 @@
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
 				DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */,
 				DC17F2422302B9E10044764A /* CountryCodeQuestionCell.swift in Sources */,
+				B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */,
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,

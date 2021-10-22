@@ -308,6 +308,9 @@ class EventsDownloader: FullDownloader<Event> {
         guard let currentEvent = configStore?.event, let currentCheckInList = configStore?.checkInList else { return }
         for event in data where event == currentEvent {
             configStore?.set(event: event, checkInList: currentCheckInList)
+            // TODO: Event details should be downloaded for this field to be accessible
+            let validKeys = (event.validKeys?.pems ?? []).map({EventValidKey(key: $0)})
+            self.dataStore.store(validKeys, for: event)
         }
     }
 }
