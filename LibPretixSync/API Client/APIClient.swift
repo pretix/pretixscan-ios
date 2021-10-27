@@ -115,6 +115,41 @@ public extension APIClient {
         task?.resume()
     }
 
+    /// Returns a task that retrieves a detail object at the specified resource.
+    ///
+    /// @see `get`
+    func getTask<T: Model>(_ resource: String,
+                           completionHandler: @escaping (Result<T, Error>) -> Void) -> URLSessionDataTask? {
+        do {
+            let url = try createURL(for: "/api/v1").appendingPathComponent(resource)
+            logger.debug("API task for url '\(url.absoluteString)'")
+            let urlRequest = try createURLRequest(for: url)
+            
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(.failure(error))
+                    return
+                }
+
+                guard let data = data else {
+                    completionHandler(.failure(APIError.emptyResponse))
+                    return
+                }
+
+                do {
+                    let model = try self.jsonDecoder.decode(T.self, from: data)
+                    completionHandler(.success(model))
+                } catch {
+                    return completionHandler(.failure(error))
+                }
+            }
+            return task
+        } catch {
+            completionHandler(.failure(error))
+            return nil
+        }
+    }
+    
     /// Returns a task that retrieves the specified model from the server and calls the completion handler for each page, once run.
     ///
     /// @see `get`
@@ -463,7 +498,7 @@ public extension APIClient {
 }
 
 // MARK: - Accessing Properties
-private extension APIClient {
+extension APIClient {
     func getOrganizerSlug() throws -> String {
         guard let organizer = configStore.organizerSlug else {
             throw APIError.notConfigured(message:

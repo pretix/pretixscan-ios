@@ -19,6 +19,18 @@
 		B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD326F8792700E10253 /* FeedbackPlayer.swift */; };
 		B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */; };
 		B5251DDA26F8887100E10253 /* CheckInStatusLargerOverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD926F8887100E10253 /* CheckInStatusLargerOverviewCell.swift */; };
+		B525795127291A95006D9EE9 /* ApiResourcePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525795027291A95006D9EE9 /* ApiResourcePath.swift */; };
+		B525795327291E26006D9EE9 /* APIClient+EventDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525795227291E26006D9EE9 /* APIClient+EventDetail.swift */; };
+		B52579562729206C006D9EE9 /* EventValidKeysDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52579552729206C006D9EE9 /* EventValidKeysDownloader.swift */; };
+		B5257958272921FB006D9EE9 /* ItemCategoriesDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5257957272921FB006D9EE9 /* ItemCategoriesDownloader.swift */; };
+		B525795A27292209006D9EE9 /* ItemsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525795927292209006D9EE9 /* ItemsDownloader.swift */; };
+		B525795C27292217006D9EE9 /* FullOrderDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525795B27292217006D9EE9 /* FullOrderDownloader.swift */; };
+		B525795E27292226006D9EE9 /* PartialOrderDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525795D27292226006D9EE9 /* PartialOrderDownloader.swift */; };
+		B525796027292233006D9EE9 /* RevokedSecretDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525795F27292233006D9EE9 /* RevokedSecretDownloader.swift */; };
+		B52579622729223F006D9EE9 /* SubEventsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52579612729223F006D9EE9 /* SubEventsDownloader.swift */; };
+		B525796427292250006D9EE9 /* EventsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525796327292250006D9EE9 /* EventsDownloader.swift */; };
+		B52579662729225D006D9EE9 /* CheckInListsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */; };
+		B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525796727292269006D9EE9 /* QuestionsDownloader.swift */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
 		B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */; };
@@ -210,6 +222,18 @@
 		B5251DD326F8792700E10253 /* FeedbackPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPlayer.swift; sourceTree = "<group>"; };
 		B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackHapticGenerator.swift; sourceTree = "<group>"; };
 		B5251DD926F8887100E10253 /* CheckInStatusLargerOverviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInStatusLargerOverviewCell.swift; sourceTree = "<group>"; };
+		B525795027291A95006D9EE9 /* ApiResourcePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResourcePath.swift; sourceTree = "<group>"; };
+		B525795227291E26006D9EE9 /* APIClient+EventDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIClient+EventDetail.swift"; sourceTree = "<group>"; };
+		B52579552729206C006D9EE9 /* EventValidKeysDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKeysDownloader.swift; sourceTree = "<group>"; };
+		B5257957272921FB006D9EE9 /* ItemCategoriesDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategoriesDownloader.swift; sourceTree = "<group>"; };
+		B525795927292209006D9EE9 /* ItemsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsDownloader.swift; sourceTree = "<group>"; };
+		B525795B27292217006D9EE9 /* FullOrderDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullOrderDownloader.swift; sourceTree = "<group>"; };
+		B525795D27292226006D9EE9 /* PartialOrderDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartialOrderDownloader.swift; sourceTree = "<group>"; };
+		B525795F27292233006D9EE9 /* RevokedSecretDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokedSecretDownloader.swift; sourceTree = "<group>"; };
+		B52579612729223F006D9EE9 /* SubEventsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubEventsDownloader.swift; sourceTree = "<group>"; };
+		B525796327292250006D9EE9 /* EventsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDownloader.swift; sourceTree = "<group>"; };
+		B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListsDownloader.swift; sourceTree = "<group>"; };
+		B525796727292269006D9EE9 /* QuestionsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsDownloader.swift; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
 		B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		B58CF83726F3104F00FADA2A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -422,6 +446,23 @@
 				B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */,
 			);
 			path = Proto;
+			sourceTree = "<group>";
+		};
+		B52579542729205F006D9EE9 /* Downloaders */ = {
+			isa = PBXGroup;
+			children = (
+				B52579552729206C006D9EE9 /* EventValidKeysDownloader.swift */,
+				B5257957272921FB006D9EE9 /* ItemCategoriesDownloader.swift */,
+				B525795927292209006D9EE9 /* ItemsDownloader.swift */,
+				B525795B27292217006D9EE9 /* FullOrderDownloader.swift */,
+				B525795D27292226006D9EE9 /* PartialOrderDownloader.swift */,
+				B525795F27292233006D9EE9 /* RevokedSecretDownloader.swift */,
+				B52579612729223F006D9EE9 /* SubEventsDownloader.swift */,
+				B525796327292250006D9EE9 /* EventsDownloader.swift */,
+				B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */,
+				B525796727292269006D9EE9 /* QuestionsDownloader.swift */,
+			);
+			path = Downloaders;
 			sourceTree = "<group>";
 		};
 		B58CF83926F31BCD00FADA2A /* FeedbackGenerator */ = {
@@ -690,6 +731,7 @@
 		DC8467A8225B99960013F647 /* SyncManager */ = {
 			isa = PBXGroup;
 			children = (
+				B52579542729205F006D9EE9 /* Downloaders */,
 				B5FA77982705C407000E1644 /* Uploaders */,
 				DC8467A9225B99A50013F647 /* SyncManager.swift */,
 				DCEEF129227DBD9F00BCAF82 /* SyncOperations.swift */,
@@ -753,6 +795,8 @@
 				DCAAFF54223AE6E20059C000 /* Errors.swift */,
 				DCB35B95224901BA00860385 /* CryptoHelpers.swift */,
 				DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */,
+				B525795027291A95006D9EE9 /* ApiResourcePath.swift */,
+				B525795227291E26006D9EE9 /* APIClient+EventDetail.swift */,
 			);
 			path = "API Client";
 			sourceTree = "<group>";
@@ -1091,6 +1135,7 @@
 				DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */,
 				B58CF83B26F31BDC00FADA2A /* ScanFeedbackGenerator.swift in Sources */,
 				B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */,
+				B52579562729206C006D9EE9 /* EventValidKeysDownloader.swift in Sources */,
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
 				DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */,
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
@@ -1111,6 +1156,7 @@
 				DC17F2402302B9C30044764A /* DateTimeQuestionCell.swift in Sources */,
 				DCC5D8512295694100DAEFA0 /* FMDBOrderPosition.swift in Sources */,
 				B5FC7E2326CBFEAD0040CD28 /* PrimaryGreenButton.swift in Sources */,
+				B525795E27292226006D9EE9 /* PartialOrderDownloader.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
@@ -1129,6 +1175,7 @@
 				DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */,
 				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
+				B525796427292250006D9EE9 /* EventsDownloader.swift in Sources */,
 				B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */,
 				B5BD3E3F2715C469003FEB74 /* TicketInformation.swift in Sources */,
 				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
@@ -1139,8 +1186,10 @@
 				B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
+				B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
+				B52579622729223F006D9EE9 /* SubEventsDownloader.swift in Sources */,
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
 				DCF8A45122A26C5E0020E0DE /* BlinkerView.swift in Sources */,
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
@@ -1163,15 +1212,18 @@
 				B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */,
 				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
 				B58CF83826F3104F00FADA2A /* Logger.swift in Sources */,
+				B52579662729225D006D9EE9 /* CheckInListsDownloader.swift in Sources */,
 				DCAF1A7122CBAD67009896F1 /* Answer.swift in Sources */,
 				DC2A606222DD07F900E7A6EA /* PaddingView.swift in Sources */,
 				DC91EB31223FA36A00704F24 /* SelectEventTableViewController.swift in Sources */,
 				B5BD3E432715CE19003FEB74 /* SignedTicketData.swift in Sources */,
 				DCAAFF49223AB8450059C000 /* DeviceInitializationResponse.swift in Sources */,
+				B525795127291A95006D9EE9 /* ApiResourcePath.swift in Sources */,
 				DC8467A7225B99590013F647 /* DataStore.swift in Sources */,
 				DC2A606022DCD90600E7A6EA /* QuestionCell.swift in Sources */,
 				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchHeaderView.swift in Sources */,
+				B525795C27292217006D9EE9 /* FullOrderDownloader.swift in Sources */,
 				DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */,
 				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
 				DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */,
@@ -1187,9 +1239,11 @@
 				DC17F23A2302B9800044764A /* FileUploadQuestionCell.swift in Sources */,
 				B5251DDA26F8887100E10253 /* CheckInStatusLargerOverviewCell.swift in Sources */,
 				DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */,
+				B5257958272921FB006D9EE9 /* ItemCategoriesDownloader.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
 				B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */,
 				DCC5710922C6353A008A4397 /* FMResultSet+NullableColumns.swift in Sources */,
+				B525795327291E26006D9EE9 /* APIClient+EventDetail.swift in Sources */,
 				DC667FFB22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift in Sources */,
 				DC8467BD225CF4000013F647 /* Item.swift in Sources */,
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
@@ -1206,6 +1260,7 @@
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				B5FA779A2705C40E000E1644 /* QueuedRedemptionRequestsUploader.swift in Sources */,
 				B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */,
+				B525796027292233006D9EE9 /* RevokedSecretDownloader.swift in Sources */,
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
 				DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */,
 				DC17F2422302B9E10044764A /* CountryCodeQuestionCell.swift in Sources */,
@@ -1216,6 +1271,7 @@
 				DC8467BF225CF4000013F647 /* ItemAddon.swift in Sources */,
 				B5B990AD26EB59F90029D614 /* Seat.swift in Sources */,
 				DCC5D84F2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift in Sources */,
+				B525795A27292209006D9EE9 /* ItemsDownloader.swift in Sources */,
 				DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */,
 				DCDD82D6224BCBA000DC0200 /* CheckInStatusOverviewTableViewCell.swift in Sources */,
 				DCC5D84D2295687E00DAEFA0 /* Extensions.swift in Sources */,

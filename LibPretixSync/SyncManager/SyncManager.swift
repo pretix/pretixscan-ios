@@ -174,6 +174,9 @@ public class SyncManager {
         let revokedSecrets = RevokedSecretDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         revokedSecrets.addDependency(events)
         
+        let validKeys = EventValidKeysDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        validKeys.addDependency(events)
+        
         let checkInLists = CheckInListsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         checkInLists.configStore = configStore
         
@@ -187,7 +190,7 @@ public class SyncManager {
         partialOrders.addDependency(fullOrders)
         let questions = QuestionsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         
-        let allSyncOperations = [events, revokedSecrets, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders, questions]
+        let allSyncOperations = [events, revokedSecrets, validKeys, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders, questions]
         allSyncOperations.forEach { queue.addOperation($0) }
         
         // Cleanup
