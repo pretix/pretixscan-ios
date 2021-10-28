@@ -42,11 +42,61 @@ class OfflineValidationTests: XCTestCase {
         XCTAssertNotNil(signedTicket)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testEventHasNoKeys() throws {
+        // arrange
+        let eventJsonData = testFileContents("event1", "json")
+        let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let dataStore = MockDataStore(keys: [], revoked: [qrCode])
+        let sut = DatalessTicketValidator(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: event)
+        XCTAssertEqual(result, Result.failure(DatalessTicketValidator.ValidationError.noKeys))
+    }
+    
+    func testRevoked() throws {
+        // arrange
+        let eventJsonData = testFileContents("event1", "json")
+        let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let dataStore = MockDataStore(keys: event.validKeys!.pems, revoked: [qrCode])
+        let sut = DatalessTicketValidator(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: event)
+        XCTAssertEqual(result, Result.failure(DatalessTicketValidator.ValidationError.revoked))
+    }
+    
+    func testInvalid() throws {
+        // arrange
+        let eventJsonData = testFileContents("event1", "json")
+        let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
+        let qrCode = "foo"
+        let dataStore = MockDataStore(keys: event.validKeys!.pems, revoked: ["bar"])
+        let sut = DatalessTicketValidator(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: event)
+        XCTAssertEqual(result, Result.failure(DatalessTicketValidator.ValidationError.invalid))
+    }
+    
+    class MockDataStore: SignedDataStore {
+        private let keys: [String]
+        private let revoked: [String]
+        
+        init(keys: [String], revoked: [String]) {
+            self.keys = keys
+            self.revoked = revoked
+        }
+        
+        func getValidKeys(for event: Event) -> Result<[EventValidKey], Error> {
+            .success(keys.map({EventValidKey(secret: $0)}))
+        }
+        
+        func getRevokedKeys(for event: Event) -> Result<[RevokedSecret], Error> {
+            .success(revoked.map({RevokedSecret(id: 0, secret: $0)}))
         }
     }
-
 }

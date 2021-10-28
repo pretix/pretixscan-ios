@@ -19,6 +19,10 @@ struct SignedTicketData: Hashable, Equatable {
 extension SignedTicketData {
     static let version: UInt8 = 0x01
     
+    init?(base64: String, keys: [EventValidKey]) {
+        self.init(base64: base64, keys: EventValidKeys(pems: keys.map({$0.secret})))
+    }
+    
     init?(base64: String, keys: EventValidKeys) {
         let reversed = String(base64.reversed())
         guard let data = Data(base64Encoded: reversed) else {

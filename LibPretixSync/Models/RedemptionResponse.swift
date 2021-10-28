@@ -99,3 +99,10 @@ extension RedemptionResponse {
         }
     }
 }
+
+
+extension RedemptionResponse {
+    static var invalid: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: nil, questions: nil)
+    }
+}

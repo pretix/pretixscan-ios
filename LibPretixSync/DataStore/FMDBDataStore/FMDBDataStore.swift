@@ -503,3 +503,38 @@ private extension FMDBDataStore {
         return queue
     }
 }
+
+// MARK: - SignedDataStore
+extension FMDBDataStore {
+    public func getValidKeys(for event: Event) -> Result<[EventValidKey], Error> {
+        var items = [EventValidKey]()
+
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(EventValidKey.searchByEventQuery, values: [event.slug]) {
+                while result.next() {
+                    if let item = EventValidKey.from(result: result, in: database) {
+                        items.append(item)
+                    }
+                }
+            }
+        }
+
+        return .success(items)
+    }
+    
+    public func getRevokedKeys(for event: Event) -> Result<[RevokedSecret], Error> {
+        var items = [RevokedSecret]()
+
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(RevokedSecret.searchByEventQuery, values: [event.slug]) {
+                while result.next() {
+                    if let item = RevokedSecret.from(result: result, in: database) {
+                        items.append(item)
+                    }
+                }
+            }
+        }
+
+        return .success(items)
+    }
+}

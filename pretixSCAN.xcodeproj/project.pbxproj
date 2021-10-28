@@ -54,6 +54,8 @@
 		B5DBB0CB2721B6EF00FFBE23 /* RevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */; };
 		B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */; };
 		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
+		B5F6F1D7272A9B9700F702BE /* DatalessTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D6272A9B9700F702BE /* DatalessTicketValidator.swift */; };
+		B5F6F1D9272AA48400F702BE /* SignedDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D8272AA48400F702BE /* SignedDataStore.swift */; };
 		B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77832705A829000E1644 /* FailedCheckIn.swift */; };
 		B5FA77862705B553000E1644 /* FMDBFailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */; };
 		B5FA778A2705BD31000E1644 /* 01_InitialUploadMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77892705BD31000E1644 /* 01_InitialUploadMigration.swift */; };
@@ -256,6 +258,8 @@
 		B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBRevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
+		B5F6F1D6272A9B9700F702BE /* DatalessTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessTicketValidator.swift; sourceTree = "<group>"; };
+		B5F6F1D8272AA48400F702BE /* SignedDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedDataStore.swift; sourceTree = "<group>"; };
 		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
 		B5FA77832705A829000E1644 /* FailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedCheckIn.swift; sourceTree = "<group>"; };
 		B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBFailedCheckIn.swift; sourceTree = "<group>"; };
@@ -634,6 +638,7 @@
 				DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */,
 				DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */,
 				DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */,
+				B5F6F1D6272A9B9700F702BE /* DatalessTicketValidator.swift */,
 			);
 			path = TicketValidator;
 			sourceTree = "<group>";
@@ -722,6 +727,7 @@
 		DC8467A5225B7FC70013F647 /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
+				B5F6F1D8272AA48400F702BE /* SignedDataStore.swift */,
 				DC8467A6225B99590013F647 /* DataStore.swift */,
 				DCC5D84B2295686000DAEFA0 /* FMDBDataStore */,
 			);
@@ -1174,6 +1180,7 @@
 				DC66800122CA09A0002EF1C1 /* FMDBQuestion.swift in Sources */,
 				DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */,
 				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
+				B5F6F1D7272A9B9700F702BE /* DatalessTicketValidator.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
 				B525796427292250006D9EE9 /* EventsDownloader.swift in Sources */,
 				B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */,
@@ -1188,6 +1195,7 @@
 				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
 				B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
+				B5F6F1D9272AA48400F702BE /* SignedDataStore.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
 				B52579622729223F006D9EE9 /* SubEventsDownloader.swift in Sources */,
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
