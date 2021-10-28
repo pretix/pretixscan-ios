@@ -46,9 +46,6 @@ public protocol DataStore: SignedDataStore {
     func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
                               completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
     
-    /// Retrieve an `Item` instance with the specified identifier, is such an Item exists
-    func getItem(by identifier: Identifier, in event: Event) -> Item?
-    
     /// Retrieve an `Order` instance with the specified identifier, is such an Order exists
     func getOrder(by code: String, in event: Event) -> Order?
     

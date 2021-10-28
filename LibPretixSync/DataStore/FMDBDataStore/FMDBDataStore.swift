@@ -250,11 +250,6 @@ extension FMDBDataStore {
         return checkIns
     }
 
-    public func getItem(by identifier: Identifier, in event: Event) -> Item? {
-        let queue = databaseQueue(with: event)
-        return Item.getItem(by: identifier, in: queue)
-    }
-
     public func getOrder(by code: String, in event: Event) -> Order? {
         let queue = databaseQueue(with: event)
         return Order.getOrder(by: code, in: queue)
@@ -506,6 +501,12 @@ private extension FMDBDataStore {
 
 // MARK: - SignedDataStore
 extension FMDBDataStore {
+    
+    public func getItem(by identifier: Identifier, in event: Event) -> Item? {
+        let queue = databaseQueue(with: event)
+        return Item.getItem(by: identifier, in: queue)
+    }
+    
     public func getValidKeys(for event: Event) -> Result<[EventValidKey], Error> {
         var items = [EventValidKey]()
 

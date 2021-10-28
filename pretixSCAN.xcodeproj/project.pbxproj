@@ -60,6 +60,8 @@
 		B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1DC272AAE7B00F702BE /* list2.json */; };
 		B5F6F1DF272AAF4700F702BE /* list1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1DE272AAF4700F702BE /* list1.json */; };
 		B5F6F1E1272AAFCD00F702BE /* list4.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1E0272AAFCD00F702BE /* list4.json */; };
+		B5F6F1E4272AB35000F702BE /* item1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1E2272AB35000F702BE /* item1.json */; };
+		B5F6F1E5272AB35000F702BE /* item2.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1E3272AB35000F702BE /* item2.json */; };
 		B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77832705A829000E1644 /* FailedCheckIn.swift */; };
 		B5FA77862705B553000E1644 /* FMDBFailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */; };
 		B5FA778A2705BD31000E1644 /* 01_InitialUploadMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77892705BD31000E1644 /* 01_InitialUploadMigration.swift */; };
@@ -268,6 +270,8 @@
 		B5F6F1DC272AAE7B00F702BE /* list2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list2.json; sourceTree = "<group>"; };
 		B5F6F1DE272AAF4700F702BE /* list1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list1.json; sourceTree = "<group>"; };
 		B5F6F1E0272AAFCD00F702BE /* list4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list4.json; sourceTree = "<group>"; };
+		B5F6F1E2272AB35000F702BE /* item1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item1.json; sourceTree = "<group>"; };
+		B5F6F1E3272AB35000F702BE /* item2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item2.json; sourceTree = "<group>"; };
 		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
 		B5FA77832705A829000E1644 /* FailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedCheckIn.swift; sourceTree = "<group>"; };
 		B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBFailedCheckIn.swift; sourceTree = "<group>"; };
@@ -502,6 +506,8 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B5F6F1E2272AB35000F702BE /* item1.json */,
+				B5F6F1E3272AB35000F702BE /* item2.json */,
 				B5F6F1E0272AAFCD00F702BE /* list4.json */,
 				B5F6F1DE272AAF4700F702BE /* list1.json */,
 				B5F6F1DC272AAE7B00F702BE /* list2.json */,
@@ -1037,8 +1043,10 @@
 			files = (
 				B5F6F1E1272AAFCD00F702BE /* list4.json in Resources */,
 				B5BD3E472715D4B0003FEB74 /* event1.json in Resources */,
+				B5F6F1E4272AB35000F702BE /* item1.json in Resources */,
 				B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */,
 				B5B990A726EB50160029D614 /* errorRules.json in Resources */,
+				B5F6F1E5272AB35000F702BE /* item2.json in Resources */,
 				B5F6F1DF272AAF4700F702BE /* list1.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

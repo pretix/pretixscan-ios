@@ -1,0 +1,36 @@
+{
+  "id": 2,
+  "category": null,
+  "name": {
+    "en": "Merch"
+  },
+  "internal_name": null,
+  "active": true,
+  "sales_channels": [
+    "web"
+  ],
+  "description": {},
+  "default_price": "12.00",
+  "free_price": false,
+  "tax_rate": "0.00",
+  "tax_rule": null,
+  "admission": false,
+  "position": 0,
+  "picture": null,
+  "available_from": null,
+  "available_until": null,
+  "require_voucher": false,
+  "hide_without_voucher": false,
+  "allow_cancel": true,
+  "require_bundling": false,
+  "min_per_order": null,
+  "max_per_order": null,
+  "checkin_attention": false,
+  "has_variations": false,
+  "variations": [],
+  "addons": [],
+  "bundles": [],
+  "original_price": null,
+  "require_approval": false,
+  "generate_tickets": null
+}

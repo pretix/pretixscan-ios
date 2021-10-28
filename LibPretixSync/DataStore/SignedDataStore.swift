@@ -16,4 +16,9 @@ public protocol SignedDataStore: AnyObject {
     
     /// Return the list of cached `RevokedSecret` for the specified event.
     func getRevokedKeys(for event: Event) -> Result<[RevokedSecret], Error>
+    
+    
+    // MARK: - Retrieving
+    /// Retrieve an `Item` instance with the specified identifier, is such an Item exists
+    func getItem(by identifier: Identifier, in event: Event) -> Item?
 }

@@ -42,83 +42,88 @@ class OfflineValidationTests: XCTestCase {
         XCTAssertNotNil(signedTicket)
     }
     
-    var mockSignedTicket: SignedTicketData {
-        let eventJsonData = testFileContents("event1", "json")
-        let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
-        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
-        return SignedTicketData(base64: qrCode, keys: event.validKeys!)!
-    }
-
     func testEventHasNoKeys() throws {
         // arrange
-        let eventJsonData = testFileContents("event1", "json")
-        let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
         let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
-        let dataStore = MockDataStore(keys: [], revoked: [qrCode])
+        let dataStore = MockDataStore(keys: [], revoked: [qrCode], items: [])
         let sut = TicketSignatureValidator(dataStore: dataStore)
         
         // act
-        let result = sut.redeem(secret: qrCode, event: event)
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
         XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.noKeys))
     }
     
     func testRevoked() throws {
         // arrange
-        let eventJsonData = testFileContents("event1", "json")
-        let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
         let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
-        let dataStore = MockDataStore(keys: event.validKeys!.pems, revoked: [qrCode])
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [qrCode], items: [])
         let sut = TicketSignatureValidator(dataStore: dataStore)
         
         // act
-        let result = sut.redeem(secret: qrCode, event: event)
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
         XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.revoked))
     }
     
     func testInvalid() throws {
         // arrange
-        let eventJsonData = testFileContents("event1", "json")
-        let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
         let qrCode = "foo"
-        let dataStore = MockDataStore(keys: event.validKeys!.pems, revoked: ["bar"])
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: ["bar"], items: [])
         let sut = TicketSignatureValidator(dataStore: dataStore)
         
         // act
-        let result = sut.redeem(secret: qrCode, event: event)
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
         XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.invalid))
     }
     
     func testUnknownProductWithLimitProducts() throws {
+        // arrange
         let jsonData = testFileContents("list2", "json")
         let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
-        let sut = TicketProductValidator(list: list)
-        let result = sut.redeem(ticket: mockSignedTicket)
+        let dataStore = mockDataStore
+        let sut = TicketProductValidator(list: list, dataStore: dataStore)
+        // act
+        let result = sut.redeem(ticket: mockSignedTicket, event: mockEvent)
+        // assert
         XCTAssertEqual(result, Result.failure(TicketProductValidator.ValidationError.product))
     }
     
     func testValidWithAllProducts() throws {
+        // arrange
         let jsonData = testFileContents("list1", "json")
         let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
-        let sut = TicketProductValidator(list: list)
-        let result = sut.redeem(ticket: mockSignedTicket)
-        XCTAssertEqual(result, .success(mockSignedTicket))
+        let dataStore = mockDataStore
+        let sut = TicketProductValidator(list: list, dataStore: dataStore)
+        // act
+        let result = sut.redeem(ticket: mockSignedTicket, event: mockEvent)
+        // assert
+        XCTAssertEqual(result, .success(mockItems[0]))
     }
     
     func testInvalidSubEvent() throws {
+        // arrange
         let jsonData = testFileContents("list4", "json")
         let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
-        let sut = TicketProductValidator(list: list)
-        let result = sut.redeem(ticket: mockSignedTicket)
+        let dataStore = mockDataStore
+        let sut = TicketProductValidator(list: list, dataStore: dataStore)
+        // act
+        let result = sut.redeem(ticket: mockSignedTicket, event: mockEvent)
+        // assert
         XCTAssertEqual(result, Result.failure(TicketProductValidator.ValidationError.invalidProductSubEvent))
     }
+    
+    
+    //MARK: - Mocks
+    
     
     class MockDataStore: SignedDataStore {
         private let keys: [String]
         private let revoked: [String]
+        private let items: [Item]
         
-        init(keys: [String], revoked: [String]) {
+        init(keys: [String], revoked: [String], items: [Item]) {
             self.keys = keys
             self.revoked = revoked
+            self.items = items
         }
         
         func getValidKeys(for event: Event) -> Result<[EventValidKey], Error> {
@@ -128,5 +133,30 @@ class OfflineValidationTests: XCTestCase {
         func getRevokedKeys(for event: Event) -> Result<[RevokedSecret], Error> {
             .success(revoked.map({RevokedSecret(id: 0, secret: $0)}))
         }
+        
+        func getItem(by identifier: Identifier, in event: Event) -> Item? {
+            return items.first(where: {$0.identifier == identifier})
+        }
+    }
+    
+    var mockEvent: Event {
+        let eventJsonData = testFileContents("event1", "json")
+        return try! jsonDecoder.decode(Event.self, from: eventJsonData)
+    }
+    
+    var mockSignedTicket: SignedTicketData {
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        return SignedTicketData(base64: qrCode, keys: mockEvent.validKeys!)!
+    }
+    
+    var mockDataStore: SignedDataStore {
+        return MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: mockItems)
+    }
+    
+    var mockItems: [Item] {
+        ["item1", "item2"].map({item -> Item in
+            let jsonData = testFileContents(item, "json")
+            return try! jsonDecoder.decode(Item.self, from: jsonData)
+        })
     }
 }

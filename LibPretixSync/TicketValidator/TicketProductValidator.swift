@@ -10,13 +10,15 @@ import Foundation
 
 final class TicketProductValidator {
     private var checkInList: CheckInList
+    weak var dataStore: SignedDataStore?
     
-    init(list: CheckInList) {
+    init(list: CheckInList, dataStore: SignedDataStore) {
         self.checkInList = list
+        self.dataStore = dataStore
     }
     
     
-    func redeem(ticket: SignedTicketData) -> Result<SignedTicketData, ValidationError> {
+    func redeem(ticket: SignedTicketData, event: Event) -> Result<Item, ValidationError> {
         // is the product part of the check-in list
         if !checkInList.allProducts {
             if let limitProducts = checkInList.limitProducts, limitProducts.contains(ticket.item) {
@@ -29,7 +31,12 @@ final class TicketProductValidator {
             return .failure(.invalidProductSubEvent)
         }
         
-        return .success(ticket)
+        // does the ticket correspond to a known product
+        guard let item = dataStore?.getItem(by: ticket.item, in: event) else {
+            return .failure(.unknownItem)
+        }
+        
+        return .success(item)
     }
     
     enum ValidationError: Error, Hashable, Equatable, CaseIterable {
@@ -37,5 +44,7 @@ final class TicketProductValidator {
         case product
         /// The subevent of the ticket is not part of the check-in list
         case invalidProductSubEvent
+        /// The ticket item identifier is unknown
+        case unknownItem
     }
 }
