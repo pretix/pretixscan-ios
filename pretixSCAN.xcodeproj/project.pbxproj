@@ -54,8 +54,12 @@
 		B5DBB0CB2721B6EF00FFBE23 /* RevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */; };
 		B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */; };
 		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
-		B5F6F1D7272A9B9700F702BE /* DatalessTicketValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D6272A9B9700F702BE /* DatalessTicketValidator.swift */; };
+		B5F6F1D7272A9B9700F702BE /* TicketSignatureValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D6272A9B9700F702BE /* TicketSignatureValidator.swift */; };
 		B5F6F1D9272AA48400F702BE /* SignedDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D8272AA48400F702BE /* SignedDataStore.swift */; };
+		B5F6F1DB272AA7E100F702BE /* TicketProductValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1DA272AA7E100F702BE /* TicketProductValidator.swift */; };
+		B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1DC272AAE7B00F702BE /* list2.json */; };
+		B5F6F1DF272AAF4700F702BE /* list1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1DE272AAF4700F702BE /* list1.json */; };
+		B5F6F1E1272AAFCD00F702BE /* list4.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1E0272AAFCD00F702BE /* list4.json */; };
 		B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77832705A829000E1644 /* FailedCheckIn.swift */; };
 		B5FA77862705B553000E1644 /* FMDBFailedCheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */; };
 		B5FA778A2705BD31000E1644 /* 01_InitialUploadMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FA77892705BD31000E1644 /* 01_InitialUploadMigration.swift */; };
@@ -258,8 +262,12 @@
 		B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBRevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
-		B5F6F1D6272A9B9700F702BE /* DatalessTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessTicketValidator.swift; sourceTree = "<group>"; };
+		B5F6F1D6272A9B9700F702BE /* TicketSignatureValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketSignatureValidator.swift; sourceTree = "<group>"; };
 		B5F6F1D8272AA48400F702BE /* SignedDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedDataStore.swift; sourceTree = "<group>"; };
+		B5F6F1DA272AA7E100F702BE /* TicketProductValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketProductValidator.swift; sourceTree = "<group>"; };
+		B5F6F1DC272AAE7B00F702BE /* list2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list2.json; sourceTree = "<group>"; };
+		B5F6F1DE272AAF4700F702BE /* list1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list1.json; sourceTree = "<group>"; };
+		B5F6F1E0272AAFCD00F702BE /* list4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list4.json; sourceTree = "<group>"; };
 		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
 		B5FA77832705A829000E1644 /* FailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedCheckIn.swift; sourceTree = "<group>"; };
 		B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBFailedCheckIn.swift; sourceTree = "<group>"; };
@@ -494,6 +502,9 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B5F6F1E0272AAFCD00F702BE /* list4.json */,
+				B5F6F1DE272AAF4700F702BE /* list1.json */,
+				B5F6F1DC272AAE7B00F702BE /* list2.json */,
 				B5BD3E462715D4B0003FEB74 /* event1.json */,
 				B5B990A626EB50160029D614 /* errorRules.json */,
 			);
@@ -638,7 +649,8 @@
 				DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */,
 				DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */,
 				DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */,
-				B5F6F1D6272A9B9700F702BE /* DatalessTicketValidator.swift */,
+				B5F6F1D6272A9B9700F702BE /* TicketSignatureValidator.swift */,
+				B5F6F1DA272AA7E100F702BE /* TicketProductValidator.swift */,
 			);
 			path = TicketValidator;
 			sourceTree = "<group>";
@@ -1023,8 +1035,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F6F1E1272AAFCD00F702BE /* list4.json in Resources */,
 				B5BD3E472715D4B0003FEB74 /* event1.json in Resources */,
+				B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */,
 				B5B990A726EB50160029D614 /* errorRules.json in Resources */,
+				B5F6F1DF272AAF4700F702BE /* list1.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1180,7 +1195,7 @@
 				DC66800122CA09A0002EF1C1 /* FMDBQuestion.swift in Sources */,
 				DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */,
 				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
-				B5F6F1D7272A9B9700F702BE /* DatalessTicketValidator.swift in Sources */,
+				B5F6F1D7272A9B9700F702BE /* TicketSignatureValidator.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
 				B525796427292250006D9EE9 /* EventsDownloader.swift in Sources */,
 				B5FA77842705A829000E1644 /* FailedCheckIn.swift in Sources */,
@@ -1254,6 +1269,7 @@
 				B525795327291E26006D9EE9 /* APIClient+EventDetail.swift in Sources */,
 				DC667FFB22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift in Sources */,
 				DC8467BD225CF4000013F647 /* Item.swift in Sources */,
+				B5F6F1DB272AA7E100F702BE /* TicketProductValidator.swift in Sources */,
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC3CA583228DCF870003D6D3 /* FMDBModel.swift in Sources */,

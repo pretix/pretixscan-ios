@@ -41,19 +41,25 @@ class OfflineValidationTests: XCTestCase {
         // assert
         XCTAssertNotNil(signedTicket)
     }
-
     
+    var mockSignedTicket: SignedTicketData {
+        let eventJsonData = testFileContents("event1", "json")
+        let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        return SignedTicketData(base64: qrCode, keys: event.validKeys!)!
+    }
+
     func testEventHasNoKeys() throws {
         // arrange
         let eventJsonData = testFileContents("event1", "json")
         let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
         let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
         let dataStore = MockDataStore(keys: [], revoked: [qrCode])
-        let sut = DatalessTicketValidator(dataStore: dataStore)
+        let sut = TicketSignatureValidator(dataStore: dataStore)
         
         // act
         let result = sut.redeem(secret: qrCode, event: event)
-        XCTAssertEqual(result, Result.failure(DatalessTicketValidator.ValidationError.noKeys))
+        XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.noKeys))
     }
     
     func testRevoked() throws {
@@ -62,11 +68,11 @@ class OfflineValidationTests: XCTestCase {
         let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
         let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
         let dataStore = MockDataStore(keys: event.validKeys!.pems, revoked: [qrCode])
-        let sut = DatalessTicketValidator(dataStore: dataStore)
+        let sut = TicketSignatureValidator(dataStore: dataStore)
         
         // act
         let result = sut.redeem(secret: qrCode, event: event)
-        XCTAssertEqual(result, Result.failure(DatalessTicketValidator.ValidationError.revoked))
+        XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.revoked))
     }
     
     func testInvalid() throws {
@@ -75,11 +81,35 @@ class OfflineValidationTests: XCTestCase {
         let event = try! jsonDecoder.decode(Event.self, from: eventJsonData)
         let qrCode = "foo"
         let dataStore = MockDataStore(keys: event.validKeys!.pems, revoked: ["bar"])
-        let sut = DatalessTicketValidator(dataStore: dataStore)
+        let sut = TicketSignatureValidator(dataStore: dataStore)
         
         // act
         let result = sut.redeem(secret: qrCode, event: event)
-        XCTAssertEqual(result, Result.failure(DatalessTicketValidator.ValidationError.invalid))
+        XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.invalid))
+    }
+    
+    func testUnknownProductWithLimitProducts() throws {
+        let jsonData = testFileContents("list2", "json")
+        let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
+        let sut = TicketProductValidator(list: list)
+        let result = sut.redeem(ticket: mockSignedTicket)
+        XCTAssertEqual(result, Result.failure(TicketProductValidator.ValidationError.product))
+    }
+    
+    func testValidWithAllProducts() throws {
+        let jsonData = testFileContents("list1", "json")
+        let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
+        let sut = TicketProductValidator(list: list)
+        let result = sut.redeem(ticket: mockSignedTicket)
+        XCTAssertEqual(result, .success(mockSignedTicket))
+    }
+    
+    func testInvalidSubEvent() throws {
+        let jsonData = testFileContents("list4", "json")
+        let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
+        let sut = TicketProductValidator(list: list)
+        let result = sut.redeem(ticket: mockSignedTicket)
+        XCTAssertEqual(result, Result.failure(TicketProductValidator.ValidationError.invalidProductSubEvent))
     }
     
     class MockDataStore: SignedDataStore {

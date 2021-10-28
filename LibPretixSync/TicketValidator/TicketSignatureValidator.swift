@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class DatalessTicketValidator {
+final class TicketSignatureValidator {
     weak var dataStore: SignedDataStore?
     
     init(dataStore: SignedDataStore) {
@@ -18,15 +18,18 @@ final class DatalessTicketValidator {
     func redeem(secret: String, event: Event) -> Result<SignedTicketData, ValidationError> {
         logger.debug("Attempting to validate ticket signature without data")
         
+        // is the event configured to decode keys
         guard let eventKeys = try? dataStore?.getValidKeys(for: event).get(), !eventKeys.isEmpty else {
             logger.debug("Event '\(event.slug)' has no known valid keys")
             return .failure(.noKeys)
         }
         
+        // is the ticket secret on the revokation list
         if let revokedKeys = try? dataStore?.getRevokedKeys(for: event).get(), revokedKeys.contains(where: {$0.secret == secret}) {
             return .failure(.revoked)
         }
         
+        // does the secret decode with available keys
         guard let signedTicket = SignedTicketData(base64: secret, keys: eventKeys) else {
             return .failure(.invalid)
         }
