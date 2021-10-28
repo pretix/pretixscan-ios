@@ -34,6 +34,7 @@ class OrderPositionTests: XCTestCase {
       "addon_to": null,
       "subevent": null,
       "checkins": [],
+      "order__status": "p",
       "downloads": [
         {
           "output": "pdf",
