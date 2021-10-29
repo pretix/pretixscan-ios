@@ -117,26 +117,12 @@ extension RedemptionResponse {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed, questions: nil)
     }
     
-    init(validationError: TicketSignatureChecker.ValidationError) {
-        switch validationError {
-        case .noKeys:
-            self = Self.invalid
-        case .invalid:
-            self = Self.invalid
-        case .revoked:
-            self = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .revoked, questions: nil)
-        }
+    static var revoked: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .revoked, questions: nil)
     }
     
-    init(validationError: TicketProductChecker.ValidationError) {
-        switch validationError {
-        case .product(_):
-            self = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, questions: nil)
-        case .invalidProductSubEvent:
-            self = Self.invalid
-        case .unknownItem(_):
-            self = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, questions: nil)
-        }
+    static var product: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, questions: nil)
     }
     
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {
