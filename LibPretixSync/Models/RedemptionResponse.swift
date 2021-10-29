@@ -73,6 +73,9 @@ public struct RedemptionResponse: Codable, Equatable {
         
         /// The ticket signature has been revoked
         case revoked
+        
+        /// The ticket signature or event reference is not correct
+        case invalid
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -106,7 +109,7 @@ extension RedemptionResponse {
 
 extension RedemptionResponse {
     static var invalid: Self {
-        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: nil, questions: nil)
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .revoked, questions: nil)
     }
     
     static var redeemed: Self {

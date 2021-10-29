@@ -38,6 +38,8 @@ extension RedemptionResponse.ErrorReason {
             return NSLocalizedString("Not allowed", comment: "Not allowed (custom rule)")
         case .revoked:
             return NSLocalizedString("Revoked", comment: "Revoked (ticket signature)")
+        case .invalid:
+            return NSLocalizedString("Invalid", comment: "Invalid (ticket signature)")
         }
     }
 }
