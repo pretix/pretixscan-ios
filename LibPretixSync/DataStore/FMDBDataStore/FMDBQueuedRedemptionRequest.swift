@@ -36,6 +36,10 @@ extension QueuedRedemptionRequest: FMDBModel {
     static var retrieveOneRequestQuery = """
     SELECT * FROM "\(stringName)" ORDER BY datetime ASC LIMIT 1;
     """
+    
+    static var retrieveForTicketInEvent = """
+    SELECT * FROM "\(stringName)" WHERE event=? AND secret=? ORDER BY datetime ASC;
+    """
 
     static var deleteOneRequestQuery = """
     DELETE FROM "\(stringName)" WHERE nonce=?;

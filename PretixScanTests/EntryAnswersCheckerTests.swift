@@ -108,6 +108,10 @@ class EntryAnswersCheckerTests: XCTestCase {
         func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {
             return .success(questions)
         }
+        
+        func getQueuedCheckIns(_ secret: String, eventSlug: String) -> Result<[QueuedRedemptionRequest], Error> {
+            return .success([])
+        }
     }
     
     

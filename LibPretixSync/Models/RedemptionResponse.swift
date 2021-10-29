@@ -113,6 +113,10 @@ extension RedemptionResponse {
         RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
     }
     
+    static var alreadyRedeemed: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed, questions: nil)
+    }
+    
     init(validationError: TicketSignatureChecker.ValidationError) {
         switch validationError {
         case .noKeys:

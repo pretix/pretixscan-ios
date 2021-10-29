@@ -34,8 +34,19 @@ final class DatalessTicketValidator {
                 }
                 switch TicketEntryAnswersChecker(item: item, dataStore: dataStore).redeem(ticket: signedTicket, event: event, answers: answers) {
                 case .success:
-                    let variation = TicketVariationChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, item: item)
-                    fatalError("Not implemented yet")
+                    switch TicketMultiEntryChecker(list: checkInList, dataStore: dataStore).redeem(secret: secret, event: event) {
+                    case .success():
+                        return .success(RedemptionResponse.redeemed)
+                    case .failure(let check):
+                        switch check {
+                        case .alreadyRedeemed:
+                            return .success(RedemptionResponse.alreadyRedeemed)
+                        case .unknownError:
+                            return .failure(APIError.notFound)
+                        }
+                    }
+//                    let variation = TicketVariationChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, item: item)
+//                    fatalError("Not implemented yet")
                 case .failure(let check):
                     switch check {
                     case .incomplete(questions: let questions):

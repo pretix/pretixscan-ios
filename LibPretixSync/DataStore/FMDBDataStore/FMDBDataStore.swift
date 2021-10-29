@@ -539,4 +539,20 @@ extension FMDBDataStore {
 
         return .success(items)
     }
+    
+    public func getQueuedCheckIns(_ secret: String, eventSlug: String) -> Result<[QueuedRedemptionRequest], Error> {
+        var items = [QueuedRedemptionRequest]()
+        
+        uploadDataBaseQueue.inDatabase { database in
+            if let result = try? database.executeQuery(QueuedRedemptionRequest.retrieveForTicketInEvent, values: [eventSlug, secret]) {
+                while result.next() {
+                    if let item = QueuedRedemptionRequest.from(result: result, in: database) {
+                        items.append(item)
+                    }
+                }
+            }
+        }
+
+        return .success(items)
+    }
 }

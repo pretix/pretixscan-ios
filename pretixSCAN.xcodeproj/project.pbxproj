@@ -35,6 +35,7 @@
 		B553421E272BF8AF003008AD /* question3.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421B272BF8AF003008AD /* question3.json */; };
 		B553421F272BF8AF003008AD /* question2.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421C272BF8AF003008AD /* question2.json */; };
 		B5534220272BF8AF003008AD /* question1.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421D272BF8AF003008AD /* question1.json */; };
+		B5534222272BFFCE003008AD /* TicketMultiEntryChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
 		B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */; };
@@ -253,6 +254,7 @@
 		B553421B272BF8AF003008AD /* question3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question3.json; sourceTree = "<group>"; };
 		B553421C272BF8AF003008AD /* question2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question2.json; sourceTree = "<group>"; };
 		B553421D272BF8AF003008AD /* question1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question1.json; sourceTree = "<group>"; };
+		B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketMultiEntryChecker.swift; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
 		B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		B58CF83726F3104F00FADA2A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 				B5F6F1E6272AB97C00F702BE /* TicketVariationChecker.swift */,
 				B5F6F1EB272ACF5400F702BE /* TicketEntryAnswersChecker.swift */,
 				B5F6F1E9272AC3E000F702BE /* DatalessTicketValidator.swift */,
+				B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */,
 			);
 			path = Checkers;
 			sourceTree = "<group>";
@@ -1268,6 +1271,7 @@
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
 				DC0052EA2260D385002D985B /* Model.swift in Sources */,
 				B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */,
+				B5534222272BFFCE003008AD /* TicketMultiEntryChecker.swift in Sources */,
 				DCDD82DA224BCBDE00DC0200 /* AdvancedCheckInStatusItemTableViewCell.swift in Sources */,
 				DCC5D8552295697C00DAEFA0 /* FMDBItem.swift in Sources */,
 				DC17F2382302B9480044764A /* SingleChoiceQuestionCell.swift in Sources */,
