@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class TicketSignatureValidator {
+final class TicketSignatureChecker {
     weak var dataStore: SignedDataStore?
     
     init(dataStore: SignedDataStore) {
@@ -38,7 +38,7 @@ final class TicketSignatureValidator {
         return .success(signedTicket)
     }
     
-    enum ValidationError: Error, Hashable, Equatable, CaseIterable {
+    enum ValidationError: Error, Hashable, Equatable {
         /// The event has no valid signing keys which can be used to validate the ticket
         case noKeys
         /// The validity of the secret could not be confirmed by the event's signining keys

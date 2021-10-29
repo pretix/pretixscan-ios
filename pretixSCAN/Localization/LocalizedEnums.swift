@@ -36,6 +36,8 @@ extension RedemptionResponse.ErrorReason {
             return NSLocalizedString("Product", comment: "Ticket is Unpaid")
         case .rules:
             return NSLocalizedString("Not allowed", comment: "Not allowed (custom rule)")
+        case .revoked:
+            return NSLocalizedString("Revoked", comment: "Revoked (ticket signature)")
         }
     }
 }

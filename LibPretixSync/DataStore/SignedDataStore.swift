@@ -21,4 +21,7 @@ public protocol SignedDataStore: AnyObject {
     // MARK: - Retrieving
     /// Retrieve an `Item` instance with the specified identifier, is such an Item exists
     func getItem(by identifier: Identifier, in event: Event) -> Item?
+    
+    /// Retrieve Questions that should be answered for the specified Item
+    func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error>
 }

@@ -63,7 +63,7 @@ public class OfflineTicketValidator: TicketValidator {
         }
         
         DispatchQueue.global().async {
-            guard let result = self.configStore.dataStore?.getCheckInListStatus(checkInList, in: event, subEvent: nil) else { return }
+            guard let result = self.configStore.dataStore?.getCheckInListStatus(checkInList, in: event) else { return }
             switch result {
             case .success(let checkInListStatus):
                 completionHandler(checkInListStatus, nil)
@@ -111,6 +111,22 @@ public class OfflineTicketValidator: TicketValidator {
         })
     }
     
+    
+    
+    
+    func redeemWithoutData(dataStore: DataStore, _ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
+                as type: String,
+                completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+        logger.debug("Attempting to redeem without data")
+        switch DatalessTicketValidator(dataStore: dataStore).redeem(checkInList, event, secret, answers: answers, as: type) {
+        case .success(let response):
+            completionHandler(response, nil)
+        case .failure(let error):
+            completionHandler(nil, error)
+        }
+    }
+    
+    
     func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                 as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
@@ -120,9 +136,13 @@ public class OfflineTicketValidator: TicketValidator {
         let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
                                                      in: event, as: type, in: checkInList)
         
+        guard let dataStore = configStore.dataStore else {
+            completionHandler(nil, APIError.notConfigured(message: "Redeeming without a nil datastore"))
+            return
+        }
+        
         guard var response = response else {
-            completionHandler(nil, APIError.notFound)
-            // validateWithoutData(secret: secret, event: event, completionHandler: completionHandler)
+            redeemWithoutData(dataStore: dataStore, checkInList, event, secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, completionHandler: completionHandler)
             return
         }
         

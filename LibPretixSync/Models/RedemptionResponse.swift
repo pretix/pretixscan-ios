@@ -70,6 +70,9 @@ public struct RedemptionResponse: Codable, Equatable {
 
         /// A custom rules has forbidden the scan
         case rules
+        
+        /// The ticket signature has been revoked
+        case revoked
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -104,5 +107,35 @@ extension RedemptionResponse {
 extension RedemptionResponse {
     static var invalid: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: nil, questions: nil)
+    }
+    
+    static var redeemed: Self {
+        RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
+    }
+    
+    init(validationError: TicketSignatureChecker.ValidationError) {
+        switch validationError {
+        case .noKeys:
+            self = Self.invalid
+        case .invalid:
+            self = Self.invalid
+        case .revoked:
+            self = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .revoked, questions: nil)
+        }
+    }
+    
+    init(validationError: TicketProductChecker.ValidationError) {
+        switch validationError {
+        case .product(_):
+            self = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, questions: nil)
+        case .invalidProductSubEvent:
+            self = Self.invalid
+        case .unknownItem(_):
+            self = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, questions: nil)
+        }
+    }
+    
+    init(incompleteQuestions: [Question], _ answers: [Answer]?) {
+        self = RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: nil, lastCheckIn: nil, questions: incompleteQuestions, answers: answers)
     }
 }

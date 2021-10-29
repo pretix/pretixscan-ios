@@ -129,6 +129,9 @@ extension FailedCheckIn {
                 case .rules:
                     self =  FailedCheckIn(.rules, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
+                case .revoked:
+                    self =  FailedCheckIn(.revoked, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    return
                 }
             } else {
                 EventLogger.log(event: "FailedCheckIn with no error reason", category: .configuration, level: .warning, type: .info)

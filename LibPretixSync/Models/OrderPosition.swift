@@ -183,6 +183,6 @@ public struct OrderPosition: Model {
         }
 
         // Return a positive redemption response
-        return RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, position: self, lastCheckIn: nil, questions: nil, answers: nil)
+        return RedemptionResponse.redeemed
     }
 }

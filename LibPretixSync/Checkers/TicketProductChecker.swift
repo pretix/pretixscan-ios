@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class TicketProductValidator {
+final class TicketProductChecker {
     private var checkInList: CheckInList
     weak var dataStore: SignedDataStore?
     
@@ -22,7 +22,7 @@ final class TicketProductValidator {
         // is the product part of the check-in list
         if !checkInList.allProducts {
             if let limitProducts = checkInList.limitProducts, limitProducts.contains(ticket.item) {
-                return .failure(.product)
+                return .failure(.product(subEvent: ticket.subEvent))
             }
         }
         
@@ -33,18 +33,18 @@ final class TicketProductValidator {
         
         // does the ticket correspond to a known product
         guard let item = dataStore?.getItem(by: ticket.item, in: event) else {
-            return .failure(.unknownItem)
+            return .failure(.unknownItem(subEvent: ticket.subEvent))
         }
         
         return .success(item)
     }
     
-    enum ValidationError: Error, Hashable, Equatable, CaseIterable {
+    enum ValidationError: Error, Hashable, Equatable {
         /// The product of the ticket is not part of the check-in list
-        case product
+        case product(subEvent: Int)
         /// The subevent of the ticket is not part of the check-in list
         case invalidProductSubEvent
         /// The ticket item identifier is unknown
-        case unknownItem
+        case unknownItem(subEvent: Int)
     }
 }

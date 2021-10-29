@@ -46,33 +46,33 @@ class OfflineValidationTests: XCTestCase {
         // arrange
         let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
         let dataStore = MockDataStore(keys: [], revoked: [qrCode], items: [])
-        let sut = TicketSignatureValidator(dataStore: dataStore)
+        let sut = TicketSignatureChecker(dataStore: dataStore)
         
         // act
         let result = sut.redeem(secret: qrCode, event: mockEvent)
-        XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.noKeys))
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.noKeys))
     }
     
     func testRevoked() throws {
         // arrange
         let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
         let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [qrCode], items: [])
-        let sut = TicketSignatureValidator(dataStore: dataStore)
+        let sut = TicketSignatureChecker(dataStore: dataStore)
         
         // act
         let result = sut.redeem(secret: qrCode, event: mockEvent)
-        XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.revoked))
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.revoked))
     }
     
     func testInvalid() throws {
         // arrange
         let qrCode = "foo"
         let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: ["bar"], items: [])
-        let sut = TicketSignatureValidator(dataStore: dataStore)
+        let sut = TicketSignatureChecker(dataStore: dataStore)
         
         // act
         let result = sut.redeem(secret: qrCode, event: mockEvent)
-        XCTAssertEqual(result, Result.failure(TicketSignatureValidator.ValidationError.invalid))
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.invalid))
     }
     
     func testUnknownProductWithLimitProducts() throws {
@@ -80,11 +80,11 @@ class OfflineValidationTests: XCTestCase {
         let jsonData = testFileContents("list2", "json")
         let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
         let dataStore = mockDataStore
-        let sut = TicketProductValidator(list: list, dataStore: dataStore)
+        let sut = TicketProductChecker(list: list, dataStore: dataStore)
         // act
         let result = sut.redeem(ticket: mockSignedTicket, event: mockEvent)
         // assert
-        XCTAssertEqual(result, Result.failure(TicketProductValidator.ValidationError.product))
+        XCTAssertEqual(result, Result.failure(TicketProductChecker.ValidationError.product(subEvent: mockSignedTicket.subEvent)))
     }
     
     func testValidWithAllProducts() throws {
@@ -92,7 +92,7 @@ class OfflineValidationTests: XCTestCase {
         let jsonData = testFileContents("list1", "json")
         let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
         let dataStore = mockDataStore
-        let sut = TicketProductValidator(list: list, dataStore: dataStore)
+        let sut = TicketProductChecker(list: list, dataStore: dataStore)
         // act
         let result = sut.redeem(ticket: mockSignedTicket, event: mockEvent)
         // assert
@@ -104,11 +104,11 @@ class OfflineValidationTests: XCTestCase {
         let jsonData = testFileContents("list4", "json")
         let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
         let dataStore = mockDataStore
-        let sut = TicketProductValidator(list: list, dataStore: dataStore)
+        let sut = TicketProductChecker(list: list, dataStore: dataStore)
         // act
         let result = sut.redeem(ticket: mockSignedTicket, event: mockEvent)
         // assert
-        XCTAssertEqual(result, Result.failure(TicketProductValidator.ValidationError.invalidProductSubEvent))
+        XCTAssertEqual(result, Result.failure(TicketProductChecker.ValidationError.invalidProductSubEvent))
     }
     
     
@@ -136,6 +136,10 @@ class OfflineValidationTests: XCTestCase {
         
         func getItem(by identifier: Identifier, in event: Event) -> Item? {
             return items.first(where: {$0.identifier == identifier})
+        }
+        
+        func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {
+            return .success([])
         }
     }
     

@@ -255,7 +255,7 @@ extension FMDBDataStore {
         return Order.getOrder(by: code, in: queue)
     }
 
-    public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event, subEvent: SubEvent?) -> Result<CheckInListStatus, Error> {
+    public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event) -> Result<CheckInListStatus, Error> {
         let queue = databaseQueue(with: event)
 
         // Get CheckIn Count
@@ -301,21 +301,6 @@ extension FMDBDataStore {
         return .success(status)
     }
 
-    public func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {
-        var questions = [Question]()
-
-        databaseQueue(with: event).inDatabase { database in
-            if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: []) {
-                while result.next() {
-                    if let question = Question.from(result: result, in: database), question.items.contains(item.identifier) {
-                        questions.append(question)
-                    }
-                }
-            }
-        }
-
-        return .success(questions)
-    }
 }
 
 // MARK: - Checking In
@@ -501,6 +486,22 @@ private extension FMDBDataStore {
 
 // MARK: - SignedDataStore
 extension FMDBDataStore {
+    
+    public func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {
+        var questions = [Question]()
+
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: []) {
+                while result.next() {
+                    if let question = Question.from(result: result, in: database), question.items.contains(item.identifier) {
+                        questions.append(question)
+                    }
+                }
+            }
+        }
+
+        return .success(questions)
+    }
     
     public func getItem(by identifier: Identifier, in event: Event) -> Item? {
         let queue = databaseQueue(with: event)
