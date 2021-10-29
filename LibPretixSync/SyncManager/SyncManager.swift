@@ -183,14 +183,20 @@ public class SyncManager {
         let itemCategories = ItemCategoriesDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         let items = ItemsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         let subEvents = SubEventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
-        let fullOrders = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event,
-                                             checkInList: checkInList, disableTestMode: true)
-        let partialOrders = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event,
-                                                   checkInList: checkInList, disableTestMode: true)
-        partialOrders.addDependency(fullOrders)
         let questions = QuestionsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         
-        let allSyncOperations = [events, revokedSecrets, validKeys, checkInLists, itemCategories, items, subEvents, fullOrders, partialOrders, questions]
+        var allSyncOperations = [events, revokedSecrets, validKeys, checkInLists, itemCategories, items, subEvents, questions]
+        
+        if configStore.shouldDownloadOrders {
+            let fullOrders = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event,
+                                                 checkInList: checkInList, disableTestMode: true)
+            let partialOrders = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event,
+                                                       checkInList: checkInList, disableTestMode: true)
+            partialOrders.addDependency(fullOrders)
+            
+            allSyncOperations.append(contentsOf: [fullOrders, partialOrders])
+        }
+        
         allSyncOperations.forEach { queue.addOperation($0) }
         
         // Cleanup
