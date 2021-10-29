@@ -75,7 +75,9 @@ public struct Question: Model {
 
     // MARK: - Sub Types
     /// The expected type of answer
-    public enum QuestionType: String, Codable, Equatable, Hashable {
+    public enum QuestionType: String, Codable, Equatable, Hashable, UnknownCase {
+        public static var unknownCase = QuestionType.oneLineString
+        
         /// number
         case number = "N"
 
@@ -108,6 +110,9 @@ public struct Question: Model {
 
         /// country code (ISO 3666-1 alpha-2)
         case countryCode = "CC"
+        
+        /// Phone number in the format +<country code>
+        case phone = "TEL"
     }
 
     /// Possible Answer Option for Choice Questions
