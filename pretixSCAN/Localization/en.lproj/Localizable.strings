@@ -80,6 +80,9 @@
 /* Question Type Label */
 "FileUploadQuestionCell" = "Upload a File";
 
+/* Question Type Label */
+"TelQuestionCell" = "Phone number";
+
 /* No comment provided by engineer. */
 "Force Complete Resync" = "Force Complete Resync";
 

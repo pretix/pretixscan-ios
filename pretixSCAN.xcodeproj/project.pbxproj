@@ -36,6 +36,9 @@
 		B553421F272BF8AF003008AD /* question2.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421C272BF8AF003008AD /* question2.json */; };
 		B5534220272BF8AF003008AD /* question1.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421D272BF8AF003008AD /* question1.json */; };
 		B5534222272BFFCE003008AD /* TicketMultiEntryChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */; };
+		B5534226272C2D5D003008AD /* UnknownCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534225272C2D5D003008AD /* UnknownCaseProtocol.swift */; };
+		B5534228272C2E47003008AD /* TelQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534227272C2E47003008AD /* TelQuestionCell.swift */; };
+		B553422B272C325D003008AD /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = B553422A272C325D003008AD /* PhoneNumberKit */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
 		B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */; };
@@ -255,6 +258,8 @@
 		B553421C272BF8AF003008AD /* question2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question2.json; sourceTree = "<group>"; };
 		B553421D272BF8AF003008AD /* question1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question1.json; sourceTree = "<group>"; };
 		B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketMultiEntryChecker.swift; sourceTree = "<group>"; };
+		B5534225272C2D5D003008AD /* UnknownCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownCaseProtocol.swift; sourceTree = "<group>"; };
+		B5534227272C2E47003008AD /* TelQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelQuestionCell.swift; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
 		B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		B58CF83726F3104F00FADA2A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -442,6 +447,7 @@
 				B5203DB227158C2B00AAA417 /* SwiftProtobufPluginLibrary in Frameworks */,
 				409D06597D8995ABD3C2606B /* Pods_pretixSCAN.framework in Frameworks */,
 				B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */,
+				B553422B272C325D003008AD /* PhoneNumberKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +683,7 @@
 				DC17F23D2302B9AE0044764A /* TimeQuestionCell.swift */,
 				DC17F23F2302B9C30044764A /* DateTimeQuestionCell.swift */,
 				DC17F2412302B9E10044764A /* CountryCodeQuestionCell.swift */,
+				B5534227272C2E47003008AD /* TelQuestionCell.swift */,
 			);
 			path = QuestionCells;
 			sourceTree = "<group>";
@@ -852,6 +859,7 @@
 				DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */,
 				B525795027291A95006D9EE9 /* ApiResourcePath.swift */,
 				B525795227291E26006D9EE9 /* APIClient+EventDetail.swift */,
+				B5534225272C2D5D003008AD /* UnknownCaseProtocol.swift */,
 			);
 			path = "API Client";
 			sourceTree = "<group>";
@@ -982,6 +990,7 @@
 			packageProductDependencies = (
 				B5203DAF27158C2B00AAA417 /* SwiftProtobuf */,
 				B5203DB127158C2B00AAA417 /* SwiftProtobufPluginLibrary */,
+				B553422A272C325D003008AD /* PhoneNumberKit */,
 			);
 			productName = PretixScan;
 			productReference = DC07357622392474008326F7 /* pretixSCAN.app */;
@@ -1039,6 +1048,7 @@
 			mainGroup = DC07356D22392474008326F7;
 			packageReferences = (
 				B5203DAE27158C2B00AAA417 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+				B5534229272C325D003008AD /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 			);
 			productRefGroup = DC07357722392474008326F7 /* Products */;
 			projectDirPath = "";
@@ -1231,6 +1241,7 @@
 				DC227F232253700900314448 /* SetupCodeScannerViewController.swift in Sources */,
 				DCDD82CD224AB25900DC0200 /* Color.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
+				B5534226272C2D5D003008AD /* UnknownCaseProtocol.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				B5FA77952705BE25000E1644 /* 04_MigrationAddEntryType.swift in Sources */,
 				DC8467AE225BCA6A0013F647 /* Order.swift in Sources */,
@@ -1276,6 +1287,7 @@
 				DCC5D8552295697C00DAEFA0 /* FMDBItem.swift in Sources */,
 				DC17F2382302B9480044764A /* SingleChoiceQuestionCell.swift in Sources */,
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
+				B5534228272C2E47003008AD /* TelQuestionCell.swift in Sources */,
 				DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */,
 				B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */,
 				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
@@ -1666,6 +1678,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		B5534229272C325D003008AD /* XCRemoteSwiftPackageReference "PhoneNumberKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1678,6 +1698,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B5203DAE27158C2B00AAA417 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
 			productName = SwiftProtobufPluginLibrary;
+		};
+		B553422A272C325D003008AD /* PhoneNumberKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5534229272C325D003008AD /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
+			productName = PhoneNumberKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

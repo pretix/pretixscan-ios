@@ -47,7 +47,8 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
             DateQuestionCell.self,
             TimeQuestionCell.self,
             DateTimeQuestionCell.self,
-            CountryCodeQuestionCell.self
+            CountryCodeQuestionCell.self,
+            TelQuestionCell.self
         ] {
             tableView.register(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
         }
@@ -106,6 +107,9 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
         case .countryCode:
             let cell = tableView.dequeueReusableCell(withIdentifier: CountryCodeQuestionCell.reuseIdentifier, for: indexPath)
             returnCell = cell as! CountryCodeQuestionCell
+        case .phone:
+            let cell = tableView.dequeueReusableCell(withIdentifier: TelQuestionCell.reuseIdentifier, for: indexPath)
+            returnCell = cell as! TelQuestionCell
         }
 
         returnCell.delegate = self

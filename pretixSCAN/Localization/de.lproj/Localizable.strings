@@ -21,6 +21,10 @@
 "Could not create URL" = "URL konnte nicht erstellt werden";
 /* Question Type Label */
 "CountryCodeQuestionCell" = "Land Auswählen";
+
+/* Question Type Label */
+"TelQuestionCell" = "Telefonnummer";
+
 /* Question Type Label */
 "DateQuestionCell" = "Datum Eingeben";
 /* Question Type Label */
