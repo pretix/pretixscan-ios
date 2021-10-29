@@ -18,7 +18,7 @@ final class TicketEntryAnswersChecker {
         self.dataStore = dataStore
     }
     
-    func redeem(ticket: SignedTicketData, event: Event, answers: [Answer]?) -> Result<Void, CheckStatus> {
+    func redeem(ticket: SignedTicketData, event: Event, answers: [Answer]?) -> Result<Void, ValidationError> {
         guard let result = dataStore?.getQuestions(for: self.item, in: event) else {
             fatalError("dataStore instance has been disposed")
         }
@@ -55,7 +55,7 @@ final class TicketEntryAnswersChecker {
         return false
     }
     
-    enum CheckStatus: Error, Hashable, Equatable {
+    enum ValidationError: Error, Hashable, Equatable {
         /// Some qiestions do not have a valid answer
         case incomplete(questions: [Question])
         case unknownError

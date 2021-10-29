@@ -526,7 +526,6 @@
 				B5F6F1DA272AA7E100F702BE /* TicketProductChecker.swift */,
 				B5F6F1E6272AB97C00F702BE /* TicketVariationChecker.swift */,
 				B5F6F1EB272ACF5400F702BE /* TicketEntryAnswersChecker.swift */,
-				B5F6F1E9272AC3E000F702BE /* DatalessTicketValidator.swift */,
 				B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */,
 			);
 			path = Checkers;
@@ -685,6 +684,7 @@
 		DC1D6FAF2240ECE6008A9E06 /* TicketValidator */ = {
 			isa = PBXGroup;
 			children = (
+				B5F6F1E9272AC3E000F702BE /* DatalessTicketValidator.swift */,
 				DC1D6FB02240ECF4008A9E06 /* TicketValidator.swift */,
 				DC1D6FB22240EE7A008A9E06 /* OnlineTicketValidator.swift */,
 				DC8467AB225B9EC10013F647 /* OfflineTicketValidator.swift */,

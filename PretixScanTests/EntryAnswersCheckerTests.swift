@@ -35,7 +35,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         case .success():
             XCTFail("Validation is expected to fail")
         case .failure(let validation):
-            XCTAssertEqual(TicketEntryAnswersChecker.CheckStatus.incomplete(questions: mockAnswerableQuestions), validation)
+            XCTAssertEqual(TicketEntryAnswersChecker.ValidationError.incomplete(questions: mockAnswerableQuestions), validation)
         }
     }
     
@@ -49,7 +49,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         case .success():
             XCTFail("Validation is expected to fail")
         case .failure(let validation):
-            XCTAssertEqual(TicketEntryAnswersChecker.CheckStatus.incomplete(questions: [mockQuestions[1]]), validation)
+            XCTAssertEqual(TicketEntryAnswersChecker.ValidationError.incomplete(questions: [mockQuestions[1]]), validation)
         }
     }
     
@@ -63,7 +63,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         case .success():
             XCTFail("Validation is expected to fail")
         case .failure(let validation):
-            XCTAssertEqual(TicketEntryAnswersChecker.CheckStatus.incomplete(questions: mockAnswerableQuestions), validation)
+            XCTAssertEqual(TicketEntryAnswersChecker.ValidationError.incomplete(questions: mockAnswerableQuestions), validation)
         }
     }
     
