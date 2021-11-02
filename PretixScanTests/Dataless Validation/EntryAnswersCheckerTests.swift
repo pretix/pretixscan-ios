@@ -26,7 +26,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         }
     }
     
-    func testFailsNoAnswers() throws {
+    func testNoAnswersFailsAndReturnsAllCheckInQuestions() throws {
         // arrange
         let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: mockQuestions)
         let sut = TicketEntryAnswersChecker(item: mockItems[0], dataStore: dataStore)
@@ -49,7 +49,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         case .success():
             XCTFail("Validation is expected to fail")
         case .failure(let validation):
-            XCTAssertEqual(TicketEntryAnswersChecker.ValidationError.incomplete(questions: [mockQuestions[1]]), validation)
+            XCTAssertEqual(TicketEntryAnswersChecker.ValidationError.incomplete(questions: [mockQuestions[1], mockQuestions[3]]), validation)
         }
     }
     
@@ -141,7 +141,7 @@ class EntryAnswersCheckerTests: XCTestCase {
     }
     
     var mockQuestions: [Question] {
-        ["question1", "question2", "question3"].map({item -> Question in
+        ["question1", "question2", "question3", "question4"].map({item -> Question in
             let jsonData = testFileContents(item, "json")
             return try! jsonDecoder.decode(Question.self, from: jsonData)
         })

@@ -29,7 +29,22 @@ final class TicketEntryAnswersChecker {
                 .filter({$0.askDuringCheckIn && $0.isRequired})
                 .filter({!questionIsAnswered($0, answers)})
             
-            return incompleteQuestions.isEmpty ? .success(()) : .failure(.incomplete(questions: incompleteQuestions))
+            let optionalQuestions = questions
+                .filter({$0.askDuringCheckIn && !$0.isRequired})
+                .filter({!questionIsAnswered($0, answers)})
+            
+            if incompleteQuestions.isEmpty {
+                return .success(())
+            } else {
+                // questions still need answering
+                if answers == nil || answers?.isEmpty == true {
+                    // re-list all questions, even optional ones
+                    return .failure(.incomplete(questions: questions.filter({$0.askDuringCheckIn})))
+                }
+                
+                let missingQuestions = (incompleteQuestions + optionalQuestions).sorted(by: {(q1, q2) in q1.position > q2.position})
+                return .failure(.incomplete(questions: missingQuestions))
+            }
         case .failure(let err):
             EventLogger.log(event: "Failed to get questions during ticket validation: \(err.localizedDescription)", category: .database, level: .error, type: .error)
             return .failure(.unknownError)

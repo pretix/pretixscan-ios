@@ -36,6 +36,43 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertEqual(resultResponse!.status, .redeemed)
     }
     
+    func testSignedAndValidMissingAnswers() throws {
+        // arrange
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let ds = mockDataStoreWithQuestions
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        // act
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation1 = expectation(description: "Redeem")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation1.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        let answer1 = answer(for: mockQuestions[0].identifier, value: "True")
+        
+        let expectation2 = expectation(description: "Redeem 2")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: [answer1], as: "entry", completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation2.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertNotNil(resultResponse!.questions)
+        XCTAssertEqual(resultResponse!.status, .incomplete)
+        XCTAssertEqual(resultResponse!.questions, [mockAnswerableQuestions[1]])
+    }
+    
     func testSignedAndValidCheckInAttention() throws {
         // arrange
         let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
@@ -306,6 +343,10 @@ class DatalessTicketValidatorTests: XCTestCase {
     
     var mockDataStore: DatalessDataStore {
         return MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItems, checkIns: [])
+    }
+    
+    var mockDataStoreWithQuestions: DatalessDataStore {
+        return MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: mockQuestions, items: mockItems, checkIns: [])
     }
     
     var mockDataStoreRevoked: DatalessDataStore {
