@@ -127,7 +127,7 @@ public class OfflineTicketValidator: TicketValidator {
         
         guard var response = response else {
             // the order was not found in local storage, attempt dataless flow
-            DatalessTicketValidator(dataStore: dataStore).redeem(checkInList, event, secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, completionHandler: completionHandler)
+            DatalessTicketValidator(dataStore: dataStore).redeem(checkInList, event, secret, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, completionHandler: completionHandler)
             return
         }
         

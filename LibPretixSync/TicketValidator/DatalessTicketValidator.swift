@@ -18,7 +18,7 @@ final class DatalessTicketValidator {
     }
     
     
-    func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
+    func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, ignoreUnpaid: Bool, answers: [Answer]?,
                            as type: String,
                            completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         logger.debug("Attempting to redeem without data")
@@ -27,7 +27,7 @@ final class DatalessTicketValidator {
             var response: RedemptionResponse
             switch checkStatus {
             case .valid(let item, _):
-                let request = RedemptionRequest(date: Date(), force: force, ignoreUnpaid: ignoreUnpaid, nonce: NonceGenerator.nonce(), answers: answers, type: type)
+                let request = RedemptionRequest(date: Date(), force: true, ignoreUnpaid: ignoreUnpaid, nonce: NonceGenerator.nonce(), answers: answers, type: type)
                 let queuedRequest = QueuedRedemptionRequest(redemptionRequest: request, eventSlug: event.slug, checkInListIdentifier: checkInList.identifier, secret: secret)
                 dataStore?.store(queuedRequest, for: event)
                 response = RedemptionResponse.redeemed(item)
