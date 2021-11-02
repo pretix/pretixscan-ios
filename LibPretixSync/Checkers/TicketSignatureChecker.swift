@@ -9,9 +9,9 @@
 import Foundation
 
 final class TicketSignatureChecker {
-    weak var dataStore: SignedDataStore?
+    weak var dataStore: DatalessDataStore?
     
-    init(dataStore: SignedDataStore) {
+    init(dataStore: DatalessDataStore) {
         self.dataStore = dataStore
     }
     

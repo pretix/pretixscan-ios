@@ -10,7 +10,7 @@ import XCTest
 @testable import pretixSCAN
 
 
-class OfflineValidationTests: XCTestCase {
+class TicketSignatureCheckerTests: XCTestCase {
     private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
     
     override func setUpWithError() throws {
@@ -115,7 +115,7 @@ class OfflineValidationTests: XCTestCase {
     //MARK: - Mocks
     
     
-    class MockDataStore: SignedDataStore {
+    class MockDataStore: DatalessDataStore {
         private let keys: [String]
         private let revoked: [String]
         private let items: [Item]
@@ -145,6 +145,10 @@ class OfflineValidationTests: XCTestCase {
         func getQueuedCheckIns(_ secret: String, eventSlug: String) -> Result<[QueuedRedemptionRequest], Error> {
             return .success([])
         }
+        
+        func store<T>(_ resource: T, for event: Event) where T : Model {
+            
+        }
     }
     
     var mockEvent: Event {
@@ -157,7 +161,7 @@ class OfflineValidationTests: XCTestCase {
         return SignedTicketData(base64: qrCode, keys: mockEvent.validKeys!)!
     }
     
-    var mockDataStore: SignedDataStore {
+    var mockDataStore: DatalessDataStore {
         return MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: mockItems)
     }
     

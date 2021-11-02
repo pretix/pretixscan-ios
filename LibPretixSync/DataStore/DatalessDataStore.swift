@@ -1,5 +1,5 @@
 //
-//  SignedDataStore.swift
+//  DatalessDataStore.swift
 //  pretixSCAN
 //
 //  Created by Konstantin Kostov on 28/10/2021.
@@ -8,8 +8,14 @@
 
 import Foundation
 
-public protocol SignedDataStore: AnyObject {
-    // MARK: - Event Keys
+public protocol DatalessDataStore: AnyObject {
+    
+    // MARK: - Storing
+    /// Store a `Model`s related to an `Event`
+    func store<T: Model>(_ resource: T, for event: Event)
+    
+    
+    // MARK: - Event Signature Keys
     
     /// Return the list of cached `EventValidKey` for the specified event.
     func getValidKeys(for event: Event) -> Result<[EventValidKey], Error>

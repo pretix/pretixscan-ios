@@ -41,6 +41,8 @@
 		B553422B272C325D003008AD /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = B553422A272C325D003008AD /* PhoneNumberKit */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
+		B5823C1927311C9600479A73 /* DatalessTicketValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5823C1827311C9600479A73 /* DatalessTicketValidatorTests.swift */; };
+		B5823C1B273123CC00479A73 /* list5.json in Resources */ = {isa = PBXBuildFile; fileRef = B5823C1A273123CC00479A73 /* list5.json */; };
 		B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */; };
 		B58CF83826F3104F00FADA2A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83726F3104F00FADA2A /* Logger.swift */; };
 		B58CF83B26F31BDC00FADA2A /* ScanFeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83A26F31BDC00FADA2A /* ScanFeedbackGenerator.swift */; };
@@ -52,7 +54,7 @@
 		B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */; };
 		B5B990AD26EB59F90029D614 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990AB26EB57960029D614 /* Seat.swift */; };
 		B5BD3E3F2715C469003FEB74 /* TicketInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E3E2715C469003FEB74 /* TicketInformation.swift */; };
-		B5BD3E412715CD05003FEB74 /* OfflineValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E402715CD05003FEB74 /* OfflineValidationTests.swift */; };
+		B5BD3E412715CD05003FEB74 /* TicketSignatureCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E402715CD05003FEB74 /* TicketSignatureCheckerTests.swift */; };
 		B5BD3E432715CE19003FEB74 /* SignedTicketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */; };
 		B5BD3E452715D3ED003FEB74 /* EventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */; };
 		B5BD3E472715D4B0003FEB74 /* event1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5BD3E462715D4B0003FEB74 /* event1.json */; };
@@ -63,7 +65,7 @@
 		B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */; };
 		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
 		B5F6F1D7272A9B9700F702BE /* TicketSignatureChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D6272A9B9700F702BE /* TicketSignatureChecker.swift */; };
-		B5F6F1D9272AA48400F702BE /* SignedDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D8272AA48400F702BE /* SignedDataStore.swift */; };
+		B5F6F1D9272AA48400F702BE /* DatalessDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D8272AA48400F702BE /* DatalessDataStore.swift */; };
 		B5F6F1DB272AA7E100F702BE /* TicketProductChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1DA272AA7E100F702BE /* TicketProductChecker.swift */; };
 		B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1DC272AAE7B00F702BE /* list2.json */; };
 		B5F6F1DF272AAF4700F702BE /* list1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6F1DE272AAF4700F702BE /* list1.json */; };
@@ -261,6 +263,8 @@
 		B5534225272C2D5D003008AD /* UnknownCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownCaseProtocol.swift; sourceTree = "<group>"; };
 		B5534227272C2E47003008AD /* TelQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelQuestionCell.swift; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
+		B5823C1827311C9600479A73 /* DatalessTicketValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessTicketValidatorTests.swift; sourceTree = "<group>"; };
+		B5823C1A273123CC00479A73 /* list5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list5.json; sourceTree = "<group>"; };
 		B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		B58CF83726F3104F00FADA2A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B58CF83A26F31BDC00FADA2A /* ScanFeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanFeedbackGenerator.swift; sourceTree = "<group>"; };
@@ -272,7 +276,7 @@
 		B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+testFileContents.swift"; sourceTree = "<group>"; };
 		B5B990AB26EB57960029D614 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
 		B5BD3E3E2715C469003FEB74 /* TicketInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketInformation.swift; sourceTree = "<group>"; };
-		B5BD3E402715CD05003FEB74 /* OfflineValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineValidationTests.swift; sourceTree = "<group>"; };
+		B5BD3E402715CD05003FEB74 /* TicketSignatureCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketSignatureCheckerTests.swift; sourceTree = "<group>"; };
 		B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedTicketData.swift; sourceTree = "<group>"; };
 		B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKeys.swift; sourceTree = "<group>"; };
 		B5BD3E462715D4B0003FEB74 /* event1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = event1.json; sourceTree = "<group>"; };
@@ -283,7 +287,7 @@
 		B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBRevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
 		B5F6F1D6272A9B9700F702BE /* TicketSignatureChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketSignatureChecker.swift; sourceTree = "<group>"; };
-		B5F6F1D8272AA48400F702BE /* SignedDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedDataStore.swift; sourceTree = "<group>"; };
+		B5F6F1D8272AA48400F702BE /* DatalessDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessDataStore.swift; sourceTree = "<group>"; };
 		B5F6F1DA272AA7E100F702BE /* TicketProductChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketProductChecker.swift; sourceTree = "<group>"; };
 		B5F6F1DC272AAE7B00F702BE /* list2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list2.json; sourceTree = "<group>"; };
 		B5F6F1DE272AAF4700F702BE /* list1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list1.json; sourceTree = "<group>"; };
@@ -503,6 +507,16 @@
 			path = Downloaders;
 			sourceTree = "<group>";
 		};
+		B5823C1727311C5600479A73 /* Dataless Validation */ = {
+			isa = PBXGroup;
+			children = (
+				B5BD3E402715CD05003FEB74 /* TicketSignatureCheckerTests.swift */,
+				B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */,
+				B5823C1827311C9600479A73 /* DatalessTicketValidatorTests.swift */,
+			);
+			path = "Dataless Validation";
+			sourceTree = "<group>";
+		};
 		B58CF83926F31BCD00FADA2A /* FeedbackGenerator */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,6 +554,7 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B5823C1A273123CC00479A73 /* list5.json */,
 				B553421D272BF8AF003008AD /* question1.json */,
 				B553421C272BF8AF003008AD /* question2.json */,
 				B553421B272BF8AF003008AD /* question3.json */,
@@ -648,6 +663,7 @@
 		DC07358D22392476008326F7 /* PretixScanTests */ = {
 			isa = PBXGroup;
 			children = (
+				B5823C1727311C5600479A73 /* Dataless Validation */,
 				B5B990A826EB50190029D614 /* Examples */,
 				DC07359022392476008326F7 /* Info.plist */,
 				DCAAFF42223AAF4C0059C000 /* HandshakeParsingTests.swift */,
@@ -663,8 +679,6 @@
 				DC8467C9225CF9E20013F647 /* ItemTests.swift */,
 				DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */,
 				B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */,
-				B5BD3E402715CD05003FEB74 /* OfflineValidationTests.swift */,
-				B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -783,7 +797,7 @@
 		DC8467A5225B7FC70013F647 /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
-				B5F6F1D8272AA48400F702BE /* SignedDataStore.swift */,
+				B5F6F1D8272AA48400F702BE /* DatalessDataStore.swift */,
 				DC8467A6225B99590013F647 /* DataStore.swift */,
 				DCC5D84B2295686000DAEFA0 /* FMDBDataStore */,
 			);
@@ -1087,6 +1101,7 @@
 				B553421F272BF8AF003008AD /* question2.json in Resources */,
 				B553421E272BF8AF003008AD /* question3.json in Resources */,
 				B5BD3E472715D4B0003FEB74 /* event1.json in Resources */,
+				B5823C1B273123CC00479A73 /* list5.json in Resources */,
 				B5F6F1E4272AB35000F702BE /* item1.json in Resources */,
 				B5534220272BF8AF003008AD /* question1.json in Resources */,
 				B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */,
@@ -1264,7 +1279,7 @@
 				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
 				B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
-				B5F6F1D9272AA48400F702BE /* SignedDataStore.swift in Sources */,
+				B5F6F1D9272AA48400F702BE /* DatalessDataStore.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
 				B52579622729223F006D9EE9 /* SubEventsDownloader.swift in Sources */,
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
@@ -1378,7 +1393,8 @@
 				B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */,
 				DCDD82D1224BBD7600DC0200 /* CheckListStatusTests.swift in Sources */,
 				DC8467CA225CF9E20013F647 /* ItemTests.swift in Sources */,
-				B5BD3E412715CD05003FEB74 /* OfflineValidationTests.swift in Sources */,
+				B5BD3E412715CD05003FEB74 /* TicketSignatureCheckerTests.swift in Sources */,
+				B5823C1927311C9600479A73 /* DatalessTicketValidatorTests.swift in Sources */,
 				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
 				DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */,
 				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,

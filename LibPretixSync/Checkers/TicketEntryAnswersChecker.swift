@@ -11,9 +11,9 @@ import Foundation
 /// Performs dataless check if the provided answers allow entry
 final class TicketEntryAnswersChecker {
     private var item: Item
-    weak var dataStore: SignedDataStore?
+    weak var dataStore: DatalessDataStore?
     
-    init(item: Item, dataStore: SignedDataStore) {
+    init(item: Item, dataStore: DatalessDataStore) {
         self.item = item
         self.dataStore = dataStore
     }

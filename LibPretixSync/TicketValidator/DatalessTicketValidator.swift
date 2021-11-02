@@ -9,15 +9,61 @@
 import Foundation
 
 
+/// The validator implements the dataless check client flow https://docs.pretix.eu/en/latest/development/algorithms/checkin.html#client-side
 final class DatalessTicketValidator {
-    weak var dataStore: SignedDataStore?
+    weak var dataStore: DatalessDataStore?
     
-    init(dataStore: SignedDataStore) {
+    init(dataStore: DatalessDataStore) {
         self.dataStore = dataStore
     }
     
     
-    func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, answers: [Answer]?,
+    func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
+                           as type: String,
+                           completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+        logger.debug("Attempting to redeem without data")
+        switch redeem(checkInList, event, secret, answers: answers, as: type) {
+        case .success(let checkStatus):
+            var response: RedemptionResponse
+            switch checkStatus {
+            case .valid(_):
+                let request = RedemptionRequest(date: Date(), force: force, ignoreUnpaid: ignoreUnpaid, nonce: NonceGenerator.nonce(), answers: answers, type: type)
+                let queuedRequest = QueuedRedemptionRequest(redemptionRequest: request, eventSlug: event.slug, checkInListIdentifier: checkInList.identifier, secret: secret)
+                dataStore?.store(queuedRequest, for: event)
+                response = RedemptionResponse.redeemed
+            case .invalid:
+                response = RedemptionResponse.invalid
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
+            case .alreadyRedeemed:
+                response = RedemptionResponse.alreadyRedeemed
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
+            case .revoked:
+                response = RedemptionResponse.revoked
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
+            case .product:
+                response = RedemptionResponse.product
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
+            case .incomplete(questions: let questions, answers: let answers):
+                response = RedemptionResponse(incompleteQuestions: questions, answers)
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
+            }
+            completionHandler(response, nil)
+        case .failure(let error):
+            completionHandler(nil, error)
+        }
+    }
+    
+    private func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, answers: [Answer]?,
                 as type: String) -> Result<CheckStatus, Error> {
         
         
@@ -42,6 +88,7 @@ final class DatalessTicketValidator {
                     case .success():
                         return .success(CheckStatus.valid(variation: variation))
                     case .failure(let check):
+                        logger.debug("TicketMultiEntryChecker failed: \(String(describing: check))")
                         switch check {
                         case .alreadyRedeemed:
                             return .success(CheckStatus.alreadyRedeemed)
@@ -50,6 +97,7 @@ final class DatalessTicketValidator {
                         }
                     }
                 case .failure(let check):
+                    logger.debug("TicketEntryAnswersChecker failed: \(String(describing: check))")
                     switch check {
                     case .incomplete(questions: let questions):
                         return .success(CheckStatus.incomplete(questions: questions, answers: answers))
@@ -58,6 +106,7 @@ final class DatalessTicketValidator {
                     }
                 }
             case .failure(let productReason):
+                logger.debug("TicketProductChecker failed: \(String(describing: productReason))")
                 switch productReason {
                 case .product(_):
                     return .success(CheckStatus.product)
@@ -68,6 +117,7 @@ final class DatalessTicketValidator {
                 }
             }
         case .failure(let signatureReason):
+            logger.debug("TicketSignatureChecker failed: \(String(describing: signatureReason))")
             switch signatureReason {
             case .noKeys:
                 return .success(CheckStatus.invalid)

@@ -117,6 +117,11 @@ public class FMDBDataStore: DataStore {
     }
 
     // MARK: - Storing
+    
+    public func store<T>(_ resource: T, for event: Event) where T: Model {
+        self.store([resource], for: event)
+    }
+    
     /// Store a list of `Model`s related to an `Event`
     public func store<T>(_ resources: [T], for event: Event) where T: Model {
         let queue = databaseQueue(with: event)
@@ -484,7 +489,7 @@ private extension FMDBDataStore {
     }
 }
 
-// MARK: - SignedDataStore
+// MARK: - DatalessDataStore
 extension FMDBDataStore {
     
     public func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {

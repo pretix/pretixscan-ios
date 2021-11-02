@@ -10,9 +10,9 @@ import Foundation
 
 final class TicketProductChecker {
     private var checkInList: CheckInList
-    weak var dataStore: SignedDataStore?
+    weak var dataStore: DatalessDataStore?
     
-    init(list: CheckInList, dataStore: SignedDataStore) {
+    init(list: CheckInList, dataStore: DatalessDataStore) {
         self.checkInList = list
         self.dataStore = dataStore
     }

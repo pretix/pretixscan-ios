@@ -109,7 +109,7 @@ extension RedemptionResponse {
 
 extension RedemptionResponse {
     static var invalid: Self {
-        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .revoked, questions: nil)
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalid, questions: nil)
     }
     
     static var redeemed: Self {
