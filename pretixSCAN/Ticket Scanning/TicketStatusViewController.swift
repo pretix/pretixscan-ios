@@ -95,8 +95,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             return
         }
 
-        let needsAttention = (redemptionResponse.position?.order?.checkInAttention == true)
-            || (redemptionResponse.position?.item?.checkInAttention == true)
+        let needsAttention = redemptionResponse.isRequireAttention
 
         productNameLabel.text = "\(redemptionResponse.position?.item?.name.representation(in: Locale.current) ?? "🎟")"
         if let variationName = redemptionResponse.position?.calculatedVariation?.name.representation(in: Locale.current) {

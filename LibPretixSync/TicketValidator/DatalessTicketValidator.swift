@@ -26,11 +26,11 @@ final class DatalessTicketValidator {
         case .success(let checkStatus):
             var response: RedemptionResponse
             switch checkStatus {
-            case .valid(_):
+            case .valid(let item, _):
                 let request = RedemptionRequest(date: Date(), force: force, ignoreUnpaid: ignoreUnpaid, nonce: NonceGenerator.nonce(), answers: answers, type: type)
                 let queuedRequest = QueuedRedemptionRequest(redemptionRequest: request, eventSlug: event.slug, checkInListIdentifier: checkInList.identifier, secret: secret)
                 dataStore?.store(queuedRequest, for: event)
-                response = RedemptionResponse.redeemed
+                response = RedemptionResponse.redeemed(item)
             case .invalid:
                 response = RedemptionResponse.invalid
                 if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
@@ -79,14 +79,14 @@ final class DatalessTicketValidator {
             case .success(let item):
                 let variation = TicketVariationChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, item: item)
                 if type == "exit" {
-                    return .success(CheckStatus.valid(variation: variation))
+                    return .success(CheckStatus.valid(item: item, variation: variation))
                 }
                 
                 switch TicketEntryAnswersChecker(item: item, dataStore: dataStore).redeem(ticket: signedTicket, event: event, answers: answers) {
                 case .success:
                     switch TicketMultiEntryChecker(list: checkInList, dataStore: dataStore).redeem(secret: secret, event: event) {
                     case .success():
-                        return .success(CheckStatus.valid(variation: variation))
+                        return .success(CheckStatus.valid(item: item, variation: variation))
                     case .failure(let check):
                         logger.debug("TicketMultiEntryChecker failed: \(String(describing: check))")
                         switch check {
@@ -130,7 +130,7 @@ final class DatalessTicketValidator {
     }
     
     enum CheckStatus: Equatable {
-        case valid(variation: ItemVariation?)
+        case valid(item: Item, variation: ItemVariation?)
         case invalid
         case alreadyRedeemed
         case revoked

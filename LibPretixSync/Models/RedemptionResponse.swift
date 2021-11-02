@@ -40,6 +40,10 @@ public struct RedemptionResponse: Codable, Equatable {
     
     /// When a negative redemption response is created the validation reason can optionally indicate the specific codepath resulting in the error code. This is being added to aid troubleshooting https://code.rami.io/pretix/pretixscan-ios/-/issues/62 and should only be used to aid debugging.
     public var _validationReason: TicketValidationReason = .unknown
+    
+    /// If `true`, the check-in app should show a warning that this
+    /// ticket requires special attention if a ticket of this order is scanned.
+    public var checkInAttention: Bool? = nil
 
     // MARK: - Enums
     /// Possible values for the Response Status
@@ -116,6 +120,12 @@ extension RedemptionResponse {
         RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
     }
     
+    static func redeemed(_ item: Item) -> Self {
+        var response = Self.redeemed
+        response.checkInAttention = item.checkInAttention
+        return response
+    }
+    
     static var alreadyRedeemed: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed, questions: nil)
     }
@@ -129,6 +139,13 @@ extension RedemptionResponse {
     }
     
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {
-        self = RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: nil, lastCheckIn: nil, questions: incompleteQuestions, answers: answers)
+        self = RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: nil, lastCheckIn: nil, questions: incompleteQuestions, answers: answers, checkInAttention: nil)
+    }
+}
+
+
+extension RedemptionResponse {
+    var isRequireAttention: Bool {
+        self.checkInAttention == true || position?.order?.checkInAttention == true || position?.item?.checkInAttention == true
     }
 }

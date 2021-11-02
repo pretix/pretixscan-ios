@@ -36,6 +36,30 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertEqual(resultResponse!.status, .redeemed)
     }
     
+    func testSignedAndValidCheckInAttention() throws {
+        // arrange
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        // act
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .redeemed)
+        XCTAssertEqual(resultResponse!.isRequireAttention, true)
+    }
+    
     func testSignedAndRevoked() throws {
         // arrange
         let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"

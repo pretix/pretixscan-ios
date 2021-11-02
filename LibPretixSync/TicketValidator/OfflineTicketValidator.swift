@@ -111,55 +111,6 @@ public class OfflineTicketValidator: TicketValidator {
         })
     }
     
-    
-    
-    
-//    func redeemWithoutData(dataStore: DataStore, _ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
-//                           as type: String,
-//                           completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-//        logger.debug("Attempting to redeem without data")
-//        switch DatalessTicketValidator(dataStore: dataStore).redeem(checkInList, event, secret, answers: answers, as: type) {
-//        case .success(let checkStatus):
-//            var response: RedemptionResponse
-//            switch checkStatus {
-//            case .valid(_):
-//                let request = RedemptionRequest(date: Date(), force: force, ignoreUnpaid: ignoreUnpaid, nonce: NonceGenerator.nonce(), answers: answers, type: type)
-//                let queuedRequest = QueuedRedemptionRequest(redemptionRequest: request, eventSlug: event.slug, checkInListIdentifier: checkInList.identifier, secret: secret)
-//                dataStore.store([queuedRequest], for: event)
-//                response = RedemptionResponse.redeemed
-//            case .invalid:
-//                response = RedemptionResponse.invalid
-//                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
-//                    dataStore.store([failedCheckIn], for: event)
-//                }
-//            case .alreadyRedeemed:
-//                response = RedemptionResponse.alreadyRedeemed
-//                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
-//                    dataStore.store([failedCheckIn], for: event)
-//                }
-//            case .revoked:
-//                response = RedemptionResponse.revoked
-//                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
-//                    dataStore.store([failedCheckIn], for: event)
-//                }
-//            case .product:
-//                response = RedemptionResponse.product
-//                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
-//                    dataStore.store([failedCheckIn], for: event)
-//                }
-//            case .incomplete(questions: let questions, answers: let answers):
-//                response = RedemptionResponse(incompleteQuestions: questions, answers)
-//                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
-//                    dataStore.store([failedCheckIn], for: event)
-//                }
-//            }
-//            completionHandler(response, nil)
-//        case .failure(let error):
-//            completionHandler(nil, error)
-//        }
-//    }
-    
-    
     func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                 as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
