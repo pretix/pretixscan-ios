@@ -130,10 +130,10 @@ extension FailedCheckIn {
                     self =  FailedCheckIn(.rules, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 case .revoked:
-                    self =  FailedCheckIn(.revoked, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    self =  FailedCheckIn(.revoked, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 case .invalid:
-                    self =  FailedCheckIn(.invalid, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    self =  FailedCheckIn(.invalid, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 }
             } else {
