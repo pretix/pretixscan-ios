@@ -92,16 +92,16 @@ public struct FailedCheckIn: Model {
 }
 
 extension FailedCheckIn {
-    init?(response: RedemptionResponse?, error: Error?, _ eventSlug: String, _ checkInListIdentifier: Identifier, _ checkInType: String, _ rawCode: String, _ event: Event) {
+    init?(response: RedemptionResponse?, error: Error?, _ slug: String, _ checkInListIdentifier: Identifier, _ checkInType: String, _ rawCode: String, _ event: Event) {
         
         if error != nil {
-            self = FailedCheckIn(.error, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
-            return
+            self = FailedCheckIn(.error, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+            return nil
         }
         
         guard let response = response else {
-            self = FailedCheckIn(.error, eventSlug, checkInListIdentifier, checkInType, rawCode, nil, event: event)
-            return
+            self = FailedCheckIn(.error, slug, checkInListIdentifier, checkInType, rawCode, nil, event: event)
+            return nil
         }
         
         switch response.status {
@@ -109,25 +109,25 @@ extension FailedCheckIn {
             // valid entry, no failed check-in
             break
         case .incomplete:
-            self = FailedCheckIn(.incomplete, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
-            return
+            // incomplete entries should not be logged
+            return nil
         case .error:
             if let reason = response.errorReason {
                 switch reason {
                 case .unpaid:
-                    self =  FailedCheckIn(.unpaid, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    self =  FailedCheckIn(.unpaid, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 case .canceled:
-                    self =  FailedCheckIn(.canceled, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    self =  FailedCheckIn(.canceled, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 case .alreadyRedeemed:
-                    self =  FailedCheckIn(.alreadyRedeemed, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    self =  FailedCheckIn(.alreadyRedeemed, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 case .product:
-                    self =  FailedCheckIn(.product, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    self =  FailedCheckIn(.product, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 case .rules:
-                    self =  FailedCheckIn(.rules, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    self =  FailedCheckIn(.rules, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 case .revoked:
                     self =  FailedCheckIn(.revoked, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
@@ -138,7 +138,7 @@ extension FailedCheckIn {
                 }
             } else {
                 EventLogger.log(event: "FailedCheckIn with no error reason", category: .configuration, level: .warning, type: .info)
-                self = FailedCheckIn(.error, eventSlug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                self = FailedCheckIn(.error, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                 return
             }
         }
@@ -146,8 +146,8 @@ extension FailedCheckIn {
         return nil
     }
     
-    init(_ reason: FailedCheckInErrorReason, _ eventSlug: String, _ checkInListIdentifier: Identifier,  _ checkInType: String, _ rawCode: String, _ response: RedemptionResponse?, event: Event) {
-        self = FailedCheckIn(eventSlug: eventSlug, checkInListIdentifier: checkInListIdentifier, errorReason: reason.rawValue, rawBarcode: rawCode, dateTime: Date(), scanType: checkInType, position: response?.position?.identifier, rawItem: response?.position?.itemIdentifier, rawVariation: response?.position?.variation, rawSubEvent: response?.position?.subEvent)
+    init(_ reason: FailedCheckInErrorReason, _ slug: String, _ checkInListIdentifier: Identifier,  _ checkInType: String, _ rawCode: String, _ response: RedemptionResponse?, event: Event) {
+        self = FailedCheckIn(eventSlug: slug, checkInListIdentifier: checkInListIdentifier, errorReason: reason.rawValue, rawBarcode: rawCode, dateTime: Date(), scanType: checkInType, position: response?.position?.identifier, rawItem: response?.position?.itemIdentifier, rawVariation: response?.position?.variation, rawSubEvent: response?.position?.subEvent)
     }
 }
 
