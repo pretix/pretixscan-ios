@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0803991926B1A6A80075BB3C /* TicketValidationReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0803991826B1A6A80075BB3C /* TicketValidationReason.swift */; };
+		08728E7927A53459002379A6 /* SwiftMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7827A53459002379A6 /* SwiftMessages */; };
+		08728E7C27A534B9002379A6 /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7B27A534B9002379A6 /* FMDB */; };
+		08728E7F27A53503002379A6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7E27A53503002379A6 /* Sentry */; };
 		08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */; };
-		409D06597D8995ABD3C2606B /* Pods_pretixSCAN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19C23358B478B81FC4A9090 /* Pods_pretixSCAN.framework */; };
-		48B9A461E0CB52BDDA566BD2 /* Pods_PretixScanTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */; };
 		641B4D2222CE641500162D1C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 641B4D2422CE641500162D1C /* Localizable.strings */; };
 		B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5014DB526E20DEB004C6604 /* Date+substract.swift */; };
 		B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DAF27158C2B00AAA417 /* SwiftProtobuf */; };
@@ -229,14 +230,10 @@
 /* Begin PBXFileReference section */
 		0803991826B1A6A80075BB3C /* TicketValidationReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketValidationReason.swift; sourceTree = "<group>"; };
 		08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusExtraInformation.swift; sourceTree = "<group>"; };
-		0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PretixScanTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F3B006E501159B61EC31A90 /* Pods-PretixScanTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.debug.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5AEE3DBAA5CEAFBF067EB16C /* Pods-PretixScanTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PretixScanTests.release.xcconfig"; path = "Target Support Files/Pods-PretixScanTests/Pods-PretixScanTests.release.xcconfig"; sourceTree = "<group>"; };
 		641B4D1D22CE63CC00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		641B4D1E22CE63CC00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		641B4D2322CE641500162D1C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		641B4D2522CE642C00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8A87E68C45A17BFF5E94F2F0 /* Pods-pretixSCAN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.release.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.release.xcconfig"; sourceTree = "<group>"; };
 		B5014DB526E20DEB004C6604 /* Date+substract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+substract.swift"; sourceTree = "<group>"; };
 		B5203DB427158C8800AAA417 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		B5203DB527158C8800AAA417 /* pretix_sig1.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = pretix_sig1.proto; sourceTree = "<group>"; };
@@ -301,7 +298,6 @@
 		B5F6F1E6272AB97C00F702BE /* TicketVariationChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketVariationChecker.swift; sourceTree = "<group>"; };
 		B5F6F1E9272AC3E000F702BE /* DatalessTicketValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessTicketValidator.swift; sourceTree = "<group>"; };
 		B5F6F1EB272ACF5400F702BE /* TicketEntryAnswersChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketEntryAnswersChecker.swift; sourceTree = "<group>"; };
-		B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pretixSCAN.debug.xcconfig"; path = "Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN.debug.xcconfig"; sourceTree = "<group>"; };
 		B5FA77832705A829000E1644 /* FailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedCheckIn.swift; sourceTree = "<group>"; };
 		B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBFailedCheckIn.swift; sourceTree = "<group>"; };
 		B5FA77892705BD31000E1644 /* 01_InitialUploadMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 01_InitialUploadMigration.swift; sourceTree = "<group>"; };
@@ -444,7 +440,6 @@
 		DCF8A44E22A267910020E0DE /* LocalizedEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedEnums.swift; sourceTree = "<group>"; };
 		DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkerView.swift; sourceTree = "<group>"; };
 		DCFAFD8022B54E010042F9F1 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
-		E19C23358B478B81FC4A9090 /* Pods_pretixSCAN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pretixSCAN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -452,10 +447,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08728E7C27A534B9002379A6 /* FMDB in Frameworks */,
 				B5203DB227158C2B00AAA417 /* SwiftProtobufPluginLibrary in Frameworks */,
-				409D06597D8995ABD3C2606B /* Pods_pretixSCAN.framework in Frameworks */,
 				B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */,
+				08728E7927A53459002379A6 /* SwiftMessages in Frameworks */,
 				B553422B272C325D003008AD /* PhoneNumberKit in Frameworks */,
+				08728E7F27A53503002379A6 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,24 +460,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48B9A461E0CB52BDDA566BD2 /* Pods_PretixScanTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A6C5D16AFBC1EE32D87B8211 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				1F3B006E501159B61EC31A90 /* Pods-PretixScanTests.debug.xcconfig */,
-				5AEE3DBAA5CEAFBF067EB16C /* Pods-PretixScanTests.release.xcconfig */,
-				B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */,
-				8A87E68C45A17BFF5E94F2F0 /* Pods-pretixSCAN.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		B5203DB327158C6D00AAA417 /* Proto */ = {
 			isa = PBXGroup;
 			children = (
@@ -625,8 +610,6 @@
 				DC07357822392474008326F7 /* pretixSCAN */,
 				DC07358D22392476008326F7 /* PretixScanTests */,
 				DC07357722392474008326F7 /* Products */,
-				A6C5D16AFBC1EE32D87B8211 /* Pods */,
-				EC2132A7F9D83BF80D49289C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -978,15 +961,6 @@
 			path = ConfigStore;
 			sourceTree = "<group>";
 		};
-		EC2132A7F9D83BF80D49289C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0CCF502FFC68DF9377275805 /* Pods_PretixScanTests.framework */,
-				E19C23358B478B81FC4A9090 /* Pods_pretixSCAN.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -994,13 +968,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC07359322392476008326F7 /* Build configuration list for PBXNativeTarget "pretixSCAN" */;
 			buildPhases = (
-				D6EA785B345438D9BE792271 /* [CP] Check Pods Manifest.lock */,
 				DC07357222392474008326F7 /* Sources */,
 				DCAAFF2D2239342B0059C000 /* Run Linter */,
 				DC07357322392474008326F7 /* Frameworks */,
 				DC07357422392474008326F7 /* Resources */,
 				DCAAFF2C2239323B0059C000 /* Generate Documentation */,
-				5B161C7B5F7A7C34D1998F64 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1011,6 +983,9 @@
 				B5203DAF27158C2B00AAA417 /* SwiftProtobuf */,
 				B5203DB127158C2B00AAA417 /* SwiftProtobufPluginLibrary */,
 				B553422A272C325D003008AD /* PhoneNumberKit */,
+				08728E7827A53459002379A6 /* SwiftMessages */,
+				08728E7B27A534B9002379A6 /* FMDB */,
+				08728E7E27A53503002379A6 /* Sentry */,
 			);
 			productName = PretixScan;
 			productReference = DC07357622392474008326F7 /* pretixSCAN.app */;
@@ -1020,7 +995,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC07359622392476008326F7 /* Build configuration list for PBXNativeTarget "PretixScanTests" */;
 			buildPhases = (
-				5D6A3CD25BF02E28FB965C72 /* [CP] Check Pods Manifest.lock */,
 				DC07358622392476008326F7 /* Sources */,
 				DC07358722392476008326F7 /* Frameworks */,
 				DC07358822392476008326F7 /* Resources */,
@@ -1069,6 +1043,9 @@
 			packageReferences = (
 				B5203DAE27158C2B00AAA417 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				B5534229272C325D003008AD /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
+				08728E7727A53459002379A6 /* XCRemoteSwiftPackageReference "SwiftMessages" */,
+				08728E7A27A534B9002379A6 /* XCRemoteSwiftPackageReference "fmdb" */,
+				08728E7D27A53503002379A6 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = DC07357722392474008326F7 /* Products */;
 			projectDirPath = "";
@@ -1122,67 +1099,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5B161C7B5F7A7C34D1998F64 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-pretixSCAN/Pods-pretixSCAN-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5D6A3CD25BF02E28FB965C72 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PretixScanTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D6EA785B345438D9BE792271 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-pretixSCAN-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		DCAAFF2C2239323B0059C000 /* Generate Documentation */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -1577,7 +1493,6 @@
 		};
 		DC07359422392476008326F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5F790E4765735A333845AC8 /* Pods-pretixSCAN.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1598,7 +1513,6 @@
 		};
 		DC07359522392476008326F7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8A87E68C45A17BFF5E94F2F0 /* Pods-pretixSCAN.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -1619,7 +1533,6 @@
 		};
 		DC07359722392476008326F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F3B006E501159B61EC31A90 /* Pods-PretixScanTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1641,7 +1554,6 @@
 		};
 		DC07359822392476008326F7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AEE3DBAA5CEAFBF067EB16C /* Pods-PretixScanTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1694,6 +1606,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		08728E7727A53459002379A6 /* XCRemoteSwiftPackageReference "SwiftMessages" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftKickMobile/SwiftMessages";
+			requirement = {
+				kind = revision;
+				revision = 7ef6043a9bd7e72308a27ef40645fd6df3942ba2;
+			};
+		};
+		08728E7A27A534B9002379A6 /* XCRemoteSwiftPackageReference "fmdb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ccgus/fmdb";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		08728E7D27A53503002379A6 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = exactVersion;
+				version = 7.1.4;
+			};
+		};
 		B5203DAE27158C2B00AAA417 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
@@ -1713,6 +1649,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		08728E7827A53459002379A6 /* SwiftMessages */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08728E7727A53459002379A6 /* XCRemoteSwiftPackageReference "SwiftMessages" */;
+			productName = SwiftMessages;
+		};
+		08728E7B27A534B9002379A6 /* FMDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08728E7A27A534B9002379A6 /* XCRemoteSwiftPackageReference "fmdb" */;
+			productName = FMDB;
+		};
+		08728E7E27A53503002379A6 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08728E7D27A53503002379A6 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
 		B5203DAF27158C2B00AAA417 /* SwiftProtobuf */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B5203DAE27158C2B00AAA417 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
