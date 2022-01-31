@@ -262,7 +262,7 @@ class ConditionalDownloader<T: Model>: APIClientOperation {
                     self.completeOperation()
                 }
             case .failure(let error):
-                logger.error("ConditionalDownloader failure: \(error.localizedDescription)")
+                logger.error("ConditionalDownloader failure: \(error.localized), \(error.localizedDescription)")
                 self.error = error
                 self.completeOperation()
             }

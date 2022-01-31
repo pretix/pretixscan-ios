@@ -47,6 +47,8 @@ public extension APIClient {
         }
 
         let url = baseURL.appendingPathComponent("/api/v1/device/initialize")
+        logger.debug("API task for url '\(url.absoluteString)'")
+        
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = HttpMethod.POST
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -64,7 +66,9 @@ public extension APIClient {
                 completionHandler(APIError.emptyResponse)
                 return
             }
-
+            
+            logger.debugRawDataAsString(responseData)
+            
             let initializationResponse: DeviceInitializationResponse
             do {
                 initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
