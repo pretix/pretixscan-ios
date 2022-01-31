@@ -71,6 +71,9 @@ public protocol ConfigStore {
 
     /// The serial number for this device as assigned by the API
     var deviceUniqueSerial: String? { get set }
+    
+    /// The security profile describing the available API actions this device is allowed to perform
+    var securityProfile: PXSecurityProfile {get set}
 
     // MARK: - Current Event and Check-In List
     /// The currently managed event

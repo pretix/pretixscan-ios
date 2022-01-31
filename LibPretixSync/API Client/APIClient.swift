@@ -85,6 +85,7 @@ public extension APIClient {
             self.configStore.deviceName = initializationResponse.name
             self.configStore.deviceUniqueSerial = initializationResponse.uniqueSerial
             self.configStore.organizerSlug = initializationResponse.organizer
+            self.configStore.securityProfile = PXSecurityProfile(rawValue: initializationResponse.securityProfile)
 
             completionHandler(nil)
         }

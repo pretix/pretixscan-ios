@@ -25,6 +25,7 @@ public class DefaultsConfigStore: ConfigStore {
         case deviceName
         case organizerSlug
         case deviceID
+        case securityProfile
         case deviceUniqueSerial
         case event
         case checkInList
@@ -112,6 +113,14 @@ public class DefaultsConfigStore: ConfigStore {
         get { return _deviceID }
         set {
             _deviceID = newValue
+            valueChanged()
+        }
+    }
+    
+    public var securityProfile: PXSecurityProfile {
+        get { return _securityProfile }
+        set {
+            _securityProfile = newValue
             valueChanged()
         }
     }
@@ -218,6 +227,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _deviceName: String?
     private var _organizerSlug: String?
     private var _deviceID: Int?
+    private var _securityProfile: PXSecurityProfile = .full
     private var _deviceUniqueSerial: String?
     private var _scanMode: String = "entry"
     private var _event: Event?
@@ -252,6 +262,7 @@ public class DefaultsConfigStore: ConfigStore {
         _deviceName = nil
         _organizerSlug = nil
         _deviceID = nil
+        _securityProfile = .full
         _deviceUniqueSerial = nil
         _scanMode = "entry"
         _event = nil
@@ -294,6 +305,7 @@ private extension DefaultsConfigStore {
         _deviceName = defaults.string(forKey: key(.deviceName))
         _organizerSlug = defaults.string(forKey: key(.organizerSlug))
         _deviceID = defaults.integer(forKey: key(.deviceID))
+        _securityProfile = PXSecurityProfile(rawValue: defaults.string(forKey: key(.securityProfile)))
         _deviceUniqueSerial = defaults.string(forKey: key(.deviceUniqueSerial))
         _scanMode = defaults.string(forKey: key(.scanMode)) ?? "entry"
         _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))

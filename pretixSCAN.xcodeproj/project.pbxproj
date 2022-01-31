@@ -12,6 +12,8 @@
 		08728E7C27A534B9002379A6 /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7B27A534B9002379A6 /* FMDB */; };
 		08728E7F27A53503002379A6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7E27A53503002379A6 /* Sentry */; };
 		08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */; };
+		08FF5FB827A7D86600130F41 /* PXSecurityProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */; };
+		08FF5FBA27A7DB3500130F41 /* PXSecurityProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */; };
 		641B4D2222CE641500162D1C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 641B4D2422CE641500162D1C /* Localizable.strings */; };
 		B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5014DB526E20DEB004C6604 /* Date+substract.swift */; };
 		B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DAF27158C2B00AAA417 /* SwiftProtobuf */; };
@@ -230,6 +232,8 @@
 /* Begin PBXFileReference section */
 		0803991826B1A6A80075BB3C /* TicketValidationReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketValidationReason.swift; sourceTree = "<group>"; };
 		08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusExtraInformation.swift; sourceTree = "<group>"; };
+		08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecurityProfile.swift; sourceTree = "<group>"; };
+		08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecurityProfileTests.swift; sourceTree = "<group>"; };
 		641B4D1D22CE63CC00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		641B4D1E22CE63CC00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		641B4D2322CE641500162D1C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -466,6 +470,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08FF5FB627A7D83F00130F41 /* SecurityProfiles */ = {
+			isa = PBXGroup;
+			children = (
+				08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */,
+			);
+			path = SecurityProfiles;
+			sourceTree = "<group>";
+		};
 		B5203DB327158C6D00AAA417 /* Proto */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,6 +680,7 @@
 				DC8467C9225CF9E20013F647 /* ItemTests.swift */,
 				DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */,
 				B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */,
+				08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -938,6 +951,7 @@
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
 			isa = PBXGroup;
 			children = (
+				08FF5FB627A7D83F00130F41 /* SecurityProfiles */,
 				B5B12165272BE3EB00DD4435 /* Checkers */,
 				B5203DB327158C6D00AAA417 /* Proto */,
 				DCAC199822BF7E490019B53F /* EventLogging */,
@@ -1216,6 +1230,7 @@
 				DC2A605E22DCD84300E7A6EA /* QuestionsTableViewController.swift in Sources */,
 				DC17F2342302B91B0044764A /* MultiLineStringQuestionCell.swift in Sources */,
 				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,
+				08FF5FB827A7D86600130F41 /* PXSecurityProfile.swift in Sources */,
 				DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */,
 				DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */,
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
@@ -1315,6 +1330,7 @@
 				DCB35B8E2248EB5800860385 /* RedemptionRequestTests.swift in Sources */,
 				DCAAFF4B223AB9CE0059C000 /* DeviceInitializationParsingTests.swift in Sources */,
 				B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */,
+				08FF5FBA27A7DB3500130F41 /* PXSecurityProfileTests.swift in Sources */,
 				DCDD82D1224BBD7600DC0200 /* CheckListStatusTests.swift in Sources */,
 				DC8467CA225CF9E20013F647 /* ItemTests.swift in Sources */,
 				B5BD3E412715CD05003FEB74 /* TicketSignatureCheckerTests.swift in Sources */,
