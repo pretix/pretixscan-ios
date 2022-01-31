@@ -45,16 +45,37 @@ class DeviceInitializationParsingTests: XCTestCase {
                 "name": "Bar"
             }
             """.data(using: .utf8)!
+    
+    let validResponseWithSecurityProfileJSON = """
+            {
+                "organizer": "iosdemo",
+                "device_id": 154,
+                "unique_serial": "7SAYNAUWZYG1SB3T",
+                "api_token": "a token",
+                "name": "A device",
+                "security_profile": "pretixscan_online_noorders",
+                "gate": null
+            }
+            """.data(using: .utf8)!
+    
+    private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
 
     func testDecodingValidRequest() {
-        let parsedRequest = try? JSONDecoder.iso8601withFractionsDecoder.decode(DeviceInitializationRequest.self, from: validRequestJSON)
+        let parsedRequest = try? jsonDecoder.decode(DeviceInitializationRequest.self, from: validRequestJSON)
         XCTAssertNotNil(parsedRequest)
         XCTAssertEqual(parsedRequest, validDeviceInitializationRequest)
     }
 
     func testDecodingValidResponse() {
-        let parsedResponse = try? JSONDecoder.iso8601withFractionsDecoder.decode(DeviceInitializationResponse.self, from: validResponseJSON)
+        let parsedResponse = try? jsonDecoder.decode(DeviceInitializationResponse.self, from: validResponseJSON)
         XCTAssertNotNil(parsedResponse)
         XCTAssertEqual(parsedResponse, validDeviceInitializationResponse)
+    }
+    
+    func testDecodingResponseWithSecurityProfile() {
+        let expectedResponse = DeviceInitializationResponse(organizer: "iosdemo", deviceID: 154, uniqueSerial: "7SAYNAUWZYG1SB3T", apiToken: "a token", name: "A device", securityProfile: "pretixscan_online_noorders")
+        let parsedResponse = try? jsonDecoder.decode(DeviceInitializationResponse.self, from: validResponseWithSecurityProfileJSON)
+        XCTAssertNotNil(parsedResponse)
+        XCTAssertEqual(parsedResponse, expectedResponse)
     }
 }

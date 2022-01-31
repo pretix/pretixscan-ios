@@ -25,6 +25,7 @@ import Foundation
 ///     "device_id": 5,
 ///     "unique_serial": "HHZ9LW9JWP390VFZ",
 ///     "api_token": "1kcsh572fonm3hawalrncam4l1gktr2rzx25a22l8g9hx108o9oi0rztpcvwnfnd",
+///     "security_profile": "pretixscan_online_noorders",
 ///     "name": "Bar"
 /// }
 public struct DeviceInitializationResponse: Codable, Equatable {
@@ -42,12 +43,16 @@ public struct DeviceInitializationResponse: Codable, Equatable {
 
     /// A name given to this device by an administartor
     public let name: String
+    
+    /// The security profile describing the available API actions this device is allowed to perform
+    public var securityProfile: String? = nil
 
     private enum CodingKeys: String, CodingKey {
         case organizer
         case deviceID = "device_id"
         case uniqueSerial = "unique_serial"
         case apiToken = "api_token"
+        case securityProfile = "security_profile"
         case name
     }
 }
