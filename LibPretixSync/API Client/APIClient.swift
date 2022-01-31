@@ -19,7 +19,7 @@ import Foundation
 /// - Call `init:` with a config Store
 /// - Set the config store's apiBaseURL
 /// - Then call initialize with a DeviceInitializationRequest that contains the handshake token to obtain an API Token
-public class APIClient {
+public final class APIClient {
     private var configStore: ConfigStore
 
     private let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
@@ -32,6 +32,10 @@ public class APIClient {
     // MARK: - Initialization
     init(configStore: ConfigStore) {
         self.configStore = configStore
+    }
+    
+    func isAllowed(request: URLRequest) -> Bool {
+        return PXSecurityProfileRequestValidator.isAllowed(request, profile: self.configStore.securityProfile)
     }
 }
 
@@ -130,6 +134,11 @@ public extension APIClient {
             logger.debug("API task for url '\(url.absoluteString)'")
             let urlRequest = try createURLRequest(for: url)
             
+            if !isAllowed(request: urlRequest) {
+                completionHandler(.failure(APIError.notAllowed))
+                return nil
+            }
+            
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
                     completionHandler(.failure(error))
@@ -182,6 +191,11 @@ public extension APIClient {
                 urlRequest.addValue(ifModifiedSince!, forHTTPHeaderField: "If-Modified-Since")
             }
 
+            if !isAllowed(request: urlRequest) {
+                completionHandler(.failure(APIError.notAllowed))
+                return nil
+            }
+            
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
                     completionHandler(.failure(error))
@@ -354,6 +368,11 @@ public extension APIClient {
                 throw APIError.couldNotCreateURL
             }
             let urlRequest = try createURLRequest(for: urlComponentsURL)
+            
+            if !isAllowed(request: urlRequest) {
+                completionHandler(nil, APIError.notAllowed)
+                return
+            }
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
@@ -423,6 +442,11 @@ public extension APIClient {
             urlRequest.httpMethod = HttpMethod.POST
             urlRequest.httpBody = try jsonEncoder.encode(FailedCheckInRequest(failedCheckIn))
 
+            if !isAllowed(request: urlRequest) {
+                completionHandler(APIError.notAllowed)
+                return nil
+            }
+            
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
                     completionHandler(error)
@@ -450,6 +474,11 @@ public extension APIClient {
             var urlRequest = try createURLRequest(for: urlPath)
             urlRequest.httpMethod = HttpMethod.POST
             urlRequest.httpBody = try jsonEncoder.encode(redemptionRequest)
+            
+            if !isAllowed(request: urlRequest) {
+                completionHandler(nil, APIError.notAllowed)
+                return nil
+            }
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
@@ -481,6 +510,11 @@ public extension APIClient {
             let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
                 "/checkinlists/\(checkInList.identifier)/status/")
             let urlRequest = try createURLRequest(for: urlPath)
+            
+            if !isAllowed(request: urlRequest) {
+                completionHandler(nil, APIError.notAllowed)
+                return
+            }
 
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {

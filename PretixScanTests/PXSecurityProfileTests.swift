@@ -74,4 +74,24 @@ class PXSecurityProfileTests: XCTestCase {
     }
     
     
+    // MARK: - Endpoit tests
+    private func assertUrlMatchesSingleEndpointInProfile(url: String, method: String, profile: PXSecurityProfile, expectedName: String) {
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = method
+        
+        let endpoints = PXSecurityProfileRequestValidator.matchingEndpoints(for: request, profile: profile)
+        
+        XCTAssertEqual(endpoints.count, 1, "The endpoint url for \(expectedName) must be matched exactly once. Did you register a regular expression for it?")
+        XCTAssertEqual(endpoints[0].0, method)
+        XCTAssertEqual(endpoints[0].1, expectedName)
+    }
+    
+    /// This test validates that all URLs have a valid regular expression resulting in a unique endpoint match. The expected name is a string constant usually shared with the server by convention.
+    func testProfilePretixScanV1Endpoints() {
+    
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-list")
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-detail")
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/", method: "GET", profile: .pretixscan, expectedName: "api-v1:subevent-list")
+    
+    }
 }

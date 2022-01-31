@@ -20,7 +20,7 @@ extension Error {
                 return Localization.Errors.EmptyResponse
             case .nonHTTPResponse:
                 return Localization.Errors.NonHTTPResponse
-            case .badRequest:
+            case .badRequest, .notAllowed:
                 return Localization.Errors.BadRequest
             case .unauthorized:
                 return Localization.Errors.Unauthorized
