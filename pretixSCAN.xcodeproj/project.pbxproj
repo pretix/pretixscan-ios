@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0803991926B1A6A80075BB3C /* TicketValidationReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0803991826B1A6A80075BB3C /* TicketValidationReason.swift */; };
+		080DF08027AD234100C7A4D4 /* PXDeviceInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080DF07F27AD234100C7A4D4 /* PXDeviceInitialization.swift */; };
 		08728E7927A53459002379A6 /* SwiftMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7827A53459002379A6 /* SwiftMessages */; };
 		08728E7C27A534B9002379A6 /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7B27A534B9002379A6 /* FMDB */; };
 		08728E7F27A53503002379A6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7E27A53503002379A6 /* Sentry */; };
 		08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */; };
+		08DEDA9927B1773C009716F3 /* BumpVersionUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DEDA9827B1773C009716F3 /* BumpVersionUploader.swift */; };
 		08FF5FB827A7D86600130F41 /* PXSecurityProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */; };
 		08FF5FBA27A7DB3500130F41 /* PXSecurityProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */; };
 		08FF5FBC27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */; };
@@ -232,7 +234,9 @@
 
 /* Begin PBXFileReference section */
 		0803991826B1A6A80075BB3C /* TicketValidationReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketValidationReason.swift; sourceTree = "<group>"; };
+		080DF07F27AD234100C7A4D4 /* PXDeviceInitialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDeviceInitialization.swift; sourceTree = "<group>"; };
 		08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusExtraInformation.swift; sourceTree = "<group>"; };
+		08DEDA9827B1773C009716F3 /* BumpVersionUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumpVersionUploader.swift; sourceTree = "<group>"; };
 		08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecurityProfile.swift; sourceTree = "<group>"; };
 		08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecurityProfileTests.swift; sourceTree = "<group>"; };
 		08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecurityProfileRequestValidator.swift; sourceTree = "<group>"; };
@@ -477,6 +481,7 @@
 			children = (
 				08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */,
 				08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */,
+				080DF07F27AD234100C7A4D4 /* PXDeviceInitialization.swift */,
 			);
 			path = SecurityProfiles;
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 			children = (
 				B5FA77992705C40E000E1644 /* QueuedRedemptionRequestsUploader.swift */,
 				B5FA779B2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift */,
+				08DEDA9827B1773C009716F3 /* BumpVersionUploader.swift */,
 			);
 			path = Uploaders;
 			sourceTree = "<group>";
@@ -1261,6 +1267,7 @@
 				DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */,
 				DC1D6FC122424CA9008A9E06 /* SearchHeaderView.swift in Sources */,
 				B525795C27292217006D9EE9 /* FullOrderDownloader.swift in Sources */,
+				080DF08027AD234100C7A4D4 /* PXDeviceInitialization.swift in Sources */,
 				DC8467CE225D08D10013F647 /* ItemCategory.swift in Sources */,
 				DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */,
 				DC8467BE225CF4000013F647 /* ItemVariation.swift in Sources */,
@@ -1306,6 +1313,7 @@
 				DC17F2422302B9E10044764A /* CountryCodeQuestionCell.swift in Sources */,
 				B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */,
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
+				08DEDA9927B1773C009716F3 /* BumpVersionUploader.swift in Sources */,
 				DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */,
 				08FF5FBC27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,

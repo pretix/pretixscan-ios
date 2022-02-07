@@ -42,6 +42,7 @@ final class PXSecurityProfileRequestValidator {
     
     /// Endpoint detection expressions
     static let EndpointExpressions: [PXAllowedEndpointName: PXEndpointRegExPattern] = [
+        "api-v1:device.update": #"(\/v1\/device\/update\/)$"#,
         "api-v1:event-list": #"(\/v1\/organizers\/)(.+?(?=\/))(\/events\/)$"#,
         "api-v1:event-detail": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)$"#,
         "api-v1:subevent-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)subevents\/$"#,
@@ -59,11 +60,8 @@ final class PXSecurityProfileRequestValidator {
     ]
     
     
-    static let AllowListNoOrders: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("GET", "api-v1:version"),
-                                                                                    ("GET", "api-v1:device.eventselection"),
+    static let AllowListNoOrders: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [
                                                                                     ("POST", "api-v1:device.update"),
-                                                                                    ("POST", "api-v1:device.revoke"),
-                                                                                    ("POST", "api-v1:device.roll"),
                                                                                     ("GET", "api-v1:event-list"),
                                                                                     ("GET", "api-v1:event-detail"),
                                                                                     ("GET", "api-v1:subevent-list"),
@@ -71,46 +69,15 @@ final class PXSecurityProfileRequestValidator {
                                                                                     ("GET", "api-v1:itemcategory-list"),
                                                                                     ("GET", "api-v1:item-list"),
                                                                                     ("GET", "api-v1:question-list"),
-                                                                                    ("GET", "api-v1:badgelayout-list"),
-                                                                                    ("GET", "api-v1:badgeitem-list"),
                                                                                     ("GET", "api-v1:checkinlist-list"),
                                                                                     ("GET", "api-v1:checkinlist-status"),
                                                                                     ("POST", "api-v1:checkinlist-failed_checkins"),
                                                                                     ("GET", "api-v1:checkinlistpos-list"),
                                                                                     ("POST", "api-v1:checkinlistpos-redeem"),
-                                                                                    ("GET", "api-v1:revokedsecrets-list"),
-                                                                                    ("GET", "api-v1:orderposition-pdf_image"),
-                                                                                    ("GET", "api-v1:event.settings"),
-                                                                                    ("POST", "api-v1:upload")]
+                                                                                    ("GET", "api-v1:revokedsecrets-list")]
     
-    static let AllowListKiosk: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("GET", "api-v1:version"),
-                                                                                 ("GET", "api-v1:device.eventselection"),
-                                                                                 ("POST", "api-v1:device.update"),
-                                                                                 ("POST", "api-v1:device.revoke"),
-                                                                                 ("POST", "api-v1:device.roll"),
-                                                                                 ("GET", "api-v1:event-list"),
-                                                                                 ("GET", "api-v1:event-detail"),
-                                                                                 ("GET", "api-v1:subevent-list"),
-                                                                                 ("GET", "api-v1:subevent-detail"),
-                                                                                 ("GET", "api-v1:itemcategory-list"),
-                                                                                 ("GET", "api-v1:item-list"),
-                                                                                 ("GET", "api-v1:question-list"),
-                                                                                 ("GET", "api-v1:badgelayout-list"),
-                                                                                 ("GET", "api-v1:badgeitem-list"),
-                                                                                 ("GET", "api-v1:checkinlist-list"),
-                                                                                 ("GET", "api-v1:checkinlist-status"),
-                                                                                 ("POST", "api-v1:checkinlist-failed_checkins"),
-                                                                                 ("POST", "api-v1:checkinlistpos-redeem"),
-                                                                                 ("GET", "api-v1:revokedsecrets-list"),
-                                                                                 ("GET", "api-v1:orderposition-pdf_image"),
-                                                                                 ("GET", "api-v1:event.settings"),
-                                                                                 ("POST", "api-v1:upload")]
     
-    static let AllowListPretixScan: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("GET", "api-v1:version"), // NOT USED BY THE APP
-                                                                                      ("GET", "api-v1:device.eventselection"), // NOT USED BY THE APP
-                                                                                      ("POST", "api-v1:device.update"), // NOT USED BY THE APP
-                                                                                      ("POST", "api-v1:device.revoke"), // NOT USED BY THE APP
-                                                                                      ("POST", "api-v1:device.roll"), // NOT USED BY THE APP
+    static let AllowListPretixScan: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
                                                                                       ("GET", "api-v1:event-list"), // OK
                                                                                       ("GET", "api-v1:event-detail"), // OK, POST?
                                                                                       ("GET", "api-v1:subevent-list"), // OK
@@ -118,18 +85,14 @@ final class PXSecurityProfileRequestValidator {
                                                                                       ("GET", "api-v1:itemcategory-list"), // OK
                                                                                       ("GET", "api-v1:item-list"), // OK
                                                                                       ("GET", "api-v1:question-list"), // OK
-                                                                                      ("GET", "api-v1:badgelayout-list"), // NOT USED BY THE APP
-                                                                                      ("GET", "api-v1:badgeitem-list"), // NOT USED BY THE APP
                                                                                       ("GET", "api-v1:checkinlist-list"), // OK
                                                                                       ("GET", "api-v1:checkinlist-status"), // OK
                                                                                       ("POST", "api-v1:checkinlist-failed_checkins"), // OK
                                                                                       ("GET", "api-v1:checkinlistpos-list"), // OK
                                                                                       ("POST", "api-v1:checkinlistpos-redeem"), // OK
                                                                                       ("GET", "api-v1:revokedsecrets-list"), // OK
-                                                                                      ("GET", "api-v1:order-list"), // OK
-                                                                                      ("GET", "api-v1:orderposition-pdf_image"), // NOT USED BY THE APP
-                                                                                      ("GET", "api-v1:event.settings"), // NOT USED BY THE APP
-                                                                                      ("POST", "api-v1:upload")]
+                                                                                      ("GET", "api-v1:order-list"),
+    ]
     
     
     /// Returns a list of endpoint names applicable for the provided security profile
@@ -144,8 +107,6 @@ final class PXSecurityProfileRequestValidator {
             return []
         case .pretixscan:
             return AllowListPretixScan
-        case .kiosk:
-            return AllowListKiosk
         case .noOrders:
             return AllowListNoOrders
         }

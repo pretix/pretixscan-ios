@@ -14,8 +14,6 @@ public enum PXSecurityProfile: String {
     case full = "full"
     /// Everything you need to allow all functionality of the scan app is allowed, everything else is blocked
     case pretixscan = "pretixscan"
-    /// Used if the device is used as a kiosk device, i.e. self-service check-in for users
-    case kiosk = "pretixscan_online_kiosk"
     /// Used if there are strict privacy regulations or if the data set is really large
     case noOrders = "pretixscan_online_noorders"
     

@@ -32,10 +32,6 @@ class PXSecurityProfileTests: XCTestCase {
         XCTAssertEqual(profile, PXSecurityProfile.full)
     }
     
-    func testPXSecurityProfileSupportsKiosk() {
-        let profile = PXSecurityProfile(rawValue: "pretixscan_online_kiosk")
-        XCTAssertEqual(profile, PXSecurityProfile.kiosk)
-    }
     
     func testPXSecurityProfileSupportsNoOrders() {
         let profile = PXSecurityProfile(rawValue: "pretixscan_online_noorders")
@@ -58,13 +54,6 @@ class PXSecurityProfileTests: XCTestCase {
         XCTAssertEqual(sut.securityProfile, .full)
     }
     
-    func testDefaultsConfigStoreLoadsProfileKiosk() {
-        let defaults = UserDefaults(suiteName: "testDatabase")!
-        defaults.set(PXSecurityProfile.kiosk.rawValue, forKey: defaultsKey("securityProfile"))
-        let sut = DefaultsConfigStore(defaults: defaults)
-        
-        XCTAssertEqual(sut.securityProfile, .kiosk)
-    }
     
     func testDefaultsConfigStoreLoadsProfileNoOrders() {
         let defaults = UserDefaults(suiteName: "testDatabase")!
@@ -87,9 +76,21 @@ class PXSecurityProfileTests: XCTestCase {
         XCTAssertEqual(endpoints[0].1, expectedName)
     }
     
+    func testAllRulesHaveUrls() {
+        for rule in PXSecurityProfileRequestValidator.AllowListPretixScan {
+            XCTAssertTrue(PXSecurityProfileRequestValidator.EndpointExpressions.contains(where: {$0.key == rule.1}), "Endpoint \(rule.1) must have a url expression")
+        }
+        
+        for rule in PXSecurityProfileRequestValidator.AllowListNoOrders {
+            XCTAssertTrue(PXSecurityProfileRequestValidator.EndpointExpressions.contains(where: {$0.key == rule.1}), "Endpoint \(rule.1) must have a url expression")
+        }
+    }
+    
     /// This test validates that all URLs have a valid regular expression resulting in a unique endpoint match. The expected name is a string constant usually shared with the server by convention.
     func testProfilePretixScanV1Endpoints() {
     
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/device/update/", method: "POST", profile: .pretixscan, expectedName: "api-v1:device.update")
+        
         assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-list")
         
         assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-detail")

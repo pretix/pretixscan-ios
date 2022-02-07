@@ -100,6 +100,72 @@ public extension APIClient {
 
         task.resume()
     }
+    
+    /// Updates the software version of the device on the server
+    /// https://docs.pretix.eu/en/latest/api/deviceauth.html#updating-the-software-version
+    func update(_ updateRequest: DeviceUpdateRequest, completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
+        guard let baseURL = configStore.apiBaseURL else {
+            let message = "Please set the APIClient's configStore.apiBaseURL property before calling this function."
+            EventLogger.log(event: message, category: .configuration, level: .warning, type: .default)
+            completionHandler(APIError.notConfigured(message: message))
+            return nil
+        }
+
+        let url = baseURL.appendingPathComponent("/api/v1/device/update")
+        logger.debug("API task for url '\(url.absoluteString)'")
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = HttpMethod.POST
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // swiftlint:disable:next force_try
+        urlRequest.httpBody = try! jsonEncoder.encode(updateRequest)
+        
+        if !isAllowed(request: urlRequest) {
+            completionHandler(APIError.notAllowed)
+            return nil
+        }
+
+        let task = session.dataTask(with: urlRequest) { (data, _, error) in
+            guard error == nil else {
+                completionHandler(error)
+                return
+            }
+
+            guard let responseData = data else {
+                completionHandler(APIError.emptyResponse)
+                return
+            }
+            
+            logger.debugRawDataAsString(responseData)
+            
+            let initializationResponse: DeviceInitializationResponse
+            do {
+                initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
+            } catch let jsonError {
+
+                if let errorResponse = try? self.jsonDecoder.decode(DeviceInitializationResponseError.self, from: responseData),
+                    let message = errorResponse.token.first {
+                    completionHandler(APIError.initializationError(message: message))
+                } else {
+                    completionHandler(jsonError)
+                }
+
+                return
+            }
+
+            self.configStore.apiToken = initializationResponse.apiToken
+            self.configStore.deviceID = initializationResponse.deviceID
+            self.configStore.deviceName = initializationResponse.name
+            self.configStore.deviceUniqueSerial = initializationResponse.uniqueSerial
+            self.configStore.organizerSlug = initializationResponse.organizer
+            self.configStore.securityProfile = PXSecurityProfile(rawValue: initializationResponse.securityProfile)
+
+            completionHandler(nil)
+        }
+        
+        return task
+    }
 }
 
 extension HTTPURLResponse {
