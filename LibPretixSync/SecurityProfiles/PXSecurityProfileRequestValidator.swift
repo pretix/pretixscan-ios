@@ -8,7 +8,31 @@
 
 import Foundation
 
-/// Allow validation of outgoing API requests against a security profile
+/// Allow validation of outgoing API requests against a security profile.
+///
+/// Each security profile from https://github.com/pretix/pretix/blob/master/src/pretix/api/auth/devicesecurity.py#L42 is reflected below in the collections `AllowListNoOrders` and `AllowListPretixScan`.
+///
+/// Steps to register a new endpoint:
+///
+/// 1. Get the name of the rule on the server (it's best to keep this aligned). e.g. `api-v1:my-endpoint`
+///
+/// 2. Add the rule to the allowed list of the profiles where it can be used (`AllowListNoOrders` and `AllowListPretixScan`).
+///
+/// 3. Validate by running test `PXSecurityProfileTests.testAllRulesHaveUrls()` - it will fail because the new rule doesn't have a RegEx expression for the url.
+///
+/// 4. Extend the unit tests in `PXSecurityProfileTests` to ensure the validator works correctly:
+///
+///     - `testProfileFullIsAllowed` - Add a case for the new rule
+///
+///     - `testProfilePretixScanIsAllowed` - Add a case for the new rule
+///
+///     - `testProfileNoOrdersIsAllowed` - Add a case for the new rule
+///
+/// 5. At this point all tests are failing.
+///
+/// 6. Add a regular expression for this rule in the `EndpointExpressions` collection.
+///
+/// 7. All tests should be passing.
 final class PXSecurityProfileRequestValidator {
     
     
