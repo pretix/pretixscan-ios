@@ -337,6 +337,7 @@ private extension DefaultsConfigStore {
         save(_deviceName, forKey: .deviceName)
         save(_organizerSlug, forKey: .organizerSlug)
         save(_deviceID, forKey: .deviceID)
+        save(_securityProfile.rawValue, forKey: .securityProfile)
         save(_scanMode, forKey: .scanMode)
         save(_deviceUniqueSerial, forKey: .deviceUniqueSerial)
         save(_asyncModeEnabled, forKey: .asyncModeEnabled)

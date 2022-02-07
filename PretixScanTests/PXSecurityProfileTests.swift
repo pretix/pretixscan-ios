@@ -44,6 +44,7 @@ class PXSecurityProfileTests: XCTestCase {
     
     func testDefaultsConfigStoreDefaultsToFull() {
         let defaults = UserDefaults(suiteName: "testDatabase")!
+        defaults.removeObject(forKey: defaultsKey("securityProfile"))
         let sut = DefaultsConfigStore(defaults: defaults)
         
         XCTAssertEqual(sut.securityProfile, .full)
@@ -90,8 +91,140 @@ class PXSecurityProfileTests: XCTestCase {
     func testProfilePretixScanV1Endpoints() {
     
         assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-list")
+        
         assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-detail")
-        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/", method: "GET", profile: .pretixscan, expectedName: "api-v1:subevent-list")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:subevent-list")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/1/", method: "GET", profile: .pretixscan, expectedName: "api-v1:subevent-detail")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/categories/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:itemcategory-list")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/items/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:item-list")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/questions/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:question-list")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:checkinlist-list")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/status/", method: "GET", profile: .pretixscan, expectedName: "api-v1:checkinlist-status")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/failed_checkins/", method: "POST", profile: .pretixscan, expectedName: "api-v1:checkinlist-failed_checkins")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/", method: "GET", profile: .pretixscan, expectedName: "api-v1:checkinlistpos-list")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/abc1234/redeem/", method: "POST", profile: .pretixscan, expectedName: "api-v1:checkinlistpos-redeem")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/revokedsecrets/", method: "GET", profile: .pretixscan, expectedName: "api-v1:revokedsecrets-list")
+        
+        assertUrlMatchesSingleEndpointInProfile(url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orders/", method: "GET", profile: .pretixscan, expectedName: "api-v1:order-list")
+    }
     
+    private func assertUrlInProfile(is allowed: Bool, url: String, method: String, profile: PXSecurityProfile, expectedName: String) {
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = method
+        
+        if allowed {
+            XCTAssertTrue(PXSecurityProfileRequestValidator.isAllowed(request, profile: profile), "The endpoint url for \(expectedName) is not allowed for this profile.")
+        } else {
+            XCTAssertFalse(PXSecurityProfileRequestValidator.isAllowed(request, profile: profile), "The endpoint url for \(expectedName) is not allowed for this profile.")
+        }
+        
+    }
+    
+    /// This test validates that the requests are allowed for a given profile.
+    func testProfileFullIsAllowed() {
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:event-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .full, expectedName: "api-v1:event-detail")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:subevent-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/1/", method: "GET", profile: .full, expectedName: "api-v1:subevent-detail")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/categories/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:itemcategory-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/items/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:item-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/questions/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:question-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:checkinlist-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/status/", method: "GET", profile: .full, expectedName: "api-v1:checkinlist-status")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/failed_checkins/", method: "POST", profile: .full, expectedName: "api-v1:checkinlist-failed_checkins")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/", method: "GET", profile: .full, expectedName: "api-v1:checkinlistpos-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/abc1234/redeem/", method: "POST", profile: .full, expectedName: "api-v1:checkinlistpos-redeem")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/revokedsecrets/", method: "GET", profile: .full, expectedName: "api-v1:revokedsecrets-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orders/", method: "GET", profile: .full, expectedName: "api-v1:order-list")
+    }
+    
+    /// This test validates that the requests are allowed for a given profile.
+    func testProfilePretixScanIsAllowed() {
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-detail")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:subevent-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/1/", method: "GET", profile: .pretixscan, expectedName: "api-v1:subevent-detail")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/categories/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:itemcategory-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/items/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:item-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/questions/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:question-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:checkinlist-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/status/", method: "GET", profile: .pretixscan, expectedName: "api-v1:checkinlist-status")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/failed_checkins/", method: "POST", profile: .pretixscan, expectedName: "api-v1:checkinlist-failed_checkins")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/", method: "GET", profile: .pretixscan, expectedName: "api-v1:checkinlistpos-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/abc1234/redeem/", method: "POST", profile: .pretixscan, expectedName: "api-v1:checkinlistpos-redeem")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/revokedsecrets/", method: "GET", profile: .pretixscan, expectedName: "api-v1:revokedsecrets-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orders/", method: "GET", profile: .pretixscan, expectedName: "api-v1:order-list")
+    }
+    
+    /// This test validates that the requests are allowed for a given profile.
+    func testProfileNoOrdersIsAllowed() {
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .noOrders, expectedName: "api-v1:event-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .noOrders, expectedName: "api-v1:event-detail")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/?page=1&ordering=datetime", method: "GET", profile: .noOrders, expectedName: "api-v1:subevent-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/1/", method: "GET", profile: .noOrders, expectedName: "api-v1:subevent-detail")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/categories/?page=1&ordering=datetime", method: "GET", profile: .noOrders, expectedName: "api-v1:itemcategory-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/items/?page=1&ordering=datetime", method: "GET", profile: .noOrders, expectedName: "api-v1:item-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/questions/?page=1&ordering=datetime", method: "GET", profile: .noOrders, expectedName: "api-v1:question-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/?page=1&ordering=datetime", method: "GET", profile: .noOrders, expectedName: "api-v1:checkinlist-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/status/", method: "GET", profile: .noOrders, expectedName: "api-v1:checkinlist-status")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/failed_checkins/", method: "POST", profile: .noOrders, expectedName: "api-v1:checkinlist-failed_checkins")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/", method: "GET", profile: .noOrders, expectedName: "api-v1:checkinlistpos-list")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/abc1234/redeem/", method: "POST", profile: .noOrders, expectedName: "api-v1:checkinlistpos-redeem")
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/revokedsecrets/", method: "GET", profile: .noOrders, expectedName: "api-v1:revokedsecrets-list")
+        
+        // NOT ALLOWED
+        assertUrlInProfile(is: false, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orders/", method: "GET", profile: .noOrders, expectedName: "api-v1:order-list")
     }
 }
