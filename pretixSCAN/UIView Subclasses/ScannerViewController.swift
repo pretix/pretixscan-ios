@@ -114,7 +114,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
         if previewLayer.connection?.isVideoOrientationSupported == true {
             guard let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation else {
-                EventLogger.log(event: "Unknown interfaceOrientation", category: .avCaptureDevice, level: .warning, type: .error)
+                logger.warning("Unknown interfaceOrientation")
                 return
             }
             switch interfaceOrientation {
