@@ -187,6 +187,8 @@ class PXSecurityProfileTests: XCTestCase {
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/abc1234/redeem/", method: "POST", profile: .full, expectedName: "api-v1:checkinlistpos-redeem")
         
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/%7B%22handshake_version%22:%201,%20%22url%22:%20%22https://pretix.eu%22,%20%22token%22:%20%fdsfdsfsd3333%22%7D/redeem/", method: "POST", profile: .full, expectedName: "api-v1:checkinlistpos-redeem")
+        
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/revokedsecrets/", method: "GET", profile: .full, expectedName: "api-v1:revokedsecrets-list")
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orders/", method: "GET", profile: .full, expectedName: "api-v1:order-list")

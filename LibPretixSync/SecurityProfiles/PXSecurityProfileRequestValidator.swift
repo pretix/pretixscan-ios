@@ -78,7 +78,7 @@ final class PXSecurityProfileRequestValidator {
         "api-v1:checkinlist-status": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)checkinlists\/([^\/\s]+\/)status\/$"#,
         "api-v1:checkinlist-failed_checkins": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)checkinlists\/([^\/\s]+\/)failed_checkins\/$"#,
         "api-v1:checkinlistpos-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)checkinlists\/([^\/\s]+\/)positions\/$"#,
-        "api-v1:checkinlistpos-redeem": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)checkinlists\/([^\/\s]+\/)positions\/([^\/\s]+\/)redeem\/$"#,
+        "api-v1:checkinlistpos-redeem": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)checkinlists\/([^\/\s]+\/)positions\/(.+\/)redeem\/$"#,
         "api-v1:revokedsecrets-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)revokedsecrets\/$"#,
         "api-v1:order-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)orders\/$"#,
     ]
