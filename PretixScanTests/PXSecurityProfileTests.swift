@@ -34,6 +34,11 @@ class PXSecurityProfileTests: XCTestCase {
         XCTAssertEqual(profile, PXSecurityProfile.noOrders)
     }
     
+    func testPXSecurityProfileSupportsKiosk() {
+        let profile = PXSecurityProfile(rawValue: "pretixscan_online_kiosk")
+        XCTAssertEqual(profile, PXSecurityProfile.kiosk)
+    }
+    
     func testDefaultsConfigStoreDefaultsToFull() {
         let defaults = UserDefaults(suiteName: "testDatabase")!
         defaults.removeObject(forKey: defaultsKey("securityProfile"))
@@ -50,6 +55,14 @@ class PXSecurityProfileTests: XCTestCase {
         XCTAssertEqual(sut.securityProfile, .full)
     }
     
+    func testDefaultsConfigStoreLoadsProfileKiosk() {
+        let defaults = UserDefaults(suiteName: "testDatabase")!
+        defaults.set(PXSecurityProfile.kiosk.rawValue, forKey: defaultsKey("securityProfile"))
+        let sut = DefaultsConfigStore(defaults: defaults)
+        
+        XCTAssertEqual(sut.securityProfile, .kiosk)
+    }
+    
     
     func testDefaultsConfigStoreLoadsProfileNoOrders() {
         let defaults = UserDefaults(suiteName: "testDatabase")!
@@ -61,17 +74,63 @@ class PXSecurityProfileTests: XCTestCase {
     
     // MARK: - Defaults tests
     
+    
     func testPXSecurityProfileDefaultForOrderSync() {
         for profileCase in PXSecurityProfile.allCases {
             switch profileCase {
             case .full:
                 XCTAssertTrue(profileCase.defaultValue(for: .shouldDownloadOrders), "The security profile '\(profileCase.rawValue)' must set default value shouldDownloadOrders = true")
+                XCTAssertTrue(profileCase.defaultValue(for: .enableSearch), "The security profile '\(profileCase.rawValue)' must set default value enableSearch = true")
             case .pretixscan:
                 XCTAssertTrue(profileCase.defaultValue(for: .shouldDownloadOrders), "The security profile '\(profileCase.rawValue)' must set default value shouldDownloadOrders = true")
+                XCTAssertTrue(profileCase.defaultValue(for: .enableSearch), "The security profile '\(profileCase.rawValue)' must set default value enableSearch = true")
             case .noOrders:
                 XCTAssertFalse(profileCase.defaultValue(for: .shouldDownloadOrders), "The security profile '\(profileCase.rawValue)' must set default value shouldDownloadOrders = false")
+            case .kiosk:
+                XCTAssertFalse(profileCase.defaultValue(for: .shouldDownloadOrders), "The security profile '\(profileCase.rawValue)' must set default value shouldDownloadOrders = false")
+                XCTAssertFalse(profileCase.defaultValue(for: .enableSearch), "The security profile '\(profileCase.rawValue)' must set default value enableSearch = false")
             }
         }
+    }
+    
+    func testDefaultsForKios() {
+        let defaults = UserDefaults(suiteName: "testDatabase")!
+        defaults.set(PXSecurityProfile.kiosk.rawValue, forKey: defaultsKey("securityProfile"))
+        let sut = DefaultsConfigStore(defaults: defaults)
+        sut.applySecurityDefaults()
+        
+        XCTAssertFalse(sut.shouldDownloadOrders)
+        XCTAssertFalse(sut.enableSearch)
+    }
+    
+    func testDefaultsForNoOrders() {
+        let defaults = UserDefaults(suiteName: "testDatabase")!
+        defaults.set(PXSecurityProfile.noOrders.rawValue, forKey: defaultsKey("securityProfile"))
+        let sut = DefaultsConfigStore(defaults: defaults)
+        sut.applySecurityDefaults()
+        
+        XCTAssertFalse(sut.shouldDownloadOrders)
+        XCTAssertTrue(sut.enableSearch)
+    }
+    
+    func testDefaultsForPretix() {
+        let defaults = UserDefaults(suiteName: "testDatabase")!
+        defaults.set(PXSecurityProfile.pretixscan.rawValue, forKey: defaultsKey("securityProfile"))
+        let sut = DefaultsConfigStore(defaults: defaults)
+        sut.applySecurityDefaults()
+        
+        XCTAssertTrue(sut.shouldDownloadOrders)
+        XCTAssertTrue(sut.enableSearch)
+    }
+    
+    func testDefaultsForFull() {
+        let defaults = UserDefaults(suiteName: "testDatabase")!
+        defaults.set(PXSecurityProfile.full.rawValue, forKey: defaultsKey("securityProfile"))
+        let sut = DefaultsConfigStore(defaults: defaults)
+        sut.applySecurityDefaults()
+        
+        XCTAssertTrue(sut.shouldDownloadOrders)
+        XCTAssertTrue(sut.enableSearch)
     }
     
     // MARK: - Endpoit tests

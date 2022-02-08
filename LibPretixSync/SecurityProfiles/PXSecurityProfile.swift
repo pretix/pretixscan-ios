@@ -17,6 +17,9 @@ public enum PXSecurityProfile: String, CaseIterable {
     /// Used if there are strict privacy regulations or if the data set is really large
     case noOrders = "pretixscan_online_noorders"
     
+    /// Used if the device is used as a kiosk device, i.e. self-service check-in for users
+    case kiosk = "pretixscan_online_kiosk"
+    
     init(rawValue: String?) {
         guard let rawValue = rawValue else {
             self = .full

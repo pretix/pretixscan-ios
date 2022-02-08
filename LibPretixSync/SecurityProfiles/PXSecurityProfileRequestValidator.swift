@@ -117,6 +117,20 @@ final class PXSecurityProfileRequestValidator {
                                                                                       ("GET", "api-v1:order-list"),
     ]
     
+    static let AllowListKiosk: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [    ("POST", "api-v1:device.update"),
+                                                                                     ("GET", "api-v1:event-list"),
+                                                                                     ("GET", "api-v1:event-detail"),
+                                                                                     ("GET", "api-v1:subevent-list"),
+                                                                                     ("GET", "api-v1:subevent-detail"),
+                                                                                     ("GET", "api-v1:itemcategory-list"),
+                                                                                     ("GET", "api-v1:item-list"),
+                                                                                     ("GET", "api-v1:question-list"),
+                                                                                     ("GET", "api-v1:checkinlist-list"),
+                                                                                     ("GET", "api-v1:checkinlist-status"),
+                                                                                     ("POST", "api-v1:checkinlist-failed_checkins"),
+                                                                                     ("POST", "api-v1:checkinlistpos-redeem"),
+                                                                                     ("GET", "api-v1:revokedsecrets-list")]
+    
     
     /// Returns a list of endpoint names applicable for the provided security profile
     ///
@@ -132,6 +146,8 @@ final class PXSecurityProfileRequestValidator {
             return AllowListPretixScan
         case .noOrders:
             return AllowListNoOrders
+        case .kiosk:
+            return AllowListKiosk
         }
     }
     

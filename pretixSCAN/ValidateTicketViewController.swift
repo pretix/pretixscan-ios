@@ -34,6 +34,7 @@ class ValidateTicketViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupEventButton()
+        setupSearchController()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -119,6 +120,18 @@ extension ValidateTicketViewController {
     }
     
     private func setupSearchController() {
+        if !configStore.enableSearch {
+            logger.debug("🔎 Search is disabled")
+            navigationItem.searchController?.dismiss(animated: false, completion: nil)
+            navigationItem.searchController?.removeFromParent()
+            navigationItem.searchController = nil
+            return
+        }
+        
+        if navigationItem.searchController != nil {
+            return
+        }
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let resultsViewController = storyboard.instantiateViewController(withIdentifier: "searchResults")
         guard let resultsController = resultsViewController as? SearchResultsTableViewController else {

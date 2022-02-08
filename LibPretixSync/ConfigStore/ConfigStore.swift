@@ -61,6 +61,9 @@ public protocol ConfigStore: AnyObject {
     
     /// The last version of the app published to the server
     var publishedSoftwareVersion: String? { get set }
+    
+    /// If `true`, the user is allowed to use the search function
+    var enableSearch: Bool {get set}
 
     // MARK: - Device
     /// The name that was specified for this device in the Pretix Organizer Backend

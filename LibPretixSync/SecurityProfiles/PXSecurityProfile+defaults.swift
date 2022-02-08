@@ -16,6 +16,8 @@ extension PXSecurityProfile {
             switch key {
             case .shouldDownloadOrders:
                 return true
+            case .enableSearch:
+                return true
             default:
                 return false
             }
@@ -23,12 +25,25 @@ extension PXSecurityProfile {
             switch key {
             case .shouldDownloadOrders:
                 return true
+            case .enableSearch:
+                return true
             default:
                 return false
             }
         case .noOrders:
             switch key {
             case .shouldDownloadOrders:
+                return false
+            case .enableSearch:
+                return true
+            default:
+                return false
+            }
+        case .kiosk:
+            switch key {
+            case .shouldDownloadOrders:
+                return false
+            case .enableSearch:
                 return false
             default:
                 return false

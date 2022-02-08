@@ -35,8 +35,17 @@ public class DefaultsConfigStore: ConfigStore {
         case shouldPlaySounds
         case shouldDownloadOrders
         case publishedSoftwareVersion
+        case enableSearch
     }
 
+    public var enableSearch: Bool {
+        get { return _enableSearch }
+        set {
+            _enableSearch = newValue
+            valueChanged()
+        }
+    }
+    
     public var welcomeScreenIsConfirmed: Bool {
         get { return _welcomeScreenIsConfirmed }
         set {
@@ -246,6 +255,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _allManagedEvents: [Event] = []
     private var _asyncModeEnabled: Bool = false
     private var _shouldAutoSync: Bool = true
+    private var _enableSearch: Bool = true
     private var _publishedVersion: String? = nil
 
     private let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
@@ -259,6 +269,7 @@ public class DefaultsConfigStore: ConfigStore {
     
     public func applySecurityDefaults() {
         shouldDownloadOrders = self.securityProfile.defaultValue(for: .shouldDownloadOrders)
+        enableSearch = self.securityProfile.defaultValue(for: .enableSearch)
     }
 
     public func factoryReset() {
@@ -286,6 +297,7 @@ public class DefaultsConfigStore: ConfigStore {
         _allManagedEvents = []
         _asyncModeEnabled = false
         _publishedVersion = nil
+        _enableSearch = true
         shouldPlaySounds = true
         shouldDownloadOrders = true
 
@@ -329,6 +341,8 @@ private extension DefaultsConfigStore {
         shouldPlaySounds = defaults.bool(forKey: key(.shouldPlaySounds))
         shouldDownloadOrders = defaults.bool(forKey: key(.shouldDownloadOrders))
         _publishedVersion = defaults.string(forKey: key(.publishedSoftwareVersion))
+        _enableSearch = defaults.value(forKey: key(.enableSearch)) as? Bool ?? true
+        
         // Event
         if let eventData = defaults.data(forKey: key(.event)) {
             _event = try? jsonDecoder.decode(Event.self, from: eventData)
@@ -363,6 +377,7 @@ private extension DefaultsConfigStore {
         save(try? jsonEncoder.encode(_checkInList), forKey: .checkInList)
         save(try? jsonEncoder.encode(_allManagedEvents), forKey: .allManagedEvents)
         save(_publishedVersion, forKey: .publishedSoftwareVersion)
+        save(_enableSearch, forKey: .enableSearch)
         
         defaults.synchronize()
 
