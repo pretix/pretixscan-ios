@@ -108,7 +108,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     
     // MARK: - Actions
     func toggleScanMode() {
-        guard var configStore = configStore else { return }
+        guard let configStore = configStore else { return }
         let previousValue = configStore.scanMode
         if (previousValue == "exit") {
             configStore.scanMode = "entry"
@@ -120,13 +120,13 @@ class SettingsTableViewController: UITableViewController, Configurable {
     }
 
     func toggleShouldDownloadOrders() {
-        guard var configStore = configStore else { return }
+        guard let configStore = configStore else { return }
         configStore.shouldDownloadOrders.toggle()
         shouldDownloadOrdersCell.detailTextLabel?.text = configStore.shouldDownloadOrders == true ? Icon.enabled : Icon.disabled
     }
     
     func toggleShouldAutoSync() {
-        guard var configStore = configStore else { return }
+        guard let configStore = configStore else { return }
         let previousValue = configStore.shouldAutoSync
         configStore.shouldAutoSync = !previousValue
 
@@ -149,7 +149,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     }
 
     func toggleOfflineMode() {
-        if var configStore = configStore {
+        if let configStore = configStore {
             configStore.asyncModeEnabled = !(configStore.asyncModeEnabled)
             offlineModeCell.valueLabel?.text = configStore.asyncModeEnabled ?
                 Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline

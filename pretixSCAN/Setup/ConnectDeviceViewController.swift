@@ -52,7 +52,7 @@ class ConnectDeviceViewController: UIViewController, Configurable, SetupScannerV
     }
 
     func initialize(token: String, url: URL) {
-        guard var configStore = self.configStore else {
+        guard let configStore = self.configStore else {
             EventLogger.log(event: "ConfigStore not available", category: .configuration, level: .fatal, type: .error)
             return
         }

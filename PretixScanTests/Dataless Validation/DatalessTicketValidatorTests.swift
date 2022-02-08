@@ -43,12 +43,8 @@ class DatalessTicketValidatorTests: XCTestCase {
         let sut = DatalessTicketValidator(dataStore: ds)
         
         // act
-        var resultResponse: RedemptionResponse?
-        var resultError: Error?
         let expectation = expectation(description: "Redeem")
         sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
-            resultResponse = response
-            resultError = err
             expectation.fulfill()
         })
         

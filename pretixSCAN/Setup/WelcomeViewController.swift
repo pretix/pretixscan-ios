@@ -31,7 +31,7 @@ class WelcomeViewController: UIViewController, Configurable {
     }
 
     @IBAction private func `continue`(_ sender: Any) {
-        guard var configStore = self.configStore else { return }
+        guard let configStore = self.configStore else { return }
         configStore.welcomeScreenIsConfirmed = true
         dismiss(animated: true, completion: nil)
     }
