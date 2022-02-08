@@ -12,10 +12,6 @@ import XCTest
 
 class PXSecurityProfileTests: XCTestCase {
     
-    private func defaultsKey(_ key: String) -> String {
-        return "eu.pretix.pretixscan.ios.\(key)"
-    }
-
     func testPXSecurityProfileDefaultsToFull() {
         let profile = PXSecurityProfile(rawValue: nil)
         XCTAssertEqual(profile, PXSecurityProfile.full)
@@ -63,6 +59,20 @@ class PXSecurityProfileTests: XCTestCase {
         XCTAssertEqual(sut.securityProfile, .noOrders)
     }
     
+    // MARK: - Defaults tests
+    
+    func testPXSecurityProfileDefaultForOrderSync() {
+        for profileCase in PXSecurityProfile.allCases {
+            switch profileCase {
+            case .full:
+                XCTAssertTrue(profileCase.defaultValue(for: .shouldDownloadOrders), "The security profile '\(profileCase.rawValue)' must set default value shouldDownloadOrders = true")
+            case .pretixscan:
+                XCTAssertTrue(profileCase.defaultValue(for: .shouldDownloadOrders), "The security profile '\(profileCase.rawValue)' must set default value shouldDownloadOrders = true")
+            case .noOrders:
+                XCTAssertFalse(profileCase.defaultValue(for: .shouldDownloadOrders), "The security profile '\(profileCase.rawValue)' must set default value shouldDownloadOrders = false")
+            }
+        }
+    }
     
     // MARK: - Endpoit tests
     
@@ -91,6 +101,8 @@ class PXSecurityProfileTests: XCTestCase {
     
     /// This test validates that the requests are allowed for a given profile.
     func testProfileFullIsAllowed() {
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/update", method: "POST", profile: .full, expectedName: "api-v1:device.update")
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:event-list")
         
@@ -124,6 +136,8 @@ class PXSecurityProfileTests: XCTestCase {
     /// This test validates that the requests are allowed for a given profile.
     func testProfilePretixScanIsAllowed() {
         
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/update", method: "POST", profile: .full, expectedName: "api-v1:device.update")
+        
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-list")
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-detail")
@@ -155,6 +169,8 @@ class PXSecurityProfileTests: XCTestCase {
     
     /// This test validates that the requests are allowed for a given profile.
     func testProfileNoOrdersIsAllowed() {
+        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/update", method: "POST", profile: .full, expectedName: "api-v1:device.update")
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .noOrders, expectedName: "api-v1:event-list")
         

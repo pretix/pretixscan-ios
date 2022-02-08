@@ -9,7 +9,7 @@
 import Foundation
 
 /// API Security profile level. Check https://github.com/pretix/pretix/blob/master/src/pretix/api/auth/devicesecurity.py#L42 for a full description
-public enum PXSecurityProfile: String {
+public enum PXSecurityProfile: String, CaseIterable {
     /// Everything is allowed
     case full = "full"
     /// Everything you need to allow all functionality of the scan app is allowed, everything else is blocked

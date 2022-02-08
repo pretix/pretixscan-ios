@@ -20,4 +20,8 @@ extension XCTestCase {
         let url = URLForResource(fileName: filename, withExtension: ext)
         return try! Data.init(contentsOf: url)
     }
+    
+    func defaultsKey(_ key: String) -> String {
+        return "eu.pretix.pretixscan.ios.\(key)"
+    }
 }

@@ -14,6 +14,8 @@
 		08728E7F27A53503002379A6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7E27A53503002379A6 /* Sentry */; };
 		08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */; };
 		08DEDA9927B1773C009716F3 /* BumpVersionUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DEDA9827B1773C009716F3 /* BumpVersionUploader.swift */; };
+		08DEDA9B27B1889D009716F3 /* PXSecurityProfile+defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DEDA9A27B1889D009716F3 /* PXSecurityProfile+defaults.swift */; };
+		08DEDA9D27B1FD81009716F3 /* PXDeviceInitializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DEDA9C27B1FD81009716F3 /* PXDeviceInitializationTests.swift */; };
 		08FF5FB827A7D86600130F41 /* PXSecurityProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */; };
 		08FF5FBA27A7DB3500130F41 /* PXSecurityProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */; };
 		08FF5FBC27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */; };
@@ -237,6 +239,8 @@
 		080DF07F27AD234100C7A4D4 /* PXDeviceInitialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDeviceInitialization.swift; sourceTree = "<group>"; };
 		08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusExtraInformation.swift; sourceTree = "<group>"; };
 		08DEDA9827B1773C009716F3 /* BumpVersionUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumpVersionUploader.swift; sourceTree = "<group>"; };
+		08DEDA9A27B1889D009716F3 /* PXSecurityProfile+defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PXSecurityProfile+defaults.swift"; sourceTree = "<group>"; };
+		08DEDA9C27B1FD81009716F3 /* PXDeviceInitializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXDeviceInitializationTests.swift; sourceTree = "<group>"; };
 		08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecurityProfile.swift; sourceTree = "<group>"; };
 		08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecurityProfileTests.swift; sourceTree = "<group>"; };
 		08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXSecurityProfileRequestValidator.swift; sourceTree = "<group>"; };
@@ -482,6 +486,7 @@
 				08FF5FB727A7D86600130F41 /* PXSecurityProfile.swift */,
 				08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */,
 				080DF07F27AD234100C7A4D4 /* PXDeviceInitialization.swift */,
+				08DEDA9A27B1889D009716F3 /* PXSecurityProfile+defaults.swift */,
 			);
 			path = SecurityProfiles;
 			sourceTree = "<group>";
@@ -690,6 +695,7 @@
 				DC8467D0225D09D60013F647 /* ItemCategoryTests.swift */,
 				B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */,
 				08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */,
+				08DEDA9C27B1FD81009716F3 /* PXDeviceInitializationTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -1195,6 +1201,7 @@
 				B525795E27292226006D9EE9 /* PartialOrderDownloader.swift in Sources */,
 				DC91EB33223FAFF300704F24 /* PagedList.swift in Sources */,
 				08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */,
+				08DEDA9B27B1889D009716F3 /* PXSecurityProfile+defaults.swift in Sources */,
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */,
@@ -1353,6 +1360,7 @@
 				B553421A272BF81A003008AD /* EntryAnswersCheckerTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
 				DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */,
+				08DEDA9D27B1FD81009716F3 /* PXDeviceInitializationTests.swift in Sources */,
 				DCC00041223BEAF300236424 /* EventTests.swift in Sources */,
 				DCB35B942248F66100860385 /* RedemptionResponseTests.swift in Sources */,
 			);

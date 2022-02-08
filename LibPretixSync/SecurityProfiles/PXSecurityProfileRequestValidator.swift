@@ -66,7 +66,7 @@ final class PXSecurityProfileRequestValidator {
     
     /// Endpoint detection expressions
     static let EndpointExpressions: [PXAllowedEndpointName: PXEndpointRegExPattern] = [
-        "api-v1:device.update": #"(\/v1\/device\/update\/)$"#,
+        "api-v1:device.update": #"(\/v1\/device\/update)$"#,
         "api-v1:event-list": #"(\/v1\/organizers\/)(.+?(?=\/))(\/events\/)$"#,
         "api-v1:event-detail": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)$"#,
         "api-v1:subevent-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)subevents\/$"#,
@@ -84,8 +84,7 @@ final class PXSecurityProfileRequestValidator {
     ]
     
     
-    static let AllowListNoOrders: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [
-                                                                                    ("POST", "api-v1:device.update"),
+    static let AllowListNoOrders: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
                                                                                     ("GET", "api-v1:event-list"),
                                                                                     ("GET", "api-v1:event-detail"),
                                                                                     ("GET", "api-v1:subevent-list"),

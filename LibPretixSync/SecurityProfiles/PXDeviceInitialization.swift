@@ -10,46 +10,40 @@ import Foundation
 import UIKit
 
 final class PXDeviceInitialization {
-    private let defaults: UserDefaults
+    private weak var configStore: ConfigStore?
     
-    enum Keys: String, CaseIterable {
-        /// The last version of the app which was used during initialization
-        case publishedSoftwareVersion
-    }
+    var hardwareBrand: String = "Apple"
     
-    init(_ defaults: UserDefaults) {
-        self.defaults = defaults
+    var hardwareModel: String = UIDevice.current.modelName
+    
+    var softwareBrand: String = Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "n/a"
+    
+    var softwareVersion: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
+    
+    init(_ config: ConfigStore) {
+        self.configStore = config
     }
 
     
     func needsToUpdate() -> Bool {
-        guard let publishedSoftwareVersion = defaults.string(forKey: Keys.publishedSoftwareVersion.rawValue) else {
+        guard let publishedSoftwareVersion = configStore?.publishedSoftwareVersion else {
             // no published version
             logger.warning("Needs to update: no known published version")
             return true
         }
         
-        guard let softwareVersion = getSoftwareVersion() else {
-            logger.warning("Needs to update: unable to determine software version")
-            return false
-        }
-        
-        logger.debug("Needs to update comparing '\(publishedSoftwareVersion)' to current '\(softwareVersion)'")
-        return softwareVersion.compare(publishedSoftwareVersion) == .orderedAscending
+        logger.debug("Needs to update comparing '\(publishedSoftwareVersion)' to current '\(self.softwareVersion)'")
+        return softwareVersion.compare(publishedSoftwareVersion) == .orderedDescending
     }
     
     func setPublishedVersion(_ version: String) {
         logger.debug("Setting last published version to '\(version)'")
-        defaults.set(version, forKey: Keys.publishedSoftwareVersion.rawValue)
-        defaults.synchronize()
+        configStore?.publishedSoftwareVersion = version
     }
-    
-    func getSoftwareVersion() -> String? {
-        Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
-    }
+
     
     func getUpdateRequest() -> DeviceUpdateRequest? {
-        return DeviceUpdateRequest(hardwareBrand: "Apple", hardwareModel: UIDevice.current.modelName, softwareBrand: Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "n/a", softwareVersion: getSoftwareVersion() ?? "n/a")
+        return DeviceUpdateRequest(hardwareBrand: hardwareBrand, hardwareModel: hardwareModel, softwareBrand: softwareBrand, softwareVersion: softwareVersion)
     }
 }
 

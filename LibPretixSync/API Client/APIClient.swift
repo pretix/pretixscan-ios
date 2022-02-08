@@ -21,14 +21,14 @@ import Foundation
 /// - Then call initialize with a DeviceInitializationRequest that contains the handshake token to obtain an API Token
 public final class APIClient {
     private var configStore: ConfigStore
-
+    
     private let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
     private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
     private let session = URLSession.shared
-
+    
     /// A previously fired off search task, so we cancel it if a new task is fired before this one is completed.
     private var previousSearchTask: URLSessionDataTask?
-
+    
     // MARK: - Initialization
     init(configStore: ConfigStore) {
         self.configStore = configStore
@@ -49,23 +49,23 @@ public extension APIClient {
             completionHandler(APIError.notConfigured(message: message))
             return
         }
-
+        
         let url = baseURL.appendingPathComponent("/api/v1/device/initialize")
         logger.debug("API task for url '\(url.absoluteString)'")
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = HttpMethod.POST
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+        
         // swiftlint:disable:next force_try
         urlRequest.httpBody = try! jsonEncoder.encode(initializationRequest)
-
+        
         let task = session.dataTask(with: urlRequest) { (data, _, error) in
             guard error == nil else {
                 completionHandler(error)
                 return
             }
-
+            
             guard let responseData = data else {
                 completionHandler(APIError.emptyResponse)
                 return
@@ -77,94 +77,98 @@ public extension APIClient {
             do {
                 initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
             } catch let jsonError {
-
+                
                 if let errorResponse = try? self.jsonDecoder.decode(DeviceInitializationResponseError.self, from: responseData),
-                    let message = errorResponse.token.first {
+                   let message = errorResponse.token.first {
                     completionHandler(APIError.initializationError(message: message))
                 } else {
                     completionHandler(jsonError)
                 }
-
+                
                 return
             }
-
+            
+            // store the published version
+            let pxd = PXDeviceInitialization(self.configStore)
+            pxd.setPublishedVersion(initializationRequest.softwareVersion)
+            
+            // setup the configuration store and apply security defaults
             self.configStore.apiToken = initializationResponse.apiToken
             self.configStore.deviceID = initializationResponse.deviceID
             self.configStore.deviceName = initializationResponse.name
             self.configStore.deviceUniqueSerial = initializationResponse.uniqueSerial
             self.configStore.organizerSlug = initializationResponse.organizer
             self.configStore.securityProfile = PXSecurityProfile(rawValue: initializationResponse.securityProfile)
-
+            self.configStore.applySecurityDefaults()
+            
             completionHandler(nil)
         }
-
+        
         task.resume()
     }
     
     /// Updates the software version of the device on the server
     /// https://docs.pretix.eu/en/latest/api/deviceauth.html#updating-the-software-version
     func update(_ updateRequest: DeviceUpdateRequest, completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
-        guard let baseURL = configStore.apiBaseURL else {
-            let message = "Please set the APIClient's configStore.apiBaseURL property before calling this function."
-            EventLogger.log(event: message, category: .configuration, level: .warning, type: .default)
-            completionHandler(APIError.notConfigured(message: message))
-            return nil
-        }
-
-        let url = baseURL.appendingPathComponent("/api/v1/device/update")
-        logger.debug("API task for url '\(url.absoluteString)'")
         
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = HttpMethod.POST
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        // swiftlint:disable:next force_try
-        urlRequest.httpBody = try! jsonEncoder.encode(updateRequest)
-        
-        if !isAllowed(request: urlRequest) {
-            completionHandler(APIError.notAllowed)
-            return nil
-        }
-
-        let task = session.dataTask(with: urlRequest) { (data, _, error) in
-            guard error == nil else {
-                completionHandler(error)
-                return
-            }
-
-            guard let responseData = data else {
-                completionHandler(APIError.emptyResponse)
-                return
+        do {
+            let urlPath = try createURL(for: "/api/v1/device/update")
+            var urlRequest = try createURLRequest(for: urlPath)
+            urlRequest.httpMethod = HttpMethod.POST
+            urlRequest.httpBody = try jsonEncoder.encode(updateRequest)
+            
+            
+            if !isAllowed(request: urlRequest) {
+                completionHandler(APIError.notAllowed)
+                return nil
             }
             
-            logger.debugRawDataAsString(responseData)
-            
-            let initializationResponse: DeviceInitializationResponse
-            do {
-                initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
-            } catch let jsonError {
-
-                if let errorResponse = try? self.jsonDecoder.decode(DeviceInitializationResponseError.self, from: responseData),
-                    let message = errorResponse.token.first {
-                    completionHandler(APIError.initializationError(message: message))
-                } else {
-                    completionHandler(jsonError)
+            let task = session.dataTask(with: urlRequest) { (data, _, error) in
+                guard error == nil else {
+                    completionHandler(error)
+                    return
                 }
-
-                return
+                
+                guard let responseData = data else {
+                    completionHandler(APIError.emptyResponse)
+                    return
+                }
+                
+                logger.debugRawDataAsString(responseData)
+                
+                let initializationResponse: DeviceInitializationResponse
+                do {
+                    initializationResponse = try self.jsonDecoder.decode(DeviceInitializationResponse.self, from: responseData)
+                } catch let jsonError {
+                    
+                    if let errorResponse = try? self.jsonDecoder.decode(DeviceInitializationResponseError.self, from: responseData),
+                       let message = errorResponse.token.first {
+                        completionHandler(APIError.initializationError(message: message))
+                    } else {
+                        completionHandler(jsonError)
+                    }
+                    
+                    return
+                }
+                
+                self.configStore.apiToken = initializationResponse.apiToken
+                self.configStore.deviceID = initializationResponse.deviceID
+                self.configStore.deviceName = initializationResponse.name
+                self.configStore.deviceUniqueSerial = initializationResponse.uniqueSerial
+                self.configStore.organizerSlug = initializationResponse.organizer
+                self.configStore.securityProfile = PXSecurityProfile(rawValue: initializationResponse.securityProfile)
+                
+                completionHandler(nil)
             }
-
-            self.configStore.apiToken = initializationResponse.apiToken
-            self.configStore.deviceID = initializationResponse.deviceID
-            self.configStore.deviceName = initializationResponse.name
-            self.configStore.deviceUniqueSerial = initializationResponse.uniqueSerial
-            self.configStore.organizerSlug = initializationResponse.organizer
-            self.configStore.securityProfile = PXSecurityProfile(rawValue: initializationResponse.securityProfile)
-
-            completionHandler(nil)
+            
+            return task
+            
+        } catch {
+            logger.error("API task error \(String(describing: error))")
+            completionHandler(error)
+            return nil
         }
         
-        return task
     }
 }
 
@@ -180,7 +184,7 @@ extension HTTPURLResponse {
 
 // MARK: - Retrieving Items
 public extension APIClient {
-
+    
     /// Retrieve the specified model from the server and call the completion handler for each page.
     ///
     /// @see `getTask`
@@ -189,7 +193,7 @@ public extension APIClient {
         let task = getTask(model, page: page, lastUpdated: lastUpdated, completionHandler: completionHandler)
         task?.resume()
     }
-
+    
     /// Returns a task that retrieves a detail object at the specified resource.
     ///
     /// @see `get`
@@ -210,12 +214,12 @@ public extension APIClient {
                     completionHandler(.failure(error))
                     return
                 }
-
+                
                 guard let data = data else {
                     completionHandler(.failure(APIError.emptyResponse))
                     return
                 }
-
+                
                 do {
                     let model = try self.jsonDecoder.decode(T.self, from: data)
                     completionHandler(.success(model))
@@ -244,19 +248,19 @@ public extension APIClient {
                 let event = try event ?? getEvent()
                 url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)/\(model.stringName)/")
             }
-
+            
             logger.debug("API task for url '\(url.absoluteString)'")
             let urlComponents = createURLComponents(url: url, page: page, lastUpdated: lastUpdated, filters: filters)
             guard let urlComponentsURL = urlComponents?.url else {
                 throw APIError.couldNotCreateURL
             }
-
+            
             var urlRequest = try createURLRequest(for: urlComponentsURL)
             
             if (ifModifiedSince != nil) {
                 urlRequest.addValue(ifModifiedSince!, forHTTPHeaderField: "If-Modified-Since")
             }
-
+            
             if !isAllowed(request: urlRequest) {
                 completionHandler(.failure(APIError.notAllowed))
                 return nil
@@ -267,17 +271,17 @@ public extension APIClient {
                     completionHandler(.failure(error))
                     return
                 }
-
+                
                 guard let data = data else {
                     completionHandler(.failure(APIError.emptyResponse))
                     return
                 }
-
+                
                 do {
                     var pagedList = try self.jsonDecoder.decode(PagedList<T>.self, from: data)
                     pagedList.generatedAt = (response as? HTTPURLResponse)?.find(header: "X-Page-Generated")
                     pagedList.lastModified = (response as? HTTPURLResponse)?.find(header: "Last-Modified")
-
+                    
                     // Check if there are more pages to load
                     if (pageLimit != nil && page >= pageLimit!) {
                         pagedList.next = nil
@@ -293,7 +297,7 @@ public extension APIClient {
                 } catch {
                     return completionHandler(.failure(error))
                 }
-
+                
             }
             return task
         } catch {
@@ -301,7 +305,7 @@ public extension APIClient {
             return nil
         }
     }
-
+    
     private func createURLComponents(url: URL, page: Int, lastUpdated: String?, filters: [String: String] = [:]) -> URLComponents? {
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
         var queryItems = [URLQueryItem]()
@@ -309,28 +313,28 @@ public extension APIClient {
         if lastUpdated != nil {
             queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
         }
-
+        
         let isFullFetch = lastUpdated == nil
         if isFullFetch {
             queryItems.append(URLQueryItem(name: "ordering", value: "datetime"))
         } else {
             queryItems.append(URLQueryItem(name: "ordering", value: "-last_modified"))
         }
-
+        
         for filter in filters {
             queryItems.append(URLQueryItem(name: filter.key, value: filter.value))
         }
         urlComponents?.queryItems = queryItems
-
+        
         // Fix a missing feature in URLComponents where the "+" is not encoded correctly
         // https://www.djackson.org/why-we-do-not-use-urlcomponents/
         let percentEncodedURLQuery = urlComponents!.percentEncodedQuery!
-            // manually encode + into percent encoding
+        // manually encode + into percent encoding
             .replacingOccurrences(of: "+", with: "%2B")
-            // optional, probably unnecessary: convert percent-encoded spaces into +
+        // optional, probably unnecessary: convert percent-encoded spaces into +
             .replacingOccurrences(of: "%20", with: "+")
         urlComponents!.percentEncodedQuery = percentEncodedURLQuery
-
+        
         return urlComponents
     }
 }
@@ -369,14 +373,14 @@ public extension APIClient {
         }, pageLimit: 5)
         task?.resume()
     }
-
+    
     /// Returns a list of all subevents in the completionHandler
     func getSubEvents(event: Event, completionHandler: @escaping ([SubEvent]?, Error?) -> Void) {
         var results = [SubEvent]()
-
+        
         let dayAgo = Calendar.current.date(byAdding: .hour, value: -8, to: Date())!
         let endsAfter = Formatter.iso8601.string(from: dayAgo)
-
+        
         let task = getTask(SubEvent.self, lastUpdated: nil, event: event, filters: ["ends_after": endsAfter, "ordering": "date_from"], completionHandler:  { result in
             switch result {
             case .failure(let error):
@@ -398,7 +402,7 @@ public extension APIClient {
     /// Returns a list of all check-in lists within a given event.
     func getCheckinLists(event: Event, completionHandler: @escaping ([CheckInList]?, Error?) -> Void) {
         var results = [CheckInList]()
-
+        
         let task = getTask(CheckInList.self, lastUpdated: nil, event: event) { result in
             switch result {
             case .failure(let error):
@@ -413,7 +417,7 @@ public extension APIClient {
         }
         task?.resume()
     }
-
+    
     /// Search all OrderPositions within a CheckInList
     ///
     /// Note: Firing off a search query will invalidate all previous queries
@@ -423,8 +427,8 @@ public extension APIClient {
             let event = try getEvent()
             let checkInList = try getCheckInList()
             let url = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
-                "/checkinlists/\(checkInList.identifier)/positions/")
-
+                                       "/checkinlists/\(checkInList.identifier)/positions/")
+            
             var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
             urlComponents?.queryItems = [
                 URLQueryItem(name: "search", value: query),
@@ -439,7 +443,7 @@ public extension APIClient {
                 completionHandler(nil, APIError.notAllowed)
                 return
             }
-
+            
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
                     if let error = error as NSError? {
@@ -448,29 +452,29 @@ public extension APIClient {
                             return
                         }
                     }
-
+                    
                     completionHandler(nil, error)
                     return
                 }
-
+                
                 let pagedListResult: (list: PagedList<OrderPosition>?, error: Error?) = self.pagedList(from: data!)
                 completionHandler(pagedListResult.list?.results, pagedListResult.error)
             }
             previousSearchTask?.cancel()
-
+            
             // Wait a short while before firing off the request to see if there are
             // further requests coming (i.e. the user is still typing)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 task.resume()
             }
-
+            
             previousSearchTask = task
-
+            
         } catch {
             completionHandler(nil, error)
         }
     }
-
+    
     /// Check in an attendee, identified by their secret code, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
@@ -482,24 +486,24 @@ public extension APIClient {
             task.resume()
         }
     }
-
+    
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func redeemTask(secret: String, force: Bool, ignoreUnpaid: Bool, date: Date? = nil, eventSlug: String? = nil,
                     checkInListIdentifier: Identifier? = nil, answers: [Answer]? = nil, as type: String,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
-
-            let redemptionRequest = RedemptionRequest(
-                questionsSupported: true,
-                date: date, force: force, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce(), answers: answers, type: type)
-
+        
+        let redemptionRequest = RedemptionRequest(
+            questionsSupported: true,
+            date: date, force: force, ignoreUnpaid: ignoreUnpaid,
+            nonce: NonceGenerator.nonce(), answers: answers, type: type)
+        
         return redeemTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug,
                           checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
     }
-
+    
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func failedCheckInTask(_ failedCheckIn: FailedCheckIn,
-                    completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
+                           completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
         do {
             let organizer = try getOrganizerSlug()
             let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(failedCheckIn.eventSlug)" +
@@ -507,7 +511,7 @@ public extension APIClient {
             var urlRequest = try createURLRequest(for: urlPath)
             urlRequest.httpMethod = HttpMethod.POST
             urlRequest.httpBody = try jsonEncoder.encode(FailedCheckInRequest(failedCheckIn))
-
+            
             if !isAllowed(request: urlRequest) {
                 completionHandler(APIError.notAllowed)
                 return nil
@@ -536,7 +540,7 @@ public extension APIClient {
             let event = try getEvent()
             let checkInList = try getCheckInList()
             let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(eventSlug ?? event.slug)" +
-                "/checkinlists/\(checkInListIdentifier ?? checkInList.identifier)/positions/\(secret)/redeem/")
+                                           "/checkinlists/\(checkInListIdentifier ?? checkInList.identifier)/positions/\(secret)/redeem/")
             var urlRequest = try createURLRequest(for: urlPath)
             urlRequest.httpMethod = HttpMethod.POST
             urlRequest.httpBody = try jsonEncoder.encode(redemptionRequest)
@@ -545,13 +549,13 @@ public extension APIClient {
                 completionHandler(nil, APIError.notAllowed)
                 return nil
             }
-
+            
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
                     completionHandler(nil, error)
                     return
                 }
-
+                
                 do {
                     let redemptionResponse = try self.jsonDecoder.decode(RedemptionResponse.self, from: data!)
                     completionHandler(redemptionResponse, nil)
@@ -566,7 +570,7 @@ public extension APIClient {
             return nil
         }
     }
-
+    
     /// Get Status information for the current CheckInList
     func getCheckInListStatus(completionHandler: @escaping (CheckInListStatus?, Error?) -> Void) {
         do {
@@ -574,20 +578,20 @@ public extension APIClient {
             let event = try getEvent()
             let checkInList = try getCheckInList()
             let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/events/\(event.slug)" +
-                "/checkinlists/\(checkInList.identifier)/status/")
+                                           "/checkinlists/\(checkInList.identifier)/status/")
             let urlRequest = try createURLRequest(for: urlPath)
             
             if !isAllowed(request: urlRequest) {
                 completionHandler(nil, APIError.notAllowed)
                 return
             }
-
+            
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
                 if let error = self.checkResponse(data: data, response: response, error: error) {
                     completionHandler(nil, error)
                     return
                 }
-
+                
                 do {
                     let checkInListStatus = try self.jsonDecoder.decode(CheckInListStatus.self, from: data ?? Data())
                     completionHandler(checkInListStatus, nil)
@@ -607,26 +611,26 @@ extension APIClient {
     func getOrganizerSlug() throws -> String {
         guard let organizer = configStore.organizerSlug else {
             throw APIError.notConfigured(message:
-                "APIClient's configStore.organizerSlug property must be set before calling this function."
+                                            "APIClient's configStore.organizerSlug property must be set before calling this function."
             )
         }
-
+        
         return organizer
     }
-
+    
     func getEvent() throws -> Event {
         guard let event = configStore.event else {
             throw APIError.notConfigured(message: "APIClient's configStore.event property must be set before calling this function.")
         }
-
+        
         return event
     }
-
+    
     func getCheckInList() throws -> CheckInList {
         guard let checkInList = configStore.checkInList else {
             throw APIError.notConfigured(message: "APIClient's configStore.checkInList property must be set before calling this function.")
         }
-
+        
         return checkInList
     }
 }
@@ -638,20 +642,20 @@ private extension APIClient {
         let urlRequest = try createURLRequest(for: url)
         return urlRequest
     }
-
+    
     func createURL(for pathComponent: String) throws -> URL {
         guard let baseURL = configStore.apiBaseURL else {
             throw APIError.notConfigured(message: "APIClient's configStore.apiBaseURL property must be set before calling this function.")
         }
-
+        
         return baseURL.appendingPathComponent(pathComponent)
     }
-
+    
     func createURLRequest(for url: URL) throws -> URLRequest {
         guard let apiToken = configStore.apiToken else {
             throw APIError.notConfigured(message: "APIClient's configStore.apiToken property must be set before calling this function.")
         }
-
+        
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = HttpMethod.GET
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -660,20 +664,20 @@ private extension APIClient {
         urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         return urlRequest
     }
-
+    
     func checkResponse(data: Data?, response: URLResponse?, error: Error?) -> Error? {
         guard error == nil else {
             return error
         }
-
+        
         guard data != nil else {
             return APIError.emptyResponse
         }
-
+        
         guard let httpURLResponse = response as? HTTPURLResponse else {
             return APIError.nonHTTPResponse
         }
-
+        
         guard [200, 201, 400].contains(httpURLResponse.statusCode) else {
             switch httpURLResponse.statusCode {
             case 304:
@@ -693,10 +697,10 @@ private extension APIClient {
                 return APIError.unknownStatusCode(statusCode: httpURLResponse.statusCode)
             }
         }
-
+        
         return nil
     }
-
+    
     func pagedList<T: Codable>(from data: Data) -> (list: PagedList<T>?, error: Error?) {
         do {
             return (try self.jsonDecoder.decode(PagedList<T>.self, from: data), nil)

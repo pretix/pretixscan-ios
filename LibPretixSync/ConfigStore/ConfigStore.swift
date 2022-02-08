@@ -9,7 +9,7 @@
 import Foundation
 
 /// A protocol that defines elements that contain information about the app's configuration.
-public protocol ConfigStore {
+public protocol ConfigStore: AnyObject {
     // MARK: - Configuration
     /// Restore all settings to factory default and start over. Returns the app into the state at first launch.
     func factoryReset()
@@ -58,6 +58,9 @@ public protocol ConfigStore {
 
     /// Entry or exit
     var scanMode: String { get set }
+    
+    /// The last version of the app published to the server
+    var publishedSoftwareVersion: String? { get set }
 
     // MARK: - Device
     /// The name that was specified for this device in the Pretix Organizer Backend
@@ -87,6 +90,8 @@ public protocol ConfigStore {
 
     /// Set both event and checkinlist
     func set(event: Event, checkInList: CheckInList)
+    
+    func applySecurityDefaults()
 }
 
 extension ConfigStore {

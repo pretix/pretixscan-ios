@@ -17,7 +17,7 @@ import Sentry
 public class DefaultsConfigStore: ConfigStore {
     private var defaults: UserDefaults
 
-    private enum Keys: String, CaseIterable {
+    enum Keys: String, CaseIterable {
         case welcomeScreenIsConfirmed
         case apiBaseURL
         case apiToken
@@ -34,6 +34,7 @@ public class DefaultsConfigStore: ConfigStore {
         case scanMode
         case shouldPlaySounds
         case shouldDownloadOrders
+        case publishedSoftwareVersion
     }
 
     public var welcomeScreenIsConfirmed: Bool {
@@ -214,6 +215,16 @@ public class DefaultsConfigStore: ConfigStore {
             save(shouldDownloadOrders, forKey: .shouldDownloadOrders)
         }
     }
+    
+    public var publishedSoftwareVersion: String? {
+        get {
+            return _publishedVersion
+        }
+        set {
+            _publishedVersion = newValue
+            valueChanged()
+        }
+    }
 
     private var _welcomeScreenIsConfirmed: Bool = false
     private var _apiBaseURL: URL?
@@ -235,6 +246,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _allManagedEvents: [Event] = []
     private var _asyncModeEnabled: Bool = false
     private var _shouldAutoSync: Bool = true
+    private var _publishedVersion: String? = nil
 
     private let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
     private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
@@ -243,6 +255,10 @@ public class DefaultsConfigStore: ConfigStore {
         self.defaults = defaults
         registerInitialValues()
         loadFromDefaults()
+    }
+    
+    public func applySecurityDefaults() {
+        shouldDownloadOrders = self.securityProfile.defaultValue(for: .shouldDownloadOrders)
     }
 
     public func factoryReset() {
@@ -269,6 +285,7 @@ public class DefaultsConfigStore: ConfigStore {
         _checkInList = nil
         _allManagedEvents = []
         _asyncModeEnabled = false
+        _publishedVersion = nil
         shouldPlaySounds = true
         shouldDownloadOrders = true
 
@@ -311,6 +328,7 @@ private extension DefaultsConfigStore {
         _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))
         shouldPlaySounds = defaults.bool(forKey: key(.shouldPlaySounds))
         shouldDownloadOrders = defaults.bool(forKey: key(.shouldDownloadOrders))
+        _publishedVersion = defaults.string(forKey: key(.publishedSoftwareVersion))
         // Event
         if let eventData = defaults.data(forKey: key(.event)) {
             _event = try? jsonDecoder.decode(Event.self, from: eventData)
@@ -344,7 +362,8 @@ private extension DefaultsConfigStore {
         save(try? jsonEncoder.encode(_event), forKey: .event)
         save(try? jsonEncoder.encode(_checkInList), forKey: .checkInList)
         save(try? jsonEncoder.encode(_allManagedEvents), forKey: .allManagedEvents)
-
+        save(_publishedVersion, forKey: .publishedSoftwareVersion)
+        
         defaults.synchronize()
 
         // Save api token into keychain

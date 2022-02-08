@@ -259,12 +259,14 @@ public class SyncManager {
     
     private func createBumpVersionUploader(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) -> BumpVersionUploader {
         let uploader = BumpVersionUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        uploader.configStore = self.configStore
         uploader.completionBlock = {[weak self] in
             if case .retryAfter(let seconds) = uploader.error as? APIError, uploader.shouldRepeat {
                 print("BumpVersionUploader Request Received Retry-After \(seconds) seconds header. Postponing upload.")
                 self?.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList, delay: TimeInterval(seconds))
                 return
             }
+            
             if let error = uploader.error {
                 if let urlError = error as? URLError, urlError.code == URLError.Code.notConnectedToInternet {
                     logger.debug("BumpVersionUploader Request failed while not connected to internet.")
