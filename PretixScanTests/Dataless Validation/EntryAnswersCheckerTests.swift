@@ -18,7 +18,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [])
         let sut = TicketEntryAnswersChecker(item: mockItems[0], dataStore: dataStore)
         // act
-        switch sut.redeem(ticket: mockSignedTicket, event: mockEvent, answers: nil) {
+        switch sut.redeem(event: mockEvent, answers: nil) {
         case .success():
             XCTAssert(true)
         case .failure(let err):
@@ -31,7 +31,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: mockQuestions)
         let sut = TicketEntryAnswersChecker(item: mockItems[0], dataStore: dataStore)
         // act
-        switch sut.redeem(ticket: mockSignedTicket, event: mockEvent, answers: nil) {
+        switch sut.redeem(event: mockEvent, answers: nil) {
         case .success():
             XCTFail("Validation is expected to fail")
         case .failure(let validation):
@@ -45,7 +45,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         let sut = TicketEntryAnswersChecker(item: mockItems[0], dataStore: dataStore)
         // act
         let answer1 = answer(for: mockQuestions[0].identifier, value: "true")
-        switch sut.redeem(ticket: mockSignedTicket, event: mockEvent, answers: [answer1]) {
+        switch sut.redeem(event: mockEvent, answers: [answer1]) {
         case .success():
             XCTFail("Validation is expected to fail")
         case .failure(let validation):
@@ -59,7 +59,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         let sut = TicketEntryAnswersChecker(item: mockItems[0], dataStore: dataStore)
         // act
         let answer1 = answer(for: mockQuestions[0].identifier, value: "false") // valid answer is "True" or "true"
-        switch sut.redeem(ticket: mockSignedTicket, event: mockEvent, answers: [answer1]) {
+        switch sut.redeem(event: mockEvent, answers: [answer1]) {
         case .success():
             XCTFail("Validation is expected to fail")
         case .failure(let validation):
@@ -74,7 +74,7 @@ class EntryAnswersCheckerTests: XCTestCase {
         // act
         let answer1 = answer(for: mockQuestions[0].identifier, value: "True")
         let answer2 = answer(for: mockQuestions[1].identifier, value: "1")
-        switch sut.redeem(ticket: mockSignedTicket, event: mockEvent, answers: [answer1, answer2]) {
+        switch sut.redeem(event: mockEvent, answers: [answer1, answer2]) {
         case .success():
             XCTAssert(true)
         case .failure(let err):

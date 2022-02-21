@@ -82,7 +82,7 @@ final class DatalessTicketValidator {
                     return .success(CheckStatus.valid(item: item, variation: variation))
                 }
                 
-                switch TicketEntryAnswersChecker(item: item, dataStore: dataStore).redeem(ticket: signedTicket, event: event, answers: answers) {
+                switch TicketEntryAnswersChecker(item: item, dataStore: dataStore).redeem(event: event, answers: answers) {
                 case .success:
                     switch TicketMultiEntryChecker(list: checkInList, dataStore: dataStore).redeem(secret: secret, event: event) {
                     case .success():
