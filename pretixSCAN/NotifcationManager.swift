@@ -31,7 +31,7 @@ class NotificationManager {
                     SwiftMessages.hideAll()
                     SwiftMessages.show {
                         let view = MessageView.viewFromNib(layout: .statusLine)
-                        view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
+                        view.configureTheme(backgroundColor: PXColor.okay, foregroundColor: PXColor.primaryText)
                         view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
                         if self.configStore.asyncModeEnabled {
@@ -45,7 +45,7 @@ class NotificationManager {
                     SwiftMessages.hideAll()
                     SwiftMessages.show {
                         let view = MessageView.viewFromNib(layout: .statusLine)
-                        view.configureTheme(backgroundColor: Color.okay, foregroundColor: Color.primaryText)
+                        view.configureTheme(backgroundColor: PXColor.okay, foregroundColor: PXColor.primaryText)
                         view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
                         if self.configStore.shouldAutoSync {
@@ -67,7 +67,7 @@ class NotificationManager {
             // we wait for 2 seconds so the application can settle down and reset its UI before we show the alert
             SwiftMessages.show {
                 let view = MessageView.viewFromNib(layout: .statusLine)
-                view.configureTheme(backgroundColor: Color.warning, foregroundColor: Color.primaryText)
+                view.configureTheme(backgroundColor: PXColor.warning, foregroundColor: PXColor.primaryText)
                 view.layoutMarginAdditions = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
                 view.configureContent(body: Localization.NotificationManager.Reset)
                 return view

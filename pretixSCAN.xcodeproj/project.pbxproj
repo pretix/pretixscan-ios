@@ -205,7 +205,7 @@
 		DCC5D85B229569B000DAEFA0 /* FMDBOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D85A229569B000DAEFA0 /* FMDBOrder.swift */; };
 		DCC5D85D229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC5D85C229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift */; };
 		DCDD82CB224AB1A400DC0200 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CA224AB1A400DC0200 /* Icon.swift */; };
-		DCDD82CD224AB25900DC0200 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CC224AB25900DC0200 /* Color.swift */; };
+		DCDD82CD224AB25900DC0200 /* PXColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CC224AB25900DC0200 /* PXColor.swift */; };
 		DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */; };
 		DCDD82D1224BBD7600DC0200 /* CheckListStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82D0224BBD7600DC0200 /* CheckListStatusTests.swift */; };
 		DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD82D3224BC99300DC0200 /* CheckInStatusTableViewController.swift */; };
@@ -437,7 +437,7 @@
 		DCC5D85A229569B000DAEFA0 /* FMDBOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBOrder.swift; sourceTree = "<group>"; };
 		DCC5D85C229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBQueuedRedemptionRequest.swift; sourceTree = "<group>"; };
 		DCDD82CA224AB1A400DC0200 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
-		DCDD82CC224AB25900DC0200 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		DCDD82CC224AB25900DC0200 /* PXColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXColor.swift; sourceTree = "<group>"; };
 		DCDD82CE224BB96E00DC0200 /* CheckInListStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListStatus.swift; sourceTree = "<group>"; };
 		DCDD82D0224BBD7600DC0200 /* CheckListStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListStatusTests.swift; sourceTree = "<group>"; };
 		DCDD82D3224BC99300DC0200 /* CheckInStatusTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInStatusTableViewController.swift; sourceTree = "<group>"; };
@@ -666,7 +666,7 @@
 				DCB35B8B2248E8D400860385 /* fa-solid-900.ttf */,
 				DC07358522392476008326F7 /* Info.plist */,
 				DCDD82CA224AB1A400DC0200 /* Icon.swift */,
-				DCDD82CC224AB25900DC0200 /* Color.swift */,
+				DCDD82CC224AB25900DC0200 /* PXColor.swift */,
 				DC2F4A03225781B100710EFA /* Segues */,
 				DC7DD5C122846B0000C08817 /* Localization */,
 				DCB35B9E2249407300860385 /* Utilities */,
@@ -1208,7 +1208,7 @@
 				DCB35BA02249408800860385 /* UIAlertController.swift in Sources */,
 				B5FA77972705BE61000E1644 /* 05_MigrationAddSeatJSON.swift in Sources */,
 				DC227F232253700900314448 /* SetupCodeScannerViewController.swift in Sources */,
-				DCDD82CD224AB25900DC0200 /* Color.swift in Sources */,
+				DCDD82CD224AB25900DC0200 /* PXColor.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				B5534226272C2D5D003008AD /* UnknownCaseProtocol.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,

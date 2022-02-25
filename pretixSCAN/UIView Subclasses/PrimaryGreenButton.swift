@@ -21,9 +21,9 @@ class PrimaryGreenButton: UIButton {
     }
 
     private func setup() {
-        backgroundColor = Color.primaryGreen
-        tintColor = Color.primaryGreenText
-        setTitleColor(Color.primaryGreenText, for: .normal)
+        backgroundColor = PXColor.primaryGreen
+        tintColor = PXColor.primaryGreenText
+        setTitleColor(PXColor.primaryGreenText, for: .normal)
         layer.cornerRadius = Style.cornerRadius
         titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)

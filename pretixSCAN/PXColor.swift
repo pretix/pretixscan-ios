@@ -8,7 +8,8 @@
 
 import UIKit
 
-struct Color {
+
+struct PXColor {
     static let primary = UIColor(named: "primary")!
     static let primaryText = UIColor(named: "primaryText")!
     static let secondary = UIColor(named: "secondary")!

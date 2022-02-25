@@ -45,22 +45,22 @@ class SearchResultTableViewCell: UITableViewCell {
 
         guard let redemptionResponse = orderPosition.createRedemptionResponse(force: false, ignoreUnpaid: false,
                                                                               in: event, in: checkInList) else {
-            statusBackgroundView.backgroundColor = Color.error
+            statusBackgroundView.backgroundColor = PXColor.error
             statusLabel.text = Localization.TicketStatusViewController.InvalidTicket
             return
         }
 
         if redemptionResponse.status == .redeemed {
-            statusBackgroundView.backgroundColor = Color.okay
+            statusBackgroundView.backgroundColor = PXColor.okay
             statusLabel.text = Localization.TicketStatusViewController.ValidTicket
         } else if redemptionResponse.errorReason == .alreadyRedeemed {
-            statusBackgroundView.backgroundColor = Color.warning
+            statusBackgroundView.backgroundColor = PXColor.warning
             statusLabel.text = Localization.TicketStatusViewController.TicketAlreadyRedeemed
         } else if redemptionResponse.errorReason == .unpaid && checkInList.includePending {
-            statusBackgroundView.backgroundColor = Color.okay
+            statusBackgroundView.backgroundColor = PXColor.okay
             statusLabel.text = redemptionResponse.errorReason?.localizedDescription()
         } else {
-            statusBackgroundView.backgroundColor = Color.error
+            statusBackgroundView.backgroundColor = PXColor.error
             statusLabel.text = redemptionResponse.errorReason?.localizedDescription()
         }
 

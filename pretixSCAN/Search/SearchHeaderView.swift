@@ -28,7 +28,7 @@ class SearchHeaderView: UIView {
     private let loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.color = Color.primary
+        indicator.color = PXColor.primary
         return indicator
     }()
 
@@ -43,7 +43,7 @@ class SearchHeaderView: UIView {
     }
 
     private func configureView() {
-        backgroundColor = Color.grayBackground
+        backgroundColor = PXColor.grayBackground
 
         addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false

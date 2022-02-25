@@ -20,7 +20,7 @@ class GroupContainerView: UIView {
     }
 
     private func setup() {
-        backgroundColor = Color.grayBackground
+        backgroundColor = PXColor.grayBackground
         layer.cornerRadius = Style.cornerRadius
     }
 }

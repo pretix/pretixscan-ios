@@ -42,10 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // Setup Appearance
-        UIButton.appearance().tintColor = Color.buttons
-        UIProgressView.appearance().tintColor = Color.buttons
-        UIActivityIndicatorView.appearance().tintColor = Color.buttons
-        UIView.appearance().tintColor = Color.buttons
+        UIButton.appearance().tintColor = PXColor.buttons
+        UIProgressView.appearance().tintColor = PXColor.buttons
+        UIActivityIndicatorView.appearance().tintColor = PXColor.buttons
+        UIView.appearance().tintColor = PXColor.buttons
 
         return true
     }

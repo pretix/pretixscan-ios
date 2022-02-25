@@ -25,9 +25,9 @@ class ChoiceButton: UIButton {
     }
 
     private func setup() {
-        backgroundColor = UIColor(cgColor: Color.secondary.cgColor.copy(alpha: 0.5)!)
+        backgroundColor = UIColor(cgColor: PXColor.secondary.cgColor.copy(alpha: 0.5)!)
         layer.cornerRadius = 4
-        layer.borderColor = Color.secondary.cgColor
+        layer.borderColor = PXColor.secondary.cgColor
         layer.borderWidth = 2
 
         titleLabel?.numberOfLines = 2
@@ -42,16 +42,16 @@ class ChoiceButton: UIButton {
     private func update() {
         UIView.animate(withDuration: 0.25) {
             if self.isSelected {
-                self.backgroundColor = UIColor(cgColor: Color.secondary.cgColor.copy(alpha: 0.9)!)
+                self.backgroundColor = UIColor(cgColor: PXColor.secondary.cgColor.copy(alpha: 0.9)!)
             } else {
-                self.backgroundColor = UIColor(cgColor: Color.secondary.cgColor.copy(alpha: 0.5)!)
+                self.backgroundColor = UIColor(cgColor: PXColor.secondary.cgColor.copy(alpha: 0.5)!)
             }
         }
     }
 
     private func updateHighlight() {
         if isHighlighted {
-            backgroundColor = Color.secondary
+            backgroundColor = PXColor.secondary
         } else {
             update()
         }

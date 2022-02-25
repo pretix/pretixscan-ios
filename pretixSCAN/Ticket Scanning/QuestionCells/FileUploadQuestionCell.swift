@@ -13,7 +13,7 @@ class FileUploadQuestionCell: QuestionCell {
     let noticeLabel: UILabel = {
         let noticeLabel = UILabel()
         noticeLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-        noticeLabel.textColor = Color.secondary
+        noticeLabel.textColor = PXColor.secondary
         noticeLabel.numberOfLines = 0
         return noticeLabel
     }()

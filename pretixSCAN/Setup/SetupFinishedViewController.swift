@@ -29,7 +29,7 @@ class SetupFinishedViewController: UIViewController, Configurable {
         eventPreviewView.layer.cornerRadius = Style.cornerRadius
         eventPreviewView.layer.borderColor = UIColor.lightGray.cgColor
         eventPreviewView.layer.borderWidth = 0.5
-        eventPreviewBackgroundView.backgroundColor = Color.okay
+        eventPreviewBackgroundView.backgroundColor = PXColor.okay
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -15,7 +15,7 @@ class PaddingView: UIView {
         super.init(frame: CGRect.zero)
         self.setContent(contentView)
 
-        layer.borderColor = Color.grayBackground.cgColor
+        layer.borderColor = PXColor.grayBackground.cgColor
         layer.borderWidth = 2
         layer.cornerRadius = 4
     }

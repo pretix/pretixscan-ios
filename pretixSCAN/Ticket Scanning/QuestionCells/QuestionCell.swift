@@ -34,7 +34,7 @@ class QuestionCell: UITableViewCell {
     let questionTypeLabel: UILabel = {
         let questionTypeLabel = UILabel()
         questionTypeLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-        questionTypeLabel.textColor = Color.secondary
+        questionTypeLabel.textColor = PXColor.secondary
         return questionTypeLabel
     }()
 
@@ -76,7 +76,7 @@ class QuestionCell: UITableViewCell {
         questionTextLabel.text = question?.question.representation(in: Locale.current)
 
         UIView.animate(withDuration: 0.25) {
-            self.backgroundColor = self.shouldStandOut ? Color.warning : Color.defaultBackground
+            self.backgroundColor = self.shouldStandOut ? PXColor.warning : PXColor.defaultBackground
         }
     }
 }

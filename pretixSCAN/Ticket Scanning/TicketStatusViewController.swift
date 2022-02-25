@@ -64,7 +64,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             }
         }
 
-        let newBackgroundColor = Color.error
+        let newBackgroundColor = PXColor.error
         iconLabel.text = Icon.error
         ticketStatusLabel.text = Localization.TicketStatusViewController.Error
         toggleExtraInformationIfAvailable(.unknown)
@@ -106,15 +106,15 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         orderIDLabel.text =
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
 
-        var newBackgroundColor = Color.grayBackground
+        var newBackgroundColor = PXColor.grayBackground
         blinkerView.isHidden = true
 
         switch redemptionResponse.status {
         case .redeemed:
-            newBackgroundColor = Color.okay
+            newBackgroundColor = PXColor.okay
             updateToRedeemed(needsAttention: needsAttention, redemptionResponse.position?.seat, exitMode)
         case .incomplete:
-            newBackgroundColor = Color.warning
+            newBackgroundColor = PXColor.warning
             updateToIncomplete(redemptionResponse)
             return
 
@@ -129,7 +129,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
     
     private func resetToEmpty() {
-        backgroundColorView.backgroundColor = Color.grayBackground
+        backgroundColorView.backgroundColor = PXColor.grayBackground
         iconLabel.text = Icon.general
         ticketStatusLabel.text = nil
         productNameLabel.text = nil
@@ -226,7 +226,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     private func updateToError(_ redemptionResponse: RedemptionResponse) -> UIColor {
         var newBackgroundColor = UIColor.blue
         if redemptionResponse.errorReason == .alreadyRedeemed {
-            newBackgroundColor = Color.warning
+            newBackgroundColor = PXColor.warning
             iconLabel.text = Icon.warning
             setTicketStatus(status: Localization.TicketStatusViewController.TicketAlreadyRedeemed, with: redemptionResponse.position?.seat)
 
@@ -237,7 +237,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
                 ticketStatusLabel.text = (ticketStatusLabel.text ?? "") + "\n\(dateFormatter.string(from: lastCheckIn.date))"
             }
         } else {
-            newBackgroundColor = Color.error
+            newBackgroundColor = PXColor.error
             iconLabel.text = Icon.error
             setTicketStatus(status: Localization.TicketStatusViewController.InvalidTicket, with: redemptionResponse.position?.seat)
             productNameLabel.text = redemptionResponse.localizedErrorReason
