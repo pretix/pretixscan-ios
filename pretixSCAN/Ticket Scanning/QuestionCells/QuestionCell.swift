@@ -10,6 +10,7 @@ import UIKit
 
 protocol QuestionCellDelegate: AnyObject {
     func answerUpdated(for indexPath: IndexPath?, newAnswer: Answer?)
+    func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
 }
 
 /// Base Class for Question Cells. See subclasses for actual implementation.

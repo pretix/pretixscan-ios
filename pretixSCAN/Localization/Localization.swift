@@ -155,6 +155,7 @@ struct Localization {
     struct QuestionsTableViewController {
         static let Title = NSLocalizedString("Questions", comment: "Title for the List of Questions")
         static let UploadNotPossibleNotice = NSLocalizedString("You need to upload a file here. Please do so from your computer", comment: "")
+        static let TakePhotoAction = NSLocalizedString("Take a photo", comment: "")
     }
 
     struct QuestionCells {

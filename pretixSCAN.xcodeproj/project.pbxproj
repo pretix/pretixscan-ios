@@ -39,6 +39,7 @@
 		B525796427292250006D9EE9 /* EventsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525796327292250006D9EE9 /* EventsDownloader.swift */; };
 		B52579662729225D006D9EE9 /* CheckInListsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */; };
 		B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525796727292269006D9EE9 /* QuestionsDownloader.swift */; };
+		B530F79C27CA97ED001F5232 /* PXTemporaryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */; };
 		B553421A272BF81A003008AD /* EntryAnswersCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */; };
 		B553421E272BF8AF003008AD /* question3.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421B272BF8AF003008AD /* question3.json */; };
 		B553421F272BF8AF003008AD /* question2.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421C272BF8AF003008AD /* question2.json */; };
@@ -68,6 +69,7 @@
 		B5BD3E432715CE19003FEB74 /* SignedTicketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */; };
 		B5BD3E452715D3ED003FEB74 /* EventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */; };
 		B5BD3E472715D4B0003FEB74 /* event1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5BD3E462715D4B0003FEB74 /* event1.json */; };
+		B5C2F00627CA6BD3004A3166 /* ImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C2F00527CA6BD3004A3166 /* ImageResize.swift */; };
 		B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255E92723187F0064652F /* FMDBEventValidKey.swift */; };
 		B5D255EC272318F50064652F /* EventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255EB272318F50064652F /* EventValidKey.swift */; };
 		B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */; };
@@ -268,6 +270,7 @@
 		B525796327292250006D9EE9 /* EventsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDownloader.swift; sourceTree = "<group>"; };
 		B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListsDownloader.swift; sourceTree = "<group>"; };
 		B525796727292269006D9EE9 /* QuestionsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsDownloader.swift; sourceTree = "<group>"; };
+		B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTemporaryFile.swift; sourceTree = "<group>"; };
 		B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryAnswersCheckerTests.swift; sourceTree = "<group>"; };
 		B553421B272BF8AF003008AD /* question3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question3.json; sourceTree = "<group>"; };
 		B553421C272BF8AF003008AD /* question2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question2.json; sourceTree = "<group>"; };
@@ -295,6 +298,7 @@
 		B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedTicketData.swift; sourceTree = "<group>"; };
 		B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKeys.swift; sourceTree = "<group>"; };
 		B5BD3E462715D4B0003FEB74 /* event1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = event1.json; sourceTree = "<group>"; };
+		B5C2F00527CA6BD3004A3166 /* ImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResize.swift; sourceTree = "<group>"; };
 		B5D255E92723187F0064652F /* FMDBEventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBEventValidKey.swift; sourceTree = "<group>"; };
 		B5D255EB272318F50064652F /* EventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKey.swift; sourceTree = "<group>"; };
 		B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 08_MigrationAddEventValidKeys.swift; sourceTree = "<group>"; };
@@ -913,6 +917,8 @@
 				DCB35B9F2249408800860385 /* UIAlertController.swift */,
 				DCB35B9C2249406000860385 /* UIDevice.swift */,
 				DC227F2022536B5B00314448 /* AppCoordinator.swift */,
+				B5C2F00527CA6BD3004A3166 /* ImageResize.swift */,
+				B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1211,6 +1217,7 @@
 				DCDD82CD224AB25900DC0200 /* PXColor.swift in Sources */,
 				DCAAFF36223952350059C000 /* WelcomeViewController.swift in Sources */,
 				B5534226272C2D5D003008AD /* UnknownCaseProtocol.swift in Sources */,
+				B530F79C27CA97ED001F5232 /* PXTemporaryFile.swift in Sources */,
 				DC07357A22392474008326F7 /* AppDelegate.swift in Sources */,
 				B5FA77952705BE25000E1644 /* 04_MigrationAddEntryType.swift in Sources */,
 				DC8467AE225BCA6A0013F647 /* Order.swift in Sources */,
@@ -1228,6 +1235,7 @@
 				B5D255EC272318F50064652F /* EventValidKey.swift in Sources */,
 				DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */,
 				B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */,
+				B5C2F00627CA6BD3004A3166 /* ImageResize.swift in Sources */,
 				B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
