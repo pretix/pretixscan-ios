@@ -76,6 +76,8 @@
 		B5DBB0CB2721B6EF00FFBE23 /* RevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */; };
 		B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */; };
 		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
+		B5EFD43427CDDCCB00DACCA6 /* PXUploadedFileId.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */; };
+		B5EFD44127CDE41500DACCA6 /* URL+mimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */; };
 		B5F6F1D7272A9B9700F702BE /* TicketSignatureChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D6272A9B9700F702BE /* TicketSignatureChecker.swift */; };
 		B5F6F1D9272AA48400F702BE /* DatalessDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D8272AA48400F702BE /* DatalessDataStore.swift */; };
 		B5F6F1DB272AA7E100F702BE /* TicketProductChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1DA272AA7E100F702BE /* TicketProductChecker.swift */; };
@@ -305,6 +307,8 @@
 		B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBRevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
+		B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUploadedFileId.swift; sourceTree = "<group>"; };
+		B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+mimeType.swift"; sourceTree = "<group>"; };
 		B5F6F1D6272A9B9700F702BE /* TicketSignatureChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketSignatureChecker.swift; sourceTree = "<group>"; };
 		B5F6F1D8272AA48400F702BE /* DatalessDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessDataStore.swift; sourceTree = "<group>"; };
 		B5F6F1DA272AA7E100F702BE /* TicketProductChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketProductChecker.swift; sourceTree = "<group>"; };
@@ -587,6 +591,16 @@
 				B5B990A626EB50160029D614 /* errorRules.json */,
 			);
 			path = Examples;
+			sourceTree = "<group>";
+		};
+		B5EFD43227CDDC0300DACCA6 /* File Upload */ = {
+			isa = PBXGroup;
+			children = (
+				B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */,
+				B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */,
+				B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */,
+			);
+			path = "File Upload";
 			sourceTree = "<group>";
 		};
 		B5FA77872705BCF8000E1644 /* Migrations */ = {
@@ -918,7 +932,6 @@
 				DCB35B9C2249406000860385 /* UIDevice.swift */,
 				DC227F2022536B5B00314448 /* AppCoordinator.swift */,
 				B5C2F00527CA6BD3004A3166 /* ImageResize.swift */,
-				B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -972,6 +985,7 @@
 		DCEF6E31223924F2009E7078 /* LibPretixSync */ = {
 			isa = PBXGroup;
 			children = (
+				B5EFD43227CDDC0300DACCA6 /* File Upload */,
 				08FF5FB627A7D83F00130F41 /* SecurityProfiles */,
 				B5B12165272BE3EB00DD4435 /* Checkers */,
 				B5203DB327158C6D00AAA417 /* Proto */,
@@ -1185,6 +1199,7 @@
 				B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */,
 				B52579562729206C006D9EE9 /* EventValidKeysDownloader.swift in Sources */,
 				DCEF6E36223925EF009E7078 /* ConfigStore.swift in Sources */,
+				B5EFD44127CDE41500DACCA6 /* URL+mimeType.swift in Sources */,
 				DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */,
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
@@ -1235,6 +1250,7 @@
 				B5D255EC272318F50064652F /* EventValidKey.swift in Sources */,
 				DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */,
 				B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */,
+				B5EFD43427CDDCCB00DACCA6 /* PXUploadedFileId.swift in Sources */,
 				B5C2F00627CA6BD3004A3166 /* ImageResize.swift in Sources */,
 				B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,

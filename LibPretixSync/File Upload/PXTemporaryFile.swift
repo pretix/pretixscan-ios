@@ -25,4 +25,9 @@ extension PXTemporaryFile {
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension(ext))
     }
+    
+    
+    init(path: String) {
+        self = PXTemporaryFile(contentURL: URL(fileURLWithPath: path))
+    }
 }

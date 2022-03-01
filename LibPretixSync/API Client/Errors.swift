@@ -23,4 +23,6 @@ enum APIError: Error {
     case unknownStatusCode(statusCode: Int)
     case couldNotCreateURL
     case couldNotCreateNonce
+    case fileNotFound
+    case unknownFileType
 }

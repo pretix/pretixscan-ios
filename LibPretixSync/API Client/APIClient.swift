@@ -501,6 +501,65 @@ public extension APIClient {
                           checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
     }
     
+    private func uploadFileTask(path: String, completionHandler: @escaping (Result<PXUploadedFile, Error>) -> ()) -> URLSessionDataTask? {
+        
+        if !FileManager.default.fileExists(atPath: path) {
+            logger.error("Find file for upload at path '\(path)' was not found.")
+            completionHandler(.failure(APIError.fileNotFound))
+            return nil
+        }
+        
+        let file = PXTemporaryFile(path: path)
+        guard let mimeType = file.contentURL.mimeType() else {
+            logger.error("File for upload at path '\(path)' has unknown mime type.")
+            completionHandler(.failure(APIError.unknownFileType))
+            return nil
+        }
+        
+        guard let fileData = try? Data(contentsOf: file.contentURL), !fileData.isEmpty else {
+            logger.error("Find file for upload at path '\(path)' is empty.")
+            completionHandler(.failure(APIError.fileNotFound))
+            return nil
+        }
+        
+        do {
+            let urlPath = try createURL(for: "/api/v1/upload")
+            var urlRequest = try createURLRequestForAnyContent(for: urlPath)
+            urlRequest.addValue(mimeType, forHTTPHeaderField: "Content-Type")
+            urlRequest.addValue("attachment; filename=\"\(file.contentURL.lastPathComponent)\"", forHTTPHeaderField: "Content-Disposition")
+            urlRequest.addValue("\(fileData.count)", forHTTPHeaderField: "Content-Length")
+            
+            urlRequest.httpMethod = HttpMethod.POST
+            urlRequest.httpBody = fileData
+            
+            if !isAllowed(request: urlRequest) {
+                completionHandler(.failure(APIError.notAllowed))
+                return nil
+            }
+            
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(.failure(error))
+                } else {
+                    do {
+                        let uploadedFile = try self.jsonDecoder.decode(PXUploadedFile.self, from: data!)
+                        completionHandler(.success(uploadedFile))
+                    } catch {
+                        logger.error("Failed to decode server response for uploaded file: \(String(describing: error))")
+                        EventLogger.log(event: "Failed to decode server response for uploaded file: \(String(describing: error))", category: .network, level: .error, type: .error)
+                        completionHandler(.failure(APIError.badRequest))
+                    }
+                }
+            }
+            return task
+            
+        } catch {
+            logger.error("Failed to upload file: \(String(describing: error))")
+            completionHandler(.failure(error))
+            return nil
+        }
+    }
+    
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     func failedCheckInTask(_ failedCheckIn: FailedCheckIn,
                            completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
@@ -652,13 +711,18 @@ private extension APIClient {
     }
     
     func createURLRequest(for url: URL) throws -> URLRequest {
+        var urlRequest = try createURLRequestForAnyContent(for: url)
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        return urlRequest
+    }
+    
+    func createURLRequestForAnyContent(for url: URL) throws -> URLRequest {
         guard let apiToken = configStore.apiToken else {
             throw APIError.notConfigured(message: "APIClient's configStore.apiToken property must be set before calling this function.")
         }
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = HttpMethod.GET
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("Device \(apiToken)", forHTTPHeaderField: "Authorization")
         urlRequest.httpBody = nil
         urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
