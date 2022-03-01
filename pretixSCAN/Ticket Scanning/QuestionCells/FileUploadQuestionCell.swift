@@ -112,7 +112,7 @@ class FileUploadQuestionCell: QuestionCell {
         logger.debug("Picture taken and saved at \(file), updating thumbnail")
         thumbnailPreview.image = thumbnail
         
-        delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question!.identifier, answer: file.contentURL.absoluteString,
+        delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question!.identifier, answer: file.contentURL.relativePath,
                                                                   questionStringIdentifier: nil, options: [],
                                                                   optionStringIdentifiers: []))
     }

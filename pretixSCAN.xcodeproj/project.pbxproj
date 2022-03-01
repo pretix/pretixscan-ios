@@ -78,6 +78,9 @@
 		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
 		B5EFD43427CDDCCB00DACCA6 /* PXUploadedFileId.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */; };
 		B5EFD44127CDE41500DACCA6 /* URL+mimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */; };
+		B5EFD44327CDEB8F00DACCA6 /* PXFileUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD44227CDEB8F00DACCA6 /* PXFileUploadTests.swift */; };
+		B5EFD44627CDEC1C00DACCA6 /* imagePNG.png in Resources */ = {isa = PBXBuildFile; fileRef = B5EFD44427CDEC1C00DACCA6 /* imagePNG.png */; };
+		B5EFD44727CDEC1C00DACCA6 /* imageJPEG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B5EFD44527CDEC1C00DACCA6 /* imageJPEG.jpg */; };
 		B5F6F1D7272A9B9700F702BE /* TicketSignatureChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D6272A9B9700F702BE /* TicketSignatureChecker.swift */; };
 		B5F6F1D9272AA48400F702BE /* DatalessDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1D8272AA48400F702BE /* DatalessDataStore.swift */; };
 		B5F6F1DB272AA7E100F702BE /* TicketProductChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6F1DA272AA7E100F702BE /* TicketProductChecker.swift */; };
@@ -309,6 +312,9 @@
 		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
 		B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUploadedFileId.swift; sourceTree = "<group>"; };
 		B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+mimeType.swift"; sourceTree = "<group>"; };
+		B5EFD44227CDEB8F00DACCA6 /* PXFileUploadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXFileUploadTests.swift; sourceTree = "<group>"; };
+		B5EFD44427CDEC1C00DACCA6 /* imagePNG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imagePNG.png; sourceTree = "<group>"; };
+		B5EFD44527CDEC1C00DACCA6 /* imageJPEG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = imageJPEG.jpg; sourceTree = "<group>"; };
 		B5F6F1D6272A9B9700F702BE /* TicketSignatureChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketSignatureChecker.swift; sourceTree = "<group>"; };
 		B5F6F1D8272AA48400F702BE /* DatalessDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessDataStore.swift; sourceTree = "<group>"; };
 		B5F6F1DA272AA7E100F702BE /* TicketProductChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketProductChecker.swift; sourceTree = "<group>"; };
@@ -576,6 +582,8 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B5EFD44527CDEC1C00DACCA6 /* imageJPEG.jpg */,
+				B5EFD44427CDEC1C00DACCA6 /* imagePNG.png */,
 				B5823C1E27313F8A00479A73 /* question4.json */,
 				B5823C1C27312D0300479A73 /* list6.json */,
 				B5823C1A273123CC00479A73 /* list5.json */,
@@ -714,6 +722,7 @@
 				B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */,
 				08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */,
 				08DEDA9C27B1FD81009716F3 /* PXDeviceInitializationTests.swift */,
+				B5EFD44227CDEB8F00DACCA6 /* PXFileUploadTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -1132,6 +1141,8 @@
 				B5F6F1E1272AAFCD00F702BE /* list4.json in Resources */,
 				B553421F272BF8AF003008AD /* question2.json in Resources */,
 				B553421E272BF8AF003008AD /* question3.json in Resources */,
+				B5EFD44627CDEC1C00DACCA6 /* imagePNG.png in Resources */,
+				B5EFD44727CDEC1C00DACCA6 /* imageJPEG.jpg in Resources */,
 				B5823C1F27313F8A00479A73 /* question4.json in Resources */,
 				B5BD3E472715D4B0003FEB74 /* event1.json in Resources */,
 				B5823C1B273123CC00479A73 /* list5.json in Resources */,
@@ -1382,6 +1393,7 @@
 				DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */,
 				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,
 				B553421A272BF81A003008AD /* EntryAnswersCheckerTests.swift in Sources */,
+				B5EFD44327CDEB8F00DACCA6 /* PXFileUploadTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
 				DC23BA4D223FD28700ED7713 /* CheckinListTests.swift in Sources */,
 				08DEDA9D27B1FD81009716F3 /* PXDeviceInitializationTests.swift in Sources */,

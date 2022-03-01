@@ -12,7 +12,7 @@ import XCTest
 final private class OwnerClass {}
 
 extension XCTestCase {
-    private func URLForResource(fileName: String, withExtension: String) -> URL {
+    func URLForResource(fileName: String, withExtension: String) -> URL {
         return Bundle(for: OwnerClass.self).url(forResource: fileName, withExtension: withExtension)!
     }
     

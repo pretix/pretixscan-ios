@@ -480,10 +480,24 @@ public extension APIClient {
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
-                                 as: type,
-                                 completionHandler: completionHandler) {
-            task.resume()
+        Task {
+            var answersWithFiles = answers ?? []
+            for (ix, answer) in answersWithFiles.enumerated() {
+                // TODO: Use a file URL, only on questions of tyle file upload
+                if answer.answer.starts(with: "/private/var/mobile") {
+                    logger.debug("Uploading file for question \(answer.question).")
+                    if let file = try? await uploadAttachment(path: answer.answer) {
+                        answersWithFiles[ix].answer = file.id
+                    }
+                }
+            }
+            
+            logger.debug("Redeeming ticket.")
+            if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answersWithFiles,
+                                     as: type,
+                                     completionHandler: completionHandler) {
+                task.resume()
+            }
         }
     }
     
@@ -501,13 +515,20 @@ public extension APIClient {
                           checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
     }
     
-    private func uploadFileTask(path: String, completionHandler: @escaping (Result<PXUploadedFile, Error>) -> ()) -> URLSessionDataTask? {
-        
-        if !FileManager.default.fileExists(atPath: path) {
-            logger.error("Find file for upload at path '\(path)' was not found.")
-            completionHandler(.failure(APIError.fileNotFound))
-            return nil
+    private func uploadAttachment(path: String) async throws -> PXUploadedFile {
+        return try await withCheckedThrowingContinuation { continuation in
+            uploadFile(path: path, completionHandler: { result in
+                continuation.resume(with: result)
+            })
         }
+    }
+    
+    private func uploadFile(path: String, completionHandler: @escaping (Result<PXUploadedFile, Error>) -> ()) {
+        let task = uploadFileTask(path: path, completionHandler: completionHandler)
+        task?.resume()
+    }
+    
+    private func uploadFileTask(path: String, completionHandler: @escaping (Result<PXUploadedFile, Error>) -> ()) -> URLSessionDataTask? {
         
         let file = PXTemporaryFile(path: path)
         guard let mimeType = file.contentURL.mimeType() else {

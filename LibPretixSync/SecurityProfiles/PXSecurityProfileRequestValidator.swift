@@ -81,6 +81,7 @@ final class PXSecurityProfileRequestValidator {
         "api-v1:checkinlistpos-redeem": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)checkinlists\/([^\/\s]+\/)positions\/(.+\/)redeem\/$"#,
         "api-v1:revokedsecrets-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)revokedsecrets\/$"#,
         "api-v1:order-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)orders\/$"#,
+        "api-v1:upload": #"\/v1\/upload"#
     ]
     
     
@@ -97,7 +98,8 @@ final class PXSecurityProfileRequestValidator {
                                                                                     ("POST", "api-v1:checkinlist-failed_checkins"),
                                                                                     ("GET", "api-v1:checkinlistpos-list"),
                                                                                     ("POST", "api-v1:checkinlistpos-redeem"),
-                                                                                    ("GET", "api-v1:revokedsecrets-list")]
+                                                                                    ("GET", "api-v1:revokedsecrets-list"),
+                                                                                    ("POST", "api-v1:upload")]
     
     
     static let AllowListPretixScan: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
@@ -115,6 +117,7 @@ final class PXSecurityProfileRequestValidator {
                                                                                       ("POST", "api-v1:checkinlistpos-redeem"), // OK
                                                                                       ("GET", "api-v1:revokedsecrets-list"), // OK
                                                                                       ("GET", "api-v1:order-list"),
+                                                                                      ("POST", "api-v1:upload")
     ]
     
     static let AllowListKiosk: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [    ("POST", "api-v1:device.update"),
@@ -129,7 +132,8 @@ final class PXSecurityProfileRequestValidator {
                                                                                      ("GET", "api-v1:checkinlist-status"),
                                                                                      ("POST", "api-v1:checkinlist-failed_checkins"),
                                                                                      ("POST", "api-v1:checkinlistpos-redeem"),
-                                                                                     ("GET", "api-v1:revokedsecrets-list")]
+                                                                                     ("GET", "api-v1:revokedsecrets-list"),
+                                                                                     ("POST", "api-v1:upload")]
     
     
     /// Returns a list of endpoint names applicable for the provided security profile

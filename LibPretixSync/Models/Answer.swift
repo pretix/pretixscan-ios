@@ -17,7 +17,7 @@ public struct Answer: Model {
     public let question: Identifier
 
     /// Text representation of the answer
-    public let answer: String
+    public var answer: String
 
     /// The question’s `identifier` field
     public let questionStringIdentifier: String?
