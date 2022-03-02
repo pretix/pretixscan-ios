@@ -16,7 +16,7 @@ public struct QueuedRedemptionRequest: Model {
     public static var stringName = "queued_redemption_requests"
 
     /// The redemption requet to upload to the server
-    public let redemptionRequest: RedemptionRequest
+    public var redemptionRequest: RedemptionRequest
 
     /// The slug of the event this request belongs to
     public let eventSlug: String

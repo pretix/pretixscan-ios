@@ -57,7 +57,7 @@ public struct RedemptionRequest: Model {
     // If questions are supported/required, you may/must supply a mapping of question IDs to their
     // respective answers. The answers should always be strings. In case of (multiple-)choice-type
     // answers, the string should contain the (comma-separated) IDs of the selected options.
-    public let answers: [String: String]?
+    public var answers: [String: String]?
     
     public let type: String
 

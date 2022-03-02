@@ -481,17 +481,7 @@ public extension APIClient {
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         Task {
-            var answersWithFiles = answers ?? []
-            for (ix, answer) in answersWithFiles.enumerated() {
-                // TODO: Use a file URL, only on questions of tyle file upload
-                if answer.answer.starts(with: "/private/var/mobile") {
-                    logger.debug("Uploading file for question \(answer.question).")
-                    if let file = try? await uploadAttachment(path: answer.answer) {
-                        answersWithFiles[ix].answer = file.id
-                    }
-                }
-            }
-            
+            let answersWithFiles = await uploadAttachments(answers: answers)
             logger.debug("Redeeming ticket.")
             if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answersWithFiles,
                                      as: type,
@@ -513,6 +503,36 @@ public extension APIClient {
         
         return redeemTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug,
                           checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
+    }
+    
+    func uploadAttachments(answers: [String: String]) async -> [String: String] {
+        var answersWithFiles = answers
+        for (questionId, answer) in answersWithFiles {
+            // TODO: Use a file URL, only on questions of tyle file upload
+            if answer.starts(with: "/private/var/mobile") {
+                logger.debug("Uploading file for question \(questionId).")
+                if let file = try? await uploadAttachment(path: answer) {
+                    answersWithFiles[questionId] = file.id
+                }
+            }
+        }
+        return answersWithFiles
+    }
+    
+    func uploadAttachments(answers: [Answer]?) async -> [Answer]? {
+        guard var answersWithFiles = answers else {
+            return nil
+        }
+        for (ix, answer) in answersWithFiles.enumerated() {
+            // TODO: Use a file URL, only on questions of tyle file upload
+            if answer.answer.starts(with: "/private/var/mobile") {
+                logger.debug("Uploading file for question \(answer.question).")
+                if let file = try? await uploadAttachment(path: answer.answer) {
+                    answersWithFiles[ix].answer = file.id
+                }
+            }
+        }
+        return answersWithFiles
     }
     
     private func uploadAttachment(path: String) async throws -> PXUploadedFile {
