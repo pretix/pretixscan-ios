@@ -112,9 +112,8 @@ class FileUploadQuestionCell: QuestionCell {
         logger.debug("Picture taken and saved at \(file), updating thumbnail")
         thumbnailPreview.image = thumbnail
         
-        delegate?.answerUpdated(for: indexPath, newAnswer: Answer(question: question!.identifier, answer: file.contentURL.relativePath,
-                                                                  questionStringIdentifier: nil, options: [],
-                                                                  optionStringIdentifiers: []))
+        let updatedAnswer = Answer(questionIdentifier: question!.identifier, fileUrl: file.contentURL)
+        delegate?.answerUpdated(for: indexPath, newAnswer: updatedAnswer)
     }
     
     func onFailedToTakePicture() {

@@ -27,6 +27,9 @@ public struct Answer: Model {
 
     /// The identifier fields of the selected option(s)s
     public let optionStringIdentifiers: [String]
+    
+    /// URL to a local file which should be uploaded as the payload for this answer
+    public var fileUrl: URL?
 
     // MARK: - CodingKeys
     private enum CodingKeys: String, CodingKey {
@@ -35,5 +38,16 @@ public struct Answer: Model {
         case questionStringIdentifier = "question_identifier"
         case options
         case optionStringIdentifiers = "option_identifiers"
+        case fileUrl
+    }
+}
+
+extension Answer {
+    init(questionIdentifier: Identifier, fileUrl: URL) {
+        self = Answer(question: questionIdentifier, answer: "", questionStringIdentifier: nil, options: [], optionStringIdentifiers: [], fileUrl: fileUrl)
+    }
+    
+    init(question: Identifier, answer: String, questionStringIdentifier: String?, options: [Identifier], optionStringIdentifiers: [String]) {
+        self = Answer(question: question, answer: answer, questionStringIdentifier: questionStringIdentifier, options: options, optionStringIdentifiers: optionStringIdentifiers, fileUrl: nil)
     }
 }

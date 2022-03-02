@@ -10,6 +10,8 @@ import Foundation
 
 /// A reference to a temporary file
 struct PXTemporaryFile: CustomStringConvertible {
+    static let FilePrefix: String = "file://"
+    
     var description: String {
         return self.contentURL.absoluteString
     }

@@ -508,10 +508,10 @@ public extension APIClient {
     func uploadAttachments(answers: [String: String]) async -> [String: String] {
         var answersWithFiles = answers
         for (questionId, answer) in answersWithFiles {
-            // TODO: Use a file URL, only on questions of tyle file upload
-            if answer.starts(with: "/private/var/mobile") {
+            if answer.starts(with: PXTemporaryFile.FilePrefix) {
+                let filePath = answer.replacingOccurrences(of: PXTemporaryFile.FilePrefix, with: "", options: .caseInsensitive, range: nil)
                 logger.debug("Uploading file for question \(questionId).")
-                if let file = try? await uploadAttachment(path: answer) {
+                if let file = try? await uploadAttachment(path: filePath) {
                     answersWithFiles[questionId] = file.id
                 }
             }
@@ -524,10 +524,11 @@ public extension APIClient {
             return nil
         }
         for (ix, answer) in answersWithFiles.enumerated() {
-            // TODO: Use a file URL, only on questions of tyle file upload
-            if answer.answer.starts(with: "/private/var/mobile") {
+            if let fileUrl = answer.fileUrl {
                 logger.debug("Uploading file for question \(answer.question).")
-                if let file = try? await uploadAttachment(path: answer.answer) {
+                if let file = try? await uploadAttachment(path: fileUrl.relativePath) {
+                    logger.debug("File for question \(answer.question) uploaded as \(file.id).")
+                    answersWithFiles[ix].fileUrl = nil
                     answersWithFiles[ix].answer = file.id
                 }
             }
