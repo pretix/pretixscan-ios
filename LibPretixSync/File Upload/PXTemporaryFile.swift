@@ -17,6 +17,14 @@ struct PXTemporaryFile: CustomStringConvertible {
     }
     
     let contentURL: URL
+    
+    func delete() {
+        do {
+            try FileManager.default.removeItem(at: self.contentURL)
+        } catch {
+            logger.error("Error deleting a temporary file at '\(self.contentURL)': \(String(describing: error))")
+        }
+    }
 }
 
 

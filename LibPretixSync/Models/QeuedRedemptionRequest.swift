@@ -14,16 +14,16 @@ import Foundation
 public struct QueuedRedemptionRequest: Model {
     public static var humanReadableName = "Queued Redemption Request"
     public static var stringName = "queued_redemption_requests"
-
+    
     /// The redemption requet to upload to the server
     public var redemptionRequest: RedemptionRequest
-
+    
     /// The slug of the event this request belongs to
     public let eventSlug: String
-
+    
     /// The identifier of the check-in-olist this request belongs to
     public let checkInListIdentifier: Identifier
-
+    
     /// The order position secret, identifying the attendee to checki in
     public let secret: String
 }
@@ -34,5 +34,22 @@ extension QueuedRedemptionRequest: Hashable {
         hasher.combine(eventSlug)
         hasher.combine(checkInListIdentifier)
         hasher.combine(secret)
+    }
+}
+
+
+extension QueuedRedemptionRequest {
+    func deleteAttachmentFiles() {
+        let files = redemptionRequest.answers?.filter({$0.value.starts(with: PXTemporaryFile.FilePrefix)}) ?? [:]
+        if !files.isEmpty {
+            logger.debug("Deleting \(files.count) local files attachments...")
+            DispatchQueue.global(qos: .background).async {
+                for fileItem in files {
+                    let filePath = fileItem.value.replacingOccurrences(of: PXTemporaryFile.FilePrefix, with: "", options: .caseInsensitive, range: nil)
+                    let temporaryFile = PXTemporaryFile(path: filePath)
+                    temporaryFile.delete()
+                }
+            }
+        }
     }
 }

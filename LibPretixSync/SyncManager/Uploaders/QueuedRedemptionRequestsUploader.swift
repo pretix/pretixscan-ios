@@ -31,7 +31,6 @@ final class QueuedRedemptionRequestsUploader: APIClientOperation {
             var request = nextQueuedRedemptionRequest
             if let answers = request.redemptionRequest.answers {
                 request.redemptionRequest.answers = await apiClient.uploadAttachments(answers: answers)
-                
             }
             
             
@@ -74,6 +73,7 @@ final class QueuedRedemptionRequestsUploader: APIClientOperation {
                 self.errorReason = result?.errorReason
                 
                 // Done, delete the queued redemption request
+                nextQueuedRedemptionRequest.deleteAttachmentFiles()
                 self.dataStore.delete(nextQueuedRedemptionRequest)
                 
                 // The instantiator of this class should queue more operations in the completion block.
