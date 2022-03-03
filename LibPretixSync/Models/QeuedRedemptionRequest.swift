@@ -40,16 +40,10 @@ extension QueuedRedemptionRequest: Hashable {
 
 extension QueuedRedemptionRequest {
     func deleteAttachmentFiles() {
-        let files = redemptionRequest.answers?.filter({$0.value.starts(with: PXTemporaryFile.FilePrefix)}) ?? [:]
+        let files = redemptionRequest.answers?.filter({PXTemporaryFile.isTemporaryFilePath($0.value)}) ?? [:]
         if !files.isEmpty {
             logger.debug("Deleting \(files.count) local files attachments...")
-            DispatchQueue.global(qos: .background).async {
-                for fileItem in files {
-                    let filePath = fileItem.value.replacingOccurrences(of: PXTemporaryFile.FilePrefix, with: "", options: .caseInsensitive, range: nil)
-                    let temporaryFile = PXTemporaryFile(path: filePath)
-                    temporaryFile.delete()
-                }
-            }
+            PXTemporaryFile.cleanUp(files.map({$0.value}))
         }
     }
 }

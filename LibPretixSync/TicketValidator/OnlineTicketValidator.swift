@@ -121,6 +121,10 @@ public class OnlineTicketValidator: TicketValidator {
                 $0.listID == checkInList.identifier
             }.first
 
+            if redemptionResponse == .redeemed {
+                PXTemporaryFile.cleanUp(answers?.compactMap({$0.fileUrl}) ?? [])
+            }
+            
             completionHandler(redemptionResponse, error)
         }
     }

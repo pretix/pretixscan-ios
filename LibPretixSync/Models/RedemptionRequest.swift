@@ -78,7 +78,7 @@ public struct RedemptionRequest: Model {
         var answerDict = [String: String]()
         for answer in answers {
             if let fileUrl = answer.fileUrl {
-                answerDict["\(answer.question)"] = "\(PXTemporaryFile.FilePrefix)\(fileUrl.relativePath)"
+                answerDict["\(answer.question)"] = PXTemporaryFile.addPathPrefix(fileUrl)
             } else {
                 answerDict["\(answer.question)"] = answer.answer
             }

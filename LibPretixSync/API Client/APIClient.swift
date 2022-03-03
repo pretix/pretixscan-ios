@@ -508,10 +508,9 @@ public extension APIClient {
     func uploadAttachments(answers: [String: String]) async -> [String: String] {
         var answersWithFiles = answers
         for (questionId, answer) in answersWithFiles {
-            if answer.starts(with: PXTemporaryFile.FilePrefix) {
-                let filePath = answer.replacingOccurrences(of: PXTemporaryFile.FilePrefix, with: "", options: .caseInsensitive, range: nil)
+            if PXTemporaryFile.isTemporaryFilePath(answer) {
                 logger.debug("Uploading file for question \(questionId).")
-                if let file = try? await uploadAttachment(path: filePath) {
+                if let file = try? await uploadAttachment(file: PXTemporaryFile.removePathPrefix(answer)) {
                     answersWithFiles[questionId] = file.id
                 }
             }
@@ -526,7 +525,7 @@ public extension APIClient {
         for (ix, answer) in answersWithFiles.enumerated() {
             if let fileUrl = answer.fileUrl {
                 logger.debug("Uploading file for question \(answer.question).")
-                if let file = try? await uploadAttachment(path: fileUrl.relativePath) {
+                if let file = try? await uploadAttachment(file: PXTemporaryFile(contentURL: fileUrl, name: fileUrl.lastPathComponent)) {
                     logger.debug("File for question \(answer.question) uploaded as \(file.id).")
                     answersWithFiles[ix].fileUrl = nil
                     answersWithFiles[ix].answer = file.id
@@ -536,30 +535,29 @@ public extension APIClient {
         return answersWithFiles
     }
     
-    private func uploadAttachment(path: String) async throws -> PXUploadedFile {
+    private func uploadAttachment(file: PXTemporaryFile) async throws -> PXUploadedFile {
         return try await withCheckedThrowingContinuation { continuation in
-            uploadFile(path: path, completionHandler: { result in
+            uploadFile(file: file, completionHandler: { result in
                 continuation.resume(with: result)
             })
         }
     }
     
-    private func uploadFile(path: String, completionHandler: @escaping (Result<PXUploadedFile, Error>) -> ()) {
-        let task = uploadFileTask(path: path, completionHandler: completionHandler)
+    private func uploadFile(file: PXTemporaryFile, completionHandler: @escaping (Result<PXUploadedFile, Error>) -> ()) {
+        let task = uploadFileTask(file: file, completionHandler: completionHandler)
         task?.resume()
     }
     
-    private func uploadFileTask(path: String, completionHandler: @escaping (Result<PXUploadedFile, Error>) -> ()) -> URLSessionDataTask? {
+    private func uploadFileTask(file: PXTemporaryFile, completionHandler: @escaping (Result<PXUploadedFile, Error>) -> ()) -> URLSessionDataTask? {
         
-        let file = PXTemporaryFile(path: path)
         guard let mimeType = file.contentURL.mimeType() else {
-            logger.error("File for upload at path '\(path)' has unknown mime type.")
+            logger.error("File for upload at path '\(file.contentURL)' has unknown mime type.")
             completionHandler(.failure(APIError.unknownFileType))
             return nil
         }
         
         guard let fileData = try? Data(contentsOf: file.contentURL), !fileData.isEmpty else {
-            logger.error("Find file for upload at path '\(path)' is empty.")
+            logger.error("Find file for upload at path '\(file.contentURL)' is empty.")
             completionHandler(.failure(APIError.fileNotFound))
             return nil
         }

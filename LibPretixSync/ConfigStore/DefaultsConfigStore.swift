@@ -282,6 +282,8 @@ public class DefaultsConfigStore: ConfigStore {
 
         purgeAllSettings()
         
+        PXTemporaryFile.cleanUpAll()
+        
         _welcomeScreenIsConfirmed = false
         _apiBaseURL = nil
         _apiToken = nil

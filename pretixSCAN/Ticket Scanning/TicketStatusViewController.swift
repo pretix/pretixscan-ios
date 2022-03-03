@@ -144,7 +144,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         guard let configuration = configuration else { return }
 
         activityIndicator.startAnimating()
-
+        
         // The wait here fixes a timing issue with presentation animations
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             self.configStore?.ticketValidator?.redeem(
