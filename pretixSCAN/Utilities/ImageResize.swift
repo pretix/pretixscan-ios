@@ -6,7 +6,6 @@
 //  Copyright © 2022 rami.io. All rights reserved.
 //
 
-import CoreGraphics
 import UIKit
 
 public extension UIImage {
