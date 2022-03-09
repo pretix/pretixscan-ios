@@ -136,13 +136,9 @@ extension FileUploadQuestionCell: UIImagePickerControllerDelegate, UINavigationC
         DispatchQueue.global(qos: .userInitiated).async {
             logger.debug("📸 resizing picture from \(String(describing: image.size)) to \(String(describing: FileUploadQuestionCell.ThumbnailSize)) and \(String(describing: FileUploadQuestionCell.UploadSize))")
             
-            if let thumbnail = try? image.cgImage?.resized(to: FileUploadQuestionCell.ThumbnailSize),
-               let upload = try? image.cgImage?.resized(to: FileUploadQuestionCell.UploadSize)
+            if let thumbnailImage = image.resize(to: FileUploadQuestionCell.ThumbnailSize),
+               let uploadImage = image.resize(to: FileUploadQuestionCell.UploadSize)
             {
-                
-                let thumbnailImage = UIImage(cgImage: thumbnail)
-                let uploadImage = UIImage(cgImage: upload)
-                
                 // store the original image as a temporary file on the file system
                 // the answer will contain the URL to the file so it can be processed at time of upload
                 let temporaryFile = PXTemporaryFile(extension: "jpeg")
