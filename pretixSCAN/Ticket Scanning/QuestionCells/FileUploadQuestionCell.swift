@@ -135,28 +135,21 @@ extension FileUploadQuestionCell: UIImagePickerControllerDelegate, UINavigationC
         
         DispatchQueue.global(qos: .userInitiated).async {
             logger.debug("📸 resizing picture from \(String(describing: image.size)) to \(String(describing: FileUploadQuestionCell.ThumbnailSize)) and \(String(describing: FileUploadQuestionCell.UploadSize))")
+            let uploadImage = image.resizeAndCrop(to: FileUploadQuestionCell.UploadSize)
+            let thumbnailImage = uploadImage.resize(to: FileUploadQuestionCell.ThumbnailSize)!
+            // store the original image as a temporary file on the file system
+            // the answer will contain the URL to the file so it can be processed at time of upload
+            let temporaryFile = PXTemporaryFile(extension: "jpeg")
+            if let data = uploadImage.jpegData(compressionQuality: 1.0) {
+                do {
+                    try data.write(to: temporaryFile.contentURL)
+                } catch {
+                    logger.error("Error writing thumbnail to temporary file at \(temporaryFile): \(String(describing: error))")
+                }
+            }
             
-            if let thumbnailImage = image.resize(to: FileUploadQuestionCell.ThumbnailSize),
-               let uploadImage = image.resize(to: FileUploadQuestionCell.UploadSize)
-            {
-                // store the original image as a temporary file on the file system
-                // the answer will contain the URL to the file so it can be processed at time of upload
-                let temporaryFile = PXTemporaryFile(extension: "jpeg")
-                if let data = uploadImage.jpegData(compressionQuality: 1.0) {
-                    do {
-                        try data.write(to: temporaryFile.contentURL)
-                    } catch {
-                        logger.error("Error writing thumbnail to temporary file at \(temporaryFile): \(String(describing: error))")
-                    }
-                }
-                
-                DispatchQueue.main.async {[weak self] in
-                    self?.onPictureUpdated(thumbnail: thumbnailImage, file: temporaryFile)
-                }
-            } else {
-                DispatchQueue.main.async {[weak self] in
-                    self?.onFailedToTakePicture()
-                }
+            DispatchQueue.main.async {[weak self] in
+                self?.onPictureUpdated(thumbnail: thumbnailImage, file: temporaryFile)
             }
         }
     }
