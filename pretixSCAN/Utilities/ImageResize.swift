@@ -62,7 +62,9 @@ public extension UIImage {
         let contextImage: UIImage = UIImage(cgImage: cgimage)
         let contextSize: CGSize = contextImage.size
         
-        
+        if newSize == contextSize {
+            return self
+        }
         
         var posX: CGFloat = 0.0
         var posY: CGFloat = 0.0
