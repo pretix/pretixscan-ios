@@ -20,6 +20,11 @@ final class PXCameraController: UIViewController {
     var videoPreviewLayer: AVCaptureVideoPreviewLayer!
     
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        takePhotoButton.setTitle(Localization.QuestionsTableViewController.TakePhotoAction, for: .normal)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if captureSession.isRunning {
