@@ -37,7 +37,7 @@ class FileUploadQuestionCell: QuestionCell {
         background.backgroundColor = PXColor.grayBackground
         background.translatesAutoresizingMaskIntoConstraints = false
         
-        let icon = UIImageView(image: UIImage(systemName: "camera.shutter.button.fill"))
+        let icon = UIImageView(image: UIImage(systemName: "camera.fill"))
         icon.translatesAutoresizingMaskIntoConstraints = false
         background.addSubview(icon)
         
@@ -100,19 +100,14 @@ class FileUploadQuestionCell: QuestionCell {
     
     
     @objc func takePicture(_ sender: AnyObject) {
-        let vc = PXImagePickerController()
-        vc.sourceType = .camera
-        vc.allowsEditing = false
-        vc.cameraCaptureMode = .photo
+        guard let vc = UIStoryboard.init(name: "Camera", bundle: Bundle.main).instantiateViewController(withIdentifier: "takePicture") as? PXCameraController else {
+            logger.error("PXCameraController not found in storyboard!")
+            return
+        }
+        
         vc.delegate = self
-    
-        // offer a simple overlay camera guide 
-        let overlayView = PXCameraOverlayView(frame: vc.cameraOverlayView!.frame)
-        overlayView.imagePicker = vc
-        overlayView.backgroundColor = .clear
-        overlayView.isUserInteractionEnabled = false
-        vc.cameraOverlayView = overlayView
-   
+        
+        
         self.delegate?.present(vc, animated: true, completion: nil)
     }
     
@@ -131,19 +126,9 @@ class FileUploadQuestionCell: QuestionCell {
     }
 }
 
-extension FileUploadQuestionCell: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func navigationControllerPreferredInterfaceOrientationForPresentation(_ navigationController: UINavigationController) -> UIInterfaceOrientation {
-        return .portrait
-    }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true)
-        
-        guard let image = info[.originalImage] as? UIImage else {
-            logger.warning("There was no image found after the picker was dismissed")
-            onFailedToTakePicture()
-            return
-        }
+extension FileUploadQuestionCell: PXCameraControllerDelegate {
+    func onPhotoCaptured(_ uiImage: UIImage) {
+        let image = uiImage
         
         DispatchQueue.global(qos: .userInitiated).async {
             logger.debug("📸 resizing picture from \(String(describing: image.size)) to \(String(describing: FileUploadQuestionCell.ThumbnailSize)) and \(String(describing: FileUploadQuestionCell.UploadSize))")
@@ -164,5 +149,9 @@ extension FileUploadQuestionCell: UIImagePickerControllerDelegate, UINavigationC
                 self?.onPictureUpdated(thumbnail: thumbnailImage, file: temporaryFile)
             }
         }
+    }
+    
+    func onPhotoCaptureCancelled() {
+        onFailedToTakePicture()
     }
 }

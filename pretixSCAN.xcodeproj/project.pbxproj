@@ -61,6 +61,8 @@
 		B58CF84226F3302800FADA2A /* exit.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83F26F32BFA00FADA2A /* exit.m4a */; };
 		B58CF84326F3302800FADA2A /* enter.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83D26F32BFA00FADA2A /* enter.m4a */; };
 		B58CF84426F3302800FADA2A /* beep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83C26F32BFA00FADA2A /* beep.m4a */; };
+		B5AF40B627DF4C5C001576DD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5AF40B527DF4C5C001576DD /* Camera.storyboard */; };
+		B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF40B727DF4D17001576DD /* PXCameraController.swift */; };
 		B5B990A726EB50160029D614 /* errorRules.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B990A626EB50160029D614 /* errorRules.json */; };
 		B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */; };
 		B5B990AD26EB59F90029D614 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990AB26EB57960029D614 /* Seat.swift */; };
@@ -76,8 +78,6 @@
 		B5DBB0CB2721B6EF00FFBE23 /* RevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */; };
 		B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */; };
 		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
-		B5DCA62E27D9CF5800191631 /* PXCameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCA62D27D9CF5800191631 /* PXCameraOverlayView.swift */; };
-		B5DCA63027D9CF5E00191631 /* PXImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCA62F27D9CF5E00191631 /* PXImagePickerController.swift */; };
 		B5EFD43427CDDCCB00DACCA6 /* PXUploadedFileId.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */; };
 		B5EFD44127CDE41500DACCA6 /* URL+mimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */; };
 		B5EFD44327CDEB8F00DACCA6 /* PXFileUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD44227CDEB8F00DACCA6 /* PXFileUploadTests.swift */; };
@@ -297,6 +297,8 @@
 		B58CF83D26F32BFA00FADA2A /* enter.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = enter.m4a; sourceTree = "<group>"; };
 		B58CF83E26F32BFA00FADA2A /* error.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = error.m4a; sourceTree = "<group>"; };
 		B58CF83F26F32BFA00FADA2A /* exit.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = exit.m4a; sourceTree = "<group>"; };
+		B5AF40B527DF4C5C001576DD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
+		B5AF40B727DF4D17001576DD /* PXCameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraController.swift; sourceTree = "<group>"; };
 		B5B990A626EB50160029D614 /* errorRules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = errorRules.json; sourceTree = "<group>"; };
 		B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+testFileContents.swift"; sourceTree = "<group>"; };
 		B5B990AB26EB57960029D614 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
@@ -312,8 +314,6 @@
 		B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBRevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
-		B5DCA62D27D9CF5800191631 /* PXCameraOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraOverlayView.swift; sourceTree = "<group>"; };
-		B5DCA62F27D9CF5E00191631 /* PXImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXImagePickerController.swift; sourceTree = "<group>"; };
 		B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUploadedFileId.swift; sourceTree = "<group>"; };
 		B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+mimeType.swift"; sourceTree = "<group>"; };
 		B5EFD44227CDEB8F00DACCA6 /* PXFileUploadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXFileUploadTests.swift; sourceTree = "<group>"; };
@@ -608,8 +608,7 @@
 		B5DCA62C27D9CF4C00191631 /* CameraOverlay */ = {
 			isa = PBXGroup;
 			children = (
-				B5DCA62D27D9CF5800191631 /* PXCameraOverlayView.swift */,
-				B5DCA62F27D9CF5E00191631 /* PXImagePickerController.swift */,
+				B5AF40B727DF4D17001576DD /* PXCameraController.swift */,
 			);
 			path = CameraOverlay;
 			sourceTree = "<group>";
@@ -880,6 +879,7 @@
 			children = (
 				DC07357D22392474008326F7 /* Main.storyboard */,
 				DC07358222392476008326F7 /* LaunchScreen.storyboard */,
+				B5AF40B527DF4C5C001576DD /* Camera.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1135,6 +1135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */,
+				B5AF40B627DF4C5C001576DD /* Camera.storyboard in Resources */,
 				B58CF84226F3302800FADA2A /* exit.m4a in Resources */,
 				641B4D2222CE641500162D1C /* Localizable.strings in Resources */,
 				DCB35B8C2248E8E300860385 /* fa-solid-900.ttf in Resources */,
@@ -1280,6 +1281,7 @@
 				B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */,
 				DCAAFF55223AE6E20059C000 /* Errors.swift in Sources */,
 				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
+				B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */,
 				B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				B5F6F1D9272AA48400F702BE /* DatalessDataStore.swift in Sources */,
@@ -1355,11 +1357,9 @@
 				B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */,
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC667FFF22C75E26002EF1C1 /* Question.swift in Sources */,
-				B5DCA63027D9CF5E00191631 /* PXImagePickerController.swift in Sources */,
 				B5F6F1EC272ACF5400F702BE /* TicketEntryAnswersChecker.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				B5FA778E2705BDB0000E1644 /* 06_CreateFailedCheckInsTableMigration.swift in Sources */,
-				B5DCA62E27D9CF5800191631 /* PXCameraOverlayView.swift in Sources */,
 				DC8467C0225CF4000013F647 /* ItemBundle.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				B5F6F1E8272ABA2A00F702BE /* TicketVariationChecker.swift in Sources */,

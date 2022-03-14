@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Camera Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="takePicture" modalPresentationStyle="fullScreen" id="Y6W-OH-hqX" customClass="PXCameraController" customModule="pretixSCAN" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9f-yn-uwZ">
+                                <rect key="frame" x="0.0" y="182.66666666666669" width="428" height="570.66666666666652"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="f9f-yn-uwZ" secondAttribute="height" multiplier="3:4" id="UxM-qO-Pci"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U94-yT-YCk">
+                                <rect key="frame" x="153" y="841" width="122" height="31"/>
+                                <color key="backgroundColor" name="buttons"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="camera.fill" catalog="system" title="Take Photo">
+                                    <color key="baseForegroundColor" name="primaryText"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="takePhoto:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="aCF-cZ-Lj9"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="f9f-yn-uwZ" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" id="GPU-4e-jNt"/>
+                            <constraint firstItem="U94-yT-YCk" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="LNk-16-Xgh"/>
+                            <constraint firstItem="f9f-yn-uwZ" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="NQ8-MX-RNE"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="U94-yT-YCk" secondAttribute="bottom" constant="20" id="maO-JL-rA6"/>
+                            <constraint firstItem="f9f-yn-uwZ" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="wFw-1m-edw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="previewView" destination="f9f-yn-uwZ" id="tI4-0Q-9O5"/>
+                        <outlet property="takePhotoButton" destination="U94-yT-YCk" id="WWI-MY-Od1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="22" y="48"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="camera.fill" catalog="system" width="128" height="94"/>
+        <namedColor name="buttons">
+            <color red="0.49799999594688416" green="0.35199999809265137" blue="0.56800001859664917" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="primaryText">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
