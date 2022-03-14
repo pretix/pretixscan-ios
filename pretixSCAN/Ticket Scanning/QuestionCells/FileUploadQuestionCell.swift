@@ -100,11 +100,19 @@ class FileUploadQuestionCell: QuestionCell {
     
     
     @objc func takePicture(_ sender: AnyObject) {
-        let vc = UIImagePickerController()
+        let vc = PXImagePickerController()
         vc.sourceType = .camera
         vc.allowsEditing = false
         vc.cameraCaptureMode = .photo
         vc.delegate = self
+    
+        // offer a simple overlay camera guide 
+        let overlayView = PXCameraOverlayView(frame: vc.cameraOverlayView!.frame)
+        overlayView.imagePicker = vc
+        overlayView.backgroundColor = .clear
+        overlayView.isUserInteractionEnabled = false
+        vc.cameraOverlayView = overlayView
+   
         self.delegate?.present(vc, animated: true, completion: nil)
     }
     
@@ -124,6 +132,10 @@ class FileUploadQuestionCell: QuestionCell {
 }
 
 extension FileUploadQuestionCell: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func navigationControllerPreferredInterfaceOrientationForPresentation(_ navigationController: UINavigationController) -> UIInterfaceOrientation {
+        return .portrait
+    }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
         
@@ -136,7 +148,7 @@ extension FileUploadQuestionCell: UIImagePickerControllerDelegate, UINavigationC
         DispatchQueue.global(qos: .userInitiated).async {
             logger.debug("📸 resizing picture from \(String(describing: image.size)) to \(String(describing: FileUploadQuestionCell.ThumbnailSize)) and \(String(describing: FileUploadQuestionCell.UploadSize))")
             let uploadImage = image.resizeAndCrop(to: FileUploadQuestionCell.UploadSize)
-            let thumbnailImage = uploadImage.resize(to: FileUploadQuestionCell.ThumbnailSize)!
+            let thumbnailImage = image.resizeAndCrop(to: FileUploadQuestionCell.UploadSize).resize(to: FileUploadQuestionCell.ThumbnailSize)!
             // store the original image as a temporary file on the file system
             // the answer will contain the URL to the file so it can be processed at time of upload
             let temporaryFile = PXTemporaryFile(extension: "jpeg")

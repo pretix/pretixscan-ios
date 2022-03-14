@@ -76,6 +76,8 @@
 		B5DBB0CB2721B6EF00FFBE23 /* RevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */; };
 		B5DBB0CD2721BE6600FFBE23 /* FMDBRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */; };
 		B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */; };
+		B5DCA62E27D9CF5800191631 /* PXCameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCA62D27D9CF5800191631 /* PXCameraOverlayView.swift */; };
+		B5DCA63027D9CF5E00191631 /* PXImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DCA62F27D9CF5E00191631 /* PXImagePickerController.swift */; };
 		B5EFD43427CDDCCB00DACCA6 /* PXUploadedFileId.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */; };
 		B5EFD44127CDE41500DACCA6 /* URL+mimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */; };
 		B5EFD44327CDEB8F00DACCA6 /* PXFileUploadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EFD44227CDEB8F00DACCA6 /* PXFileUploadTests.swift */; };
@@ -310,6 +312,8 @@
 		B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBRevokedSecret.swift; sourceTree = "<group>"; };
 		B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 07_MigrationAddRevokedSecret.swift; sourceTree = "<group>"; };
+		B5DCA62D27D9CF5800191631 /* PXCameraOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraOverlayView.swift; sourceTree = "<group>"; };
+		B5DCA62F27D9CF5E00191631 /* PXImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXImagePickerController.swift; sourceTree = "<group>"; };
 		B5EFD43327CDDCCB00DACCA6 /* PXUploadedFileId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXUploadedFileId.swift; sourceTree = "<group>"; };
 		B5EFD44027CDE41500DACCA6 /* URL+mimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+mimeType.swift"; sourceTree = "<group>"; };
 		B5EFD44227CDEB8F00DACCA6 /* PXFileUploadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXFileUploadTests.swift; sourceTree = "<group>"; };
@@ -601,6 +605,15 @@
 			path = Examples;
 			sourceTree = "<group>";
 		};
+		B5DCA62C27D9CF4C00191631 /* CameraOverlay */ = {
+			isa = PBXGroup;
+			children = (
+				B5DCA62D27D9CF5800191631 /* PXCameraOverlayView.swift */,
+				B5DCA62F27D9CF5E00191631 /* PXImagePickerController.swift */,
+			);
+			path = CameraOverlay;
+			sourceTree = "<group>";
+		};
 		B5EFD43227CDDC0300DACCA6 /* File Upload */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,6 +796,7 @@
 		DC227F1F22536AFE00314448 /* Ticket Scanning */ = {
 			isa = PBXGroup;
 			children = (
+				B5DCA62C27D9CF4C00191631 /* CameraOverlay */,
 				DCB35B9A2249402300860385 /* TicketStatusViewController.swift */,
 				DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */,
 				DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */,
@@ -1341,9 +1355,11 @@
 				B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */,
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
 				DC667FFF22C75E26002EF1C1 /* Question.swift in Sources */,
+				B5DCA63027D9CF5E00191631 /* PXImagePickerController.swift in Sources */,
 				B5F6F1EC272ACF5400F702BE /* TicketEntryAnswersChecker.swift in Sources */,
 				DC91EB28223F9F7D00704F24 /* ConfiguredNavigationController.swift in Sources */,
 				B5FA778E2705BDB0000E1644 /* 06_CreateFailedCheckInsTableMigration.swift in Sources */,
+				B5DCA62E27D9CF5800191631 /* PXCameraOverlayView.swift in Sources */,
 				DC8467C0225CF4000013F647 /* ItemBundle.swift in Sources */,
 				DC1D6FC32242589B008A9E06 /* SearchResultTableViewCell.swift in Sources */,
 				B5F6F1E8272ABA2A00F702BE /* TicketVariationChecker.swift in Sources */,
