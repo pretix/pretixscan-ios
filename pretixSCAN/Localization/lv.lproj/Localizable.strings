@@ -13,3 +13,58 @@
 "Canceled" = "Atcelts";
 "About this App" = "Par šo aplikāciju";
 "Already Scanned" = "Jau noskenēts";
+"Currently Attending" = "Šobrīd apmeklē";
+"Entry" = "Ieeja";
+"Continue" = "Turpināt";
+"Sync every few minutes" = "Sinhronizēt ik pa pāris minūtēm";
+"Statistics" = "Statistika";
+"pretixSCAN" = "pretixSCAN";
+
+/* Answer to a Boolean Check In Question */
+"Yes" = "Jā";
+
+/* Note for a required boolean question */
+"You have to answer YES to check in" = "Jums jāatbild JĀ, lai reģistrētos";
+"Exit stored" = "Izeja saglabāta";
+"Scan mode" = "Skenēšanas režīms";
+"Exit" = "Izeja";
+
+/* Not allowed (custom rule) */
+"Not allowed" = "Nav atļauts";
+
+/* Title for the List of Questions */
+"Questions" = "Jautājumi";
+"Valid" = "Derīgs";
+"Valid Ticket" = "Derīga biļete";
+"Total Tickets Sold" = "Kopā pārdotās biļetes";
+"Welcome" = "Laipni lūgti";
+
+/* Ticket is Unpaid */
+"Unpaid" = "Neapmaksāts";
+"Valid Ticket, but needs attention" = "Derīga biļete, bet nepieciešama pārbaude";
+"This will delete event data from the device and log you out. Do you want to continue?" = "Ar šo jūs izdzēsīsiet visus pasākuma datus no ierīces un iziesiet no konta. Vai vēlaties turpināt?";
+"Ticket Already Used" = "Biļete jau izmantota";
+
+/* Question Type Label */
+"TimeQuestionCell" = "Ievadiet laiku";
+"This is not a ticket, or not a ticket for this event." = "Šī nav biļete vai arī ir biļete citam pasākumam.";
+"This ticket has not been paid for, do you still want to check it in?" = "Šī bilete nav apmaksāta, vai vēlaties to tik un tā iereģistrēt?";
+"Settings" = "Uzstādījumi";
+"Search" = "Meklēt";
+"Select Event" = "Izvēlēties pasākumu";
+
+/* Ticket is Unpaid */
+"Product" = "Produkts";
+"OK" = "OK";
+
+/* Question Type Label */
+"OneLineStringQuestionCell" = "Ievadiet tekstu";
+
+/* Order Paid */
+"Paid" = "Apmaksāts";
+
+/* e.g. do not check in unpaid ticket */
+"No" = "Nē";
+
+/* Question Type Label */
+"MultiLineStringQuestionCell" = "Ievadiet tekstu";
