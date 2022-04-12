@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 /// You can create check-in lists that you can use e.g. at the entrance
 /// of your event to track who is coming and if they actually bought a ticket.
@@ -62,7 +63,10 @@ public struct CheckInList: Model {
         case includePending = "include_pending"
         case allowEntryAfterExit = "allow_entry_after_exit"
         case allowMultipleEntries = "allow_multiple_entries"
+        case rules
     }
+    
+    public var rules: JSON? = nil
 }
 
 extension CheckInList: Equatable {
@@ -74,5 +78,26 @@ extension CheckInList: Equatable {
 extension CheckInList: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.identifier)
+    }
+}
+
+extension CheckInList {
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try values.decode(Identifier.self, forKey: .identifier)
+        self.name = try values.decode(String.self, forKey: .name)
+        self.allProducts = try values.decode(Bool.self, forKey: .allProducts)
+        self.limitProducts = try values.decode(Optional<Array<Int>>.self, forKey: .limitProducts)
+        self.subEvent = try values.decode(Optional<Identifier>.self, forKey: .subEvent)
+        self.positionCount = try values.decode(Int.self, forKey: .positionCount)
+        self.checkinCount = try values.decode(Int.self, forKey: .checkinCount)
+        self.includePending = try values.decode(Bool.self, forKey: .includePending)
+        self.allowEntryAfterExit = try values.decode(Bool.self, forKey: .allowEntryAfterExit)
+        self.allowMultipleEntries = try values.decode(Bool.self, forKey: .allowMultipleEntries)
+
+        // rules is a JSON object
+        let container = try decoder.singleValueContainer()
+        let meta = try container.decode([String:JSON].self)
+        self.rules = meta["rules"]
     }
 }

@@ -21,6 +21,8 @@
 		08FF5FBC27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */; };
 		641B4D2222CE641500162D1C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 641B4D2422CE641500162D1C /* Localizable.strings */; };
 		B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5014DB526E20DEB004C6604 /* Date+substract.swift */; };
+		B50945B528054C8500E8AFC0 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B50945B428054C8500E8AFC0 /* SwiftyJSON */; };
+		B50945B728054E8900E8AFC0 /* list2-rules.json in Resources */ = {isa = PBXBuildFile; fileRef = B50945B628054E8900E8AFC0 /* list2-rules.json */; };
 		B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DAF27158C2B00AAA417 /* SwiftProtobuf */; };
 		B5203DB227158C2B00AAA417 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DB127158C2B00AAA417 /* SwiftProtobufPluginLibrary */; };
 		B5203DB827158D6300AAA417 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5203DB627158C8800AAA417 /* pretix_sig1.pb.swift */; };
@@ -48,6 +50,7 @@
 		B5534226272C2D5D003008AD /* UnknownCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534225272C2D5D003008AD /* UnknownCaseProtocol.swift */; };
 		B5534228272C2E47003008AD /* TelQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534227272C2E47003008AD /* TelQuestionCell.swift */; };
 		B553422B272C325D003008AD /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = B553422A272C325D003008AD /* PhoneNumberKit */; };
+		B57291E12804043B009969E1 /* TicketJsonLogicCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
 		B5823C1927311C9600479A73 /* DatalessTicketValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5823C1827311C9600479A73 /* DatalessTicketValidatorTests.swift */; };
@@ -71,6 +74,8 @@
 		B5BD3E432715CE19003FEB74 /* SignedTicketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */; };
 		B5BD3E452715D3ED003FEB74 /* EventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */; };
 		B5BD3E472715D4B0003FEB74 /* event1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5BD3E462715D4B0003FEB74 /* event1.json */; };
+		B5C0B61828018C740089DCDB /* jsonlogic in Frameworks */ = {isa = PBXBuildFile; productRef = B5C0B61728018C740089DCDB /* jsonlogic */; };
+		B5C0B61A28018CA00089DCDB /* TicketJsonLogicChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */; };
 		B5C2F00627CA6BD3004A3166 /* ImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C2F00527CA6BD3004A3166 /* ImageResize.swift */; };
 		B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255E92723187F0064652F /* FMDBEventValidKey.swift */; };
 		B5D255EC272318F50064652F /* EventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255EB272318F50064652F /* EventValidKey.swift */; };
@@ -258,6 +263,7 @@
 		641B4D2322CE641500162D1C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		641B4D2522CE642C00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B5014DB526E20DEB004C6604 /* Date+substract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+substract.swift"; sourceTree = "<group>"; };
+		B50945B628054E8900E8AFC0 /* list2-rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "list2-rules.json"; sourceTree = "<group>"; };
 		B5203DB427158C8800AAA417 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		B5203DB527158C8800AAA417 /* pretix_sig1.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = pretix_sig1.proto; sourceTree = "<group>"; };
 		B5203DB627158C8800AAA417 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
@@ -285,6 +291,7 @@
 		B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketMultiEntryChecker.swift; sourceTree = "<group>"; };
 		B5534225272C2D5D003008AD /* UnknownCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownCaseProtocol.swift; sourceTree = "<group>"; };
 		B5534227272C2E47003008AD /* TelQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelQuestionCell.swift; sourceTree = "<group>"; };
+		B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicCheckerTests.swift; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
 		B5823C1827311C9600479A73 /* DatalessTicketValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessTicketValidatorTests.swift; sourceTree = "<group>"; };
 		B5823C1A273123CC00479A73 /* list5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list5.json; sourceTree = "<group>"; };
@@ -307,6 +314,7 @@
 		B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedTicketData.swift; sourceTree = "<group>"; };
 		B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKeys.swift; sourceTree = "<group>"; };
 		B5BD3E462715D4B0003FEB74 /* event1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = event1.json; sourceTree = "<group>"; };
+		B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicChecker.swift; sourceTree = "<group>"; };
 		B5C2F00527CA6BD3004A3166 /* ImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResize.swift; sourceTree = "<group>"; };
 		B5D255E92723187F0064652F /* FMDBEventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBEventValidKey.swift; sourceTree = "<group>"; };
 		B5D255EB272318F50064652F /* EventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKey.swift; sourceTree = "<group>"; };
@@ -481,7 +489,9 @@
 			files = (
 				08728E7C27A534B9002379A6 /* FMDB in Frameworks */,
 				B5203DB227158C2B00AAA417 /* SwiftProtobufPluginLibrary in Frameworks */,
+				B50945B528054C8500E8AFC0 /* SwiftyJSON in Frameworks */,
 				B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */,
+				B5C0B61828018C740089DCDB /* jsonlogic in Frameworks */,
 				08728E7927A53459002379A6 /* SwiftMessages in Frameworks */,
 				B553422B272C325D003008AD /* PhoneNumberKit in Frameworks */,
 				08728E7F27A53503002379A6 /* Sentry in Frameworks */,
@@ -545,6 +555,7 @@
 				B5BD3E402715CD05003FEB74 /* TicketSignatureCheckerTests.swift */,
 				B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */,
 				B5823C1827311C9600479A73 /* DatalessTicketValidatorTests.swift */,
+				B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */,
 			);
 			path = "Dataless Validation";
 			sourceTree = "<group>";
@@ -579,6 +590,7 @@
 				B5F6F1E6272AB97C00F702BE /* TicketVariationChecker.swift */,
 				B5F6F1EB272ACF5400F702BE /* TicketEntryAnswersChecker.swift */,
 				B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */,
+				B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */,
 			);
 			path = Checkers;
 			sourceTree = "<group>";
@@ -586,6 +598,7 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B50945B628054E8900E8AFC0 /* list2-rules.json */,
 				B5EFD44527CDEC1C00DACCA6 /* imageJPEG.jpg */,
 				B5EFD44427CDEC1C00DACCA6 /* imagePNG.png */,
 				B5823C1E27313F8A00479A73 /* question4.json */,
@@ -1058,6 +1071,8 @@
 				08728E7827A53459002379A6 /* SwiftMessages */,
 				08728E7B27A534B9002379A6 /* FMDB */,
 				08728E7E27A53503002379A6 /* Sentry */,
+				B5C0B61728018C740089DCDB /* jsonlogic */,
+				B50945B428054C8500E8AFC0 /* SwiftyJSON */,
 			);
 			productName = PretixScan;
 			productReference = DC07357622392474008326F7 /* pretixSCAN.app */;
@@ -1118,6 +1133,8 @@
 				08728E7727A53459002379A6 /* XCRemoteSwiftPackageReference "SwiftMessages" */,
 				08728E7A27A534B9002379A6 /* XCRemoteSwiftPackageReference "fmdb" */,
 				08728E7D27A53503002379A6 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				B5C0B61628018C740089DCDB /* XCRemoteSwiftPackageReference "json-logic-swift" */,
+				B50945B328054C8500E8AFC0 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = DC07357722392474008326F7 /* Products */;
 			projectDirPath = "";
@@ -1167,6 +1184,7 @@
 				B5823C1D27312D0300479A73 /* list6.json in Resources */,
 				B5B990A726EB50160029D614 /* errorRules.json in Resources */,
 				B5F6F1E5272AB35000F702BE /* item2.json in Resources */,
+				B50945B728054E8900E8AFC0 /* list2-rules.json in Resources */,
 				B5F6F1DF272AAF4700F702BE /* list1.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1343,6 +1361,7 @@
 				DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */,
 				B5257958272921FB006D9EE9 /* ItemCategoriesDownloader.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
+				B5C0B61A28018CA00089DCDB /* TicketJsonLogicChecker.swift in Sources */,
 				B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */,
 				DCC5710922C6353A008A4397 /* FMResultSet+NullableColumns.swift in Sources */,
 				B525795327291E26006D9EE9 /* APIClient+EventDetail.swift in Sources */,
@@ -1408,6 +1427,7 @@
 				DCAAFF43223AAF4C0059C000 /* HandshakeParsingTests.swift in Sources */,
 				DC8467D1225D09D60013F647 /* ItemCategoryTests.swift in Sources */,
 				DC1D6FBB2240FA16008A9E06 /* OrderPositionTests.swift in Sources */,
+				B57291E12804043B009969E1 /* TicketJsonLogicCheckerTests.swift in Sources */,
 				B553421A272BF81A003008AD /* EntryAnswersCheckerTests.swift in Sources */,
 				B5EFD44327CDEB8F00DACCA6 /* PXFileUploadTests.swift in Sources */,
 				DCC0003E223BE6D700236424 /* MultiLingualStringTests.swift in Sources */,
@@ -1512,7 +1532,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1569,7 +1589,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1585,8 +1605,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 6U994M44MG;
+				DEVELOPMENT_TEAM = MS6MBBXCFJ;
 				INFOPLIST_FILE = PretixScan/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1605,8 +1626,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 6U994M44MG;
+				DEVELOPMENT_TEAM = MS6MBBXCFJ;
 				INFOPLIST_FILE = PretixScan/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1625,7 +1647,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6U994M44MG;
+				DEVELOPMENT_TEAM = MS6MBBXCFJ;
 				INFOPLIST_FILE = PretixScanTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1646,7 +1668,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6U994M44MG;
+				DEVELOPMENT_TEAM = MS6MBBXCFJ;
 				INFOPLIST_FILE = PretixScanTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1718,6 +1740,14 @@
 				minimumVersion = 7.1.4;
 			};
 		};
+		B50945B328054C8500E8AFC0 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.0.1;
+			};
+		};
 		B5203DAE27158C2B00AAA417 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-protobuf.git";
@@ -1732,6 +1762,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.0.0;
+			};
+		};
+		B5C0B61628018C740089DCDB /* XCRemoteSwiftPackageReference "json-logic-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/advantagefse/json-logic-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 1.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1752,6 +1790,11 @@
 			package = 08728E7D27A53503002379A6 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
 		};
+		B50945B428054C8500E8AFC0 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B50945B328054C8500E8AFC0 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
 		B5203DAF27158C2B00AAA417 /* SwiftProtobuf */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B5203DAE27158C2B00AAA417 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
@@ -1766,6 +1809,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B5534229272C325D003008AD /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
 			productName = PhoneNumberKit;
+		};
+		B5C0B61728018C740089DCDB /* jsonlogic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5C0B61628018C740089DCDB /* XCRemoteSwiftPackageReference "json-logic-swift" */;
+			productName = jsonlogic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,0 +1,13 @@
+{
+  "id": 2,
+  "name": "Only proudct 1, but with multientry",
+  "all_products": false,
+  "limit_products": [1],
+  "subevent": null,
+  "checkin_count": 24,
+  "position_count": 49180,
+  "include_pending": false,
+  "allow_multiple_entries": true,
+  "allow_entry_after_exit": true,
+  "rules": {"and": [false, true]}
+}
