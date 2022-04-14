@@ -26,7 +26,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let list = getListWith(rules: JSON(["foo": "bar"]))
         XCTAssertEqual(list.rules?.rawString(), "{\n  \"foo\" : \"bar\"\n}")
     }
-
+    
     func testListRulesAreDecodedFromJSON() {
         let list = getListWith(rules: nil, list: "list2-rules")
         XCTAssertEqual(list.rules?.rawString(), "{\n  \"and\" : [\n    false,\n    true\n  ]\n}")
@@ -37,7 +37,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let list = getListWith(rules: JSON(["and": [false, true]]))
         let sut = TicketJsonLogicChecker(list: list)
         
-        let result = sut.redeem()
+        let result = sut.redeem(ticket: mockSignedTicket)
         
         switch result {
         case .success():
@@ -51,12 +51,68 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let list = getListWith(rules: JSON(["and": [true, true]]))
         let sut = TicketJsonLogicChecker(list: list)
         
-        let result = sut.redeem()
+        let result = sut.redeem(ticket: mockSignedTicket)
         switch result {
         case .success():
             break
         case .failure(let err):
             XCTFail("Expected success but failed with \(String(describing: err))")
         }
+    }
+    
+    func testCheckerFailsRulesOnProduct() {
+        let rules = """
+{
+  "inList": [
+    { "var": "product" },
+    { "objectList": [{ "lookup": ["product", "2", "Ticket"] }] }
+  ]
+}
+"""
+        let list = getListWith(rules: JSON(rules))
+        let sut = TicketJsonLogicChecker(list: list)
+        
+        let result = sut.redeem(ticket: mockSignedTicket)
+        switch result {
+        case .success():
+            XCTFail("list2 has a product limit to producs with id 1 so the validation should fail since it requires product with id 2")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesRulesOnProduct() {
+        let rules = """
+{
+  "inList": [
+    { "var": "product" },
+    { "objectList": [{ "lookup": ["product", "2", "Ticket"] }, { "lookup": ["product", "1", "Ticket"] }] }
+  ]
+}
+"""
+        let list = getListWith(rules: JSON(rules))
+        let sut = TicketJsonLogicChecker(list: list)
+        
+        let result = sut.redeem(ticket: mockSignedTicket)
+        switch result {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    
+    
+    // MARK: - mocks
+    
+    var mockEvent: Event {
+        let eventJsonData = testFileContents("event1", "json")
+        return try! jsonDecoder.decode(Event.self, from: eventJsonData)
+    }
+    
+    var mockSignedTicket: SignedTicketData {
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        return SignedTicketData(base64: qrCode, keys: mockEvent.validKeys!)!
     }
 }
