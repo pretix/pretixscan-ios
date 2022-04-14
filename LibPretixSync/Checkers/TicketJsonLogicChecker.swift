@@ -17,7 +17,7 @@ final class TicketJsonLogicChecker {
         self.checkInList = list
     }
     
-    func redeem(ticket: SignedTicketData) -> Result<Void, ValidationError> {
+    func redeem(ticket: TicketData) -> Result<Void, ValidationError> {
         guard let rules = self.checkInList.rules, let rulesJSON = rules.rawString() else {
             // no rules to evaluate, check passes
             return .success(())
@@ -100,5 +100,11 @@ final class TicketJsonLogicChecker {
     enum ValidationError: Error, Hashable, Equatable {
         case rules
         case parsingError
+    }
+    
+    struct TicketData {
+        let item: Identifier
+        let variation: Identifier?
+        let subEvent: Identifier
     }
 }

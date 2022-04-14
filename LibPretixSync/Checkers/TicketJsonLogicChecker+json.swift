@@ -10,7 +10,10 @@ import Foundation
 import SwiftyJSON
 
 extension TicketJsonLogicChecker {
-    func getTicketData(_ ticket: SignedTicketData) -> String? {
-        return JSON(["product": ticket.item]).rawString()
+    func getTicketData(_ ticket: TicketData) -> String? {
+        return JSON([
+            "product": ticket.item,
+            "variation": (ticket.variation ?? 0) > 0 ? "\(ticket.variation!)" : ""
+        ]).rawString()
     }
 }

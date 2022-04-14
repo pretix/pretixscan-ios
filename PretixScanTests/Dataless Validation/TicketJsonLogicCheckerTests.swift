@@ -37,7 +37,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let list = getListWith(rules: JSON(["and": [false, true]]))
         let sut = TicketJsonLogicChecker(list: list)
         
-        let result = sut.redeem(ticket: mockSignedTicket)
+        let result = sut.redeem(ticket: mockTicket())
         
         switch result {
         case .success():
@@ -51,7 +51,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let list = getListWith(rules: JSON(["and": [true, true]]))
         let sut = TicketJsonLogicChecker(list: list)
         
-        let result = sut.redeem(ticket: mockSignedTicket)
+        let result = sut.redeem(ticket: mockTicket())
         switch result {
         case .success():
             break
@@ -72,7 +72,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let list = getListWith(rules: JSON(rules))
         let sut = TicketJsonLogicChecker(list: list)
         
-        let result = sut.redeem(ticket: mockSignedTicket)
+        let result = sut.redeem(ticket: mockTicket())
         switch result {
         case .success():
             XCTFail("list2 has a product limit to producs with id 1 so the validation should fail since it requires product with id 2")
@@ -93,7 +93,49 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let list = getListWith(rules: JSON(rules))
         let sut = TicketJsonLogicChecker(list: list)
         
-        let result = sut.redeem(ticket: mockSignedTicket)
+        let result = sut.redeem(ticket: mockTicket())
+        switch result {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testCheckerFailsRulesOnVariation() {
+        let rules = """
+{
+  "inList": [
+    { "var": "variation" },
+    { "objectList": [{ "lookup": ["variation", "3", "Ticket"] }] }
+  ]
+}
+"""
+        let list = getListWith(rules: JSON(rules))
+        let sut = TicketJsonLogicChecker(list: list)
+        
+        let result = sut.redeem(ticket: mockTicket())
+        switch result {
+        case .success():
+            XCTFail("variation limited to id 3 which is not present in mockticket with variation 2")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesRulesOnVariation() {
+        let rules = """
+{
+  "inList": [
+    { "var": "variation" },
+    { "objectList": [{ "lookup": ["variation", "3", "Ticket"] }, { "lookup": ["variation", "2", "Ticket"] }] }
+  ]
+}
+"""
+        let list = getListWith(rules: JSON(rules))
+        let sut = TicketJsonLogicChecker(list: list)
+        
+        let result = sut.redeem(ticket: mockTicket())
         switch result {
         case .success():
             break
@@ -106,13 +148,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     // MARK: - mocks
     
-    var mockEvent: Event {
-        let eventJsonData = testFileContents("event1", "json")
-        return try! jsonDecoder.decode(Event.self, from: eventJsonData)
-    }
-    
-    var mockSignedTicket: SignedTicketData {
-        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
-        return SignedTicketData(base64: qrCode, keys: mockEvent.validKeys!)!
+    func mockTicket(_ item: Identifier = 1, variation: Identifier = 2, subEvent: Identifier = 4) -> TicketJsonLogicChecker.TicketData {
+        TicketJsonLogicChecker.TicketData(item: item, variation: variation, subEvent: subEvent)
     }
 }
