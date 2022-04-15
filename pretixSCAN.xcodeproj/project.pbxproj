@@ -50,6 +50,7 @@
 		B5534226272C2D5D003008AD /* UnknownCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534225272C2D5D003008AD /* UnknownCaseProtocol.swift */; };
 		B5534228272C2E47003008AD /* TelQuestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534227272C2E47003008AD /* TelQuestionCell.swift */; };
 		B553422B272C325D003008AD /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = B553422A272C325D003008AD /* PhoneNumberKit */; };
+		B571B7772809352800861383 /* TicketJsonLogicChecker+rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571B7762809352800861383 /* TicketJsonLogicChecker+rules.swift */; };
 		B57291E12804043B009969E1 /* TicketJsonLogicCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */; };
 		B57511A12807EE22008EE595 /* TicketJsonLogicChecker+json.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57511A02807EE22008EE595 /* TicketJsonLogicChecker+json.swift */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
@@ -292,6 +293,7 @@
 		B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketMultiEntryChecker.swift; sourceTree = "<group>"; };
 		B5534225272C2D5D003008AD /* UnknownCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownCaseProtocol.swift; sourceTree = "<group>"; };
 		B5534227272C2E47003008AD /* TelQuestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelQuestionCell.swift; sourceTree = "<group>"; };
+		B571B7762809352800861383 /* TicketJsonLogicChecker+rules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TicketJsonLogicChecker+rules.swift"; sourceTree = "<group>"; };
 		B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicCheckerTests.swift; sourceTree = "<group>"; };
 		B57511A02807EE22008EE595 /* TicketJsonLogicChecker+json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TicketJsonLogicChecker+json.swift"; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 				B5534221272BFFCE003008AD /* TicketMultiEntryChecker.swift */,
 				B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */,
 				B57511A02807EE22008EE595 /* TicketJsonLogicChecker+json.swift */,
+				B571B7762809352800861383 /* TicketJsonLogicChecker+rules.swift */,
 			);
 			path = Checkers;
 			sourceTree = "<group>";
@@ -1304,6 +1307,7 @@
 				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
 				B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */,
 				B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */,
+				B571B7772809352800861383 /* TicketJsonLogicChecker+rules.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				B5F6F1D9272AA48400F702BE /* DatalessDataStore.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
