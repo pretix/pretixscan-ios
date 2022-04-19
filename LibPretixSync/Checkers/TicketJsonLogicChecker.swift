@@ -20,7 +20,11 @@ final class TicketJsonLogicChecker {
         return formatter
     }()
     
-    init(list: CheckInList, dataStore: DatalessDataStore? = nil) {
+    /// The date the checker uses as a reference to "now" when validating ticket rules
+    let now: Date
+    
+    init(list: CheckInList, dataStore: DatalessDataStore? = nil, date: Date = Date()) {
+        self.now = date
         self.checkInList = list
         self.dataStore = dataStore
     }

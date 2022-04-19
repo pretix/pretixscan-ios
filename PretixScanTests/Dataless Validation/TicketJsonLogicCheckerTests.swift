@@ -13,6 +13,12 @@ import SwiftyJSON
 class TicketJsonLogicCheckerTests: XCTestCase {
     private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
     
+    private var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        return formatter
+    }()
+    
     private func getListWith(rules: JSON? = nil, list: String = "list2") -> CheckInList {
         let jsonData = testFileContents(list, "json")
         var exampleList = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
@@ -196,6 +202,148 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     }
     
     
+    func testCheckerFailsRulesOnEntriesNumber() {
+        // arrange
+        let rules = """
+{ "<": [{ "var": "entries_number" }, 1] }
+"""
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([
+            // entry in the past
+            .init(redemptionRequest: .init(date: Date.distantPast, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+            // exit today
+            .init(redemptionRequest: .init(date: Date(), ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+        ])
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds)
+        
+        // act
+        let result = sut.redeem(ticket: mockTicket())
+        switch result {
+        case .success():
+            XCTFail("number of entries < 1, this is the second checkin and should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesRulesOnEntriesNumber() {
+        // arrange
+        let rules = """
+{ "<": [{ "var": "entries_number" }, 1] }
+"""
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds)
+        
+        // act
+        let result = sut.redeem(ticket: mockTicket())
+        switch result {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testGetEntriesDaysCount() {
+        let dates = [
+            dateFormatter.date(from: "2022/03/19 07:18")!,
+            dateFormatter.date(from: "2022/03/20 07:08")!,
+            dateFormatter.date(from: "2022/04/19 07:13")!,
+            dateFormatter.date(from: "2021/04/19 07:30")!,
+        ]
+        
+        let checkIns: [QueuedRedemptionRequest] = dates.map({
+            .init(redemptionRequest: .init(date: $0, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: "")
+        })
+        
+        let count = TicketJsonLogicChecker.getEntriesDaysCount(checkIns, calendar: Calendar.current)
+        
+        XCTAssertEqual(count, 4)
+    }
+    
+    func testGetEntriesTodayCount() {
+        let dates = [
+            dateFormatter.date(from: "2022/03/19 07:28")!,
+            dateFormatter.date(from: "2022/03/20 07:28")!,
+            dateFormatter.date(from: "2022/04/19 07:28")!,
+            dateFormatter.date(from: "2021/04/19 07:30")!,
+        ]
+        
+        let checkIns: [QueuedRedemptionRequest] = dates.map({
+            .init(redemptionRequest: .init(date: $0, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: "")
+        })
+        
+        let count = TicketJsonLogicChecker.getEntriesTodayCount(checkIns, calendar: Calendar.current, today: dateFormatter.date(from: "2022/04/19 16:00")!)
+        
+        XCTAssertEqual(count, 1)
+    }
+    
+    func testCheckerFailsRulesOnEntriesDays() {
+        // Ticket is valid unlimited times, but only on two arbitrary days
+        let rules = """
+{
+  "or": [
+    { ">": [{ "var": "entries_today" }, 0] },
+    { "<": [{ "var": "entries_days" }, 2] }
+  ]
+}
+"""
+        let dates = [dateFormatter.date(from: "2022/03/19 07:28")!, dateFormatter.date(from: "2022/04/19 07:28")!]
+        let now = dateFormatter.date(from: "2022/05/19 07:28")!
+        
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([
+            .init(redemptionRequest: .init(date: dates[0], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+            .init(redemptionRequest: .init(date: dates[0], ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+            .init(redemptionRequest: .init(date: dates[1], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+            .init(redemptionRequest: .init(date: dates[1], ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+        ])
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, date: now)
+        
+        // act
+        let result = sut.redeem(ticket: mockTicket())
+        switch result {
+        case .success():
+            XCTFail("attempted redeem on a 3rd day should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+        
+    }
+    
+    func testCheckerValidatesRulesOnEntriesDays() {
+        // Ticket is valid unlimited times, but only on two arbitrary days
+        let rules = """
+{
+  "or": [
+    { ">": [{ "var": "entries_today" }, 0] },
+    { "<": [{ "var": "entries_days" }, 2] }
+  ]
+}
+"""
+        let dates = [dateFormatter.date(from: "2022/03/19 07:28")!]
+        let now = dateFormatter.date(from: "2022/05/19 07:28")!
+        
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([
+            .init(redemptionRequest: .init(date: dates[0], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+            .init(redemptionRequest: .init(date: dates[0], ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+        ])
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, date: now)
+        
+        // act
+        let result = sut.redeem(ticket: mockTicket())
+        switch result {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+        
+    }
+    
+    
     
     
     // MARK: - mocks
@@ -203,7 +351,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let eventJsonData = testFileContents("event1", "json")
         return try! jsonDecoder.decode(Event.self, from: eventJsonData)
     }
-  
+    
     var mockItems: [Item] {
         ["item1", "item2"].map({item -> Item in
             let jsonData = testFileContents(item, "json")
