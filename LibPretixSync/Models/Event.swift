@@ -23,6 +23,12 @@ public struct Event: Model {
 
     /// The event’s start date
     public let dateFrom: Date?
+    
+    /// The event’s end date
+    public let dateTo: Date?
+    
+    /// The event’s admission date
+    public let dateAdmission: Date?
 
     /// `True` if the event has sub events
     public let hasSubEvents: Bool
@@ -33,6 +39,8 @@ public struct Event: Model {
         case name
         case slug
         case dateFrom = "date_from"
+        case dateTo = "date_to"
+        case dateAdmission = "date_admission"
         case hasSubEvents = "has_subevents"
         case validKeys = "valid_keys"
     }

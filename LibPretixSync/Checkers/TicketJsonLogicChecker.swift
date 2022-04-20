@@ -16,15 +16,20 @@ final class TicketJsonLogicChecker {
     
     var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
         return formatter
     }()
     
     /// The date the checker uses as a reference to "now" when validating ticket rules
     let now: Date
     
-    init(list: CheckInList, dataStore: DatalessDataStore? = nil, date: Date = Date()) {
+    let event: Event
+    let subEvent: SubEvent?
+    
+    init(list: CheckInList, dataStore: DatalessDataStore? = nil, event: Event, subEvent: SubEvent? = nil, date: Date = Date()) {
         self.now = date
+        self.event = event
+        self.subEvent = subEvent
         self.checkInList = list
         self.dataStore = dataStore
     }

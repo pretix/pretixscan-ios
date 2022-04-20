@@ -58,7 +58,7 @@ class OrderPositionTests: XCTestCase {
     )
 
     let event = Event(name: MultiLingualString.english("Test Event"), slug: "testevent",
-                      dateFrom: Date(), hasSubEvents: false, validKeys: nil)
+                      dateFrom: Date(), dateTo: Date(), dateAdmission: Date(), hasSubEvents: false, validKeys: nil)
     let checkInList = CheckInList(identifier: 1, name: "TestCheckInList", allProducts: true,
                                   limitProducts: nil, subEvent: nil, positionCount: 1,
                                   checkinCount: 0, includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false)
@@ -99,6 +99,8 @@ class OrderPositionTests: XCTestCase {
             name: MultiLingualString.english("Test Event"),
             slug: "testevent",
             dateFrom: Date(),
+            dateTo: Date(),
+            dateAdmission: Date(),
             hasSubEvents: true, validKeys: nil)
 
         XCTAssertNil(exampleObject.createRedemptionResponse(

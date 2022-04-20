@@ -69,6 +69,42 @@ extension TicketJsonLogicChecker {
             default:
                 return JSON.Null
             }
-        }]
+        },
+         "buildTime": {(json: JSON?) -> JSON in
+            guard let json = json,
+                  case let .Array(arguments) = json, arguments.count > 0,
+                  case let .String(timeType) = arguments[0] else {
+                // the value is null
+                return JSON.Null
+            }
+            
+            switch timeType {
+            case "date_admission":
+                guard let value = self.event.dateAdmission ?? self.event.dateFrom else {
+                    logger.warning("🚧 event had no date_admission and no date_from")
+                    return JSON.Null
+                }
+                return JSON(self.dateFormatter.string(from: value))
+            default:
+                return JSON.Null
+            }
+        },
+         "isAfter": {(json: JSON?) -> JSON in
+            guard let json = json,
+                  case let .Array(arguments) = json, arguments.count == 2 || arguments.count == 3,
+                  case let .String(dateStr) = arguments[0], let date = self.dateFormatter.date(from: dateStr),
+                  case let .String(rightDateStr) = arguments[1], let rightDate = self.dateFormatter.date(from: rightDateStr) else {
+                return JSON.Null
+            }
+            
+            if arguments.count == 2 || arguments[2] == JSON.Null {
+                return JSON(date > rightDate)
+            } else {
+                guard case let .Int(minutes) = arguments[2] else {
+                    return JSON.Null
+                }
+                return JSON(Calendar.current.date(byAdding: .minute, value: Int(minutes), to: date)! > rightDate)
+            }
+        },]
     }
 }

@@ -15,7 +15,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ" // this should be the same as TicketJsonLogicChecker.dateFormatter.dateFormat
         return formatter
     }()
     
@@ -41,7 +41,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     func testCheckerFailsSimpleRules() {
         let list = getListWith(rules: JSON(["and": [false, true]]))
-        let sut = TicketJsonLogicChecker(list: list)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
         
         let result = sut.redeem(ticket: mockTicket())
         
@@ -55,7 +55,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     func testCheckerValidatesSimpleRules() {
         let list = getListWith(rules: JSON(["and": [true, true]]))
-        let sut = TicketJsonLogicChecker(list: list)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -76,7 +76,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 }
 """
         let list = getListWith(rules: JSON(rules))
-        let sut = TicketJsonLogicChecker(list: list)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -97,7 +97,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 }
 """
         let list = getListWith(rules: JSON(rules))
-        let sut = TicketJsonLogicChecker(list: list)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -118,7 +118,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 }
 """
         let list = getListWith(rules: JSON(rules))
-        let sut = TicketJsonLogicChecker(list: list)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -139,7 +139,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 }
 """
         let list = getListWith(rules: JSON(rules))
-        let sut = TicketJsonLogicChecker(list: list)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -165,7 +165,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             // entry today
             .init(redemptionRequest: .init(date: Date(), ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: "")
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent)
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -189,7 +189,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             // exit today
             .init(redemptionRequest: .init(date: Date(), ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent)
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -214,7 +214,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             // exit today
             .init(redemptionRequest: .init(date: Date(), ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent)
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -233,7 +233,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 """
         let list = getListWith(rules: JSON(rules))
         let ds = mockDataStore([])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent)
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -247,10 +247,10 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     func testGetEntriesDaysCount() {
         let dates = [
-            dateFormatter.date(from: "2022/03/19 07:18")!,
-            dateFormatter.date(from: "2022/03/20 07:08")!,
-            dateFormatter.date(from: "2022/04/19 07:13")!,
-            dateFormatter.date(from: "2021/04/19 07:30")!,
+            dateFormatter.date(from: "2022-03-19T07:18:00.000Z")!,
+            dateFormatter.date(from: "2022-03-20T07:08:00.000Z")!,
+            dateFormatter.date(from: "2022-04-19T07:13:00.000Z")!,
+            dateFormatter.date(from: "2021-04-19T07:30:00.000Z")!,
         ]
         
         let checkIns: [QueuedRedemptionRequest] = dates.map({
@@ -264,17 +264,17 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     func testGetEntriesTodayCount() {
         let dates = [
-            dateFormatter.date(from: "2022/03/19 07:28")!,
-            dateFormatter.date(from: "2022/03/20 07:28")!,
-            dateFormatter.date(from: "2022/04/19 07:28")!,
-            dateFormatter.date(from: "2021/04/19 07:30")!,
+            dateFormatter.date(from: "2022-03-19T07:28:00.000Z")!,
+            dateFormatter.date(from: "2022-03-20T07:28:00.000Z")!,
+            dateFormatter.date(from: "2022-04-19T07:28:00.000Z")!,
+            dateFormatter.date(from: "2021-04-19T07:30:00.000Z")!,
         ]
         
         let checkIns: [QueuedRedemptionRequest] = dates.map({
             .init(redemptionRequest: .init(date: $0, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: "")
         })
         
-        let count = TicketJsonLogicChecker.getEntriesTodayCount(checkIns, calendar: Calendar.current, today: dateFormatter.date(from: "2022/04/19 16:00")!)
+        let count = TicketJsonLogicChecker.getEntriesTodayCount(checkIns, calendar: Calendar.current, today: dateFormatter.date(from: "2022-04-19T16:00:00.000Z")!)
         
         XCTAssertEqual(count, 1)
     }
@@ -289,8 +289,8 @@ class TicketJsonLogicCheckerTests: XCTestCase {
   ]
 }
 """
-        let dates = [dateFormatter.date(from: "2022/03/19 07:28")!, dateFormatter.date(from: "2022/04/19 07:28")!]
-        let now = dateFormatter.date(from: "2022/05/19 07:28")!
+        let dates = [dateFormatter.date(from: "2022-03-19T07:28:00.000Z")!, dateFormatter.date(from: "2022-04-19T07:28:00.000Z")!]
+        let now = dateFormatter.date(from: "2022-05-19T07:28:00.000Z")!
         
         let list = getListWith(rules: JSON(rules))
         let ds = mockDataStore([
@@ -299,7 +299,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             .init(redemptionRequest: .init(date: dates[1], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
             .init(redemptionRequest: .init(date: dates[1], ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, date: now)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -322,15 +322,15 @@ class TicketJsonLogicCheckerTests: XCTestCase {
   ]
 }
 """
-        let dates = [dateFormatter.date(from: "2022/03/19 07:28")!]
-        let now = dateFormatter.date(from: "2022/05/19 07:28")!
+        let dates = [dateFormatter.date(from: "2022-03-19T07:28:00.000Z")!]
+        let now = dateFormatter.date(from: "2022-05-19T07:28:00.000Z")!
         
         let list = getListWith(rules: JSON(rules))
         let ds = mockDataStore([
             .init(redemptionRequest: .init(date: dates[0], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
             .init(redemptionRequest: .init(date: dates[0], ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, date: now)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -341,6 +341,63 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             XCTFail("Expected success but failed with \(String(describing: err))")
         }
         
+    }
+    
+    func testCheckerFailsCheckinNotAfterAdmissionDate() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, 10] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T08:45:00.000Z")!
+
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        // mock event dateAdmission = 2020-01-01T09:00:00Z
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
+
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem sooner than admission date")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesIsAfterTolerance() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, 10] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T08:51:00.000Z")!
+
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        // mock event dateAdmission = 2020-01-01T09:00:00Z
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
+
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testCheckerValidatesDateIsAfterTolerance() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, 10] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T09:10:00.000Z")!
+
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        // mock event dateAdmission = 2020-01-01T09:00:00Z
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
+
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
     }
     
     
