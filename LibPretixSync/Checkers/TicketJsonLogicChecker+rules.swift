@@ -79,9 +79,29 @@ extension TicketJsonLogicChecker {
             }
             
             switch timeType {
+            case "custom":
+                guard arguments.count >= 2,
+                      case let .String(dateString) = arguments[1],
+                      let date = self.dateFormatter.date(from: dateString) else {
+                    logger.warning("🚧 buildTime custom: invalid or missing date value")
+                    return JSON.Null
+                }
+                return JSON(self.dateFormatter.string(from: date))
             case "date_admission":
-                guard let value = self.event.dateAdmission ?? self.event.dateFrom else {
-                    logger.warning("🚧 event had no date_admission and no date_from")
+                guard let value = self.getSubEventOrEventDateAdmission() else {
+                    logger.warning("🚧 buildTime date_admission: event has no date_admission and no date_from")
+                    return JSON.Null
+                }
+                return JSON(self.dateFormatter.string(from: value))
+            case "date_from":
+                guard let value = self.getSubEventOrEventDateFrom() else {
+                    logger.warning("🚧 buildTime date_from: event has no date_from")
+                    return JSON.Null
+                }
+                return JSON(self.dateFormatter.string(from: value))
+            case "date_to":
+                guard let value = self.getSubEventOrEventDateTo() else {
+                    logger.warning("🚧 buildTime date_to: event has no date_to")
                     return JSON.Null
                 }
                 return JSON(self.dateFormatter.string(from: value))
@@ -105,6 +125,47 @@ extension TicketJsonLogicChecker {
                 }
                 return JSON(Calendar.current.date(byAdding: .minute, value: Int(minutes), to: date)! > rightDate)
             }
+        },
+         "isBefore": {(json: JSON?) -> JSON in
+            guard let json = json,
+                  case let .Array(arguments) = json, arguments.count == 2 || arguments.count == 3,
+                  case let .String(dateStr) = arguments[0], let date = self.dateFormatter.date(from: dateStr),
+                  case let .String(rightDateStr) = arguments[1], let rightDate = self.dateFormatter.date(from: rightDateStr) else {
+                return JSON.Null
+            }
+            
+            if arguments.count == 2 || arguments[2] == JSON.Null {
+                return JSON(date < rightDate)
+            } else {
+                guard case let .Int(minutes) = arguments[2] else {
+                    return JSON.Null
+                }
+                return JSON(Calendar.current.date(byAdding: .minute, value: -Int(minutes), to: date)! < rightDate)
+            }
         },]
+    }
+    
+    func getSubEventOrEventDateAdmission() -> Date? {
+        if let subEvent = self.subEvent {
+            return subEvent.dateAdmission ?? subEvent.dateFrom
+        }
+        
+        return self.event.dateAdmission ?? self.event.dateFrom
+    }
+    
+    func getSubEventOrEventDateFrom() -> Date? {
+        if let subEvent = self.subEvent {
+            return subEvent.dateFrom
+        }
+        
+        return self.event.dateFrom
+    }
+    
+    func getSubEventOrEventDateTo() -> Date? {
+        if let subEvent = self.subEvent {
+            return subEvent.dateTo
+        }
+        
+        return self.event.dateTo
     }
 }

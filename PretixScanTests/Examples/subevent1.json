@@ -1,0 +1,22 @@
+{
+  "id": 14,
+  "name": {
+    "de": "Test"
+  },
+  "date_from": "2020-02-01T10:00:00Z",
+  "date_to": "2020-02-01T14:00:00Z",
+  "date_admission": "2020-02-01T09:00:00Z",
+  "active": true,
+  "presale_start": null,
+  "presale_end": null,
+  "location": {},
+  "geo_lat": null,
+  "geo_lon": null,
+  "event": "demo",
+  "is_public": true,
+  "seating_plan": null,
+  "item_price_overrides": [],
+  "variation_price_overrides": [],
+  "meta_data": {},
+  "seat_category_mapping": {}
+}

@@ -41,7 +41,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     func testCheckerFailsSimpleRules() {
         let list = getListWith(rules: JSON(["and": [false, true]]))
-        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
         
         let result = sut.redeem(ticket: mockTicket())
         
@@ -55,7 +55,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     func testCheckerValidatesSimpleRules() {
         let list = getListWith(rules: JSON(["and": [true, true]]))
-        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -76,7 +76,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 }
 """
         let list = getListWith(rules: JSON(rules))
-        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -97,7 +97,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 }
 """
         let list = getListWith(rules: JSON(rules))
-        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -118,7 +118,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 }
 """
         let list = getListWith(rules: JSON(rules))
-        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -139,7 +139,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 }
 """
         let list = getListWith(rules: JSON(rules))
-        let sut = TicketJsonLogicChecker(list: list, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
         
         let result = sut.redeem(ticket: mockTicket())
         switch result {
@@ -165,7 +165,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             // entry today
             .init(redemptionRequest: .init(date: Date(), ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: "")
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent())
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -189,7 +189,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             // exit today
             .init(redemptionRequest: .init(date: Date(), ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent())
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -214,7 +214,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             // exit today
             .init(redemptionRequest: .init(date: Date(), ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent())
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -233,7 +233,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
 """
         let list = getListWith(rules: JSON(rules))
         let ds = mockDataStore([])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent())
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -299,7 +299,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             .init(redemptionRequest: .init(date: dates[1], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
             .init(redemptionRequest: .init(date: dates[1], ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -330,7 +330,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             .init(redemptionRequest: .init(date: dates[0], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
             .init(redemptionRequest: .init(date: dates[0], ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
         ])
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
         
         // act
         let result = sut.redeem(ticket: mockTicket())
@@ -343,17 +343,17 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         
     }
     
-    func testCheckerFailsCheckinNotAfterAdmissionDate() {
+    func testCheckerFailsCheckinBeforeAdmissionDateTollerance() {
         let rules = """
 { "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, 10] }
 """
         let now = dateFormatter.date(from: "2020-01-01T08:45:00.000Z")!
-
+        
         let list = getListWith(rules: JSON(rules))
         let ds = mockDataStore([])
         // mock event dateAdmission = 2020-01-01T09:00:00Z
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
-
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
+        
         switch sut.redeem(ticket: mockTicket()) {
         case .success():
             XCTFail("attempted redeem sooner than admission date")
@@ -362,17 +362,36 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         }
     }
     
-    func testCheckerValidatesIsAfterTolerance() {
+    func testCheckerFailsCheckinBeforeAdmissionDateNoTollerance() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, null] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T08:45:00.000Z")!
+        
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        // mock event dateAdmission = 2020-01-01T09:00:00Z
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
+        
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem sooner than admission date")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesCheckinBeforeAdmissionDateTollerance() {
         let rules = """
 { "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, 10] }
 """
         let now = dateFormatter.date(from: "2020-01-01T08:51:00.000Z")!
-
+        
         let list = getListWith(rules: JSON(rules))
         let ds = mockDataStore([])
         // mock event dateAdmission = 2020-01-01T09:00:00Z
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
-
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
+        
         switch sut.redeem(ticket: mockTicket()) {
         case .success():
             break
@@ -381,22 +400,158 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         }
     }
     
-    func testCheckerValidatesDateIsAfterTolerance() {
+    func testCheckerValidatesCheckinBeforeAdmissionDateNoTollerance() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, null] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T08:51:00.000Z")!
+        
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        // mock event dateAdmission = 2020-01-01T09:00:00Z
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
+        
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem sooner than admission date")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesCheckinAfterAdmissionDateTollerance() {
         let rules = """
 { "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, 10] }
 """
         let now = dateFormatter.date(from: "2020-01-01T09:10:00.000Z")!
-
+        
         let list = getListWith(rules: JSON(rules))
         let ds = mockDataStore([])
         // mock event dateAdmission = 2020-01-01T09:00:00Z
-        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent, date: now)
-
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
+        
         switch sut.redeem(ticket: mockTicket()) {
         case .success():
             break
         case .failure(let err):
             XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testCheckerValidatesCheckinAfterAdmissionDateNoTollerance() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, null] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T09:10:00.000Z")!
+        
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        // mock event dateAdmission = 2020-01-01T09:00:00Z
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
+        
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testCheckerFailsDateIsAfterToleranceFromSubEvent() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, 10] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T09:10:00.000Z")!
+        
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        // mock event dateAdmission = 2020-01-01T09:00:00Z
+        // mock subevent dateAdmission = 2020-02-01T09:00:00Z
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent("event1-se"), subEvent: mockSubEvent(), date: now)
+        
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem sooner than admission date of the subevent")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesDateIsAfterToleranceFromSubEvent() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["date_admission"] }, 10] }
+"""
+        let now = dateFormatter.date(from: "2020-02-01T08:56:00.000Z")!
+        
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        // mock event dateAdmission = 2020-01-01T09:00:00Z
+        // mock subevent dateAdmission = 2020-02-01T09:00:00Z
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent("event1-se"), subEvent: mockSubEvent(), date: now)
+        
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testCheckerValidatesCheckinBeforeDateToTollerance() {
+        let rules = """
+{ "isBefore": [{ "var": "now" }, { "buildTime": ["date_to"] }, 10] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T14:05:00.000Z")!
+        // mock event dateTo = 2020-01-01T14:00:00Z
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+        
+    }
+    
+    func testCheckerFailsCheckinBeforeDateToTollerance() {
+        let rules = """
+{ "isBefore": [{ "var": "now" }, { "buildTime": ["date_to"] }, 10] }
+"""
+       let now = dateFormatter.date(from: "2020-01-01T14:15:00.000Z")!
+        // mock event dateTo = 2020-01-01T14:00:00Z
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem before date_to tollerance should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesCheckinBeforeDateToNoTollerance() {
+        let rules = """
+{ "isBefore": [{ "var": "now" }, { "buildTime": ["date_to"] }, null] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T13:55:00.000Z")!
+        // mock event dateTo = 2020-01-01T14:00:00Z
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+        
+    }
+    
+    func testCheckerFailsCheckinBeforeDateToNoTollerance() {
+        let rules = """
+{ "isBefore": [{ "var": "now" }, { "buildTime": ["date_to"] }, null] }
+"""
+       let now = dateFormatter.date(from: "2020-01-01T14:15:00.000Z")!
+        // mock event dateTo = 2020-01-01T14:00:00Z
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem before date_to tollerance should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
         }
     }
     
@@ -404,9 +559,14 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     
     // MARK: - mocks
-    var mockEvent: Event {
-        let eventJsonData = testFileContents("event1", "json")
+    func mockEvent(_ name: String = "event1") -> Event {
+        let eventJsonData = testFileContents(name, "json")
         return try! jsonDecoder.decode(Event.self, from: eventJsonData)
+    }
+    
+    func mockSubEvent(_ name: String = "subevent1") -> SubEvent {
+        let eventJsonData = testFileContents(name, "json")
+        return try! jsonDecoder.decode(SubEvent.self, from: eventJsonData)
     }
     
     var mockItems: [Item] {
@@ -417,11 +577,11 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     }
     
     func mockDataStore(_ checkIns: [QueuedRedemptionRequest]) -> DatalessDataStore {
-        return MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItems, checkIns: checkIns)
+        return MockDataStore(keys: mockEvent().validKeys!.pems, revoked: [], questions: [], items: mockItems, checkIns: checkIns)
     }
     
     func mockTicket(_ item: Identifier = 1, variation: Identifier = 2, subEvent: Identifier = 4) -> TicketJsonLogicChecker.TicketData {
-        TicketJsonLogicChecker.TicketData(secret: "1234", eventSlug: mockEvent.slug, item: item, variation: variation, subEvent: subEvent)
+        TicketJsonLogicChecker.TicketData(secret: "1234", eventSlug: mockEvent().slug, item: item, variation: variation, subEvent: subEvent)
     }
     
     class MockDataStore: DatalessDataStore {
