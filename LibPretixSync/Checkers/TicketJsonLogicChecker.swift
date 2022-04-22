@@ -14,10 +14,29 @@ final class TicketJsonLogicChecker {
     private var checkInList: CheckInList
     weak var dataStore: DatalessDataStore?
     
+    static let DateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    static let TimeFormat: String = "HH:mm"
+    
     var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+        formatter.dateFormat = TicketJsonLogicChecker.DateFormat
+        formatter.timeZone = TimeZone(abbreviation: "UTC")!
         return formatter
+    }()
+    
+    var timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = TicketJsonLogicChecker.TimeFormat
+        formatter.timeZone = TimeZone(abbreviation: "UTC")!
+        return formatter
+    }()
+    
+    // FIXME: - Events may be in a different timezone, Event.timezone
+    
+    var calendar: Calendar = {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(abbreviation: "UTC")!
+        return calendar
     }()
     
     /// The date the checker uses as a reference to "now" when validating ticket rules

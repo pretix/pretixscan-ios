@@ -13,9 +13,6 @@ extension TicketJsonLogicChecker {
     func getTicketData(_ ticket: TicketData) -> String? {
         let checkIns = (try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug).get()) ?? []
         
-        // FIXME: - Events may be in a different timezone, Event.timezone
-        let calendar = Calendar.current
-        
         return JSON([
             "now": dateFormatter.string(from: self.now),
             "product": ticket.item,

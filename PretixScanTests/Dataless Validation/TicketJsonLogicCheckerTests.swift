@@ -15,7 +15,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     
     private var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ" // this should be the same as TicketJsonLogicChecker.dateFormatter.dateFormat
+        formatter.dateFormat = TicketJsonLogicChecker.DateFormat
         return formatter
     }()
     
@@ -516,7 +516,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let rules = """
 { "isBefore": [{ "var": "now" }, { "buildTime": ["date_to"] }, 10] }
 """
-       let now = dateFormatter.date(from: "2020-01-01T14:15:00.000Z")!
+        let now = dateFormatter.date(from: "2020-01-01T14:15:00.000Z")!
         // mock event dateTo = 2020-01-01T14:00:00Z
         switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
         case .success():
@@ -545,13 +545,60 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         let rules = """
 { "isBefore": [{ "var": "now" }, { "buildTime": ["date_to"] }, null] }
 """
-       let now = dateFormatter.date(from: "2020-01-01T14:15:00.000Z")!
+        let now = dateFormatter.date(from: "2020-01-01T14:15:00.000Z")!
         // mock event dateTo = 2020-01-01T14:00:00Z
         switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
         case .success():
             XCTFail("attempted redeem before date_to tollerance should fail")
         case .failure(let err):
             XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesIsAfterCustomDateTime() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["custom", "2020-01-01T22:00:00.000Z"] }] }
+"""
+        let now1 = dateFormatter.date(from: "2020-01-01T21:51:00.000Z")!
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now1).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem before custom datetime should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+        
+        let now2 = dateFormatter.date(from: "2020-01-01T22:01:00.000Z")!
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now2).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testCheckerFailsIsAfterCustomTime() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["customtime", "14:00"] }] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T04:50:00.000Z")!
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem before customtime should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerValidatesIsAfterCustomTime() {
+        let rules = """
+{ "isAfter": [{ "var": "now" }, { "buildTime": ["customtime", "14:00"] }] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T05:01:00.000Z")!
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
         }
     }
     

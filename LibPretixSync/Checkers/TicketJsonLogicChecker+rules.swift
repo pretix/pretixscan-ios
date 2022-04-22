@@ -87,6 +87,20 @@ extension TicketJsonLogicChecker {
                     return JSON.Null
                 }
                 return JSON(self.dateFormatter.string(from: date))
+            case "customtime":
+                guard arguments.count >= 2,
+                      case let .String(timeString) = arguments[1],
+                      let time = self.timeFormatter.date(from: timeString) else {
+                    logger.warning("🚧 buildTime custom: invalid or missing time value")
+                    return JSON.Null
+                }
+                let timeComponents = self.calendar.dateComponents([.hour, .minute], from: time)
+                if let date = self.calendar.date(bySettingHour: timeComponents.hour!, minute: timeComponents.minute!, second: 0, of: self.now) {
+                    return JSON(self.dateFormatter.string(from: date))
+                } else {
+                    logger.warning("🚧 buildTime custom: unable to format date from time")
+                    return JSON.Null
+                }
             case "date_admission":
                 guard let value = self.getSubEventOrEventDateAdmission() else {
                     logger.warning("🚧 buildTime date_admission: event has no date_admission and no date_from")
@@ -123,7 +137,7 @@ extension TicketJsonLogicChecker {
                 guard case let .Int(minutes) = arguments[2] else {
                     return JSON.Null
                 }
-                return JSON(Calendar.current.date(byAdding: .minute, value: Int(minutes), to: date)! > rightDate)
+                return JSON(self.calendar.date(byAdding: .minute, value: Int(minutes), to: date)! > rightDate)
             }
         },
          "isBefore": {(json: JSON?) -> JSON in
@@ -140,7 +154,7 @@ extension TicketJsonLogicChecker {
                 guard case let .Int(minutes) = arguments[2] else {
                     return JSON.Null
                 }
-                return JSON(Calendar.current.date(byAdding: .minute, value: -Int(minutes), to: date)! < rightDate)
+                return JSON(self.calendar.date(byAdding: .minute, value: -Int(minutes), to: date)! < rightDate)
             }
         },]
     }
