@@ -629,7 +629,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         case .failure(let err):
             XCTFail("Expected success but failed with \(String(describing: err))")
         }
-        
+
         // second checkin (too early)
         let ds1 = mockDataStore([
             .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: "")
@@ -640,7 +640,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         case .failure(let err):
             XCTAssertEqual(err, .rules)
         }
-        
+
         // second checkin (after 3h)
         let ds2 = mockDataStore([
             .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: "")
@@ -650,6 +650,82 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             break
         case .failure(let err):
             XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+
+        // third checkin (too soon)
+        let ds3 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: ""),
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T13:01:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: ""),
+
+        ])
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds3, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T13:01:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem too soon should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+        
+        // third checkin (too soon, again)
+        let ds4 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: ""),
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T13:01:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: ""),
+
+        ])
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds4, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T15:55:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem too soon should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+        
+        // third checkin (ok)
+        let ds5 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: ""),
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T13:01:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: ""),
+
+        ])
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds5, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T16:02:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testValidatesMinutesSinceFirstEntry() {
+        // # Ticket is valid unlimited times, once checked in, you can only come back for 3 hours
+        
+        let rules = """
+{"or": [{"<=": [{"var": "minutes_since_first_entry"}, -1]}, {"<": [{"var": "minutes_since_first_entry"}, \(60 * 3)]}]}
+"""
+        // first checkin
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+
+        // second checkin (within 3h of first)
+        let ds1 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: "")
+        ])
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds1, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T12:55:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+
+        // third checkin (after 3h)
+        let ds2 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: "")
+        ])
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds2, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T13:01:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem after 3h after first checking should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
         }
     }
     
