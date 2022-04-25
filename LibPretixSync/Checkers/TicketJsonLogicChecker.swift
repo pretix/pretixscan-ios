@@ -11,7 +11,7 @@ import jsonlogic
 
 
 final class TicketJsonLogicChecker {
-    private var checkInList: CheckInList
+    var checkInList: CheckInList
     weak var dataStore: DatalessDataStore?
     
     /// The date formatter used to serialize and deserialize datetimestamps in JSON

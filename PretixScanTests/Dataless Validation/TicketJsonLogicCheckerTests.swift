@@ -616,6 +616,42 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     }
     
     
+    func testValidatesMinutesSinceLastEntry() {
+        // # Ticket is valid unlimited times, but you always need to wait 3 hours
+        
+        let rules = """
+{"or": [{"<=": [{"var": "minutes_since_last_entry"}, -1]}, {">": [{"var": "minutes_since_last_entry"}, \(60 * 3)]}]}
+"""
+        // first checkin
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+        
+        // second checkin (too early)
+        let ds1 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: "")
+        ])
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds1, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T12:55:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem too soon should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+        
+        // second checkin (after 3h)
+        let ds2 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: "")
+        ])
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds2, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T13:01:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
     
     
     // MARK: - mocks
