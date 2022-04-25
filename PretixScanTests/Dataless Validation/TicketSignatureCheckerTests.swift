@@ -146,6 +146,10 @@ class TicketSignatureCheckerTests: XCTestCase {
             return .success([])
         }
         
+        func getSubEvents(for event: Event) -> Result<[SubEvent], Error> {
+            return .success([])
+        }
+        
         func store<T>(_ resource: T, for event: Event) where T : Model {
             
         }

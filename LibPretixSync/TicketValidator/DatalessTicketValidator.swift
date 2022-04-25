@@ -19,8 +19,8 @@ final class DatalessTicketValidator {
     
     
     func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, ignoreUnpaid: Bool, answers: [Answer]?,
-                           as type: String,
-                           completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
+                as type: String,
+                completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         logger.debug("Attempting to redeem without data")
         switch redeem(checkInList, event, secret, answers: answers, as: type) {
         case .success(let checkStatus):
@@ -56,6 +56,11 @@ final class DatalessTicketValidator {
                 if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
                     dataStore?.store(failedCheckIn, for: event)
                 }
+            case .rules:
+                response = RedemptionResponse.rules
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
             }
             completionHandler(response, nil)
         case .failure(let error):
@@ -64,14 +69,14 @@ final class DatalessTicketValidator {
     }
     
     private func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, answers: [Answer]?,
-                as type: String) -> Result<CheckStatus, Error> {
+                        as type: String) -> Result<CheckStatus, Error> {
         
         
         guard let dataStore = dataStore else {
             assertionFailure("DatalessTicketValidator missing dataStore")
             return .failure(APIError.notConfigured(message: "Ticket validator without a datastore"))
         }
-
+        
         
         switch TicketSignatureChecker(dataStore: dataStore).redeem(secret: secret, event: event) {
         case .success(let signedTicket):
@@ -82,28 +87,35 @@ final class DatalessTicketValidator {
                     return .success(CheckStatus.valid(item: item, variation: variation))
                 }
                 
-                switch TicketEntryAnswersChecker(item: item, dataStore: dataStore).redeem(event: event, answers: answers) {
-                case .success:
-                    switch TicketMultiEntryChecker(list: checkInList, dataStore: dataStore).redeem(secret: secret, event: event) {
-                    case .success():
-                        return .success(CheckStatus.valid(item: item, variation: variation))
+                let subEvent = ((try? dataStore.getSubEvents(for: event).get()) ?? []).first
+                switch TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: subEvent, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: signedTicket.item, variation: signedTicket.variation, subEvent: signedTicket.subEvent)) {
+                case .success():
+                    switch TicketEntryAnswersChecker(item: item, dataStore: dataStore).redeem(event: event, answers: answers) {
+                    case .success:
+                        switch TicketMultiEntryChecker(list: checkInList, dataStore: dataStore).redeem(secret: secret, event: event) {
+                        case .success():
+                            return .success(CheckStatus.valid(item: item, variation: variation))
+                        case .failure(let check):
+                            logger.debug("TicketMultiEntryChecker failed: \(String(describing: check))")
+                            switch check {
+                            case .alreadyRedeemed:
+                                return .success(CheckStatus.alreadyRedeemed)
+                            case .unknownError:
+                                return .failure(APIError.notFound)
+                            }
+                        }
                     case .failure(let check):
-                        logger.debug("TicketMultiEntryChecker failed: \(String(describing: check))")
+                        logger.debug("TicketEntryAnswersChecker failed: \(String(describing: check))")
                         switch check {
-                        case .alreadyRedeemed:
-                            return .success(CheckStatus.alreadyRedeemed)
+                        case .incomplete(questions: let questions):
+                            return .success(CheckStatus.incomplete(questions: questions, answers: answers))
                         case .unknownError:
                             return .failure(APIError.notFound)
                         }
                     }
-                case .failure(let check):
-                    logger.debug("TicketEntryAnswersChecker failed: \(String(describing: check))")
-                    switch check {
-                    case .incomplete(questions: let questions):
-                        return .success(CheckStatus.incomplete(questions: questions, answers: answers))
-                    case .unknownError:
-                        return .failure(APIError.notFound)
-                    }
+                case .failure(_):
+                    // TODO: - check for parseError and send a sentry event
+                    return .success(CheckStatus.rules)
                 }
             case .failure(let productReason):
                 logger.debug("TicketProductChecker failed: \(String(describing: productReason))")
@@ -136,5 +148,6 @@ final class DatalessTicketValidator {
         case revoked
         case product
         case incomplete(questions: [Question], answers: [Answer]?)
+        case rules
     }
 }

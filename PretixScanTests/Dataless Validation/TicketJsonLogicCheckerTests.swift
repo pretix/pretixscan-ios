@@ -793,6 +793,10 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             return .success(checkIns)
         }
         
+        func getSubEvents(for event: Event) -> Result<[SubEvent], Error> {
+            return .success([])
+        }
+        
         func store<T>(_ resource: T, for event: Event) where T : Model {
             stored.append(resource)
             if let resp = resource as? QueuedRedemptionRequest {

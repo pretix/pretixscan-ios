@@ -42,7 +42,9 @@ final class TicketJsonLogicChecker {
     }
     
     func redeem(ticket: TicketData) -> Result<Void, ValidationError> {
-        guard let rules = self.checkInList.rules, let rulesJSON = rules.rawString() else {
+        guard let rules = self.checkInList.rules,
+              let rulesJSON = rules.rawString(),
+              !Self.isEmptyJSON(rulesJSON) else {
             // no rules to evaluate, check passes
             return .success(())
         }

@@ -242,6 +242,18 @@ extension FMDBDataStore {
 
         return checkIns
     }
+    
+    public func getSubEvents(for event: Event) -> Result<[SubEvent], Error> {
+        var results = [SubEvent]()
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(SubEvent.searchByEventQuery, values: [event.slug]) {
+                while result.next() {
+                    if let subEvent = SubEvent.from(result: result, in: database) { results.append(subEvent) }
+                }
+            }
+        }
+        return .success(results)
+    }
 
     public func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn] {
         guard let checkInList = checkInList else {

@@ -138,6 +138,10 @@ extension RedemptionResponse {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, questions: nil)
     }
     
+    static var rules: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .rules, questions: nil)
+    }
+    
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {
         self = RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: nil, lastCheckIn: nil, questions: incompleteQuestions, answers: answers, checkInAttention: nil)
     }

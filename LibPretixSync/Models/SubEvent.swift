@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FMDB
 
 /// `Event`s can represent whole event series
 ///
@@ -62,6 +63,17 @@ public struct SubEvent: Model {
         case presaleStart = "presale_start"
         case presaleEnd = "presale_end"
         case location
+    }
+    
+    static var searchByEventQuery = """
+    SELECT * FROM "\(stringName)" WHERE event=?;
+    """
+    
+    static func from(result: FMResultSet, in database: FMDatabase) -> SubEvent? {
+        guard let json = result.string(forColumn: "json"), let jsonData = json.data(using: .utf8) else { return nil }
+        guard let subEvent = try? JSONDecoder.iso8601withFractionsDecoder.decode(SubEvent.self, from: jsonData) else { return nil }
+
+        return subEvent
     }
 }
 

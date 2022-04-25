@@ -19,7 +19,8 @@ class RedemptionRequestTests: XCTestCase {
           "ignore_unpaid": false,
           "nonce": "Pvrk50vUzQd0DhdpNRL4I4OcXsvg70uA",
           "canceled_supported":true,
-          "questions_supported": false
+          "questions_supported": false,
+          "type": "entry"
         }
     """.filter { !" \n\t\r".contains($0) }).data(using: .utf8)!
 
@@ -30,6 +31,7 @@ class RedemptionRequestTests: XCTestCase {
           "nonce": "Pvrk50vUzQd0DhdpNRL4I4OcXsvg70uA",
           "datetime": null,
           "questions_supported": true,
+          "type": "entry",
           "answers": {
             "4": "XS"
           }

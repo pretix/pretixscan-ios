@@ -182,4 +182,21 @@ extension TicketJsonLogicChecker {
         
         return self.event.dateTo
     }
+    
+    static func isEmptyJSON(_ rules: String) -> Bool {
+        let clean = rules.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: "\t", with: "")
+        let asJson = JSON(string: clean)
+        switch asJson {
+        case .Null:
+            return true
+        case .Array(let array):
+            return array.isEmpty
+        case .Dictionary(let dictionary):
+            return dictionary.keys.isEmpty
+        case .String(let string):
+            return string.isEmpty
+        default:
+            return false
+        }
+    }
 }
