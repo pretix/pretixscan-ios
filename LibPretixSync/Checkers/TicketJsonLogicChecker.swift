@@ -17,25 +17,14 @@ final class TicketJsonLogicChecker {
     static let DateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     static let TimeFormat: String = "HH:mm"
     
-    var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = TicketJsonLogicChecker.DateFormat
-        formatter.timeZone = TimeZone(abbreviation: "UTC")!
-        return formatter
-    }()
-    
-    var timeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = TicketJsonLogicChecker.TimeFormat
-        formatter.timeZone = TimeZone(abbreviation: "UTC")!
-        return formatter
-    }()
+    let dateFormatter: DateFormatter
+    let timeFormatter: DateFormatter
     
     // FIXME: - Events may be in a different timezone, Event.timezone
     
     var calendar: Calendar = {
         var calendar = Calendar.current
-        calendar.timeZone = TimeZone(abbreviation: "UTC")!
+        calendar.timeZone = TimeZone(identifier: "UTC")!
         return calendar
     }()
     
@@ -51,6 +40,8 @@ final class TicketJsonLogicChecker {
         self.subEvent = subEvent
         self.checkInList = list
         self.dataStore = dataStore
+        self.dateFormatter = Self.createDateFormatter(timeZone: event.timezone)
+        self.timeFormatter = Self.createTimeFormatter(timeZone: event.timezone)
     }
     
     func redeem(ticket: TicketData) -> Result<Void, ValidationError> {
@@ -80,5 +71,19 @@ final class TicketJsonLogicChecker {
         let item: Identifier
         let variation: Identifier?
         let subEvent: Identifier
+    }
+    
+    private static func createTimeFormatter(timeZone: String) -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = TicketJsonLogicChecker.TimeFormat
+        formatter.timeZone = TimeZone(identifier: timeZone)!
+        return formatter
+    }
+    
+    private static func createDateFormatter(timeZone: String) -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = TicketJsonLogicChecker.DateFormat
+        formatter.timeZone = TimeZone(identifier: timeZone)!
+        return formatter
     }
 }

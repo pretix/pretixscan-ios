@@ -34,6 +34,9 @@ public struct Event: Model {
     public let hasSubEvents: Bool
     
     public let validKeys: EventValidKeys?
+    
+    /// Event timezone name
+    public let timezone: String
 
     private enum CodingKeys: String, CodingKey {
         case name
@@ -43,6 +46,7 @@ public struct Event: Model {
         case dateAdmission = "date_admission"
         case hasSubEvents = "has_subevents"
         case validKeys = "valid_keys"
+        case timezone
     }
 }
 
