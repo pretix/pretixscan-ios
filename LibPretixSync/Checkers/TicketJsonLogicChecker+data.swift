@@ -15,6 +15,7 @@ extension TicketJsonLogicChecker {
         
         return JSON([
             "now": dateFormatter.string(from: self.now),
+            "now_isoweekday": calendar.dateComponents([.weekday], from: self.now).weekday! - 1, // Weekday starts with 1 on Sunday but server expects Monday = 1 https://developer.apple.com/documentation/foundation/calendar/component/weekday
             "product": ticket.item,
             "variation": (ticket.variation ?? 0) > 0 ? "\(ticket.variation!)" : "",
             "entries_number": checkIns.filter({$0.redemptionRequest.type == "entry"}).count,

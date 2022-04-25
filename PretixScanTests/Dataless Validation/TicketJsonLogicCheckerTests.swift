@@ -602,6 +602,19 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         }
     }
     
+    func testValidatesUsingISOWeekDay() {
+        let rules = """
+{ "==": [{ "var": "now_isoweekday" }, 1] }
+"""
+        let now = dateFormatter.date(from: "2022-04-25T05:01:00.000Z")!
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent(), date: now).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
     
     
     

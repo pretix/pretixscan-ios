@@ -14,22 +14,18 @@ final class TicketJsonLogicChecker {
     private var checkInList: CheckInList
     weak var dataStore: DatalessDataStore?
     
-    static let DateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    static let TimeFormat: String = "HH:mm"
-    
+    /// The date formatter used to serialize and deserialize datetimestamps in JSON
     let dateFormatter: DateFormatter
+    
+    /// The date formatter used to serialize and deserialize timestamps in JSON
     let timeFormatter: DateFormatter
-    
-    // FIXME: - Events may be in a different timezone, Event.timezone
-    
-    var calendar: Calendar = {
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(identifier: "UTC")!
-        return calendar
-    }()
     
     /// The date the checker uses as a reference to "now" when validating ticket rules
     let now: Date
+    
+    /// The calendar used to calculate date and time components
+    var calendar: Calendar
+    
     
     let event: Event
     let subEvent: SubEvent?
@@ -42,6 +38,7 @@ final class TicketJsonLogicChecker {
         self.dataStore = dataStore
         self.dateFormatter = Self.createDateFormatter(timeZone: event.timezone)
         self.timeFormatter = Self.createTimeFormatter(timeZone: event.timezone)
+        self.calendar = Self.createCalendar(timeZone: event.timezone)
     }
     
     func redeem(ticket: TicketData) -> Result<Void, ValidationError> {
@@ -52,8 +49,15 @@ final class TicketJsonLogicChecker {
         
         do {
             
-            let result: Bool = try JsonLogic(rulesJSON, customOperators: getCustomRules()).applyRule(to: getTicketData(ticket))
-            return result ? .success(()) : .failure(.rules)
+            let data = getTicketData(ticket)
+            let result: Bool = try JsonLogic(rulesJSON, customOperators: getCustomRules()).applyRule(to: data)
+            switch result {
+            case true:
+                return .success(())
+            case false:
+                logger.debug("🚧 Rules validation error.\ndata:\(data ?? "nil")\nrules: \(rulesJSON) \n")
+                return .failure(.rules)
+            }
         } catch {
             logger.error("Rule parsing error \(String(describing: error))")
             return .failure(.parsingError)
@@ -73,6 +77,9 @@ final class TicketJsonLogicChecker {
         let subEvent: Identifier
     }
     
+    static let DateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    static let TimeFormat: String = "HH:mm"
+    
     private static func createTimeFormatter(timeZone: String) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = TicketJsonLogicChecker.TimeFormat
@@ -85,5 +92,11 @@ final class TicketJsonLogicChecker {
         formatter.dateFormat = TicketJsonLogicChecker.DateFormat
         formatter.timeZone = TimeZone(identifier: timeZone)!
         return formatter
+    }
+    
+    private static func createCalendar(timeZone: String) -> Calendar {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: timeZone)!
+        return calendar
     }
 }
