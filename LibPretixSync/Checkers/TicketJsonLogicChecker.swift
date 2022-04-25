@@ -76,7 +76,6 @@ final class TicketJsonLogicChecker {
         let eventSlug: String
         let item: Identifier
         let variation: Identifier?
-        let subEvent: Identifier
     }
     
     static let DateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"

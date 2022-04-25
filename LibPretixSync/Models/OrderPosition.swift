@@ -157,6 +157,13 @@ public struct OrderPosition: Model {
             return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed, position: self,
                                       lastCheckIn: self.checkins.last, questions: nil, answers: nil)
         }
+        
+        if type != "exit" {
+            // TODO: use subevent
+            if case .failure(_) = TicketJsonLogicChecker(list: checkInList, event: event, subEvent: nil, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
+                return .rules
+            }
+        }
 
         // Check if questions were never answered
         if answers == nil && questions.count > 0 {

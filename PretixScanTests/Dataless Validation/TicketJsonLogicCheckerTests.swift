@@ -753,7 +753,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
     }
     
     func mockTicket(_ item: Identifier = 1, variation: Identifier = 2, subEvent: Identifier = 4) -> TicketJsonLogicChecker.TicketData {
-        TicketJsonLogicChecker.TicketData(secret: "1234", eventSlug: mockEvent().slug, item: item, variation: variation, subEvent: subEvent)
+        TicketJsonLogicChecker.TicketData(secret: "1234", eventSlug: mockEvent().slug, item: item, variation: variation)
     }
     
     class MockDataStore: DatalessDataStore {

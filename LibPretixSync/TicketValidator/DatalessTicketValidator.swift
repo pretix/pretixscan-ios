@@ -88,7 +88,7 @@ final class DatalessTicketValidator {
                 }
                 
                 let subEvent = ((try? dataStore.getSubEvents(for: event).get()) ?? []).first
-                switch TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: subEvent, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: signedTicket.item, variation: signedTicket.variation, subEvent: signedTicket.subEvent)) {
+                switch TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: subEvent, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: signedTicket.item, variation: signedTicket.variation)) {
                 case .success():
                     switch TicketEntryAnswersChecker(item: item, dataStore: dataStore).redeem(event: event, answers: answers) {
                     case .success:
