@@ -114,7 +114,7 @@ public struct OrderPosition: Model {
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
     ///       `redeem` function as an example.
     public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList, as type: String = "entry",
-                                         with questions: [Question] = []) -> RedemptionResponse? {
+                                         with questions: [Question] = [], dataStore: DataStore? = nil) -> RedemptionResponse? {
         // Check if this ticket is for the correct sub event
         guard (checkInList.subEvent == nil || self.subEvent == checkInList.subEvent) else {
             return nil
@@ -163,7 +163,7 @@ public struct OrderPosition: Model {
         }
         
         if type != "exit" {
-            if case .failure(_) = TicketJsonLogicChecker(list: checkInList, event: event, subEvent: self.extraSubEvent, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
+            if case .failure(_) = TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: self.extraSubEvent, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
                 return .rules
             }
         }

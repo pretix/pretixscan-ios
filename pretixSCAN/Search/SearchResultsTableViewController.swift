@@ -41,6 +41,7 @@ class SearchResultsTableViewController: UITableViewController {
         cell.orderPosition = result
         cell.event = appCoordinator?.getConfigStore().event
         cell.checkInList = appCoordinator?.getConfigStore().checkInList
+        cell.dataStore = appCoordinator?.getConfigStore().dataStore
         return cell
     }
 

@@ -12,6 +12,7 @@ class SearchResultTableViewCell: UITableViewCell {
     var orderPosition: OrderPosition? { didSet { configure() }}
     var checkInList: CheckInList? { didSet { configure() }}
     var event: Event? { didSet { configure() }}
+    weak var dataStore: DataStore? = nil
 
     @IBOutlet private weak var orderCodeLabel: UILabel!
     @IBOutlet private weak var orderIDLabel: UILabel!
@@ -44,7 +45,7 @@ class SearchResultTableViewCell: UITableViewCell {
         secretLabel.text = orderPosition.secret
 
         guard let redemptionResponse = orderPosition.createRedemptionResponse(force: false, ignoreUnpaid: false,
-                                                                              in: event, in: checkInList) else {
+                                                                              in: event, in: checkInList, dataStore: dataStore) else {
             statusBackgroundView.backgroundColor = PXColor.error
             statusLabel.text = Localization.TicketStatusViewController.InvalidTicket
             return
