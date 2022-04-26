@@ -239,6 +239,12 @@ extension OrderPosition: FMDBModel {
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
             subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat)
     }
+    
+    func adding(subEvent: SubEvent?) -> OrderPosition {
+        var copy = self
+        copy.extraSubEvent = subEvent
+        return copy
+    }
 
     func adding(answers: [Answer]?) -> OrderPosition {
         // Take existing answers and overwrite with ones that have been updated

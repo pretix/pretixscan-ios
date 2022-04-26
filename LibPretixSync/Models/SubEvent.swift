@@ -69,6 +69,10 @@ public struct SubEvent: Model {
     SELECT * FROM "\(stringName)" WHERE event=?;
     """
     
+    static var searchById = """
+    SELECT * FROM "\(stringName)" WHERE id=?;
+    """
+    
     static func from(result: FMResultSet, in database: FMDatabase) -> SubEvent? {
         guard let json = result.string(forColumn: "json"), let jsonData = json.data(using: .utf8) else { return nil }
         guard let subEvent = try? JSONDecoder.iso8601withFractionsDecoder.decode(SubEvent.self, from: jsonData) else { return nil }

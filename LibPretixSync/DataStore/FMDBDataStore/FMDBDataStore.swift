@@ -254,6 +254,18 @@ extension FMDBDataStore {
         }
         return .success(results)
     }
+    
+    public func getSubEvent(id: Identifier, for event: Event) -> Result<SubEvent?, Error> {
+        var subEvent: SubEvent? = nil
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(SubEvent.searchById, values: [event.slug]) {
+                while result.next() {
+                    if let item = SubEvent.from(result: result, in: database) { subEvent = item }
+                }
+            }
+        }
+        return .success(subEvent)
+    }
 
     public func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn] {
         guard let checkInList = checkInList else {
@@ -336,10 +348,18 @@ extension FMDBDataStore {
                 return nil
             }
             let checkIns = getCheckIns(for: tempOrderPosition, in: checkInList, in: event)
-            let orderPosition = tempOrderPosition.adding(checkIns: checkIns)
+            
+            var orderPosition = tempOrderPosition
+                .adding(checkIns: checkIns)
                 .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
                 .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
                 .adding(answers: answers)
+            
+            if event.hasSubEvents, let subEventId = tempOrderPosition.subEvent {
+                let subEvent = try? self.getSubEvent(id: subEventId, for: event).get()
+                orderPosition = orderPosition.adding(subEvent: subEvent)
+            }
+            
 
             let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
 

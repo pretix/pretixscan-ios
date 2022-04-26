@@ -117,6 +117,10 @@ class EntryAnswersCheckerTests: XCTestCase {
             return .success([])
         }
         
+        func getSubEvent(id: Identifier, for event: Event) -> Result<SubEvent?, Error> {
+            .success(nil)
+        }
+        
         func store<T>(_ resource: T, for event: Event) where T : Model {
             
         }

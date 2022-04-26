@@ -55,6 +55,9 @@ public struct OrderPosition: Model {
 
     /// ID of the date inside an event series this position belongs to, if any
     public let subEvent: Identifier?
+    
+    /// ID of the related subevent, if available
+    public var extraSubEvent: SubEvent? 
 
     /// A random ID, e.g. for use in lead scanning apps
     public let pseudonymizationId: String
@@ -67,6 +70,7 @@ public struct OrderPosition: Model {
     
     /// The assigned seat. Can be null.
     public let seat: Seat?
+    
 
     /// Ticket has already been used
     public var isRedeemed: Bool {
@@ -159,8 +163,7 @@ public struct OrderPosition: Model {
         }
         
         if type != "exit" {
-            // TODO: use subevent
-            if case .failure(_) = TicketJsonLogicChecker(list: checkInList, event: event, subEvent: nil, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
+            if case .failure(_) = TicketJsonLogicChecker(list: checkInList, event: event, subEvent: self.extraSubEvent, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
                 return .rules
             }
         }
