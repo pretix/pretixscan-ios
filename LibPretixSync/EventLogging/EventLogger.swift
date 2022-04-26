@@ -39,5 +39,6 @@ public struct EventLogger {
         case database
         case avCaptureDevice
         case parsing
+        case rules
     }
 }

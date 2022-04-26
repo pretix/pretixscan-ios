@@ -49,9 +49,9 @@ final class TicketJsonLogicChecker {
             return .success(())
         }
         
+        let data = getTicketData(ticket)
+        
         do {
-            
-            let data = getTicketData(ticket)
             let result: Bool = try JsonLogic(rulesJSON, customOperators: getCustomRules()).applyRule(to: data)
             switch result {
             case true:
@@ -62,6 +62,7 @@ final class TicketJsonLogicChecker {
             }
         } catch {
             logger.error("Rule parsing error \(String(describing: error))")
+            EventLogger.log(event: "Rule parsing error: \(String(describing: error)). Data:\(data ?? "nil") Rules: \(rulesJSON)", category: .rules, level: .warning, type: .debug)
             return .failure(.parsingError)
         }
     }
