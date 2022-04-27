@@ -80,6 +80,7 @@ extension ValidateTicketViewController {
         }
         
         else if configStore.event == nil {
+            EventLogger.log(event: "reconnect device due to missing event selection", category: .network, level: .warning, type: .debug)
             performSegue(withIdentifier: Segue.presentConnectDeviceViewController, sender: self)
         }
         
