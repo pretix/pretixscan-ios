@@ -34,6 +34,7 @@ public class DefaultsConfigStore: ConfigStore {
         case scanMode
         case shouldPlaySounds
         case shouldDownloadOrders
+        case shouldAutoSync
         case publishedSoftwareVersion
         case enableSearch
     }
@@ -298,6 +299,7 @@ public class DefaultsConfigStore: ConfigStore {
         _checkInList = nil
         _allManagedEvents = []
         _asyncModeEnabled = false
+        _shouldAutoSync = true
         _publishedVersion = nil
         _enableSearch = true
         shouldPlaySounds = true
@@ -344,6 +346,7 @@ private extension DefaultsConfigStore {
         shouldDownloadOrders = defaults.bool(forKey: key(.shouldDownloadOrders))
         _publishedVersion = defaults.string(forKey: key(.publishedSoftwareVersion))
         _enableSearch = defaults.value(forKey: key(.enableSearch)) as? Bool ?? true
+        _shouldAutoSync = defaults.value(forKey: key(.shouldAutoSync)) as? Bool ?? true
         
         // Event
         if let eventData = defaults.data(forKey: key(.event)) {
@@ -375,6 +378,7 @@ private extension DefaultsConfigStore {
         save(_scanMode, forKey: .scanMode)
         save(_deviceUniqueSerial, forKey: .deviceUniqueSerial)
         save(_asyncModeEnabled, forKey: .asyncModeEnabled)
+        save(_shouldAutoSync, forKey: .shouldAutoSync)
         save(try? jsonEncoder.encode(_event), forKey: .event)
         save(try? jsonEncoder.encode(_checkInList), forKey: .checkInList)
         save(try? jsonEncoder.encode(_allManagedEvents), forKey: .allManagedEvents)
