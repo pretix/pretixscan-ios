@@ -234,13 +234,9 @@ public class SyncManager {
                 return
             }
             if let error = uploader.error {
-                if let urlError = error as? URLError, urlError.code == URLError.Code.notConnectedToInternet {
-                    logger.debug("Queued Redemption Request failed while not connected to internet.")
-                } else {
-                    EventLogger.log(event: "Queued Redemption Request came back with error: \(error)",
-                                    category: .offlineUpload, level: .error, type: .error)
-                }
+                logger.debug("Queued Redemption Request failed: \(String(describing: error)).")
             }
+            
             if let errorReason = uploader.errorReason {
                 // If error reason is set, we are not dealing with a system error;
                 // instead, the server has responded that this ticket should not be redeemed.
