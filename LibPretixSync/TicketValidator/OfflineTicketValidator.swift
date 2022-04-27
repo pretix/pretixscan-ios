@@ -103,7 +103,7 @@ public class OfflineTicketValidator: TicketValidator {
         redeem(checkInList, event, secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, completionHandler: {[weak self] (response, error) in
             
             if let failedCheckIn = FailedCheckIn(response: response, error: error, event.slug, checkInList.identifier, type, secret, event) {
-                logger.debug("Recording FailedCheckIn for upload")
+                logger.debug("Recording FailedCheckIn for upload, reason: \(failedCheckIn.errorReason)")
                 self?.configStore.dataStore?.store([failedCheckIn], for: event)
             }
             

@@ -113,8 +113,8 @@ final class DatalessTicketValidator {
                             return .failure(APIError.notFound)
                         }
                     }
-                case .failure(_):
-                    // TODO: - check for parseError and send a sentry event
+                case .failure(let rulesError):
+                    logger.debug("TicketJsonLogicChecker failed: \(String(describing: rulesError))")
                     return .success(CheckStatus.rules)
                 }
             case .failure(let productReason):
