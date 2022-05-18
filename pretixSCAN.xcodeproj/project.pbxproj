@@ -76,6 +76,7 @@
 		B5BD3E432715CE19003FEB74 /* SignedTicketData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */; };
 		B5BD3E452715D3ED003FEB74 /* EventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */; };
 		B5BD3E472715D4B0003FEB74 /* event1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5BD3E462715D4B0003FEB74 /* event1.json */; };
+		B5BD71BF2834E7C90061A261 /* PXPackageLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD71BE2834E7C90061A261 /* PXPackageLicense.swift */; };
 		B5C0B61828018C740089DCDB /* jsonlogic in Frameworks */ = {isa = PBXBuildFile; productRef = B5C0B61728018C740089DCDB /* jsonlogic */; };
 		B5C0B61A28018CA00089DCDB /* TicketJsonLogicChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */; };
 		B5C2F00627CA6BD3004A3166 /* ImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C2F00527CA6BD3004A3166 /* ImageResize.swift */; };
@@ -320,6 +321,7 @@
 		B5BD3E422715CE19003FEB74 /* SignedTicketData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedTicketData.swift; sourceTree = "<group>"; };
 		B5BD3E442715D3ED003FEB74 /* EventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKeys.swift; sourceTree = "<group>"; };
 		B5BD3E462715D4B0003FEB74 /* event1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = event1.json; sourceTree = "<group>"; };
+		B5BD71BE2834E7C90061A261 /* PXPackageLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPackageLicense.swift; sourceTree = "<group>"; };
 		B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicChecker.swift; sourceTree = "<group>"; };
 		B5C2F00527CA6BD3004A3166 /* ImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResize.swift; sourceTree = "<group>"; };
 		B5D255E92723187F0064652F /* FMDBEventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBEventValidKey.swift; sourceTree = "<group>"; };
@@ -852,6 +854,7 @@
 			children = (
 				DC2F49FF225666A200710EFA /* SettingsTableViewController.swift */,
 				DC667FFA22C67F3C002EF1C1 /* SettingsTableViewExplanationCell.swift */,
+				B5BD71BE2834E7C90061A261 /* PXPackageLicense.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1321,6 +1324,7 @@
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
 				B52579622729223F006D9EE9 /* SubEventsDownloader.swift in Sources */,
 				DCDD82DF224C169E00DC0200 /* ScannerViewController.swift in Sources */,
+				B5BD71BF2834E7C90061A261 /* PXPackageLicense.swift in Sources */,
 				DCF8A45122A26C5E0020E0DE /* BlinkerView.swift in Sources */,
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
 				B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */,

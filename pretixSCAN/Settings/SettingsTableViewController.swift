@@ -19,14 +19,22 @@ class SettingsTableViewController: UITableViewController, Configurable {
     @IBOutlet weak var forceSyncCell: UITableViewCell!
     @IBOutlet weak var resetContentCell: UITableViewCell!
     @IBOutlet weak var offlineModeCell: SettingsTableViewExplanationCell!
-    @IBOutlet weak var swiftMessagesLicenseCell: UITableViewCell!
-    @IBOutlet weak var fmdbLicenseCell: UITableViewCell!
-    @IBOutlet weak var tinkKeyChainLicenseCell: UITableViewCell!
     @IBOutlet weak var playSoundsCell: UITableViewCell!
-
+    
+    @IBOutlet weak var libraryLicenseCell1: UITableViewCell!
+    @IBOutlet weak var libraryLicenseCell2: UITableViewCell!
+    @IBOutlet weak var libraryLicenseCell3: UITableViewCell!
+    @IBOutlet weak var libraryLicenseCell4: UITableViewCell!
+    @IBOutlet weak var libraryLicenseCell5: UITableViewCell!
+    @IBOutlet weak var libraryLicenseCell6: UITableViewCell!
+    @IBOutlet weak var libraryLicenseCell7: UITableViewCell!
+    
+    var libraryLicenseCells = [UITableViewCell]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localization.SettingsTableViewController.Title
+        libraryLicenseCells = [libraryLicenseCell1, libraryLicenseCell2, libraryLicenseCell3, libraryLicenseCell4, libraryLicenseCell5, libraryLicenseCell6, libraryLicenseCell7]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -57,14 +65,10 @@ class SettingsTableViewController: UITableViewController, Configurable {
         offlineModeCell.titleLabel?.text = Localization.SettingsTableViewController.SyncMode
         offlineModeCell.explanationLabel.text = Localization.SettingsTableViewController.SyncModeExplanation
 
-        swiftMessagesLicenseCell.textLabel?.text = "SwiftMessages"
-        swiftMessagesLicenseCell.detailTextLabel?.text = Localization.SettingsTableViewController.MITLicense
-
-        fmdbLicenseCell.textLabel?.text = "FMDB"
-        fmdbLicenseCell.detailTextLabel?.text = Localization.SettingsTableViewController.MITLicense
-
-        tinkKeyChainLicenseCell.textLabel?.text = "Tink Keychain"
-        tinkKeyChainLicenseCell.detailTextLabel?.text = Localization.SettingsTableViewController.MITLicense
+        for (ix, library) in AppPackageLicenses.enumerated() {
+            libraryLicenseCells[ix].textLabel?.text = library.name
+            libraryLicenseCells[ix].detailTextLabel?.text = NSLocalizedString(library.license, comment: "")
+        }
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -81,12 +85,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
             toggleOfflineMode()
         } else if indexPath == tableView.indexPath(for: resetContentCell) {
             configStoreFactoryReset()
-        } else if indexPath == tableView.indexPath(for: swiftMessagesLicenseCell) {
-            showSwiftMessagesLicense()
-        } else if indexPath == tableView.indexPath(for: fmdbLicenseCell) {
-            showFMDBLicense()
-        } else if indexPath == tableView.indexPath(for: tinkKeyChainLicenseCell) {
-            showTinkKeyChainLicense()
+        } else if let licenseCellIx = libraryLicenseCells.firstIndex(where: {indexPath == tableView.indexPath(for: $0)}) {
+            showLicense(for: licenseCellIx)
         } else if indexPath == tableView.indexPath(for: playSoundsCell) {
             toggleShouldPlaySounds()
         } else if indexPath == tableView.indexPath(for: shouldDownloadOrdersCell) {
@@ -169,6 +169,20 @@ class SettingsTableViewController: UITableViewController, Configurable {
         self.present(alert, animated: true, completion: nil)
     }
 
+    func showLicense(for packageIx: Int) {
+        let license = AppPackageLicenses[packageIx]
+        guard let url = URL(string: license.url) else {
+            logger.error("Failed to create url for package \(license.name).")
+            return
+        }
+        
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            logger.error("OS dennied opening url for package \(license.name) (canOpenURL = false).")
+        }
+    }
+    
     func showSwiftMessagesLicense() {
         UIApplication.shared.open(URL(string: "https://github.com/SwiftKickMobile/SwiftMessages/blob/master/LICENSE.md")!, options: [:])
     }
