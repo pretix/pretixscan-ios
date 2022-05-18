@@ -23,11 +23,7 @@ struct PXColor {
     static let primaryGreenText = UIColor(named: "primaryGreenText")!
     
     static var defaultBackground: UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor.systemBackground
-        } else {
-            return UIColor.white
-        }
+        return UIColor.systemBackground
     }
 }
 
