@@ -11,32 +11,35 @@ import UIKit
 class SearchResultsTableViewController: UITableViewController {
     private static let reuseIdentifier = "SearchOrderPositionsTableViewControllerCell"
     var appCoordinator: AppCoordinator?
-
+    
     // MARK: - Private Properties
     @IBOutlet private var searchHeaderView: SearchHeaderView!
     private var numberOfSearches = 0
     private var results = [OrderPosition]()
-
+    
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = Localization.SearchOrderPositionsTableViewController.Title
         tableView.tableHeaderView = searchHeaderView
     }
-
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let defaultCell = tableView.dequeueReusableCell(withIdentifier: SearchResultsTableViewController.reuseIdentifier, for: indexPath)
         guard let cell = defaultCell as? SearchResultTableViewCell else { return defaultCell }
-
+        
+        if indexPath.row >= results.endIndex {
+            return UITableViewCell()
+        }
         let result = results[indexPath.row]
         cell.orderPosition = result
         cell.event = appCoordinator?.getConfigStore().event
@@ -44,8 +47,11 @@ class SearchResultsTableViewController: UITableViewController {
         cell.dataStore = appCoordinator?.getConfigStore().dataStore
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row >= results.endIndex {
+            return
+        }
         let result = results[indexPath.row]
         dismiss(animated: true, completion: nil)
         appCoordinator?.redeem(secret: result.secret, force: false, ignoreUnpaid: false)
@@ -62,15 +68,15 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
             tableView.reloadData()
             return
         }
-
+        
         let nextSearchNumber = numberOfSearches + 1
-
+        
         searchHeaderView.status = .loading
         deferredSearch(query: searchText) { (orders, error) in
             DispatchQueue.main.async {
                 // Protect against old slow searches overwriting new fast searches
                 guard nextSearchNumber > self.numberOfSearches else { return }
-
+                
                 // Update Results
                 self.presentErrorAlert(ifError: error)
                 self.results = orders ?? []
@@ -79,7 +85,7 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
             }
         }
     }
-
+    
     func deferredSearch(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         appCoordinator?.getConfigStore().ticketValidator?.search(query: query, completionHandler: completionHandler)
     }
