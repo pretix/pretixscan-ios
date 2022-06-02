@@ -39,7 +39,7 @@ class ValidateTicketViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        checkFirstRunActions(configStore)
+        checkFirstRunActions()
     }
     
     // MARK: - Navigation
@@ -68,7 +68,7 @@ class ValidateTicketViewController: UIViewController {
 
 // MARK: First Run Actions
 extension ValidateTicketViewController {
-    func checkFirstRunActions(_ configStore: ConfigStore) {
+    func checkFirstRunActions() {
         // First Run Welcome Screen
         if !configStore.welcomeScreenIsConfirmed {
             performSegue(withIdentifier: Segue.presentWelcomeViewController, sender: self)
@@ -79,9 +79,9 @@ extension ValidateTicketViewController {
             performSegue(withIdentifier: Segue.presentConnectDeviceViewController, sender: self)
         }
         
-        else if configStore.event == nil {
-            EventLogger.log(event: "reconnect device due to missing event selection", category: .network, level: .warning, type: .debug)
-            performSegue(withIdentifier: Segue.presentConnectDeviceViewController, sender: self)
+        else if configStore.event == nil || configStore.checkInList == nil {
+            logger.warning("No event or checkInList has been selected")
+            performSegue(withIdentifier: Segue.presentSelectEventTableViewController, sender: self)
         }
         
         // Begin Scanning
@@ -161,6 +161,8 @@ extension ValidateTicketViewController {
             } else {
                 self.title = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String
             }
+            
+            self.checkFirstRunActions()
         }
     }
 }
