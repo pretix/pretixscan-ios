@@ -79,6 +79,10 @@ final class PXCameraController: UIViewController {
         stopScanning()
     }
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
