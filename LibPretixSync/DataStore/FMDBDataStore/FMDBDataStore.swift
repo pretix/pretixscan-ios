@@ -315,14 +315,14 @@ extension FMDBDataStore {
                 
                 
                 let variationName = variation.name.representation(in: Locale.current) ?? ""
-                let variationItem = CheckInListStatus.Item.Variation(value: variationName!,
+                let variationItem = CheckInListStatus.Item.Variation(value: variationName,
                                                                      identifier: variation.identifier, checkinCount: variationCheckInCount,
                                                                      positionCount: variationPositionsCount)
                 variations.append(variationItem)
             }
 
             let itemName = item.name.representation(in: Locale.current) ?? ""
-            let checkInListStatusItem = CheckInListStatus.Item(name: itemName!,
+            let checkInListStatusItem = CheckInListStatus.Item(name: itemName,
                                                                identifier: item.identifier, checkinCount: itemCheckInCount,
                                                                admission: false, positionCount: itemPositionsCount,
                                                                variations: variations)
