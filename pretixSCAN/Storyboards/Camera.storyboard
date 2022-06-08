@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_7" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -15,19 +15,22 @@
             <objects>
                 <viewController storyboardIdentifier="takePicture" modalPresentationStyle="fullScreen" id="Y6W-OH-hqX" customClass="PXCameraController" customModule="pretixSCAN" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9f-yn-uwZ">
-                                <rect key="frame" x="0.0" y="182.66666666666669" width="428" height="570.66666666666652"/>
+                                <rect key="frame" x="0.0" y="161" width="375" height="500"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="f9f-yn-uwZ" secondAttribute="height" multiplier="3:4" id="UxM-qO-Pci"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U94-yT-YCk">
-                                <rect key="frame" x="153" y="841" width="122" height="31"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U94-yT-YCk" customClass="ChoiceButton" customModule="pretixSCAN" customModuleProvider="target">
+                                <rect key="frame" x="97.666666666666686" y="727" width="180" height="31"/>
                                 <color key="backgroundColor" name="buttons"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="yso-wG-yuv"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="camera.fill" catalog="system" title="Take Photo">
                                     <color key="baseForegroundColor" name="primaryText"/>
