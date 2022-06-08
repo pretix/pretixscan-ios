@@ -120,9 +120,7 @@ class FileUploadQuestionCell: QuestionCell {
     }
     
     func onFailedToTakePicture() {
-        logger.debug("Taking a picture aborted, clearing answer")
-        thumbnailPreview.image = nil
-        delegate?.answerUpdated(for: indexPath, newAnswer: nil)
+        logger.debug("Taking a picture aborted")
     }
 }
 
@@ -131,7 +129,7 @@ extension FileUploadQuestionCell: PXCameraControllerDelegate {
         let image = uiImage
         
         DispatchQueue.global(qos: .userInitiated).async {
-            logger.debug("📸 resizing picture from \(String(describing: image.size)) to \(String(describing: FileUploadQuestionCell.ThumbnailSize)) and \(String(describing: FileUploadQuestionCell.UploadSize))")
+            logger.debug("📸 resizing picture \(String(describing: image.imageOrientation)) from \(String(describing: image.size)) to \(String(describing: FileUploadQuestionCell.ThumbnailSize)) and \(String(describing: FileUploadQuestionCell.UploadSize))")
             let uploadImage = image.resizeAndCrop(to: FileUploadQuestionCell.UploadSize)
             let thumbnailImage = image.resizeAndCrop(to: FileUploadQuestionCell.UploadSize).resize(to: FileUploadQuestionCell.ThumbnailSize)!
             // store the original image as a temporary file on the file system

@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Combine
 
 class ValidateTicketViewController: UIViewController {
     @IBOutlet private weak var eventButton: UIBarButtonItem!
     private var searchController: UISearchController!
     private var ticketScannerViewController: TicketScannerViewController!
+    private var anyCancellables = Set<AnyCancellable>()
     
     var configStore: ConfigStore {
         guard let configStore = (UIApplication.shared.delegate as? AppDelegate)?.configStore else {
@@ -145,24 +147,40 @@ extension ValidateTicketViewController {
     }
     
     private func beginObservingNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(setupEventButton),
-                                               name: configStore.changedNotification, object: nil)
+        // The ConfigStore is emmitting multiple events per second. At this time it's impractical to change this mechanism so here we need to throttle the updates in order for the cameraview to remain performant.
+        
+        NotificationCenter.default
+            .publisher(for: configStore.changedNotification)
+            .throttle(for: 1, scheduler: DispatchQueue.global(qos: .userInitiated), latest: true)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: {[weak self] notification in
+                self?.onConfigStoreChanged(notification)
+            })
+            .store(in: &anyCancellables)
     }
     
-    @objc private func setupEventButton() {
-        DispatchQueue.main.async {
-            self.eventButton.title = Localization.ValidateTicketViewController.NoEvent
-            if let eventName = self.configStore.event?.name.representation(in: Locale.current),
-               let checkInListName = self.configStore.checkInList?.name {
-                self.eventButton.title = "\(eventName): \(checkInListName)"
-            }
-            if self.configStore.scanMode == "exit" {
-                self.title = (Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String ?? "") + " (" + Localization.SettingsTableViewController.Exit + ")"
-            } else {
-                self.title = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String
-            }
-            
+    func onConfigStoreChanged(_ notification: Notification) {
+        guard let value = notification.userInfo?["value"] as? ConfigStoreValue else {
+            return
+        }
+        if [.event, .checkInList].contains(value) {
+            self.setupEventButton()
             self.checkFirstRunActions()
+        }
+    }
+    
+    
+    private func setupEventButton() {
+        logger.debug("🔥 setupEventButton")
+        self.eventButton.title = Localization.ValidateTicketViewController.NoEvent
+        if let eventName = self.configStore.event?.name.representation(in: Locale.current),
+           let checkInListName = self.configStore.checkInList?.name {
+            self.eventButton.title = "\(eventName): \(checkInListName)"
+        }
+        if self.configStore.scanMode == "exit" {
+            self.title = (Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String ?? "") + " (" + Localization.SettingsTableViewController.Exit + ")"
+        } else {
+            self.title = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String
         }
     }
 }

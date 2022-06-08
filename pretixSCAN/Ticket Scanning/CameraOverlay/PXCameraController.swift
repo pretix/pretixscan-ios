@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import Combine
+
 
 final class PXCameraController: UIViewController {
     @IBOutlet weak var takePhotoButton: UIButton!
@@ -15,43 +17,38 @@ final class PXCameraController: UIViewController {
     
     weak var delegate: PXCameraControllerDelegate?
     
-    var captureSession: AVCaptureSession!
-    var stillImageOutput: AVCapturePhotoOutput!
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer!
-    
+    private var captureSession: AVCaptureSession!
+    private var stillImageOutput: AVCapturePhotoOutput!
+    private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+    private var previewLayerIsInitialized = false
+    private var anyCancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         takePhotoButton.setTitle(Localization.QuestionsTableViewController.TakePhotoAction, for: .normal)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if captureSession.isRunning {
-            captureSession.stopRunning()
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        captureSession = AVCaptureSession()
-        captureSession.sessionPreset = .photo
-        
-        guard let backCamera = AVCaptureDevice.default(for: AVMediaType.video)
-        else {
+        guard let backCamera = AVCaptureDevice.default(for: .video) else {
             logger.error("Unable to access back camera!")
             onError()
             return
         }
         
+        captureSession = AVCaptureSession()
+        captureSession.sessionPreset = .photo
         do {
             let input = try AVCaptureDeviceInput(device: backCamera)
             stillImageOutput = AVCapturePhotoOutput()
             if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addInput(input)
                 captureSession.addOutput(stillImageOutput)
-                setupLivePreview()
+                
+                videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+                videoPreviewLayer.videoGravity = .resizeAspectFill
+                // videoPreviewLayer.connection?.videoOrientation = .portrait
+                
+                previewView.layer.addSublayer(videoPreviewLayer)
+                
+                previewLayerIsInitialized = true
             } else {
                 onError()
             }
@@ -61,6 +58,57 @@ final class PXCameraController: UIViewController {
             onError()
             return
         }
+        
+        NotificationCenter.default.publisher(for: .AVCaptureSessionWasInterrupted)
+            .sink(receiveValue: {[weak self] n in
+                logger.debug("📸 AVCaptureSessionWasInterrupted")
+                if let cs = self?.captureSession, cs == n.object as? AVCaptureSession {
+                    self?.onError()
+                }
+            })
+            .store(in: &anyCancellables)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        startScanning()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopScanning()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard previewLayerIsInitialized else {
+            return
+        }
+
+        super.viewDidLayoutSubviews()
+        videoPreviewLayer.removeFromSuperlayer()
+        videoPreviewLayer.frame = previewView.layer.bounds
+        previewView.layer.addSublayer(videoPreviewLayer)
+
+        if videoPreviewLayer.connection?.isVideoOrientationSupported == true {
+            guard let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation else {
+                logger.warning("Unknown interfaceOrientation")
+                return
+            }
+            switch interfaceOrientation {
+            case .unknown, .portrait:
+                videoPreviewLayer.connection?.videoOrientation = .portrait
+            case .portraitUpsideDown:
+                videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
+            case .landscapeLeft:
+                videoPreviewLayer.connection?.videoOrientation = .landscapeLeft
+            case .landscapeRight:
+                videoPreviewLayer.connection?.videoOrientation = .landscapeRight
+            @unknown default:
+                videoPreviewLayer.connection?.videoOrientation = .portrait
+            }
+        }
     }
     
     @IBAction func takePhoto(_ sender: Any) {
@@ -68,27 +116,22 @@ final class PXCameraController: UIViewController {
         stillImageOutput.capturePhoto(with: settings, delegate: self)
     }
     
-    func setupLivePreview() {
-        
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        
-        videoPreviewLayer.videoGravity = .resizeAspectFill
-        videoPreviewLayer.connection?.videoOrientation = .portrait
-        previewView.layer.addSublayer(videoPreviewLayer)
-        
-        DispatchQueue.global(qos: .userInitiated).async {[weak self] in
-            self?.captureSession.startRunning()
-            DispatchQueue.main.async {
-                guard let previewBounds = self?.previewView.bounds else {
-                    return
-                }
-                self?.videoPreviewLayer.frame = previewBounds
-            }
+    private func startScanning() {
+        guard AVCaptureDevice.default(for: .video) != nil else { return }
+        if captureSession != nil && captureSession.isRunning == false {
+            captureSession.startRunning()
         }
-        
+    }
+
+    private func stopScanning() {
+        guard AVCaptureDevice.default(for: .video) != nil else { return }
+        if captureSession != nil && captureSession.isRunning == true {
+            captureSession.stopRunning()
+        }
     }
     
     func onError() {
+        self.stopScanning()
         dismiss(animated: false)
         delegate?.onPhotoCaptureCancelled()
     }
@@ -109,7 +152,7 @@ extension PXCameraController: AVCapturePhotoCaptureDelegate {
             return
         }
         delegate?.onPhotoCaptured(image)
-        dismiss(animated: true)
+        dismiss(animated: false)
     }
 }
 
