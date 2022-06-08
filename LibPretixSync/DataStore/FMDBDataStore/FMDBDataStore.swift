@@ -312,16 +312,29 @@ extension FMDBDataStore {
                                                                   for: checkInList, in: queue)
                 let variationPositionsCount = OrderPosition.countOrderPositions(of: item.identifier, variation: variation.identifier,
                                                                                 for: checkInList, in: queue)
-                let variationItem = CheckInListStatus.Item.Variation(value: variation.name.representation(in: Locale.current) ?? "🎟",
+                
+                
+                var variationName = variation.name.representation(in: Locale.current)
+                if variationName == nil {
+                    EventLogger.log(event: "Variation \(variation.identifier) in check-in list \(checkInList.identifier) had no name.", category: .general, level: .warning, type: .info)
+                    variationName = ""
+                }
+                let variationItem = CheckInListStatus.Item.Variation(value: variationName!,
                                                                      identifier: variation.identifier, checkinCount: variationCheckInCount,
                                                                      positionCount: variationPositionsCount)
                 variations.append(variationItem)
             }
 
-            let checkInListStatusItem = CheckInListStatus.Item(name: item.name.representation(in: Locale.current) ?? "🎟",
+            var itemName = item.name.representation(in: Locale.current)
+            if itemName == nil {
+                EventLogger.log(event: "Item \(item.identifier) in check-in list \(checkInList.identifier) had no name.", category: .general, level: .warning, type: .info)
+                itemName = ""
+            }
+            let checkInListStatusItem = CheckInListStatus.Item(name: itemName!,
                                                                identifier: item.identifier, checkinCount: itemCheckInCount,
                                                                admission: false, positionCount: itemPositionsCount,
                                                                variations: variations)
+            
             checkInListStatusItems.append(checkInListStatusItem)
         }
 
