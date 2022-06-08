@@ -314,22 +314,14 @@ extension FMDBDataStore {
                                                                                 for: checkInList, in: queue)
                 
                 
-                var variationName = variation.name.representation(in: Locale.current)
-                if variationName == nil {
-                    EventLogger.log(event: "Variation \(variation.identifier) in check-in list \(checkInList.identifier) had no name.", category: .general, level: .warning, type: .info)
-                    variationName = ""
-                }
+                let variationName = variation.name.representation(in: Locale.current) ?? ""
                 let variationItem = CheckInListStatus.Item.Variation(value: variationName!,
                                                                      identifier: variation.identifier, checkinCount: variationCheckInCount,
                                                                      positionCount: variationPositionsCount)
                 variations.append(variationItem)
             }
 
-            var itemName = item.name.representation(in: Locale.current)
-            if itemName == nil {
-                EventLogger.log(event: "Item \(item.identifier) in check-in list \(checkInList.identifier) had no name.", category: .general, level: .warning, type: .info)
-                itemName = ""
-            }
+            let itemName = item.name.representation(in: Locale.current) ?? ""
             let checkInListStatusItem = CheckInListStatus.Item(name: itemName!,
                                                                identifier: item.identifier, checkinCount: itemCheckInCount,
                                                                admission: false, positionCount: itemPositionsCount,
