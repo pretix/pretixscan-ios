@@ -253,9 +253,9 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             dateFormatter.date(from: "2021-04-19T07:30:00.000Z")!,
         ]
         
-        let checkIns: [QueuedRedemptionRequest] = dates.map({
+        let checkIns: [OrderPositionCheckin] = dates.map({
             .init(redemptionRequest: .init(date: $0, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: "")
-        })
+        }).map({OrderPositionCheckin(from: $0)})
         
         let count = TicketJsonLogicChecker.getEntriesDaysCount(checkIns, calendar: Calendar.current)
         
@@ -270,9 +270,9 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             dateFormatter.date(from: "2021-04-19T07:30:00.000Z")!,
         ]
         
-        let checkIns: [QueuedRedemptionRequest] = dates.map({
+        let checkIns: [OrderPositionCheckin] = dates.map({
             .init(redemptionRequest: .init(date: $0, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: "")
-        })
+        }).map({OrderPositionCheckin(from: $0)})
         
         let count = TicketJsonLogicChecker.getEntriesTodayCount(checkIns, calendar: Calendar.current, today: dateFormatter.date(from: "2022-04-19T16:00:00.000Z")!)
         
@@ -806,6 +806,10 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             if let resp = resource as? QueuedRedemptionRequest {
                 checkIns.append(resp)
             }
+        }
+        
+        func getOrderCheckIns(_ secret: String, type: String) -> Result<[pretixSCAN.OrderPositionCheckin], Error> {
+            return .success([])
         }
     }
 }

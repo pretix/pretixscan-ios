@@ -11,30 +11,36 @@ import SwiftyJSON
 
 extension TicketJsonLogicChecker {
     func getTicketData(_ ticket: TicketData) -> String? {
-        let checkIns = (try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug).get()) ?? []
+        
+        let queuedCheckIns =
+        ((try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug).get()) ?? [])
+            .filter({$0.redemptionRequest.date != nil && $0.redemptionRequest.type == "entry"})
+            .map({OrderPositionCheckin(from: $0)})
+        let orderCheckIns = (try? dataStore?.getOrderCheckIns(ticket.secret, type: "entry", self.event).get()) ?? []
+        
+        logger.debug("raw queuedCheckIns: \(queuedCheckIns.count), raw orderedCheckIns: \(orderCheckIns.count)")
+        let entryCheckIns = queuedCheckIns + orderCheckIns
         
         return JSON([
             "now": dateFormatter.string(from: self.now),
             "now_isoweekday": calendar.dateComponents([.weekday], from: self.now).weekday! - 1, // Weekday starts with 1 on Sunday but server expects Monday = 1 https://developer.apple.com/documentation/foundation/calendar/component/weekday
-            "minutes_since_last_entry": Self.getMinutesSinceLastEntryForCheckInListOrMinus1(checkIns, listId: self.checkInList.identifier, now: self.now),
-            "minutes_since_first_entry": Self.getMinutesSinceFirstEntryForCheckInListOrMinus1(checkIns, listId: self.checkInList.identifier, now: self.now),
+            "minutes_since_last_entry": Self.getMinutesSinceLastEntryForCheckInListOrMinus1(entryCheckIns, listId: self.checkInList.identifier, now: self.now),
+            "minutes_since_first_entry": Self.getMinutesSinceFirstEntryForCheckInListOrMinus1(entryCheckIns, listId: self.checkInList.identifier, now: self.now),
             "product": ticket.item,
             "variation": (ticket.variation ?? 0) > 0 ? "\(ticket.variation!)" : "",
-            "entries_number": checkIns.filter({$0.redemptionRequest.type == "entry"}).count,
-            "entries_today": Self.getEntriesTodayCount(checkIns, calendar: calendar, today: self.now),
-            "entries_days": Self.getEntriesDaysCount(checkIns, calendar: calendar)
+            "entries_number": entryCheckIns.count,
+            "entries_today": Self.getEntriesTodayCount(entryCheckIns, calendar: calendar, today: self.now),
+            "entries_days": Self.getEntriesDaysCount(entryCheckIns, calendar: calendar)
         ]).rawString()
     }
     
-    static func getMinutesSinceFirstEntryForCheckInListOrMinus1(_ checkIns: [QueuedRedemptionRequest], listId: Identifier, now: Date) -> Int {
-        if let lastCheckInDate = checkIns
+    static func getMinutesSinceFirstEntryForCheckInListOrMinus1(_ entryCheckIns: [OrderPositionCheckin], listId: Identifier, now: Date) -> Int {
+        if let lastCheckInDate = entryCheckIns
             .filter({
-                $0.redemptionRequest.date != nil &&
-                $0.checkInListIdentifier == listId &&
-                $0.redemptionRequest.type == "entry"
+                $0.checkInListIdentifier == listId
             })
-            .sorted(by: {(a, b) in a.redemptionRequest.date! < b.redemptionRequest.date!})
-            .first?.redemptionRequest.date {
+                .sorted(by: {(a, b) in a.date < b.date})
+                .first?.date {
             
             return Int((now - lastCheckInDate) / 60)
         }
@@ -42,15 +48,13 @@ extension TicketJsonLogicChecker {
         return -1
     }
     
-    static func getMinutesSinceLastEntryForCheckInListOrMinus1(_ checkIns: [QueuedRedemptionRequest], listId: Identifier, now: Date) -> Int {
-        if let lastCheckInDate = checkIns
+    static func getMinutesSinceLastEntryForCheckInListOrMinus1(_ entryCheckIns: [OrderPositionCheckin], listId: Identifier, now: Date) -> Int {
+        if let lastCheckInDate = entryCheckIns
             .filter({
-                $0.redemptionRequest.date != nil &&
-                $0.checkInListIdentifier == listId &&
-                $0.redemptionRequest.type == "entry"
+                $0.checkInListIdentifier == listId
             })
-            .sorted(by: {(a, b) in a.redemptionRequest.date! < b.redemptionRequest.date!})
-            .last?.redemptionRequest.date {
+                .sorted(by: {(a, b) in a.date < b.date})
+                .last?.date {
             
             return Int((now - lastCheckInDate) / 60)
         }
@@ -58,26 +62,20 @@ extension TicketJsonLogicChecker {
         return -1
     }
     
-    static func getEntriesTodayCount(_ checkIns: [QueuedRedemptionRequest], calendar: Calendar, today: Date) -> Int {
-        checkIns
+    static func getEntriesTodayCount(_ entryCheckIns: [OrderPositionCheckin], calendar: Calendar, today: Date) -> Int {
+        entryCheckIns
             .filter({
-                $0.redemptionRequest.date != nil &&
-                calendar.isDate($0.redemptionRequest.date!, inSameDayAs: today) &&
-                $0.redemptionRequest.type == "entry"
+                calendar.isDate($0.date, inSameDayAs: today)
             })
             .count
     }
     
-    static func getEntriesDaysCount(_ checkIns: [QueuedRedemptionRequest], calendar: Calendar) -> Int {
+    static func getEntriesDaysCount(_ entryCheckIns: [OrderPositionCheckin], calendar: Calendar) -> Int {
         (
             Set(
-                checkIns
-                    .filter({
-                        $0.redemptionRequest.date != nil &&
-                        $0.redemptionRequest.type == "entry"
-                    })
+                entryCheckIns
                     .map({
-                        calendar.dateComponents([.year, .month, .day], from: $0.redemptionRequest.date!)
+                        calendar.dateComponents([.year, .month, .day], from: $0.date)
                     })
             )
         )

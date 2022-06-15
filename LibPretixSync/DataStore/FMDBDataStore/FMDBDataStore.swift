@@ -17,16 +17,16 @@ import FMDB
 /// - Note: See `DataStore` for function level documentation.
 public class FMDBDataStore: DataStore {
     private lazy var uploadDataBaseQueue: FMDatabaseQueue = { return createUploadDataBaseQueue() }()
-
+    
     private var currentDataBaseQueue: FMDatabaseQueue?
     private var currentDataBaseQueueEvent: Event?
-
+    
     // MARK: Metadata
-
+    
     public func destroyDataStoreForUploads() {
         uploadDataBaseQueue.close()
         let fileURL = try! getUploadsFileUrl()!
-
+        
         do {
             try FileManager.default.removeItem(at: fileURL)
         } catch let error {
@@ -34,24 +34,24 @@ public class FMDBDataStore: DataStore {
                 event: "Could not delete Database file: \(error.localizedDescription)",
                 category: .database, level: .warning, type: .error)
         }
-
+        
         // Always recreate
         uploadDataBaseQueue = createUploadDataBaseQueue()
     }
-
+    
     /// Delete all data regarding an event, except queued redemption requests.
     public func destroyDataStore(for event: Event, recreate: Bool) {
         deleteDatabase(for: event)
-
+        
         if recreate {
             // Recreate the database
             _ = databaseQueue(with: event, recreate: true)
         }
-
+        
         // Send out notification
         NotificationCenter.default.post(name: SyncManager.syncStatusResetNotification, object: nil)
     }
-
+    
     /// Remove all Sync Times and pretend nothing was ever synced
     public func invalidateLastSynced(in event: Event) {
         // Drop Sync Times Database
@@ -63,11 +63,11 @@ public class FMDBDataStore: DataStore {
                 EventLogger.log(event: error.localizedDescription, category: .database, level: .fatal, type: .error)
             }
         }
-
+        
         // Send out notification
         NotificationCenter.default.post(name: SyncManager.syncStatusResetNotification, object: nil)
     }
-
+    
     /// Store timestamps of the last syncs
     public func setLastSyncModifiedTime<T>(_ dateString: String, of model: T.Type, in event: Event) where T: Model {
         databaseQueue(with: event).inDatabase { database in
@@ -78,7 +78,7 @@ public class FMDBDataStore: DataStore {
             }
         }
     }
-
+    
     /// Retrieve timestamps of the last syncs
     public func lastSyncTime<T>(of model: T.Type, in event: Event) -> String? where T: Model {
         var lastSyncedAt: String?
@@ -89,10 +89,10 @@ public class FMDBDataStore: DataStore {
                 }
             }
         }
-
+        
         return lastSyncedAt?.count == 0 ? nil : lastSyncedAt
     }
-
+    
     public func setLastSyncCreatedTime<T: Model>(_ dateString: String, of model: T.Type, in event: Event) {
         databaseQueue(with: event).inDatabase { database in
             do {
@@ -102,7 +102,7 @@ public class FMDBDataStore: DataStore {
             }
         }
     }
-
+    
     public func lastSyncCreationTime<T: Model>(of model: T.Type, in event: Event) -> String? {
         var lastSyncedAt: String?
         databaseQueue(with: event).inDatabase { database in
@@ -112,10 +112,10 @@ public class FMDBDataStore: DataStore {
                 }
             }
         }
-
+        
         return lastSyncedAt?.count == 0 ? nil : lastSyncedAt
     }
-
+    
     // MARK: - Storing
     
     public func store<T>(_ resource: T, for event: Event) where T: Model {
@@ -125,37 +125,37 @@ public class FMDBDataStore: DataStore {
     /// Store a list of `Model`s related to an `Event`
     public func store<T>(_ resources: [T], for event: Event) where T: Model {
         let queue = databaseQueue(with: event)
-
+        
         if let items = resources as? [Item] {
             Item.store(items, in: queue)
             return
         }
-
+        
         if let itemCategories = resources as? [ItemCategory] {
             ItemCategory.store(itemCategories, in: queue)
             return
         }
-
+        
         if let subEvents = resources as? [SubEvent] {
             SubEvent.store(subEvents, in: queue)
             return
         }
-
+        
         if let orders = resources as? [Order] {
             Order.store(orders, in: queue)
             return
         }
-
+        
         if let orderPositions = resources as? [OrderPosition] {
             OrderPosition.store(orderPositions, in: queue)
             return
         }
-
+        
         if let queuedRedemptionRequests = resources as? [QueuedRedemptionRequest] {
             QueuedRedemptionRequest.store(queuedRedemptionRequests, in: uploadDataBaseQueue)
             return
         }
-
+        
         if let questions = resources as? [Question] {
             Question.store(questions, in: queue)
             return
@@ -175,7 +175,7 @@ public class FMDBDataStore: DataStore {
             EventValidKey.store(validKeys, eventSlug: event.slug, in: queue)
             return
         }
-
+        
         EventLogger.log(event: "Don't know how to store \(T.humanReadableName)", category: .offlineDownload, level: .warning, type: .fault)
     }
 }
@@ -186,11 +186,11 @@ extension FMDBDataStore {
     public func searchOrderPositions(_ query: String, in event: Event, checkInList: CheckInList,
                                      completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         let queue = databaseQueue(with: event)
-
+        
         DispatchQueue.global().async {
             let queryPlaceholder = "\"%\(query.trimmingCharacters(in: .whitespacesAndNewlines))%\""
             let fullQuery = OrderPosition.searchQuery.replacingOccurrences(of: "?", with: queryPlaceholder)
-
+            
             var searchResults = [OrderPosition]()
             queue.inDatabase { database in
                 if let result = try? database.executeQuery(fullQuery, values: []) {
@@ -201,7 +201,7 @@ extension FMDBDataStore {
                     }
                 }
             }
-
+            
             // Populate with checkIns
             var foundOrderPositions = [OrderPosition]()
             for orderPosition in searchResults {
@@ -211,25 +211,25 @@ extension FMDBDataStore {
                     .adding(order: self.getOrder(by: orderPosition.orderCode, in: event))
                 foundOrderPositions.append(populatedOrderPosition)
             }
-
+            
             // Filter positions without the correct product
             let filteredOrderPositions = foundOrderPositions.filter { orderPosition in
                 if !checkInList.allProducts {
                     return checkInList.limitProducts?.contains(orderPosition.itemIdentifier) == true
                 }
-
+                
                 return true
             }
-
+            
             // Filter positions without the correct sub event
-            .filter { orderPosition in
-                return checkInList.subEvent == nil || orderPosition.subEvent == checkInList.subEvent
-            }
-
+                .filter { orderPosition in
+                    return checkInList.subEvent == nil || orderPosition.subEvent == checkInList.subEvent
+                }
+            
             completionHandler(filteredOrderPositions, nil)
         }
     }
-
+    
     public func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn] {
         var checkIns = [CheckIn]()
         databaseQueue(with: event).inDatabase { database in
@@ -239,7 +239,7 @@ extension FMDBDataStore {
                 }
             }
         }
-
+        
         return checkIns
     }
     
@@ -266,46 +266,46 @@ extension FMDBDataStore {
         }
         return .success(subEvent)
     }
-
+    
     public func getCheckIns(for orderPosition: OrderPosition, in checkInList: CheckInList?, in event: Event) -> [CheckIn] {
         guard let checkInList = checkInList else {
             return []
         }
-
+        
         let checkIns = getCheckIns(for: orderPosition, in: event).filter {
             $0.listID == checkInList.identifier
         }
-
+        
         return checkIns
     }
-
+    
     public func getOrder(by code: String, in event: Event) -> Order? {
         let queue = databaseQueue(with: event)
         return Order.getOrder(by: code, in: queue)
     }
-
+    
     public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event) -> Result<CheckInListStatus, Error> {
         let queue = databaseQueue(with: event)
-
+        
         // Get CheckIn Count
         let checkInCount = CheckIn.countCheckIns(for: checkInList, in: queue)
-
+        
         // Get Positions Count
         let positionsCount = OrderPosition.countOrderPositions(for: checkInList, in: queue)
-
+        
         // Get Items for CheckInList
         let allItems = Item.getAllItems(in: queue)
         var itemsForCheckInList = allItems
         if let limitProducts = checkInList.limitProducts, checkInList.allProducts == false {
             itemsForCheckInList = allItems.filter { return limitProducts.contains($0.identifier) }
         }
-
+        
         // Loop through items
         var checkInListStatusItems = [CheckInListStatus.Item]()
         for item in itemsForCheckInList {
             let itemCheckInCount = CheckIn.countCheckIns(of: item.identifier, for: checkInList, in: queue)
             let itemPositionsCount = OrderPosition.countOrderPositions(of: item.identifier, for: checkInList, in: queue)
-
+            
             var variations = [CheckInListStatus.Item.Variation]()
             for variation in item.variations {
                 let variationCheckInCount = CheckIn.countCheckIns(of: item.identifier, variation: variation.identifier,
@@ -320,7 +320,7 @@ extension FMDBDataStore {
                                                                      positionCount: variationPositionsCount)
                 variations.append(variationItem)
             }
-
+            
             let itemName = item.name.representation(in: Locale.current) ?? ""
             let checkInListStatusItem = CheckInListStatus.Item(name: itemName,
                                                                identifier: item.identifier, checkinCount: itemCheckInCount,
@@ -329,12 +329,12 @@ extension FMDBDataStore {
             
             checkInListStatusItems.append(checkInListStatusItem)
         }
-
+        
         /// The insideCount is not supported in offline mode, https://code.rami.io/pretix/pretixscan-ios/-/issues/69
         let status = CheckInListStatus(checkinCount: checkInCount, positionCount: positionsCount, insideCount: -1, items: checkInListStatusItems)
         return .success(status)
     }
-
+    
 }
 
 // MARK: - Checking In
@@ -345,56 +345,56 @@ extension FMDBDataStore {
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
                        as type: String,
                        in checkInList: CheckInList)
-        -> RedemptionResponse? {
-            let queue = databaseQueue(with: event)
-
-            // Retrieve OrderPosition and its CheckIns
-            guard let tempOrderPosition = OrderPosition.get(secret: secret, in: queue) else {
-                return nil
-            }
-            let checkIns = getCheckIns(for: tempOrderPosition, in: checkInList, in: event)
-            
-            var orderPosition = tempOrderPosition
-                .adding(checkIns: checkIns)
-                .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
-                .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
-                .adding(answers: answers)
-            
-            if event.hasSubEvents, let subEventId = tempOrderPosition.subEvent {
-                let subEvent = try? self.getSubEvent(id: subEventId, for: event).get()
-                orderPosition = orderPosition.adding(subEvent: subEvent)
-            }
-            
-
-            let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
-
-            guard let redemptionResponse = orderPosition.createRedemptionResponse(
-                force: force, ignoreUnpaid: ignoreUnpaid,
-                in: event, in: checkInList, as: type, with: questions, dataStore: self) else { return nil }
-
-            guard redemptionResponse.status == .redeemed else { return redemptionResponse.with(reason: .notRedeemed) }
-
-            // Store a queued redemption request
-            let checkInDate = Date()
-            let redemptionRequest = RedemptionRequest(
-                questionsSupported: true,
-                date: checkInDate, force: true, ignoreUnpaid: ignoreUnpaid,
-                nonce: NonceGenerator.nonce(), answers: answers, type: type)
-            let queuedRedemptionRequest = QueuedRedemptionRequest(
-                redemptionRequest: redemptionRequest,
-                eventSlug: event.slug,
-                checkInListIdentifier: checkInList.identifier,
-                secret: secret)
-
-            QueuedRedemptionRequest.store([queuedRedemptionRequest], in: uploadDataBaseQueue)
-
-            // Save a check in to check the attendee in
-            // This checkin will later be overwritten (or duplicated) by one synced down from the server
-            let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate, type: type)
-            CheckIn.store([checkIn], for: orderPosition, in: queue)
-
-            // return the redeemed request
-            return redemptionResponse.with(reason: .redeemedRequest)
+    -> RedemptionResponse? {
+        let queue = databaseQueue(with: event)
+        
+        // Retrieve OrderPosition and its CheckIns
+        guard let tempOrderPosition = OrderPosition.get(secret: secret, in: queue) else {
+            return nil
+        }
+        let checkIns = getCheckIns(for: tempOrderPosition, in: checkInList, in: event)
+        
+        var orderPosition = tempOrderPosition
+            .adding(checkIns: checkIns)
+            .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
+            .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
+            .adding(answers: answers)
+        
+        if event.hasSubEvents, let subEventId = tempOrderPosition.subEvent {
+            let subEvent = try? self.getSubEvent(id: subEventId, for: event).get()
+            orderPosition = orderPosition.adding(subEvent: subEvent)
+        }
+        
+        
+        let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
+        
+        guard let redemptionResponse = orderPosition.createRedemptionResponse(
+            force: force, ignoreUnpaid: ignoreUnpaid,
+            in: event, in: checkInList, as: type, with: questions, dataStore: self) else { return nil }
+        
+        guard redemptionResponse.status == .redeemed else { return redemptionResponse.with(reason: .notRedeemed) }
+        
+        // Store a queued redemption request
+        let checkInDate = Date()
+        let redemptionRequest = RedemptionRequest(
+            questionsSupported: true,
+            date: checkInDate, force: true, ignoreUnpaid: ignoreUnpaid,
+            nonce: NonceGenerator.nonce(), answers: answers, type: type)
+        let queuedRedemptionRequest = QueuedRedemptionRequest(
+            redemptionRequest: redemptionRequest,
+            eventSlug: event.slug,
+            checkInListIdentifier: checkInList.identifier,
+            secret: secret)
+        
+        QueuedRedemptionRequest.store([queuedRedemptionRequest], in: uploadDataBaseQueue)
+        
+        // Save a check in to check the attendee in
+        // This checkin will later be overwritten (or duplicated) by one synced down from the server
+        let checkIn = CheckIn(listID: checkInList.identifier, date: checkInDate, type: type)
+        CheckIn.store([checkIn], for: orderPosition, in: queue)
+        
+        // return the redeemed request
+        return redemptionResponse.with(reason: .redeemedRequest)
     }
 }
 
@@ -413,16 +413,16 @@ extension FMDBDataStore {
                 }
             }
         }
-
+        
         return redemptionRequest
     }
-
+    
     /// Remove a `QeuedRedemptionRequest` instance from the database
     public func delete(_ queuedRedemptionRequest: QueuedRedemptionRequest) {
         uploadDataBaseQueue.inDatabase { database in
             do {
                 try database.executeUpdate(QueuedRedemptionRequest.deleteOneRequestQuery,
-                    values: [queuedRedemptionRequest.redemptionRequest.nonce])
+                                           values: [queuedRedemptionRequest.redemptionRequest.nonce])
             } catch {
                 EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
@@ -440,7 +440,7 @@ extension FMDBDataStore {
                 }
             }
         }
-
+        
         return (rowId, item)
     }
     
@@ -448,7 +448,7 @@ extension FMDBDataStore {
         uploadDataBaseQueue.inDatabase { database in
             do {
                 try database.executeUpdate(FailedCheckIn.deleteOneQuery,
-                    values: [failedCheckInRowId])
+                                           values: [failedCheckInRowId])
             } catch {
                 EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
             }
@@ -473,17 +473,17 @@ private extension FMDBDataStore {
         let queue = FMDatabaseQueue(url: fileURL)
         
         migrateUploads(queue: queue!)
-
+        
         return queue!
     }
-
+    
     /// Delete the database file
     func deleteDatabase(for event: Event) {
         databaseQueue(with: event).close()
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(event.slug).sqlite")
-
+        
         do {
             try FileManager.default.removeItem(at: fileURL)
         } catch let error {
@@ -491,19 +491,19 @@ private extension FMDBDataStore {
                 event: "Could not delete Database file: \(error.localizedDescription)",
                 category: .database, level: .warning, type: .error)
         }
-
+        
     }
-
+    
     func databaseQueue(with event: Event, recreate: Bool = false) -> FMDatabaseQueue {
         // If we're dealing with the same database as last time, keep it open
         // except in case the caller specifically asked us to recreate the DB.
         if currentDataBaseQueueEvent == event, let queue = currentDataBaseQueue, !recreate {
             return queue
         }
-
+        
         // Otherwise, close it...
         currentDataBaseQueue?.close()
-
+        
         // ... and open a new queue
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -515,13 +515,13 @@ private extension FMDBDataStore {
                 category: .database, level: .warning, type: .error)
             fatalError()
         }
-
+        
         migrate(queue: queue)
-
+        
         // Cache the queue for later usage
         currentDataBaseQueue = queue
         currentDataBaseQueueEvent = event
-
+        
         return queue
     }
 }
@@ -531,7 +531,7 @@ extension FMDBDataStore {
     
     public func getQuestions(for item: Item, in event: Event) -> Result<[Question], Error> {
         var questions = [Question]()
-
+        
         databaseQueue(with: event).inDatabase { database in
             if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: []) {
                 while result.next() {
@@ -541,7 +541,7 @@ extension FMDBDataStore {
                 }
             }
         }
-
+        
         return .success(questions)
     }
     
@@ -552,7 +552,7 @@ extension FMDBDataStore {
     
     public func getValidKeys(for event: Event) -> Result<[EventValidKey], Error> {
         var items = [EventValidKey]()
-
+        
         databaseQueue(with: event).inDatabase { database in
             if let result = try? database.executeQuery(EventValidKey.searchByEventQuery, values: [event.slug]) {
                 while result.next() {
@@ -562,13 +562,13 @@ extension FMDBDataStore {
                 }
             }
         }
-
+        
         return .success(items)
     }
     
     public func getRevokedKeys(for event: Event) -> Result<[RevokedSecret], Error> {
         var items = [RevokedSecret]()
-
+        
         databaseQueue(with: event).inDatabase { database in
             if let result = try? database.executeQuery(RevokedSecret.searchByEventQuery, values: [event.slug]) {
                 while result.next() {
@@ -578,7 +578,7 @@ extension FMDBDataStore {
                 }
             }
         }
-
+        
         return .success(items)
     }
     
@@ -594,7 +594,26 @@ extension FMDBDataStore {
                 }
             }
         }
-
+        
+        return .success(items)
+    }
+    
+    public func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> Result<[OrderPositionCheckin], Error> {
+        var items = [OrderPositionCheckin]()
+        
+        databaseQueue(with: event).inDatabase {database in
+            do {
+                let result = try database.executeQuery(OrderPositionCheckin.searchQuery, values: [secret, type])
+                while result.next() {
+                    if let item = OrderPositionCheckin.from(result: result, in: database) {
+                        items.append(item)
+                    }
+                }
+            } catch {
+                logger.error("Database error: \(error)")
+            }
+        }
+        
         return .success(items)
     }
 }

@@ -124,6 +124,10 @@ class EntryAnswersCheckerTests: XCTestCase {
         func store<T>(_ resource: T, for event: Event) where T : Model {
             
         }
+        
+        func getOrderCheckIns(_ secret: String, type: String) -> Result<[pretixSCAN.OrderPositionCheckin], Error> {
+            return .success([])
+        }
     }
     
     
