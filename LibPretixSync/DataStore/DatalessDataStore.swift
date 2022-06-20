@@ -35,7 +35,7 @@ public protocol DatalessDataStore: AnyObject {
     func getQueuedCheckIns(_ secret: String, eventSlug: String) -> Result<[QueuedRedemptionRequest], Error>
     
     /// Retriesves historical checkins from order data (if available)
-    func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> Result<[OrderPositionCheckin], Error>
+    func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> [OrderPositionCheckin]
     
     /// Retrieve subevents related to an event
     func getSubEvents(for event: Event) -> Result<[SubEvent], Error>

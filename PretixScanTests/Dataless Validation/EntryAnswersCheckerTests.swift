@@ -125,8 +125,8 @@ class EntryAnswersCheckerTests: XCTestCase {
             
         }
         
-        func getOrderCheckIns(_ secret: String, type: String) -> Result<[pretixSCAN.OrderPositionCheckin], Error> {
-            return .success([])
+        func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> [pretixSCAN.OrderPositionCheckin] {
+            return []
         }
     }
     

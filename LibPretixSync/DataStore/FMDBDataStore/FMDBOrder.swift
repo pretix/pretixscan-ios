@@ -50,6 +50,25 @@ extension Order: FMDBModel {
 
         return order
     }
+    
+    static func getOrder(secret: String, in queue: FMDatabaseQueue) -> Order? {
+        var order: Order?
+        queue.inDatabase { database in
+            if let result = try? database.executeQuery("""
+                                                       SELECT * FROM orders WHERE json LIKE '%"secret":"\(secret.replacingOccurrences(of: "/", with: #"\/"#))"%'
+                                                       LIMIT 1
+""", values: []) {
+                while result.next() {
+                    if let foundItem = Order.from(result: result, in: database) {
+                        order = foundItem
+                    }
+                }
+            }
+
+        }
+
+        return order
+    }
 
     static func store(_ records: [Order], in queue: FMDatabaseQueue) {
         for record in records {

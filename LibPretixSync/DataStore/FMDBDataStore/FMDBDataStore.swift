@@ -598,22 +598,11 @@ extension FMDBDataStore {
         return .success(items)
     }
     
-    public func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> Result<[OrderPositionCheckin], Error> {
-        var items = [OrderPositionCheckin]()
-        
-        databaseQueue(with: event).inDatabase {database in
-            do {
-                let result = try database.executeQuery(OrderPositionCheckin.searchQuery, values: [secret, type])
-                while result.next() {
-                    if let item = OrderPositionCheckin.from(result: result, in: database) {
-                        items.append(item)
-                    }
-                }
-            } catch {
-                logger.error("Database error: \(error)")
-            }
+    public func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> [OrderPositionCheckin] {
+        if let order = Order.getOrder(secret: secret, in: databaseQueue(with: event)) {
+            return order.previousCheckIns.filter({$0.checkInType == type})
         }
         
-        return .success(items)
+        return []
     }
 }
