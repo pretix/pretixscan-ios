@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
-
+    
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var shouldAutoSyncCell: UITableViewCell!
     @IBOutlet weak var shouldDownloadOrdersCell: UITableViewCell!
@@ -20,6 +20,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
     @IBOutlet weak var resetContentCell: UITableViewCell!
     @IBOutlet weak var offlineModeCell: SettingsTableViewExplanationCell!
     @IBOutlet weak var playSoundsCell: UITableViewCell!
+    @IBOutlet weak var useCameraCell: UITableViewCell!
+    
     
     @IBOutlet weak var libraryLicenseCell1: UITableViewCell!
     @IBOutlet weak var libraryLicenseCell2: UITableViewCell!
@@ -36,43 +38,46 @@ class SettingsTableViewController: UITableViewController, Configurable {
         title = Localization.SettingsTableViewController.Title
         libraryLicenseCells = [libraryLicenseCell1, libraryLicenseCell2, libraryLicenseCell3, libraryLicenseCell4, libraryLicenseCell5, libraryLicenseCell6, libraryLicenseCell7]
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         scanModeCell.textLabel?.text = Localization.SettingsTableViewController.ScanMode
         scanModeCell.detailTextLabel?.text = configStore?.scanMode == "exit" ? Localization.SettingsTableViewController.Exit : Localization.SettingsTableViewController.Entry
-
+        
         shouldAutoSyncCell.textLabel?.text = Localization.SettingsTableViewController.ShouldAutoSync
         shouldAutoSyncCell.detailTextLabel?.text = configStore?.shouldAutoSync == true ? Icon.enabled : Icon.disabled
         
         shouldDownloadOrdersCell.textLabel?.text = Localization.SettingsTableViewController.DownloadOrders
         shouldDownloadOrdersCell.detailTextLabel?.text = configStore?.shouldDownloadOrders == true ? Icon.enabled : Icon.disabled
-       
+        
         playSoundsCell.textLabel?.text = Localization.SettingsTableViewController.PlaySounds
         playSoundsCell.detailTextLabel?.text = configStore?.shouldPlaySounds == true ? Icon.enabled : Icon.disabled
         
+        useCameraCell.textLabel?.text = Localization.SettingsTableViewController.UseCamera
+        useCameraCell.detailTextLabel?.text = configStore?.useDeviceCamera == true ? Icon.enabled : Icon.disabled
+        
         beginSyncingCell.textLabel?.text = Localization.SettingsTableViewController.BeginSyncing
         forceSyncCell.textLabel?.text = Localization.SettingsTableViewController.ForceSync
-
+        
         versionCell.textLabel?.text = Localization.SettingsTableViewController.Version
         versionCell.detailTextLabel?.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
-
+        
         resetContentCell.textLabel?.text = Localization.SettingsTableViewController.PerformFactoryReset
-
+        
         offlineModeCell.valueLabel?.text = configStore?.asyncModeEnabled == true ?
-            Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
+        Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
         offlineModeCell.titleLabel?.text = Localization.SettingsTableViewController.SyncMode
         offlineModeCell.explanationLabel.text = Localization.SettingsTableViewController.SyncModeExplanation
-
+        
         for (ix, library) in AppPackageLicenses.enumerated() {
             libraryLicenseCells[ix].textLabel?.text = library.name
             libraryLicenseCells[ix].detailTextLabel?.text = NSLocalizedString(library.license, comment: "")
         }
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
         if indexPath == tableView.indexPath(for: shouldAutoSyncCell) {
             toggleShouldAutoSync()
         } else if indexPath == tableView.indexPath(for: scanModeCell) {
@@ -91,11 +96,13 @@ class SettingsTableViewController: UITableViewController, Configurable {
             toggleShouldPlaySounds()
         } else if indexPath == tableView.indexPath(for: shouldDownloadOrdersCell) {
             toggleShouldDownloadOrders()
+        } else if indexPath == tableView.indexPath(for: useCameraCell) {
+            toggleUseDeviceCamera()
         }
-
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionTitles = [
             Localization.SettingsTableViewController.ConfigurationSectionTitle,
@@ -115,10 +122,10 @@ class SettingsTableViewController: UITableViewController, Configurable {
         } else {
             configStore.scanMode = "exit"
         }
-
+        
         scanModeCell.detailTextLabel?.text = configStore.scanMode == "exit" ? Localization.SettingsTableViewController.Exit : Localization.SettingsTableViewController.Entry
     }
-
+    
     func toggleShouldDownloadOrders() {
         guard let configStore = configStore else { return }
         configStore.shouldDownloadOrders.toggle()
@@ -129,33 +136,39 @@ class SettingsTableViewController: UITableViewController, Configurable {
         guard let configStore = configStore else { return }
         let previousValue = configStore.shouldAutoSync
         configStore.shouldAutoSync = !previousValue
-
+        
         shouldAutoSyncCell.detailTextLabel?.text = configStore.shouldAutoSync == true ? Icon.enabled : Icon.disabled
-
+        
         configStore.syncManager.beginSyncingIfAutoSync()
     }
-
+    
     func toggleShouldPlaySounds() {
         configStore?.shouldPlaySounds.toggle()
         playSoundsCell.detailTextLabel?.text = configStore?.shouldPlaySounds == true ? Icon.enabled : Icon.disabled
     }
     
+    func toggleUseDeviceCamera() {
+        configStore?.useDeviceCamera.toggle()
+        useCameraCell.detailTextLabel?.text = configStore?.useDeviceCamera == true ? Icon.enabled : Icon.disabled
+        configStore?.valueChanged(.useDeviceCamera)
+    }
+    
     func beginSyncing() {
         configStore?.syncManager.beginSyncing()
     }
-
+    
     func forceSync() {
         configStore?.syncManager.forceSync()
     }
-
+    
     func toggleOfflineMode() {
         if let configStore = configStore {
             configStore.asyncModeEnabled = !(configStore.asyncModeEnabled)
             offlineModeCell.valueLabel?.text = configStore.asyncModeEnabled ?
-                Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
+            Localization.SettingsTableViewController.SyncModeOffline : Localization.SettingsTableViewController.SyncModeOnline
         }
     }
-
+    
     func configStoreFactoryReset() {
         let alert = UIAlertController(
             title: Localization.SettingsTableViewController.PerformFactoryReset,
@@ -168,7 +181,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
         }))
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     func showLicense(for packageIx: Int) {
         let license = AppPackageLicenses[packageIx]
         guard let url = URL(string: license.url) else {
@@ -186,11 +199,11 @@ class SettingsTableViewController: UITableViewController, Configurable {
     func showSwiftMessagesLicense() {
         UIApplication.shared.open(URL(string: "https://github.com/SwiftKickMobile/SwiftMessages/blob/master/LICENSE.md")!, options: [:])
     }
-
+    
     func showFMDBLicense() {
         UIApplication.shared.open(URL(string: "https://github.com/ccgus/fmdb/blob/master/LICENSE.txt")!, options: [:])
     }
-
+    
     func showTinkKeyChainLicense() {
         UIApplication.shared.open(URL(string: "https://github.com/tink-ab/Keychain/blob/master/LICENSE")!, options: [:])
     }

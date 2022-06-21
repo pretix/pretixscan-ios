@@ -8,6 +8,7 @@
 
 import AVFoundation
 import UIKit
+import Combine
 
 /// Generic ViewController Superclass to scan barcodes and QR codes.
 ///
@@ -21,13 +22,15 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     /// If `true`, scanning will be active
     var shouldScan = false {
         didSet {
-            if shouldScan {
+            if shouldScan && canUseCamera {
                 startScanning()
             } else {
                 stopScanning()
             }
         }
     }
+    
+    var canUseCamera = true
 
     private var lastFoundAt: Date = Date.distantPast
 
@@ -38,7 +41,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     private var metadataOutput: AVCaptureMetadataOutput = AVCaptureMetadataOutput()
 
     private var tapGestureRecognizer: UITapGestureRecognizer?
-
+    private var anyCancellables = Set<AnyCancellable>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,6 +85,15 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         // Tap Gestures
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleFlash))
         view.addGestureRecognizer(tapGestureRecognizer!)
+        
+        NotificationCenter.default
+            .publisher(for: Notification.Name("ConfigStoreChanged"))
+            .throttle(for: 1, scheduler: DispatchQueue.global(qos: .userInitiated), latest: true)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: {[weak self] notification in
+                self?.onConfigStoreChanged(notification)
+            })
+            .store(in: &anyCancellables)
     }
 
     func failed() {
@@ -192,5 +205,20 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+    
+    func onConfigStoreChanged(_ notification: Notification) {
+        guard let value = notification.userInfo?["value"] as? ConfigStoreValue, let configStore = notification.object as? ConfigStore else {
+            return
+        }
+        if [.useDeviceCamera].contains(value) {
+            if configStore.useDeviceCamera == true {
+                canUseCamera = true
+                shouldScan = true
+            } else {
+                canUseCamera = false
+                shouldScan = false
+            }
+        }
     }
 }

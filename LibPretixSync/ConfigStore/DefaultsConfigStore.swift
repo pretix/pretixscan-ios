@@ -33,6 +33,7 @@ public class DefaultsConfigStore: ConfigStore {
         case asyncModeEnabled
         case scanMode
         case shouldPlaySounds
+        case useDeviceCamera
         case shouldDownloadOrders
         case shouldAutoSync
         case publishedSoftwareVersion
@@ -220,6 +221,12 @@ public class DefaultsConfigStore: ConfigStore {
         }
     }
     
+    public var useDeviceCamera: Bool = false {
+        didSet {
+            save(useDeviceCamera, forKey: .useDeviceCamera)
+        }
+    }
+    
     public var shouldDownloadOrders: Bool = false {
         didSet {
             save(shouldDownloadOrders, forKey: .shouldDownloadOrders)
@@ -304,18 +311,19 @@ public class DefaultsConfigStore: ConfigStore {
         _enableSearch = true
         shouldPlaySounds = true
         shouldDownloadOrders = true
-
+        useDeviceCamera = true
+        
         saveToDefaults()
         NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
+    }
+    
+    public func valueChanged(_ value: ConfigStoreValue? = nil) {
+        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
+        saveToDefaults()
     }
 }
 
 private extension DefaultsConfigStore {
-    private func valueChanged(_ value: ConfigStoreValue? = nil) {
-        NotificationCenter.default.post(name: changedNotification, object: self, userInfo: ["value": value as Any])
-        saveToDefaults()
-    }
-    
     private func purgeAllSettings() {
         for key in Keys.allCases {
             defaults.removeObject(forKey: key.rawValue)
@@ -326,6 +334,7 @@ private extension DefaultsConfigStore {
     private func registerInitialValues() {
         defaults.register(defaults: [
             Keys.shouldPlaySounds.rawValue: true,
+            Keys.useDeviceCamera.rawValue: true,
             Keys.shouldDownloadOrders.rawValue: true,
             Keys.scanMode.rawValue: "entry",
             Keys.asyncModeEnabled.rawValue: false])
@@ -343,6 +352,7 @@ private extension DefaultsConfigStore {
         _scanMode = defaults.string(forKey: key(.scanMode)) ?? "entry"
         _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))
         shouldPlaySounds = defaults.bool(forKey: key(.shouldPlaySounds))
+        useDeviceCamera = defaults.bool(forKey: key(.useDeviceCamera))
         shouldDownloadOrders = defaults.bool(forKey: key(.shouldDownloadOrders))
         _publishedVersion = defaults.string(forKey: key(.publishedSoftwareVersion))
         _enableSearch = defaults.value(forKey: key(.enableSearch)) as? Bool ?? true

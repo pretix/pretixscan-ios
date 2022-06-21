@@ -55,6 +55,9 @@ public protocol ConfigStore: AnyObject {
     
     /// If `true`, the app feedback generator generates audible notifications
     var shouldPlaySounds: Bool { get set }
+    
+    /// If `true`, the app uses the camera to scan for QR-Codes
+    var useDeviceCamera: Bool { get set }
 
     /// Entry or exit
     var scanMode: String { get set }
@@ -95,6 +98,8 @@ public protocol ConfigStore: AnyObject {
     func set(event: Event, checkInList: CheckInList)
     
     func applySecurityDefaults()
+    
+    func valueChanged(_ value: ConfigStoreValue?)
 }
 
 extension ConfigStore {
@@ -132,4 +137,7 @@ public enum ConfigStoreValue: String {
     case shouldPlaySounds
     
     case shouldDownloadOrders
+    
+    /// Indicates if the device should use the camera to scan for QR-codes
+    case useDeviceCamera
 }
