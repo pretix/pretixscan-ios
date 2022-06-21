@@ -15,6 +15,8 @@ class ValidateTicketViewController: UIViewController {
     private var ticketScannerViewController: TicketScannerViewController!
     private var anyCancellables = Set<AnyCancellable>()
     
+    private var keyboardBuffer: String = ""
+    
     var configStore: ConfigStore {
         guard let configStore = (UIApplication.shared.delegate as? AppDelegate)?.configStore else {
             fatalError("Could not get ConfigStore from AppDelegate")
@@ -140,6 +142,7 @@ extension ValidateTicketViewController {
         }
         resultsController.appCoordinator = self
         searchController = UISearchController(searchResultsController: resultsController )
+        searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = resultsController
         searchController.searchBar.placeholder = Localization.ValidateTicketViewController.SearchPlaceHolder
         navigationItem.searchController = searchController
@@ -182,5 +185,43 @@ extension ValidateTicketViewController {
         } else {
             self.title = Bundle.main.infoDictionary!["CFBundleDisplayName"] as? String
         }
+    }
+}
+
+// MARK: - UIKeyInput
+let keyboardHiderView = UIView()
+extension ValidateTicketViewController: UIKeyInput {
+    override var canBecomeFirstResponder: Bool { true }
+    var hasText: Bool { false }
+    
+    override var inputView: UIView? {
+        return keyboardHiderView
+    }
+
+    func insertText(_ text: String) {
+        print("Keyboard character received: \(text)")
+        if text == "\n" {
+            let code = self.keyboardBuffer
+            self.keyboardBuffer = ""
+            print("Redeeming ticket from keyboard: \(code)")
+            self.redeem(secret: code, force: false, ignoreUnpaid: false)
+        } else {
+            self.keyboardBuffer.append(text)
+        }
+    }
+
+    func deleteBackward() {
+        // do nothing
+    }
+}
+
+// After using the search bar, the ValidateTicketViewController should become the first responder in order to handle scanner events
+extension ValidateTicketViewController: UISearchBarDelegate {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.becomeFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.becomeFirstResponder()
     }
 }
