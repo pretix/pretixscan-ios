@@ -260,8 +260,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         customView.addSubview(label)
         
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: customView.safeAreaLayoutGuide.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: customView.safeAreaLayoutGuide.trailingAnchor),
+            label.leadingAnchor.constraint(equalTo: customView.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            label.trailingAnchor.constraint(equalTo: customView.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             label.centerYAnchor.constraint(equalTo: customView.centerYAnchor),
         ])
         

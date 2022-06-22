@@ -352,7 +352,7 @@ private extension DefaultsConfigStore {
         _scanMode = defaults.string(forKey: key(.scanMode)) ?? "entry"
         _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))
         shouldPlaySounds = defaults.bool(forKey: key(.shouldPlaySounds))
-        useDeviceCamera = defaults.bool(forKey: key(.useDeviceCamera))
+        useDeviceCamera = defaults.value(forKey: key(.useDeviceCamera)) as? Bool ?? true
         shouldDownloadOrders = defaults.bool(forKey: key(.shouldDownloadOrders))
         _publishedVersion = defaults.string(forKey: key(.publishedSoftwareVersion))
         _enableSearch = defaults.value(forKey: key(.enableSearch)) as? Bool ?? true
