@@ -138,6 +138,9 @@
 "Use device camera" = "Use device camera";
 
 /* No comment provided by engineer. */
+"ConnectExternalDevice" = "Please press the hardware scan buttons of your device to scan";
+
+/* No comment provided by engineer. */
 "Download Orders" = "Download Orders";
 
 /* No comment provided by engineer. */

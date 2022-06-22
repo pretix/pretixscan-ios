@@ -102,6 +102,7 @@ struct Localization {
         static let ScanMode = NSLocalizedString("Scan mode", comment: "")
         static let PlaySounds = NSLocalizedString("Play sounds", comment: "")
         static let UseCamera = NSLocalizedString("Use device camera", comment: "")
+        static let ConnectExternalDevice = NSLocalizedString("ConnectExternalDevice", comment: "")
         static let Exit = NSLocalizedString("Exit", comment: "")
         static let Entry = NSLocalizedString("Entry", comment: "")
         static let BeginSyncing = NSLocalizedString("Sync Now", comment: "")
