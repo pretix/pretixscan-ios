@@ -9,11 +9,7 @@
 import UIKit
 
 class SearchResultTableViewCell: UITableViewCell {
-    var orderPosition: OrderPosition? { didSet { configure() }}
-    var checkInList: CheckInList? { didSet { configure() }}
-    var event: Event? { didSet { configure() }}
-    weak var dataStore: DataStore? = nil
-
+    var searchResult: SearchResult? { didSet { configure() }}
     @IBOutlet private weak var orderCodeLabel: UILabel!
     @IBOutlet private weak var orderIDLabel: UILabel!
     @IBOutlet private weak var ticketType: UILabel!
@@ -23,9 +19,7 @@ class SearchResultTableViewCell: UITableViewCell {
 
     private func configure() {
         guard
-            let event = event,
-            let checkInList = checkInList,
-            let orderPosition = orderPosition
+            let searchResult = searchResult
         else {
             orderCodeLabel.text = "--"
             ticketType.text = nil
@@ -34,36 +28,31 @@ class SearchResultTableViewCell: UITableViewCell {
             return
         }
 
-        orderCodeLabel.text = "\(orderPosition.attendeeName ?? "--")"
-        orderIDLabel.text = orderPosition.orderCode
-        ticketType.text = orderPosition.item?.name.representation(in: Locale.current) ?? "\(orderPosition.itemIdentifier)"
+        orderCodeLabel.text = "\(searchResult.orderCode ?? "--")"
+        orderIDLabel.text = searchResult.positionId != nil ? "\(searchResult.positionId!)" : ""
+        ticketType.text = searchResult.ticket ?? "--"
 
-        if let variationName = orderPosition.calculatedVariation?.name.representation(in: Locale.current) {
-            ticketType.text = (ticketType.text ?? "") + " – \(variationName)"
+        if let variation = searchResult.variation {
+            ticketType.text = (ticketType.text ?? "") + " – \(variation)"
         }
 
-        secretLabel.text = orderPosition.secret
-
-        guard let redemptionResponse = orderPosition.createRedemptionResponse(force: false, ignoreUnpaid: false,
-                                                                              in: event, in: checkInList, dataStore: dataStore) else {
-            statusBackgroundView.backgroundColor = PXColor.error
-            statusLabel.text = Localization.TicketStatusViewController.InvalidTicket
-            return
-        }
-
-        if redemptionResponse.status == .redeemed {
-            statusBackgroundView.backgroundColor = PXColor.okay
-            statusLabel.text = Localization.TicketStatusViewController.ValidTicket
-        } else if redemptionResponse.errorReason == .alreadyRedeemed {
+        secretLabel.text = searchResult.secret ?? "--"
+        
+        if searchResult.isRedeemed {
             statusBackgroundView.backgroundColor = PXColor.warning
-            statusLabel.text = Localization.TicketStatusViewController.TicketAlreadyRedeemed
-        } else if redemptionResponse.errorReason == .unpaid && checkInList.includePending {
-            statusBackgroundView.backgroundColor = PXColor.okay
-            statusLabel.text = redemptionResponse.errorReason?.localizedDescription()
+            statusLabel.text = Localization.TicketStatusViewController.Redeemed
         } else {
-            statusBackgroundView.backgroundColor = PXColor.error
-            statusLabel.text = redemptionResponse.errorReason?.localizedDescription()
+            switch searchResult.status! {
+            case .paid:
+                statusBackgroundView.backgroundColor = PXColor.okay
+                statusLabel.text = Localization.TicketStatusViewController.Valid
+            case .cancelled:
+                statusBackgroundView.backgroundColor = PXColor.error
+                statusLabel.text = Localization.TicketStatusViewController.CanceledTicket
+            case .pending:
+                statusBackgroundView.backgroundColor = PXColor.error
+                statusLabel.text = Localization.TicketStatusViewController.UnpaidTicket
+            }
         }
-
     }
 }

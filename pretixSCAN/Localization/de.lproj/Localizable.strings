@@ -131,8 +131,12 @@
 "Currently Attending" = "Aktuell Anwesend";
 /* Ticket is Unpaid */
 "Unpaid" = "Unbezahlt";
+"Redeemed" = "Eingelöst";
 "Valid" = "Gültig";
 "Valid Ticket" = "Gültiges Ticket";
+/* No comment provided by engineer. */
+"Canceled" = "Storniert";
+
 "Valid Ticket, but needs attention" = "Gültiges Ticket, erfordert Aufmerksamkeit";
 "Welcome" = "Willkommen";
 "You are forbidden from accessing this resource" = "Sie dürfen auf diese Ressource nicht zugreifen";

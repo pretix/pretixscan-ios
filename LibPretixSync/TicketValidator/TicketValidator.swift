@@ -32,7 +32,7 @@ public protocol TicketValidator {
 
     // MARK: - Search
     /// Search all OrderPositions within a CheckInList
-    func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void)
+    func search(query: String, _ locale: Locale) async throws -> [SearchResult]
 
     // MARK: - Redemption
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList

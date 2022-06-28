@@ -15,7 +15,7 @@ class SearchResultsTableViewController: UITableViewController {
     // MARK: - Private Properties
     @IBOutlet private var searchHeaderView: SearchHeaderView!
     private var numberOfSearches = 0
-    private var results = [OrderPosition]()
+    private var results = [SearchResult]()
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -41,10 +41,7 @@ class SearchResultsTableViewController: UITableViewController {
             return UITableViewCell()
         }
         let result = results[indexPath.row]
-        cell.orderPosition = result
-        cell.event = appCoordinator?.getConfigStore().event
-        cell.checkInList = appCoordinator?.getConfigStore().checkInList
-        cell.dataStore = appCoordinator?.getConfigStore().dataStore
+        cell.searchResult = result
         return cell
     }
     
@@ -54,7 +51,9 @@ class SearchResultsTableViewController: UITableViewController {
         }
         let result = results[indexPath.row]
         dismiss(animated: true, completion: nil)
-        appCoordinator?.redeem(secret: result.secret, force: false, ignoreUnpaid: false)
+        if let secret = result.secret  {
+            appCoordinator?.redeem(secret: secret, force: false, ignoreUnpaid: false)
+        }
     }
 }
 
@@ -72,22 +71,28 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
         let nextSearchNumber = numberOfSearches + 1
         
         searchHeaderView.status = .loading
-        deferredSearch(query: searchText) { (orders, error) in
-            DispatchQueue.main.async {
-                // Protect against old slow searches overwriting new fast searches
-                guard nextSearchNumber > self.numberOfSearches else { return }
-                
-                // Update Results
-                self.presentErrorAlert(ifError: error)
-                self.results = orders ?? []
-                self.tableView.reloadData()
-                self.searchHeaderView.status = .searchCompleted(results: self.results.count)
-            }
+        deferredSearch(query: searchText) { (results, error) in
+            // Protect against old slow searches overwriting new fast searches
+            guard nextSearchNumber > self.numberOfSearches else { return }
+            
+            // Update Results
+            self.presentErrorAlert(ifError: error)
+            self.results = results ?? []
+            self.tableView.reloadData()
+            self.searchHeaderView.status = .searchCompleted(results: self.results.count)
         }
     }
     
-    func deferredSearch(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        appCoordinator?.getConfigStore().ticketValidator?.search(query: query, completionHandler: completionHandler)
+    func deferredSearch(query: String, completionHandler: @MainActor @escaping ([SearchResult]?, Error?) -> Void) {
+        let locale = Locale.current
+        Task {
+            do {
+                let results = try await appCoordinator?.getConfigStore().ticketValidator?.search(query: query, locale)
+                completionHandler(results, nil)
+            } catch {
+                completionHandler(nil, error)
+            }
+        }
     }
 }
 

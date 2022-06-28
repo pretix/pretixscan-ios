@@ -297,7 +297,13 @@
 "Valid" = "Valid";
 
 /* No comment provided by engineer. */
+"Redeemed" = "Redeemed";
+
+/* No comment provided by engineer. */
 "Valid Ticket" = "Valid Ticket";
+
+/* No comment provided by engineer. */
+"Canceled" = "Canceled";
 
 /* No comment provided by engineer. */
 "Valid Ticket, but needs attention" = "Valid Ticket, but needs attention";

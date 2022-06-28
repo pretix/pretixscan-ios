@@ -54,13 +54,17 @@ public class OnlineTicketValidator: TicketValidator {
     }
     
     /// Searches for all order positions within the currently selected Event and CheckIn List
-    public func search(query: String, event: Event, _ locale: Locale = Locale.current) async throws -> [SearchResult] {
+    public func search(query: String, _ locale: Locale = Locale.current) async throws -> [SearchResult] {
         let orderPositions = try await searchOrderPositions(query: query)
+        let event = self.configStore.event
+        guard let event = event else {
+            throw APIError.notConfigured(message: "No Event is set")
+        }
         
         return orderPositions.map({ op in
             let item = self.configStore.dataStore?.getItem(by: op.itemIdentifier, in: event)
             var sr = SearchResult()
-            sr.ticket = item?.internalName
+            sr.ticket = item?.name.representation(in: locale)
             if let variationId = op.variation {
                 sr.variation = item?.variations.first(where: {$0.identifier == variationId})?.name.representation(in: locale)
             }
@@ -70,9 +74,10 @@ public class OnlineTicketValidator: TicketValidator {
             sr.positionId = op.positionid
             sr.secret = op.secret
             sr.isRedeemed = op.checkins.count > 0
-            if op.orderStatus == .paid {
+            let orderStatus = op.orderStatus ?? op.order?.status
+            if orderStatus == .paid {
                 sr.status = .paid
-            } else if op.orderStatus == .pending {
+            } else if orderStatus == .pending {
                 sr.status = .pending
             } else {
                 sr.status = .cancelled
@@ -96,31 +101,6 @@ public class OnlineTicketValidator: TicketValidator {
                     }
                 }
             }
-        }
-    }
-
-    /// Search all OrderPositions within a CheckInList
-    public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        configStore.apiClient?.getSearchResults(query: query) { orderPositions, error in
-            guard let orderPositions = orderPositions else {
-                completionHandler(nil, error)
-                return
-            }
-
-            var enhancedOrderPositions = [OrderPosition]()
-            for orderPosition in orderPositions {
-                if let event =  self.configStore.event,
-                    let item = self.configStore.dataStore?.getItem(by: orderPosition.itemIdentifier, in: event) {
-                    enhancedOrderPositions.append(
-                        orderPosition.adding(item: item)
-                            .adding(order: self.configStore.dataStore?.getOrder(by: orderPosition.orderCode, in: event))
-                    )
-                } else {
-                    enhancedOrderPositions.append(orderPosition)
-                }
-
-            }
-            completionHandler(enhancedOrderPositions, error)
         }
     }
 

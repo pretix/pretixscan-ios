@@ -16,7 +16,7 @@ extension TicketJsonLogicChecker {
         ((try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug).get()) ?? [])
             .filter({$0.redemptionRequest.date != nil && $0.redemptionRequest.type == "entry"})
             .map({OrderPositionCheckin(from: $0)})
-        let orderCheckIns = (try? dataStore?.getOrderCheckIns(ticket.secret, type: "entry", self.event)) ?? []
+        let orderCheckIns = dataStore?.getOrderCheckIns(ticket.secret, type: "entry", self.event) ?? []
         
         logger.debug("raw queuedCheckIns: \(queuedCheckIns.count), raw orderedCheckIns: \(orderCheckIns.count)")
         let entryCheckIns = queuedCheckIns + orderCheckIns

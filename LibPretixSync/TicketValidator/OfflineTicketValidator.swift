@@ -74,17 +74,65 @@ public class OfflineTicketValidator: TicketValidator {
     }
     
     /// Searches for all order positions within the currently selected Event and CheckIn List
-    public func search(query: String, event: Event, _ locale: Locale = Locale.current) async throws -> [SearchResult] {
-
+    public func search(query: String, _ locale: Locale = Locale.current) async throws -> [SearchResult] {
+        let event = self.configStore.event
+        let checkInList = self.configStore.checkInList
+        guard let event = event, let checkInList = checkInList else {
+            throw APIError.notConfigured(message: "No Event is set")
+        }
+        
+        let orderPositions = try await searchOrderPositions(query: query, event: event, checkInList: checkInList)
+        
+        return orderPositions.map({ op in
+            var sr = SearchResult()
+            sr.ticket = op.item?.name.representation(in: locale)
+            if let variationId = op.variation {
+                sr.variation = op.item?.variations.first(where: {$0.identifier == variationId})?.name.representation(in: locale)
+            }
+            sr.attendeeName = op.attendeeName
+            sr.seat = op.seat?.name
+            sr.orderCode = op.orderCode
+            sr.positionId = op.positionid
+            sr.secret = op.secret
+            
+            let checkins = getQueuedAndKnownCheckIns(secret: op.secret, event: event, order: op.order)
+            sr.isRedeemed = !checkins.isEmpty
+            let orderStatus = op.orderStatus ?? op.order?.status
+            if orderStatus == .paid {
+                sr.status = .paid
+            } else if orderStatus == .pending {
+                sr.status = .pending
+            } else {
+                sr.status = .cancelled
+            }
+            sr.isRequireAttention = op.order?.checkInAttention ?? false
+            return sr
+        })
     }
     
-    /// Search all OrderPositions within a CheckInList
-    public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
-        guard let event = configStore.event, let checkInList = configStore.checkInList else {
-            completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
-            return
+    /// Searches for all order positions within the currently selected Event and CheckIn List
+    func searchOrderPositions(query: String, event: Event, checkInList: CheckInList) async throws -> [OrderPosition] {
+        try await withCheckedThrowingContinuation { continuation in
+            configStore.dataStore?.searchOrderPositions(query, in: event, checkInList: checkInList, completionHandler: { orderPositions, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    if let results = orderPositions {
+                        continuation.resume(returning: results)
+                    } else {
+                        continuation.resume(throwing: APIError.emptyResponse)
+                    }
+                }
+            })
         }
-        configStore.dataStore?.searchOrderPositions(query, in: event, checkInList: checkInList, completionHandler: completionHandler)
+    }
+    
+    func getQueuedAndKnownCheckIns(secret: String, event: Event, order: Order?) -> [OrderPositionCheckin] {
+        let queuedCheckIns =
+        ((try? configStore.dataStore?.getQueuedCheckIns(secret, eventSlug: event.slug).get()) ?? []).map({OrderPositionCheckin(from: $0)})
+        let orderCheckIns = order?.previousCheckIns ?? []
+        
+        return queuedCheckIns + orderCheckIns
     }
     
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList

@@ -17,7 +17,11 @@ struct Localization {
     }
 
     struct TicketStatusViewController {
+        static let CanceledTicket = NSLocalizedString("Canceled", comment: "")
+        static let UnpaidTicket = NSLocalizedString("Unpaid", comment: "")
         static let ValidTicket = NSLocalizedString("Valid Ticket", comment: "")
+        static let Valid = NSLocalizedString("Valid", comment: "")
+        static let Redeemed = NSLocalizedString("Redeemed", comment: "")
         static let ValidExit = NSLocalizedString("Exit stored", comment: "")
         static let TicketAlreadyRedeemed = NSLocalizedString("Ticket Already Used", comment: "")
         static let InvalidTicket = NSLocalizedString("Invalid Ticket", comment: "")
