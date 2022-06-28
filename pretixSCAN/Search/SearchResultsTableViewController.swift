@@ -90,3 +90,23 @@ extension SearchResultsTableViewController: UISearchResultsUpdating {
         appCoordinator?.getConfigStore().ticketValidator?.search(query: query, completionHandler: completionHandler)
     }
 }
+
+public enum SearchResultStatus: Hashable, Equatable, Codable {
+    case paid
+    case cancelled
+    case pending
+}
+
+public struct SearchResult: Hashable, Equatable, Codable {
+    public var secret: String? = nil
+    public var ticket: String? = nil
+    public var variation: String? = nil
+    public var attendeeName: String? = nil
+    public var seat: String? = nil
+    public var orderCode: String? = nil
+    public var positionId: Identifier? = nil
+    public var addonText: String? = nil
+    public var status: SearchResultStatus? = nil
+    public var isRedeemed = false
+    public var isRequireAttention = false
+}

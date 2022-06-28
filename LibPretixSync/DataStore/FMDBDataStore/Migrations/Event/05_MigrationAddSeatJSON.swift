@@ -10,7 +10,6 @@ import Foundation
 import FMDB
 
 
-/// Migrate DB OrderPosition Version 2 to Version 3
 final class MigrationAddSeatJSON: FMDatabaseMigration {
     var fromVersion: UInt32 = 4
     var toVersion: UInt32 = 5

@@ -107,7 +107,7 @@ extension OrderPosition: FMDBModel {
         let orderPosition = OrderPosition(
             identifier: identifier, orderCode: order, orderStatus: nil, order: nil, positionid: positionid, itemIdentifier: item, item: nil,
             variation: variation, price: price, attendeeName: attendee_name, attendeeEmail: attendee_email, secret: secret!,
-            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [], answers: answers, seat: Seat(seat_id, seat_name, seat_guid))
+            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [], answers: answers, seat: Seat(seat_id, seat_name, seat_guid), requiresAttention: nil)
         return orderPosition
     }
 
@@ -223,21 +223,21 @@ extension OrderPosition: FMDBModel {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns, answers: answers, seat: self.seat)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention)
     }
 
     func adding(item: Item?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention)
     }
 
     func adding(order: Order?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention)
     }
     
     func adding(subEvent: SubEvent?) -> OrderPosition {
@@ -259,6 +259,6 @@ extension OrderPosition: FMDBModel {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: mergedAnswers.values.map { $0 }, seat: self.seat)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: mergedAnswers.values.map { $0 }, seat: self.seat, requiresAttention: self.requiresAttention)
     }
 }

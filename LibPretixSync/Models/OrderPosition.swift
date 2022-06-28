@@ -71,6 +71,7 @@ public struct OrderPosition: Model {
     /// The assigned seat. Can be null.
     public let seat: Seat?
     
+    public let requiresAttention: Bool?
 
     /// Ticket has already been used
     public var isRedeemed: Bool {
@@ -98,6 +99,7 @@ public struct OrderPosition: Model {
         case checkins
         case answers
         case seat
+        case requiresAttention = "require_attention"
     }
 
     public func adding(order: Order) -> OrderPosition {
@@ -106,9 +108,9 @@ public struct OrderPosition: Model {
             orderCode: self.orderCode,  orderStatus: order.status, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
             item: self.item, variation: self.variation, price: self.price, attendeeName: self.attendeeName,
             attendeeEmail: self.attendeeEmail, secret: self.secret, subEvent: self.subEvent,
-            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat)
+            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat, requiresAttention: self.requiresAttention)
     }
-
+    
     /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.
     ///
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s

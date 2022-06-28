@@ -52,6 +52,52 @@ public class OnlineTicketValidator: TicketValidator {
             completionHandler(resultQuestions, nil)
         }
     }
+    
+    /// Searches for all order positions within the currently selected Event and CheckIn List
+    public func search(query: String, event: Event, _ locale: Locale = Locale.current) async throws -> [SearchResult] {
+        let orderPositions = try await searchOrderPositions(query: query)
+        
+        return orderPositions.map({ op in
+            let item = self.configStore.dataStore?.getItem(by: op.itemIdentifier, in: event)
+            var sr = SearchResult()
+            sr.ticket = item?.internalName
+            if let variationId = op.variation {
+                sr.variation = item?.variations.first(where: {$0.identifier == variationId})?.name.representation(in: locale)
+            }
+            sr.attendeeName = op.attendeeName
+            sr.seat = op.seat?.name
+            sr.orderCode = op.orderCode
+            sr.positionId = op.positionid
+            sr.secret = op.secret
+            sr.isRedeemed = op.checkins.count > 0
+            if op.orderStatus == .paid {
+                sr.status = .paid
+            } else if op.orderStatus == .pending {
+                sr.status = .pending
+            } else {
+                sr.status = .cancelled
+            }
+            sr.isRequireAttention = op.requiresAttention ?? false
+            return sr
+        })
+    }
+    
+    /// Searches for all order positions within the currently selected Event and CheckIn List
+    func searchOrderPositions(query: String) async throws -> [OrderPosition] {
+        try await withCheckedThrowingContinuation { continuation in
+            configStore.apiClient?.getSearchResults(query: query) { orderPositions, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    if let results = orderPositions {
+                        continuation.resume(returning: results)
+                    } else {
+                        continuation.resume(throwing: APIError.emptyResponse)
+                    }
+                }
+            }
+        }
+    }
 
     /// Search all OrderPositions within a CheckInList
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {

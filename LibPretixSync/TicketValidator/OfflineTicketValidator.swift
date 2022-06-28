@@ -73,6 +73,11 @@ public class OfflineTicketValidator: TicketValidator {
         }
     }
     
+    /// Searches for all order positions within the currently selected Event and CheckIn List
+    public func search(query: String, event: Event, _ locale: Locale = Locale.current) async throws -> [SearchResult] {
+
+    }
+    
     /// Search all OrderPositions within a CheckInList
     public func search(query: String, completionHandler: @escaping ([OrderPosition]?, Error?) -> Void) {
         guard let event = configStore.event, let checkInList = configStore.checkInList else {
