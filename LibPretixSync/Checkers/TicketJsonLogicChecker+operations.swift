@@ -83,15 +83,15 @@ extension TicketJsonLogicChecker {
                 guard arguments.count >= 2,
                       case let .String(dateString) = arguments[1],
                       let date = self.dateFormatter.date(from: dateString) else {
-                    logger.warning("🚧 buildTime custom: invalid or missing date value")
+                    logger.warning("🚧 buildTime custom: invalid time format")
                     return JSON.Null
                 }
                 return JSON(self.dateFormatter.string(from: date))
             case "customtime":
                 guard arguments.count >= 2,
                       case let .String(timeString) = arguments[1],
-                      let time = self.timeFormatter.date(from: timeString) else {
-                    logger.warning("🚧 buildTime custom: invalid or missing time value")
+                      let time = self.timeFormatters.compactMap({$0.date(from: timeString)}).first else {
+                    logger.warning("🚧 buildTime customtime: invalid time format")
                     return JSON.Null
                 }
                 let timeComponents = self.calendar.dateComponents([.hour, .minute], from: time)

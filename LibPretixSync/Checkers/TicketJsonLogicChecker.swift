@@ -18,7 +18,7 @@ final class TicketJsonLogicChecker {
     let dateFormatter: DateFormatter
     
     /// The date formatter used to serialize and deserialize timestamps in JSON
-    let timeFormatter: DateFormatter
+    let timeFormatters: [DateFormatter]
     
     /// The date the checker uses as a reference to "now" when validating ticket rules
     let now: Date
@@ -37,7 +37,7 @@ final class TicketJsonLogicChecker {
         self.checkInList = list
         self.dataStore = dataStore
         self.dateFormatter = Self.createDateFormatter(timeZone: event.timezone)
-        self.timeFormatter = Self.createTimeFormatter(timeZone: event.timezone)
+        self.timeFormatters = Self.createTimeFormatters(timeZone: event.timezone)
         self.calendar = Self.createCalendar(timeZone: event.timezone)
     }
     
@@ -80,13 +80,15 @@ final class TicketJsonLogicChecker {
     }
     
     static let DateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    static let TimeFormat: String = "HH:mm"
+    static let TimeFormats: [String] = ["HH:mm", "HH:mm:ss"]
     
-    private static func createTimeFormatter(timeZone: String) -> DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = TicketJsonLogicChecker.TimeFormat
-        formatter.timeZone = TimeZone(identifier: timeZone)!
-        return formatter
+    private static func createTimeFormatters(timeZone: String) -> [DateFormatter] {
+        return TicketJsonLogicChecker.TimeFormats.map({format in
+            let formatter = DateFormatter()
+            formatter.dateFormat = format
+            formatter.timeZone = TimeZone(identifier: timeZone)!
+            return formatter
+        })
     }
     
     private static func createDateFormatter(timeZone: String) -> DateFormatter {

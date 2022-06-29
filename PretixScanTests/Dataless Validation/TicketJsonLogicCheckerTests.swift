@@ -38,6 +38,23 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         XCTAssertEqual(list.rules?.rawString(), "{\n  \"and\" : [\n    false,\n    true\n  ]\n}")
     }
     
+    func testRuleFromBugReport() {
+        let rules = """
+{"or" : [{"inList" : [{"var" : "product"},{"objectList" : [{"lookup" : ["product","174","Ausstellerausweis"]}]}]},{"isAfter" : [{"var" : "now"},{"buildTime" : ["customtime","07:00:00"]}]}]}
+"""
+        let now = dateFormatter.date(from: "2022-06-27T13:00:27.522+0100")!
+        
+        let list = getListWith(rules: JSON(rules))
+        let ds = mockDataStore([])
+        let sut = TicketJsonLogicChecker(list: list, dataStore: ds, event: mockEvent(), date: now)
+        
+        switch sut.redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
     
     func testCheckerFailsSimpleRules() {
         let list = getListWith(rules: JSON(["and": [false, true]]))

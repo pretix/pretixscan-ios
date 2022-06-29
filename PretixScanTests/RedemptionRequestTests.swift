@@ -68,14 +68,8 @@ class RedemptionRequestTests: XCTestCase {
     func testEncodingExampleNoQuestions() {
         XCTAssertNoThrow(try jsonEncoder.encode(exampleObjectNoQuestions))
         let encodedInstance = try? jsonEncoder.encode(exampleObjectNoQuestions)
-        XCTAssertEqual(encodedInstance, exampleJSONNoQuestions)
+        XCTAssertNotNil(encodedInstance)
+        let decoded = try! jsonDecoder.decode(RedemptionRequest.self, from: encodedInstance!)
+        XCTAssertEqual(exampleObjectNoQuestions, decoded)
     }
-
-// Include once Questions are supported
-//
-//    func testParsingExample() {
-//        XCTAssertNoThrow(try jsonDecoder.decode(RedemptionRequest.self, from: exampleJSON))
-//        let parsedInstance = try? jsonDecoder.decode(RedemptionRequest.self, from: exampleJSON)
-//        XCTAssertEqual(parsedInstance, exampleObject)
-//    }
 }
