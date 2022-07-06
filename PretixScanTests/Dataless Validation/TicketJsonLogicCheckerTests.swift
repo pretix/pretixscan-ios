@@ -529,6 +529,21 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         
     }
     
+    func testBuildTimeDateToFallsBackOnDateFrom() {
+        let rules = """
+{ "isBefore": [{ "var": "now" }, { "buildTime": ["date_to"] }, 10] }
+"""
+        let now = dateFormatter.date(from: "2020-01-01T14:05:00.000Z")!
+        // mock event dateTo = null, dateFrom = 2020-01-01T14:00:00Z
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent("event1-datetonull"), date: now).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+        
+    }
+    
     func testCheckerFailsCheckinBeforeDateToTollerance() {
         let rules = """
 { "isBefore": [{ "var": "now" }, { "buildTime": ["date_to"] }, 10] }
@@ -769,7 +784,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         return MockDataStore(keys: mockEvent().validKeys!.pems, revoked: [], questions: [], items: mockItems, checkIns: checkIns)
     }
     
-    func mockTicket(_ item: Identifier = 1, variation: Identifier = 2, subEvent: Identifier = 4) -> TicketJsonLogicChecker.TicketData {
+    func mockTicket(_ item: Identifier = 1, variation: Identifier? = 2, subEvent: Identifier = 4) -> TicketJsonLogicChecker.TicketData {
         TicketJsonLogicChecker.TicketData(secret: "1234", eventSlug: mockEvent().slug, item: item, variation: variation)
     }
     
