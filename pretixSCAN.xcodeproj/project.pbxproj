@@ -53,6 +53,7 @@
 		B571B7772809352800861383 /* TicketJsonLogicChecker+operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571B7762809352800861383 /* TicketJsonLogicChecker+operations.swift */; };
 		B57291E12804043B009969E1 /* TicketJsonLogicCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */; };
 		B57511A12807EE22008EE595 /* TicketJsonLogicChecker+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57511A02807EE22008EE595 /* TicketJsonLogicChecker+data.swift */; };
+		B5798D3428755452006EF8E0 /* event1-datetonull.json in Resources */ = {isa = PBXBuildFile; fileRef = B5798D3328755452006EF8E0 /* event1-datetonull.json */; };
 		B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8467C6225CF5280013F647 /* TypeAliases.swift */; };
 		B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57FF6D326C66EBE001B9005 /* DelayOperation.swift */; };
 		B5823C1927311C9600479A73 /* DatalessTicketValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5823C1827311C9600479A73 /* DatalessTicketValidatorTests.swift */; };
@@ -300,6 +301,7 @@
 		B571B7762809352800861383 /* TicketJsonLogicChecker+operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TicketJsonLogicChecker+operations.swift"; sourceTree = "<group>"; };
 		B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicCheckerTests.swift; sourceTree = "<group>"; };
 		B57511A02807EE22008EE595 /* TicketJsonLogicChecker+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TicketJsonLogicChecker+data.swift"; sourceTree = "<group>"; };
+		B5798D3328755452006EF8E0 /* event1-datetonull.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "event1-datetonull.json"; sourceTree = "<group>"; };
 		B57FF6D326C66EBE001B9005 /* DelayOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayOperation.swift; sourceTree = "<group>"; };
 		B5823C1827311C9600479A73 /* DatalessTicketValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatalessTicketValidatorTests.swift; sourceTree = "<group>"; };
 		B5823C1A273123CC00479A73 /* list5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list5.json; sourceTree = "<group>"; };
@@ -630,6 +632,7 @@
 				B553421B272BF8AF003008AD /* question3.json */,
 				B5823C1E27313F8A00479A73 /* question4.json */,
 				B5F52FE628112FBA008F5D5A /* subevent1.json */,
+				B5798D3328755452006EF8E0 /* event1-datetonull.json */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -1197,6 +1200,7 @@
 				B5EFD44727CDEC1C00DACCA6 /* imageJPEG.jpg in Resources */,
 				B5823C1F27313F8A00479A73 /* question4.json in Resources */,
 				B5BD3E472715D4B0003FEB74 /* event1.json in Resources */,
+				B5798D3428755452006EF8E0 /* event1-datetonull.json in Resources */,
 				B5823C1B273123CC00479A73 /* list5.json in Resources */,
 				B5F6F1E4272AB35000F702BE /* item1.json in Resources */,
 				B5534220272BF8AF003008AD /* question1.json in Resources */,

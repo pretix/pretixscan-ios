@@ -114,7 +114,7 @@ extension TicketJsonLogicChecker {
                 }
                 return JSON(self.dateFormatter.string(from: value))
             case "date_to":
-                guard let value = self.getSubEventOrEventDateTo() else {
+                guard let value = self.getSubEventOrEventDateTo() ?? self.getSubEventOrEventDateFrom() else {
                     logger.warning("🚧 buildTime date_to: event has no date_to")
                     return JSON.Null
                 }
