@@ -360,6 +360,9 @@ extension FMDBDataStore {
         
         var tempOrderPosition = tickets[0]
         
+        let parentTicket = tempOrderPosition
+            .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
+        
         if checkInList.addonMatch {
             var candidates = [tempOrderPosition]
             candidates
@@ -387,14 +390,13 @@ extension FMDBDataStore {
             tempOrderPosition = candidates[0]
         }
         
-        
-        
         let checkIns = getCheckIns(for: tempOrderPosition, in: checkInList, in: event)
         
         var orderPosition = tempOrderPosition
             .adding(checkIns: checkIns)
             .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
             .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
+            .adding(parentTicket: parentTicket)
             .adding(answers: answers)
         
         if event.hasSubEvents, let subEventId = tempOrderPosition.subEvent {

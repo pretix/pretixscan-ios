@@ -45,10 +45,10 @@ public struct OrderPosition: Model {
     public let price: Money
 
     /// Specified attendee name for this position
-    public let attendeeName: String?
+    public var attendeeName: String?
 
     /// Specified attendee email address for this position
-    public let attendeeEmail: String?
+    public var attendeeEmail: String?
 
     /// Secret code printed on the tickets for validation
     public let secret: String
