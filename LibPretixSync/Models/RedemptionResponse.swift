@@ -122,6 +122,12 @@ extension RedemptionResponse {
         RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
     }
     
+    static func redeemed(with orderPosition: OrderPosition) -> Self {
+        var response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
+        response.position = orderPosition
+        return response
+    }
+    
     static func redeemed(_ item: Item) -> Self {
         var response = Self.redeemed
         response.checkInAttention = item.checkInAttention

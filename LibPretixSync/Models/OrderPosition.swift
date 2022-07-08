@@ -199,6 +199,6 @@ public struct OrderPosition: Model {
         }
 
         // Return a positive redemption response
-        return RedemptionResponse.redeemed
+        return RedemptionResponse.redeemed(with: self)
     }
 }
