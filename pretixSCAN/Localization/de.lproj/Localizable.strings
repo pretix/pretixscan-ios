@@ -137,6 +137,9 @@
 /* No comment provided by engineer. */
 "Canceled" = "Storniert";
 
+/* No comment provided by engineer. */
+"Ambiguous" = "Ticket-Code auf Liste nicht eindeutig";
+
 "Valid Ticket, but needs attention" = "Gültiges Ticket, erfordert Aufmerksamkeit";
 "Welcome" = "Willkommen";
 "You are forbidden from accessing this resource" = "Sie dürfen auf diese Ressource nicht zugreifen";

@@ -306,6 +306,9 @@
 "Canceled" = "Canceled";
 
 /* No comment provided by engineer. */
+"Ambiguous" = "Ticket code is ambiguous on list";
+
+/* No comment provided by engineer. */
 "Valid Ticket, but needs attention" = "Valid Ticket, but needs attention";
 
 /* No comment provided by engineer. */
