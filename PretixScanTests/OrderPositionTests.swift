@@ -61,7 +61,7 @@ class OrderPositionTests: XCTestCase {
                       dateFrom: Date(), dateTo: Date(), dateAdmission: Date(), hasSubEvents: false, validKeys: nil, timezone: Calendar.current.timeZone.identifier)
     let checkInList = CheckInList(identifier: 1, name: "TestCheckInList", allProducts: true,
                                   limitProducts: nil, subEvent: nil, positionCount: 1,
-                                  checkinCount: 0, includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false)
+                                  checkinCount: 0, includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false, addonMatch: false)
 
     func testParsingAll() {
         XCTAssertNoThrow(try jsonDecoder.decode(OrderPosition.self, from: exampleJSON))
@@ -94,7 +94,7 @@ class OrderPositionTests: XCTestCase {
         let checkInListWithSubEvent = CheckInList(
             identifier: 1, name: "TestCheckInList", allProducts: true,
             limitProducts: nil, subEvent: 1, positionCount: 1,
-            checkinCount: 0, includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false)
+            checkinCount: 0, includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false, addonMatch: false)
         let eventWithSubEvents = Event(
             name: MultiLingualString.english("Test Event"),
             slug: "testevent",
@@ -117,7 +117,7 @@ class OrderPositionTests: XCTestCase {
             subEvent: nil,
             positionCount: 1,
             checkinCount: 0,
-            includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false)
+            includePending: false, allowEntryAfterExit: false, allowMultipleEntries: false, addonMatch: false)
 
         let errorResponse = RedemptionResponse(
             status: .error,
@@ -195,7 +195,7 @@ class OrderPositionTests: XCTestCase {
             subEvent: nil,
             positionCount: 1,
             checkinCount: 0,
-            includePending: true, allowEntryAfterExit: false, allowMultipleEntries: true)
+            includePending: true, allowEntryAfterExit: false, allowMultipleEntries: true, addonMatch: false)
 
         let unpaidOrder = Order.stubOrder(code: "ABC", status: .pending, secret: "ABC")
         let unpaidOrderPosition = exampleObject.adding(order: unpaidOrder)

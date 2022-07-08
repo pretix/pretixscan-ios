@@ -69,7 +69,7 @@ public struct CheckInList: Model {
     
     public var rules: JSON? = nil
     
-    public var addonMatch: Bool? = nil
+    public var addonMatch: Bool
 }
 
 extension CheckInList: Equatable {
@@ -102,6 +102,6 @@ extension CheckInList {
         let container = try decoder.singleValueContainer()
         let meta = try container.decode([String:JSON].self)
         self.rules = meta["rules"]
-        self.addonMatch = try values.decodeIfPresent(Bool.self, forKey: .addonMatch)
+        self.addonMatch = try values.decodeIfPresent(Bool.self, forKey: .addonMatch) ?? false
     }
 }
