@@ -82,6 +82,9 @@ public struct OrderPosition: Model {
         guard let variationIdentifier = variation else { return nil }
         return item?.variations.filter({ $0.identifier == variationIdentifier }).first
     }
+    
+    /// Internal ID of the position this position is an add-on for (or null)
+    public var addonTo: Identifier?
 
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
@@ -100,6 +103,7 @@ public struct OrderPosition: Model {
         case answers
         case seat
         case requiresAttention = "require_attention"
+        case addonTo = "addon_to"
     }
 
     public func adding(order: Order) -> OrderPosition {
@@ -108,7 +112,7 @@ public struct OrderPosition: Model {
             orderCode: self.orderCode,  orderStatus: order.status, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
             item: self.item, variation: self.variation, price: self.price, attendeeName: self.attendeeName,
             attendeeEmail: self.attendeeEmail, secret: self.secret, subEvent: self.subEvent,
-            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat, requiresAttention: self.requiresAttention)
+            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo)
     }
     
     /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.
