@@ -270,7 +270,7 @@ extension OrderPosition: FMDBModel {
     func adding(parentTicket: OrderPosition) -> OrderPosition {
         var copy = self
         copy.attendeeName = copy.attendeeName ?? parentTicket.attendeeName
-        copy.attendeeEmail = copy.attendeeName ?? parentTicket.attendeeEmail
+        copy.attendeeEmail = copy.attendeeEmail ?? parentTicket.attendeeEmail
         var item = copy.item ?? parentTicket.item
         item?.description = copy.item?.description ?? parentTicket.item?.description
         item?.name = copy.item?.name ?? parentTicket.item?.name ?? .init()
