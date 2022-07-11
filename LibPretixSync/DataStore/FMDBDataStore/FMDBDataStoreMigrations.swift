@@ -86,7 +86,8 @@ private let migrations: [FMDatabaseMigration] = [
     MigrationAddEntryType(),
     MigrationAddSeatJSON(),
     MigrationAddRevokedSecret(),
-    MigrationAddEventValidKeys()
+    MigrationAddEventValidKeys(),
+    MigrationAddAddOnToOrderPosition()
 ]
 
 /// List of upload Migrations. Don't forget to add new migrations to this list.

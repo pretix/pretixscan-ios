@@ -17,7 +17,7 @@ public struct Item: Model {
     public let identifier: Identifier
 
     /// The item’s visible name
-    public let name: MultiLingualString
+    public var name: MultiLingualString
 
     /// An optional name that is only used in the backend
     public let internalName: String?
@@ -32,7 +32,7 @@ public struct Item: Model {
     public let active: Bool
 
     /// A public description of the item. May contain Markdown syntax
-    public let description: MultiLingualString?
+    public var description: MultiLingualString?
 
     /// If true, customers can change the price at which they buy the product
     ///

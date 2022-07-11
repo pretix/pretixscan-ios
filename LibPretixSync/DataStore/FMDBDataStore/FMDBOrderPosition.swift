@@ -98,6 +98,7 @@ extension OrderPosition: FMDBModel {
         let seat_id = result.nullableInt(forColumn: "seat_id")
         let seat_name = result.string(forColumn: "seat_name")
         let seat_guid = result.string(forColumn: "seat_guid")
+        let addOntoId = result.nullableInt(forColumn: "addon_to")
 
         var answers: [Answer] = []
         if let jsonData = answersJSON?.data(using: .utf8) {
@@ -107,7 +108,7 @@ extension OrderPosition: FMDBModel {
         let orderPosition = OrderPosition(
             identifier: identifier, orderCode: order, orderStatus: nil, order: nil, positionid: positionid, itemIdentifier: item, item: nil,
             variation: variation, price: price, attendeeName: attendee_name, attendeeEmail: attendee_email, secret: secret!,
-            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [], answers: answers, seat: Seat(seat_id, seat_name, seat_guid), requiresAttention: nil)
+            subEvent: subevent, pseudonymizationId: pseudonymization_id, checkins: [], answers: answers, seat: Seat(seat_id, seat_name, seat_guid), requiresAttention: nil, addonTo: addOntoId)
         return orderPosition
     }
 
@@ -127,6 +128,26 @@ extension OrderPosition: FMDBModel {
         }
 
         return orderPosition
+    }
+    
+    static func getAll(secret: String, in queue: FMDatabaseQueue) -> [OrderPosition] {
+        var results = [OrderPosition]()
+
+        queue.inDatabase { database in
+            do {
+                let result = try database.executeQuery(getBySecretQuery, values: [secret])
+                while result.next() {
+                    if let itemFromResult = OrderPosition.from(result: result) {
+                        results.append(itemFromResult)
+                    }
+                }
+
+            } catch {
+                EventLogger.log(event: "\(error.localizedDescription)", category: .database, level: .fatal, type: .error)
+            }
+        }
+
+        return results
     }
 
     static func store(_ records: [OrderPosition], in queue: FMDatabaseQueue) {
@@ -223,26 +244,39 @@ extension OrderPosition: FMDBModel {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: newCheckIns, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo)
     }
 
     func adding(item: Item?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo)
     }
 
     func adding(order: Order?) -> OrderPosition {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo)
     }
     
     func adding(subEvent: SubEvent?) -> OrderPosition {
         var copy = self
         copy.extraSubEvent = subEvent
+        return copy
+    }
+    
+    func adding(parentTicket: OrderPosition) -> OrderPosition {
+        var copy = self
+        
+        if copy.attendeeName.isBlank {
+            copy.attendeeName = parentTicket.attendeeName
+        }
+        
+        if copy.attendeeEmail.isBlank {
+            copy.attendeeEmail = parentTicket.attendeeEmail
+        }
         return copy
     }
 
@@ -259,6 +293,13 @@ extension OrderPosition: FMDBModel {
         return OrderPosition(
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
-            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: mergedAnswers.values.map { $0 }, seat: self.seat, requiresAttention: self.requiresAttention)
+            subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: mergedAnswers.values.map { $0 }, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo)
+    }
+}
+
+private extension Optional where Wrapped == String {
+    /// Returns `true` if the string value is nil or empty
+    var isBlank: Bool {
+        return self?.isEmpty ?? true
     }
 }

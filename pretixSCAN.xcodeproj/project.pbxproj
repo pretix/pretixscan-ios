@@ -41,6 +41,7 @@
 		B525796427292250006D9EE9 /* EventsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525796327292250006D9EE9 /* EventsDownloader.swift */; };
 		B52579662729225D006D9EE9 /* CheckInListsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */; };
 		B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525796727292269006D9EE9 /* QuestionsDownloader.swift */; };
+		B52E2F4D287823A300BD6588 /* 09_MigrationAddAddOnToOrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59017B52878203500FE0125 /* 09_MigrationAddAddOnToOrderPosition.swift */; };
 		B530F79C27CA97ED001F5232 /* PXTemporaryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */; };
 		B553421A272BF81A003008AD /* EntryAnswersCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */; };
 		B553421E272BF8AF003008AD /* question3.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421B272BF8AF003008AD /* question3.json */; };
@@ -67,6 +68,9 @@
 		B58CF84226F3302800FADA2A /* exit.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83F26F32BFA00FADA2A /* exit.m4a */; };
 		B58CF84326F3302800FADA2A /* enter.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83D26F32BFA00FADA2A /* enter.m4a */; };
 		B58CF84426F3302800FADA2A /* beep.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B58CF83C26F32BFA00FADA2A /* beep.m4a */; };
+		B59017B02878030300FE0125 /* list7.json in Resources */ = {isa = PBXBuildFile; fileRef = B59017AF2878030300FE0125 /* list7.json */; };
+		B59017B32878052600FE0125 /* list9.json in Resources */ = {isa = PBXBuildFile; fileRef = B59017B12878052600FE0125 /* list9.json */; };
+		B59017B42878052600FE0125 /* list8.json in Resources */ = {isa = PBXBuildFile; fileRef = B59017B22878052600FE0125 /* list8.json */; };
 		B5956BCE285A0B65002D34EC /* OrderPositionCheckin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */; };
 		B5AF40B627DF4C5C001576DD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5AF40B527DF4C5C001576DD /* Camera.storyboard */; };
 		B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF40B727DF4D17001576DD /* PXCameraController.swift */; };
@@ -314,6 +318,10 @@
 		B58CF83D26F32BFA00FADA2A /* enter.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = enter.m4a; sourceTree = "<group>"; };
 		B58CF83E26F32BFA00FADA2A /* error.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = error.m4a; sourceTree = "<group>"; };
 		B58CF83F26F32BFA00FADA2A /* exit.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = exit.m4a; sourceTree = "<group>"; };
+		B59017AF2878030300FE0125 /* list7.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = list7.json; sourceTree = "<group>"; };
+		B59017B12878052600FE0125 /* list9.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list9.json; sourceTree = "<group>"; };
+		B59017B22878052600FE0125 /* list8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list8.json; sourceTree = "<group>"; };
+		B59017B52878203500FE0125 /* 09_MigrationAddAddOnToOrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 09_MigrationAddAddOnToOrderPosition.swift; sourceTree = "<group>"; };
 		B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPositionCheckin.swift; sourceTree = "<group>"; };
 		B5AF40B527DF4C5C001576DD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		B5AF40B727DF4D17001576DD /* PXCameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraController.swift; sourceTree = "<group>"; };
@@ -614,6 +622,8 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B59017B22878052600FE0125 /* list8.json */,
+				B59017B12878052600FE0125 /* list9.json */,
 				B5B990A626EB50160029D614 /* errorRules.json */,
 				B5F52FE728112FBA008F5D5A /* event1-se.json */,
 				B5BD3E462715D4B0003FEB74 /* event1.json */,
@@ -633,6 +643,7 @@
 				B5823C1E27313F8A00479A73 /* question4.json */,
 				B5F52FE628112FBA008F5D5A /* subevent1.json */,
 				B5798D3328755452006EF8E0 /* event1-datetonull.json */,
+				B59017AF2878030300FE0125 /* list7.json */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -683,6 +694,7 @@
 				B5FA77962705BE61000E1644 /* 05_MigrationAddSeatJSON.swift */,
 				B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */,
 				B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */,
+				B59017B52878203500FE0125 /* 09_MigrationAddAddOnToOrderPosition.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -1196,10 +1208,12 @@
 				B553421E272BF8AF003008AD /* question3.json in Resources */,
 				B5F52FE828112FBA008F5D5A /* subevent1.json in Resources */,
 				B5F52FE928112FBA008F5D5A /* event1-se.json in Resources */,
+				B59017B02878030300FE0125 /* list7.json in Resources */,
 				B5EFD44627CDEC1C00DACCA6 /* imagePNG.png in Resources */,
 				B5EFD44727CDEC1C00DACCA6 /* imageJPEG.jpg in Resources */,
 				B5823C1F27313F8A00479A73 /* question4.json in Resources */,
 				B5BD3E472715D4B0003FEB74 /* event1.json in Resources */,
+				B59017B42878052600FE0125 /* list8.json in Resources */,
 				B5798D3428755452006EF8E0 /* event1-datetonull.json in Resources */,
 				B5823C1B273123CC00479A73 /* list5.json in Resources */,
 				B5F6F1E4272AB35000F702BE /* item1.json in Resources */,
@@ -1207,6 +1221,7 @@
 				B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */,
 				B5823C1D27312D0300479A73 /* list6.json in Resources */,
 				B5B990A726EB50160029D614 /* errorRules.json in Resources */,
+				B59017B32878052600FE0125 /* list9.json in Resources */,
 				B5F6F1E5272AB35000F702BE /* item2.json in Resources */,
 				B50945B728054E8900E8AFC0 /* list2-rules.json in Resources */,
 				B5F6F1DF272AAF4700F702BE /* list1.json in Resources */,
@@ -1386,6 +1401,7 @@
 				0803991926B1A6A80075BB3C /* TicketValidationReason.swift in Sources */,
 				DC17F23A2302B9800044764A /* FileUploadQuestionCell.swift in Sources */,
 				B5251DDA26F8887100E10253 /* CheckInStatusLargerOverviewCell.swift in Sources */,
+				B52E2F4D287823A300BD6588 /* 09_MigrationAddAddOnToOrderPosition.swift in Sources */,
 				DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */,
 				B5257958272921FB006D9EE9 /* ItemCategoriesDownloader.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,

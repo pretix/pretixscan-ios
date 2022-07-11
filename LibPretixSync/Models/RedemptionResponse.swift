@@ -80,6 +80,8 @@ public struct RedemptionResponse: Codable, Equatable {
         
         /// The ticket signature or event reference is not correct
         case invalid
+        
+        case ambiguous
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -120,6 +122,12 @@ extension RedemptionResponse {
         RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
     }
     
+    static func redeemed(with orderPosition: OrderPosition) -> Self {
+        var response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
+        response.position = orderPosition
+        return response
+    }
+    
     static func redeemed(_ item: Item) -> Self {
         var response = Self.redeemed
         response.checkInAttention = item.checkInAttention
@@ -140,6 +148,10 @@ extension RedemptionResponse {
     
     static var rules: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .rules, questions: nil)
+    }
+    
+    static var ambiguous: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .ambiguous, questions: nil)
     }
     
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {

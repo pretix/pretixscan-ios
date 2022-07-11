@@ -135,6 +135,9 @@ extension FailedCheckIn {
                 case .invalid:
                     self =  FailedCheckIn(.invalid, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
+                case .ambiguous:
+                    self =  FailedCheckIn(.ambiguous, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    return
                 }
             } else {
                 EventLogger.log(event: "FailedCheckIn with no error reason", category: .configuration, level: .warning, type: .info)
@@ -161,4 +164,5 @@ enum FailedCheckInErrorReason: String, Hashable, CaseIterable, Codable {
     case incomplete
     case alreadyRedeemed = "already_redeemed"
     case error
+    case ambiguous
 }

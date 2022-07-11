@@ -1,0 +1,14 @@
+{
+  "id": 4,
+  "name": "Add-on match with all products",
+  "all_products": true,
+  "limit_products": [],
+  "subevent": null,
+  "checkin_count": 24,
+  "position_count": 49180,
+  "include_pending": true,
+  "allow_multiple_entries": false,
+  "allow_entry_after_exit": false,
+  "rules": {},
+  "addon_match": true
+}

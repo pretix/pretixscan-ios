@@ -123,7 +123,9 @@ final class PXCameraController: UIViewController {
     private func startScanning() {
         guard AVCaptureDevice.default(for: .video) != nil else { return }
         if captureSession != nil && captureSession.isRunning == false {
-            captureSession.startRunning()
+            DispatchQueue.global(qos: .userInitiated).async {[weak self] in
+                self?.captureSession?.startRunning()
+            }
         }
     }
 

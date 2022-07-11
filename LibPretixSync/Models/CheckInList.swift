@@ -64,9 +64,12 @@ public struct CheckInList: Model {
         case allowEntryAfterExit = "allow_entry_after_exit"
         case allowMultipleEntries = "allow_multiple_entries"
         case rules
+        case addonMatch = "addon_match"
     }
     
     public var rules: JSON? = nil
+    
+    public var addonMatch: Bool
 }
 
 extension CheckInList: Equatable {
@@ -99,5 +102,6 @@ extension CheckInList {
         let container = try decoder.singleValueContainer()
         let meta = try container.decode([String:JSON].self)
         self.rules = meta["rules"]
+        self.addonMatch = try values.decodeIfPresent(Bool.self, forKey: .addonMatch) ?? false
     }
 }

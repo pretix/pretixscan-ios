@@ -349,15 +349,54 @@ extension FMDBDataStore {
         let queue = databaseQueue(with: event)
         
         // Retrieve OrderPosition and its CheckIns
-        guard let tempOrderPosition = OrderPosition.get(secret: secret, in: queue) else {
+        let tickets = OrderPosition.getAll(secret: secret, in: queue)
+        if tickets.isEmpty {
             return nil
         }
+        
+        if tickets.count > 1 {
+            return RedemptionResponse.ambiguous
+        }
+        
+        var tempOrderPosition = tickets[0]
+        
+        let parentTicket = tempOrderPosition
+            .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
+        
+        if checkInList.addonMatch {
+            var candidates = [tempOrderPosition]
+            candidates
+                .append(contentsOf:
+                            (getOrder(by: tempOrderPosition.orderCode, in: event)?.positions ?? []).filter({$0.addonTo == tempOrderPosition.identifier})
+                )
+            
+            logger.debug("Addon matching with \(candidates.count) candidate tickets.")
+            
+            if !checkInList.allProducts, let itemIds = checkInList.limitProducts {
+                candidates = candidates.filter({candidate in itemIds.contains(candidate.itemIdentifier)
+                })
+            }
+            
+            logger.debug("Filtered to \(candidates.count) candidate tickets.")
+            
+            if candidates.isEmpty {
+                return RedemptionResponse.product
+            }
+            
+            if candidates.count > 1 {
+                return RedemptionResponse.ambiguous
+            }
+            
+            tempOrderPosition = candidates[0]
+        }
+        
         let checkIns = getCheckIns(for: tempOrderPosition, in: checkInList, in: event)
         
         var orderPosition = tempOrderPosition
             .adding(checkIns: checkIns)
             .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
             .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
+            .adding(parentTicket: parentTicket)
             .adding(answers: answers)
         
         if event.hasSubEvents, let subEventId = tempOrderPosition.subEvent {
