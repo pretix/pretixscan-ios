@@ -1648,7 +1648,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 6U994M44MG;
 				INFOPLIST_FILE = PretixScan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -1656,7 +1656,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.14.0;
+				MARKETING_VERSION = 1.15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.pretixscan.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1669,7 +1669,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = 6U994M44MG;
 				INFOPLIST_FILE = PretixScan/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
@@ -1677,7 +1677,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.14.0;
+				MARKETING_VERSION = 1.15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = eu.pretix.pretixscan.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
