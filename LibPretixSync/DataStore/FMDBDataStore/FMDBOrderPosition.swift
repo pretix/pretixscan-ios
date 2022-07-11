@@ -269,12 +269,14 @@ extension OrderPosition: FMDBModel {
     
     func adding(parentTicket: OrderPosition) -> OrderPosition {
         var copy = self
-        copy.attendeeName = copy.attendeeName ?? parentTicket.attendeeName
-        copy.attendeeEmail = copy.attendeeEmail ?? parentTicket.attendeeEmail
-        var item = copy.item ?? parentTicket.item
-        item?.description = copy.item?.description ?? parentTicket.item?.description
-        item?.name = copy.item?.name ?? parentTicket.item?.name ?? .init()
-        copy.item = item
+        
+        if copy.attendeeName.isBlank {
+            copy.attendeeName = parentTicket.attendeeName
+        }
+        
+        if copy.attendeeEmail.isBlank {
+            copy.attendeeEmail = parentTicket.attendeeEmail
+        }
         return copy
     }
 
@@ -292,5 +294,12 @@ extension OrderPosition: FMDBModel {
             identifier: identifier, orderCode: orderCode, orderStatus: orderStatus, order: order, positionid: positionid, itemIdentifier: itemIdentifier, item: item,
             variation: variation, price: price, attendeeName: attendeeName, attendeeEmail: attendeeEmail, secret: secret,
             subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: mergedAnswers.values.map { $0 }, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo)
+    }
+}
+
+private extension Optional where Wrapped == String {
+    /// Returns `true` if the string value is nil or empty
+    var isBlank: Bool {
+        return self?.isEmpty ?? true
     }
 }
