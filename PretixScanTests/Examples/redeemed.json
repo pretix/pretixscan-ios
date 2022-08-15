@@ -1,0 +1,162 @@
+{
+  "status": "ok",
+  "require_attention": true,
+  "position": {
+    "id": 17094037,
+    "order": "TXPJQ",
+    "positionid": 1,
+    "item": 25646,
+    "variation": null,
+    "price": "500.00",
+    "attendee_name": "",
+    "attendee_name_parts": { "_scheme": "full" },
+    "company": null,
+    "street": null,
+    "zipcode": null,
+    "city": null,
+    "country": null,
+    "state": null,
+    "attendee_email": null,
+    "voucher": null,
+    "tax_rate": "19.00",
+    "tax_value": "79.83",
+    "secret": "OcSF4VybTZbmMtW4dehB3rYPOj806lBGp/IGHWI0bT/oeCor4ub+pMM+hHM8AYjw4PQj/g12tCy+Bv5z3Ad6JEAyuChbhh1ck5mSZlVCKAEAPAQA",
+    "addon_to": null,
+    "subevent": null,
+    "checkins": [
+      {
+        "id": 12165231,
+        "datetime": "2022-08-15T11:10:26.696331+02:00",
+        "list": 12159,
+        "auto_checked_in": false,
+        "gate": null,
+        "device": 12952,
+        "type": "entry"
+      },
+      {
+        "id": 12165229,
+        "datetime": "2022-08-15T11:09:58.266458+02:00",
+        "list": 12159,
+        "auto_checked_in": false,
+        "gate": null,
+        "device": 12952,
+        "type": "entry"
+      },
+      {
+        "id": 12165227,
+        "datetime": "2022-08-15T11:09:15.197117+02:00",
+        "list": 12159,
+        "auto_checked_in": false,
+        "gate": null,
+        "device": 12952,
+        "type": "entry"
+      }
+    ],
+    "downloads": [
+      {
+        "output": "pdf",
+        "url": "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orderpositions/17094037/download/pdf/"
+      },
+      {
+        "output": "passbook",
+        "url": "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orderpositions/17094037/download/passbook/"
+      }
+    ],
+    "answers": [
+      {
+        "question": 3186,
+        "answer": "True",
+        "question_identifier": "LZ7GZ3H3",
+        "options": [],
+        "option_identifiers": []
+      },
+      {
+        "question": 4273,
+        "answer": "Food",
+        "question_identifier": "L87GSDXH",
+        "options": [],
+        "option_identifiers": []
+      },
+      {
+        "question": 4281,
+        "answer": "2022-08-16 09:09:00+00:00",
+        "question_identifier": "AX3ZJH97",
+        "options": [],
+        "option_identifiers": []
+      },
+      {
+        "question": 4279,
+        "answer": "2022-08-16",
+        "question_identifier": "YHQANXTJ",
+        "options": [],
+        "option_identifiers": []
+      },
+      {
+        "question": 4280,
+        "answer": "10:08:00",
+        "question_identifier": "7R7HZFNX",
+        "options": [],
+        "option_identifiers": []
+      },
+      {
+        "question": 4276,
+        "answer": "Admiring",
+        "question_identifier": "9UTRZLH9",
+        "options": [7041],
+        "option_identifiers": ["KBVF7EV7"]
+      },
+      {
+        "question": 4277,
+        "answer": "The Hammock Dome",
+        "question_identifier": "SGGAMCTZ",
+        "options": [7047],
+        "option_identifiers": ["89BXZT73"]
+      },
+      {
+        "question": 4274,
+        "answer": "Name",
+        "question_identifier": "FWJXMLLJ",
+        "options": [],
+        "option_identifiers": []
+      },
+      {
+        "question": 4272,
+        "answer": "2",
+        "question_identifier": "WJMZBMDL",
+        "options": [],
+        "option_identifiers": []
+      },
+      {
+        "question": 45047,
+        "answer": "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orderpositions/17094037/answer/45047/",
+        "question_identifier": "8B9PMJWR",
+        "options": [],
+        "option_identifiers": []
+      },
+      {
+        "question": 4275,
+        "answer": "True",
+        "question_identifier": "PCZBQKLA",
+        "options": [],
+        "option_identifiers": []
+      }
+    ],
+    "tax_rule": 12107,
+    "pseudonymization_id": "3MKAZRTABC",
+    "seat": {
+      "id": 4340415,
+      "name": "Liel\u0101 z\u0101le pa kreisi / Back left, Row 27, Seat 8",
+      "seat_guid": "Back left-27-8"
+    },
+    "require_attention": true,
+    "order__status": "p"
+  },
+  "list": {
+    "id": 12159,
+    "name": "Everyone",
+    "event": "democon",
+    "subevent": null,
+    "include_pending": true
+  }
+}
+

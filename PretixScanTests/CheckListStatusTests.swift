@@ -15,6 +15,7 @@ class CheckListStatusTests: XCTestCase {
     let exampleJSON = """
         {
           "checkin_count": 17,
+          "inside_count": 0,
           "position_count": 42,
           "event": {
             "name": "Demo Conference"
