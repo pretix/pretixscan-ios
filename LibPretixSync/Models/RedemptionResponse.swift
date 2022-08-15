@@ -91,6 +91,7 @@ public struct RedemptionResponse: Codable, Equatable {
         case lastCheckIn
         case questions
         case reasonExplanation = "reason_explanation"
+        case checkInAttention = "require_attention"
     }
 }
 
