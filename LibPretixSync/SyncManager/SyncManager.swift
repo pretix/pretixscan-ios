@@ -284,7 +284,11 @@ public class SyncManager {
                 return
             }
             if let error = uploader.error {
-                if let urlError = error as? URLError, urlError.code == URLError.Code.notConnectedToInternet {
+                if let urlError = error as? URLError, (urlError.code == URLError.Code.notConnectedToInternet ||
+                                                       urlError.code == URLError.Code.timedOut ||
+                                                       urlError.code == URLError.Code.cannotConnectToHost ||
+                                                       urlError.code == URLError.Code.networkConnectionLost ||
+                                                       urlError.code == URLError.Code.cannotLoadFromNetwork) {
                     logger.debug("Queued Redemption Request failed while not connected to internet.")
                 } else {
                     EventLogger.log(event: "Queued Failed Check-In came back with error: \(error)",
