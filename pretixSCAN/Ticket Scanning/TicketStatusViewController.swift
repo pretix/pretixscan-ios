@@ -241,6 +241,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
         
         toggleExtraInformationIfAvailable(redemptionResponse._validationReason)
+        toggleTicketRequiresAttention(redemptionResponse.isRequireAttention)
         
         return newBackgroundColor
     }
