@@ -108,7 +108,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
         
         var newBackgroundColor = PXColor.grayBackground
-        blinkerView.isHidden = true
+        toggleTicketRequiresAttention(false)
         
         switch redemptionResponse.status {
         case .redeemed:
