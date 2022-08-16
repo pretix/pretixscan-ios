@@ -188,19 +188,19 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             try device.lockForConfiguration()
             
             if device.torchMode == .on {
-                device.torchMode = .off
+                if device.isTorchModeSupported(.off) {
+                    device.torchMode = .off
+                }
             } else {
-                do {
-                    try device.setTorchModeOn(level: 1.0)
-                } catch {
-                    EventLogger.log(event: "\(error.localizedDescription)", category: .avCaptureDevice, level: .error, type: .fault)
+                if device.isTorchModeSupported(.on) {
+                    device.torchMode = .on
                 }
             }
-            
-            device.unlockForConfiguration()
         } catch {
-            EventLogger.log(event: "\(error.localizedDescription)", category: .avCaptureDevice, level: .error, type: .fault)
+            EventLogger.log(event: "Failed to lock AVCaptureDevice for configuration: \(String(describing: error))", category: .avCaptureDevice, level: .error, type: .fault)
         }
+        
+        device.unlockForConfiguration()
     }
     
     // Override this method in yuor subclass
