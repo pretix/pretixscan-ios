@@ -108,7 +108,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
         
         var newBackgroundColor = PXColor.grayBackground
-        blinkerView.isHidden = true
+        toggleTicketRequiresAttention(false)
         
         switch redemptionResponse.status {
         case .redeemed:
@@ -185,15 +185,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             setTicketStatus(status: Localization.TicketStatusViewController.ValidTicket, with: seat)
         }
         
-        if needsAttention {
-            blinkerView.isHidden = false
-            if (exitMode) {
-                setTicketStatus(status: Localization.TicketStatusViewController.ValidExit, with: seat)
-            } else {
-                setTicketStatus(status: Localization.TicketStatusViewController.ValidTicket, with: seat)
-            }
-            iconLabel.text = Icon.attention
-        }
+        toggleTicketRequiresAttention(needsAttention)
     }
     
     private func setTicketStatus(status: String, with seat: Seat?) {
@@ -249,8 +241,35 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
         
         toggleExtraInformationIfAvailable(redemptionResponse._validationReason)
+        toggleTicketRequiresAttention(redemptionResponse.isRequireAttention)
         
         return newBackgroundColor
+    }
+    
+    private func toggleTicketRequiresAttention(_ requiresAttention: Bool) {
+        blinkerView.isHidden = !requiresAttention || UIAccessibility.isReduceMotionEnabled
+        
+        if requiresAttention {
+            view.backgroundColor = UIColor(named: "blue")
+            orderIDLabel.textColor = UIColor(named: "primaryText")
+            attendeeNameLabel.textColor = UIColor(named: "primaryText")
+            extraInformationLabel.textColor = UIColor(named: "primaryText")
+            
+            let attachment = NSTextAttachment()
+            attachment.image = UIImage(systemName: "exclamationmark.triangle")?.withRenderingMode(.alwaysTemplate)
+            let imageString = NSMutableAttributedString(attachment: attachment)
+            imageString.append(NSAttributedString(string: " "))
+            let textString = NSAttributedString(string: Localization.TicketStatusViewController.TicketRequiresAttention)
+            imageString.append(textString)
+            extraInformationLabel.attributedText = imageString
+            extraInformationLabel.sizeToFit()
+            
+        } else {
+            view.backgroundColor = UIColor.systemBackground
+            extraInformationLabel.textColor = UIColor.label
+            orderIDLabel.textColor =  UIColor.label
+            attendeeNameLabel.textColor =  UIColor.label
+        }
     }
     
     private func toggleExtraInformationIfAvailable(_ reason: TicketValidationReason) {

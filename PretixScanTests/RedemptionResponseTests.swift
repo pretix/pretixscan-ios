@@ -99,4 +99,14 @@ class RedemptionResponseTests: XCTestCase {
         
         XCTAssertEqual(redemptionResponse.localizedErrorReason, "\(RedemptionResponse.ErrorReason.rules.localizedDescription()): Minimum number of entries exceeded")
     }
+    
+    func testSetsRequiresAttention() {
+        let jsonResponse = testFileContents("redeemed", "json")
+        let redemptionResponse = try? jsonDecoder.decode(RedemptionResponse.self, from: jsonResponse)
+        guard let redemptionResponse = redemptionResponse else {
+            XCTFail("RedemptionResponse instance should be arranged")
+            return
+        }
+        XCTAssertTrue(redemptionResponse.isRequireAttention)
+    }
 }
