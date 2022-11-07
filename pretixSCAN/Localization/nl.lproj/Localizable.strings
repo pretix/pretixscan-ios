@@ -1,0 +1,162 @@
+
+
+"In online mode, the app will confirm any check-ins in real-time with the server. In offline mode, the app will work locally and only synchronize it's data with the server every couple of minutes. When working with multiple devices, this can potentially mean that a ticket can be used multiple times. Choose offline mode if you have an unreliable internet connection but can tolerate such situations." = "In de online-modus zal de app iedere check-in eerst controleren bij de pretix-server. In de offline-modus werkt de app lokaal en worden de gegevens elke paar minuten met de server gesynchroniseerd. Als u meerdere apparaten gebruikt om tickets te scannen en de offline-modus gebruikt betekent dit dat een ticket mogelijk meerdere keren gebruikt kan worden. We raden aan voor de offlinemodus te kiezen als u een onbetrouwbare of trage internetverbinding heeft en dit risico voor u acceptabel is.";
+"About this App" = "Over deze app";
+"All Contents and Settings were deleted" = "Alle gegevens en instellingen zijn verwijderd";
+
+/* Ticket is already redeemed */
+"Already Redeemed" = "Al gebruikt";
+"Already Scanned" = "Al gescand";
+"App Version" = "App-versie";
+"Automatic Syncing is now disabled" = "Automatische synchronisatie is nu uitgeschakeld";
+"Automatic Syncing is now enabled" = "Automatische synchronisatie is nu ingeschakeld";
+
+/* Question Type Label */
+"BoolQuestionCell" = "Ja of nee";
+"Cancel" = "Annuleren";
+
+/* Order Canceled */
+"Canceled" = "Geannuleerd";
+"Check In Unpaid" = "Onbetaald inchecken";
+"Checked In" = "Ingecheckt";
+"Configuration" = "Instellingen";
+"Connect" = "Verbinden";
+"Connect Device" = "Apparaat verbinden";
+"Continue" = "Ga verder";
+"Could not create Nonce" = "Nonce-waarde kon niet gegenereerd worden";
+"Could not create URL" = "URL kon niet gemaakt worden";
+
+/* Question Type Label */
+"CountryCodeQuestionCell" = "Kies een land";
+
+/* Question Type Label */
+"DateQuestionCell" = "Voer een datum in";
+"Delete Everything" = "Alles verwijderen";
+"Do Nothing" = "Doe niets";
+"Enter Connection Details" = "Verbindingsgegevens invoeren";
+
+/* Question Type Label */
+"DateTimeQuestionCell" = "Voer een datum en tijd in";
+"Error" = "Fout";
+
+/* Order Expired */
+"Expired" = "Verlopen";
+
+/* Question Type Label */
+"FileUploadQuestionCell" = "Bestand uploaden";
+"Force Complete Resync" = "Volledige hersynchronisatie afdwingen";
+
+/* Placeholder is an integer */
+"Found %d Results" = "%d resultaten gevonden";
+"Found No Results" = "Geen resultaten gevonden";
+"Found one Result" = "Één resultaat gevonden";
+"Found too many results, keep typing" = "Te veel resultaten gevonden, voer meer tekens in";
+"I understand that personal data of attendees of my connected events will be stored on this device and I will secure the device properly." = "Ik begrijp dat persoonsgegevens van gasten van mijn verbonden evenementen zullen worden opgeslagen op dit apparaat, en ik zal het apparaat goed beveiligen.";
+"Incomplete Information" = "Onvolledige informatie";
+"Initialization Token already used" = "Dit initialisatietoken is al gebruikt";
+"Instead of scanning a QR code, you can read these details off your screen." = "U kunt deze gegevens ook handmatig invoeren, in plaats van de QR-code te scannen.";
+"Invalid Ticket" = "Ongeldig ticket";
+
+/* e.g. Last Sync [12 minutes] ago */
+"Last Sync %@ ago " = "Laatste synchronisatie %@ geleden ";
+"Last Sync: Never " = "Nog nooit gesynchroniseerd ";
+
+/* time interval */
+"less than a minute" = "minder dan een minuut";
+"Libraries and Licenses" = "Softwarebibliotheken en licenties";
+"Loading Search" = "Zoekfunctie wordt geladen";
+"Manual Setup" = "Handmatig instellen";
+"MIT License" = "MIT-licentie";
+
+/* Question Type Label */
+"MultiLineStringQuestionCell" = "Voer tekst in";
+
+/* Question Type Label */
+"MultipleChoiceQuestionCell" = "Kies alle opties die van toepassing zijn";
+
+/* e.g. do not check in unpaid ticket */
+"No" = "Nee";
+"No Event" = "Geen evenement";
+
+/* Question Type Label */
+"NumberQuestionCell" = "Voer een getal in";
+"Offline" = "Offline";
+"OK" = "OK";
+
+/* Question Type Label */
+"OneLineStringQuestionCell" = "Voer tekst in";
+"Online" = "Online";
+
+/* Order Paid */
+"Paid" = "Betaald";
+
+/* Order Pending */
+"Pending" = "Openstaand";
+"pretixSCAN" = "pretixSCAN";
+"pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix." = "pretixSCAN is een toegangscontroleapp die u kunt gebruiken om tickets te controleren die u via pretix heeft verkocht.";
+
+/* Ticket is Unpaid */
+"Product" = "Product";
+"Reset Contents and Settings" = "Gegevens en instellingen resetten";
+"Search" = "Zoeken";
+"Search will begin after you have typed at least 3 characters." = "Voer ten minste drie tekens in om te zoeken.";
+"Select Check-In List" = "Kies inchecklijst";
+"Select Event" = "Kies evenement";
+"Settings" = "Instellingen";
+"Setup Complete" = "Instellen voltooid";
+
+/* Question Type Label */
+"SingleChoiceQuestionCell" = "Kies een optie";
+"Start Scanning" = "Start met scannen";
+"Statistics" = "Statistieken";
+"Sync every few minutes" = "Synchroniseer om de paar minuten";
+"Sync Mode" = "Synchronisatiemodus";
+"Sync Mode Switched to Offline" = "Synchronisatiemodus is nu op 'offline' ingesteld";
+"Sync Mode Switched to Online" = "Synchronisatiemodus is nu op 'online' ingesteld";
+"Sync Now" = "Nu synchroniseren";
+"Syncing Done " = "Synchroniseren klaar ";
+"System URL" = "Systeem-URL";
+"The resource was not found on the server" = "De informatie kon niet gevonden worden op de server";
+"The server refused to handle our request" = "De server heeft het verzoek van de app geweigerd";
+"The server returned a non HTTP response" = "De server heeft geen HTTP-antwoord teruggegeven";
+"The server returned an empty response" = "De server heeft een leeg antwoord teruggegeven";
+"The server returned an unkown status code: " = "De server gaf een onbekende statuscode terug: ";
+"This feature cannot be used at the moment: " = "Deze functie kan momenteel niet gebruikt worden: ";
+"This is not a ticket, or not a ticket for this event." = "Dit is geen ticket of niet een ticket voor dit evenement.";
+"This ticket has not been paid for, do you still want to check it in?" = "Er is nog niet betaald voor dit ticket, wilt u het ticket alsnog inchecken?";
+"This will delete event data from the device and log you out. Do you want to continue?" = "Dit zal de gegevens over het evenement van het apparaat verwijderen en u uitloggen. Wilt u doorgaan?";
+"Ticket Already Used" = "Ticket al gebruikt";
+
+/* Question Type Label */
+"TimeQuestionCell" = "Voer een tijd in";
+"To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan." = "Maak om te beginnen een nieuw apparaat aan in de sectie 'Apparaten' van uw organisatoraccount in de pretix-backend. Wanneer u dit doet krijgt u een QR-code te zien die u met deze app kunt scannen.";
+"Token" = "Token";
+"Total Tickets Sold" = "Totaal aantal tickets verkocht";
+
+/* Ticket is Unpaid */
+"Unpaid" = "Niet betaald";
+"Valid" = "Geldig";
+"Valid Ticket" = "Geldig ticket";
+"Valid Ticket, but needs attention" = "Geldig ticket, maar speciale aandacht nodig";
+"Welcome" = "Welkom";
+"You are forbidden from accessing this resource" = "U heeft geen toegang tot deze informatie";
+"You are not authorized to access this resource" = "U heeft geen toestemming tot deze informatie";
+"You can now start scanning" = "U kunt nu beginnen met tickets scannen";
+"Entry" = "Binnenkomst";
+"Exit" = "Vertrek";
+"Exit stored" = "Vertrek opgeslagen";
+
+/* Not allowed (custom rule) */
+"Not allowed" = "Niet toegestaan";
+
+/* Title for the List of Questions */
+"Questions" = "Vragen";
+"Scan mode" = "Scanmodus";
+
+/* Answer to a Boolean Check In Question */
+"Yes" = "Ja";
+
+/* Note for a required boolean question */
+"You have to answer YES to check in" = "U moet 'Ja' kiezen om deze persoon in te checken";
+"You need to upload a file here. Please do so from your computer" = "U moet hier een bestand uploaden, doe dit vanaf uw computer";
+"Offline validation" = "Offline-validatie";
