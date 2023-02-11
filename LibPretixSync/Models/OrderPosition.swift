@@ -85,6 +85,9 @@ public struct OrderPosition: Model {
     
     /// Internal ID of the position this position is an add-on for (or null)
     public var addonTo: Identifier?
+    
+    /// A list of strings, or null. Whenever not null, the ticket may not be used (e.g. for check-in).
+    public let blocked: [String]?
 
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
@@ -104,6 +107,7 @@ public struct OrderPosition: Model {
         case seat
         case requiresAttention = "require_attention"
         case addonTo = "addon_to"
+        case blocked
     }
 
     public func adding(order: Order) -> OrderPosition {
@@ -112,7 +116,7 @@ public struct OrderPosition: Model {
             orderCode: self.orderCode,  orderStatus: order.status, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
             item: self.item, variation: self.variation, price: self.price, attendeeName: self.attendeeName,
             attendeeEmail: self.attendeeEmail, secret: self.secret, subEvent: self.subEvent,
-            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo)
+            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo, blocked: self.blocked)
     }
     
     /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.

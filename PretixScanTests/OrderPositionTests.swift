@@ -47,14 +47,15 @@ class OrderPositionTests: XCTestCase {
       ],
       "answers": [],
       "tax_rule": 12107,
-      "pseudonymization_id": "DAC7ULNMUB"
+      "pseudonymization_id": "DAC7ULNMUB",
+      "blocked": ["test"]
     }
     """.data(using: .utf8)!
 
     let exampleObject = OrderPosition(
         identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: nil, positionid: 1, itemIdentifier: 25643, item: nil, variation: nil,
         price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil, secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
-        pseudonymizationId: "DAC7ULNMUB", checkins: [], answers: [], seat: nil, requiresAttention: nil
+        pseudonymizationId: "DAC7ULNMUB", checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: ["test"]
     )
 
     let event = Event(name: MultiLingualString.english("Test Event"), slug: "testevent",
@@ -74,7 +75,7 @@ class OrderPositionTests: XCTestCase {
             identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: nil, positionid: 1, itemIdentifier: 25643,
             item: nil, variation: nil, price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil, pseudonymizationId: "DAC7ULNMUB",
-            checkins: [], answers: [], seat: nil, requiresAttention: nil)
+            checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: nil)
 
         let order = Order(code: "ABC", status: .paid, secret: "ABC", email: nil, locale: nil, salesChannel: nil,
                           createdAt: nil, expiresAt: nil, lastModifiedAt: nil, total: nil, comment: nil,
@@ -84,7 +85,7 @@ class OrderPositionTests: XCTestCase {
             identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: order, positionid: 1, itemIdentifier: 25643,
             item: nil, variation: nil, price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil, pseudonymizationId: "DAC7ULNMUB",
-            checkins: [], answers: [], seat: nil, requiresAttention: nil)
+            checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: nil)
 
         XCTAssertEqual(orderPosition1.adding(order: order), orderPosition2)
     }
@@ -224,7 +225,7 @@ class OrderPositionTests: XCTestCase {
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
             pseudonymizationId: "DAC7ULNMUB", checkins: [lastCheckIn],
-            answers: [], seat: nil, requiresAttention: nil)
+            answers: [], seat: nil, requiresAttention: nil, blocked: nil)
 
         let errorResponse = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed,
                                                position: alreadyCheckInOrderPosition,
@@ -244,7 +245,7 @@ class OrderPositionTests: XCTestCase {
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
             pseudonymizationId: "DAC7ULNMUB", checkins: [],
-            answers: [], seat: nil, requiresAttention: nil)
+            answers: [], seat: nil, requiresAttention: nil, blocked: nil)
 
         let requiredQuestion = Question(
             identifier: 1, question: MultiLingualString.english("Question"),
@@ -272,7 +273,7 @@ class OrderPositionTests: XCTestCase {
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
             pseudonymizationId: "DAC7ULNMUB", checkins: [],
-            answers: [], seat: nil, requiresAttention: nil)
+            answers: [], seat: nil, requiresAttention: nil, blocked: nil)
         let requiredBoolQuestion = Question(
             identifier: 2, question: MultiLingualString.english("Answer yes!"),
             type: .boolean, isRequired: true, position: 2, items: [], stringIdentifier: "q2",
@@ -298,7 +299,7 @@ class OrderPositionTests: XCTestCase {
             price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
             pseudonymizationId: "DAC7ULNMUB", checkins: [],
-            answers: nil, seat: nil, requiresAttention: nil)
+            answers: nil, seat: nil, requiresAttention: nil, blocked: nil)
         let optionalQuestion = Question(
             identifier: 3, question: MultiLingualString.english("Why?"), type: .oneLineString,
             isRequired: false, position: 3, items: [], stringIdentifier: "3",
