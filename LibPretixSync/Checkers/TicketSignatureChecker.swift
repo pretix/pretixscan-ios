@@ -29,8 +29,8 @@ final class TicketSignatureChecker {
             return .failure(.revoked)
         }
         
-        // is the ticket secret is blocked
-        if let blockedKeys = try? dataStore?.getBlockedKeys(for: event).get(), let blockedKey = blockedKeys.first(where: {$0.secret == secret}), blockedKey.blocked == true {
+        // if the ticket secret is blocked
+        if let blockedKeys = try? dataStore?.getBlockedKeys(for: event).get(), blockedKeys.contains(where: {$0.secret == secret && $0.blocked}) {
             return .failure(.blocked)
         }
         
