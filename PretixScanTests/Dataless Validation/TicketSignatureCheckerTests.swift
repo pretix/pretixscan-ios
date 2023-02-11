@@ -64,6 +64,17 @@ class TicketSignatureCheckerTests: XCTestCase {
         XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.revoked))
     }
     
+    func testBlocked() throws {
+        // arrange
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: [], blocked: [qrCode])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.blocked))
+    }
+    
     func testInvalid() throws {
         // arrange
         let qrCode = "foo"
@@ -118,12 +129,14 @@ class TicketSignatureCheckerTests: XCTestCase {
     class MockDataStore: DatalessDataStore {
         private let keys: [String]
         private let revoked: [String]
+        private let blocked: [String]
         private let items: [Item]
         
-        init(keys: [String], revoked: [String], items: [Item]) {
+        init(keys: [String], revoked: [String], items: [Item], blocked: [String] = []) {
             self.keys = keys
             self.revoked = revoked
             self.items = items
+            self.blocked = blocked
         }
         
         func getValidKeys(for event: Event) -> Result<[EventValidKey], Error> {
@@ -132,6 +145,10 @@ class TicketSignatureCheckerTests: XCTestCase {
         
         func getRevokedKeys(for event: Event) -> Result<[RevokedSecret], Error> {
             .success(revoked.map({RevokedSecret(id: 0, secret: $0)}))
+        }
+        
+        func getBlockedKeys(for event: Event) -> Result<[BlockedSecret], Error> {
+            .success(blocked.map({BlockedSecret(id: 0, secret: $0, blocked: true)}))
         }
         
         func getItem(by identifier: Identifier, in event: Event) -> Item? {
