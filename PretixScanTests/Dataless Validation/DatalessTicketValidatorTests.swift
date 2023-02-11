@@ -331,6 +331,10 @@ class DatalessTicketValidatorTests: XCTestCase {
             .success(revoked.map({RevokedSecret(id: 0, secret: $0)}))
         }
         
+        func getBlockedKeys(for event: pretixSCAN.Event) -> Result<[pretixSCAN.BlockedSecret], Error> {
+            .success([])
+        }
+        
         func getItem(by identifier: Identifier, in event: Event) -> Item? {
             return items.first(where: {$0.identifier == identifier})
         }

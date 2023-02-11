@@ -23,6 +23,9 @@ public protocol DatalessDataStore: AnyObject {
     /// Return the list of cached `RevokedSecret` for the specified event.
     func getRevokedKeys(for event: Event) -> Result<[RevokedSecret], Error>
     
+    /// Return the list of cached `BlockedSecret` for the specified event.
+    func getBlockedKeys(for event: Event) -> Result<[BlockedSecret], Error>
+    
     
     // MARK: - Retrieving
     /// Retrieve an `Item` instance with the specified identifier, is such an Item exists

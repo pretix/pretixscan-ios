@@ -621,6 +621,22 @@ extension FMDBDataStore {
         return .success(items)
     }
     
+    public func getBlockedKeys(for event: Event) -> Result<[BlockedSecret], Error> {
+        var items = [BlockedSecret]()
+        
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(BlockedSecret.searchByEventQuery, values: [event.slug]) {
+                while result.next() {
+                    if let item = BlockedSecret.from(result: result, in: database) {
+                        items.append(item)
+                    }
+                }
+            }
+        }
+        
+        return .success(items)
+    }
+    
     public func getQueuedCheckIns(_ secret: String, eventSlug: String) -> Result<[QueuedRedemptionRequest], Error> {
         var items = [QueuedRedemptionRequest]()
         
