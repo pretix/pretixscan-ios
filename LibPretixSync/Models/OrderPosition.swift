@@ -129,6 +129,11 @@ public struct OrderPosition: Model {
         guard (checkInList.subEvent == nil || self.subEvent == checkInList.subEvent) else {
             return nil
         }
+        
+        if self.blocked != nil {
+            return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .blocked, position: self, lastCheckIn: nil, questions: nil,
+                                      answers: nil)
+        }
 
         // Check for products
         if !checkInList.allProducts {

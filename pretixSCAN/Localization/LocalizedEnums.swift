@@ -42,6 +42,8 @@ extension RedemptionResponse.ErrorReason {
             return NSLocalizedString("Invalid", comment: "Invalid (ticket signature)")
         case .ambiguous:
             return NSLocalizedString("Ambiguous", comment: "")
+        case .blocked:
+            return NSLocalizedString("Blocked", comment: "Blocked (ticket signature)")
         }
     }
 }

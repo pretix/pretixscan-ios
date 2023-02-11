@@ -82,6 +82,8 @@ public struct RedemptionResponse: Codable, Equatable {
         case invalid
         
         case ambiguous
+        
+        case blocked
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -153,6 +155,10 @@ extension RedemptionResponse {
     
     static var ambiguous: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .ambiguous, questions: nil)
+    }
+    
+    static var blocked: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .blocked, questions: nil)
     }
     
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {
