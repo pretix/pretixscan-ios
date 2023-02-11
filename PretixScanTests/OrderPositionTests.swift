@@ -13,7 +13,7 @@ import XCTest
 class OrderPositionTests: XCTestCase {
     let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
 
-    let exampleJSON = """
+    let exampleBlockedJSON = """
         {
       "id": 1842899,
       "order": "RDTBG",
@@ -51,11 +51,50 @@ class OrderPositionTests: XCTestCase {
       "blocked": ["test"]
     }
     """.data(using: .utf8)!
+    
+    let exampleJSON = """
+        {
+      "id": 1842899,
+      "order": "RDTBG",
+      "positionid": 1,
+      "item": 25643,
+      "variation": null,
+      "price": "250.00",
+      "attendee_name": "Daniel Jilg",
+      "attendee_name_parts": {
+        "_scheme": "full",
+        "full_name": "Daniel Jilg"
+      },
+      "attendee_email": null,
+      "voucher": null,
+      "tax_rate": "19.00",
+      "tax_value": "39.92",
+      "secret": "xmwtyuq5rf3794hwudf7smr6zgmbez9y",
+      "addon_to": null,
+      "subevent": null,
+      "checkins": [],
+      "order__status": "p",
+      "downloads": [
+        {
+          "output": "pdf",
+          "url": "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orderpositions/1842899/download/pdf/"
+        },
+        {
+          "output": "passbook",
+          "url": "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orderpositions/1842899/download/passbook/"
+        }
+      ],
+      "answers": [],
+      "tax_rule": 12107,
+      "pseudonymization_id": "DAC7ULNMUB",
+      "blocked": null
+    }
+    """.data(using: .utf8)!
 
     let exampleObject = OrderPosition(
         identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: nil, positionid: 1, itemIdentifier: 25643, item: nil, variation: nil,
         price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil, secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil,
-        pseudonymizationId: "DAC7ULNMUB", checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: ["test"]
+        pseudonymizationId: "DAC7ULNMUB", checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: nil
     )
 
     let event = Event(name: MultiLingualString.english("Test Event"), slug: "testevent",
@@ -68,6 +107,12 @@ class OrderPositionTests: XCTestCase {
         XCTAssertNoThrow(try jsonDecoder.decode(OrderPosition.self, from: exampleJSON))
         let parsedInstance = try? jsonDecoder.decode(OrderPosition.self, from: exampleJSON)
         XCTAssertEqual(parsedInstance, exampleObject)
+    }
+    
+    func testParsingBlockedNotNull() {
+        XCTAssertNoThrow(try jsonDecoder.decode(OrderPosition.self, from: exampleBlockedJSON))
+        let parsedInstance = try? jsonDecoder.decode(OrderPosition.self, from: exampleBlockedJSON)
+        XCTAssertEqual(parsedInstance?.blocked, ["test"])
     }
 
     func testAddingOrder() {
@@ -88,6 +133,29 @@ class OrderPositionTests: XCTestCase {
             checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: nil)
 
         XCTAssertEqual(orderPosition1.adding(order: order), orderPosition2)
+    }
+    
+    /// Order is blocked
+    func testCreateRedemptionResponseOrderBlocked() {
+        guard let examleOrderPosition = try? jsonDecoder.decode(OrderPosition.self, from: exampleBlockedJSON) else {
+            XCTFail("Invalid test data, expected OrderPosition")
+            return
+        }
+        
+        let order = Order.stubOrder(code: "ABC", status: .paid, secret: "ABC")
+        let orderPosition = examleOrderPosition.adding(order: order)
+
+        let blockedResponse = RedemptionResponse(
+            status: .error,
+            reasonExplanation: nil,
+            errorReason: .blocked,
+            position: orderPosition,
+            lastCheckIn: nil,
+            questions: nil,
+            answers: nil)
+
+        XCTAssertEqual(blockedResponse, orderPosition.createRedemptionResponse(
+            force: false, ignoreUnpaid: false, in: event, in: checkInList))
     }
 
     /// Sub Event is wrong
