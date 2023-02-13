@@ -84,6 +84,8 @@ public struct RedemptionResponse: Codable, Equatable {
         case ambiguous
         
         case blocked
+        
+        case invalidTime = "invalid_time"
     }
 
     private enum CodingKeys: String, CodingKey {
