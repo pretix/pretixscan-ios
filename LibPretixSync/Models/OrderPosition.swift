@@ -20,7 +20,7 @@ public struct OrderPosition: Model {
     public let orderCode: String
 
     /// Status of the order (only set for live search in online mode)
-    public let orderStatus: Order.Status?
+    public var orderStatus: Order.Status?
 
     /// The `Order` this position belongs to.
     ///
@@ -88,6 +88,10 @@ public struct OrderPosition: Model {
     
     /// A list of strings, or null. Whenever not null, the ticket may not be used (e.g. for check-in).
     public let blocked: [String]?
+    
+    public let validFrom: Date?
+    
+    public let validUntil: Date?
 
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
@@ -108,6 +112,8 @@ public struct OrderPosition: Model {
         case requiresAttention = "require_attention"
         case addonTo = "addon_to"
         case blocked
+        case validFrom = "valid_from"
+        case validUntil = "valid_until"
     }
 
     public func adding(order: Order) -> OrderPosition {
@@ -116,7 +122,7 @@ public struct OrderPosition: Model {
             orderCode: self.orderCode,  orderStatus: order.status, order: order, positionid: self.positionid, itemIdentifier: self.itemIdentifier,
             item: self.item, variation: self.variation, price: self.price, attendeeName: self.attendeeName,
             attendeeEmail: self.attendeeEmail, secret: self.secret, subEvent: self.subEvent,
-            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo, blocked: self.blocked)
+            pseudonymizationId: self.pseudonymizationId, checkins: self.checkins, answers: self.answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo, blocked: self.blocked, validFrom: self.validFrom, validUntil: self.validUntil)
     }
     
     /// Create a RedemptionResponse by assuming the user wants to check in this OrderPosition in the provided CheckInList.
@@ -124,7 +130,7 @@ public struct OrderPosition: Model {
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
     ///       `redeem` function as an example.
     public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList, as type: String = "entry",
-                                         with questions: [Question] = [], dataStore: DataStore? = nil) -> RedemptionResponse? {
+                                         with questions: [Question] = [], dataStore: DataStore? = nil, nowDate: Date = Date()) -> RedemptionResponse? {
         // Check if this ticket is for the correct sub event
         guard (checkInList.subEvent == nil || self.subEvent == checkInList.subEvent) else {
             return nil
@@ -153,6 +159,13 @@ public struct OrderPosition: Model {
             return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .blocked, position: self, lastCheckIn: nil, questions: nil,
                                       answers: nil)
         }
+        
+        if type != "exit" {
+            if case .failure(_) = TicketEntryValidFromToChecker(now: nowDate).redeem(position: self) {
+                return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalidTime, position: self, lastCheckIn: nil, questions: nil,
+                                          answers: nil)
+            }
+        }
 
         let shouldIgnoreUnpaid = ignoreUnpaid && checkInList.includePending
         if status == .pending, !shouldIgnoreUnpaid {
@@ -178,7 +191,7 @@ public struct OrderPosition: Model {
         }
         
         if type != "exit" {
-            if case .failure(_) = TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: self.extraSubEvent, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
+            if case .failure(_) = TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: self.extraSubEvent, date: nowDate).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
                 return .rules
             }
         }

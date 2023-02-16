@@ -16,7 +16,7 @@ extension XCTestCase {
         return Bundle(for: OwnerClass.self).url(forResource: fileName, withExtension: withExtension)!
     }
     
-    func testFileContents(_ filename: String, _ ext: String) -> Data {
+    func testFileContents(_ filename: String, _ ext: String = "json") -> Data {
         let url = URLForResource(fileName: filename, withExtension: ext)
         return try! Data.init(contentsOf: url)
     }
