@@ -405,6 +405,22 @@ class OrderPositionTests: XCTestCase {
         return formatter
     }()
     
+    func testRedeemPositionAfterValidUntilOnExit() {
+        let jsonData = testFileContents("order")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        guard var position = order.positions?.first(where: {$0.identifier == 92694}) else {
+            XCTFail("Invalid test data, looking for order position 92694")
+            return
+        }
+        position.orderStatus = order.status
+        
+        // valid_until 2023-03-04T00:00:00.000Z
+        let checkInDate = dateFormatter.date(from: "2023-03-05T00:00:00.000Z")!
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid, as: "exit", nowDate: checkInDate)
+        
+        XCTAssertEqual(result?.status, .redeemed)
+    }
+    
     func testRedeemPositionAfterValidUntil() {
         let jsonData = testFileContents("order")
         let order = try! jsonDecoder.decode(Order.self, from: jsonData)
@@ -451,6 +467,23 @@ class OrderPositionTests: XCTestCase {
         let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid, nowDate: checkInDate)
         
         XCTAssertEqual(result?.errorReason, .invalidTime)
+        
+    }
+    
+    func testRedeemPositionBeforeValidFromOnExit() {
+        let jsonData = testFileContents("order")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        guard var position = order.positions?.first(where: {$0.identifier == 92695}) else {
+            XCTFail("Invalid test data, looking for order position 92695")
+            return
+        }
+        position.orderStatus = order.status
+        
+        // valid_from 2023-03-04T00:00:00.000Z
+        let checkInDate = dateFormatter.date(from: "2023-03-03T00:00:00.000Z")!
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid, as: "exit", nowDate: checkInDate)
+        
+        XCTAssertEqual(result?.status, .redeemed)
         
     }
     

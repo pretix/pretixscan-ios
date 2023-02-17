@@ -163,6 +163,10 @@ extension RedemptionResponse {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .blocked, questions: nil)
     }
     
+    static var invalidTime: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalidTime, questions: nil)
+    }
+    
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {
         self = RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: nil, lastCheckIn: nil, questions: incompleteQuestions, answers: answers, checkInAttention: nil)
     }

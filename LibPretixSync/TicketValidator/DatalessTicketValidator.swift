@@ -66,6 +66,11 @@ final class DatalessTicketValidator {
                 if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
                     dataStore?.store(failedCheckIn, for: event)
                 }
+            case .invalidTime:
+                response = RedemptionResponse.invalidTime
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
             }
             completionHandler(response, nil)
         case .failure(let error):
@@ -85,6 +90,9 @@ final class DatalessTicketValidator {
         
         switch TicketSignatureChecker(dataStore: dataStore).redeem(secret: secret, event: event) {
         case .success(let signedTicket):
+            if type != "exit", case .failure(_) = TicketEntryValidFromToChecker(now: Date()).redeem(ticket: signedTicket) {
+                return .success(.invalidTime)
+            }
             switch TicketProductChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, event: event) {
             case .success(let item):
                 let variation = TicketVariationChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, item: item)
@@ -151,6 +159,7 @@ final class DatalessTicketValidator {
     enum CheckStatus: Equatable {
         case valid(item: Item, variation: ItemVariation?)
         case invalid
+        case invalidTime
         case alreadyRedeemed
         case revoked
         case blocked
