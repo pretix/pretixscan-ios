@@ -33,10 +33,35 @@ struct Ticket {
 
   var subevent: Int64 = 0
 
+  var validFromUnixTime: Int64 {
+    get {return _validFromUnixTime ?? 0}
+    set {_validFromUnixTime = newValue}
+  }
+  /// Returns true if `validFromUnixTime` has been explicitly set.
+  var hasValidFromUnixTime: Bool {return self._validFromUnixTime != nil}
+  /// Clears the value of `validFromUnixTime`. Subsequent reads from it will return its default value.
+  mutating func clearValidFromUnixTime() {self._validFromUnixTime = nil}
+
+  var validUntilUnixTime: Int64 {
+    get {return _validUntilUnixTime ?? 0}
+    set {_validUntilUnixTime = newValue}
+  }
+  /// Returns true if `validUntilUnixTime` has been explicitly set.
+  var hasValidUntilUnixTime: Bool {return self._validUntilUnixTime != nil}
+  /// Clears the value of `validUntilUnixTime`. Subsequent reads from it will return its default value.
+  mutating func clearValidUntilUnixTime() {self._validUntilUnixTime = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _validFromUnixTime: Int64? = nil
+  fileprivate var _validUntilUnixTime: Int64? = nil
 }
+
+#if swift(>=5.5) && canImport(_Concurrency)
+extension Ticket: @unchecked Sendable {}
+#endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
@@ -47,6 +72,8 @@ extension Ticket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
     2: .same(proto: "item"),
     3: .same(proto: "variation"),
     4: .same(proto: "subevent"),
+    5: .same(proto: "validFromUnixTime"),
+    6: .same(proto: "validUntilUnixTime"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -59,12 +86,18 @@ extension Ticket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
       case 2: try { try decoder.decodeSingularInt64Field(value: &self.item) }()
       case 3: try { try decoder.decodeSingularInt64Field(value: &self.variation) }()
       case 4: try { try decoder.decodeSingularInt64Field(value: &self.subevent) }()
+      case 5: try { try decoder.decodeSingularInt64Field(value: &self._validFromUnixTime) }()
+      case 6: try { try decoder.decodeSingularInt64Field(value: &self._validUntilUnixTime) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.seed.isEmpty {
       try visitor.visitSingularStringField(value: self.seed, fieldNumber: 1)
     }
@@ -77,6 +110,12 @@ extension Ticket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
     if self.subevent != 0 {
       try visitor.visitSingularInt64Field(value: self.subevent, fieldNumber: 4)
     }
+    try { if let v = self._validFromUnixTime {
+      try visitor.visitSingularInt64Field(value: v, fieldNumber: 5)
+    } }()
+    try { if let v = self._validUntilUnixTime {
+      try visitor.visitSingularInt64Field(value: v, fieldNumber: 6)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -85,6 +124,8 @@ extension Ticket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
     if lhs.item != rhs.item {return false}
     if lhs.variation != rhs.variation {return false}
     if lhs.subevent != rhs.subevent {return false}
+    if lhs._validFromUnixTime != rhs._validFromUnixTime {return false}
+    if lhs._validUntilUnixTime != rhs._validUntilUnixTime {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

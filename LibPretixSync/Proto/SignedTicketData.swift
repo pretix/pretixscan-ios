@@ -14,6 +14,8 @@ struct SignedTicketData: Hashable, Equatable {
     let item: Identifier
     let variation: Identifier
     let subEvent: Identifier
+    let validFrom: Date?
+    let validUntil: Date?
 }
 
 extension SignedTicketData {
@@ -64,7 +66,13 @@ extension SignedTicketData {
         
         do {
             let ticket = try Ticket(contiguousBytes: payload)
-            self = SignedTicketData(seed: ticket.seed, item: Identifier(ticket.item), variation: Identifier(ticket.variation), subEvent: Identifier(ticket.subevent))
+            self = SignedTicketData(
+                seed: ticket.seed,
+                item: Identifier(ticket.item),
+                variation: Identifier(ticket.variation),
+                subEvent: Identifier(ticket.subevent),
+                validFrom: ticket.hasValidFromUnixTime ? Date(timeIntervalSince1970: TimeInterval(ticket.validFromUnixTime)) : nil,
+                validUntil: ticket.hasValidUntilUnixTime ? Date(timeIntervalSince1970: TimeInterval(ticket.validUntilUnixTime)) : nil)
         } catch {
             logger.error("Failed to decode protobuf Ticket payload: \(error.localizedDescription)")
             return nil

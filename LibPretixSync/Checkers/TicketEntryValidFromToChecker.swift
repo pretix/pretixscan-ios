@@ -10,6 +10,18 @@ final class TicketEntryValidFromToChecker {
         self.now = now
     }
     
+    func redeem(ticket: SignedTicketData) -> Result<Void, ValidationError> {
+        if let from = ticket.validFrom, now < from {
+            return .failure(.invalidTime)
+        }
+        
+        if let until = ticket.validUntil, now > until {
+            return .failure(.invalidTime)
+        }
+        
+        return .success(())
+    }
+    
     func redeem(position: OrderPosition) -> Result<Void, ValidationError> {
         if let from = position.validFrom, now < from {
             return .failure(.invalidTime)

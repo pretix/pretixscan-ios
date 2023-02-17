@@ -30,7 +30,6 @@
 		B50945B728054E8900E8AFC0 /* list2-rules.json in Resources */ = {isa = PBXBuildFile; fileRef = B50945B628054E8900E8AFC0 /* list2-rules.json */; };
 		B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DAF27158C2B00AAA417 /* SwiftProtobuf */; };
 		B5203DB227158C2B00AAA417 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DB127158C2B00AAA417 /* SwiftProtobufPluginLibrary */; };
-		B5203DB827158D6300AAA417 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5203DB627158C8800AAA417 /* pretix_sig1.pb.swift */; };
 		B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD326F8792700E10253 /* FeedbackPlayer.swift */; };
 		B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */; };
 		B5251DDA26F8887100E10253 /* CheckInStatusLargerOverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD926F8887100E10253 /* CheckInStatusLargerOverviewCell.swift */; };
@@ -80,6 +79,7 @@
 		B59017B32878052600FE0125 /* list9.json in Resources */ = {isa = PBXBuildFile; fileRef = B59017B12878052600FE0125 /* list9.json */; };
 		B59017B42878052600FE0125 /* list8.json in Resources */ = {isa = PBXBuildFile; fileRef = B59017B22878052600FE0125 /* list8.json */; };
 		B5956BCE285A0B65002D34EC /* OrderPositionCheckin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */; };
+		B59E923E299F9AAA00E32248 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */; };
 		B5AF40B627DF4C5C001576DD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5AF40B527DF4C5C001576DD /* Camera.storyboard */; };
 		B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF40B727DF4D17001576DD /* PXCameraController.swift */; };
 		B5B76A6228AA4B2900B64763 /* redeemed.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B76A6128AA4B2900B64763 /* redeemed.json */; };
@@ -291,7 +291,6 @@
 		B50945B628054E8900E8AFC0 /* list2-rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "list2-rules.json"; sourceTree = "<group>"; };
 		B5203DB427158C8800AAA417 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		B5203DB527158C8800AAA417 /* pretix_sig1.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = pretix_sig1.proto; sourceTree = "<group>"; };
-		B5203DB627158C8800AAA417 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
 		B5203DB727158C8800AAA417 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B5251DD326F8792700E10253 /* FeedbackPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPlayer.swift; sourceTree = "<group>"; };
 		B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackHapticGenerator.swift; sourceTree = "<group>"; };
@@ -340,6 +339,7 @@
 		B59017B22878052600FE0125 /* list8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list8.json; sourceTree = "<group>"; };
 		B59017B52878203500FE0125 /* 09_MigrationAddAddOnToOrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 09_MigrationAddAddOnToOrderPosition.swift; sourceTree = "<group>"; };
 		B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPositionCheckin.swift; sourceTree = "<group>"; };
+		B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
 		B5AF40B527DF4C5C001576DD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		B5AF40B727DF4D17001576DD /* PXCameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraController.swift; sourceTree = "<group>"; };
 		B5B76A6128AA4B2900B64763 /* redeemed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = redeemed.json; sourceTree = "<group>"; };
@@ -562,8 +562,8 @@
 		B5203DB327158C6D00AAA417 /* Proto */ = {
 			isa = PBXGroup;
 			children = (
+				B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */,
 				B5203DB427158C8800AAA417 /* Makefile */,
-				B5203DB627158C8800AAA417 /* pretix_sig1.pb.swift */,
 				B5203DB527158C8800AAA417 /* pretix_sig1.proto */,
 				B5203DB727158C8800AAA417 /* README.md */,
 				B5BD3E3E2715C469003FEB74 /* TicketInformation.swift */,
@@ -1450,7 +1450,6 @@
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC3CA583228DCF870003D6D3 /* FMDBModel.swift in Sources */,
-				B5203DB827158D6300AAA417 /* pretix_sig1.pb.swift in Sources */,
 				DCC5D8572295699000DAEFA0 /* FMDBItemCategory.swift in Sources */,
 				B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */,
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
@@ -1467,6 +1466,7 @@
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
 				DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */,
 				DC17F2422302B9E10044764A /* CountryCodeQuestionCell.swift in Sources */,
+				B59E923E299F9AAA00E32248 /* pretix_sig1.pb.swift in Sources */,
 				B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */,
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				08DEDA9927B1773C009716F3 /* BumpVersionUploader.swift in Sources */,
