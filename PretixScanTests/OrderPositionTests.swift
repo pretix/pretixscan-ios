@@ -597,4 +597,20 @@ class OrderPositionTests: XCTestCase {
         XCTAssertEqual(result?.status, .redeemed)
         XCTAssertEqual(result?.checkInAttention, true)
     }
+    
+    func testCheckInOrderRequireApprovalRedeemsAsUnpaid() {
+        let jsonData = testFileContents("order-reqapproval")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        guard var position = order.positions?.first(where: {$0.identifier == 92692}) else {
+            XCTFail("Invalid test data, looking for order position 92692")
+            return
+        }
+        position = position.adding(order: order)
+        XCTAssertEqual(position.orderStatus, .paid)
+        
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid)
+        
+        XCTAssertEqual(result?.status, .error)
+        XCTAssertEqual(result?.errorReason, .unpaid)
+    }
 }

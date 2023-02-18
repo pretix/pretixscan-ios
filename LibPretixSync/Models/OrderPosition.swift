@@ -166,6 +166,10 @@ public struct OrderPosition: Model {
                                           answers: nil)
             }
         }
+        
+        if status == .paid && order?.requireApproval == true {
+            return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
+        }
 
         let shouldIgnoreUnpaid = (ignoreUnpaid && checkInList.includePending) || order?.validIfPending == true
         if status == .pending, !shouldIgnoreUnpaid {
