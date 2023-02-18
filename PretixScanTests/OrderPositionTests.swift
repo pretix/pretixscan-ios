@@ -128,7 +128,7 @@ class OrderPositionTests: XCTestCase {
         
         let order = Order(code: "ABC", status: .paid, secret: "ABC", email: nil, locale: nil, salesChannel: nil,
                           createdAt: nil, expiresAt: nil, lastModifiedAt: nil, total: nil, comment: nil,
-                          checkInAttention: nil, positions: nil, requireApproval: nil)
+                          checkInAttention: nil, positions: nil, requireApproval: nil, validIfPending: nil)
         
         let orderPosition2 = OrderPosition(
             identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: order, positionid: 1, itemIdentifier: 25643,
@@ -160,6 +160,30 @@ class OrderPositionTests: XCTestCase {
         
         let response = orderPosition.createRedemptionResponse(
             force: false, ignoreUnpaid: false, in: event, in: checkInList)
+        
+        XCTAssertEqual(blockedResponse, response)
+    }
+    
+    func testCreateRedemptionResponseOrderBlockedOnExit() {
+        guard let examleOrderPosition = try? jsonDecoder.decode(OrderPosition.self, from: exampleBlockedJSON) else {
+            XCTFail("Invalid test data, expected OrderPosition")
+            return
+        }
+        
+        let order = Order.stubOrder(code: "ABC", status: .paid, secret: "ABC")
+        let orderPosition = examleOrderPosition.adding(order: order)
+        
+        let blockedResponse = RedemptionResponse(
+            status: .error,
+            reasonExplanation: nil,
+            errorReason: .blocked,
+            position: orderPosition,
+            lastCheckIn: nil,
+            questions: nil,
+            answers: nil)
+        
+        let response = orderPosition.createRedemptionResponse(
+            force: false, ignoreUnpaid: false, in: event, in: checkInList, as: "exit")
         
         XCTAssertEqual(blockedResponse, response)
     }
@@ -412,7 +436,7 @@ class OrderPositionTests: XCTestCase {
             XCTFail("Invalid test data, looking for order position 92694")
             return
         }
-        position.orderStatus = order.status
+        position = position.adding(order: order)
         
         // valid_until 2023-03-04T00:00:00.000Z
         let checkInDate = dateFormatter.date(from: "2023-03-05T00:00:00.000Z")!
@@ -428,7 +452,7 @@ class OrderPositionTests: XCTestCase {
             XCTFail("Invalid test data, looking for order position 92694")
             return
         }
-        position.orderStatus = order.status
+        position = position.adding(order: order)
         
         // valid_until 2023-03-04T00:00:00.000Z
         let checkInDate = dateFormatter.date(from: "2023-03-05T00:00:00.000Z")!
@@ -444,7 +468,7 @@ class OrderPositionTests: XCTestCase {
             XCTFail("Invalid test data, looking for order position 92694")
             return
         }
-        position.orderStatus = order.status
+        position = position.adding(order: order)
         
         // valid_until 2023-03-04T00:00:00.000Z
         let checkInDate = dateFormatter.date(from: "2023-03-03T00:00:00.000Z")!
@@ -460,7 +484,7 @@ class OrderPositionTests: XCTestCase {
             XCTFail("Invalid test data, looking for order position 92695")
             return
         }
-        position.orderStatus = order.status
+        position = position.adding(order: order)
         
         // valid_from 2023-03-04T00:00:00.000Z
         let checkInDate = dateFormatter.date(from: "2023-03-03T00:00:00.000Z")!
@@ -477,7 +501,7 @@ class OrderPositionTests: XCTestCase {
             XCTFail("Invalid test data, looking for order position 92695")
             return
         }
-        position.orderStatus = order.status
+        position = position.adding(order: order)
         
         // valid_from 2023-03-04T00:00:00.000Z
         let checkInDate = dateFormatter.date(from: "2023-03-03T00:00:00.000Z")!
@@ -494,11 +518,62 @@ class OrderPositionTests: XCTestCase {
             XCTFail("Invalid test data, looking for order position 92695")
             return
         }
-        position.orderStatus = order.status
+        position = position.adding(order: order)
         
         // valid_from 2023-03-04T00:00:00.000Z
         let checkInDate = dateFormatter.date(from: "2023-03-05T00:00:00.000Z")!
         let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid, nowDate: checkInDate)
+        
+        XCTAssertEqual(result?.status, .redeemed)
+    }
+    
+    func testSerializeOrderValidIfPending() {
+        let jsonData = testFileContents("order")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        XCTAssertEqual(order.validIfPending, true)
+    }
+    
+    func testRedeemOrderValidIfPendingWithoutIgnoreUnpaid() {
+        let jsonData = testFileContents("order")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        guard var position = order.positions?.first(where: {$0.identifier == 92692}) else {
+            XCTFail("Invalid test data, looking for order position 92692")
+            return
+        }
+        position = position.adding(order: order)
+        XCTAssertEqual(position.orderStatus, .pending)
+        
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: false, in: event, in: checkInList)
+        
+        XCTAssertEqual(result?.status, .redeemed)
+    }
+    
+    func testRedeemOrderValidIfPendingWithIgnoreUnpaid() {
+        let jsonData = testFileContents("order")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        guard var position = order.positions?.first(where: {$0.identifier == 92692}) else {
+            XCTFail("Invalid test data, looking for order position 92692")
+            return
+        }
+        position = position.adding(order: order)
+        XCTAssertEqual(position.orderStatus, .pending)
+        
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInList)
+        
+        XCTAssertEqual(result?.status, .redeemed)
+    }
+    
+    func testRedeemOrderValidIfPendingWithIgnoreUnpaidAndAllowUnpaidList() {
+        let jsonData = testFileContents("order")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        guard var position = order.positions?.first(where: {$0.identifier == 92692}) else {
+            XCTFail("Invalid test data, looking for order position 92692")
+            return
+        }
+        position = position.adding(order: order)
+        XCTAssertEqual(position.orderStatus, .pending)
+        
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid)
         
         XCTAssertEqual(result?.status, .redeemed)
     }

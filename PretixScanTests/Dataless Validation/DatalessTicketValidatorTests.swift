@@ -305,6 +305,235 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertEqual(resultResponse!.errorReason, .alreadyRedeemed)
     }
     
+    func testSignedAndNotYetValid() {
+        let qrCode = "Ok4EsqDRCr2cL6yDRtqeP7j5Usr1Vj1Db7J0izOuRGx6Qn0BS1ISW2nxlW8PXkYRk7PJhIBmsK1V1ucq5obBoBAMG4p9jCPKBAheRdFV0REVDZUCKAEAVAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        let checkInDate = dateFormatter.date(from: "2023-02-03T22:59:59.000Z")!
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .error)
+        XCTAssertEqual(resultResponse!.errorReason, .invalidTime)
+    }
+    
+    func testSignedAndNotYetValidOnExit() {
+        let qrCode = "Ok4EsqDRCr2cL6yDRtqeP7j5Usr1Vj1Db7J0izOuRGx6Qn0BS1ISW2nxlW8PXkYRk7PJhIBmsK1V1ucq5obBoBAMG4p9jCPKBAheRdFV0REVDZUCKAEAVAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        let checkInDate = dateFormatter.date(from: "2023-02-03T22:59:59.000Z")!
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .redeemed)
+    }
+    
+    func testSignedAndNotYetValidBecomesValid() {
+        let qrCode = "Ok4EsqDRCr2cL6yDRtqeP7j5Usr1Vj1Db7J0izOuRGx6Qn0BS1ISW2nxlW8PXkYRk7PJhIBmsK1V1ucq5obBoBAMG4p9jCPKBAheRdFV0REVDZUCKAEAVAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        let checkInDate = dateFormatter.date(from: "2023-02-03T23:01:01.000Z")!
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .redeemed)
+    }
+    
+    func testSignedAndNotYetValidBecomesValidOnExit() {
+        let qrCode = "Ok4EsqDRCr2cL6yDRtqeP7j5Usr1Vj1Db7J0izOuRGx6Qn0BS1ISW2nxlW8PXkYRk7PJhIBmsK1V1ucq5obBoBAMG4p9jCPKBAheRdFV0REVDZUCKAEAVAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        let checkInDate = dateFormatter.date(from: "2023-02-03T23:01:01.000Z")!
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .redeemed)
+    }
+    
+    func testSignedAndNotLongerValid() {
+        let qrCode = "EU9dJn3k5jzwfY4JQAKrTOVFmo+BvZKwH6UAIFOz3XTxABa7tmjU5UoLD8hJr3440uY7IFEHzau1DVk0sP994bgnzLNswAAKBARdUdGMmNVSHVUCKAEAVAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        let checkInDate = dateFormatter.date(from: "2023-02-03T11:01:01.000Z")!
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .error)
+        XCTAssertEqual(resultResponse!.errorReason, .invalidTime)
+    }
+    
+    func testSignedAndNotLongerValidOnExit() {
+        let qrCode = "EU9dJn3k5jzwfY4JQAKrTOVFmo+BvZKwH6UAIFOz3XTxABa7tmjU5UoLD8hJr3440uY7IFEHzau1DVk0sP994bgnzLNswAAKBARdUdGMmNVSHVUCKAEAVAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        let checkInDate = dateFormatter.date(from: "2023-02-03T11:01:01.000Z")!
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .redeemed)
+    }
+    
+    func testSignedAndNotLongerValidBecomesValid() {
+        let qrCode = "EU9dJn3k5jzwfY4JQAKrTOVFmo+BvZKwH6UAIFOz3XTxABa7tmjU5UoLD8hJr3440uY7IFEHzau1DVk0sP994bgnzLNswAAKBARdUdGMmNVSHVUCKAEAVAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        let checkInDate = dateFormatter.date(from: "2023-02-03T10:59:59.000Z")!
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .redeemed)
+    }
+    
+    func testSignedAndNotLongerValidBecomesValidOnExit() {
+        let qrCode = "EU9dJn3k5jzwfY4JQAKrTOVFmo+BvZKwH6UAIFOz3XTxABa7tmjU5UoLD8hJr3440uY7IFEHzau1DVk0sP994bgnzLNswAAKBARdUdGMmNVSHVUCKAEAVAQA"
+        let ds = mockDataStore
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        let checkInDate = dateFormatter.date(from: "2023-02-03T10:59:59.000Z")!
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .redeemed)
+    }
+    
+    func testSignedBlocked() {
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let ds = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItems, checkIns: [], blocked: [.init(id: 1, secret: qrCode, blocked: true)])
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .error)
+        XCTAssertEqual(resultResponse!.errorReason, .blocked)
+    }
+    
+    func testSignedBlockedOnExit() {
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let ds = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItems, checkIns: [], blocked: [.init(id: 1, secret: qrCode, blocked: true)])
+        let sut = DatalessTicketValidator(dataStore: ds)
+        
+        var resultResponse: RedemptionResponse?
+        var resultError: Error?
+        let expectation = expectation(description: "Redeem")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", completionHandler: {(response, err) in
+            resultResponse = response
+            resultError = err
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(resultResponse)
+        XCTAssertNil(resultError)
+        XCTAssertEqual(resultResponse!.status, .error)
+        XCTAssertEqual(resultResponse!.errorReason, .blocked)
+    }
+    
+    // MARK: - Mock helpers
+    
+    private var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = TicketJsonLogicChecker.DateFormat
+        return formatter
+    }()
     
     class MockDataStore: DatalessDataStore {
         private let keys: [String]
@@ -312,15 +541,17 @@ class DatalessTicketValidatorTests: XCTestCase {
         private let questions: [Question]
         private let items: [Item]
         private var checkIns: [QueuedRedemptionRequest]
+        private let blocked: [BlockedSecret]
         
         var stored: [Codable] = []
         
-        init(keys: [String], revoked: [String], questions: [Question], items: [Item], checkIns: [QueuedRedemptionRequest]) {
+        init(keys: [String], revoked: [String], questions: [Question], items: [Item], checkIns: [QueuedRedemptionRequest], blocked: [BlockedSecret] = []) {
             self.keys = keys
             self.revoked = revoked
             self.questions = questions
             self.items = items
             self.checkIns = checkIns
+            self.blocked = blocked
         }
         
         func getValidKeys(for event: Event) -> Result<[EventValidKey], Error> {
@@ -332,7 +563,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         }
         
         func getBlockedKeys(for event: pretixSCAN.Event) -> Result<[pretixSCAN.BlockedSecret], Error> {
-            .success([])
+            .success(blocked)
         }
         
         func getItem(by identifier: Identifier, in event: Event) -> Item? {
@@ -387,6 +618,10 @@ class DatalessTicketValidatorTests: XCTestCase {
     
     var mockDataStoreRevoked: DatalessDataStore {
         return MockDataStore(keys: mockEvent.validKeys!.pems, revoked: ["E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"], questions: [], items: mockItems, checkIns: [])
+    }
+    
+    var mockDataStoreBlocked: DatalessDataStore {
+        return MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItems, checkIns: [])
     }
     
     var mockItems: [Item] {
