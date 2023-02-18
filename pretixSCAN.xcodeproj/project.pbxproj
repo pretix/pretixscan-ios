@@ -82,6 +82,7 @@
 		B59E923E299F9AAA00E32248 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */; };
 		B5AF40B627DF4C5C001576DD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5AF40B527DF4C5C001576DD /* Camera.storyboard */; };
 		B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF40B727DF4D17001576DD /* PXCameraController.swift */; };
+		B5B3F93D29A0E8E600A7CEFD /* order-reqapproval.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */; };
 		B5B76A6228AA4B2900B64763 /* redeemed.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B76A6128AA4B2900B64763 /* redeemed.json */; };
 		B5B990A726EB50160029D614 /* errorRules.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B990A626EB50160029D614 /* errorRules.json */; };
 		B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */; };
@@ -342,6 +343,7 @@
 		B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
 		B5AF40B527DF4C5C001576DD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		B5AF40B727DF4D17001576DD /* PXCameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraController.swift; sourceTree = "<group>"; };
+		B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "order-reqapproval.json"; sourceTree = "<group>"; };
 		B5B76A6128AA4B2900B64763 /* redeemed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = redeemed.json; sourceTree = "<group>"; };
 		B5B990A626EB50160029D614 /* errorRules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = errorRules.json; sourceTree = "<group>"; };
 		B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+testFileContents.swift"; sourceTree = "<group>"; };
@@ -642,6 +644,7 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */,
 				B59017B22878052600FE0125 /* list8.json */,
 				B59017B12878052600FE0125 /* list9.json */,
 				B5B990A626EB50160029D614 /* errorRules.json */,
@@ -1233,6 +1236,7 @@
 				B5F6F1E1272AAFCD00F702BE /* list4.json in Resources */,
 				B553421F272BF8AF003008AD /* question2.json in Resources */,
 				B553421E272BF8AF003008AD /* question3.json in Resources */,
+				B5B3F93D29A0E8E600A7CEFD /* order-reqapproval.json in Resources */,
 				B5F52FE828112FBA008F5D5A /* subevent1.json in Resources */,
 				B5F52FE928112FBA008F5D5A /* event1-se.json in Resources */,
 				B59017B02878030300FE0125 /* list7.json in Resources */,

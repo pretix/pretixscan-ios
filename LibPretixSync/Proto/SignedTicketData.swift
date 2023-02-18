@@ -71,11 +71,27 @@ extension SignedTicketData {
                 item: Identifier(ticket.item),
                 variation: Identifier(ticket.variation),
                 subEvent: Identifier(ticket.subevent),
-                validFrom: ticket.hasValidFromUnixTime ? Date(timeIntervalSince1970: TimeInterval(ticket.validFromUnixTime)) : nil,
-                validUntil: ticket.hasValidUntilUnixTime ? Date(timeIntervalSince1970: TimeInterval(ticket.validUntilUnixTime)) : nil)
+                validFrom: Self.getValidFrom(ticket),
+                validUntil: Self.getValidUntil(ticket))
         } catch {
             logger.error("Failed to decode protobuf Ticket payload: \(error.localizedDescription)")
             return nil
         }
+    }
+    
+    /// Converts the `validFromUnixTime` value of the ticket to a date if present. A value if 0 is interpreted as if the value is not set and returns `nil`.
+    private static func getValidFrom(_ ticket: Ticket) -> Date? {
+        if ticket.hasValidFromUnixTime && ticket.validFromUnixTime > 0 {
+            return Date(timeIntervalSince1970: TimeInterval(ticket.validFromUnixTime))
+        }
+        return nil
+    }
+    
+    /// Converts the `validUntilUnixTime` value of the ticket to a date if present. A value if 0 is interpreted as if the value is not set and returns `nil`.
+    private static func getValidUntil(_ ticket: Ticket) -> Date? {
+        if ticket.hasValidUntilUnixTime && ticket.validUntilUnixTime > 0 {
+            return Date(timeIntervalSince1970: TimeInterval(ticket.validUntilUnixTime))
+        }
+        return nil
     }
 }
