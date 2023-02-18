@@ -1,0 +1,103 @@
+{
+    "tax_rule": 12107,
+    "position": 0,
+    "active": true,
+    "require_voucher": false,
+    "allow_cancel": false,
+    "addons": [
+        
+    ],
+    "default_price": "25.00",
+    "tax_rate": "19.00",
+    "category": 3281,
+    "name": {
+        "en": "T-Shirt"
+    },
+    "admission": false,
+    "variations": [
+        {
+            "active": true,
+            "position": 0,
+            "id": 6423,
+            "price": "25.00",
+            "value": {
+                "de": "S"
+            },
+            "description": {
+                
+            },
+            "checkin_attention": false
+        },
+        {
+            "active": true,
+            "position": 1,
+            "id": 6424,
+            "price": "25.00",
+            "value": {
+                "de": "M"
+            },
+            "description": {
+                
+            },
+            "checkin_attention": false
+        },
+        {
+            "active": true,
+            "position": 2,
+            "id": 6425,
+            "price": "25.00",
+            "value": {
+                "de": "L"
+            },
+            "description": {
+                
+            },
+            "checkin_attention": false
+        },
+        {
+            "active": true,
+            "position": 3,
+            "id": 6426,
+            "price": "25.00",
+            "value": {
+                "de": "XL"
+            },
+            "description": {
+                
+            },
+            "checkin_attention": false
+        },
+        {
+            "active": true,
+            "position": 4,
+            "id": 6427,
+            "price": "30.00",
+            "value": {
+                "de": "XXL"
+            },
+            "description": {
+                
+            },
+            "default_price": "30.00",
+            "checkin_attention": true
+        }
+    ],
+    "free_price": false,
+    "id": 25647,
+    "bundles": [
+        
+    ],
+    "has_variations": true,
+    "require_bundling": false,
+    "sales_channels": [
+        "web",
+        "resellers",
+        "pretixpos"
+    ],
+    "require_approval": false,
+    "hide_without_voucher": false,
+    "checkin_attention": false,
+    "description": {
+        
+    }
+}

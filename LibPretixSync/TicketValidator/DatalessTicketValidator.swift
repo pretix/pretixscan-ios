@@ -26,11 +26,11 @@ final class DatalessTicketValidator {
         case .success(let checkStatus):
             var response: RedemptionResponse
             switch checkStatus {
-            case .valid(let item, _):
+            case .valid(let item, let variation):
                 let request = RedemptionRequest(date: nowDate, force: true, ignoreUnpaid: ignoreUnpaid, nonce: NonceGenerator.nonce(), answers: answers, type: type)
                 let queuedRequest = QueuedRedemptionRequest(redemptionRequest: request, eventSlug: event.slug, checkInListIdentifier: checkInList.identifier, secret: secret)
                 dataStore?.store(queuedRequest, for: event)
-                response = RedemptionResponse.redeemed(item)
+                response = RedemptionResponse.redeemed(item, variation: variation)
             case .invalid:
                 response = RedemptionResponse.invalid
                 if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {

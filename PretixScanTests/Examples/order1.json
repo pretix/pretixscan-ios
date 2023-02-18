@@ -1,0 +1,56 @@
+{
+    "secret": "ikyxek1dqdi3cmhq",
+    "positions": [
+        {
+            "secret": "==wA0fnUEHO6+a0z\/\/NYbOZQVI4ttGzvRLcClbwUAkY\/uM8dt9vODpkZCPEHS5spB1+OWVbrRgDLhOTxSs0lQD6+AADAoEAyuCRU3gWc6ZHTOZXCKAEATAQA",
+            "seat": {
+                "id": 4340378,
+                "name": "Lielā zāle pa kreisi \/ Back left, Row 29, Seat 7",
+                "seat_guid": "Back left-29-7"
+            },
+            "positionid": 1,
+            "id": 20240967,
+            "order": "YMHMY",
+            "price": "500.00",
+            "attendee_name": "",
+            "pseudonymization_id": "AWUWB788NP",
+            "answers": [
+                
+            ],
+            "checkins": [
+                
+            ],
+            "item": 25646
+        },
+        {
+            "secret": "==gBxhpy9U7riN48MN\/I6UmzXJNfQu3WaJnVruOfyX3upSgs9OpQouVABRg6FG8DaPzs921yUyUj7o9fc5Es35SAAADAoIzmYEAyvCBcYZ1Q4ITUVBXCKAEAWAQA",
+            "positionid": 2,
+            "id": 20240968,
+            "order": "YMHMY",
+            "price": "30.00",
+            "pseudonymization_id": "VSGDD8WXSV",
+            "variation": 6427,
+            "answers": [
+                
+            ],
+            "checkins": [
+                
+            ],
+            "item": 25647
+        }
+    ],
+    "valid_if_pending": false,
+    "checkin_attention": false,
+    "require_approval": false,
+    "testmode": false,
+    "total": "530.00",
+    "last_modified": "2023-02-18T12:24:23.954Z",
+    "locale": "en",
+    "comment": "",
+    "code": "YMHMY",
+    "expires": "2023-03-06T22:59:59.000Z",
+    "sales_channel": "web",
+    "email": "konstantin@headbright.be",
+    "status": "p",
+    "datetime": "2023-02-18T13:24:10.753289+01:00"
+}
