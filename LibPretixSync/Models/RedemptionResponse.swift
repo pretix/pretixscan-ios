@@ -130,12 +130,15 @@ extension RedemptionResponse {
     static func redeemed(with orderPosition: OrderPosition) -> Self {
         var response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
         response.position = orderPosition
+        if (orderPosition.item?.checkInAttention == true || orderPosition.calculatedVariation?.checkInAttention == true) {
+            response.checkInAttention = true
+        }
         return response
     }
     
-    static func redeemed(_ item: Item) -> Self {
+    static func redeemed(_ item: Item, variation: ItemVariation?) -> Self {
         var response = Self.redeemed
-        response.checkInAttention = item.checkInAttention
+        response.checkInAttention = item.checkInAttention || variation?.checkInAttention == true
         return response
     }
     
@@ -175,6 +178,6 @@ extension RedemptionResponse {
 
 extension RedemptionResponse {
     var isRequireAttention: Bool {
-        self.checkInAttention == true || position?.order?.checkInAttention == true || position?.item?.checkInAttention == true
+        self.checkInAttention == true || position?.order?.checkInAttention == true || position?.item?.checkInAttention == true || position?.calculatedVariation?.checkInAttention == true
     }
 }
