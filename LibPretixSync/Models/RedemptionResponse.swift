@@ -106,7 +106,7 @@ extension RedemptionResponse {
             return ""
         }
         switch reason {
-        case .rules:
+        case .rules, .invalidTime:
             if let explanation = reasonExplanation {
                 return "\(reason.localizedDescription()): \(explanation)".trimmingCharacters(in: .whitespacesAndNewlines)
             }
