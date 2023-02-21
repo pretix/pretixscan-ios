@@ -191,6 +191,8 @@ class PXSecurityProfileTests: XCTestCase {
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/revokedsecrets/", method: "GET", profile: .full, expectedName: "api-v1:revokedsecrets-list")
         
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/blockedsecrets/", method: "GET", profile: .full, expectedName: "api-v1:blockedsecrets-list")
+        
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orders/", method: "GET", profile: .full, expectedName: "api-v1:order-list")
     }
     

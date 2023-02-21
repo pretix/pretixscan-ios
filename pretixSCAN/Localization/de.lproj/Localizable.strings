@@ -168,3 +168,9 @@
 
 /* No comment provided by engineer. */
 "Attention, special ticket!" = "Vorsicht, besonderes Ticket!";
+
+/* Blocked (ticket signature) */
+"Blocked" = "Ticket gesperrt";
+
+/* Invalid time (ticket signature) */
+"Invalid time" = "Ticket momentan nicht gültig";

@@ -171,6 +171,11 @@ public class FMDBDataStore: DataStore {
             return
         }
         
+        if let blockedSecrets = resources as? [BlockedSecret] {
+            BlockedSecret.store(blockedSecrets, eventSlug: event.slug, in: queue)
+            return
+        }
+        
         if let validKeys = resources as? [EventValidKey] {
             EventValidKey.store(validKeys, eventSlug: event.slug, in: queue)
             return
@@ -612,6 +617,22 @@ extension FMDBDataStore {
             if let result = try? database.executeQuery(RevokedSecret.searchByEventQuery, values: [event.slug]) {
                 while result.next() {
                     if let item = RevokedSecret.from(result: result, in: database) {
+                        items.append(item)
+                    }
+                }
+            }
+        }
+        
+        return .success(items)
+    }
+    
+    public func getBlockedKeys(for event: Event) -> Result<[BlockedSecret], Error> {
+        var items = [BlockedSecret]()
+        
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(BlockedSecret.searchByEventQuery, values: [event.slug]) {
+                while result.next() {
+                    if let item = BlockedSecret.from(result: result, in: database) {
                         items.append(item)
                     }
                 }

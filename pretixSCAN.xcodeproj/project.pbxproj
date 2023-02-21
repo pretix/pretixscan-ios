@@ -20,12 +20,16 @@
 		08FF5FBA27A7DB3500130F41 /* PXSecurityProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */; };
 		08FF5FBC27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */; };
 		641B4D2222CE641500162D1C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 641B4D2422CE641500162D1C /* Localizable.strings */; };
+		B5000E902997DA7F00942799 /* FMDBBlockedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000E8F2997DA7F00942799 /* FMDBBlockedSecret.swift */; };
+		B5000E922997DAC600942799 /* BlockedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000E912997DAC600942799 /* BlockedSecret.swift */; };
+		B5000E942997DC1900942799 /* 10_MigrationAddBlockedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000E932997DC1900942799 /* 10_MigrationAddBlockedSecret.swift */; };
+		B5000E962997DCA400942799 /* BlockedSecretDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000E952997DCA400942799 /* BlockedSecretDownloader.swift */; };
+		B5000E982997E1D800942799 /* 11_MigrationAddBlockedToOrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000E972997E1D800942799 /* 11_MigrationAddBlockedToOrderPosition.swift */; };
 		B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5014DB526E20DEB004C6604 /* Date+substract.swift */; };
 		B50945B528054C8500E8AFC0 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B50945B428054C8500E8AFC0 /* SwiftyJSON */; };
 		B50945B728054E8900E8AFC0 /* list2-rules.json in Resources */ = {isa = PBXBuildFile; fileRef = B50945B628054E8900E8AFC0 /* list2-rules.json */; };
 		B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DAF27158C2B00AAA417 /* SwiftProtobuf */; };
 		B5203DB227158C2B00AAA417 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DB127158C2B00AAA417 /* SwiftProtobufPluginLibrary */; };
-		B5203DB827158D6300AAA417 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5203DB627158C8800AAA417 /* pretix_sig1.pb.swift */; };
 		B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD326F8792700E10253 /* FeedbackPlayer.swift */; };
 		B5251DD626F87ACB00E10253 /* FeedbackHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */; };
 		B5251DDA26F8887100E10253 /* CheckInStatusLargerOverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD926F8887100E10253 /* CheckInStatusLargerOverviewCell.swift */; };
@@ -43,6 +47,12 @@
 		B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525796727292269006D9EE9 /* QuestionsDownloader.swift */; };
 		B52E2F4D287823A300BD6588 /* 09_MigrationAddAddOnToOrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59017B52878203500FE0125 /* 09_MigrationAddAddOnToOrderPosition.swift */; };
 		B530F79C27CA97ED001F5232 /* PXTemporaryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */; };
+		B540729E29A0F9FB00757E25 /* item3.json in Resources */ = {isa = PBXBuildFile; fileRef = B540729D29A0F9FB00757E25 /* item3.json */; };
+		B54072A129A1046500757E25 /* item4.json in Resources */ = {isa = PBXBuildFile; fileRef = B540729F29A1046500757E25 /* item4.json */; };
+		B54072A229A1046500757E25 /* order1.json in Resources */ = {isa = PBXBuildFile; fileRef = B54072A029A1046500757E25 /* order1.json */; };
+		B548031F299E094000B6356E /* order.json in Resources */ = {isa = PBXBuildFile; fileRef = B548031E299E094000B6356E /* order.json */; };
+		B5480321299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480320299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift */; };
+		B5480323299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480322299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift */; };
 		B553421A272BF81A003008AD /* EntryAnswersCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */; };
 		B553421E272BF8AF003008AD /* question3.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421B272BF8AF003008AD /* question3.json */; };
 		B553421F272BF8AF003008AD /* question2.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421C272BF8AF003008AD /* question2.json */; };
@@ -72,8 +82,10 @@
 		B59017B32878052600FE0125 /* list9.json in Resources */ = {isa = PBXBuildFile; fileRef = B59017B12878052600FE0125 /* list9.json */; };
 		B59017B42878052600FE0125 /* list8.json in Resources */ = {isa = PBXBuildFile; fileRef = B59017B22878052600FE0125 /* list8.json */; };
 		B5956BCE285A0B65002D34EC /* OrderPositionCheckin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */; };
+		B59E923E299F9AAA00E32248 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */; };
 		B5AF40B627DF4C5C001576DD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5AF40B527DF4C5C001576DD /* Camera.storyboard */; };
 		B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF40B727DF4D17001576DD /* PXCameraController.swift */; };
+		B5B3F93D29A0E8E600A7CEFD /* order-reqapproval.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */; };
 		B5B76A6228AA4B2900B64763 /* redeemed.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B76A6128AA4B2900B64763 /* redeemed.json */; };
 		B5B990A726EB50160029D614 /* errorRules.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B990A626EB50160029D614 /* errorRules.json */; };
 		B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */; };
@@ -274,11 +286,15 @@
 		641B4D1E22CE63CC00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		641B4D2322CE641500162D1C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		641B4D2522CE642C00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B5000E8F2997DA7F00942799 /* FMDBBlockedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBBlockedSecret.swift; sourceTree = "<group>"; };
+		B5000E912997DAC600942799 /* BlockedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedSecret.swift; sourceTree = "<group>"; };
+		B5000E932997DC1900942799 /* 10_MigrationAddBlockedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 10_MigrationAddBlockedSecret.swift; sourceTree = "<group>"; };
+		B5000E952997DCA400942799 /* BlockedSecretDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedSecretDownloader.swift; sourceTree = "<group>"; };
+		B5000E972997E1D800942799 /* 11_MigrationAddBlockedToOrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 11_MigrationAddBlockedToOrderPosition.swift; sourceTree = "<group>"; };
 		B5014DB526E20DEB004C6604 /* Date+substract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+substract.swift"; sourceTree = "<group>"; };
 		B50945B628054E8900E8AFC0 /* list2-rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "list2-rules.json"; sourceTree = "<group>"; };
 		B5203DB427158C8800AAA417 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		B5203DB527158C8800AAA417 /* pretix_sig1.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = pretix_sig1.proto; sourceTree = "<group>"; };
-		B5203DB627158C8800AAA417 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
 		B5203DB727158C8800AAA417 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B5251DD326F8792700E10253 /* FeedbackPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPlayer.swift; sourceTree = "<group>"; };
 		B5251DD526F87ACB00E10253 /* FeedbackHapticGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackHapticGenerator.swift; sourceTree = "<group>"; };
@@ -296,6 +312,12 @@
 		B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListsDownloader.swift; sourceTree = "<group>"; };
 		B525796727292269006D9EE9 /* QuestionsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsDownloader.swift; sourceTree = "<group>"; };
 		B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTemporaryFile.swift; sourceTree = "<group>"; };
+		B540729D29A0F9FB00757E25 /* item3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item3.json; sourceTree = "<group>"; };
+		B540729F29A1046500757E25 /* item4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item4.json; sourceTree = "<group>"; };
+		B54072A029A1046500757E25 /* order1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = order1.json; sourceTree = "<group>"; };
+		B548031E299E094000B6356E /* order.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = order.json; sourceTree = "<group>"; };
+		B5480320299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketEntryValidFromToChecker.swift; sourceTree = "<group>"; };
+		B5480322299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 12_MigrationAddValidToFrom.swift; sourceTree = "<group>"; };
 		B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryAnswersCheckerTests.swift; sourceTree = "<group>"; };
 		B553421B272BF8AF003008AD /* question3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question3.json; sourceTree = "<group>"; };
 		B553421C272BF8AF003008AD /* question2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question2.json; sourceTree = "<group>"; };
@@ -324,8 +346,10 @@
 		B59017B22878052600FE0125 /* list8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list8.json; sourceTree = "<group>"; };
 		B59017B52878203500FE0125 /* 09_MigrationAddAddOnToOrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 09_MigrationAddAddOnToOrderPosition.swift; sourceTree = "<group>"; };
 		B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPositionCheckin.swift; sourceTree = "<group>"; };
+		B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
 		B5AF40B527DF4C5C001576DD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		B5AF40B727DF4D17001576DD /* PXCameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraController.swift; sourceTree = "<group>"; };
+		B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "order-reqapproval.json"; sourceTree = "<group>"; };
 		B5B76A6128AA4B2900B64763 /* redeemed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = redeemed.json; sourceTree = "<group>"; };
 		B5B990A626EB50160029D614 /* errorRules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = errorRules.json; sourceTree = "<group>"; };
 		B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+testFileContents.swift"; sourceTree = "<group>"; };
@@ -546,8 +570,8 @@
 		B5203DB327158C6D00AAA417 /* Proto */ = {
 			isa = PBXGroup;
 			children = (
+				B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */,
 				B5203DB427158C8800AAA417 /* Makefile */,
-				B5203DB627158C8800AAA417 /* pretix_sig1.pb.swift */,
 				B5203DB527158C8800AAA417 /* pretix_sig1.proto */,
 				B5203DB727158C8800AAA417 /* README.md */,
 				B5BD3E3E2715C469003FEB74 /* TicketInformation.swift */,
@@ -569,6 +593,7 @@
 				B525796327292250006D9EE9 /* EventsDownloader.swift */,
 				B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */,
 				B525796727292269006D9EE9 /* QuestionsDownloader.swift */,
+				B5000E952997DCA400942799 /* BlockedSecretDownloader.swift */,
 			);
 			path = Downloaders;
 			sourceTree = "<group>";
@@ -617,6 +642,7 @@
 				B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */,
 				B57511A02807EE22008EE595 /* TicketJsonLogicChecker+data.swift */,
 				B571B7762809352800861383 /* TicketJsonLogicChecker+operations.swift */,
+				B5480320299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift */,
 			);
 			path = Checkers;
 			sourceTree = "<group>";
@@ -624,6 +650,10 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B540729F29A1046500757E25 /* item4.json */,
+				B54072A029A1046500757E25 /* order1.json */,
+				B540729D29A0F9FB00757E25 /* item3.json */,
+				B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */,
 				B59017B22878052600FE0125 /* list8.json */,
 				B59017B12878052600FE0125 /* list9.json */,
 				B5B990A626EB50160029D614 /* errorRules.json */,
@@ -647,6 +677,7 @@
 				B5798D3328755452006EF8E0 /* event1-datetonull.json */,
 				B59017AF2878030300FE0125 /* list7.json */,
 				B5B76A6128AA4B2900B64763 /* redeemed.json */,
+				B548031E299E094000B6356E /* order.json */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -698,6 +729,9 @@
 				B5DBB0CE2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift */,
 				B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */,
 				B59017B52878203500FE0125 /* 09_MigrationAddAddOnToOrderPosition.swift */,
+				B5000E932997DC1900942799 /* 10_MigrationAddBlockedSecret.swift */,
+				B5000E972997E1D800942799 /* 11_MigrationAddBlockedToOrderPosition.swift */,
+				B5480322299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -966,6 +1000,7 @@
 				B5DBB0CA2721B6EF00FFBE23 /* RevokedSecret.swift */,
 				B5D255EB272318F50064652F /* EventValidKey.swift */,
 				B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */,
+				B5000E912997DAC600942799 /* BlockedSecret.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1029,6 +1064,7 @@
 				B5FA77852705B553000E1644 /* FMDBFailedCheckIn.swift */,
 				B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */,
 				B5D255E92723187F0064652F /* FMDBEventValidKey.swift */,
+				B5000E8F2997DA7F00942799 /* FMDBBlockedSecret.swift */,
 			);
 			path = FMDBDataStore;
 			sourceTree = "<group>";
@@ -1209,10 +1245,12 @@
 				B5F6F1E1272AAFCD00F702BE /* list4.json in Resources */,
 				B553421F272BF8AF003008AD /* question2.json in Resources */,
 				B553421E272BF8AF003008AD /* question3.json in Resources */,
+				B5B3F93D29A0E8E600A7CEFD /* order-reqapproval.json in Resources */,
 				B5F52FE828112FBA008F5D5A /* subevent1.json in Resources */,
 				B5F52FE928112FBA008F5D5A /* event1-se.json in Resources */,
 				B59017B02878030300FE0125 /* list7.json in Resources */,
 				B5EFD44627CDEC1C00DACCA6 /* imagePNG.png in Resources */,
+				B54072A129A1046500757E25 /* item4.json in Resources */,
 				B5EFD44727CDEC1C00DACCA6 /* imageJPEG.jpg in Resources */,
 				B5823C1F27313F8A00479A73 /* question4.json in Resources */,
 				B5BD3E472715D4B0003FEB74 /* event1.json in Resources */,
@@ -1220,10 +1258,13 @@
 				B5798D3428755452006EF8E0 /* event1-datetonull.json in Resources */,
 				B5B76A6228AA4B2900B64763 /* redeemed.json in Resources */,
 				B5823C1B273123CC00479A73 /* list5.json in Resources */,
+				B548031F299E094000B6356E /* order.json in Resources */,
 				B5F6F1E4272AB35000F702BE /* item1.json in Resources */,
 				B5534220272BF8AF003008AD /* question1.json in Resources */,
 				B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */,
+				B54072A229A1046500757E25 /* order1.json in Resources */,
 				B5823C1D27312D0300479A73 /* list6.json in Resources */,
+				B540729E29A0F9FB00757E25 /* item3.json in Resources */,
 				B5B990A726EB50160029D614 /* errorRules.json in Resources */,
 				B59017B32878052600FE0125 /* list9.json in Resources */,
 				B5F6F1E5272AB35000F702BE /* item2.json in Resources */,
@@ -1302,6 +1343,7 @@
 				DCC0003C223BE31F00236424 /* MultiLingualString.swift in Sources */,
 				DC7DD5C52285816D00C08817 /* SubEvent.swift in Sources */,
 				DCEEF11F22799FD600BCAF82 /* QeuedRedemptionRequest.swift in Sources */,
+				B5000E942997DC1900942799 /* 10_MigrationAddBlockedSecret.swift in Sources */,
 				DCC5D85D229569C200DAEFA0 /* FMDBQueuedRedemptionRequest.swift in Sources */,
 				DC17F2402302B9C30044764A /* DateTimeQuestionCell.swift in Sources */,
 				DCC5D8512295694100DAEFA0 /* FMDBOrderPosition.swift in Sources */,
@@ -1326,6 +1368,7 @@
 				DC1D6FB72240F82B008A9E06 /* CheckIn.swift in Sources */,
 				DC66800122CA09A0002EF1C1 /* FMDBQuestion.swift in Sources */,
 				DCF8A44F22A267910020E0DE /* LocalizedEnums.swift in Sources */,
+				B5000E962997DCA400942799 /* BlockedSecretDownloader.swift in Sources */,
 				DC8467AC225B9EC10013F647 /* OfflineTicketValidator.swift in Sources */,
 				B5F6F1D7272A9B9700F702BE /* TicketSignatureChecker.swift in Sources */,
 				DC8467AA225B99A50013F647 /* SyncManager.swift in Sources */,
@@ -1355,15 +1398,18 @@
 				DC227F2522539BF000314448 /* PrimaryButton.swift in Sources */,
 				B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */,
 				DCB35B9D2249406000860385 /* UIDevice.swift in Sources */,
+				B5480323299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift in Sources */,
 				DC17F23E2302B9AE0044764A /* TimeQuestionCell.swift in Sources */,
 				B5F6F1EA272AC3E000F702BE /* DatalessTicketValidator.swift in Sources */,
 				DC2A605E22DCD84300E7A6EA /* QuestionsTableViewController.swift in Sources */,
 				DC17F2342302B91B0044764A /* MultiLineStringQuestionCell.swift in Sources */,
+				B5000E922997DAC600942799 /* BlockedSecret.swift in Sources */,
 				DC227F272253A58400314448 /* GroupContainerView.swift in Sources */,
 				08FF5FB827A7D86600130F41 /* PXSecurityProfile.swift in Sources */,
 				DC0052E8225FB02B002D985B /* FMDBDataStore.swift in Sources */,
 				DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */,
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
+				B5480321299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift in Sources */,
 				DC0052EA2260D385002D985B /* Model.swift in Sources */,
 				B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */,
 				B5534222272BFFCE003008AD /* TicketMultiEntryChecker.swift in Sources */,
@@ -1400,6 +1446,7 @@
 				DCC5D85B229569B000DAEFA0 /* FMDBOrder.swift in Sources */,
 				DC8387BF2317AB9D001C9434 /* FMDBDataStoreMigrations.swift in Sources */,
 				DCC5D859229569A100DAEFA0 /* FMDBSubEvent.swift in Sources */,
+				B5000E982997E1D800942799 /* 11_MigrationAddBlockedToOrderPosition.swift in Sources */,
 				DC1D6FC922425B02008A9E06 /* SelectCheckInListTableViewController.swift in Sources */,
 				DCAC199C22BFB51A0019B53F /* RegionCode.swift in Sources */,
 				0803991926B1A6A80075BB3C /* TicketValidationReason.swift in Sources */,
@@ -1419,7 +1466,6 @@
 				DC2F4A022256722100710EFA /* NotifcationManager.swift in Sources */,
 				DCAAFF3122394BDD0059C000 /* ValidateTicketViewController.swift in Sources */,
 				DC3CA583228DCF870003D6D3 /* FMDBModel.swift in Sources */,
-				B5203DB827158D6300AAA417 /* pretix_sig1.pb.swift in Sources */,
 				DCC5D8572295699000DAEFA0 /* FMDBItemCategory.swift in Sources */,
 				B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */,
 				DC2F49FD22565FFE00710EFA /* FontAwesomeBarButtonItem.swift in Sources */,
@@ -1436,6 +1482,7 @@
 				DCDD82D4224BC99300DC0200 /* CheckInStatusTableViewController.swift in Sources */,
 				DCC5D8532295696600DAEFA0 /* FMDBCheckIn.swift in Sources */,
 				DC17F2422302B9E10044764A /* CountryCodeQuestionCell.swift in Sources */,
+				B59E923E299F9AAA00E32248 /* pretix_sig1.pb.swift in Sources */,
 				B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */,
 				DCAAFF41223AAB8E0059C000 /* Handshake.swift in Sources */,
 				08DEDA9927B1773C009716F3 /* BumpVersionUploader.swift in Sources */,
@@ -1444,6 +1491,7 @@
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
 				DC8467BF225CF4000013F647 /* ItemAddon.swift in Sources */,
 				B5B990AD26EB59F90029D614 /* Seat.swift in Sources */,
+				B5000E902997DA7F00942799 /* FMDBBlockedSecret.swift in Sources */,
 				DCC5D84F2295691F00DAEFA0 /* FMDBSyncTimeStamp.swift in Sources */,
 				B525795A27292209006D9EE9 /* ItemsDownloader.swift in Sources */,
 				DCDD82E1224C19D800DC0200 /* TicketScannerViewController.swift in Sources */,

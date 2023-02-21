@@ -273,6 +273,7 @@ public class DefaultsConfigStore: ConfigStore {
         self.defaults = defaults
         registerInitialValues()
         loadFromDefaults()
+        printDeviceIdentity()
     }
     
     public func applySecurityDefaults() {
@@ -375,6 +376,15 @@ private extension DefaultsConfigStore {
         // Retrieve API Token from KeyChain
         guard let apiBaseURL = _apiBaseURL?.absoluteString else { return }
         _apiToken = Keychain.get(account: apiBaseURL, service: apiBaseURL)
+    }
+    
+    private func printDeviceIdentity() {
+#if DEBUG
+        // prints the device identity which can be looked up in the pretix.eu portal
+        let did = _deviceID ?? -1
+        let dsn = _deviceUniqueSerial ?? "-"
+        logger.debug("🔑 device identity: \(String(did)), serial \(dsn)")
+#endif
     }
 
     private func saveToDefaults() {

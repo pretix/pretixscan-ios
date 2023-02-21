@@ -19,18 +19,18 @@ final class DatalessTicketValidator {
     
     
     func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, ignoreUnpaid: Bool, answers: [Answer]?,
-                as type: String,
+                as type: String, nowDate: Date = Date(),
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         logger.debug("Attempting to redeem without data")
-        switch redeem(checkInList, event, secret, answers: answers, as: type) {
+        switch redeem(checkInList, event, secret, answers: answers, as: type, nowDate: nowDate) {
         case .success(let checkStatus):
             var response: RedemptionResponse
             switch checkStatus {
-            case .valid(let item, _):
-                let request = RedemptionRequest(date: Date(), force: true, ignoreUnpaid: ignoreUnpaid, nonce: NonceGenerator.nonce(), answers: answers, type: type)
+            case .valid(let item, let variation):
+                let request = RedemptionRequest(date: nowDate, force: true, ignoreUnpaid: ignoreUnpaid, nonce: NonceGenerator.nonce(), answers: answers, type: type)
                 let queuedRequest = QueuedRedemptionRequest(redemptionRequest: request, eventSlug: event.slug, checkInListIdentifier: checkInList.identifier, secret: secret)
                 dataStore?.store(queuedRequest, for: event)
-                response = RedemptionResponse.redeemed(item)
+                response = RedemptionResponse.redeemed(item, variation: variation)
             case .invalid:
                 response = RedemptionResponse.invalid
                 if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
@@ -61,6 +61,16 @@ final class DatalessTicketValidator {
                 if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
                     dataStore?.store(failedCheckIn, for: event)
                 }
+            case .blocked:
+                response = RedemptionResponse.blocked
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
+            case .invalidTime:
+                response = RedemptionResponse.invalidTime
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
             }
             completionHandler(response, nil)
         case .failure(let error):
@@ -69,7 +79,7 @@ final class DatalessTicketValidator {
     }
     
     private func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, answers: [Answer]?,
-                        as type: String) -> Result<CheckStatus, Error> {
+                        as type: String, nowDate: Date = Date()) -> Result<CheckStatus, Error> {
         
         
         guard let dataStore = dataStore else {
@@ -80,6 +90,9 @@ final class DatalessTicketValidator {
         
         switch TicketSignatureChecker(dataStore: dataStore).redeem(secret: secret, event: event) {
         case .success(let signedTicket):
+            if type != "exit", case .failure(_) = TicketEntryValidFromToChecker(now: nowDate).redeem(ticket: signedTicket) {
+                return .success(.invalidTime)
+            }
             switch TicketProductChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, event: event) {
             case .success(let item):
                 let variation = TicketVariationChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, item: item)
@@ -88,7 +101,7 @@ final class DatalessTicketValidator {
                 }
                 
                 let subEvent = ((try? dataStore.getSubEvents(for: event).get()) ?? []).first
-                switch TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: subEvent, date: Date()).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: signedTicket.item, variation: signedTicket.variation)) {
+                switch TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: subEvent, date: nowDate).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: signedTicket.item, variation: signedTicket.variation)) {
                 case .success():
                     switch TicketEntryAnswersChecker(item: item, dataStore: dataStore).redeem(event: event, answers: answers) {
                     case .success:
@@ -137,6 +150,8 @@ final class DatalessTicketValidator {
                 return .success(CheckStatus.invalid)
             case .revoked:
                 return .success(CheckStatus.revoked)
+            case .blocked:
+                return .success(CheckStatus.blocked)
             }
         }
     }
@@ -144,8 +159,10 @@ final class DatalessTicketValidator {
     enum CheckStatus: Equatable {
         case valid(item: Item, variation: ItemVariation?)
         case invalid
+        case invalidTime
         case alreadyRedeemed
         case revoked
+        case blocked
         case product
         case incomplete(questions: [Question], answers: [Answer]?)
         case rules

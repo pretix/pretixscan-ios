@@ -106,9 +106,9 @@ class ItemTests: XCTestCase {
         hasVariations: true,
         variations: [
             ItemVariation(identifier: 6423, name: MultiLingualString.german("S"),
-                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 0),
+                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 0, checkInAttention: nil),
             ItemVariation(identifier: 6424, name: MultiLingualString.german("M"),
-                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 1)
+                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 1, checkInAttention: nil)
         ],
         addons: [],
         bundles: []
@@ -118,5 +118,12 @@ class ItemTests: XCTestCase {
         XCTAssertNoThrow(try jsonDecoder.decode(Item.self, from: exampleJSON))
         let parsedInstance = try? jsonDecoder.decode(Item.self, from: exampleJSON)
         XCTAssertEqual(parsedInstance, exampleObject)
+    }
+    
+    func testSerializeItemVariationRequiresAttention() {
+        let jsonData = testFileContents("item3")
+        let item = try! jsonDecoder.decode(Item.self, from: jsonData)
+        XCTAssertEqual(item.hasVariations, true)
+        XCTAssertEqual(item.variations[4].checkInAttention, true)
     }
 }

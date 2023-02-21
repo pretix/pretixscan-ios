@@ -95,14 +95,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             return
         }
         
-        let needsAttention = redemptionResponse.isRequireAttention
-        let productName = redemptionResponse.position?.item?.name.representation(in: Locale.current) ?? ""
-        
-        productNameLabel.text = productName
-        if let variationName = redemptionResponse.position?.calculatedVariation?.name.representation(in: Locale.current) {
-            productNameLabel.text = (productNameLabel.text ?? "") + " – \(variationName)"
-        }
-        
+        productNameLabel.text = redemptionResponse.calculatedProductLabel
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
         orderIDLabel.text =
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
@@ -110,6 +103,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         var newBackgroundColor = PXColor.grayBackground
         toggleTicketRequiresAttention(false)
         
+        let needsAttention = redemptionResponse.isRequireAttention
         switch redemptionResponse.status {
         case .redeemed:
             newBackgroundColor = PXColor.okay

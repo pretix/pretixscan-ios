@@ -118,11 +118,9 @@ public class SyncManager {
               let checkInList = configStore.checkInList,
               let apiClient = configStore.apiClient,
               let dataStore = configStore.dataStore else {
-                  assertionFailure("event, checkinList, dataStore and APIclient should be set")
-                  EventLogger.log(event: "forseSync: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
-                                  category: .configuration, level: .warning, type: .default)
-                  return
-              }
+            logger.debug("⏱️ ignoring a force sync request while no event, check-in list and a data store are available")
+            return
+        }
         
         configStore.dataStore?.destroyDataStore(for: event, recreate: true)
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
@@ -133,12 +131,18 @@ public class SyncManager {
         if configStore.shouldAutoSync {
             if let lastRequestedSync = lastRequestedSync {
                 if Date() - lastRequestedSync < timeBetweenSyncs {
-                    // ignoring request to sync before timeBetweenSyncs has elapsed
+                    logger.debug("⏱️ ignoring request to sync before timeBetweenSyncs has elapsed")
                     return
                 }
             }
             beginSyncing()
         }
+    }
+    
+    /// Resets the state of the sync manager allowing it to sync on the next request
+    public func resetSyncState() {
+        logger.debug("⏱️ resetting lastRequestedSync")
+        lastRequestedSync = nil
     }
     
     /// Trigger a sync process, which will check for new data from the server
@@ -147,11 +151,9 @@ public class SyncManager {
               let checkInList = configStore.checkInList,
               let apiClient = configStore.apiClient,
               let dataStore = configStore.dataStore else {
-                  assertionFailure("event, checkinList, dataStore and APIclient should be set")
-                  EventLogger.log(event: "beginSyncing: SyncStore will not work unless event, checkinList, dataStore and APIclient are set",
-                                  category: .configuration, level: .warning, type: .default)
-                  return
-              }
+            logger.debug("⏱️ ignoring a sync request while no event, check-in list and a data store are available")
+            return
+        }
         
         populateQueues(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
     }
@@ -174,6 +176,9 @@ public class SyncManager {
         let revokedSecrets = RevokedSecretDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         revokedSecrets.addDependency(events)
         
+        let blockedSecrets = BlockedSecretDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        blockedSecrets.addDependency(events)
+        
         let validKeys = EventValidKeysDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         validKeys.addDependency(events)
         
@@ -185,7 +190,7 @@ public class SyncManager {
         let subEvents = SubEventsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         let questions = QuestionsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         
-        var allSyncOperations = [events, revokedSecrets, validKeys, checkInLists, itemCategories, items, subEvents, questions]
+        var allSyncOperations = [events, revokedSecrets, blockedSecrets, validKeys, checkInLists, itemCategories, items, subEvents, questions]
         
         if configStore.shouldDownloadOrders {
             let fullOrders = FullOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event,

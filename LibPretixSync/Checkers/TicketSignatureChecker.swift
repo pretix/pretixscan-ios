@@ -29,6 +29,11 @@ final class TicketSignatureChecker {
             return .failure(.revoked)
         }
         
+        // if the ticket secret is blocked
+        if let blockedKeys = try? dataStore?.getBlockedKeys(for: event).get(), blockedKeys.contains(where: {$0.secret == secret && $0.blocked}) {
+            return .failure(.blocked)
+        }
+        
         // does the secret decode with available keys
         guard let signedTicket = SignedTicketData(base64: secret, keys: eventKeys) else {
             return .failure(.invalid)
@@ -45,5 +50,7 @@ final class TicketSignatureChecker {
         case invalid
         /// The secret has been explicitly revoked for this event
         case revoked
+        /// The secret has been blocked for this event
+        case blocked
     }
 }

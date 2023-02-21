@@ -24,6 +24,9 @@ public struct RedemptionResponse: Codable, Equatable {
 
     /// The `OrderPosition` being redeemed
     public var position: OrderPosition?
+    
+    /// A description of the item being redeemed which may be set during dataless validation when order position is unavailable
+    public var datalessDescription: String? = nil
 
     /// If the ticket has already been redeemed, this field might contain the last CheckIn
     public var lastCheckIn: CheckIn?
@@ -82,6 +85,10 @@ public struct RedemptionResponse: Codable, Equatable {
         case invalid
         
         case ambiguous
+        
+        case blocked
+        
+        case invalidTime = "invalid_time"
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -102,7 +109,7 @@ extension RedemptionResponse {
             return ""
         }
         switch reason {
-        case .rules:
+        case .rules, .invalidTime:
             if let explanation = reasonExplanation {
                 return "\(reason.localizedDescription()): \(explanation)".trimmingCharacters(in: .whitespacesAndNewlines)
             }
@@ -126,12 +133,16 @@ extension RedemptionResponse {
     static func redeemed(with orderPosition: OrderPosition) -> Self {
         var response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
         response.position = orderPosition
+        if (orderPosition.item?.checkInAttention == true || orderPosition.calculatedVariation?.checkInAttention == true) {
+            response.checkInAttention = true
+        }
         return response
     }
     
-    static func redeemed(_ item: Item) -> Self {
+    static func redeemed(_ item: Item, variation: ItemVariation?) -> Self {
         var response = Self.redeemed
-        response.checkInAttention = item.checkInAttention
+        response.setDatalessDescription(item, variation: variation)
+        response.checkInAttention = item.checkInAttention || variation?.checkInAttention == true
         return response
     }
     
@@ -155,6 +166,14 @@ extension RedemptionResponse {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .ambiguous, questions: nil)
     }
     
+    static var blocked: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .blocked, questions: nil)
+    }
+    
+    static var invalidTime: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalidTime, questions: nil)
+    }
+    
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {
         self = RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: nil, lastCheckIn: nil, questions: incompleteQuestions, answers: answers, checkInAttention: nil)
     }
@@ -163,6 +182,35 @@ extension RedemptionResponse {
 
 extension RedemptionResponse {
     var isRequireAttention: Bool {
-        self.checkInAttention == true || position?.order?.checkInAttention == true || position?.item?.checkInAttention == true
+        self.checkInAttention == true || position?.order?.checkInAttention == true || position?.item?.checkInAttention == true || position?.calculatedVariation?.checkInAttention == true
+    }
+}
+
+
+extension RedemptionResponse {
+    mutating func setDatalessDescription(_ item: Item, variation: ItemVariation?) {
+        var label: String? = nil
+        
+        if let itemName = item.name.representation(in: Locale.current) {
+            label = itemName
+        }
+        
+        if let variationName = variation?.name.representation(in: Locale.current) {
+            if var label = label {
+                label = "\(label) – \(variationName)"
+            } else {
+                label = variationName
+            }
+        }
+        
+        self.datalessDescription = label
+    }
+    
+    /// Returns a human readable product label based on the order position or any item and variation details available during validation. If no information s found, returns an emtpy string
+    var calculatedProductLabel: String {
+        if let position = self.position {
+            return position.calculatedProductLabel
+        }
+        return datalessDescription ?? ""
     }
 }

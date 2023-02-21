@@ -57,6 +57,9 @@ public struct Order: Model {
     /// organizer before it can continue. If true and the order is canceled,
     /// this order has been denied by the event organizer.
     public let requireApproval: Bool?
+    
+    /// If true and the order is pending, this order is still treated like a paid order for most purposes, such as check-in. This may be used e.g. for trusted customers who only need to pay after the event.
+    public let validIfPending: Bool?
 
     private enum CodingKeys: String, CodingKey {
         case code
@@ -74,6 +77,7 @@ public struct Order: Model {
         case checkInAttention = "checkin_attention"
         case positions
         case requireApproval = "require_approval"
+        case validIfPending = "valid_if_pending"
     }
 
     public enum Status: String, Codable, Equatable {
@@ -87,7 +91,7 @@ public struct Order: Model {
         return Order(code: code, status: status, secret: secret, email: nil, locale: nil,
                      salesChannel: nil, createdAt: nil, expiresAt: nil, lastModifiedAt: nil,
                      total: nil, comment: nil, checkInAttention: nil, positions: nil,
-                     requireApproval: nil)
+                     requireApproval: nil, validIfPending: nil)
     }
 }
 

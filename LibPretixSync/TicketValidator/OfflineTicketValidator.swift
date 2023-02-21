@@ -98,7 +98,7 @@ public class OfflineTicketValidator: TicketValidator {
             let checkins = getQueuedAndKnownCheckIns(secret: op.secret, event: event, order: op.order)
             sr.isRedeemed = !checkins.isEmpty
             let orderStatus = op.orderStatus ?? op.order?.status
-            if orderStatus == .paid {
+            if orderStatus == .paid || op.order?.validIfPending == true {
                 sr.status = .paid
             } else if orderStatus == .pending {
                 sr.status = .pending
