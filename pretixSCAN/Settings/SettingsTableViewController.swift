@@ -177,6 +177,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
         alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.CancelReset, style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.ConfirmReset, style: .destructive, handler: { _ in
             self.configStore?.factoryReset()
+            self.configStore?.syncManager.resetSyncState()
             self.navigationController?.popViewController(animated: true)
         }))
         self.present(alert, animated: true, completion: nil)
