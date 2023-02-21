@@ -171,6 +171,11 @@ public class FMDBDataStore: DataStore {
             return
         }
         
+        if let blockedSecrets = resources as? [BlockedSecret] {
+            BlockedSecret.store(blockedSecrets, eventSlug: event.slug, in: queue)
+            return
+        }
+        
         if let validKeys = resources as? [EventValidKey] {
             EventValidKey.store(validKeys, eventSlug: event.slug, in: queue)
             return
