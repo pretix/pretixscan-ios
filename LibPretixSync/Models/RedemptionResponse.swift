@@ -24,6 +24,9 @@ public struct RedemptionResponse: Codable, Equatable {
 
     /// The `OrderPosition` being redeemed
     public var position: OrderPosition?
+    
+    /// A description of the item being redeemed which may be set during dataless validation when order position is unavailable
+    public var datalessDescription: String? = nil
 
     /// If the ticket has already been redeemed, this field might contain the last CheckIn
     public var lastCheckIn: CheckIn?
@@ -138,6 +141,7 @@ extension RedemptionResponse {
     
     static func redeemed(_ item: Item, variation: ItemVariation?) -> Self {
         var response = Self.redeemed
+        response.setDatalessDescription(item, variation: variation)
         response.checkInAttention = item.checkInAttention || variation?.checkInAttention == true
         return response
     }
@@ -179,5 +183,34 @@ extension RedemptionResponse {
 extension RedemptionResponse {
     var isRequireAttention: Bool {
         self.checkInAttention == true || position?.order?.checkInAttention == true || position?.item?.checkInAttention == true || position?.calculatedVariation?.checkInAttention == true
+    }
+}
+
+
+extension RedemptionResponse {
+    mutating func setDatalessDescription(_ item: Item, variation: ItemVariation?) {
+        var label: String? = nil
+        
+        if let itemName = item.name.representation(in: Locale.current) {
+            label = itemName
+        }
+        
+        if let variationName = variation?.name.representation(in: Locale.current) {
+            if var label = label {
+                label = "\(label) – \(variationName)"
+            } else {
+                label = variationName
+            }
+        }
+        
+        self.datalessDescription = label
+    }
+    
+    /// Returns a human readable product label based on the order position or any item and variation details available during validation. If no information s found, returns an emtpy string
+    var calculatedProductLabel: String {
+        if let position = self.position {
+            return position.calculatedProductLabel
+        }
+        return datalessDescription ?? ""
     }
 }

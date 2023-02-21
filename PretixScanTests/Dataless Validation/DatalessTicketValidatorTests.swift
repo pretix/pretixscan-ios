@@ -115,6 +115,8 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertNil(resultError)
         XCTAssertEqual(resultResponse!.status, .redeemed)
         XCTAssertEqual(resultResponse!.isRequireAttention, true)
+        XCTAssertNotNil(resultResponse!.calculatedProductLabel)
+        XCTAssertEqual(resultResponse!.calculatedProductLabel, "Regular ticket")
     }
     
     func testSignedAndRevoked() throws {
@@ -348,6 +350,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertNotNil(resultResponse)
         XCTAssertNil(resultError)
         XCTAssertEqual(resultResponse!.status, .redeemed)
+        XCTAssertEqual(resultResponse!.calculatedProductLabel, "Regular ticket")
     }
     
     func testSignedAndNotYetValidBecomesValid() {
@@ -370,6 +373,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertNotNil(resultResponse)
         XCTAssertNil(resultError)
         XCTAssertEqual(resultResponse!.status, .redeemed)
+        XCTAssertEqual(resultResponse!.calculatedProductLabel, "Regular ticket")
     }
     
     func testSignedAndNotYetValidBecomesValidOnExit() {
@@ -392,6 +396,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertNotNil(resultResponse)
         XCTAssertNil(resultError)
         XCTAssertEqual(resultResponse!.status, .redeemed)
+        XCTAssertEqual(resultResponse!.calculatedProductLabel, "Regular ticket")
     }
     
     func testSignedAndNotLongerValid() {
@@ -437,6 +442,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertNotNil(resultResponse)
         XCTAssertNil(resultError)
         XCTAssertEqual(resultResponse!.status, .redeemed)
+        XCTAssertEqual(resultResponse!.calculatedProductLabel, "Regular ticket")
     }
     
     func testSignedAndNotLongerValidBecomesValid() {
@@ -459,6 +465,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertNotNil(resultResponse)
         XCTAssertNil(resultError)
         XCTAssertEqual(resultResponse!.status, .redeemed)
+        XCTAssertEqual(resultResponse!.calculatedProductLabel, "Regular ticket")
     }
     
     func testSignedAndNotLongerValidBecomesValidOnExit() {
@@ -481,6 +488,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertNotNil(resultResponse)
         XCTAssertNil(resultError)
         XCTAssertEqual(resultResponse!.status, .redeemed)
+        XCTAssertEqual(resultResponse!.calculatedProductLabel, "Regular ticket")
     }
     
     func testSignedBlocked() {

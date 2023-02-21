@@ -228,3 +228,34 @@ public struct OrderPosition: Model {
         return RedemptionResponse.redeemed(with: self)
     }
 }
+
+extension OrderPosition {
+    /// Returns the item name in the current locale if an item with detail has been set.
+    var productName: String? {
+        return item?.name.representation(in: Locale.current)
+    }
+    
+    /// Returns the variation name in the current locale if a variation with detail has been set.
+    var variationName: String? {
+        return calculatedVariation?.name.representation(in: Locale.current)
+    }
+    
+    /// The product label as it can be shown in the UI combining available information for the current item and variation. If the item and variation are not set, the label is an empty string.
+    var calculatedProductLabel: String {
+        var label: String = ""
+        
+        if let productName = productName {
+            label = productName
+        }
+        
+        if let variationName = variationName {
+            if label.isEmpty {
+                label = variationName
+            } else {
+                label = "\(label) – \(variationName)"
+            }
+        }
+        
+        return label
+    }
+}
