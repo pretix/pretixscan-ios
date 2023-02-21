@@ -613,4 +613,24 @@ class OrderPositionTests: XCTestCase {
         XCTAssertEqual(result?.status, .error)
         XCTAssertEqual(result?.errorReason, .unpaid)
     }
+    
+    func testCheckInWithItemInformation() {
+        let jsonData = testFileContents("order1")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        let jsonDataItem = testFileContents("item4")
+        let item = try! jsonDecoder.decode(Item.self, from: jsonDataItem)
+        
+        guard var position = order.positions?.first(where: {$0.identifier == 20240968}) else {
+            XCTFail("Invalid test data, looking for order position 20240968")
+            return
+        }
+        position = position.adding(order: order)
+        position = position.adding(item: item)
+        XCTAssertEqual(position.orderStatus, .paid)
+        
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid)
+        
+        XCTAssertEqual(result?.status, .redeemed)
+        XCTAssertEqual(result?.calculatedProductLabel, "T-Shirt – XXL")
+    }
 }
