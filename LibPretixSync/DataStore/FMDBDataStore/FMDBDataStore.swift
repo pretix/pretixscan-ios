@@ -660,7 +660,7 @@ extension FMDBDataStore {
     
     public func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> [OrderPositionCheckin] {
         if let order = Order.getOrder(secret: secret, in: databaseQueue(with: event)) {
-            return order.previousCheckIns.filter({$0.checkInType == type})
+            return order.previousCheckIns.filter({$0.checkInType == type && $0.secret == secret})
         }
         
         return []

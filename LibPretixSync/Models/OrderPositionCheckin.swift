@@ -26,4 +26,8 @@ extension Order {
     var previousCheckIns: [OrderPositionCheckin] {
         return self.positions?.flatMap({position in position.checkins.map({checkin in OrderPositionCheckin(secret: position.secret, checkInType: checkin.type, date: checkin.date, checkInListIdentifier: checkin.listID)})}) ?? []
     }
+    
+    func getPreviousCheckIns(secret: String) -> [OrderPositionCheckin] {
+        return previousCheckIns.filter({$0.secret == secret})
+    }
 }

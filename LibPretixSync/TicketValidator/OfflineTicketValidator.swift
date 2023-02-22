@@ -130,8 +130,9 @@ public class OfflineTicketValidator: TicketValidator {
     func getQueuedAndKnownCheckIns(secret: String, event: Event, order: Order?) -> [OrderPositionCheckin] {
         let queuedCheckIns =
         ((try? configStore.dataStore?.getQueuedCheckIns(secret, eventSlug: event.slug).get()) ?? []).map({OrderPositionCheckin(from: $0)})
-        let orderCheckIns = order?.previousCheckIns ?? []
+        let orderCheckIns = order?.getPreviousCheckIns(secret: secret) ?? []
         
+        logger.debug("queued: \(queuedCheckIns.count), order: \(orderCheckIns.count)")
         return queuedCheckIns + orderCheckIns
     }
     
