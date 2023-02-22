@@ -825,7 +825,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             return .success(questions)
         }
         
-        func getQueuedCheckIns(_ secret: String, eventSlug: String) -> Result<[QueuedRedemptionRequest], Error> {
+        func getQueuedCheckIns(_ secret: String, eventSlug: String, listId: Identifier) -> Result<[QueuedRedemptionRequest], Error> {
             return .success(checkIns)
         }
         
@@ -844,7 +844,7 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             }
         }
         
-        func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> [pretixSCAN.OrderPositionCheckin] {
+        func getOrderCheckIns(_ secret: String, type: String, _ event: Event, listId: Identifier) -> [pretixSCAN.OrderPositionCheckin] {
             return []
         }
     }
