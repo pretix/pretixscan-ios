@@ -23,7 +23,13 @@ extension OrderPositionCheckin {
 }
 
 extension Order {
-    var previousCheckIns: [OrderPositionCheckin] {
+    /// Returns a list of all check-ins in the given order, for all positions and all lists
+    private var previousCheckIns: [OrderPositionCheckin] {
         return self.positions?.flatMap({position in position.checkins.map({checkin in OrderPositionCheckin(secret: position.secret, checkInType: checkin.type, date: checkin.date, checkInListIdentifier: checkin.listID)})}) ?? []
+    }
+    
+    /// Return a list of checkins for the given `secret` in the given `list`
+    func getPreviousCheckIns(secret: String, listId: Identifier) -> [OrderPositionCheckin] {
+        return previousCheckIns.filter({$0.secret == secret && $0.checkInListIdentifier == listId})
     }
 }

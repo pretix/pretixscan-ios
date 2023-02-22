@@ -50,7 +50,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         
         waitForExpectations(timeout: 5, handler: nil)
         
-        let queued = (try? ds.getQueuedCheckIns(qrCode, eventSlug: mockEvent.slug).get())?.first
+        let queued = (try? ds.getQueuedCheckIns(qrCode, eventSlug: mockEvent.slug, listId: mockCheckInListAllProducts.identifier).get())?.first
         
         XCTAssertNotNil(queued?.redemptionRequest)
         XCTAssertTrue(queued!.redemptionRequest.force)
@@ -582,7 +582,7 @@ class DatalessTicketValidatorTests: XCTestCase {
             return .success(questions)
         }
         
-        func getQueuedCheckIns(_ secret: String, eventSlug: String) -> Result<[QueuedRedemptionRequest], Error> {
+        func getQueuedCheckIns(_ secret: String, eventSlug: String, listId: Identifier) -> Result<[QueuedRedemptionRequest], Error> {
             return .success(checkIns)
         }
         
@@ -601,7 +601,7 @@ class DatalessTicketValidatorTests: XCTestCase {
             }
         }
         
-        func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> [pretixSCAN.OrderPositionCheckin] {
+        func getOrderCheckIns(_ secret: String, type: String, _ event: Event, listId: Identifier) -> [pretixSCAN.OrderPositionCheckin] {
             return []
         }
     }

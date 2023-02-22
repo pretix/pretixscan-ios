@@ -13,10 +13,10 @@ extension TicketJsonLogicChecker {
     func getTicketData(_ ticket: TicketData) -> String? {
         
         let queuedCheckIns =
-        ((try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug).get()) ?? [])
+        ((try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug, listId: self.checkInList.identifier).get()) ?? [])
             .filter({$0.redemptionRequest.date != nil && $0.redemptionRequest.type == "entry"})
             .map({OrderPositionCheckin(from: $0)})
-        let orderCheckIns = dataStore?.getOrderCheckIns(ticket.secret, type: "entry", self.event) ?? []
+        let orderCheckIns = dataStore?.getOrderCheckIns(ticket.secret, type: "entry", self.event, listId: self.checkInList.identifier) ?? []
         
         logger.debug("raw queuedCheckIns: \(queuedCheckIns.count), raw orderedCheckIns: \(orderCheckIns.count)")
         let entryCheckIns = queuedCheckIns + orderCheckIns

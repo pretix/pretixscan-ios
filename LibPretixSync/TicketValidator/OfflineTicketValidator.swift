@@ -95,10 +95,10 @@ public class OfflineTicketValidator: TicketValidator {
             sr.positionId = op.positionid
             sr.secret = op.secret
             
-            let checkins = getQueuedAndKnownCheckIns(secret: op.secret, event: event, order: op.order)
+            let checkins = getQueuedAndKnownCheckIns(secret: op.secret, event: event, order: op.order, listId: checkInList.identifier)
             sr.isRedeemed = !checkins.isEmpty
             let orderStatus = op.orderStatus ?? op.order?.status
-            if orderStatus == .paid || op.order?.validIfPending == true {
+            if orderStatus == .paid || (orderStatus == .pending && op.order?.validIfPending == true) {
                 sr.status = .paid
             } else if orderStatus == .pending {
                 sr.status = .pending
@@ -127,11 +127,12 @@ public class OfflineTicketValidator: TicketValidator {
         }
     }
     
-    func getQueuedAndKnownCheckIns(secret: String, event: Event, order: Order?) -> [OrderPositionCheckin] {
+    func getQueuedAndKnownCheckIns(secret: String, event: Event, order: Order?, listId: Identifier) -> [OrderPositionCheckin] {
         let queuedCheckIns =
-        ((try? configStore.dataStore?.getQueuedCheckIns(secret, eventSlug: event.slug).get()) ?? []).map({OrderPositionCheckin(from: $0)})
-        let orderCheckIns = order?.previousCheckIns ?? []
+        ((try? configStore.dataStore?.getQueuedCheckIns(secret, eventSlug: event.slug, listId: listId).get()) ?? []).map({OrderPositionCheckin(from: $0)})
+        let orderCheckIns = order?.getPreviousCheckIns(secret: secret, listId: listId) ?? []
         
+        logger.debug("queued: \(queuedCheckIns.count), order: \(orderCheckIns.count)")
         return queuedCheckIns + orderCheckIns
     }
     
