@@ -22,7 +22,7 @@ final class TicketMultiEntryChecker {
             return .success(())
         }
         
-        guard let result = dataStore?.getQueuedCheckIns(secret, eventSlug: event.slug) else {
+        guard let result = dataStore?.getQueuedCheckIns(secret, eventSlug: event.slug, listId: self.checkInList.identifier) else {
             fatalError("dataStore instance has been disposed")
         }
         

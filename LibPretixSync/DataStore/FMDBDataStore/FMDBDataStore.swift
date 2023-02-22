@@ -642,7 +642,7 @@ extension FMDBDataStore {
         return .success(items)
     }
     
-    public func getQueuedCheckIns(_ secret: String, eventSlug: String) -> Result<[QueuedRedemptionRequest], Error> {
+    public func getQueuedCheckIns(_ secret: String, eventSlug: String, listId: Identifier) -> Result<[QueuedRedemptionRequest], Error> {
         var items = [QueuedRedemptionRequest]()
         
         uploadDataBaseQueue.inDatabase { database in
@@ -655,12 +655,12 @@ extension FMDBDataStore {
             }
         }
         
-        return .success(items)
+        return .success(items.filter({$0.checkInListIdentifier == listId}))
     }
     
-    public func getOrderCheckIns(_ secret: String, type: String, _ event: Event) -> [OrderPositionCheckin] {
+    public func getOrderCheckIns(_ secret: String, type: String, _ event: Event, listId: Identifier) -> [OrderPositionCheckin] {
         if let order = Order.getOrder(secret: secret, in: databaseQueue(with: event)) {
-            return order.previousCheckIns.filter({$0.checkInType == type && $0.secret == secret})
+            return order.getPreviousCheckIns(secret: secret, listId: listId).filter({$0.checkInType == type})
         }
         
         return []
