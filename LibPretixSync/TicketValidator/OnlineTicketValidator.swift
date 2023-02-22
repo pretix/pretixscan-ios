@@ -75,7 +75,7 @@ public class OnlineTicketValidator: TicketValidator {
             sr.secret = op.secret
             sr.isRedeemed = op.checkins.count > 0
             let orderStatus = op.orderStatus ?? op.order?.status
-            if orderStatus == .paid || op.order?.validIfPending == true {
+            if orderStatus == .paid || (orderStatus == .pending && op.order?.validIfPending == true) {
                 sr.status = .paid
             } else if orderStatus == .pending {
                 sr.status = .pending
