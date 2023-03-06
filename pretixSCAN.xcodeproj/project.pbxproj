@@ -20,6 +20,7 @@
 		08FF5FBA27A7DB3500130F41 /* PXSecurityProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FB927A7DB3500130F41 /* PXSecurityProfileTests.swift */; };
 		08FF5FBC27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF5FBB27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift */; };
 		641B4D2222CE641500162D1C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 641B4D2422CE641500162D1C /* Localizable.strings */; };
+		AAC693F829B0F7A500362F47 /* attention.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AAC693F729B0F7A500362F47 /* attention.m4a */; };
 		B5000E902997DA7F00942799 /* FMDBBlockedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000E8F2997DA7F00942799 /* FMDBBlockedSecret.swift */; };
 		B5000E922997DAC600942799 /* BlockedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000E912997DAC600942799 /* BlockedSecret.swift */; };
 		B5000E942997DC1900942799 /* 10_MigrationAddBlockedSecret.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000E932997DC1900942799 /* 10_MigrationAddBlockedSecret.swift */; };
@@ -286,6 +287,7 @@
 		641B4D1E22CE63CC00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		641B4D2322CE641500162D1C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		641B4D2522CE642C00162D1C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AAC693F729B0F7A500362F47 /* attention.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = attention.m4a; sourceTree = "<group>"; };
 		B5000E8F2997DA7F00942799 /* FMDBBlockedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBBlockedSecret.swift; sourceTree = "<group>"; };
 		B5000E912997DAC600942799 /* BlockedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedSecret.swift; sourceTree = "<group>"; };
 		B5000E932997DC1900942799 /* 10_MigrationAddBlockedSecret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 10_MigrationAddBlockedSecret.swift; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 		B58CF84026F3300A00FADA2A /* AudioFiles */ = {
 			isa = PBXGroup;
 			children = (
+				AAC693F729B0F7A500362F47 /* attention.m4a */,
 				B58CF83C26F32BFA00FADA2A /* beep.m4a */,
 				B58CF83D26F32BFA00FADA2A /* enter.m4a */,
 				B58CF83E26F32BFA00FADA2A /* error.m4a */,
@@ -1223,6 +1226,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAC693F829B0F7A500362F47 /* attention.m4a in Resources */,
 				DC07358422392476008326F7 /* LaunchScreen.storyboard in Resources */,
 				B5AF40B627DF4C5C001576DD /* Camera.storyboard in Resources */,
 				B58CF84226F3302800FADA2A /* exit.m4a in Resources */,
