@@ -60,7 +60,11 @@ final class ScanFeedbackGenerator: FeedbackGenerator {
         
         switch redemptionResponse.status {
         case .redeemed:
-            announce(exitMode ? .validExit : .validEntry)
+            if exitMode {
+                announce(.validExit)
+            } else {
+                announce(redemptionResponse.isRequireAttention ? .validEntryRequiresAttention : .validEntry)
+            }
         case .incomplete:
             logger.debug("Skipping announcement due to incomplete.")
             performHapticNotification(ofType: .warning)
@@ -80,6 +84,9 @@ final class ScanFeedbackGenerator: FeedbackGenerator {
         case .validEntry:
             performHapticNotification(ofType: .success)
             playSound(.enter)
+        case .validEntryRequiresAttention:
+            performHapticNotification(ofType: .warning)
+            playSound(.attention)
         case .validExit:
             performHapticNotification(ofType: .success)
             playSound(.exit)

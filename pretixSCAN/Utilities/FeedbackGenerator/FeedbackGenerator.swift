@@ -24,6 +24,8 @@ public enum FeedbackType: String, Equatable, Hashable, CaseIterable, CustomStrin
     case didScanQrCode
     /// Validation result is "OK" and we're in entry mode
     case validEntry
+    /// Validation result is "OK", requires attention flag is set and we're in entry mode
+    case validEntryRequiresAttention
     /// Validation result is "OK" and we're in exit mode
     case validExit
     /// Validation result is *not* "OK"
@@ -35,6 +37,7 @@ public enum FeedbackType: String, Equatable, Hashable, CaseIterable, CustomStrin
 }
 
 enum AudioFile: String, Equatable, Hashable, CaseIterable, CustomStringConvertible {
+    case attention
     case beep
     case enter
     case error
