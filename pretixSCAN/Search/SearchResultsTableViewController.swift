@@ -115,3 +115,18 @@ public struct SearchResult: Hashable, Equatable, Codable {
     public var isRedeemed = false
     public var isRequireAttention = false
 }
+
+
+public extension SearchResult {
+    var orderCodeLabel: String {
+        guard let orderCode = orderCode else {
+            return "--"
+        }
+        
+        if let attendeeName = attendeeName, !attendeeName.isEmpty {
+            return "\(orderCode) \(attendeeName)"
+        }
+        
+        return orderCode
+    }
+}
