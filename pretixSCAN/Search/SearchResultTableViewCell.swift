@@ -25,10 +25,11 @@ class SearchResultTableViewCell: UITableViewCell {
             ticketType.text = nil
             statusLabel.text = nil
             secretLabel.text = nil
+            orderIDLabel.text = nil
             return
         }
 
-        orderCodeLabel.text = "\(searchResult.orderCode ?? "--")"
+        orderCodeLabel.text = searchResult.orderCodeLabel
         orderIDLabel.text = searchResult.positionId != nil ? "\(searchResult.positionId!)" : ""
         ticketType.text = searchResult.ticket ?? "--"
 
