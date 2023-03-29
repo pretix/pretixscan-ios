@@ -549,7 +549,7 @@ public extension APIClient {
             date: date, force: force, ignoreUnpaid: ignoreUnpaid,
             nonce: NonceGenerator.nonce(), answers: answers, type: type)
         
-        return redeemTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug,
+        return createCheckInTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug,
                           checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
     }
     
@@ -678,8 +678,61 @@ public extension APIClient {
         }
     }
     
+    
+    func createCheckInTask(secret: String, redemptionRequest: RedemptionRequest, eventSlug: String? = nil,
+                    checkInListIdentifier: Identifier? = nil,
+                    completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
+        
+        if configStore.knownPretixVersion ?? 0 > 40120001001 {
+            return checkInTask(secret: secret, redemptionRequest: redemptionRequest, completionHandler: completionHandler)
+        } else {
+            return redeemPositionTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug, checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
+        }
+    }
+    
+    
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
-    func redeemTask(secret: String, redemptionRequest: RedemptionRequest, eventSlug: String? = nil,
+    private func checkInTask(secret: String, redemptionRequest: RedemptionRequest, checkInListIdentifier: Identifier? = nil,
+                    completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
+        do {
+            let organizer = try getOrganizerSlug()
+            let checkInListId = try checkInListIdentifier ?? (try getCheckInList()).identifier
+            let request = CheckInRequest(list: checkInListId, secret: secret, redemptionRequest: redemptionRequest)
+            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/checkinrpc/redeem/")
+            var urlRequest = try createURLRequest(for: urlPath)
+            urlRequest.httpMethod = HttpMethod.POST
+            urlRequest.httpBody = try jsonEncoder.encode(request)
+            
+            if !isAllowed(request: urlRequest) {
+                completionHandler(nil, APIError.notAllowed)
+                return nil
+            }
+            
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                if let error = self.checkResponse(data: data, response: response, error: error) {
+                    completionHandler(nil, error)
+                    return
+                }
+                
+                do {
+                    let redemptionResponse = try self.jsonDecoder.decode(RedemptionResponse.self, from: data!)
+                    completionHandler(redemptionResponse, nil)
+                } catch let jsonError {
+                    completionHandler(nil, jsonError)
+                    return
+                }
+            }
+            return task
+        } catch {
+            completionHandler(nil, error)
+            return nil
+        }
+    }
+    
+    
+    /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
+    @available(*, deprecated, renamed: "checkInTask")
+    private func redeemPositionTask(secret: String, redemptionRequest: RedemptionRequest, eventSlug: String? = nil,
                     checkInListIdentifier: Identifier? = nil,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
         do {

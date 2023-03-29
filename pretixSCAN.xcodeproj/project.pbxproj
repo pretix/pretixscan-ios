@@ -31,6 +31,7 @@
 		B50945B728054E8900E8AFC0 /* list2-rules.json in Resources */ = {isa = PBXBuildFile; fileRef = B50945B628054E8900E8AFC0 /* list2-rules.json */; };
 		B515CF5429D426EF0010CC6D /* ServerVersionDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515CF5329D426EF0010CC6D /* ServerVersionDownloader.swift */; };
 		B515CF5629D429A80010CC6D /* DeviceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515CF5529D429A80010CC6D /* DeviceInfoResponse.swift */; };
+		B515CF5A29D47E8D0010CC6D /* CheckInRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515CF5929D47E8D0010CC6D /* CheckInRequest.swift */; };
 		B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DAF27158C2B00AAA417 /* SwiftProtobuf */; };
 		B5203DB227158C2B00AAA417 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DB127158C2B00AAA417 /* SwiftProtobufPluginLibrary */; };
 		B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD326F8792700E10253 /* FeedbackPlayer.swift */; };
@@ -300,6 +301,7 @@
 		B50945B628054E8900E8AFC0 /* list2-rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "list2-rules.json"; sourceTree = "<group>"; };
 		B515CF5329D426EF0010CC6D /* ServerVersionDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerVersionDownloader.swift; sourceTree = "<group>"; };
 		B515CF5529D429A80010CC6D /* DeviceInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoResponse.swift; sourceTree = "<group>"; };
+		B515CF5929D47E8D0010CC6D /* CheckInRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInRequest.swift; sourceTree = "<group>"; };
 		B5203DB427158C8800AAA417 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		B5203DB527158C8800AAA417 /* pretix_sig1.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = pretix_sig1.proto; sourceTree = "<group>"; };
 		B5203DB727158C8800AAA417 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 				B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */,
 				B5000E912997DAC600942799 /* BlockedSecret.swift */,
 				B515CF5529D429A80010CC6D /* DeviceInfoResponse.swift */,
+				B515CF5929D47E8D0010CC6D /* CheckInRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1369,6 +1372,7 @@
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */,
+				B515CF5A29D47E8D0010CC6D /* CheckInRequest.swift in Sources */,
 				DCB35BA02249408800860385 /* UIAlertController.swift in Sources */,
 				B5FA77972705BE61000E1644 /* 05_MigrationAddSeatJSON.swift in Sources */,
 				DC227F232253700900314448 /* SetupCodeScannerViewController.swift in Sources */,

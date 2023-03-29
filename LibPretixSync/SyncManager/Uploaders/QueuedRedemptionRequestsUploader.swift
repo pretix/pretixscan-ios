@@ -34,7 +34,7 @@ final class QueuedRedemptionRequestsUploader: APIClientOperation {
             }
             
             
-            urlSessionTask = apiClient.redeemTask(
+            urlSessionTask = apiClient.createCheckInTask(
                 secret: request.secret,
                 redemptionRequest: request.redemptionRequest,
                 eventSlug: request.eventSlug,

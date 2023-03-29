@@ -83,7 +83,8 @@ final class PXSecurityProfileRequestValidator {
         "api-v1:revokedsecrets-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)revokedsecrets\/$"#,
         "api-v1:order-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)orders\/$"#,
         "api-v1:blockedsecrets-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)blockedsecrets\/$"#,
-        "api-v1:upload": #"\/v1\/upload"#
+        "api-v1:upload": #"\/v1\/upload"#,
+        "api-v1:checkinrpc.redeem": #"(\/v1\/organizers\/)(.+?(?=\/))(\/checkinrpc\/redeem\/)$"#,
     ]
     
     
@@ -103,7 +104,9 @@ final class PXSecurityProfileRequestValidator {
                                                                                     ("POST", "api-v1:checkinlistpos-redeem"),
                                                                                     ("GET", "api-v1:revokedsecrets-list"),
                                                                                     ("GET", "api-v1:blockedsecrets-list"),
-                                                                                    ("POST", "api-v1:upload")]
+                                                                                    ("POST", "api-v1:upload"),
+                                                                                    ("POST", "api-v1:checkinrpc.redeem")
+    ]
     
     
     static let AllowListPretixScan: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
@@ -123,7 +126,8 @@ final class PXSecurityProfileRequestValidator {
                                                                                       ("GET", "api-v1:revokedsecrets-list"), // OK
                                                                                       ("GET", "api-v1:blockedsecrets-list"),
                                                                                       ("GET", "api-v1:order-list"),
-                                                                                      ("POST", "api-v1:upload")
+                                                                                      ("POST", "api-v1:upload"),
+                                                                                      ("POST", "api-v1:checkinrpc.redeem")
     ]
     
     static let AllowListKiosk: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [    ("POST", "api-v1:device.update"),
@@ -141,7 +145,9 @@ final class PXSecurityProfileRequestValidator {
                                                                                      ("POST", "api-v1:checkinlistpos-redeem"),
                                                                                      ("GET", "api-v1:revokedsecrets-list"),
                                                                                      ("GET", "api-v1:blockedsecrets-list"),
-                                                                                     ("POST", "api-v1:upload")]
+                                                                                     ("POST", "api-v1:upload"),
+                                                                                     ("POST", "api-v1:checkinrpc.redeem")
+    ]
     
     
     /// Returns a list of endpoint names applicable for the provided security profile
