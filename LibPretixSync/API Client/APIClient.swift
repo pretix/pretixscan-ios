@@ -683,7 +683,7 @@ public extension APIClient {
                     checkInListIdentifier: Identifier? = nil,
                     completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) -> URLSessionDataTask? {
         
-        if configStore.knownPretixVersion ?? 0 > 40120001001 {
+        if configStore.knownPretixVersion ?? 0 >= 40120001001 {
             return checkInTask(secret: secret, redemptionRequest: redemptionRequest, completionHandler: completionHandler)
         } else {
             return redeemPositionTask(secret: secret, redemptionRequest: redemptionRequest, eventSlug: eventSlug, checkInListIdentifier: checkInListIdentifier, completionHandler: completionHandler)
