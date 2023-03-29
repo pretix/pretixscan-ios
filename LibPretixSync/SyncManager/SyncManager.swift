@@ -280,6 +280,28 @@ public class SyncManager {
         return uploader
     }
     
+    private func createServerVersionDownloader(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) -> ServerVersionDownloader {
+        let downloader = ServerVersionDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        downloader.configStore = self.configStore
+        downloader.completionBlock = {[weak self] in
+            if case .retryAfter(let seconds) = downloader.error as? APIError, downloader.shouldRepeat {
+                print("ServerVersionDownloader Request Received Retry-After \(seconds) seconds header. Postponing upload.")
+                self?.populateUploadQueue(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList, delay: TimeInterval(seconds))
+                return
+            }
+            
+            if let error = downloader.error {
+                if let urlError = error as? URLError, urlError.code == URLError.Code.notConnectedToInternet {
+                    logger.debug("ServerVersionDownloader Request failed while not connected to internet.")
+                } else {
+                    EventLogger.log(event: "ServerVersionDownloader Request came back with error: \(error)",
+                                    category: .offlineUpload, level: .error, type: .error)
+                }
+            }
+        }
+        return downloader
+    }
+    
     private func createFailedCheckInsUploader(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) -> QueueFailedCheckInsUploader {
         let uploader = QueueFailedCheckInsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         uploader.completionBlock = {[weak self] in
@@ -316,6 +338,8 @@ public class SyncManager {
     }
     
     private func populateUploadQueue(apiClient: APIClient, dataStore: DataStore, event: Event, checkInList: CheckInList) {
+        let serverDownloader = createServerVersionDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        queue.addOperation(serverDownloader)
         let updateVersion = createBumpVersionUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
         queue.addOperation(updateVersion)
         let uploader = createQueuedRedemptionRequestsUploader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)

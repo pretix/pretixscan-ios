@@ -107,6 +107,54 @@ public extension APIClient {
         task.resume()
     }
     
+    /// Retrieves device information
+    /// https://docs.pretix.eu/en/latest/api/deviceauth.html#device-information
+    func getServerVersion(completionHandler: @escaping (Error?, Int?) -> Void) -> URLSessionDataTask? {
+        do {
+            let urlPath = try createURL(for: "/api/v1/device/info")
+            var urlRequest = try createURLRequest(for: urlPath)
+            urlRequest.httpMethod = HttpMethod.GET
+            
+            
+            if !isAllowed(request: urlRequest) {
+                completionHandler(APIError.notAllowed, nil)
+                return nil
+            }
+            
+            let task = session.dataTask(with: urlRequest) { (data, _, error) in
+                guard error == nil else {
+                    completionHandler(error, nil)
+                    return
+                }
+                
+                guard let responseData = data else {
+                    completionHandler(APIError.emptyResponse, nil)
+                    return
+                }
+                
+                logger.debugRawDataAsString(responseData)
+                
+                let response: DeviceInfoResponse
+                do {
+                    response = try self.jsonDecoder.decode(DeviceInfoResponse.self, from: responseData)
+                } catch {
+                    completionHandler(error, nil)
+                    return
+                }
+
+                
+                completionHandler(nil, response.server?.version?.pretixNumeric)
+            }
+            
+            return task
+            
+        } catch {
+            logger.error("API task error \(String(describing: error))")
+            completionHandler(error, nil)
+            return nil
+        }
+    }
+    
     /// Updates the software version of the device on the server
     /// https://docs.pretix.eu/en/latest/api/deviceauth.html#updating-the-software-version
     func update(_ updateRequest: DeviceUpdateRequest, completionHandler: @escaping (Error?) -> Void) -> URLSessionDataTask? {
