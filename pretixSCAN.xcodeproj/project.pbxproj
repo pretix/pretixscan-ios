@@ -29,6 +29,9 @@
 		B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5014DB526E20DEB004C6604 /* Date+substract.swift */; };
 		B50945B528054C8500E8AFC0 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = B50945B428054C8500E8AFC0 /* SwiftyJSON */; };
 		B50945B728054E8900E8AFC0 /* list2-rules.json in Resources */ = {isa = PBXBuildFile; fileRef = B50945B628054E8900E8AFC0 /* list2-rules.json */; };
+		B515CF5429D426EF0010CC6D /* ServerVersionDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515CF5329D426EF0010CC6D /* ServerVersionDownloader.swift */; };
+		B515CF5629D429A80010CC6D /* DeviceInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515CF5529D429A80010CC6D /* DeviceInfoResponse.swift */; };
+		B515CF5A29D47E8D0010CC6D /* CheckInRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515CF5929D47E8D0010CC6D /* CheckInRequest.swift */; };
 		B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DAF27158C2B00AAA417 /* SwiftProtobuf */; };
 		B5203DB227158C2B00AAA417 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = B5203DB127158C2B00AAA417 /* SwiftProtobufPluginLibrary */; };
 		B5251DD426F8792700E10253 /* FeedbackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5251DD326F8792700E10253 /* FeedbackPlayer.swift */; };
@@ -296,6 +299,9 @@
 		B5000E972997E1D800942799 /* 11_MigrationAddBlockedToOrderPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 11_MigrationAddBlockedToOrderPosition.swift; sourceTree = "<group>"; };
 		B5014DB526E20DEB004C6604 /* Date+substract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+substract.swift"; sourceTree = "<group>"; };
 		B50945B628054E8900E8AFC0 /* list2-rules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "list2-rules.json"; sourceTree = "<group>"; };
+		B515CF5329D426EF0010CC6D /* ServerVersionDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerVersionDownloader.swift; sourceTree = "<group>"; };
+		B515CF5529D429A80010CC6D /* DeviceInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoResponse.swift; sourceTree = "<group>"; };
+		B515CF5929D47E8D0010CC6D /* CheckInRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInRequest.swift; sourceTree = "<group>"; };
 		B5203DB427158C8800AAA417 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		B5203DB527158C8800AAA417 /* pretix_sig1.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = pretix_sig1.proto; sourceTree = "<group>"; };
 		B5203DB727158C8800AAA417 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -598,6 +604,7 @@
 				B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */,
 				B525796727292269006D9EE9 /* QuestionsDownloader.swift */,
 				B5000E952997DCA400942799 /* BlockedSecretDownloader.swift */,
+				B515CF5329D426EF0010CC6D /* ServerVersionDownloader.swift */,
 			);
 			path = Downloaders;
 			sourceTree = "<group>";
@@ -1007,6 +1014,8 @@
 				B5D255EB272318F50064652F /* EventValidKey.swift */,
 				B5956BCD285A0B65002D34EC /* OrderPositionCheckin.swift */,
 				B5000E912997DAC600942799 /* BlockedSecret.swift */,
+				B515CF5529D429A80010CC6D /* DeviceInfoResponse.swift */,
+				B515CF5929D47E8D0010CC6D /* CheckInRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1338,6 +1347,7 @@
 				DC23BA4B223FCFF200ED7713 /* CheckInList.swift in Sources */,
 				DCAAFF47223AB6A00059C000 /* DeviceInitializationRequest.swift in Sources */,
 				DCAAFF3822396EC30059C000 /* Segues.swift in Sources */,
+				B515CF5429D426EF0010CC6D /* ServerVersionDownloader.swift in Sources */,
 				B5BD3E452715D3ED003FEB74 /* EventValidKeys.swift in Sources */,
 				DCEEF12A227DBD9F00BCAF82 /* SyncOperations.swift in Sources */,
 				B5FA77912705BDEC000E1644 /* 01_InitialMigration.swift in Sources */,
@@ -1362,6 +1372,7 @@
 				DC1D6FCB22427B2D008A9E06 /* RedemptionRequest.swift in Sources */,
 				DC1D6FB12240ECF4008A9E06 /* TicketValidator.swift in Sources */,
 				DCDD82CF224BB96E00DC0200 /* CheckInListStatus.swift in Sources */,
+				B515CF5A29D47E8D0010CC6D /* CheckInRequest.swift in Sources */,
 				DCB35BA02249408800860385 /* UIAlertController.swift in Sources */,
 				B5FA77972705BE61000E1644 /* 05_MigrationAddSeatJSON.swift in Sources */,
 				DC227F232253700900314448 /* SetupCodeScannerViewController.swift in Sources */,
@@ -1496,6 +1507,7 @@
 				DCDD82DD224BDE7E00DC0200 /* ItemVariationTableViewCell.swift in Sources */,
 				08FF5FBC27A7E2A800130F41 /* PXSecurityProfileRequestValidator.swift in Sources */,
 				DCAAFF51223ACAC60059C000 /* HttpMethods.swift in Sources */,
+				B515CF5629D429A80010CC6D /* DeviceInfoResponse.swift in Sources */,
 				DC8467BF225CF4000013F647 /* ItemAddon.swift in Sources */,
 				B5B990AD26EB59F90029D614 /* Seat.swift in Sources */,
 				B5000E902997DA7F00942799 /* FMDBBlockedSecret.swift in Sources */,

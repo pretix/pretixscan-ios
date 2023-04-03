@@ -93,6 +93,9 @@ public protocol ConfigStore: AnyObject {
 
     /// The CheckInList to scan against
     var checkInList: CheckInList? { get }
+    
+    /// The version of the server we're currently connected to
+    var knownPretixVersion: Int? { get set }
 
     /// Set both event and checkinlist
     func set(event: Event, checkInList: CheckInList)

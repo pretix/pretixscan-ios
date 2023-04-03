@@ -67,6 +67,7 @@ final class PXSecurityProfileRequestValidator {
     /// Endpoint detection expressions
     static let EndpointExpressions: [PXAllowedEndpointName: PXEndpointRegExPattern] = [
         "api-v1:device.update": #"(\/v1\/device\/update)$"#,
+        "api-v1:device.info": #"(\/v1\/device\/info)$"#,
         "api-v1:event-list": #"(\/v1\/organizers\/)(.+?(?=\/))(\/events\/)$"#,
         "api-v1:event-detail": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)$"#,
         "api-v1:subevent-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)subevents\/$"#,
@@ -82,11 +83,13 @@ final class PXSecurityProfileRequestValidator {
         "api-v1:revokedsecrets-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)revokedsecrets\/$"#,
         "api-v1:order-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)orders\/$"#,
         "api-v1:blockedsecrets-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)blockedsecrets\/$"#,
-        "api-v1:upload": #"\/v1\/upload"#
+        "api-v1:upload": #"\/v1\/upload"#,
+        "api-v1:checkinrpc.redeem": #"(\/v1\/organizers\/)(.+?(?=\/))(\/checkinrpc\/redeem\/)$"#,
     ]
     
     
     static let AllowListNoOrders: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
+                                                                                    ("GET", "api-v1:device.info"),
                                                                                     ("GET", "api-v1:event-list"),
                                                                                     ("GET", "api-v1:event-detail"),
                                                                                     ("GET", "api-v1:subevent-list"),
@@ -101,10 +104,13 @@ final class PXSecurityProfileRequestValidator {
                                                                                     ("POST", "api-v1:checkinlistpos-redeem"),
                                                                                     ("GET", "api-v1:revokedsecrets-list"),
                                                                                     ("GET", "api-v1:blockedsecrets-list"),
-                                                                                    ("POST", "api-v1:upload")]
+                                                                                    ("POST", "api-v1:upload"),
+                                                                                    ("POST", "api-v1:checkinrpc.redeem")
+    ]
     
     
     static let AllowListPretixScan: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
+                                                                                      ("GET", "api-v1:device.info"),
                                                                                       ("GET", "api-v1:event-list"), // OK
                                                                                       ("GET", "api-v1:event-detail"), // OK, POST?
                                                                                       ("GET", "api-v1:subevent-list"), // OK
@@ -120,10 +126,12 @@ final class PXSecurityProfileRequestValidator {
                                                                                       ("GET", "api-v1:revokedsecrets-list"), // OK
                                                                                       ("GET", "api-v1:blockedsecrets-list"),
                                                                                       ("GET", "api-v1:order-list"),
-                                                                                      ("POST", "api-v1:upload")
+                                                                                      ("POST", "api-v1:upload"),
+                                                                                      ("POST", "api-v1:checkinrpc.redeem")
     ]
     
     static let AllowListKiosk: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [    ("POST", "api-v1:device.update"),
+                                                                                     ("GET", "api-v1:device.info"),
                                                                                      ("GET", "api-v1:event-list"),
                                                                                      ("GET", "api-v1:event-detail"),
                                                                                      ("GET", "api-v1:subevent-list"),
@@ -137,7 +145,9 @@ final class PXSecurityProfileRequestValidator {
                                                                                      ("POST", "api-v1:checkinlistpos-redeem"),
                                                                                      ("GET", "api-v1:revokedsecrets-list"),
                                                                                      ("GET", "api-v1:blockedsecrets-list"),
-                                                                                     ("POST", "api-v1:upload")]
+                                                                                     ("POST", "api-v1:upload"),
+                                                                                     ("POST", "api-v1:checkinrpc.redeem")
+    ]
     
     
     /// Returns a list of endpoint names applicable for the provided security profile

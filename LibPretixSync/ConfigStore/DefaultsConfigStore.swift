@@ -38,6 +38,7 @@ public class DefaultsConfigStore: ConfigStore {
         case shouldAutoSync
         case publishedSoftwareVersion
         case enableSearch
+        case knownPretixVersion
     }
 
     public var enableSearch: Bool {
@@ -60,6 +61,14 @@ public class DefaultsConfigStore: ConfigStore {
         get { return _apiBaseURL }
         set {
             _apiBaseURL = newValue
+            valueChanged()
+        }
+    }
+    
+    public var knownPretixVersion: Int? {
+        get { return _knownPretixVersion }
+        set {
+            _knownPretixVersion = newValue
             valueChanged()
         }
     }
@@ -246,6 +255,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _welcomeScreenIsConfirmed: Bool = false
     private var _apiBaseURL: URL?
     private var _apiToken: String?
+    private var _knownPretixVersion: Int?
     private var _apiClient: APIClient?
     private var _offlineTicketValidator: OfflineTicketValidator?
     private var _onlineTicketValidator: OnlineTicketValidator?
@@ -296,6 +306,7 @@ public class DefaultsConfigStore: ConfigStore {
         _welcomeScreenIsConfirmed = false
         _apiBaseURL = nil
         _apiToken = nil
+        _knownPretixVersion = nil
         _apiClient = nil
         _deviceName = nil
         _organizerSlug = nil
@@ -358,6 +369,7 @@ private extension DefaultsConfigStore {
         _publishedVersion = defaults.string(forKey: key(.publishedSoftwareVersion))
         _enableSearch = defaults.value(forKey: key(.enableSearch)) as? Bool ?? true
         _shouldAutoSync = defaults.value(forKey: key(.shouldAutoSync)) as? Bool ?? true
+        _knownPretixVersion = defaults.value(forKey: key(.knownPretixVersion)) as? Int
         
         // Event
         if let eventData = defaults.data(forKey: key(.event)) {
@@ -392,6 +404,7 @@ private extension DefaultsConfigStore {
         save(_welcomeScreenIsConfirmed, forKey: .welcomeScreenIsConfirmed)
         save(_apiBaseURL, forKey: .apiBaseURL)
         save(_deviceName, forKey: .deviceName)
+        save(_knownPretixVersion, forKey: .knownPretixVersion)
         save(_organizerSlug, forKey: .organizerSlug)
         save(_deviceID, forKey: .deviceID)
         save(_securityProfile.rawValue, forKey: .securityProfile)
