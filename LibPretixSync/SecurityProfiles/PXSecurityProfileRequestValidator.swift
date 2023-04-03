@@ -104,13 +104,8 @@ final class PXSecurityProfileRequestValidator {
                                                                                     ("POST", "api-v1:checkinlistpos-redeem"),
                                                                                     ("GET", "api-v1:revokedsecrets-list"),
                                                                                     ("GET", "api-v1:blockedsecrets-list"),
-<<<<<<< HEAD
                                                                                     ("POST", "api-v1:upload"),
-                                                                                    ("POST", "api-v1:checkinrpc.redeem")
-    ]
-=======
-                                                                                    ("POST", "api-v1:upload")]
->>>>>>> c77e7c93996a2e160027d7976c9dee1a20f61abc
+                                                                                    ("POST", "api-v1:checkinrpc.redeem")]
     
     
     static let AllowListPretixScan: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
@@ -149,13 +144,8 @@ final class PXSecurityProfileRequestValidator {
                                                                                      ("POST", "api-v1:checkinlistpos-redeem"),
                                                                                      ("GET", "api-v1:revokedsecrets-list"),
                                                                                      ("GET", "api-v1:blockedsecrets-list"),
-<<<<<<< HEAD
                                                                                      ("POST", "api-v1:upload"),
-                                                                                     ("POST", "api-v1:checkinrpc.redeem")
-    ]
-=======
-                                                                                     ("POST", "api-v1:upload")]
->>>>>>> c77e7c93996a2e160027d7976c9dee1a20f61abc
+                                                                                     ("POST", "api-v1:checkinrpc.redeem")]
     
     
     /// Returns a list of endpoint names applicable for the provided security profile
