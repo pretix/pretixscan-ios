@@ -263,7 +263,7 @@ extension FMDBDataStore {
     public func getSubEvent(id: Identifier, for event: Event) -> Result<SubEvent?, Error> {
         var subEvent: SubEvent? = nil
         databaseQueue(with: event).inDatabase { database in
-            if let result = try? database.executeQuery(SubEvent.searchById, values: [event.slug]) {
+            if let result = try? database.executeQuery(SubEvent.searchById, values: [id]) {
                 while result.next() {
                     if let item = SubEvent.from(result: result, in: database) { subEvent = item }
                 }
