@@ -177,3 +177,6 @@
 
 /* Reset Device */
 "Reset Device" = "Gerät zurücksetzen";
+
+/* There are no events to show */
+"There are no events to show" = "Es wurde kein gegenwärtiges oder zukünftiges Event gefunden. Bitte prüfen Sie das Datum und die Zugriffsrechte Ihrer Veranstaltungen.";

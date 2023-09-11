@@ -53,11 +53,15 @@ class SelectEventTableViewController: UITableViewController, Configurable {
         subEvents = [:]
 
         var subEventsLoading = 0
+        hideEmptyMessage()
 
         configStore?.ticketValidator?.getEvents { (eventList, error) in
             self.presentErrorAlert(ifError: error)
             self.events = eventList
             if let events = self.events {
+                if events.isEmpty {
+                    self.showEmptyMessage()
+                }
                 subEventsLoading = events.count
                 for event in events {
                     guard event.hasSubEvents else {
@@ -84,7 +88,15 @@ class SelectEventTableViewController: UITableViewController, Configurable {
                 }
             } else {
                 self.isLoading = false
+                self.showEmptyMessage()
             }
+            
+        }
+    }
+    
+    func showEmptyMessage() {
+        DispatchQueue.main.async {[weak self] in
+            self?.setBackgroundMessage(Localization.SelectEventTableViewController.NoEventsToShowError)
         }
     }
 
@@ -163,5 +175,24 @@ class SelectEventTableViewController: UITableViewController, Configurable {
             }
         }))
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+private extension SelectEventTableViewController {
+
+    /// Update the background of the tableView to show a message
+    func setBackgroundMessage(_ message: String) {
+        let messageLabel = LabelWithPadding(withInsets: 20, 20, 20, 20)
+        messageLabel.text = message
+        messageLabel.textColor = PXColor.dynamicText
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.sizeToFit()
+        self.tableView.backgroundView = messageLabel
+    }
+
+    /// Remove the background of the tableView
+    func hideEmptyMessage() {
+        self.tableView.backgroundView = nil
     }
 }

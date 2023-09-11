@@ -58,6 +58,7 @@ struct Localization {
     struct SelectEventTableViewController {
         static let Title = NSLocalizedString("Select Event", comment: "")
         static let ResetDevice = NSLocalizedString("Reset Device", comment: "")
+        static let NoEventsToShowError = NSLocalizedString("There are no events to show", comment: "")
     }
 
     struct SelectCheckInListTableViewController {
