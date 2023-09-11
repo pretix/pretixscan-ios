@@ -39,6 +39,8 @@ class SelectEventTableViewController: UITableViewController, Configurable {
         super.viewDidLoad()
         title = Localization.SelectEventTableViewController.Title
         refreshControl?.addTarget(self, action: #selector(updateView), for: .valueChanged)
+        hideNavBarBackButton()
+        setTrailingNavBarAction(title:  Localization.SelectEventTableViewController.ResetDevice, selector: #selector(self.confirmFactoryReset), target: self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -140,5 +142,26 @@ class SelectEventTableViewController: UITableViewController, Configurable {
             selectCheckInListViewController.event = selectedEvent
             selectCheckInListViewController.subEvent = selectedSubEvent
         }
+    }
+    
+    // MARK: Sign out
+    @objc func confirmFactoryReset() {
+        let alert = UIAlertController(
+            title: Localization.SettingsTableViewController.PerformFactoryReset,
+            message: Localization.SettingsTableViewController.FactoryResetConfirmMessage,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.CancelReset, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.ConfirmReset, style: .destructive, handler: { [weak self] _ in
+            self?.configStore?.factoryReset()
+            self?.configStore?.syncManager.resetSyncState()
+            self?.dismiss(animated: true)
+            if let validateController = (self?.presentingViewController as? UINavigationController)?.viewControllers[0] as? ValidateTicketViewController {
+                // as this is a modal, the first run actions will not run automatically
+                DispatchQueue.main.async {
+                    validateController.checkFirstRunActions()
+                }
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }

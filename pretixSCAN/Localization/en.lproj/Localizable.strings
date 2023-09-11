@@ -364,3 +364,6 @@
 
 /* Invalid time (ticket signature) */
 "Invalid time" = "Ticket currently not valid";
+
+/* Reset Device */
+"Reset Device" = "Reset Device";

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -57,6 +57,7 @@
 		B548031F299E094000B6356E /* order.json in Resources */ = {isa = PBXBuildFile; fileRef = B548031E299E094000B6356E /* order.json */; };
 		B5480321299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480320299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift */; };
 		B5480323299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480322299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift */; };
+		B5502A342AAF4DEB00107B65 /* UIViewController+navBarControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5502A332AAF4DEB00107B65 /* UIViewController+navBarControls.swift */; };
 		B553421A272BF81A003008AD /* EntryAnswersCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */; };
 		B553421E272BF8AF003008AD /* question3.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421B272BF8AF003008AD /* question3.json */; };
 		B553421F272BF8AF003008AD /* question2.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421C272BF8AF003008AD /* question2.json */; };
@@ -327,6 +328,7 @@
 		B548031E299E094000B6356E /* order.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = order.json; sourceTree = "<group>"; };
 		B5480320299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketEntryValidFromToChecker.swift; sourceTree = "<group>"; };
 		B5480322299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 12_MigrationAddValidToFrom.swift; sourceTree = "<group>"; };
+		B5502A332AAF4DEB00107B65 /* UIViewController+navBarControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+navBarControls.swift"; sourceTree = "<group>"; };
 		B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryAnswersCheckerTests.swift; sourceTree = "<group>"; };
 		B553421B272BF8AF003008AD /* question3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question3.json; sourceTree = "<group>"; };
 		B553421C272BF8AF003008AD /* question2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question2.json; sourceTree = "<group>"; };
@@ -1054,6 +1056,7 @@
 				DCB35B9C2249406000860385 /* UIDevice.swift */,
 				DC227F2022536B5B00314448 /* AppCoordinator.swift */,
 				B5C2F00527CA6BD3004A3166 /* ImageResize.swift */,
+				B5502A332AAF4DEB00107B65 /* UIViewController+navBarControls.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1438,6 +1441,7 @@
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				B5534228272C2E47003008AD /* TelQuestionCell.swift in Sources */,
 				DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */,
+				B5502A342AAF4DEB00107B65 /* UIViewController+navBarControls.swift in Sources */,
 				B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */,
 				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
 				B58CF83826F3104F00FADA2A /* Logger.swift in Sources */,
