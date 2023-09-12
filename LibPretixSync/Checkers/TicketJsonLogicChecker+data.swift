@@ -21,7 +21,10 @@ extension TicketJsonLogicChecker {
         logger.debug("raw queuedCheckIns: \(queuedCheckIns.count), raw orderedCheckIns: \(orderCheckIns.count)")
         let entryCheckIns = queuedCheckIns + orderCheckIns
         
+        let config = getConfigStore()
+        
         return JSON([
+            "gate": config.deviceKnownGateId != nil ? String(config.deviceKnownGateId!) : "",
             "now": dateFormatter.string(from: self.now),
             "now_isoweekday": calendar.dateComponents([.weekday], from: self.now).weekday! - 1, // Weekday starts with 1 on Sunday but server expects Monday = 1 https://developer.apple.com/documentation/foundation/calendar/component/weekday
             "minutes_since_last_entry": Self.getMinutesSinceLastEntryForCheckInListOrMinus1(entryCheckIns, listId: self.checkInList.identifier, now: self.now),

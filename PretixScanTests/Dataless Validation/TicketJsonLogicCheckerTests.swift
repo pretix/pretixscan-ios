@@ -761,6 +761,93 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         }
     }
     
+    func testCheckerValidatesGate() {
+        let rules = """
+{
+  "inList": [
+    { "var": "gate" },
+    { "objectList": [{ "lookup": ["gate", "1", "Gate 1"] }, { "lookup": ["gate", "2", "Gate 2"] }] }
+  ]
+}
+"""
+        // arrange
+        // override the local configuration with an appropriate gate id
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.configStore?.deviceKnownGateId = 1
+        
+        let list = getListWith(rules: JSON(rules))
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
+        
+        // act
+        let result = sut.redeem(ticket: mockTicket())
+        
+        // assert
+        switch result {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+    }
+    
+    func testCheckerFailsGate() {
+        let rules = """
+{
+  "inList": [
+    { "var": "gate" },
+    { "objectList": [{ "lookup": ["gate", "1", "Gate 1"] }, { "lookup": ["gate", "2", "Gate 2"] }] }
+  ]
+}
+"""
+        // arrange
+        // override the local configuration with an appropriate gate id
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.configStore?.deviceKnownGateId = 77
+        
+        let list = getListWith(rules: JSON(rules))
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
+        
+        // act
+        let result = sut.redeem(ticket: mockTicket())
+        
+        // assert
+        switch result {
+        case .success():
+            XCTFail("Expected failure due to rules but check succeeded.")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testCheckerFailsGateWhenNotSet() {
+        let rules = """
+{
+  "inList": [
+    { "var": "gate" },
+    { "objectList": [{ "lookup": ["gate", "1", "Gate 1"] }, { "lookup": ["gate", "2", "Gate 2"] }] }
+  ]
+}
+"""
+        // arrange
+        // override the local configuration with an appropriate gate id
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.configStore?.deviceKnownGateId = nil
+        
+        let list = getListWith(rules: JSON(rules))
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
+        
+        // act
+        let result = sut.redeem(ticket: mockTicket())
+        
+        // assert
+        switch result {
+        case .success():
+            XCTFail("Expected failure due to rules but check succeeded.")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
     
     // MARK: - mocks
     func mockEvent(_ name: String = "event1") -> Event {
