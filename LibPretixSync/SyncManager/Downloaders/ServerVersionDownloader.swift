@@ -29,13 +29,16 @@ final class ServerVersionDownloader: APIClientOperation {
         }
         
         
-        urlSessionTask = apiClient.getServerVersion { error, version in
+        urlSessionTask = apiClient.getServerVersion { error, deviceInfo in
             if let error = error {
                 logger.error("🍅 ServerVersionDownloader failed \(String(describing: error))")
             } else {
-                logger.debug("🪧 Server version: \(String(describing: version))")
+                let version = deviceInfo?.server?.version?.pretixNumeric
+                let gate = deviceInfo?.device?.gate?.id
+                logger.debug("🪧 Server version: \(String(describing: version)), Gate: \(String(describing: gate))")
                 DispatchQueue.main.async {
                     configStore.knownPretixVersion = version
+                    configStore.deviceKnownGateId = gate
                 }
             }
             // The instantiator of this class should queue more operations in the completion block.

@@ -11,6 +11,7 @@ import Foundation
 
 public struct DeviceInfoResponse: Codable, Equatable {
     let server: ServerInfo?
+    let device: DeviceInfoData?
 }
 
 public struct ServerInfo: Codable, Equatable {
@@ -25,4 +26,13 @@ public struct ServerVersionInfo: Codable, Equatable {
         case pretixNumeric = "pretix_numeric"
         case pretix
     }
+}
+
+public struct DeviceInfoData: Codable, Equatable {
+    let gate: DeviceInfoGate?
+}
+
+public struct DeviceInfoGate: Codable, Equatable {
+    let id: Identifier
+    let name: String
 }

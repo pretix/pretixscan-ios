@@ -39,6 +39,7 @@ public class DefaultsConfigStore: ConfigStore {
         case publishedSoftwareVersion
         case enableSearch
         case knownPretixVersion
+        case deviceKnownGateId
     }
 
     public var enableSearch: Bool {
@@ -69,6 +70,14 @@ public class DefaultsConfigStore: ConfigStore {
         get { return _knownPretixVersion }
         set {
             _knownPretixVersion = newValue
+            valueChanged()
+        }
+    }
+    
+    public var deviceKnownGateId: Int? {
+        get { return _deviceKnownGateId }
+        set {
+            _deviceKnownGateId = newValue
             valueChanged()
         }
     }
@@ -256,6 +265,7 @@ public class DefaultsConfigStore: ConfigStore {
     private var _apiBaseURL: URL?
     private var _apiToken: String?
     private var _knownPretixVersion: Int?
+    private var _deviceKnownGateId: Int?
     private var _apiClient: APIClient?
     private var _offlineTicketValidator: OfflineTicketValidator?
     private var _onlineTicketValidator: OnlineTicketValidator?
@@ -307,6 +317,7 @@ public class DefaultsConfigStore: ConfigStore {
         _apiBaseURL = nil
         _apiToken = nil
         _knownPretixVersion = nil
+        _deviceKnownGateId = nil
         _apiClient = nil
         _deviceName = nil
         _organizerSlug = nil
@@ -370,6 +381,7 @@ private extension DefaultsConfigStore {
         _enableSearch = defaults.value(forKey: key(.enableSearch)) as? Bool ?? true
         _shouldAutoSync = defaults.value(forKey: key(.shouldAutoSync)) as? Bool ?? true
         _knownPretixVersion = defaults.value(forKey: key(.knownPretixVersion)) as? Int
+        _deviceKnownGateId = defaults.value(forKey: key(.deviceKnownGateId)) as? Int
         
         // Event
         if let eventData = defaults.data(forKey: key(.event)) {
@@ -405,6 +417,7 @@ private extension DefaultsConfigStore {
         save(_apiBaseURL, forKey: .apiBaseURL)
         save(_deviceName, forKey: .deviceName)
         save(_knownPretixVersion, forKey: .knownPretixVersion)
+        save(_deviceKnownGateId, forKey: .deviceKnownGateId)
         save(_organizerSlug, forKey: .organizerSlug)
         save(_deviceID, forKey: .deviceID)
         save(_securityProfile.rawValue, forKey: .securityProfile)
