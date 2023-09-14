@@ -12,15 +12,8 @@ import SwiftyJSON
 extension TicketJsonLogicChecker {
     func getTicketData(_ ticket: TicketData) -> String? {
         
-        let queuedCheckIns =
-        ((try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug, listId: self.checkInList.identifier).get()) ?? [])
-            .filter({$0.redemptionRequest.date != nil && $0.redemptionRequest.type == "entry"})
-            .map({OrderPositionCheckin(from: $0)})
-        let orderCheckIns = dataStore?.getOrderCheckIns(ticket.secret, type: "entry", self.event, listId: self.checkInList.identifier) ?? []
         
-        logger.debug("raw queuedCheckIns: \(queuedCheckIns.count), raw orderedCheckIns: \(orderCheckIns.count)")
-        let entryCheckIns = queuedCheckIns + orderCheckIns
-        
+        let entryCheckIns = Self.getEntryCheckIns(ticket: ticket, event: self.event, checkInListId: self.checkInList.identifier, dataStore)
         let config = getConfigStore()
         
         return JSON([
@@ -35,6 +28,17 @@ extension TicketJsonLogicChecker {
             "entries_today": Self.getEntriesTodayCount(entryCheckIns, calendar: calendar, today: self.now),
             "entries_days": Self.getEntriesDaysCount(entryCheckIns, calendar: calendar)
         ]).rawString()
+    }
+    
+    static func getEntryCheckIns(ticket: TicketData, event: Event, checkInListId: Identifier, _ dataStore: DatalessDataStore?) -> [OrderPositionCheckin] {
+        let queuedCheckIns =
+        ((try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug, listId: checkInListId).get()) ?? [])
+            .filter({$0.redemptionRequest.date != nil && $0.redemptionRequest.type == "entry"})
+            .map({OrderPositionCheckin(from: $0)})
+        let orderCheckIns = dataStore?.getOrderCheckIns(ticket.secret, type: "entry", event, listId: checkInListId) ?? []
+        
+        logger.debug("raw queuedCheckIns: \(queuedCheckIns.count), raw orderedCheckIns: \(orderCheckIns.count)")
+        return queuedCheckIns + orderCheckIns
     }
     
     static func getMinutesSinceFirstEntryForCheckInListOrMinus1(_ entryCheckIns: [OrderPositionCheckin], listId: Identifier, now: Date) -> Int {

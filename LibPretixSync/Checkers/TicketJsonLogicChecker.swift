@@ -52,7 +52,7 @@ final class TicketJsonLogicChecker {
         let data = getTicketData(ticket)
         
         do {
-            let result: Bool = try JsonLogic(rulesJSON, customOperators: getCustomRules()).applyRule(to: data)
+            let result: Bool = try JsonLogic(rulesJSON, customOperators: getCustomRules(ticket)).applyRule(to: data)
             switch result {
             case true:
                 return .success(())

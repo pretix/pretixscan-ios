@@ -848,6 +848,210 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         }
     }
     
+    func testValidatesEntriesSince() {
+        // Ticket is valid once before X and once after X
+        let rules = """
+{
+  "or": [
+    { "<=": [{ "var": "entries_number" }, 0] },
+    {
+      "and": [
+        {
+          "isAfter": [
+            { "var": "now" },
+            { "buildTime": ["custom", "2020-01-01T23:00:00.000+01:00"] },
+            0
+          ]
+        },
+        {
+          "<=": [
+            {
+              "entries_since": [
+                { "buildTime": ["custom", "2020-01-01T23:00:00.000+01:00"] }
+              ]
+            },
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}
+"""
+
+        let list = getListWith(rules: JSON(rules))
+        
+        // checking before time should succeed
+        switch TicketJsonLogicChecker(list: list, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T21:00:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("first check-in before should have succeeded: \(String(describing: err))")
+        }
+        
+        // (fails unless after 23h and only once)
+        let ds2 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T21:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: list.identifier, secret: "")
+        ])
+        
+        switch TicketJsonLogicChecker(list: list, dataStore: ds2, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T21:00:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("second checkin before designated time should fail")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+        
+        let ds3 = mockDataStore([])
+        
+        switch TicketJsonLogicChecker(list: list, dataStore: ds3, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T22:10:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("first check-in after should have succeeded: \(String(describing: err))")
+        }
+        
+        let ds4 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T22:10:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: list.identifier, secret: "")
+        ])
+        
+        switch TicketJsonLogicChecker(list: list, dataStore: ds4, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T22:10:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("second checkin after should fail because entries_since > 0")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+    }
+    
+    func testValidatesEntriesSinceTimeOfDay() {
+        // Ticket is valid once before X and once after X
+        let rules = """
+{
+  "or": [
+    { "<=": [{ "var": "entries_today" }, 0] },
+    {
+      "and": [
+        {
+          "isAfter": [
+            { "var": "now" },
+            { "buildTime": ["customtime", "23:00:00"] },
+            0
+          ]
+        },
+        {
+          "<=": [
+            { "entries_since": [{ "buildTime": ["customtime", "23:00:00"] }] },
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+"""
+        
+        let times = [
+            dateFormatter.date(from: "2020-01-01T22:00:00.000+09:00")!,
+            dateFormatter.date(from: "2020-01-01T23:01:00.000+09:00")!,
+            dateFormatter.date(from: "2020-01-02T22:00:00.000+09:00")!,
+            dateFormatter.date(from: "2020-01-02T23:01:00.000+09:00")!
+        ]
+
+        let list = getListWith(rules: JSON(rules))
+        
+        for (ix, time) in times.enumerated() {
+            let ds1 = mockDataStore((0..<ix).map({
+                .init(redemptionRequest: .init(date: times[$0], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: list.identifier, secret: "")
+            }))
+            
+            switch TicketJsonLogicChecker(list: list, dataStore: ds1, event: mockEvent(), date: time).redeem(ticket: mockTicket()) {
+            case .success():
+                break
+            case .failure(let err):
+                XCTFail("first check-in at \(ix). \(time) should have succeeded: \(String(describing: err))")
+            }
+            
+            
+            let ds2 = mockDataStore((0...ix).map({
+                .init(redemptionRequest: .init(date: times[$0], ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: list.identifier, secret: "")
+            }))
+            
+            switch TicketJsonLogicChecker(list: list, dataStore: ds2, event: mockEvent(), date: time).redeem(ticket: mockTicket()) {
+            case .success():
+                XCTFail("second checkin at \(time) should fail")
+            case .failure(let err):
+                XCTAssertEqual(err, .rules)
+            }
+        }
+    }
+    
+    
+    func testValidatesEntriesBefore() {
+        // Ticket is valid after 23:00 only if people already showed up before
+        let rules = """
+{
+  "or": [
+    {
+      "isBefore": [
+        { "var": "now" },
+        { "buildTime": ["custom", "2020-01-01T23:00:00.000+01:00"] },
+        0
+      ]
+    },
+    {
+      "and": [
+        {
+          "isAfter": [
+            { "var": "now" },
+            { "buildTime": ["custom", "2020-01-01T23:00:00.000+01:00"] },
+            0
+          ]
+        },
+        {
+          ">=": [
+            {
+              "entries_before": [
+                { "buildTime": ["custom", "2020-01-01T23:00:00.000+01:00"] }
+              ]
+            },
+            1
+          ]
+        }
+      ]
+    }
+  ]
+}
+"""
+
+        let list = getListWith(rules: JSON(rules))
+        
+        switch TicketJsonLogicChecker(list: list, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T21:00:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("first check-in before should have succeeded: \(String(describing: err))")
+        }
+        
+        switch TicketJsonLogicChecker(list: list, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T22:10:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("check-in should fail because it's after 23h and the ticket hasn't shown up before")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+        
+        
+        
+        let ds1 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T21:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: "")
+        ])
+        
+        switch TicketJsonLogicChecker(list: list, dataStore: ds1, event: mockEvent(), date: dateFormatter.date(from: "2020-01-01T22:10:00.000Z")!).redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("check-in should succeed because the person has been seen before: \(String(describing: err))")
+        }
+    }
     
     // MARK: - mocks
     func mockEvent(_ name: String = "event1") -> Event {
