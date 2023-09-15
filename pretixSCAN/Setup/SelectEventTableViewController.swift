@@ -26,6 +26,7 @@ class SelectEventTableViewController: UITableViewController, Configurable {
 
     private var events: [Event]?
     private var subEvents: [Event: [SubEvent]]?
+    var showingResetDevice: Bool = false
 
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -39,12 +40,22 @@ class SelectEventTableViewController: UITableViewController, Configurable {
         super.viewDidLoad()
         title = Localization.SelectEventTableViewController.Title
         refreshControl?.addTarget(self, action: #selector(updateView), for: .valueChanged)
-        hideNavBarBackButton()
-        setTrailingNavBarAction(title:  Localization.SelectEventTableViewController.ResetDevice, selector: #selector(self.confirmFactoryReset), target: self)
+        
+        if !showingResetDevice {
+            setLeadingNavBarAction(title: Localization.Common.dismiss, selector: #selector(self.hide), target: self)
+        } else {
+            clearLeadingBavBarAction()
+            hideNavBarBackButton()
+            setTrailingNavBarAction(title:  Localization.SelectEventTableViewController.ResetDevice, selector: #selector(self.confirmFactoryReset), target: self)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         updateView()
+    }
+    
+    @objc func hide() {
+        self.dismiss(animated: true)
     }
 
     @objc private func updateView() {

@@ -172,4 +172,8 @@ struct Localization {
         static let booleanNo = NSLocalizedString("No", comment: "Answer to a Boolean Check In Question")
         static let requiredBooleanQuestion = NSLocalizedString("You have to answer YES to check in", comment: "Note for a required boolean question")
     }
+    
+    struct Common {
+        static let dismiss = NSLocalizedString("Dismiss", comment: "")
+    }
 }
