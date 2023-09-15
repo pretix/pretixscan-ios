@@ -115,6 +115,7 @@ struct Localization {
         static let BeginSyncing = NSLocalizedString("Sync Now", comment: "")
         static let ForceSync = NSLocalizedString("Force Complete Resync", comment: "")
         static let Version = NSLocalizedString("App Version", comment: "")
+        static let Gate = NSLocalizedString("Gate", comment: "")
         static let PerformFactoryReset = NSLocalizedString("Reset Contents and Settings", comment: "")
         static let FactoryResetConfirmMessage = NSLocalizedString("This will delete event data from the device and log you out. Do you want to continue?", comment: "")
         static let CancelReset = NSLocalizedString("Do Nothing", comment: "")

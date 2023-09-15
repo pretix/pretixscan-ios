@@ -35,10 +35,12 @@ final class ServerVersionDownloader: APIClientOperation {
             } else {
                 let version = deviceInfo?.server?.version?.pretixNumeric
                 let gate = deviceInfo?.device?.gate?.id
-                logger.debug("🪧 Server version: \(String(describing: version)), Gate: \(String(describing: gate))")
+                let gateName = deviceInfo?.device?.gate?.name
+                logger.debug("🪧 Server version: \(String(describing: version)), Gate: \(String(describing: gate)) \(String(describing: gateName))")
                 DispatchQueue.main.async {
                     configStore.knownPretixVersion = version
                     configStore.deviceKnownGateId = gate
+                    configStore.deviceKnownGateName = gateName
                 }
             }
             // The instantiator of this class should queue more operations in the completion block.

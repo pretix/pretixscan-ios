@@ -11,6 +11,7 @@ import UIKit
 class SettingsTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
     
+    @IBOutlet weak var gateCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var shouldAutoSyncCell: UITableViewCell!
     @IBOutlet weak var shouldDownloadOrdersCell: UITableViewCell!
@@ -62,6 +63,9 @@ class SettingsTableViewController: UITableViewController, Configurable {
         
         versionCell.textLabel?.text = Localization.SettingsTableViewController.Version
         versionCell.detailTextLabel?.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
+        
+        gateCell.textLabel?.text = Localization.SettingsTableViewController.Gate
+        gateCell.detailTextLabel?.text = configStore?.deviceKnownGateName ?? "---"
         
         resetContentCell.textLabel?.text = Localization.SettingsTableViewController.PerformFactoryReset
         
