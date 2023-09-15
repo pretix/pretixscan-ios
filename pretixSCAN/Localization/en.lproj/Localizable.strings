@@ -369,7 +369,7 @@
 "Reset Device" = "Reset Device";
 
 /* There are no events to show */
-"There are no events to show" = "No current or future event could be found. Please check the dates and access rights of your events.";
+"There are no events to show" = "No current or future event could be found. Please check the dates and access rights of your events and pull to refresh.";
 
 /* Dismiss */
 "Dismiss" = "Dismiss";
