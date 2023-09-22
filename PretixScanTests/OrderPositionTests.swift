@@ -128,7 +128,7 @@ class OrderPositionTests: XCTestCase {
         
         let order = Order(code: "ABC", status: .paid, secret: "ABC", email: nil, locale: nil, salesChannel: nil,
                           createdAt: nil, expiresAt: nil, lastModifiedAt: nil, total: nil, comment: nil,
-                          checkInAttention: nil, positions: nil, requireApproval: nil, validIfPending: nil)
+                          checkInAttention: nil, positions: nil, requireApproval: nil, validIfPending: nil, checkInText: nil)
         
         let orderPosition2 = OrderPosition(
             identifier: 1842899, orderCode: "RDTBG", orderStatus: .paid, order: order, positionid: 1, itemIdentifier: 25643,

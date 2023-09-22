@@ -103,12 +103,13 @@ class ItemTests: XCTestCase {
         requireApproval: false,
         requireBundling: false,
         generateTickets: nil,
+        checkInText: nil,
         hasVariations: true,
         variations: [
             ItemVariation(identifier: 6423, name: MultiLingualString.german("S"),
-                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 0, checkInAttention: nil),
+                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 0, checkInAttention: nil, checkInText: nil),
             ItemVariation(identifier: 6424, name: MultiLingualString.german("M"),
-                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 1, checkInAttention: nil)
+                          defaultPrice: nil, price: "25.00", active: true, description: MultiLingualString(), position: 1, checkInAttention: nil, checkInText: nil)
         ],
         addons: [],
         bundles: []

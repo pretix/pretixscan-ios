@@ -35,6 +35,9 @@ public struct ItemVariation: Codable, Equatable {
     
     /// If true, the check-in app should show a warning that this ticket requires special attention if such a variation is being scanned.
     public let checkInAttention: Bool?
+    
+    /// Additional text to be shown when this ticket is canned
+    public let checkInText: String?
 
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
@@ -45,5 +48,6 @@ public struct ItemVariation: Codable, Equatable {
         case description
         case position
         case checkInAttention = "checkin_attention"
+        case checkInText = "checkin_text"
     }
 }
