@@ -71,6 +71,7 @@ class SelectEventTableViewController: UITableViewController, Configurable {
             self.events = eventList
             if let events = self.events {
                 if events.isEmpty {
+                    self.isLoading = false
                     self.showEmptyMessage()
                 }
                 subEventsLoading = events.count
