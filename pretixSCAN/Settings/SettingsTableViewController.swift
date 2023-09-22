@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 class SettingsTableViewController: UITableViewController, Configurable {
     var configStore: ConfigStore?
@@ -33,6 +34,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     @IBOutlet weak var libraryLicenseCell7: UITableViewCell!
     
     var libraryLicenseCells = [UITableViewCell]()
+    private var anyCancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,8 +66,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
         versionCell.textLabel?.text = Localization.SettingsTableViewController.Version
         versionCell.detailTextLabel?.text = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
         
-        gateCell.textLabel?.text = Localization.SettingsTableViewController.Gate
-        gateCell.detailTextLabel?.text = configStore?.deviceKnownGateName ?? "---"
+        setAppInfoFromConfig()
         
         resetContentCell.textLabel?.text = Localization.SettingsTableViewController.PerformFactoryReset
         
@@ -78,6 +79,13 @@ class SettingsTableViewController: UITableViewController, Configurable {
             libraryLicenseCells[ix].textLabel?.text = library.name
             libraryLicenseCells[ix].detailTextLabel?.text = NSLocalizedString(library.license, comment: "")
         }
+        
+        beginObservingNotifications()
+    }
+    
+    func setAppInfoFromConfig() {
+        gateCell.textLabel?.text = Localization.SettingsTableViewController.Gate
+        gateCell.detailTextLabel?.text = configStore?.deviceKnownGateName ?? "---"
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -115,6 +123,23 @@ class SettingsTableViewController: UITableViewController, Configurable {
             Localization.SettingsTableViewController.LicensesSectionTitle
         ]
         return sectionTitles[section]
+    }
+    
+    private func beginObservingNotifications() {
+        NotificationCenter.default
+            .publisher(for: configStore!.changedNotification)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: {[weak self] notification in
+                self?.onConfigStoreChanged(notification)
+            })
+            .store(in: &anyCancellables)
+    }
+    
+    func onConfigStoreChanged(_ notification: Notification) {
+        guard let value = notification.userInfo?["value"] as? ConfigStoreValue else {
+            return
+        }
+        setAppInfoFromConfig()
     }
     
     // MARK: - Actions
