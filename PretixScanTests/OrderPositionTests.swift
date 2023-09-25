@@ -633,4 +633,67 @@ class OrderPositionTests: XCTestCase {
         XCTAssertEqual(result?.status, .redeemed)
         XCTAssertEqual(result?.calculatedProductLabel, "T-Shirt – XXL")
     }
+    
+    func testCheckInWithOrderCheckInText() {
+        let jsonData = testFileContents("order2")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        let jsonDataItem = testFileContents("item5")
+        let item = try! jsonDecoder.decode(Item.self, from: jsonDataItem)
+        
+        guard var position = order.positions?.first(where: {$0.identifier == 8}) else {
+            XCTFail("Invalid test data, looking for order position 8")
+            return
+        }
+        position = position.adding(order: order)
+        position = position.adding(item: item)
+        XCTAssertEqual(position.orderStatus, .paid)
+        
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid)
+        
+        XCTAssertEqual(result?.status, .redeemed)
+        XCTAssertEqual(result?.checkInTexts, ["text on order"])
+        XCTAssertEqual(result?.calculatedProductLabel, "Regular ticket with options – Not standard")
+    }
+    
+    func testCheckInWithOrderVariationWithoutCheckInText() {
+        let jsonData = testFileContents("order2")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        let jsonDataItem = testFileContents("item5")
+        let item = try! jsonDecoder.decode(Item.self, from: jsonDataItem)
+        
+        guard var position = order.positions?.first(where: {$0.identifier == 8}) else {
+            XCTFail("Invalid test data, looking for order position 8")
+            return
+        }
+        position = position.adding(order: order)
+        position = position.adding(item: item)
+        XCTAssertEqual(position.orderStatus, .paid)
+        
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid)
+        
+        XCTAssertEqual(result?.status, .redeemed)
+        XCTAssertEqual(result?.checkInTexts, ["text on order"])
+        XCTAssertEqual(result?.calculatedProductLabel, "Regular ticket with options – Not standard")
+    }
+    
+    func testCheckInWithOrderVariationWithCheckInText() {
+        let jsonData = testFileContents("order3")
+        let order = try! jsonDecoder.decode(Order.self, from: jsonData)
+        let jsonDataItem = testFileContents("item5")
+        let item = try! jsonDecoder.decode(Item.self, from: jsonDataItem)
+        
+        guard var position = order.positions?.first(where: {$0.identifier == 9}) else {
+            XCTFail("Invalid test data, looking for order position 9")
+            return
+        }
+        position = position.adding(order: order)
+        position = position.adding(item: item)
+        XCTAssertEqual(position.orderStatus, .paid)
+        
+        let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid)
+        
+        XCTAssertEqual(result?.status, .redeemed)
+        XCTAssertEqual(result?.checkInTexts, ["Check-in text on the product variation", "text on order"])
+        XCTAssertEqual(result?.calculatedProductLabel, "Regular ticket with options – Standard")
+    }
 }

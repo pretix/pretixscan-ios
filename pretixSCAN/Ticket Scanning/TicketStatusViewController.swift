@@ -95,7 +95,12 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             return
         }
         
-        productNameLabel.text = redemptionResponse.calculatedProductLabel
+        
+        if let checkInTexts = redemptionResponse.checkInTexts, !checkInTexts.isEmpty {
+            productNameLabel.text = redemptionResponse.calculatedProductLabel + "\n" + checkInTexts.joined(separator: "\n")
+        } else {
+            productNameLabel.text = redemptionResponse.calculatedProductLabel
+        }
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
         orderIDLabel.text =
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"

@@ -47,6 +47,8 @@ public struct RedemptionResponse: Codable, Equatable {
     /// If `true`, the check-in app should show a warning that this
     /// ticket requires special attention if a ticket of this order is scanned.
     public var checkInAttention: Bool? = nil
+    
+    public var checkInTexts: [String]? = nil
 
     // MARK: - Enums
     /// Possible values for the Response Status
@@ -99,6 +101,7 @@ public struct RedemptionResponse: Codable, Equatable {
         case questions
         case reasonExplanation = "reason_explanation"
         case checkInAttention = "require_attention"
+        case checkInTexts = "checkin_texts"
     }
 }
 
@@ -136,6 +139,20 @@ extension RedemptionResponse {
         if (orderPosition.item?.checkInAttention == true || orderPosition.calculatedVariation?.checkInAttention == true) {
             response.checkInAttention = true
         }
+        
+        var newTexts = [String]()
+        if let checkInText = orderPosition.item?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if let checkInText = orderPosition.calculatedVariation?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if let checkInText = orderPosition.order?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if !newTexts.isEmpty {
+            response.checkInTexts = newTexts
+        }
         return response
     }
     
@@ -143,6 +160,18 @@ extension RedemptionResponse {
         var response = Self.redeemed
         response.setDatalessDescription(item, variation: variation)
         response.checkInAttention = item.checkInAttention || variation?.checkInAttention == true
+        response.checkInTexts = response.checkInTexts ?? []
+        
+        var newTexts = [String]()
+        if let checkInText = item.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if let checkInText = variation?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if !newTexts.isEmpty {
+            response.checkInTexts = newTexts
+        }
         return response
     }
     

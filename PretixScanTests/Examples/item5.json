@@ -1,0 +1,44 @@
+{
+  "tax_rate": "0.00",
+  "active": true,
+  "position": 2,
+  "addons": [],
+  "name": { "en": "Regular ticket with options" },
+  "has_variations": true,
+  "id": 2,
+  "bundles": [],
+  "hide_without_voucher": false,
+  "allow_cancel": true,
+  "checkin_text": "",
+  "require_bundling": false,
+  "admission": true,
+  "description": {},
+  "free_price": false,
+  "variations": [
+    {
+      "price": "10.00",
+      "checkin_attention": false,
+      "id": 1,
+      "active": true,
+      "checkin_text": "Check-in text on the product variation",
+      "position": 0,
+      "description": {},
+      "value": { "en": "Standard" }
+    },
+    {
+      "price": "10.00",
+      "description": {},
+      "value": { "en": "Not standard" },
+      "checkin_text": "",
+      "checkin_attention": false,
+      "position": 1,
+      "active": true,
+      "id": 2
+    }
+  ],
+  "checkin_attention": false,
+  "require_approval": false,
+  "sales_channels": ["web"],
+  "default_price": "10.00",
+  "require_voucher": false
+}
