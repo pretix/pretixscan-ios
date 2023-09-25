@@ -95,16 +95,14 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             return
         }
         
-        
-        if let checkInTexts = redemptionResponse.checkInTexts, !checkInTexts.isEmpty {
-            productNameLabel.text = redemptionResponse.calculatedProductLabel + "\n" + checkInTexts.joined(separator: "\n")
-        } else {
-            productNameLabel.text = redemptionResponse.calculatedProductLabel
-        }
+        productNameLabel.text = redemptionResponse.calculatedProductLabel
         attendeeNameLabel.text = redemptionResponse.position?.attendeeName
         orderIDLabel.text =
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
         
+        if let notes = redemptionResponse.checkInTexts {
+            updateExtraInformation(.notes(values: notes))
+        }
         var newBackgroundColor = PXColor.grayBackground
         toggleTicketRequiresAttention(false)
         
@@ -272,13 +270,13 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
     }
     
     private func toggleExtraInformationIfAvailable(_ reason: TicketValidationReason) {
-        let extraInformation: TicketStatusExtraInformation = configStore?.ticketValidator?.isOnline == false ? .offlineValidation : .none
-        updateExtraInformation(extraInformation, reason)
+        let extraInformation: TicketStatusExtraInformation = configStore?.ticketValidator?.isOnline == false ? .offlineValidation(reason: reason) : .none
+        updateExtraInformation(extraInformation)
     }
     
-    private func updateExtraInformation(_ extra: TicketStatusExtraInformation, _ reason: TicketValidationReason) {
+    private func updateExtraInformation(_ extra: TicketStatusExtraInformation) {
         switch extra {
-        case .offlineValidation:
+        case .offlineValidation(reason: let reason):
             let attachment = NSTextAttachment()
             attachment.image = UIImage(systemName: "wifi.slash")?.withRenderingMode(.alwaysTemplate)
             let imageString = NSMutableAttributedString(attachment: attachment)
@@ -290,7 +288,9 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             }
             extraInformationLabel.attributedText = imageString
             extraInformationLabel.sizeToFit()
-            
+        case .notes(values: let values):
+            extraInformationLabel.text = values.joined(separator: "\n")
+            extraInformationLabel.sizeToFit()
         case .none:
             extraInformationLabel.text = nil
         }
