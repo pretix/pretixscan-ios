@@ -141,13 +141,13 @@ extension RedemptionResponse {
         }
         
         var newTexts = [String]()
-        if let checkInText = orderPosition.item?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+        if let checkInText = orderPosition.order?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
             newTexts.append(checkInText)
         }
         if let checkInText = orderPosition.calculatedVariation?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
             newTexts.append(checkInText)
         }
-        if let checkInText = orderPosition.order?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+        if let checkInText = orderPosition.item?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
             newTexts.append(checkInText)
         }
         if !newTexts.isEmpty {
@@ -163,10 +163,10 @@ extension RedemptionResponse {
         response.checkInTexts = response.checkInTexts ?? []
         
         var newTexts = [String]()
-        if let checkInText = item.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+        if let checkInText = variation?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
             newTexts.append(checkInText)
         }
-        if let checkInText = variation?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+        if let checkInText = item.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
             newTexts.append(checkInText)
         }
         if !newTexts.isEmpty {
