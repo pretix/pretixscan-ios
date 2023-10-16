@@ -67,7 +67,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         let newBackgroundColor = PXColor.error
         iconLabel.text = Icon.error
         ticketStatusLabel.text = Localization.TicketStatusViewController.Error
-        toggleExtraInformationIfAvailable(.unknown)
+        toggleExtraInformation([.offlineValidation(reason: .unknown)])
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
             self.backgroundColorView.backgroundColor = newBackgroundColor
@@ -100,9 +100,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         orderIDLabel.text =
         "\(redemptionResponse.position?.orderCode ?? "") \(redemptionResponse.position?.order?.status.localizedDescription() ?? "")"
         
-        if let notes = redemptionResponse.checkInTexts {
-            updateExtraInformation(.notes(values: notes))
-        }
         var newBackgroundColor = PXColor.grayBackground
         toggleTicketRequiresAttention(false)
         
@@ -110,7 +107,17 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         switch redemptionResponse.status {
         case .redeemed:
             newBackgroundColor = PXColor.okay
-            updateToRedeemed(needsAttention: needsAttention, redemptionResponse.position?.seat, exitMode)
+            updateToRedeemed(redemptionResponse.position?.seat, exitMode)
+            var extras = [TicketStatusExtraInformation]()
+            
+            if let notes = redemptionResponse.checkInTexts {
+                extras.append(.notes(values: notes))
+            }
+            if needsAttention {
+                extras.append(.requiresAttention)
+                toggleTicketRequiresAttention(true)
+            }
+            toggleExtraInformation(extras)
         case .incomplete:
             newBackgroundColor = PXColor.warning
             updateToIncomplete(redemptionResponse)
@@ -173,7 +180,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
     }
     
-    private func updateToRedeemed(needsAttention: Bool, _ seat: Seat?, _ exitMode: Bool) {
+    private func updateToRedeemed(_ seat: Seat?, _ exitMode: Bool) {
         if (exitMode) {
             iconLabel.text = Icon.exit
             setTicketStatus(status: Localization.TicketStatusViewController.ValidExit, with: seat)
@@ -181,8 +188,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             iconLabel.text = Icon.okay
             setTicketStatus(status: Localization.TicketStatusViewController.ValidTicket, with: seat)
         }
-        
-        toggleTicketRequiresAttention(needsAttention)
     }
     
     private func setTicketStatus(status: String, with seat: Seat?) {
@@ -237,7 +242,15 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             }
         }
         
-        toggleExtraInformationIfAvailable(redemptionResponse._validationReason)
+        var extras = [TicketStatusExtraInformation]()
+        if let notes = redemptionResponse.checkInTexts {
+            extras.append(.notes(values: notes))
+        }
+        if configStore?.ticketValidator?.isOnline == false {
+            extras.append(.offlineValidation(reason: redemptionResponse._validationReason))
+        }
+        toggleExtraInformation(extras)
+        
         toggleTicketRequiresAttention(redemptionResponse.isRequireAttention)
         
         return newBackgroundColor
@@ -252,15 +265,6 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             attendeeNameLabel.textColor = UIColor(named: "primaryText")
             extraInformationLabel.textColor = UIColor(named: "primaryText")
             
-            let attachment = NSTextAttachment()
-            attachment.image = UIImage(systemName: "exclamationmark.triangle")?.withRenderingMode(.alwaysTemplate)
-            let imageString = NSMutableAttributedString(attachment: attachment)
-            imageString.append(NSAttributedString(string: " "))
-            let textString = NSAttributedString(string: Localization.TicketStatusViewController.TicketRequiresAttention)
-            imageString.append(textString)
-            extraInformationLabel.attributedText = imageString
-            extraInformationLabel.sizeToFit()
-            
         } else {
             view.backgroundColor = UIColor.systemBackground
             extraInformationLabel.textColor = UIColor.label
@@ -268,13 +272,26 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             attendeeNameLabel.textColor =  UIColor.label
         }
     }
+
     
-    private func toggleExtraInformationIfAvailable(_ reason: TicketValidationReason) {
-        let extraInformation: TicketStatusExtraInformation = configStore?.ticketValidator?.isOnline == false ? .offlineValidation(reason: reason) : .none
-        updateExtraInformation(extraInformation)
+    /// Show extra information in case of positive scan
+    private func toggleExtraInformation(_ extras: [TicketStatusExtraInformation]) {
+        if extras.isEmpty {
+            extraInformationLabel.text = nil
+            extraInformationLabel.sizeToFit()
+            return
+        }
+        
+        let texts = extras.map({getExtraText($0)})
+                          .filter({$0 != nil})
+                          .map({$0!})
+                          .joinedWithNewlines()
+        
+        extraInformationLabel.attributedText = texts
+        extraInformationLabel.sizeToFit()
     }
     
-    private func updateExtraInformation(_ extra: TicketStatusExtraInformation) {
+    private func getExtraText(_ extra: TicketStatusExtraInformation) -> NSAttributedString? {
         switch extra {
         case .offlineValidation(reason: let reason):
             let attachment = NSTextAttachment()
@@ -286,13 +303,19 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             if reason != .unknown {
                 imageString.append(NSAttributedString(string: " (\(reason.rawValue))"))
             }
-            extraInformationLabel.attributedText = imageString
-            extraInformationLabel.sizeToFit()
+            return imageString
         case .notes(values: let values):
-            extraInformationLabel.text = values.joined(separator: "\n")
-            extraInformationLabel.sizeToFit()
+            return NSAttributedString(string: values.joined(separator: "\n"))
         case .none:
-            extraInformationLabel.text = nil
+            return nil
+        case .requiresAttention:
+            let attachment = NSTextAttachment()
+            attachment.image = UIImage(systemName: "exclamationmark.triangle")?.withRenderingMode(.alwaysTemplate)
+            let imageString = NSMutableAttributedString(attachment: attachment)
+            imageString.append(NSAttributedString(string: " "))
+            let textString = NSAttributedString(string: Localization.TicketStatusViewController.TicketRequiresAttention)
+            imageString.append(textString)
+            return imageString
         }
     }
     

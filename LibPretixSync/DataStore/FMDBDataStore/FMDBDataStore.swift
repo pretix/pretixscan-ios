@@ -416,7 +416,9 @@ extension FMDBDataStore {
             force: force, ignoreUnpaid: ignoreUnpaid,
             in: event, in: checkInList, as: type, with: questions, dataStore: self) else { return nil }
         
-        guard redemptionResponse.status == .redeemed else { return redemptionResponse.with(reason: .notRedeemed) }
+        guard redemptionResponse.status == .redeemed else {
+            return RedemptionResponse.appendMetadataForStatusVisualization(redemptionResponse.with(reason: .notRedeemed), orderPosition: orderPosition)
+        }
         
         // Store a queued redemption request
         let checkInDate = Date()

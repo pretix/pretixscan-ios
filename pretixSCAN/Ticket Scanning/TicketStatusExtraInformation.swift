@@ -13,6 +13,7 @@ enum TicketStatusExtraInformation {
     case notes(values: [String])
     /// The ticket was validated using the offline ticket validator
     case offlineValidation(reason: TicketValidationReason)
+    case requiresAttention
     /// No extra information
     case none
 }

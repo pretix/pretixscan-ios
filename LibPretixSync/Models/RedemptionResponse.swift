@@ -135,6 +135,27 @@ extension RedemptionResponse {
     
     static func redeemed(with orderPosition: OrderPosition) -> Self {
         var response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
+        return appendMetadataForStatusVisualization(response, orderPosition: orderPosition)
+    }
+    
+    static func redeemed(_ item: Item, variation: ItemVariation?) -> Self {
+        return appendMetadataForStatusVisualization(Self.redeemed, item: item, variation: variation)
+    }
+    
+    static var alreadyRedeemed: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed, questions: nil)
+    }
+    
+    static func alreadyRedeemed(_ item: Item, variation: ItemVariation?) -> Self {
+        return appendMetadataForStatusVisualization(Self.alreadyRedeemed, item: item, variation: variation)
+    }
+    
+    static func alreadyRedeemed(with orderPosition: OrderPosition) -> Self {
+        return appendMetadataForStatusVisualization(Self.alreadyRedeemed, orderPosition: orderPosition)
+    }
+    
+    static func appendMetadataForStatusVisualization(_ redemptionResponse: RedemptionResponse, orderPosition: OrderPosition) -> RedemptionResponse {
+        var response = redemptionResponse
         response.position = orderPosition
         if (orderPosition.item?.checkInAttention == true || orderPosition.calculatedVariation?.checkInAttention == true) {
             response.checkInAttention = true
@@ -156,8 +177,9 @@ extension RedemptionResponse {
         return response
     }
     
-    static func redeemed(_ item: Item, variation: ItemVariation?) -> Self {
-        var response = Self.redeemed
+    
+    static func appendMetadataForStatusVisualization(_ redemptionResponse: RedemptionResponse, item: Item, variation: ItemVariation?) -> RedemptionResponse {
+        var response = redemptionResponse
         response.setDatalessDescription(item, variation: variation)
         response.checkInAttention = item.checkInAttention || variation?.checkInAttention == true
         response.checkInTexts = response.checkInTexts ?? []
@@ -173,10 +195,6 @@ extension RedemptionResponse {
             response.checkInTexts = newTexts
         }
         return response
-    }
-    
-    static var alreadyRedeemed: Self {
-        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed, questions: nil)
     }
     
     static var revoked: Self {
