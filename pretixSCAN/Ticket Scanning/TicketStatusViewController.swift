@@ -110,7 +110,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
             updateToRedeemed(redemptionResponse.position?.seat, exitMode)
             var extras = [TicketStatusExtraInformation]()
             
-            if let notes = redemptionResponse.checkInTexts {
+            if !exitMode, let notes = redemptionResponse.checkInTexts {
                 extras.append(.notes(values: notes))
             }
             if needsAttention {
@@ -243,7 +243,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         }
         
         var extras = [TicketStatusExtraInformation]()
-        if let notes = redemptionResponse.checkInTexts {
+        if !exitMode, let notes = redemptionResponse.checkInTexts {
             extras.append(.notes(values: notes))
         }
         if configStore?.ticketValidator?.isOnline == false {
