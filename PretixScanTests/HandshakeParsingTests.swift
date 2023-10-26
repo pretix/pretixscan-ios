@@ -17,7 +17,7 @@ class HandshakeParsingTests: XCTestCase {
             """.data(using: .utf8)!
 
     let invalidJSON = """
-            {"handshake_version": 1, "url": "this is not a url", "token": "kpp4jn8g2ynzonp6"}
+            {"handshake_version": 1, "url": "", "token": "kpp4jn8g2ynzonp6"}
             """.data(using: .utf8)!
 
     func testEncodingValidHandshake() {

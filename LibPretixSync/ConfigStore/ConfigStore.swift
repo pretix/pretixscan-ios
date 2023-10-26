@@ -96,6 +96,12 @@ public protocol ConfigStore: AnyObject {
     
     /// The version of the server we're currently connected to
     var knownPretixVersion: Int? { get set }
+    
+    /// The id of the gate this device has been assigned to.
+    var deviceKnownGateId: Int? {get set}
+    
+    /// The name of the gate this device has been assigned to.
+    var deviceKnownGateName: String? {get set}
 
     /// Set both event and checkinlist
     func set(event: Event, checkInList: CheckInList)

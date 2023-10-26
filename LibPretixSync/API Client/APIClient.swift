@@ -109,7 +109,7 @@ public extension APIClient {
     
     /// Retrieves device information
     /// https://docs.pretix.eu/en/latest/api/deviceauth.html#device-information
-    func getServerVersion(completionHandler: @escaping (Error?, Int?) -> Void) -> URLSessionDataTask? {
+    func getServerVersion(completionHandler: @escaping (Error?, DeviceInfoResponse?) -> Void) -> URLSessionDataTask? {
         do {
             let urlPath = try createURL(for: "/api/v1/device/info")
             var urlRequest = try createURLRequest(for: urlPath)
@@ -143,7 +143,7 @@ public extension APIClient {
                 }
 
                 
-                completionHandler(nil, response.server?.version?.pretixNumeric)
+                completionHandler(nil, response)
             }
             
             return task

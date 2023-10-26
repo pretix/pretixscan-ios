@@ -10,8 +10,12 @@ import Foundation
 import JSON
 
 extension TicketJsonLogicChecker {
-    func getCustomRules() -> [String: (JSON?) -> JSON] {
-        ["inList": { (json: JSON?) -> JSON in
+    func getCustomRules(_ ticket: TicketData) -> [String: (JSON?) -> JSON] {
+        let event = self.event
+        let listId = self.checkInList.identifier
+        let store = self.dataStore
+        
+        return ["inList": { (json: JSON?) -> JSON in
             // receives an array of JSON values and checks if the element at index 0 is contained in the array at index 1
             guard let json = json else {
                 return JSON(false)
@@ -156,7 +160,26 @@ extension TicketJsonLogicChecker {
                 }
                 return JSON(self.calendar.date(byAdding: .minute, value: -Int(minutes), to: date)! < rightDate)
             }
-        },]
+        },
+         "entries_since": {(json: JSON?) -> JSON in
+            guard let json = json,
+                  case let .Array(arguments) = json, arguments.count == 1,
+                  case let .String(dateStr) = arguments[0], let date = self.dateFormatter.date(from: dateStr) else {
+                return JSON.Null
+            }
+            
+            return JSON(Self.getEntriesSinceCount(Self.getEntryCheckIns(ticket: ticket, event: event, checkInListId: listId, store), date: date))
+        },
+         "entries_before": {(json: JSON?) -> JSON in
+            guard let json = json,
+                  case let .Array(arguments) = json, arguments.count == 1,
+                  case let .String(dateStr) = arguments[0], let date = self.dateFormatter.date(from: dateStr) else {
+                return JSON.Null
+            }
+            
+            return JSON(Self.getEntriesBeforeCount(Self.getEntryCheckIns(ticket: ticket, event: event, checkInListId: listId, store), date: date))
+        },
+        ]
     }
     
     func getSubEventOrEventDateAdmission() -> Date? {
@@ -198,5 +221,21 @@ extension TicketJsonLogicChecker {
         default:
             return false
         }
+    }
+    
+    static func getEntriesSinceCount(_ entryCheckIns: [OrderPositionCheckin], date: Date) -> Int {
+        entryCheckIns
+            .filter({
+                $0.date >= date
+            })
+            .count
+    }
+    
+    static func getEntriesBeforeCount(_ entryCheckIns: [OrderPositionCheckin], date: Date) -> Int {
+        entryCheckIns
+            .filter({
+                $0.date <= date
+            })
+            .count
     }
 }
