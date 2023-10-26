@@ -25,6 +25,10 @@ class ConnectDeviceViewController: UIViewController, Configurable, SetupScannerV
         if let setupCodeScannerViewController = segue.destination as? SetupCodeScannerViewController {
             setupCodeScannerViewController.delegate = self
         }
+        
+        if let selectEventController = segue.destination as? SelectEventTableViewController {
+            selectEventController.showingResetDevice = true
+        }
     }
 
     @IBAction private func manualSetup(_ sender: Any) {

@@ -57,6 +57,8 @@ struct Localization {
 
     struct SelectEventTableViewController {
         static let Title = NSLocalizedString("Select Event", comment: "")
+        static let ResetDevice = NSLocalizedString("Reset Device", comment: "")
+        static let NoEventsToShowError = NSLocalizedString("There are no events to show", comment: "")
     }
 
     struct SelectCheckInListTableViewController {
@@ -169,5 +171,9 @@ struct Localization {
         static let booleanYes = NSLocalizedString("Yes", comment: "Answer to a Boolean Check In Question")
         static let booleanNo = NSLocalizedString("No", comment: "Answer to a Boolean Check In Question")
         static let requiredBooleanQuestion = NSLocalizedString("You have to answer YES to check in", comment: "Note for a required boolean question")
+    }
+    
+    struct Common {
+        static let dismiss = NSLocalizedString("Dismiss", comment: "")
     }
 }

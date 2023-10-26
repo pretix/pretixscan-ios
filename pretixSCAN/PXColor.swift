@@ -12,6 +12,7 @@ import UIKit
 struct PXColor {
     static let primary = UIColor(named: "primary")!
     static let primaryText = UIColor(named: "primaryText")!
+    static let dynamicText = UIColor(named: "dynamicText")!
     static let secondary = UIColor(named: "secondary")!
     static let grayBackground = UIColor(named: "grayBackground")!
     static let error = UIColor(named: "error")!

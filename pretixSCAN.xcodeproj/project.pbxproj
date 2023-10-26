@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -57,6 +57,7 @@
 		B548031F299E094000B6356E /* order.json in Resources */ = {isa = PBXBuildFile; fileRef = B548031E299E094000B6356E /* order.json */; };
 		B5480321299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480320299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift */; };
 		B5480323299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5480322299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift */; };
+		B5502A342AAF4DEB00107B65 /* UIViewController+navBarControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5502A332AAF4DEB00107B65 /* UIViewController+navBarControls.swift */; };
 		B553421A272BF81A003008AD /* EntryAnswersCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */; };
 		B553421E272BF8AF003008AD /* question3.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421B272BF8AF003008AD /* question3.json */; };
 		B553421F272BF8AF003008AD /* question2.json in Resources */ = {isa = PBXBuildFile; fileRef = B553421C272BF8AF003008AD /* question2.json */; };
@@ -104,6 +105,7 @@
 		B5C0B61828018C740089DCDB /* jsonlogic in Frameworks */ = {isa = PBXBuildFile; productRef = B5C0B61728018C740089DCDB /* jsonlogic */; };
 		B5C0B61A28018CA00089DCDB /* TicketJsonLogicChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */; };
 		B5C2F00627CA6BD3004A3166 /* ImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C2F00527CA6BD3004A3166 /* ImageResize.swift */; };
+		B5C35C802AAF6C86003E17D2 /* LabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C35C7F2AAF6C86003E17D2 /* LabelWithPadding.swift */; };
 		B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255E92723187F0064652F /* FMDBEventValidKey.swift */; };
 		B5D255EC272318F50064652F /* EventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255EB272318F50064652F /* EventValidKey.swift */; };
 		B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */; };
@@ -327,6 +329,7 @@
 		B548031E299E094000B6356E /* order.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = order.json; sourceTree = "<group>"; };
 		B5480320299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketEntryValidFromToChecker.swift; sourceTree = "<group>"; };
 		B5480322299E0E0300B6356E /* 12_MigrationAddValidToFrom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 12_MigrationAddValidToFrom.swift; sourceTree = "<group>"; };
+		B5502A332AAF4DEB00107B65 /* UIViewController+navBarControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+navBarControls.swift"; sourceTree = "<group>"; };
 		B5534219272BF81A003008AD /* EntryAnswersCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryAnswersCheckerTests.swift; sourceTree = "<group>"; };
 		B553421B272BF8AF003008AD /* question3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question3.json; sourceTree = "<group>"; };
 		B553421C272BF8AF003008AD /* question2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question2.json; sourceTree = "<group>"; };
@@ -372,6 +375,7 @@
 		B5BD71BE2834E7C90061A261 /* PXPackageLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPackageLicense.swift; sourceTree = "<group>"; };
 		B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicChecker.swift; sourceTree = "<group>"; };
 		B5C2F00527CA6BD3004A3166 /* ImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResize.swift; sourceTree = "<group>"; };
+		B5C35C7F2AAF6C86003E17D2 /* LabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPadding.swift; sourceTree = "<group>"; };
 		B5D255E92723187F0064652F /* FMDBEventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBEventValidKey.swift; sourceTree = "<group>"; };
 		B5D255EB272318F50064652F /* EventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKey.swift; sourceTree = "<group>"; };
 		B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 08_MigrationAddEventValidKeys.swift; sourceTree = "<group>"; };
@@ -1054,6 +1058,8 @@
 				DCB35B9C2249406000860385 /* UIDevice.swift */,
 				DC227F2022536B5B00314448 /* AppCoordinator.swift */,
 				B5C2F00527CA6BD3004A3166 /* ImageResize.swift */,
+				B5502A332AAF4DEB00107B65 /* UIViewController+navBarControls.swift */,
+				B5C35C7F2AAF6C86003E17D2 /* LabelWithPadding.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1407,6 +1413,7 @@
 				B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */,
 				B571B7772809352800861383 /* TicketJsonLogicChecker+operations.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
+				B5C35C802AAF6C86003E17D2 /* LabelWithPadding.swift in Sources */,
 				B5F6F1D9272AA48400F702BE /* DatalessDataStore.swift in Sources */,
 				DC1D6FBF22416268008A9E06 /* SearchResultsTableViewController.swift in Sources */,
 				B52579622729223F006D9EE9 /* SubEventsDownloader.swift in Sources */,
@@ -1438,6 +1445,7 @@
 				DC227F2E22550B6600314448 /* DefaultsConfigStore.swift in Sources */,
 				B5534228272C2E47003008AD /* TelQuestionCell.swift in Sources */,
 				DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */,
+				B5502A342AAF4DEB00107B65 /* UIViewController+navBarControls.swift in Sources */,
 				B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */,
 				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
 				B58CF83826F3104F00FADA2A /* Logger.swift in Sources */,

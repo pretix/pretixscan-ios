@@ -26,6 +26,7 @@ class SelectEventTableViewController: UITableViewController, Configurable {
 
     private var events: [Event]?
     private var subEvents: [Event: [SubEvent]]?
+    var showingResetDevice: Bool = false
 
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -39,10 +40,22 @@ class SelectEventTableViewController: UITableViewController, Configurable {
         super.viewDidLoad()
         title = Localization.SelectEventTableViewController.Title
         refreshControl?.addTarget(self, action: #selector(updateView), for: .valueChanged)
+        
+        if !showingResetDevice {
+            setLeadingNavBarAction(title: Localization.Common.dismiss, selector: #selector(self.hide), target: self)
+        } else {
+            clearLeadingBavBarAction()
+            hideNavBarBackButton()
+            setTrailingNavBarAction(title:  Localization.SelectEventTableViewController.ResetDevice, selector: #selector(self.confirmFactoryReset), target: self)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         updateView()
+    }
+    
+    @objc func hide() {
+        self.dismiss(animated: true)
     }
 
     @objc private func updateView() {
@@ -51,11 +64,16 @@ class SelectEventTableViewController: UITableViewController, Configurable {
         subEvents = [:]
 
         var subEventsLoading = 0
+        hideEmptyMessage()
 
         configStore?.ticketValidator?.getEvents { (eventList, error) in
             self.presentErrorAlert(ifError: error)
             self.events = eventList
             if let events = self.events {
+                if events.isEmpty {
+                    self.isLoading = false
+                    self.showEmptyMessage()
+                }
                 subEventsLoading = events.count
                 for event in events {
                     guard event.hasSubEvents else {
@@ -82,7 +100,15 @@ class SelectEventTableViewController: UITableViewController, Configurable {
                 }
             } else {
                 self.isLoading = false
+                self.showEmptyMessage()
             }
+            
+        }
+    }
+    
+    func showEmptyMessage() {
+        DispatchQueue.main.async {[weak self] in
+            self?.setBackgroundMessage(Localization.SelectEventTableViewController.NoEventsToShowError)
         }
     }
 
@@ -140,5 +166,45 @@ class SelectEventTableViewController: UITableViewController, Configurable {
             selectCheckInListViewController.event = selectedEvent
             selectCheckInListViewController.subEvent = selectedSubEvent
         }
+    }
+    
+    // MARK: Sign out
+    @objc func confirmFactoryReset() {
+        let alert = UIAlertController(
+            title: Localization.SettingsTableViewController.PerformFactoryReset,
+            message: Localization.SettingsTableViewController.FactoryResetConfirmMessage,
+            preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.CancelReset, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Localization.SettingsTableViewController.ConfirmReset, style: .destructive, handler: { [weak self] _ in
+            self?.configStore?.factoryReset()
+            self?.configStore?.syncManager.resetSyncState()
+            self?.dismiss(animated: true)
+            if let validateController = (self?.presentingViewController as? UINavigationController)?.viewControllers[0] as? ValidateTicketViewController {
+                // as this is a modal, the first run actions will not run automatically
+                DispatchQueue.main.async {
+                    validateController.checkFirstRunActions()
+                }
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
+private extension SelectEventTableViewController {
+
+    /// Update the background of the tableView to show a message
+    func setBackgroundMessage(_ message: String) {
+        let messageLabel = LabelWithPadding(withInsets: 20, 20, 20, 20)
+        messageLabel.text = message
+        messageLabel.textColor = PXColor.dynamicText
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.sizeToFit()
+        self.tableView.backgroundView = messageLabel
+    }
+
+    /// Remove the background of the tableView
+    func hideEmptyMessage() {
+        self.tableView.backgroundView = nil
     }
 }
