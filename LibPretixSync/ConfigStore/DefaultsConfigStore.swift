@@ -496,3 +496,17 @@ private extension DefaultsConfigStore {
         return prefix + key.rawValue
     }
 }
+
+
+extension DefaultsConfigStore {
+    public func updateAndApplyCredentials(deviceInit: DeviceInitializationResponse) {
+        _apiToken = deviceInit.apiToken
+        _deviceID = deviceInit.deviceID
+        _deviceName = deviceInit.name
+        _deviceUniqueSerial = deviceInit.uniqueSerial
+        _organizerSlug = deviceInit.organizer
+        _securityProfile = PXSecurityProfile(rawValue: deviceInit.securityProfile)
+        saveToDefaults()
+        applySecurityDefaults()
+    }
+}

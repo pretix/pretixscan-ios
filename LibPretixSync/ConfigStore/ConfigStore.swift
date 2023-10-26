@@ -109,6 +109,8 @@ public protocol ConfigStore: AnyObject {
     func applySecurityDefaults()
     
     func valueChanged(_ value: ConfigStoreValue?)
+    
+    func updateAndApplyCredentials(deviceInit: DeviceInitializationResponse)
 }
 
 extension ConfigStore {
