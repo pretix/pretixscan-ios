@@ -96,6 +96,9 @@ public struct Item: Model {
     /// If `true`, tickets are generated even if this is a non-admission or add-on product, regardless of event settings.
     /// If this is `nil`, regular ticketing rules apply.
     public let generateTickets: Bool?
+    
+    /// Additional text to be shown when this ticket is canned
+    public let checkInText: String?
 
     /// Shows whether or not this item has variations.
     public let hasVariations: Bool
@@ -140,6 +143,7 @@ public struct Item: Model {
         case variations
         case addons
         case bundles
+        case checkInText = "checkin_text"
     }
 }
 

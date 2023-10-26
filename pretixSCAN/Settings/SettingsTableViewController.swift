@@ -136,7 +136,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     }
     
     func onConfigStoreChanged(_ notification: Notification) {
-        guard let value = notification.userInfo?["value"] as? ConfigStoreValue else {
+        guard let _ = notification.userInfo?["value"] as? ConfigStoreValue else {
             return
         }
         setAppInfoFromConfig()

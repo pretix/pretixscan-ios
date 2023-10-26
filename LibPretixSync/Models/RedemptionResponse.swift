@@ -47,6 +47,8 @@ public struct RedemptionResponse: Codable, Equatable {
     /// If `true`, the check-in app should show a warning that this
     /// ticket requires special attention if a ticket of this order is scanned.
     public var checkInAttention: Bool? = nil
+    
+    public var checkInTexts: [String]? = nil
 
     // MARK: - Enums
     /// Possible values for the Response Status
@@ -99,6 +101,7 @@ public struct RedemptionResponse: Codable, Equatable {
         case questions
         case reasonExplanation = "reason_explanation"
         case checkInAttention = "require_attention"
+        case checkInTexts = "checkin_texts"
     }
 }
 
@@ -132,22 +135,66 @@ extension RedemptionResponse {
     
     static func redeemed(with orderPosition: OrderPosition) -> Self {
         var response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
-        response.position = orderPosition
-        if (orderPosition.item?.checkInAttention == true || orderPosition.calculatedVariation?.checkInAttention == true) {
-            response.checkInAttention = true
-        }
-        return response
+        return appendMetadataForStatusVisualization(response, orderPosition: orderPosition)
     }
     
     static func redeemed(_ item: Item, variation: ItemVariation?) -> Self {
-        var response = Self.redeemed
-        response.setDatalessDescription(item, variation: variation)
-        response.checkInAttention = item.checkInAttention || variation?.checkInAttention == true
-        return response
+        return appendMetadataForStatusVisualization(Self.redeemed, item: item, variation: variation)
     }
     
     static var alreadyRedeemed: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyRedeemed, questions: nil)
+    }
+    
+    static func alreadyRedeemed(_ item: Item, variation: ItemVariation?) -> Self {
+        return appendMetadataForStatusVisualization(Self.alreadyRedeemed, item: item, variation: variation)
+    }
+    
+    static func alreadyRedeemed(with orderPosition: OrderPosition) -> Self {
+        return appendMetadataForStatusVisualization(Self.alreadyRedeemed, orderPosition: orderPosition)
+    }
+    
+    static func appendMetadataForStatusVisualization(_ redemptionResponse: RedemptionResponse, orderPosition: OrderPosition) -> RedemptionResponse {
+        var response = redemptionResponse
+        response.position = orderPosition
+        if (orderPosition.item?.checkInAttention == true || orderPosition.calculatedVariation?.checkInAttention == true) {
+            response.checkInAttention = true
+        }
+        
+        var newTexts = [String]()
+        if let checkInText = orderPosition.order?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if let checkInText = orderPosition.calculatedVariation?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if let checkInText = orderPosition.item?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if !newTexts.isEmpty {
+            response.checkInTexts = newTexts
+        }
+        return response
+    }
+    
+    
+    static func appendMetadataForStatusVisualization(_ redemptionResponse: RedemptionResponse, item: Item, variation: ItemVariation?) -> RedemptionResponse {
+        var response = redemptionResponse
+        response.setDatalessDescription(item, variation: variation)
+        response.checkInAttention = item.checkInAttention || variation?.checkInAttention == true
+        response.checkInTexts = response.checkInTexts ?? []
+        
+        var newTexts = [String]()
+        if let checkInText = variation?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if let checkInText = item.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
+            newTexts.append(checkInText)
+        }
+        if !newTexts.isEmpty {
+            response.checkInTexts = newTexts
+        }
+        return response
     }
     
     static var revoked: Self {

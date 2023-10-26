@@ -9,8 +9,11 @@
 import Foundation
 
 enum TicketStatusExtraInformation {
+    /// Additional notes to be shown
+    case notes(values: [String])
     /// The ticket was validated using the offline ticket validator
-    case offlineValidation
+    case offlineValidation(reason: TicketValidationReason)
+    case requiresAttention
     /// No extra information
     case none
 }
