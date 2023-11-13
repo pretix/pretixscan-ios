@@ -530,7 +530,6 @@ public extension APIClient {
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         Task {
             let answersWithFiles = await uploadAttachments(answers: answers)
-            logger.debug("Redeeming ticket.")
             if let task = redeemTask(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answersWithFiles,
                                      as: type,
                                      completionHandler: completionHandler) {
@@ -572,9 +571,9 @@ public extension APIClient {
         }
         for (ix, answer) in answersWithFiles.enumerated() {
             if let fileUrl = answer.fileUrl {
-                logger.debug("Uploading file for question \(answer.question).")
+                logger.debug("Uploading file for question \(answer.question.id).")
                 if let file = try? await uploadAttachment(file: PXTemporaryFile(contentURL: fileUrl, name: fileUrl.lastPathComponent)) {
-                    logger.debug("File for question \(answer.question) uploaded as \(file.id).")
+                    logger.debug("File for question \(answer.question.id) uploaded as \(file.id).")
                     answersWithFiles[ix].fileUrl = nil
                     answersWithFiles[ix].answer = file.id
                 }
@@ -690,6 +689,21 @@ public extension APIClient {
         }
     }
     
+    private func createRedeemURL(organizer: String) throws -> URL {
+        var url = try createURL(for: "/api/v1/organizers/\(organizer)/checkinrpc/redeem/")
+        if #available(iOS 16.0, *) {
+            url.append(queryItems: [URLQueryItem(name: "expand", value: "answers.question")])
+        } else {
+            // Fallback on earlier versions
+            var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+            urlComponents?.queryItems = [URLQueryItem(name: "expand", value: "answers.question")]
+            guard let urlComponentsURL = urlComponents?.url else {
+                throw APIError.couldNotCreateURL
+            }
+            url = urlComponentsURL
+        }
+        return url
+    }
     
     /// Create a paused task to check in an attendee, identified by their secret code, into the currently configured CheckInList
     private func checkInTask(secret: String, redemptionRequest: RedemptionRequest, checkInListIdentifier: Identifier? = nil,
@@ -698,8 +712,9 @@ public extension APIClient {
             let organizer = try getOrganizerSlug()
             let checkInListId = try checkInListIdentifier ?? (try getCheckInList()).identifier
             let request = CheckInRequest(list: checkInListId, secret: secret, redemptionRequest: redemptionRequest)
-            let urlPath = try createURL(for: "/api/v1/organizers/\(organizer)/checkinrpc/redeem/")
-            var urlRequest = try createURLRequest(for: urlPath)
+            
+            let url = try createRedeemURL(organizer: organizer)
+            var urlRequest = try createURLRequest(for: url)
             urlRequest.httpMethod = HttpMethod.POST
             urlRequest.httpBody = try jsonEncoder.encode(request)
             

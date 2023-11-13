@@ -206,7 +206,7 @@ class TicketStatusViewController: UIViewController, Configurable, AppCoordinator
         if let answers = redemptionResponse.answers {
             var mappedAnswers = [Answer?](repeating: nil, count: questions.count)
             for (index, question) in questions.enumerated() {
-                if let answer = answers.filter({ $0.question == question.identifier }).first {
+                if let answer = answers.filter({ $0.question.id == question.identifier }).first {
                     mappedAnswers[index] = answer
                 }
             }

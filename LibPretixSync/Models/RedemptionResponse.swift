@@ -18,27 +18,27 @@ public struct RedemptionResponse: Codable, Equatable {
     
     /// In case of reason rules includes a human-readable description of the violated rules.
     public let reasonExplanation: String?
-
+    
     /// The reason for `status` being `error`, if applicable
     public let errorReason: ErrorReason?
-
+    
     /// The `OrderPosition` being redeemed
     public var position: OrderPosition?
     
     /// A description of the item being redeemed which may be set during dataless validation when order position is unavailable
     public var datalessDescription: String? = nil
-
+    
     /// If the ticket has already been redeemed, this field might contain the last CheckIn
     public var lastCheckIn: CheckIn?
-
+    
     /// If the ticket is incomplete, a list of questions that need to be answered
     public let questions: [Question]?
-
+    
     /// A list of answers to be pre-filled.
     ///
     /// When answering questions, the request/respons cycle can go around a few times. The server will save the answers individually,
     /// but we don't want to do that while in offline mode. So instead, we return the already provided answers in this array, so they
-    /// can be pre-filled in the UI, allowing the user to only answer the missing ones. 
+    /// can be pre-filled in the UI, allowing the user to only answer the missing ones.
     public var answers: [Answer]?
     
     /// When a negative redemption response is created the validation reason can optionally indicate the specific codepath resulting in the error code. This is being added to aid troubleshooting https://code.rami.io/pretix/pretixscan-ios/-/issues/62 and should only be used to aid debugging.
@@ -49,34 +49,34 @@ public struct RedemptionResponse: Codable, Equatable {
     public var checkInAttention: Bool? = nil
     
     public var checkInTexts: [String]? = nil
-
+    
     // MARK: - Enums
     /// Possible values for the Response Status
     public enum Status: String, Codable {
         /// The ticket has been successfully redeemed and the attendee should be let in
         case redeemed = "ok"
-
+        
         /// Some information is missing
         case incomplete
-
+        
         /// An error occurred, check the `errorReason`
         case error
     }
-
+    
     /// Possible reasons an error could occur
     public enum ErrorReason: String, Codable {
         /// The ticket was not yet paid
         case unpaid
-
+        
         /// The ticket order was canceled
         case canceled
-
+        
         /// The ticket was already used
         case alreadyRedeemed = "already_redeemed"
-
+        
         /// The product is not available on this check in list
         case product
-
+        
         /// A custom rules has forbidden the scan
         case rules
         
@@ -92,7 +92,7 @@ public struct RedemptionResponse: Codable, Equatable {
         
         case invalidTime = "invalid_time"
     }
-
+    
     private enum CodingKeys: String, CodingKey {
         case status
         case errorReason = "reason"
@@ -135,11 +135,11 @@ extension RedemptionResponse {
     
     static func redeemed(with orderPosition: OrderPosition) -> Self {
         var response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
-        return appendMetadataForStatusVisualization(response, orderPosition: orderPosition)
+        return appendDataFromOfflineMetadataForStatusVisualization(response, orderPosition: orderPosition)
     }
     
     static func redeemed(_ item: Item, variation: ItemVariation?) -> Self {
-        return appendMetadataForStatusVisualization(Self.redeemed, item: item, variation: variation)
+        return appendDataFromOfflineMetadataForStatusVisualization(Self.redeemed, item: item, variation: variation)
     }
     
     static var alreadyRedeemed: Self {
@@ -147,14 +147,40 @@ extension RedemptionResponse {
     }
     
     static func alreadyRedeemed(_ item: Item, variation: ItemVariation?) -> Self {
-        return appendMetadataForStatusVisualization(Self.alreadyRedeemed, item: item, variation: variation)
+        return appendDataFromOfflineMetadataForStatusVisualization(Self.alreadyRedeemed, item: item, variation: variation)
     }
     
     static func alreadyRedeemed(with orderPosition: OrderPosition) -> Self {
-        return appendMetadataForStatusVisualization(Self.alreadyRedeemed, orderPosition: orderPosition)
+        return appendDataFromOfflineMetadataForStatusVisualization(Self.alreadyRedeemed, orderPosition: orderPosition)
     }
     
-    static func appendMetadataForStatusVisualization(_ redemptionResponse: RedemptionResponse, orderPosition: OrderPosition) -> RedemptionResponse {
+    static func appendDataFromOnlineQuestionsForStatusVisualization(_ redemptionResponse: RedemptionResponse) -> RedemptionResponse {
+        var response = redemptionResponse
+        var newTexts = [String]()
+        
+        let questionTexts = redemptionResponse.position?.answers?
+            .filter({
+                switch $0.question {
+                case .identifier(_):
+                    false
+                case .questionDetail(let questionDetail):
+                    questionDetail.showDuringCheckIn ?? false
+                }
+            })
+            .map({
+                "\($0.question.displayQuestion): \($0.answer)"
+            }) ?? []
+        newTexts.append(contentsOf: questionTexts)
+        if !newTexts.isEmpty {
+            if response.checkInTexts == nil {
+                response.checkInTexts = []
+            }
+            response.checkInTexts!.append(contentsOf: newTexts)
+        }
+        return response
+    }
+    
+    static func appendDataFromOfflineMetadataForStatusVisualization(_ redemptionResponse: RedemptionResponse, orderPosition: OrderPosition) -> RedemptionResponse {
         var response = redemptionResponse
         response.position = orderPosition
         if (orderPosition.item?.checkInAttention == true || orderPosition.calculatedVariation?.checkInAttention == true) {
@@ -162,6 +188,7 @@ extension RedemptionResponse {
         }
         
         var newTexts = [String]()
+        // check-in messages from order, variation and item
         if let checkInText = orderPosition.order?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
             newTexts.append(checkInText)
         }
@@ -174,17 +201,21 @@ extension RedemptionResponse {
         if !newTexts.isEmpty {
             response.checkInTexts = newTexts
         }
+        
+        // check-in messages from questions
+        response = appendDataFromOnlineQuestionsForStatusVisualization(response)
         return response
     }
     
     
-    static func appendMetadataForStatusVisualization(_ redemptionResponse: RedemptionResponse, item: Item, variation: ItemVariation?) -> RedemptionResponse {
+    static func appendDataFromOfflineMetadataForStatusVisualization(_ redemptionResponse: RedemptionResponse, item: Item, variation: ItemVariation?) -> RedemptionResponse {
         var response = redemptionResponse
         response.setDatalessDescription(item, variation: variation)
         response.checkInAttention = item.checkInAttention || variation?.checkInAttention == true
         response.checkInTexts = response.checkInTexts ?? []
         
         var newTexts = [String]()
+        // check-in messages from order, variation and item
         if let checkInText = variation?.checkInText?.trimmingCharacters(in: .whitespacesAndNewlines), !checkInText.isEmpty {
             newTexts.append(checkInText)
         }
@@ -194,6 +225,10 @@ extension RedemptionResponse {
         if !newTexts.isEmpty {
             response.checkInTexts = newTexts
         }
+        
+        // check-in messages from questions
+        response = appendDataFromOnlineQuestionsForStatusVisualization(response)
+        
         return response
     }
     

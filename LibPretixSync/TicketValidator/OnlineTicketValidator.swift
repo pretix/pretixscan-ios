@@ -147,6 +147,8 @@ public class OnlineTicketValidator: TicketValidator {
                 $0.listID == checkInList.identifier
             }.first
 
+            redemptionResponse = RedemptionResponse.appendDataFromOnlineQuestionsForStatusVisualization(redemptionResponse)
+            
             if redemptionResponse == .redeemed {
                 PXTemporaryFile.cleanUp(answers?.compactMap({$0.fileUrl}) ?? [])
             }

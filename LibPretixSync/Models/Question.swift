@@ -38,6 +38,9 @@ public struct Question: Model {
 
     /// If true, this question will not be asked while buying the ticket, but will show up when redeeming the ticket instead.
     public let askDuringCheckIn: Bool
+    
+    /// If true, the answer to the question will be shown as a message when the ticket is scanned
+    public var showDuringCheckIn: Bool?
 
     /// If `true`, the question will only be shown in the backend.
     public let isHidden: Bool
@@ -71,6 +74,7 @@ public struct Question: Model {
         case options
         case dependencyQuestion = "dependency_question"
         case dependencyValue = "dependency_value"
+        case showDuringCheckIn = "show_during_checkin"
     }
 
     // MARK: - Sub Types

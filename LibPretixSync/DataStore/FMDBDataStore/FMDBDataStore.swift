@@ -412,13 +412,15 @@ extension FMDBDataStore {
         
         let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
         
-        guard let redemptionResponse = orderPosition.createRedemptionResponse(
+        guard var redemptionResponse = orderPosition.createRedemptionResponse(
             force: force, ignoreUnpaid: ignoreUnpaid,
             in: event, in: checkInList, as: type, with: questions, dataStore: self) else { return nil }
         
         guard redemptionResponse.status == .redeemed else {
-            return RedemptionResponse.appendMetadataForStatusVisualization(redemptionResponse.with(reason: .notRedeemed), orderPosition: orderPosition)
+            return RedemptionResponse
+                .appendDataFromOfflineMetadataForStatusVisualization(redemptionResponse.with(reason: .notRedeemed), orderPosition: orderPosition)
         }
+        redemptionResponse = RedemptionResponse.appendDataFromOfflineMetadataForStatusVisualization(redemptionResponse, orderPosition: orderPosition)
         
         // Store a queued redemption request
         let checkInDate = Date()

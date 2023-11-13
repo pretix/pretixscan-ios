@@ -300,10 +300,10 @@ extension OrderPosition: FMDBModel {
         // Take existing answers and overwrite with ones that have been updated
         var mergedAnswers = [Identifier: Answer]()
         for existingAnswer in self.answers ?? [] {
-            mergedAnswers[existingAnswer.question] = existingAnswer
+            mergedAnswers[existingAnswer.question.id] = existingAnswer
         }
         for newAnswer in answers ?? [] {
-            mergedAnswers[newAnswer.question] = newAnswer
+            mergedAnswers[newAnswer.question.id] = newAnswer
         }
 
         return OrderPosition(

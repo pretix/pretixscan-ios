@@ -57,7 +57,7 @@ final class TicketEntryAnswersChecker {
             return false
         }
         
-        if let answer = answers.first(where: {$0.question == q.identifier}) {
+        if let answer = answers.first(where: {$0.question.id == q.identifier}) {
             switch q.type {
             case .boolean:
                 // required boolean questions must answer "true"
