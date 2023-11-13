@@ -691,6 +691,11 @@ public extension APIClient {
     
     private func createRedeemURL(organizer: String) throws -> URL {
         var url = try createURL(for: "/api/v1/organizers/\(organizer)/checkinrpc/redeem/")
+        return try addExpandQuery(url)
+    }
+    
+    private func addExpandQuery(_ url: URL) throws -> URL {
+        var url = url
         if #available(iOS 16.0, *) {
             url.append(queryItems: [URLQueryItem(name: "expand", value: "answers.question")])
         } else {

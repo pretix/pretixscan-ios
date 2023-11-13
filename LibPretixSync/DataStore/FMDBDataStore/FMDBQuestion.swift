@@ -33,8 +33,12 @@ extension Question: FMDBModel {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     """
 
-    static let checkInQuestionsWithItemQuery = """
+    static let askDuringCheckInQuestionsForEventQuery = """
     SELECT * FROM "\(stringName)" WHERE ask_during_checkin=1 ORDER BY position;
+    """
+    
+    static let allQuestionsForEventQuery = """
+    SELECT * FROM "\(stringName)" ORDER BY position;
     """
 
     static func from(result: FMResultSet, in database: FMDatabase) -> Question? {

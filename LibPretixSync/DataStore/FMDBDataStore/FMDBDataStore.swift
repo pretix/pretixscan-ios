@@ -396,10 +396,14 @@ extension FMDBDataStore {
         }
         
         let checkIns = getCheckIns(for: tempOrderPosition, in: checkInList, in: event)
-        
+        var orderPositionQuestions: [Question]? = nil
+        if case .success(let questions) = getQuestions(in: event) {
+            orderPositionQuestions = questions
+        }
         var orderPosition = tempOrderPosition
             .adding(checkIns: checkIns)
             .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
+            .adding(questions: orderPositionQuestions)
             .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
             .adding(parentTicket: parentTicket)
             .adding(answers: answers)
@@ -581,9 +585,25 @@ extension FMDBDataStore {
         var questions = [Question]()
         
         databaseQueue(with: event).inDatabase { database in
-            if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: []) {
+            if let result = try? database.executeQuery(Question.askDuringCheckInQuestionsForEventQuery, values: []) {
                 while result.next() {
                     if let question = Question.from(result: result, in: database), question.items.contains(item.identifier) {
+                        questions.append(question)
+                    }
+                }
+            }
+        }
+        
+        return .success(questions)
+    }
+    
+    public func getQuestions(in event: Event) -> Result<[Question], Error> {
+        var questions = [Question]()
+        
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(Question.allQuestionsForEventQuery, values: []) {
+                while result.next() {
+                    if let question = Question.from(result: result, in: database) {
                         questions.append(question)
                     }
                 }

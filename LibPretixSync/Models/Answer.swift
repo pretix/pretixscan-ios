@@ -14,7 +14,7 @@ public struct Answer: Model {
     public static var stringName = "answers"
     
     /// Internal ID of the answered question
-    public let question: QuestionType
+    public var question: QuestionType
     
     /// Text representation of the answer
     public var answer: String
