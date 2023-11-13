@@ -97,6 +97,7 @@
 		B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF40B727DF4D17001576DD /* PXCameraController.swift */; };
 		B5AF9F082AB053BD009B0D3A /* TicketJsonLogicChecker+configStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF9F072AB053BD009B0D3A /* TicketJsonLogicChecker+configStore.swift */; };
 		B5B3F93D29A0E8E600A7CEFD /* order-reqapproval.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */; };
+		B5B5544B2B02936400D6F3B6 /* redeem1.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B5544A2B02936400D6F3B6 /* redeem1.json */; };
 		B5B76A6228AA4B2900B64763 /* redeemed.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B76A6128AA4B2900B64763 /* redeemed.json */; };
 		B5B990A726EB50160029D614 /* errorRules.json in Resources */ = {isa = PBXBuildFile; fileRef = B5B990A626EB50160029D614 /* errorRules.json */; };
 		B5B990AA26EB504F0029D614 /* XCTestCase+testFileContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */; };
@@ -373,6 +374,7 @@
 		B5AF40B727DF4D17001576DD /* PXCameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraController.swift; sourceTree = "<group>"; };
 		B5AF9F072AB053BD009B0D3A /* TicketJsonLogicChecker+configStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TicketJsonLogicChecker+configStore.swift"; sourceTree = "<group>"; };
 		B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "order-reqapproval.json"; sourceTree = "<group>"; };
+		B5B5544A2B02936400D6F3B6 /* redeem1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = redeem1.json; sourceTree = "<group>"; };
 		B5B76A6128AA4B2900B64763 /* redeemed.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = redeemed.json; sourceTree = "<group>"; };
 		B5B990A626EB50160029D614 /* errorRules.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = errorRules.json; sourceTree = "<group>"; };
 		B5B990A926EB504F0029D614 /* XCTestCase+testFileContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+testFileContents.swift"; sourceTree = "<group>"; };
@@ -677,37 +679,38 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
-				B50EEDC82AC18D4F0092696D /* order3.json */,
-				B5A1D4A12ABDB52F00E360EF /* order2.json */,
-				B5A1D49F2ABDB03C00E360EF /* item5.json */,
-				B540729F29A1046500757E25 /* item4.json */,
-				B54072A029A1046500757E25 /* order1.json */,
-				B540729D29A0F9FB00757E25 /* item3.json */,
-				B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */,
-				B59017B22878052600FE0125 /* list8.json */,
-				B59017B12878052600FE0125 /* list9.json */,
 				B5B990A626EB50160029D614 /* errorRules.json */,
+				B5798D3328755452006EF8E0 /* event1-datetonull.json */,
 				B5F52FE728112FBA008F5D5A /* event1-se.json */,
 				B5BD3E462715D4B0003FEB74 /* event1.json */,
 				B5EFD44527CDEC1C00DACCA6 /* imageJPEG.jpg */,
 				B5EFD44427CDEC1C00DACCA6 /* imagePNG.png */,
 				B5F6F1E2272AB35000F702BE /* item1.json */,
 				B5F6F1E3272AB35000F702BE /* item2.json */,
+				B540729D29A0F9FB00757E25 /* item3.json */,
+				B540729F29A1046500757E25 /* item4.json */,
+				B5A1D49F2ABDB03C00E360EF /* item5.json */,
 				B5F6F1DE272AAF4700F702BE /* list1.json */,
 				B50945B628054E8900E8AFC0 /* list2-rules.json */,
 				B5F6F1DC272AAE7B00F702BE /* list2.json */,
 				B5F6F1E0272AAFCD00F702BE /* list4.json */,
 				B5823C1A273123CC00479A73 /* list5.json */,
 				B5823C1C27312D0300479A73 /* list6.json */,
+				B59017AF2878030300FE0125 /* list7.json */,
+				B59017B22878052600FE0125 /* list8.json */,
+				B59017B12878052600FE0125 /* list9.json */,
+				B5B3F93C29A0E8E600A7CEFD /* order-reqapproval.json */,
+				B548031E299E094000B6356E /* order.json */,
+				B54072A029A1046500757E25 /* order1.json */,
+				B5A1D4A12ABDB52F00E360EF /* order2.json */,
+				B50EEDC82AC18D4F0092696D /* order3.json */,
 				B553421D272BF8AF003008AD /* question1.json */,
 				B553421C272BF8AF003008AD /* question2.json */,
 				B553421B272BF8AF003008AD /* question3.json */,
 				B5823C1E27313F8A00479A73 /* question4.json */,
-				B5F52FE628112FBA008F5D5A /* subevent1.json */,
-				B5798D3328755452006EF8E0 /* event1-datetonull.json */,
-				B59017AF2878030300FE0125 /* list7.json */,
+				B5B5544A2B02936400D6F3B6 /* redeem1.json */,
 				B5B76A6128AA4B2900B64763 /* redeemed.json */,
-				B548031E299E094000B6356E /* order.json */,
+				B5F52FE628112FBA008F5D5A /* subevent1.json */,
 			);
 			path = Examples;
 			sourceTree = "<group>";
@@ -1302,6 +1305,7 @@
 				B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */,
 				B5A1D4A02ABDB03C00E360EF /* item5.json in Resources */,
 				B54072A229A1046500757E25 /* order1.json in Resources */,
+				B5B5544B2B02936400D6F3B6 /* redeem1.json in Resources */,
 				B5823C1D27312D0300479A73 /* list6.json in Resources */,
 				B540729E29A0F9FB00757E25 /* item3.json in Resources */,
 				B5B990A726EB50160029D614 /* errorRules.json in Resources */,

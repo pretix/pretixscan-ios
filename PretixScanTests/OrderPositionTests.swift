@@ -693,7 +693,8 @@ class OrderPositionTests: XCTestCase {
         let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid)
         
         XCTAssertEqual(result?.status, .redeemed)
-        XCTAssertEqual(result?.checkInTexts, ["Check-in text on the product variation", "text on order"])
+        // check-in texts are ordered: Questions > Order > Variation > Item
+        XCTAssertEqual(result?.checkInTexts, ["text on order", "Check-in text on the product variation"])
         XCTAssertEqual(result?.calculatedProductLabel, "Regular ticket with options – Standard")
     }
 }

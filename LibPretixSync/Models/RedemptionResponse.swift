@@ -175,7 +175,8 @@ extension RedemptionResponse {
             if response.checkInTexts == nil {
                 response.checkInTexts = []
             }
-            response.checkInTexts!.append(contentsOf: newTexts)
+            // questions should be prepended so they appear before server-sent check-in texts
+            response.checkInTexts = newTexts + response.checkInTexts!
         }
         return response
     }
