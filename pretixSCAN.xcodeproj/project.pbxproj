@@ -82,6 +82,8 @@
 		B5823C1B273123CC00479A73 /* list5.json in Resources */ = {isa = PBXBuildFile; fileRef = B5823C1A273123CC00479A73 /* list5.json */; };
 		B5823C1D27312D0300479A73 /* list6.json in Resources */ = {isa = PBXBuildFile; fileRef = B5823C1C27312D0300479A73 /* list6.json */; };
 		B5823C1F27313F8A00479A73 /* question4.json in Resources */ = {isa = PBXBuildFile; fileRef = B5823C1E27313F8A00479A73 /* question4.json */; };
+		B58994FB2B0654E100D1F951 /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58994FA2B0654E100D1F951 /* QuestionsView.swift */; };
+		B58994FD2B065ADC00D1F951 /* ConditionalViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58994FC2B065ADC00D1F951 /* ConditionalViewModifiers.swift */; };
 		B58CF83626F3066900FADA2A /* FeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */; };
 		B58CF83826F3104F00FADA2A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83726F3104F00FADA2A /* Logger.swift */; };
 		B58CF83B26F31BDC00FADA2A /* ScanFeedbackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CF83A26F31BDC00FADA2A /* ScanFeedbackGenerator.swift */; };
@@ -365,6 +367,8 @@
 		B5823C1A273123CC00479A73 /* list5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list5.json; sourceTree = "<group>"; };
 		B5823C1C27312D0300479A73 /* list6.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list6.json; sourceTree = "<group>"; };
 		B5823C1E27313F8A00479A73 /* question4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = question4.json; sourceTree = "<group>"; };
+		B58994FA2B0654E100D1F951 /* QuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsView.swift; sourceTree = "<group>"; };
+		B58994FC2B065ADC00D1F951 /* ConditionalViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalViewModifiers.swift; sourceTree = "<group>"; };
 		B58CF83526F3066900FADA2A /* FeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGenerator.swift; sourceTree = "<group>"; };
 		B58CF83726F3104F00FADA2A /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B58CF83A26F31BDC00FADA2A /* ScanFeedbackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanFeedbackGenerator.swift; sourceTree = "<group>"; };
@@ -649,6 +653,7 @@
 				B59709C92B051EB200D6B82F /* TicketStatusConfiguration.swift */,
 				B57EE4652B03E1600019342B /* TicketStatusController.swift */,
 				B59709CD2B053B8F00D6B82F /* TicketStatusAnnouncement.swift */,
+				B58994FA2B0654E100D1F951 /* QuestionsView.swift */,
 			);
 			path = TicketStatus;
 			sourceTree = "<group>";
@@ -1107,6 +1112,7 @@
 				B5502A332AAF4DEB00107B65 /* UIViewController+navBarControls.swift */,
 				B5C35C7F2AAF6C86003E17D2 /* LabelWithPadding.swift */,
 				B51C54192ADD404D00077716 /* NSAttributedString+joinedWithNewLines.swift */,
+				B58994FC2B065ADC00D1F951 /* ConditionalViewModifiers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1397,6 +1403,7 @@
 				B5FA778C2705BD62000E1644 /* 04_MigrationQueueAddEntryType.swift in Sources */,
 				DCAC199A22BF7E5B0019B53F /* EventLogger.swift in Sources */,
 				B58CF83B26F31BDC00FADA2A /* ScanFeedbackGenerator.swift in Sources */,
+				B58994FD2B065ADC00D1F951 /* ConditionalViewModifiers.swift in Sources */,
 				B57FF6D426C66EBE001B9005 /* DelayOperation.swift in Sources */,
 				B57EE4662B03E1600019342B /* TicketStatusController.swift in Sources */,
 				B52579562729206C006D9EE9 /* EventValidKeysDownloader.swift in Sources */,
@@ -1540,6 +1547,7 @@
 				DC17F2362302B9300044764A /* BoolQuestionCell.swift in Sources */,
 				B5257958272921FB006D9EE9 /* ItemCategoriesDownloader.swift in Sources */,
 				DCB35B912248F31400860385 /* RedemptionResponse.swift in Sources */,
+				B58994FB2B0654E100D1F951 /* QuestionsView.swift in Sources */,
 				B5C0B61A28018CA00089DCDB /* TicketJsonLogicChecker.swift in Sources */,
 				B5014DB626E20DEB004C6604 /* Date+substract.swift in Sources */,
 				DCC5710922C6353A008A4397 /* FMResultSet+NullableColumns.swift in Sources */,

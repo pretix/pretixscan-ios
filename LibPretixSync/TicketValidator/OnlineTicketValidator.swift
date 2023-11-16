@@ -120,7 +120,6 @@ public class OnlineTicketValidator: TicketValidator {
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
-    @available(*, renamed: "redeem()")
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]? = nil,
                        as type: String,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {

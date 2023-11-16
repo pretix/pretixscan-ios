@@ -16,7 +16,7 @@ protocol QuestionsTableViewControllerDelegate: AnyObject {
 class QuestionsTableViewController: UITableViewController, Configurable, QuestionCellDelegate {
     // MARK: Properties
     var configStore: ConfigStore?
-    var questions = [Question]() { didSet { answers = [Answer?](repeating: nil, count: questions.count) }}
+    var questions = [Question]()
     var answers = [Answer?]()
 
     weak var delegate: QuestionsTableViewControllerDelegate?
@@ -147,7 +147,7 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
         self.delegate?.receivedAnswers(answerList)
 
         // Bye bye
-        dismiss(animated: true)
+        // dismiss(animated: true)
     }
 
     private func missingAnswer(for question: Question) {

@@ -22,5 +22,8 @@ struct RedeemTicketView: View {
             .task({
                 await viewModel.redeem()
             })
+            .sheet(isPresented: $viewModel.askingQuestions, content: {
+                QuestionsView(configStore: viewModel.configStore!, questions: viewModel.questions, answers: viewModel.answerSlots, onCancelAnswering: {viewModel.cancelAnsweringCheckInQuestions()}, onAnswered: {viewModel.receivedAnswers($0)})
+            })
     }
 }

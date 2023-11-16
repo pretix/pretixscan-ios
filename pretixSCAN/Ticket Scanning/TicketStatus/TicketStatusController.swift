@@ -15,7 +15,14 @@ class TicketStatusController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupAutoDismiss()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissVC), name: .init("CloseRedeemView"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stopAutoDismiss), name: .init("RedeemStopAutoDismissView"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setupAutoDismiss), name: .init("RedeemStartAutoDismissView"), object: nil)
+        
+        // Add a tap gesture recognizer to stop any running autodismiss from taps
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stopAutoDismiss))
+        self.view.addGestureRecognizer(tapGesture)
         
         guard let configuration = configuration else {
             fatalError("ticket status configuration must be set")
@@ -29,15 +36,13 @@ class TicketStatusController: UIViewController {
         hostController.didMove(toParent: self)
     }
     
-    func setupAutoDismiss() {
+    @objc func setupAutoDismiss() {
+        timer?.invalidate()
         let delay = 5.0 // seconds
         let dismissTimer = Timer(timeInterval: delay, target: self, selector: #selector(dismissVC), userInfo: nil, repeats: false)
         RunLoop.main.add(dismissTimer, forMode: .common)
         timer = dismissTimer
         
-        // Add a tap gesture recognizer to the view controller's view
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stopAutoDismiss))
-        self.view.addGestureRecognizer(tapGesture)
     }
     
 
