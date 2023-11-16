@@ -104,6 +104,11 @@ extension ValidateTicketViewController: AppCoordinator {
     }
     
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
+        if presentedViewController != nil {
+            print("ticket status is currently being shown, we can't scan a code")
+            return
+        }
+        
         if !ignoreUnpaid {
             getConfigStore().feedbackGenerator.announce(.didScanQrCode)
         }
@@ -124,6 +129,7 @@ extension ValidateTicketViewController: AppCoordinator {
             sheet.preferredCornerRadius = 35
             sheet.delegate = statusController
         }
+        
         present(statusController, animated: true, completion: nil)
     }
 }
