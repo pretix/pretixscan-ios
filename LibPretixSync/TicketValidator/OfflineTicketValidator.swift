@@ -136,6 +136,20 @@ public class OfflineTicketValidator: TicketValidator {
         return queuedCheckIns + orderCheckIns
     }
     
+    public func redeem(configuration: TicketStatusConfiguration, as type: String) async throws -> RedemptionResponse? {
+        return try await withCheckedThrowingContinuation { continuation in
+            redeem(secret: configuration.secret, force: configuration.force, ignoreUnpaid: configuration.ignoreUnpaid, answers: configuration.answers, as: type) {redemptionResponse, error in
+                
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: redemptionResponse)
+                }
+            }
+        }
+    }
+    
+    
     /// Check in an attendee, identified by OrderPosition, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.

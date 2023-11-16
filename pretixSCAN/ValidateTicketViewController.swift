@@ -107,9 +107,24 @@ extension ValidateTicketViewController: AppCoordinator {
         if !ignoreUnpaid {
             getConfigStore().feedbackGenerator.announce(.didScanQrCode)
         }
-        let ticketStatusViewControllerConfiguration = TicketStatusViewController.Configuration(
-            secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: nil)
-        self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: ticketStatusViewControllerConfiguration)
+        showStatusAndRedeem(secret, force, ignoreUnpaid)
+    }
+    
+    func showStatusAndRedeem(_ secret: String, _ force: Bool, _ ignoreUnpaid: Bool) {
+        let statusController = TicketStatusController()
+        statusController.configuration = TicketStatusConfiguration(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: nil)
+        
+        if let sheet = statusController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+//            sheet.largestUndimmedDetentIdentifier = .medium
+//            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//            sheet.prefersEdgeAttachedInCompactHeight = true
+//            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+            sheet.preferredCornerRadius = 35
+            sheet.delegate = statusController
+        }
+        present(statusController, animated: true, completion: nil)
     }
 }
 

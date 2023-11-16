@@ -38,9 +38,13 @@ public protocol TicketValidator {
     /// Check in an attendee, identified by their secret, into the currently configured CheckInList
     ///
     /// - See `RedemptionResponse` for the response returned in the completion handler.
+    @available(*, renamed: "redeem()")
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                 as type: String,
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void)
+    
+    /// Attempt to check in the ticket
+    func redeem(configuration: TicketStatusConfiguration, as type: String) async throws -> RedemptionResponse?
     
     /// Indicates if the ticket validator instance uses online validation or local DataStore state validation.
     var isOnline: Bool {get}
