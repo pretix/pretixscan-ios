@@ -21,13 +21,22 @@ struct TicketStatusAnnouncement: Hashable, Equatable {
     var lastScan: String = ""
     var showAttention: Bool = false
     var showCheckInUnpaid: Bool = false
-    var attendeeName: String = ""
+    var attendeeName: String = "-"
     var orderAndPosition: String = ""
     var seat: String = ""
     var additionalTexts: [String] = []
+    var questions: [TicketKeyValuePair] = []
     
     static func empty() -> Self {
         TicketStatusAnnouncement(nil, nil, false, false)
+    }
+    
+    static func success() -> Self {
+        TicketStatusAnnouncement(.redeemed, nil, false, false)
+    }
+    
+    static func product() -> Self {
+        TicketStatusAnnouncement(.product, nil, false, false)
     }
 }
 
@@ -51,6 +60,7 @@ extension TicketStatusAnnouncement  {
             attendeeName = redemptionResponse.position?.attendeeName ?? ""
             seat = redemptionResponse.position?.seat?.name ?? ""
             additionalTexts = Self.determineAdditionalTexts(redemptionResponse, isExitMode)
+            questions = redemptionResponse.visibleAnswers ?? []
         } else if let error = error {
             icon = Icon.error
             background = Color(uiColor: PXColor.error)
@@ -66,7 +76,7 @@ extension TicketStatusAnnouncement  {
         }
     }
     
-    private static func determineOrderAndPosition(_ redemptionResponse: RedemptionResponse) -> String {
+    static func determineOrderAndPosition(_ redemptionResponse: RedemptionResponse) -> String {
         let order = redemptionResponse.position?.orderCode ?? ""
         if let variationId = redemptionResponse.position?.positionid {
             return "\(order)-\(String(variationId))"
@@ -74,7 +84,7 @@ extension TicketStatusAnnouncement  {
         return order
     }
     
-    private static func determineBackground(_ redemptionResponse: RedemptionResponse) -> Color {
+    static func determineBackground(_ redemptionResponse: RedemptionResponse) -> Color {
         switch redemptionResponse.status {
         case .redeemed:
             return Color(uiColor: PXColor.okay)
@@ -89,7 +99,7 @@ extension TicketStatusAnnouncement  {
         }
     }
     
-    private static func determineIcon(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
+    static func determineIcon(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
         switch redemptionResponse.status {
         case .redeemed:
             if isExitMode {
@@ -107,7 +117,7 @@ extension TicketStatusAnnouncement  {
         }
     }
     
-    private static func determineStatus(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
+    static func determineStatus(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
         switch redemptionResponse.status {
         case .redeemed:
             if isExitMode {
@@ -125,7 +135,7 @@ extension TicketStatusAnnouncement  {
         }
     }
     
-    private static func determineLastScan(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
+    static func determineLastScan(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
         switch redemptionResponse.status {
         case .redeemed:
             return ""
@@ -143,7 +153,7 @@ extension TicketStatusAnnouncement  {
         }
     }
     
-    private static func determineAdditionalTexts(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> [String] {
+    static func determineAdditionalTexts(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> [String] {
         if !isExitMode {
             return redemptionResponse.checkInTexts ?? []
         }

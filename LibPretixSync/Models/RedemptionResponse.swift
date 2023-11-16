@@ -50,6 +50,8 @@ public struct RedemptionResponse: Codable, Equatable {
     
     public var checkInTexts: [String]? = nil
     
+    public var visibleAnswers: [TicketKeyValuePair]? = nil
+    
     // MARK: - Enums
     /// Possible values for the Response Status
     public enum Status: String, Codable {
@@ -156,7 +158,6 @@ extension RedemptionResponse {
     
     static func appendDataFromOnlineQuestionsForStatusVisualization(_ redemptionResponse: RedemptionResponse) -> RedemptionResponse {
         var response = redemptionResponse
-        var newTexts = [String]()
         
         let questionTexts = redemptionResponse.position?.answers?
             .filter({
@@ -168,16 +169,11 @@ extension RedemptionResponse {
                 }
             })
             .map({
-                "\($0.question.displayQuestion): \($0.answer)"
+                TicketKeyValuePair(key: $0.question.displayQuestion, value: $0.answer)
             }) ?? []
-        newTexts.append(contentsOf: questionTexts)
-        if !newTexts.isEmpty {
-            if response.checkInTexts == nil {
-                response.checkInTexts = []
-            }
-            // questions should be prepended so they appear before server-sent check-in texts
-            response.checkInTexts = newTexts + response.checkInTexts!
-        }
+        
+        response.visibleAnswers = questionTexts
+        
         return response
     }
     

@@ -13,7 +13,11 @@ struct RedeemStatusView: View {
     
     var body: some View {
         if viewModel.isLoading {
-            ProgressView()
+            VStack {
+                ProgressView()
+                    .scaleEffect(150)
+                Spacer()
+            }
         } else {
             RedeemedTicketView(announcement: viewModel.announcement, redeemUnpaid: {
                 viewModel.redeemUnpaid()
