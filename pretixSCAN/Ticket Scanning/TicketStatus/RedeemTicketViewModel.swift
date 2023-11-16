@@ -11,8 +11,8 @@ import UIKit
 
 final class RedeemTicketViewModel: ObservableObject {
     private let secret: String
-    private let force: Bool
-    private var ignoreUnpaid: Bool
+    private let forcedRedeem: Bool
+    private var unpaidAreIgnored: Bool
     private var canAutoDismiss: Bool = true
     
     
@@ -29,8 +29,8 @@ final class RedeemTicketViewModel: ObservableObject {
     
     init(configuration: TicketStatusConfiguration) {
         self.secret = configuration.secret
-        self.force = configuration.force
-        self.ignoreUnpaid = configuration.ignoreUnpaid
+        self.forcedRedeem = configuration.force
+        self.unpaidAreIgnored = configuration.ignoreUnpaid
         self.questionAnswers = configuration.answers ?? []
         
         // get a reference to the application's current config store
@@ -43,7 +43,7 @@ final class RedeemTicketViewModel: ObservableObject {
         announcement = TicketStatusAnnouncement(redemptionResponse, error, isExitMode, configStore!.checkInList!.includePending)
         
         // haptic and sound announcements
-        if !ignoreUnpaid {
+        if !unpaidAreIgnored {
             configStore!.feedbackGenerator.announce(redemptionResponse: redemptionResponse, error, isExitMode)
         }
         
@@ -62,17 +62,29 @@ final class RedeemTicketViewModel: ObservableObject {
     @Published var questionAnswers: [Answer] = []
     
     
+    func redeemUnpaid() {
+        unpaidAreIgnored = true
+        Task {
+            await requestRedeem()
+        }
+    }
+    
     @MainActor
     func redeem() async {
-        stopCountDown()
+        await requestRedeem()
+    }
+    
+    @MainActor
+    func requestRedeem() async {
         isLoading = true
         askingQuestions = false
         
-        let config = TicketStatusConfiguration(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: questionAnswers)
+        let config = TicketStatusConfiguration(secret: secret, force: forcedRedeem, ignoreUnpaid: unpaidAreIgnored, answers: questionAnswers)
         do {
             let redemptionResponse = try await configStore!.ticketValidator!.redeem(configuration: config, as: scanMode)
             if let redemptionResponse, redemptionResponse.status == .incomplete {
                 // we need to ask questions
+                stopCountDown()
                 updateQuestionsAndAnswers(redemptionResponse)
                 showQuestions()
             } else {
@@ -132,6 +144,7 @@ final class RedeemTicketViewModel: ObservableObject {
     
     @MainActor
     func startCountDown() {
+        print("requesting countdown, can countdown: ", canAutoDismiss)
         // we can only request autodismiss once per ticket
         // once canceled the view stays open forever
         if canAutoDismiss {

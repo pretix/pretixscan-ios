@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RedeemedTicketView: View {
     let announcement: TicketStatusAnnouncement
+    var redeemUnpaid: () -> Void
     
     var body: some View {
         ScrollView(.vertical) {
@@ -37,6 +38,15 @@ struct RedeemedTicketView: View {
                     }
                 }
                 
+                if announcement.showCheckInUnpaid {
+                    Button(action: {
+                        self.redeemUnpaid()
+                    }, label: {
+                        Text(Localization.TicketStatusViewController.UnpaidContinueButtonTitle)
+                    })
+                    
+                }
+                
                 if announcement.showAttention {
                     HStack {
                         Image(systemName: "exclamationmark.triangle.fill")
@@ -59,6 +69,8 @@ struct RedeemedTicketView: View {
                     }
                     
                     Text(announcement.additionalTexts.joined(separator: "\n"))
+                    
+                    Spacer()
                 }.background(detailsBackground)
                 
                 HStack {

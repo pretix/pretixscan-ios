@@ -15,7 +15,9 @@ struct RedeemStatusView: View {
         if viewModel.isLoading {
             ProgressView()
         } else {
-            RedeemedTicketView(announcement: viewModel.announcement)
+            RedeemedTicketView(announcement: viewModel.announcement, redeemUnpaid: {
+                viewModel.redeemUnpaid()
+            })
         }
     }
 }
