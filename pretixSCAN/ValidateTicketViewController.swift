@@ -60,10 +60,6 @@ class ValidateTicketViewController: UIViewController {
             appCoordinatorReceiver.appCoordinator = self
         }
         
-        if let ticketStatusViewController = segue.destination as? TicketStatusViewController {
-            ticketStatusViewController.configuration = sender as? TicketStatusViewController.Configuration
-        }
-        
         if let ticketScannerViewController = segue.destination as? TicketScannerViewController {
             self.ticketScannerViewController = ticketScannerViewController
         }

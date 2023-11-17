@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HlP-Wp-lil">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="HlP-Wp-lil">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -83,150 +83,11 @@
                         <outlet property="eventButton" destination="cOt-oc-Yuk" id="UwT-QF-X0X"/>
                         <segue destination="S7W-QK-Oc8" kind="presentation" identifier="presentWelcomeViewController" modalPresentationStyle="fullScreen" id="GkZ-ev-8dv"/>
                         <segue destination="VRx-cx-5T1" kind="presentation" identifier="presentConnectDeviceViewController" modalPresentationStyle="fullScreen" id="N4U-ol-VwL"/>
-                        <segue destination="YdL-xT-kVF" kind="custom" identifier="presentTicketStatusViewController" customClass="TicketStatusSegue" customModule="pretixSCAN" customModuleProvider="target" id="4rb-9a-QOx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="862" y="26"/>
-        </scene>
-        <!--Ticket Status View Controller-->
-        <scene sceneID="44S-iH-zbx">
-            <objects>
-                <viewController modalPresentationStyle="pageSheet" id="YdL-xT-kVF" customClass="TicketStatusViewController" customModule="pretixSCAN" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wWc-OI-sUy">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="333"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="TVc-eH-wzS">
-                                <rect key="frame" x="140" y="297" width="20" height="20"/>
-                            </activityIndicatorView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6j9-eu-btb">
-                                <rect key="frame" x="20" y="242" width="260" height="81"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendee Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArE-vk-H54">
-                                        <rect key="frame" x="0.0" y="0.0" width="260" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order ID" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Xn-UT-Ort">
-                                        <rect key="frame" x="0.0" y="30.333333333333314" width="260" height="20.333333333333329"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Extra Information" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QD2-oT-PAO" userLabel="Extra Information">
-                                        <rect key="frame" x="0.0" y="60.666666666666693" width="260" height="20.333333333333336"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hin-1O-uRs">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="232"/>
-                                <subviews>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHE-AY-7kO" customClass="BlinkerView" customModule="pretixSCAN" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="232"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="250" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-ON-nVd">
-                                        <rect key="frame" x="20" y="5" width="260" height="65.333333333333329"/>
-                                        <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="68"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ticket Status" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rcg-Oi-qF2">
-                                        <rect key="frame" x="20" y="90.333333333333329" width="260" height="26.333333333333329"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" minimumFontSize="16" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTu-Kg-YZG">
-                                        <rect key="frame" x="20" y="121.66666666666667" width="260" height="20.333333333333329"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BD1-QJ-P2d" customClass="PrimaryGreenButton" customModule="pretixSCAN" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="182" width="260" height="30"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Check In Unpaid"/>
-                                        <connections>
-                                            <action selector="redeemUnpaidTicket:" destination="YdL-xT-kVF" eventType="touchUpInside" id="O2m-W0-LMM"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.62514378230000001" green="0.14160739580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="8LH-ON-nVd" secondAttribute="trailing" constant="20" id="6wA-Mc-DtH"/>
-                                    <constraint firstItem="BD1-QJ-P2d" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="84H-LE-zwv"/>
-                                    <constraint firstAttribute="trailing" secondItem="hTu-Kg-YZG" secondAttribute="trailing" constant="20" id="9Zj-xX-AMO"/>
-                                    <constraint firstItem="Rcg-Oi-qF2" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="BWR-IM-vyp"/>
-                                    <constraint firstItem="gHE-AY-7kO" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" id="EMP-5c-Rdb"/>
-                                    <constraint firstAttribute="bottom" secondItem="BD1-QJ-P2d" secondAttribute="bottom" constant="20" id="EeX-tL-osw"/>
-                                    <constraint firstItem="8LH-ON-nVd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hin-1O-uRs" secondAttribute="top" constant="5" id="VdC-kP-IUd"/>
-                                    <constraint firstAttribute="trailing" secondItem="BD1-QJ-P2d" secondAttribute="trailing" constant="20" id="WKV-P6-ZRm"/>
-                                    <constraint firstAttribute="trailing" secondItem="Rcg-Oi-qF2" secondAttribute="trailing" constant="20" id="Yhd-qb-3f8"/>
-                                    <constraint firstItem="8LH-ON-nVd" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="cLx-C4-xPA"/>
-                                    <constraint firstItem="Rcg-Oi-qF2" firstAttribute="top" secondItem="8LH-ON-nVd" secondAttribute="bottom" constant="20" id="ez7-gF-a2K"/>
-                                    <constraint firstItem="hTu-Kg-YZG" firstAttribute="leading" secondItem="hin-1O-uRs" secondAttribute="leading" constant="20" id="g6t-Cq-jkh"/>
-                                    <constraint firstAttribute="bottom" secondItem="hTu-Kg-YZG" secondAttribute="bottom" constant="90" id="iQ0-ox-3ih"/>
-                                    <constraint firstAttribute="bottom" secondItem="gHE-AY-7kO" secondAttribute="bottom" id="k8o-fM-Hn4"/>
-                                    <constraint firstItem="gHE-AY-7kO" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="top" id="nzZ-xN-X4f"/>
-                                    <constraint firstItem="hTu-Kg-YZG" firstAttribute="top" secondItem="Rcg-Oi-qF2" secondAttribute="bottom" constant="5" id="pxX-w9-NRp"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="xGH-g9-Haq">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="400"/>
-                                    </constraint>
-                                    <constraint firstAttribute="trailing" secondItem="gHE-AY-7kO" secondAttribute="trailing" id="yYv-3E-TlC"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="RdG-rZ-yD4"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="6j9-eu-btb" secondAttribute="trailing" constant="20" id="8FN-S1-WuE"/>
-                            <constraint firstItem="hin-1O-uRs" firstAttribute="leading" secondItem="wWc-OI-sUy" secondAttribute="leading" id="BLw-To-Rk2"/>
-                            <constraint firstItem="6j9-eu-btb" firstAttribute="top" secondItem="hin-1O-uRs" secondAttribute="bottom" constant="10" id="T02-Fb-oej"/>
-                            <constraint firstItem="6j9-eu-btb" firstAttribute="leading" secondItem="wWc-OI-sUy" secondAttribute="leading" constant="20" id="Tk3-ou-jm9"/>
-                            <constraint firstItem="hin-1O-uRs" firstAttribute="top" secondItem="wWc-OI-sUy" secondAttribute="top" id="cEe-mY-sBw"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="TVc-eH-wzS" secondAttribute="bottom" constant="16" id="cWc-dk-xdM"/>
-                            <constraint firstAttribute="trailing" secondItem="hin-1O-uRs" secondAttribute="trailing" id="dMx-mv-O1g"/>
-                            <constraint firstAttribute="bottom" secondItem="6j9-eu-btb" secondAttribute="bottom" constant="10" id="da7-ey-Odz"/>
-                            <constraint firstItem="TVc-eH-wzS" firstAttribute="centerX" secondItem="6j9-eu-btb" secondAttribute="centerX" id="ugz-HD-TAW"/>
-                        </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="Q1K-6u-PNc" appends="YES" id="ttr-uU-5Qa"/>
-                        </connections>
-                    </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="300"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="333"/>
-                    <connections>
-                        <outlet property="activityIndicator" destination="TVc-eH-wzS" id="mkk-PW-kdP"/>
-                        <outlet property="attendeeNameLabel" destination="ArE-vk-H54" id="yy8-Bz-nZL"/>
-                        <outlet property="backgroundColorView" destination="hin-1O-uRs" id="QiY-LE-qKn"/>
-                        <outlet property="blinkerView" destination="gHE-AY-7kO" id="6B3-vb-WZM"/>
-                        <outlet property="checkInUnpaidButton" destination="BD1-QJ-P2d" id="BKI-me-u7g"/>
-                        <outlet property="checkInUnpaidButtonBottomConstraint" destination="iQ0-ox-3ih" id="kIR-ib-gM0"/>
-                        <outlet property="extraInformationLabel" destination="QD2-oT-PAO" id="6TE-bF-vOW"/>
-                        <outlet property="iconLabel" destination="8LH-ON-nVd" id="55e-j1-4Q1"/>
-                        <outlet property="orderIDLabel" destination="4Xn-UT-Ort" id="k4R-jW-fxJ"/>
-                        <outlet property="productNameLabel" destination="hTu-Kg-YZG" id="tpy-wC-I4r"/>
-                        <outlet property="ticketStatusLabel" destination="Rcg-Oi-qF2" id="Cb4-JW-I4Z"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rdg-ts-dAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Q1K-6u-PNc">
-                    <connections>
-                        <action selector="tap:" destination="YdL-xT-kVF" id="VTN-W8-HJn"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="1280" y="857.51231527093603"/>
         </scene>
         <!--Connect Device View Controller-->
         <scene sceneID="Yt1-Uo-1IR">
@@ -398,25 +259,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9uQ-lp-XUw">
-                                <rect key="frame" x="16" y="113.99999999999997" width="343" height="347.33333333333326"/>
+                                <rect key="frame" x="16" y="114.00000000000003" width="343" height="360.66666666666674"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Check-In List" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YNE-8y-Z73">
-                                        <rect key="frame" x="20" y="273.66666666666669" width="303" height="33.666666666666686"/>
+                                        <rect key="frame" x="20" y="287" width="303" height="33.666666666666686"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3z-Xw-PIk">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="253.66666666666666"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="267"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="EW6-d9-gTY">
-                                                <rect key="frame" x="0.0" y="60" width="343" height="80"/>
+                                                <rect key="frame" x="0.0" y="59.999999999999993" width="343" height="93.333333333333314"/>
                                                 <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="80"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Event" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H0-rB-JlM">
-                                                <rect key="frame" x="20" y="200" width="303" height="33.666666666666657"/>
+                                                <rect key="frame" x="20" y="213.33333333333331" width="303" height="33.666666666666657"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -449,7 +310,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enC-LR-18x" customClass="PrimaryButton" customModule="pretixSCAN" customModuleProvider="target">
-                                <rect key="frame" x="16" y="481.33333333333331" width="343" height="30"/>
+                                <rect key="frame" x="16" y="494.66666666666669" width="343" height="30.000000000000057"/>
                                 <state key="normal" title="Dismiss button"/>
                                 <connections>
                                     <action selector="dismiss:" destination="scQ-Rp-23B" eventType="touchUpInside" id="Nbx-Fx-aOd"/>
@@ -1014,7 +875,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NGP-eK-9Ee">
-                                                    <rect key="frame" x="308.66666666666669" y="13" width="46.333333333333336" height="17"/>
+                                                    <rect key="frame" x="311.66666666666669" y="12" width="43.333333333333336" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1038,7 +899,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4fP-CJ-jo9">
-                                                    <rect key="frame" x="308.66666666666669" y="13" width="46.333333333333336" height="17"/>
+                                                    <rect key="frame" x="311.66666666666669" y="12" width="43.333333333333336" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1117,7 +978,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lE1-5d-WnD">
-                                                    <rect key="frame" x="308.66666666666669" y="13" width="46.333333333333336" height="17"/>
+                                                    <rect key="frame" x="311.66666666666669" y="12" width="43.333333333333336" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1141,7 +1002,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oTF-1D-alU">
-                                                    <rect key="frame" x="308.66666666666669" y="13" width="46.333333333333336" height="17"/>
+                                                    <rect key="frame" x="311.66666666666669" y="12" width="43.333333333333336" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="FontAwesome5Free-Solid" family="Font Awesome 5 Free" pointSize="17"/>
                                                     <nil key="textColor"/>

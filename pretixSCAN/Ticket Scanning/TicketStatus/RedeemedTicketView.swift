@@ -65,7 +65,7 @@ struct RedeemedTicketView: View {
                             Button(action: {
                                 self.redeemUnpaid()
                             }, label: {
-                                Text(Localization.TicketStatusViewController.UnpaidContinueButtonTitle)
+                                Text(Localization.TickerStatus.UnpaidContinueButtonTitle)
                             })
                             .buttonStyle(PrimaryGreenButtonStyle())
                         }

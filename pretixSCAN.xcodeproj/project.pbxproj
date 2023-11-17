@@ -249,7 +249,6 @@
 		DCB35B942248F66100860385 /* RedemptionResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B932248F66100860385 /* RedemptionResponseTests.swift */; };
 		DCB35B96224901BA00860385 /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B95224901BA00860385 /* CryptoHelpers.swift */; };
 		DCB35B9822490B7D00860385 /* DateFormattingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */; };
-		DCB35B9B2249402300860385 /* TicketStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9A2249402300860385 /* TicketStatusViewController.swift */; };
 		DCB35B9D2249406000860385 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9C2249406000860385 /* UIDevice.swift */; };
 		DCB35BA02249408800860385 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB35B9F2249408800860385 /* UIAlertController.swift */; };
 		DCC0003A223BE07D00236424 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC00039223BE07D00236424 /* Event.swift */; };
@@ -541,7 +540,6 @@
 		DCB35B932248F66100860385 /* RedemptionResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedemptionResponseTests.swift; sourceTree = "<group>"; };
 		DCB35B95224901BA00860385 /* CryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelpers.swift; sourceTree = "<group>"; };
 		DCB35B9722490B7D00860385 /* DateFormattingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormattingHelpers.swift; sourceTree = "<group>"; };
-		DCB35B9A2249402300860385 /* TicketStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusViewController.swift; sourceTree = "<group>"; };
 		DCB35B9C2249406000860385 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		DCB35B9F2249408800860385 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		DCC00039223BE07D00236424 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -951,7 +949,6 @@
 			children = (
 				B57EE4642B03E1260019342B /* TicketStatus */,
 				B5DCA62C27D9CF4C00191631 /* CameraOverlay */,
-				DCB35B9A2249402300860385 /* TicketStatusViewController.swift */,
 				DCDD82E0224C19D800DC0200 /* TicketScannerViewController.swift */,
 				DCF8A45022A26C5E0020E0DE /* BlinkerView.swift */,
 				DC2A605D22DCD84300E7A6EA /* QuestionsTableViewController.swift */,
@@ -1603,7 +1600,6 @@
 				DCAAFF4F223ABC670059C000 /* APIClient.swift in Sources */,
 				DCDD82D8224BCBC600DC0200 /* SimpleCheckInStatusItemTableViewCell.swift in Sources */,
 				B5FA77932705BE06000E1644 /* 02_MigrationAddAnswersJSON.swift in Sources */,
-				DCB35B9B2249402300860385 /* TicketStatusViewController.swift in Sources */,
 				B5FA778A2705BD31000E1644 /* 01_InitialUploadMigration.swift in Sources */,
 				DC227F2122536B5B00314448 /* AppCoordinator.swift in Sources */,
 				DC2A606422DD110D00E7A6EA /* ChoiceButton.swift in Sources */,
