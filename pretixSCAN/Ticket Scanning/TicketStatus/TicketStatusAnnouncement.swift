@@ -26,23 +26,26 @@ struct TicketStatusAnnouncement: Hashable, Equatable {
     var seat: String = ""
     var additionalTexts: [String] = []
     var questions: [TicketKeyValuePair] = []
+    var showOfflineIndicator: Bool = false
+    
+    
     
     static func empty() -> Self {
-        TicketStatusAnnouncement(nil, nil, false, false)
+        TicketStatusAnnouncement(nil, nil, false, false, false)
     }
     
     static func success() -> Self {
-        TicketStatusAnnouncement(.redeemed, nil, false, false)
+        TicketStatusAnnouncement(.redeemed, nil, false, false, false)
     }
     
     static func product() -> Self {
-        TicketStatusAnnouncement(.product, nil, false, false)
+        TicketStatusAnnouncement(.product, nil, false, false, false)
     }
 }
 
 
 extension TicketStatusAnnouncement  {
-    init(_ redemptionResponse: RedemptionResponse?, _ error: Error?, _ isExitMode: Bool, _ canCheckInUnpaid: Bool) {
+    init(_ redemptionResponse: RedemptionResponse?, _ error: Error?, _ isExitMode: Bool, _ canCheckInUnpaid: Bool, _ isOffline: Bool) {
         if let redemptionResponse = redemptionResponse {
             background = Self.determineBackground(redemptionResponse)
             icon = Self.determineIcon(redemptionResponse, isExitMode)
@@ -55,6 +58,7 @@ extension TicketStatusAnnouncement  {
             lastScan = Self.determineLastScan(redemptionResponse, isExitMode)
             showAttention = redemptionResponse.isRequireAttention
             showCheckInUnpaid = redemptionResponse.errorReason == .unpaid && canCheckInUnpaid
+            showOfflineIndicator = isOffline
             
             // ticket details
             attendeeName = redemptionResponse.position?.attendeeName ?? ""
@@ -65,6 +69,7 @@ extension TicketStatusAnnouncement  {
             icon = Icon.error
             background = Color(uiColor: PXColor.error)
             status = Localization.TicketStatusViewController.InvalidTicket
+            showOfflineIndicator = true
             if let apiError = error as? APIError {
                 switch apiError {
                 case .notFound:

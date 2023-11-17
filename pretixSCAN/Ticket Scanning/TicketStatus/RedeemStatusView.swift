@@ -14,8 +14,10 @@ struct RedeemStatusView: View {
     var body: some View {
         if viewModel.isLoading {
             VStack {
-                ProgressView()
-                    .scaleEffect(150)
+                ProgressView("Loading")
+                    .controlSize(.large)
+                    .padding(.top)
+                    .padding(.top)
                 Spacer()
             }
         } else {
@@ -24,4 +26,8 @@ struct RedeemStatusView: View {
             })
         }
     }
+}
+
+#Preview {
+    RedeemStatusView(viewModel: .init(configuration: .init(secret: "", force: false, ignoreUnpaid: false)))
 }

@@ -39,7 +39,7 @@ class TicketStatusController: UIViewController {
     @objc func setupAutoDismiss() {
         timer?.invalidate()
         print("starting count down")
-        let delay = 5.0 // seconds
+        let delay = 15.0 // seconds
         let dismissTimer = Timer(timeInterval: delay, target: self, selector: #selector(dismissVC), userInfo: nil, repeats: false)
         RunLoop.main.add(dismissTimer, forMode: .common)
         timer = dismissTimer

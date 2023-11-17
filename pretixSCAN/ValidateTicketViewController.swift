@@ -122,10 +122,6 @@ extension ValidateTicketViewController: AppCoordinator {
         if let sheet = statusController.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-//            sheet.largestUndimmedDetentIdentifier = .medium
-//            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-//            sheet.prefersEdgeAttachedInCompactHeight = true
-//            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
             sheet.preferredCornerRadius = 35
             sheet.delegate = statusController
         }

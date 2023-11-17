@@ -100,6 +100,7 @@
 		B59709CA2B051EB200D6B82F /* TicketStatusConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59709C92B051EB200D6B82F /* TicketStatusConfiguration.swift */; };
 		B59709CC2B052C3B00D6B82F /* RedeemTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59709CB2B052C3B00D6B82F /* RedeemTicketView.swift */; };
 		B59709CE2B053B8F00D6B82F /* TicketStatusAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59709CD2B053B8F00D6B82F /* TicketStatusAnnouncement.swift */; };
+		B59AD3972B0746CC0045B593 /* PrimaryGreenButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59AD3962B0746CC0045B593 /* PrimaryGreenButtonStyle.swift */; };
 		B59E923E299F9AAA00E32248 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */; };
 		B5A1D4A02ABDB03C00E360EF /* item5.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A1D49F2ABDB03C00E360EF /* item5.json */; };
 		B5A1D4A22ABDB52F00E360EF /* order2.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A1D4A12ABDB52F00E360EF /* order2.json */; };
@@ -387,6 +388,7 @@
 		B59709C92B051EB200D6B82F /* TicketStatusConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusConfiguration.swift; sourceTree = "<group>"; };
 		B59709CB2B052C3B00D6B82F /* RedeemTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemTicketView.swift; sourceTree = "<group>"; };
 		B59709CD2B053B8F00D6B82F /* TicketStatusAnnouncement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusAnnouncement.swift; sourceTree = "<group>"; };
+		B59AD3962B0746CC0045B593 /* PrimaryGreenButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryGreenButtonStyle.swift; sourceTree = "<group>"; };
 		B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
 		B5A1D49F2ABDB03C00E360EF /* item5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item5.json; sourceTree = "<group>"; };
 		B5A1D4A12ABDB52F00E360EF /* order2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = order2.json; sourceTree = "<group>"; };
@@ -657,6 +659,7 @@
 				B59709CD2B053B8F00D6B82F /* TicketStatusAnnouncement.swift */,
 				B58994FA2B0654E100D1F951 /* QuestionsView.swift */,
 				B58994FE2B067EBA00D1F951 /* TicketKeyValuePair.swift */,
+				B59AD3962B0746CC0045B593 /* PrimaryGreenButtonStyle.swift */,
 			);
 			path = TicketStatus;
 			sourceTree = "<group>";
@@ -1511,6 +1514,7 @@
 				B5534228272C2E47003008AD /* TelQuestionCell.swift in Sources */,
 				DCFAFD8122B54E010042F9F1 /* Keychain.swift in Sources */,
 				B5502A342AAF4DEB00107B65 /* UIViewController+navBarControls.swift in Sources */,
+				B59AD3972B0746CC0045B593 /* PrimaryGreenButtonStyle.swift in Sources */,
 				B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */,
 				DC17F23C2302B99B0044764A /* DateQuestionCell.swift in Sources */,
 				B58CF83826F3104F00FADA2A /* Logger.swift in Sources */,
