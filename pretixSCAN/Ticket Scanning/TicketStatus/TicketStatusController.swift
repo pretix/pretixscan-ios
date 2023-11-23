@@ -30,10 +30,21 @@ class TicketStatusController: UIViewController {
         
         // let SwiftUI take over
         let hostController = UIHostingController(rootView: RedeemTicketView(configuration: configuration))
+        
+        // but... it's autolayout's world, we're just redenring views in it
+        hostController.view.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        // add the SwiftUI host as a child controller
         addChild(hostController)
         view.addSubview(hostController.view)
-        hostController.view.frame = view.bounds
         hostController.didMove(toParent: self)
+        
+        // activate constraints to center the SwiftUI view in the center
+        hostController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        hostController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        hostController.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        hostController.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
     
     @objc func setupAutoDismiss() {
@@ -52,7 +63,6 @@ class TicketStatusController: UIViewController {
     
     @objc func stopAutoDismiss() {
         print("cancel timer \(timer != nil)")
-        // Invalidate the timer when the user taps the screen
         timer?.invalidate()
     }
 }

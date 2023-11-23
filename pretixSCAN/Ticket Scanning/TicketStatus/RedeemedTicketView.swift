@@ -89,21 +89,23 @@ struct RedeemedTicketView: View {
                         }
                         
                         VStack(alignment:. leading) {
-                            HStack {
-                                Text(announcement.attendeeName)
-                                    .font(.title3)
-                                    .bold()
-                                Spacer()
-                                Text(announcement.orderAndPosition)
-                                    .font(.title3)
-                            }
+                            VStack(alignment:. leading) {
+                                HStack {
+                                    Text(announcement.attendeeName)
+                                        .font(.title3)
+                                        .bold()
+                                    Spacer()
+                                    Text(announcement.orderAndPosition)
+                                        .font(.title3)
+                                }
+                                
+                                if !announcement.seat.isEmpty {
+                                    Text(announcement.seat)
+                                        .font(.callout)
+                                }
+                            }.if(!announcement.questions.isEmpty, transform: {$0.padding(.bottom)})
                             
-                            if !announcement.seat.isEmpty {
-                                Text(announcement.seat)
-                                    .font(.callout)
-                            }
-                            
-                            VStack(alignment: .leading) {
+                             VStack(alignment: .leading) {
                                 // questions and answers
                                 ForEach(announcement.questions, id: \.self) {q in
                                     HStack {
@@ -111,11 +113,11 @@ struct RedeemedTicketView: View {
                                             .bold() + Text(": ") + Text(q.value)
                                     }
                                 }
-                            }.padding(.top)
+                            }
+                             .padding(.bottom)
                             
                             // additional texts
                             Text(announcement.additionalTexts.joined(separator: "\n"))
-                                .padding(.top)
                             
                             Spacer()
                         }
@@ -129,9 +131,6 @@ struct RedeemedTicketView: View {
                         Spacer()
                     }
                 }
-                
-                
-                
             }
         }
         .background(detailsBackground)
