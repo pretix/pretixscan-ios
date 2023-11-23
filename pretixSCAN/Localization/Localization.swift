@@ -16,7 +16,7 @@ struct Localization {
         static let SearchPlaceHolder = NSLocalizedString("Search", comment: "")
     }
 
-    struct TickerStatus {
+    struct TicketStatus {
         static let CanceledTicket = NSLocalizedString("Canceled", comment: "")
         static let UnpaidTicket = NSLocalizedString("Unpaid", comment: "")
         static let ValidTicket = NSLocalizedString("Valid Ticket", comment: "")

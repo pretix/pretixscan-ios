@@ -41,18 +41,18 @@ class SearchResultTableViewCell: UITableViewCell {
         
         if searchResult.isRedeemed {
             statusBackgroundView.backgroundColor = PXColor.warning
-            statusLabel.text = Localization.TickerStatus.Redeemed
+            statusLabel.text = Localization.TicketStatus.Redeemed
         } else {
             switch searchResult.status! {
             case .paid:
                 statusBackgroundView.backgroundColor = PXColor.okay
-                statusLabel.text = Localization.TickerStatus.Valid
+                statusLabel.text = Localization.TicketStatus.Valid
             case .cancelled:
                 statusBackgroundView.backgroundColor = PXColor.error
-                statusLabel.text = Localization.TickerStatus.CanceledTicket
+                statusLabel.text = Localization.TicketStatus.CanceledTicket
             case .pending:
                 statusBackgroundView.backgroundColor = PXColor.error
-                statusLabel.text = Localization.TickerStatus.UnpaidTicket
+                statusLabel.text = Localization.TicketStatus.UnpaidTicket
             }
         }
     }

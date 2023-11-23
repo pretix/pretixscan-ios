@@ -68,7 +68,7 @@ extension TicketStatusAnnouncement  {
         } else if let error = error {
             icon = Icon.error
             background = Color(uiColor: PXColor.error)
-            status = Localization.TickerStatus.InvalidTicket
+            status = Localization.TicketStatus.InvalidTicket
             showOfflineIndicator = true
             if let apiError = error as? APIError {
                 switch apiError {
@@ -126,17 +126,17 @@ extension TicketStatusAnnouncement  {
         switch redemptionResponse.status {
         case .redeemed:
             if isExitMode {
-                return Localization.TickerStatus.ValidExit
+                return Localization.TicketStatus.ValidExit
             }
-            return Localization.TickerStatus.ValidTicket
+            return Localization.TicketStatus.ValidTicket
         case .incomplete:
             return ""
         case .error:
             if redemptionResponse.errorReason == .alreadyRedeemed {
-                return Localization.TickerStatus.TicketAlreadyRedeemed
+                return Localization.TicketStatus.TicketAlreadyRedeemed
             }
             
-            return Localization.TickerStatus.InvalidTicket
+            return Localization.TicketStatus.InvalidTicket
         }
     }
     
