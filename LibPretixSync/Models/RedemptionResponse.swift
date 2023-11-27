@@ -92,6 +92,8 @@ public struct RedemptionResponse: Codable, Equatable {
         
         case blocked
         
+        case unapproved
+        
         case invalidTime = "invalid_time"
     }
     

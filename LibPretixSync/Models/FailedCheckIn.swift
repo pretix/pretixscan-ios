@@ -144,6 +144,9 @@ extension FailedCheckIn {
                 case .invalidTime:
                     self =  FailedCheckIn(.invalidTime, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
+                case .unapproved:
+                    self =  FailedCheckIn(.unapproved, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    return
                 }
             } else {
                 EventLogger.log(event: "FailedCheckIn with no error reason", category: .configuration, level: .warning, type: .info)
@@ -173,4 +176,5 @@ enum FailedCheckInErrorReason: String, Hashable, CaseIterable, Codable {
     case ambiguous
     case blocked
     case invalidTime = "invalid_time"
+    case unapproved
 }

@@ -160,15 +160,16 @@ public struct OrderPosition: Model {
                                       answers: nil)
         }
         
+        if status == .paid && order?.requireApproval == true {
+            return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .unapproved, position: self, lastCheckIn: nil, questions: nil,
+                                      answers: nil)
+        }
+        
         if type != "exit" {
             if case .failure(_) = TicketEntryValidFromToChecker(now: nowDate).redeem(position: self) {
                 return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalidTime, position: self, lastCheckIn: nil, questions: nil,
                                           answers: nil)
             }
-        }
-        
-        if status == .paid && order?.requireApproval == true {
-            return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
         }
 
         let shouldIgnoreUnpaid = (ignoreUnpaid && checkInList.includePending) || order?.validIfPending == true

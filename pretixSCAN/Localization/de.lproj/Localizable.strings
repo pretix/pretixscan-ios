@@ -186,3 +186,5 @@
 
 /* Gate */
 "Gate" = "Station";
+
+"Order not approved" = "Bestellung nicht freigegeben";
