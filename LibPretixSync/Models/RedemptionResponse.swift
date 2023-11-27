@@ -136,7 +136,7 @@ extension RedemptionResponse {
     }
     
     static func redeemed(with orderPosition: OrderPosition) -> Self {
-        var response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
+        let response = RedemptionResponse(status: .redeemed, reasonExplanation: nil, errorReason: nil, questions: nil)
         return appendDataFromOfflineMetadataForStatusVisualization(response, orderPosition: orderPosition)
     }
     

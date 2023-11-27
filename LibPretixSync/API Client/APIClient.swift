@@ -691,7 +691,7 @@ public extension APIClient {
     }
     
     private func createRedeemURL(organizer: String) throws -> URL {
-        var url = try createURL(for: "/api/v1/organizers/\(organizer)/checkinrpc/redeem/")
+        let url = try createURL(for: "/api/v1/organizers/\(organizer)/checkinrpc/redeem/")
         return try addExpandQuery(url)
     }
     
