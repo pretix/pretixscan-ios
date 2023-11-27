@@ -100,7 +100,7 @@ extension ValidateTicketViewController: AppCoordinator {
     }
     
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
-        if presentedViewController != nil {
+        if presentedViewController != nil && presentedViewController is UISearchController == false {
             print("ticket status is currently being shown, we can't scan a code")
             return
         }
@@ -155,7 +155,7 @@ extension ValidateTicketViewController {
             fatalError("Could not get get results view controller from Storyboard")
         }
         resultsController.appCoordinator = self
-        searchController = UISearchController(searchResultsController: resultsController )
+        searchController = UISearchController(searchResultsController: resultsController)
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = resultsController
         searchController.searchBar.placeholder = Localization.ValidateTicketViewController.SearchPlaceHolder
