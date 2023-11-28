@@ -716,9 +716,11 @@ public extension APIClient {
             }
             
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
+#if DEBUG
                 if let data = data {
                     print("response error", String(data: data, encoding: .utf8))
                 }
+#endif
                 if let error = self.checkResponse(data: data, response: response, error: error) {
                     completionHandler(nil, error)
                     return
