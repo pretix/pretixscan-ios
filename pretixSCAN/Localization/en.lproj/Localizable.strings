@@ -376,3 +376,5 @@
 
 /* Gate */
 "Gate" = "Gate";
+
+"Order not approved" = "Order not approved";

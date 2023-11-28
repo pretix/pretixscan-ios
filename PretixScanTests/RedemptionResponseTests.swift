@@ -131,6 +131,7 @@ class RedemptionResponseTests: XCTestCase {
         let result = RedemptionResponse.appendDataFromOnlineQuestionsForStatusVisualization(redemptionResponse)
         
         // check-in texts are ordered: Questions > Order > Variation > Item
-        XCTAssertEqual(result.checkInTexts, ["Question on screen: Some answer", "check-in on product"])
+        XCTAssertEqual(result.checkInTexts, ["check-in on product"])
+        XCTAssertEqual(result.visibleAnswers, [.init(key: "Question on screen", value: "Some answer")])
     }
 }

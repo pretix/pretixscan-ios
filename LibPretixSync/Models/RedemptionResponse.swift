@@ -50,7 +50,7 @@ public struct RedemptionResponse: Codable, Equatable {
     
     public var checkInTexts: [String]? = nil
     
-    public var visibleAnswers: [TicketKeyValuePair]? = nil
+    public var visibleAnswers: [TicketKeyValuePair] = []
     
     // MARK: - Enums
     /// Possible values for the Response Status
@@ -91,6 +91,8 @@ public struct RedemptionResponse: Codable, Equatable {
         case ambiguous
         
         case blocked
+        
+        case unapproved
         
         case invalidTime = "invalid_time"
     }

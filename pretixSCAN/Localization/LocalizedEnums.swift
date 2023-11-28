@@ -46,6 +46,8 @@ extension RedemptionResponse.ErrorReason {
             return NSLocalizedString("Blocked", comment: "Blocked (ticket signature)")
         case .invalidTime:
             return NSLocalizedString("Invalid time", comment: "Invalid time (ticket signature)")
+        case .unapproved:
+            return NSLocalizedString("Order not approved", comment: "")
         }
     }
 }

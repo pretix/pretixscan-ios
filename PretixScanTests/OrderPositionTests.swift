@@ -611,7 +611,7 @@ class OrderPositionTests: XCTestCase {
         let result = position.createRedemptionResponse(force: false, ignoreUnpaid: true, in: event, in: checkInListUnpaid)
         
         XCTAssertEqual(result?.status, .error)
-        XCTAssertEqual(result?.errorReason, .unpaid)
+        XCTAssertEqual(result?.errorReason, .unapproved)
     }
     
     func testCheckInWithItemInformation() {
