@@ -123,6 +123,7 @@
 		B5C0B61A28018CA00089DCDB /* TicketJsonLogicChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */; };
 		B5C2F00627CA6BD3004A3166 /* ImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C2F00527CA6BD3004A3166 /* ImageResize.swift */; };
 		B5C35C802AAF6C86003E17D2 /* LabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C35C7F2AAF6C86003E17D2 /* LabelWithPadding.swift */; };
+		B5CF74ED2AEA5B6E005CF5AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CF74EC2AEA5B6E005CF5AD /* SceneDelegate.swift */; };
 		B5D255EA2723187F0064652F /* FMDBEventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255E92723187F0064652F /* FMDBEventValidKey.swift */; };
 		B5D255EC272318F50064652F /* EventValidKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255EB272318F50064652F /* EventValidKey.swift */; };
 		B5D255EE272319DF0064652F /* 08_MigrationAddEventValidKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */; };
@@ -409,6 +410,7 @@
 		B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicChecker.swift; sourceTree = "<group>"; };
 		B5C2F00527CA6BD3004A3166 /* ImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResize.swift; sourceTree = "<group>"; };
 		B5C35C7F2AAF6C86003E17D2 /* LabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPadding.swift; sourceTree = "<group>"; };
+		B5CF74EC2AEA5B6E005CF5AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B5D255E92723187F0064652F /* FMDBEventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBEventValidKey.swift; sourceTree = "<group>"; };
 		B5D255EB272318F50064652F /* EventValidKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventValidKey.swift; sourceTree = "<group>"; };
 		B5D255ED272319DF0064652F /* 08_MigrationAddEventValidKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 08_MigrationAddEventValidKeys.swift; sourceTree = "<group>"; };
@@ -1030,6 +1032,7 @@
 		DCAAFF3222394BE80059C000 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				B5CF74EC2AEA5B6E005CF5AD /* SceneDelegate.swift */,
 				DC07357D22392474008326F7 /* Main.storyboard */,
 				DC07358222392476008326F7 /* LaunchScreen.storyboard */,
 				B5AF40B527DF4C5C001576DD /* Camera.storyboard */,
@@ -1499,6 +1502,7 @@
 				DCEEF122227AFC4600BCAF82 /* SyncStatusViewController.swift in Sources */,
 				DC2F4A05225781CF00710EFA /* TicketStatusSegue.swift in Sources */,
 				B5480321299E0ABF00B6356E /* TicketEntryValidFromToChecker.swift in Sources */,
+				B5CF74ED2AEA5B6E005CF5AD /* SceneDelegate.swift in Sources */,
 				DC0052EA2260D385002D985B /* Model.swift in Sources */,
 				B5DBB0CF2721C17C00FFBE23 /* 07_MigrationAddRevokedSecret.swift in Sources */,
 				B5534222272BFFCE003008AD /* TicketMultiEntryChecker.swift in Sources */,

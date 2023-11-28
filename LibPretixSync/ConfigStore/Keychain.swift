@@ -26,7 +26,8 @@ public struct Keychain {
             kSecClassValue: kSecClassGenericPasswordValue,
             kSecAttrServiceValue: service,
             kSecAttrAccountValue: account,
-            kSecValueDataValue: data
+            kSecValueDataValue: data,
+            kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
         ]
 
         SecItemDelete(query as CFDictionary)

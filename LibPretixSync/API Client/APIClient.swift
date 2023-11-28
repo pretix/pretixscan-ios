@@ -93,14 +93,7 @@ public extension APIClient {
             pxd.setPublishedVersion(initializationRequest.softwareVersion)
             
             // setup the configuration store and apply security defaults
-            self.configStore.apiToken = initializationResponse.apiToken
-            self.configStore.deviceID = initializationResponse.deviceID
-            self.configStore.deviceName = initializationResponse.name
-            self.configStore.deviceUniqueSerial = initializationResponse.uniqueSerial
-            self.configStore.organizerSlug = initializationResponse.organizer
-            self.configStore.securityProfile = PXSecurityProfile(rawValue: initializationResponse.securityProfile)
-            self.configStore.applySecurityDefaults()
-            
+            self.configStore.updateAndApplyCredentials(deviceInit: initializationResponse)
             completionHandler(nil)
         }
         
@@ -199,13 +192,7 @@ public extension APIClient {
                     return
                 }
                 
-                self.configStore.apiToken = initializationResponse.apiToken
-                self.configStore.deviceID = initializationResponse.deviceID
-                self.configStore.deviceName = initializationResponse.name
-                self.configStore.deviceUniqueSerial = initializationResponse.uniqueSerial
-                self.configStore.organizerSlug = initializationResponse.organizer
-                self.configStore.securityProfile = PXSecurityProfile(rawValue: initializationResponse.securityProfile)
-                
+                self.configStore.updateAndApplyCredentials(deviceInit: initializationResponse)
                 completionHandler(nil)
             }
             
