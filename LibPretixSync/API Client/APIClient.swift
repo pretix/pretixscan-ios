@@ -483,7 +483,8 @@ public extension APIClient {
                 if let error = self.checkResponse(data: data, response: response, error: error) {
                     if let error = error as NSError? {
                         if error.code == NSURLErrorCancelled {
-                            // The task was cancelled, send no completionHandler
+                            
+                            completionHandler(nil, nil)
                             return
                         }
                     }
@@ -677,7 +678,7 @@ public extension APIClient {
     }
     
     private func createRedeemURL(organizer: String) throws -> URL {
-        var url = try createURL(for: "/api/v1/organizers/\(organizer)/checkinrpc/redeem/")
+        let url = try createURL(for: "/api/v1/organizers/\(organizer)/checkinrpc/redeem/")
         return try addExpandQuery(url)
     }
     
