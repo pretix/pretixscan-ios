@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Manages a queue of changes to be up- and downloaded to and from the API.
 ///
@@ -132,6 +133,11 @@ public class SyncManager {
             if let lastRequestedSync = lastRequestedSync {
                 if Date() - lastRequestedSync < timeBetweenSyncs {
                     logger.debug("⏱️ ignoring request to sync before timeBetweenSyncs has elapsed")
+                    return
+                }
+                
+                if !UIApplication.shared.isProtectedDataAvailable {
+                    logger.debug("⏱️ ignoring request to sync while content protection is disabled (which may prevent us from reading/writing to the file system)")
                     return
                 }
             }
