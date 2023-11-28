@@ -207,7 +207,7 @@ public struct OrderPosition: Model {
         }
 
         // Check for open Questions
-        let answerQuestionIDs: [Identifier] = answers?.map { return $0.question } ?? []
+        let answerQuestionIDs: [Identifier] = answers?.map { return $0.question.id } ?? []
         let unansweredQuestions = questions.filter { return !answerQuestionIDs.contains($0.identifier) }
         let requiredUnansweredQuestions = unansweredQuestions.filter { $0.isRequired }
         if requiredUnansweredQuestions.count > 0 {
@@ -218,7 +218,7 @@ public struct OrderPosition: Model {
         // Check that Boolean Questions with `isRequired` are answered true
         let booleanRequiredQuestions = questions.filter { $0.type == .boolean && $0.isRequired }
         let booleanRequiredQuestionIDs = booleanRequiredQuestions.map { $0.identifier }
-        let badBools = answers?.filter { booleanRequiredQuestionIDs.contains($0.question) }.filter { $0.answer.lowercased() != "true" }
+        let badBools = answers?.filter { booleanRequiredQuestionIDs.contains($0.question.id) }.filter { $0.answer.lowercased() != "true" }
         if badBools?.count ?? 0 > 0 {
             return RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: self, lastCheckIn: nil,
                                       questions: booleanRequiredQuestions, answers: answers)

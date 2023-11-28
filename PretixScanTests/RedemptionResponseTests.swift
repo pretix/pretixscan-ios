@@ -101,12 +101,36 @@ class RedemptionResponseTests: XCTestCase {
     }
     
     func testSetsRequiresAttention() {
-        let jsonResponse = testFileContents("redeemed", "json")
+        let jsonResponse = testFileContents("redeemed")
         let redemptionResponse = try? jsonDecoder.decode(RedemptionResponse.self, from: jsonResponse)
         guard let redemptionResponse = redemptionResponse else {
             XCTFail("RedemptionResponse instance should be arranged")
             return
         }
         XCTAssertTrue(redemptionResponse.isRequireAttention)
+    }
+    
+    func testHandleInlineQuestionObjects() {
+        let jsonResponse = testFileContents("redeem1")
+        let redemptionResponse = try? jsonDecoder.decode(RedemptionResponse.self, from: jsonResponse)
+        guard let redemptionResponse = redemptionResponse else {
+            XCTFail("RedemptionResponse instance should be arranged")
+            return
+        }
+        XCTAssertNotNil(redemptionResponse.position?.answers)
+        XCTAssertEqual(redemptionResponse.position!.answers![0].question.displayQuestion, "Question on screen")
+    }
+    
+    func testAppendsQuestionsAsCheckInTexts() {
+        let jsonResponse = testFileContents("redeem1")
+        let redemptionResponse = try? jsonDecoder.decode(RedemptionResponse.self, from: jsonResponse)
+        guard let redemptionResponse = redemptionResponse else {
+            XCTFail("RedemptionResponse instance should be arranged")
+            return
+        }
+        let result = RedemptionResponse.appendDataFromOnlineQuestionsForStatusVisualization(redemptionResponse)
+        
+        // check-in texts are ordered: Questions > Order > Variation > Item
+        XCTAssertEqual(result.checkInTexts, ["Question on screen: Some answer", "check-in on product"])
     }
 }

@@ -16,7 +16,7 @@ struct Localization {
         static let SearchPlaceHolder = NSLocalizedString("Search", comment: "")
     }
 
-    struct TicketStatusViewController {
+    struct TicketStatus {
         static let CanceledTicket = NSLocalizedString("Canceled", comment: "")
         static let UnpaidTicket = NSLocalizedString("Unpaid", comment: "")
         static let ValidTicket = NSLocalizedString("Valid Ticket", comment: "")
@@ -26,11 +26,8 @@ struct Localization {
         static let TicketAlreadyRedeemed = NSLocalizedString("Ticket Already Used", comment: "")
         static let InvalidTicket = NSLocalizedString("Invalid Ticket", comment: "")
         static let Error = NSLocalizedString("Error", comment: "")
-        static let IncompleteInformation = NSLocalizedString("Incomplete Information", comment: "")
         static let NeedsAttention = NSLocalizedString("Valid Ticket, but needs attention", comment: "")
-        static let UnpaidContinueText = NSLocalizedString("This ticket has not been paid for, do you still want to check it in?", comment: "")
         static let UnpaidContinueButtonTitle = NSLocalizedString("Check In Unpaid", comment: "")
-        static let OfflineValidation = NSLocalizedString("Offline validation", comment: "")
         static let TicketRequiresAttention = NSLocalizedString("Attention, special ticket!", comment: "")
     }
 

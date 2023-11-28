@@ -60,10 +60,6 @@ class ValidateTicketViewController: UIViewController {
             appCoordinatorReceiver.appCoordinator = self
         }
         
-        if let ticketStatusViewController = segue.destination as? TicketStatusViewController {
-            ticketStatusViewController.configuration = sender as? TicketStatusViewController.Configuration
-        }
-        
         if let ticketScannerViewController = segue.destination as? TicketScannerViewController {
             self.ticketScannerViewController = ticketScannerViewController
         }
@@ -104,12 +100,29 @@ extension ValidateTicketViewController: AppCoordinator {
     }
     
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool) {
+        if presentedViewController != nil && presentedViewController is UISearchController == false {
+            print("ticket status is currently being shown, we can't scan a code")
+            return
+        }
+        
         if !ignoreUnpaid {
             getConfigStore().feedbackGenerator.announce(.didScanQrCode)
         }
-        let ticketStatusViewControllerConfiguration = TicketStatusViewController.Configuration(
-            secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: nil)
-        self.performSegue(withIdentifier: Segue.presentTicketStatusViewController, sender: ticketStatusViewControllerConfiguration)
+        showStatusAndRedeem(secret, force, ignoreUnpaid)
+    }
+    
+    func showStatusAndRedeem(_ secret: String, _ force: Bool, _ ignoreUnpaid: Bool) {
+        let statusController = TicketStatusController()
+        statusController.configuration = TicketStatusConfiguration(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: nil)
+        
+        if let sheet = statusController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+            sheet.preferredCornerRadius = 35
+            sheet.delegate = statusController
+        }
+        
+        present(statusController, animated: true, completion: nil)
     }
 }
 
@@ -142,7 +155,7 @@ extension ValidateTicketViewController {
             fatalError("Could not get get results view controller from Storyboard")
         }
         resultsController.appCoordinator = self
-        searchController = UISearchController(searchResultsController: resultsController )
+        searchController = UISearchController(searchResultsController: resultsController)
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = resultsController
         searchController.searchBar.placeholder = Localization.ValidateTicketViewController.SearchPlaceHolder

@@ -396,10 +396,14 @@ extension FMDBDataStore {
         }
         
         let checkIns = getCheckIns(for: tempOrderPosition, in: checkInList, in: event)
-        
+        var orderPositionQuestions: [Question]? = nil
+        if case .success(let questions) = getQuestions(in: event) {
+            orderPositionQuestions = questions
+        }
         var orderPosition = tempOrderPosition
             .adding(checkIns: checkIns)
             .adding(item: getItem(by: tempOrderPosition.itemIdentifier, in: event))
+            .adding(questions: orderPositionQuestions)
             .adding(order: getOrder(by: tempOrderPosition.orderCode, in: event))
             .adding(parentTicket: parentTicket)
             .adding(answers: answers)
@@ -412,13 +416,15 @@ extension FMDBDataStore {
         
         let questions = try! getQuestions(for: orderPosition.item!, in: event).get()
         
-        guard let redemptionResponse = orderPosition.createRedemptionResponse(
+        guard var redemptionResponse = orderPosition.createRedemptionResponse(
             force: force, ignoreUnpaid: ignoreUnpaid,
             in: event, in: checkInList, as: type, with: questions, dataStore: self) else { return nil }
         
         guard redemptionResponse.status == .redeemed else {
-            return RedemptionResponse.appendMetadataForStatusVisualization(redemptionResponse.with(reason: .notRedeemed), orderPosition: orderPosition)
+            return RedemptionResponse
+                .appendDataFromOfflineMetadataForStatusVisualization(redemptionResponse.with(reason: .notRedeemed), orderPosition: orderPosition)
         }
+        redemptionResponse = RedemptionResponse.appendDataFromOfflineMetadataForStatusVisualization(redemptionResponse, orderPosition: orderPosition)
         
         // Store a queued redemption request
         let checkInDate = Date()
@@ -579,9 +585,25 @@ extension FMDBDataStore {
         var questions = [Question]()
         
         databaseQueue(with: event).inDatabase { database in
-            if let result = try? database.executeQuery(Question.checkInQuestionsWithItemQuery, values: []) {
+            if let result = try? database.executeQuery(Question.askDuringCheckInQuestionsForEventQuery, values: []) {
                 while result.next() {
                     if let question = Question.from(result: result, in: database), question.items.contains(item.identifier) {
+                        questions.append(question)
+                    }
+                }
+            }
+        }
+        
+        return .success(questions)
+    }
+    
+    public func getQuestions(in event: Event) -> Result<[Question], Error> {
+        var questions = [Question]()
+        
+        databaseQueue(with: event).inDatabase { database in
+            if let result = try? database.executeQuery(Question.allQuestionsForEventQuery, values: []) {
+                while result.next() {
+                    if let question = Question.from(result: result, in: database) {
                         questions.append(question)
                     }
                 }

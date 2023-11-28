@@ -277,6 +277,30 @@ extension OrderPosition: FMDBModel {
             subEvent: subEvent, pseudonymizationId: pseudonymizationId, checkins: checkins, answers: answers, seat: self.seat, requiresAttention: self.requiresAttention, addonTo: self.addonTo, blocked: self.blocked, validFrom: self.validFrom, validUntil: self.validUntil)
     }
     
+    func adding(questions: [Question]?) -> OrderPosition {
+        var copy = self
+        guard let answers = copy.answers, let questions = questions else {
+            return copy
+        }
+        
+        copy.answers = answers.map({
+            var answerCopy = $0
+            switch answerCopy.question {
+            case .identifier(let questionId):
+                if let knownQuestion = questions.first(where: {q in q.identifier == questionId}) {
+                    answerCopy.question = .questionDetail(knownQuestion)
+                    return answerCopy
+                }
+                // sorry, we don't know this question
+                return answerCopy
+            case .questionDetail(_):
+                // already has a question
+                return answerCopy
+            }
+        })
+        return copy
+    }
+    
     func adding(subEvent: SubEvent?) -> OrderPosition {
         var copy = self
         copy.extraSubEvent = subEvent
@@ -300,10 +324,10 @@ extension OrderPosition: FMDBModel {
         // Take existing answers and overwrite with ones that have been updated
         var mergedAnswers = [Identifier: Answer]()
         for existingAnswer in self.answers ?? [] {
-            mergedAnswers[existingAnswer.question] = existingAnswer
+            mergedAnswers[existingAnswer.question.id] = existingAnswer
         }
         for newAnswer in answers ?? [] {
-            mergedAnswers[newAnswer.question] = newAnswer
+            mergedAnswers[newAnswer.question.id] = newAnswer
         }
 
         return OrderPosition(

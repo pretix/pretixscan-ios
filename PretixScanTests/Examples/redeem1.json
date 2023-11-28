@@ -1,0 +1,116 @@
+{
+  "status": "ok",
+  "require_attention": false,
+  "checkin_texts": ["check-in on product"],
+  "position": {
+    "id": 13,
+    "order": "CVLT7",
+    "positionid": 1,
+    "item": 4,
+    "variation": 2,
+    "price": "10.00",
+    "attendee_name": "",
+    "attendee_name_parts": { "_scheme": "given_family" },
+    "company": null,
+    "street": null,
+    "zipcode": null,
+    "city": null,
+    "country": null,
+    "state": null,
+    "attendee_email": null,
+    "voucher": null,
+    "tax_rate": "0.00",
+    "tax_value": "0.00",
+    "secret": "==AA87z5Revzh0+fWucV0fu7mDjWBWD6NFlHQZph1Ch1WonY9t1xYkYHgGhDYJ0HyyTED1m6uvg35hPB4D9rvfmcAADAoIAGEABasBTSOVHe5YUCKAEATAQA",
+    "addon_to": null,
+    "subevent": null,
+    "checkins": [
+      {
+        "id": 84,
+        "datetime": "2023-10-26T09:14:09.137502Z",
+        "list": 2,
+        "auto_checked_in": false,
+        "gate": null,
+        "device": 6,
+        "type": "entry"
+      },
+      {
+        "id": 83,
+        "datetime": "2023-10-26T07:27:31.058736Z",
+        "list": 2,
+        "auto_checked_in": false,
+        "gate": null,
+        "device": 5,
+        "type": "entry"
+      },
+      {
+        "id": 81,
+        "datetime": "2023-10-26T07:05:58.701153Z",
+        "list": 2,
+        "auto_checked_in": false,
+        "gate": null,
+        "device": 5,
+        "type": "entry"
+      },
+      {
+        "id": 80,
+        "datetime": "2023-10-26T07:01:37.889483Z",
+        "list": 2,
+        "auto_checked_in": false,
+        "gate": null,
+        "device": 5,
+        "type": "entry"
+      }
+    ],
+    "downloads": [],
+    "answers": [
+      {
+        "question": {
+          "id": 2,
+          "question": { "en": "Question on screen" },
+          "type": "S",
+          "required": false,
+          "items": [2, 3, 4],
+          "options": [],
+          "position": 0,
+          "ask_during_checkin": false,
+          "show_during_checkin": true,
+          "identifier": "JR9QFCUR",
+          "dependency_question": null,
+          "dependency_values": [],
+          "hidden": false,
+          "dependency_value": null,
+          "print_on_invoice": false,
+          "help_text": {},
+          "valid_number_min": null,
+          "valid_number_max": null,
+          "valid_date_min": null,
+          "valid_date_max": null,
+          "valid_datetime_min": null,
+          "valid_datetime_max": null,
+          "valid_string_length_max": null,
+          "valid_file_portrait": false
+        },
+        "answer": "Some answer",
+        "question_identifier": "JR9QFCUR",
+        "options": [],
+        "option_identifiers": []
+      }
+    ],
+    "tax_rule": null,
+    "pseudonymization_id": "BA93N3XNNA",
+    "seat": null,
+    "require_attention": false,
+    "order__status": "p",
+    "valid_from": null,
+    "valid_until": null,
+    "blocked": null
+  },
+  "list": {
+    "id": 2,
+    "name": "Default",
+    "event": "kittymeetup",
+    "subevent": null,
+    "include_pending": false
+  }
+}
