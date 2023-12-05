@@ -25,7 +25,7 @@ public class FMDBDataStore: DataStore {
     
     public func destroyDataStoreForUploads() {
         uploadDataBaseQueue.close()
-        let fileURL = try! getUploadsFileUrl()!
+        let fileURL = try! getUploadsFileUrl()
         
         do {
             try FileManager.default.removeItem(at: fileURL)
@@ -513,14 +513,16 @@ extension FMDBDataStore {
 private extension FMDBDataStore {
     static let UploadsDatabaseFileName: String = "uploads.sqlite"
     
-    private func getUploadsFileUrl() throws -> URL? {
-        return try FileManager.default
+    private func getUploadsFileUrl() throws -> URL {
+        let fileUrl = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent(Self.UploadsDatabaseFileName)
+        try fileUrl.configureParentDirectoryProtection()
+        return fileUrl
     }
     
     private func createUploadDataBaseQueue() -> FMDatabaseQueue {
-        let fileURL = try! getUploadsFileUrl()!
+        let fileURL = try! getUploadsFileUrl()
         print("Opening Database \(fileURL.path)")
         let queue = FMDatabaseQueue(url: fileURL)
         

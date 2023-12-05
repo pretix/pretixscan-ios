@@ -53,6 +53,7 @@
 		B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B525796727292269006D9EE9 /* QuestionsDownloader.swift */; };
 		B52E2F4D287823A300BD6588 /* 09_MigrationAddAddOnToOrderPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59017B52878203500FE0125 /* 09_MigrationAddAddOnToOrderPosition.swift */; };
 		B530F79C27CA97ED001F5232 /* PXTemporaryFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */; };
+		B53597012B1F60E300188070 /* URL+parentDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53597002B1F60E300188070 /* URL+parentDirectory.swift */; };
 		B540729E29A0F9FB00757E25 /* item3.json in Resources */ = {isa = PBXBuildFile; fileRef = B540729D29A0F9FB00757E25 /* item3.json */; };
 		B54072A129A1046500757E25 /* item4.json in Resources */ = {isa = PBXBuildFile; fileRef = B540729F29A1046500757E25 /* item4.json */; };
 		B54072A229A1046500757E25 /* order1.json in Resources */ = {isa = PBXBuildFile; fileRef = B54072A029A1046500757E25 /* order1.json */; };
@@ -342,6 +343,7 @@
 		B52579652729225D006D9EE9 /* CheckInListsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInListsDownloader.swift; sourceTree = "<group>"; };
 		B525796727292269006D9EE9 /* QuestionsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsDownloader.swift; sourceTree = "<group>"; };
 		B530F79B27CA97ED001F5232 /* PXTemporaryFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXTemporaryFile.swift; sourceTree = "<group>"; };
+		B53597002B1F60E300188070 /* URL+parentDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+parentDirectory.swift"; sourceTree = "<group>"; };
 		B540729D29A0F9FB00757E25 /* item3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item3.json; sourceTree = "<group>"; };
 		B540729F29A1046500757E25 /* item4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item4.json; sourceTree = "<group>"; };
 		B54072A029A1046500757E25 /* order1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = order1.json; sourceTree = "<group>"; };
@@ -1145,6 +1147,7 @@
 				B5DBB0CC2721BE6600FFBE23 /* FMDBRevokedSecret.swift */,
 				B5D255E92723187F0064652F /* FMDBEventValidKey.swift */,
 				B5000E8F2997DA7F00942799 /* FMDBBlockedSecret.swift */,
+				B53597002B1F60E300188070 /* URL+parentDirectory.swift */,
 			);
 			path = FMDBDataStore;
 			sourceTree = "<group>";
@@ -1470,6 +1473,7 @@
 				DC2F4A00225666A200710EFA /* SettingsTableViewController.swift in Sources */,
 				DC1D6FB52240F689008A9E06 /* OrderPosition.swift in Sources */,
 				B5D255EC272318F50064652F /* EventValidKey.swift in Sources */,
+				B53597012B1F60E300188070 /* URL+parentDirectory.swift in Sources */,
 				DC17F2302302B8EA0044764A /* NumberQuestionCell.swift in Sources */,
 				B57FF6D226C65ABC001B9005 /* TypeAliases.swift in Sources */,
 				B5EFD43427CDDCCB00DACCA6 /* PXUploadedFileId.swift in Sources */,
