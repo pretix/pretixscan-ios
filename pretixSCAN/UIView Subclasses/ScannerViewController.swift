@@ -233,13 +233,13 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     func hideNoCameraView() {
         logger.debug("Hiding no camera view")
         previewLayer.isHidden = false
-        noCameraView!.isHidden = true
+        noCameraView?.isHidden = true
     }
     
     func showNoCameraView() {
         logger.debug("Showing no camera view")
         previewLayer.isHidden = true
-        noCameraView!.isHidden = false
+        noCameraView?.isHidden = false
     }
     
     func configureNoCameraView() {
