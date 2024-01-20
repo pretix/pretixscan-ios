@@ -63,13 +63,13 @@ final class TicketJsonLogicChecker {
         } catch {
             logger.error("Rule parsing error \(String(describing: error))")
             EventLogger.log(event: "Rule parsing error: \(String(describing: error)). Data:\(data ?? "nil") Rules: \(rulesJSON)", category: .rules, level: .warning, type: .debug)
-            return .failure(.parsingError)
+            return .failure(.parsingError(reason: "\(String(describing: error))"))
         }
     }
     
     enum ValidationError: Error, Hashable, Equatable {
         case rules
-        case parsingError
+        case parsingError(reason: String)
     }
     
     struct TicketData {

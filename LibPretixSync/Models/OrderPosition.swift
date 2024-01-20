@@ -196,8 +196,13 @@ public struct OrderPosition: Model {
         }
         
         if type != "exit" {
-            if case .failure(_) = TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: self.extraSubEvent, date: nowDate).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
-                return .rules
+            if case .failure(let rulesError) = TicketJsonLogicChecker(list: checkInList, dataStore: dataStore, event: event, subEvent: self.extraSubEvent, date: nowDate).redeem(ticket: .init(secret: secret, eventSlug: event.slug, item: self.itemIdentifier, variation: self.variation)) {
+                switch rulesError {
+                case .rules:
+                    return .rules
+                case .parsingError(reason: let reason):
+                    return RedemptionResponse.appendReason(.rules, reason)
+                }
             }
         }
 

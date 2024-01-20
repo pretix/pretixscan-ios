@@ -17,7 +17,7 @@ public struct RedemptionResponse: Codable, Equatable {
     public let status: Status
     
     /// In case of reason rules includes a human-readable description of the violated rules.
-    public let reasonExplanation: String?
+    public var reasonExplanation: String?
     
     /// The reason for `status` being `error`, if applicable
     public let errorReason: ErrorReason?
@@ -175,6 +175,16 @@ extension RedemptionResponse {
             }) ?? []
         
         response.visibleAnswers = questionTexts
+        
+        return response
+    }
+    
+    static func appendReason(_ redemptionResponse: RedemptionResponse, _ reason: String?) -> RedemptionResponse {
+        var response = redemptionResponse
+        
+        if let reason = reason {
+            response.reasonExplanation = (response.reasonExplanation ?? "") + reason
+        }
         
         return response
     }

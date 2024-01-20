@@ -128,7 +128,12 @@ final class DatalessTicketValidator {
                     }
                 case .failure(let rulesError):
                     logger.debug("TicketJsonLogicChecker failed: \(String(describing: rulesError))")
-                    return .success(CheckStatus.rules)
+                    switch rulesError {
+                    case .rules:
+                        return .success(CheckStatus.rules(reason: nil))
+                    case .parsingError(reason: let reason):
+                        return .success(CheckStatus.rules(reason: reason))
+                    }
                 }
             case .failure(let productReason):
                 logger.debug("TicketProductChecker failed: \(String(describing: productReason))")
@@ -165,6 +170,6 @@ final class DatalessTicketValidator {
         case blocked
         case product
         case incomplete(questions: [Question], answers: [Answer]?)
-        case rules
+        case rules(reason: String?)
     }
 }

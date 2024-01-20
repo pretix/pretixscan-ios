@@ -1220,6 +1220,32 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         
     }
     
+    func testCheckerReturnsErrors() {
+        let rules = """
+{
+  "inList": [
+    { "var": "SYNTAX ERROR },
+    { "objectList": [{ "lookup": ["variation", "3", "Ticket"] }] }
+  ]
+}
+"""
+        let list = getListWith(rules: JSON(rules))
+        let sut = TicketJsonLogicChecker(list: list, event: mockEvent())
+        
+        let result = sut.redeem(ticket: mockTicket())
+        switch result {
+        case .success():
+            XCTFail("validation should fail in case of invalid rules")
+        case .failure(let validationError):
+            switch validationError {
+            case .rules:
+                XCTFail("error should include a reason")
+            case .parsingError(reason: let reason):
+                XCTAssertEqual(reason, "GenericError(\"Error parsing json \\\'Error(JSON.JSON.JSON2Error.NSError(Error Domain=NSCocoaErrorDomain Code=3840 \\\"Unescaped control character around line 3, column 29.\\\" UserInfo={NSDebugDescription=Unescaped control character around line 3, column 29., NSJSONSerializationErrorIndex=45}))\\\'\")")
+            }
+        }
+    }
+    
     // MARK: - mocks
     func mockEvent(_ name: String = "event1") -> Event {
         let eventJsonData = testFileContents(name, "json")
