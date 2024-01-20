@@ -517,7 +517,6 @@ private extension FMDBDataStore {
         let fileUrl = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent(Self.UploadsDatabaseFileName)
-        try fileUrl.configureParentDirectoryProtection()
         return fileUrl
     }
     
@@ -525,6 +524,8 @@ private extension FMDBDataStore {
         let fileURL = try! getUploadsFileUrl()
         print("Opening Database \(fileURL.path)")
         let queue = FMDatabaseQueue(url: fileURL)
+        
+        try! fileURL.configureParentDirectoryProtection()
         
         migrateUploads(queue: queue!)
         
