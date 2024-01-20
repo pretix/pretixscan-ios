@@ -179,6 +179,25 @@ extension TicketJsonLogicChecker {
             
             return JSON(Self.getEntriesBeforeCount(Self.getEntryCheckIns(ticket: ticket, event: event, checkInListId: listId, store), date: date))
         },
+        "entries_days_since": {(json: JSON?) -> JSON in
+           guard let json = json,
+                 case let .Array(arguments) = json, arguments.count == 1,
+                 case let .String(dateStr) = arguments[0], let date = self.dateFormatter.date(from: dateStr) else {
+               return JSON.Null
+           }
+           
+            return JSON(Self.getEntriesDaysSinceCount(Self.getEntryCheckIns(ticket: ticket, event: event, checkInListId: listId, store), date: date, cal: self.calendar))
+       },
+        "entries_days_before": {(json: JSON?) -> JSON in
+           guard let json = json,
+                 case let .Array(arguments) = json, arguments.count == 1,
+                 case let .String(dateStr) = arguments[0], let date = self.dateFormatter.date(from: dateStr) else {
+               return JSON.Null
+           }
+           
+           return JSON(Self.getEntriesBeforeCount(Self.getEntryCheckIns(ticket: ticket, event: event, checkInListId: listId, store), date: date))
+       },
+                
         ]
     }
     
@@ -221,6 +240,24 @@ extension TicketJsonLogicChecker {
         default:
             return false
         }
+    }
+    
+    static func getEntriesDaysSinceCount(_ entryCheckIns: [OrderPositionCheckin], date: Date, cal: Calendar) -> Int {
+        Set(entryCheckIns
+            .filter({
+                $0.date >= date
+            }).map({cal.component(.day, from: $0.date)})
+        )
+        .count
+    }
+    
+    static func getEntriesDaysBeforeCount(_ entryCheckIns: [OrderPositionCheckin], date: Date, cal: Calendar) -> Int {
+        Set(entryCheckIns
+            .filter({
+                $0.date <= date
+            }).map({cal.component(.day, from: $0.date)})
+        )
+        .count
     }
     
     static func getEntriesSinceCount(_ entryCheckIns: [OrderPositionCheckin], date: Date) -> Int {
