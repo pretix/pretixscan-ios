@@ -117,11 +117,7 @@ public class OfflineTicketValidator: TicketValidator {
                 if let error = error {
                     continuation.resume(throwing: error)
                 } else {
-                    if let results = orderPositions {
-                        continuation.resume(returning: results)
-                    } else {
-                        continuation.resume(throwing: APIError.emptyResponse)
-                    }
+                    continuation.resume(returning: orderPositions ?? [])
                 }
             })
         }
