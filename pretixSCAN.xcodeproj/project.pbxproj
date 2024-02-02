@@ -74,6 +74,7 @@
 		B57291E12804043B009969E1 /* TicketJsonLogicCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */; };
 		B57511A12807EE22008EE595 /* TicketJsonLogicChecker+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57511A02807EE22008EE595 /* TicketJsonLogicChecker+data.swift */; };
 		B5798D3428755452006EF8E0 /* event1-datetonull.json in Resources */ = {isa = PBXBuildFile; fileRef = B5798D3328755452006EF8E0 /* event1-datetonull.json */; };
+		B57BDB382B5BF967000E6CAE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B57BDB372B5BF967000E6CAE /* PrivacyInfo.xcprivacy */; };
 		B57EE4662B03E1600019342B /* TicketStatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EE4652B03E1600019342B /* TicketStatusController.swift */; };
 		B57EE4682B03E67F0019342B /* RedeemStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EE4672B03E67F0019342B /* RedeemStatusView.swift */; };
 		B57EE46A2B03F12F0019342B /* RedeemTicketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EE4692B03F12F0019342B /* RedeemTicketViewModel.swift */; };
@@ -122,6 +123,7 @@
 		B5BD71BF2834E7C90061A261 /* PXPackageLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD71BE2834E7C90061A261 /* PXPackageLicense.swift */; };
 		B5C0B61828018C740089DCDB /* jsonlogic in Frameworks */ = {isa = PBXBuildFile; productRef = B5C0B61728018C740089DCDB /* jsonlogic */; };
 		B5C0B61A28018CA00089DCDB /* TicketJsonLogicChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */; };
+		B5C24B572B6CD02600B835F6 /* TicketStatusAnnouncementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C24B562B6CD02600B835F6 /* TicketStatusAnnouncementTests.swift */; };
 		B5C2F00627CA6BD3004A3166 /* ImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C2F00527CA6BD3004A3166 /* ImageResize.swift */; };
 		B5C35C802AAF6C86003E17D2 /* LabelWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C35C7F2AAF6C86003E17D2 /* LabelWithPadding.swift */; };
 		B5CF74ED2AEA5B6E005CF5AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CF74EC2AEA5B6E005CF5AD /* SceneDelegate.swift */; };
@@ -363,6 +365,7 @@
 		B57291E02804043B009969E1 /* TicketJsonLogicCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicCheckerTests.swift; sourceTree = "<group>"; };
 		B57511A02807EE22008EE595 /* TicketJsonLogicChecker+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TicketJsonLogicChecker+data.swift"; sourceTree = "<group>"; };
 		B5798D3328755452006EF8E0 /* event1-datetonull.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "event1-datetonull.json"; sourceTree = "<group>"; };
+		B57BDB372B5BF967000E6CAE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B57EE4652B03E1600019342B /* TicketStatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusController.swift; sourceTree = "<group>"; };
 		B57EE4672B03E67F0019342B /* RedeemStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemStatusView.swift; sourceTree = "<group>"; };
 		B57EE4692B03F12F0019342B /* RedeemTicketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemTicketViewModel.swift; sourceTree = "<group>"; };
@@ -410,6 +413,7 @@
 		B5BD3E462715D4B0003FEB74 /* event1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = event1.json; sourceTree = "<group>"; };
 		B5BD71BE2834E7C90061A261 /* PXPackageLicense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXPackageLicense.swift; sourceTree = "<group>"; };
 		B5C0B61928018CA00089DCDB /* TicketJsonLogicChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketJsonLogicChecker.swift; sourceTree = "<group>"; };
+		B5C24B562B6CD02600B835F6 /* TicketStatusAnnouncementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusAnnouncementTests.swift; sourceTree = "<group>"; };
 		B5C2F00527CA6BD3004A3166 /* ImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResize.swift; sourceTree = "<group>"; };
 		B5C35C7F2AAF6C86003E17D2 /* LabelWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelWithPadding.swift; sourceTree = "<group>"; };
 		B5CF74EC2AEA5B6E005CF5AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -864,6 +868,7 @@
 				DC7DD5C122846B0000C08817 /* Localization */,
 				DCB35B9E2249407300860385 /* Utilities */,
 				DC2F4A012256722100710EFA /* NotifcationManager.swift */,
+				B57BDB372B5BF967000E6CAE /* PrivacyInfo.xcprivacy */,
 			);
 			path = pretixSCAN;
 			sourceTree = "<group>";
@@ -891,6 +896,7 @@
 				08DEDA9C27B1FD81009716F3 /* PXDeviceInitializationTests.swift */,
 				B5EFD44227CDEB8F00DACCA6 /* PXFileUploadTests.swift */,
 				B557622029C3281500E358D8 /* SearchResultTests.swift */,
+				B5C24B562B6CD02600B835F6 /* TicketStatusAnnouncementTests.swift */,
 			);
 			path = PretixScanTests;
 			sourceTree = "<group>";
@@ -1315,6 +1321,7 @@
 				DCB35B8C2248E8E300860385 /* fa-solid-900.ttf in Resources */,
 				B58CF84126F3302800FADA2A /* error.m4a in Resources */,
 				DC07358122392476008326F7 /* Assets.xcassets in Resources */,
+				B57BDB382B5BF967000E6CAE /* PrivacyInfo.xcprivacy in Resources */,
 				DCAAFF29223929B60059C000 /* README.md in Resources */,
 				B58CF84426F3302800FADA2A /* beep.m4a in Resources */,
 				DC07357F22392474008326F7 /* Main.storyboard in Resources */,
@@ -1619,6 +1626,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5C24B572B6CD02600B835F6 /* TicketStatusAnnouncementTests.swift in Sources */,
 				DC8467B0225BD7F70013F647 /* OrderTests.swift in Sources */,
 				DCB35B8E2248EB5800860385 /* RedemptionRequestTests.swift in Sources */,
 				B557622129C3281500E358D8 /* SearchResultTests.swift in Sources */,

@@ -31,21 +31,23 @@ struct TicketStatusAnnouncement: Hashable, Equatable {
     
     
     static func empty() -> Self {
-        TicketStatusAnnouncement(nil, nil, false, false, false)
+        TicketStatusAnnouncement(nil, nil, false, false, isOffline: false)
     }
     
     static func success() -> Self {
-        TicketStatusAnnouncement(.redeemed, nil, false, false, false)
+        TicketStatusAnnouncement(.redeemed, nil, false, false, isOffline: false)
     }
     
     static func product() -> Self {
-        TicketStatusAnnouncement(.product, nil, false, false, false)
+        TicketStatusAnnouncement(.product, nil, false, false, isOffline: false)
     }
 }
 
 
 extension TicketStatusAnnouncement  {
-    init(_ redemptionResponse: RedemptionResponse?, _ error: Error?, _ isExitMode: Bool, _ canCheckInUnpaid: Bool, _ isOffline: Bool) {
+    init(_ redemptionResponse: RedemptionResponse?, _ error: Error?, _ isExitMode: Bool, _ canCheckInUnpaid: Bool, isOffline: Bool) {
+        showOfflineIndicator = isOffline
+        
         if let redemptionResponse = redemptionResponse {
             background = Self.determineBackground(redemptionResponse)
             icon = Self.determineIcon(redemptionResponse, isExitMode)
@@ -58,18 +60,16 @@ extension TicketStatusAnnouncement  {
             lastScan = Self.determineLastScan(redemptionResponse, isExitMode)
             showAttention = redemptionResponse.isRequireAttention
             showCheckInUnpaid = redemptionResponse.errorReason == .unpaid && canCheckInUnpaid
-            showOfflineIndicator = isOffline
             
             // ticket details
             attendeeName = redemptionResponse.position?.attendeeName ?? ""
             seat = redemptionResponse.position?.seat?.name ?? ""
             additionalTexts = Self.determineAdditionalTexts(redemptionResponse, isExitMode)
-            questions = redemptionResponse.visibleAnswers ?? []
+            questions = redemptionResponse.visibleAnswers
         } else if let error = error {
             icon = Icon.error
             background = Color(uiColor: PXColor.error)
             status = Localization.TicketStatus.InvalidTicket
-            showOfflineIndicator = true
             if let apiError = error as? APIError {
                 switch apiError {
                 case .notFound:
@@ -77,6 +77,10 @@ extension TicketStatusAnnouncement  {
                 default:
                     reason = error.localized
                 }
+            } else {
+                reason = error.localizedDescription
+                // if we got here, it means the error was not managed so let's send us a signal
+                EventLogger.log(event: "Ticked validation failed for unknown reason: \(String(describing: error))", category: .general, level: .error, type: .error)
             }
         }
     }

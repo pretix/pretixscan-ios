@@ -40,7 +40,7 @@ final class RedeemTicketViewModel: ObservableObject {
     @MainActor
     private func announceResult(_ redemptionResponse: RedemptionResponse?, _ error: Error?) {
         // visual announcement
-        announcement = TicketStatusAnnouncement(redemptionResponse, error, isExitMode, configStore!.checkInList!.includePending, configStore!.ticketValidator!.isOnline != true)
+        announcement = TicketStatusAnnouncement(redemptionResponse, error, isExitMode, configStore!.checkInList!.includePending, isOffline: configStore!.ticketValidator!.isOnline != true)
         
         // haptic and sound announcements
         if !unpaidAreIgnored {
