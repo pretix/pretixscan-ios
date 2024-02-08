@@ -60,6 +60,9 @@ public struct Keychain {
             kSecAttrAccountValue: account
         ]
 
-        SecItemDelete(query as CFDictionary)
+        let status = SecItemDelete(query as CFDictionary)
+        if !(status == errSecSuccess || status == errSecItemNotFound) {
+            EventLogger.log(event: "Failed to remove keychain item: \(String(describing: status))", category: .configuration, level: .warning, type: .error)
+        }
     }
 }

@@ -323,6 +323,10 @@ public class DefaultsConfigStore: ConfigStore {
         
         PXTemporaryFile.cleanUpAll()
         
+        if let serviceName = _apiBaseURL?.absoluteString {
+            Keychain.delete(account: serviceName, service: serviceName)
+        }
+        
         _welcomeScreenIsConfirmed = false
         _apiBaseURL = nil
         _apiToken = nil
