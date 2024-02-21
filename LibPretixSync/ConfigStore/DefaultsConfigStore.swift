@@ -20,7 +20,6 @@ public class DefaultsConfigStore: ConfigStore {
     enum Keys: String, CaseIterable {
         case welcomeScreenIsConfirmed
         case apiBaseURL
-        case apiToken
         case apiClient
         case deviceName
         case organizerSlug
@@ -88,14 +87,6 @@ public class DefaultsConfigStore: ConfigStore {
         set {
             _deviceKnownGateName = newValue
             valueChanged()
-        }
-    }
-
-    public var apiToken: String? {
-        get { return _apiToken }
-        set {
-            _apiToken = newValue
-            valueChanged(.apiToken)
         }
     }
 
@@ -272,7 +263,6 @@ public class DefaultsConfigStore: ConfigStore {
 
     private var _welcomeScreenIsConfirmed: Bool = false
     private var _apiBaseURL: URL?
-    private var _apiToken: String?
     private var _knownPretixVersion: Int?
     private var _deviceKnownGateId: Int?
     private var _deviceKnownGateName: String?
@@ -329,7 +319,6 @@ public class DefaultsConfigStore: ConfigStore {
         
         _welcomeScreenIsConfirmed = false
         _apiBaseURL = nil
-        _apiToken = nil
         _knownPretixVersion = nil
         _deviceKnownGateId = nil
         _deviceKnownGateName = nil
@@ -353,6 +342,21 @@ public class DefaultsConfigStore: ConfigStore {
         
         saveToDefaults()
         NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
+    }
+    
+    public var isDeviceInitialized: Bool {
+        /// if we don't have a _deviceUniqueSerial given by the server, the device hasn't been initialized yet. This field is set to `nil` during factory reset (see `factoryReset()`)
+        return _deviceUniqueSerial != nil
+    }
+    
+    public func updateAndApplyCredentials(deviceInit: DeviceInitializationResponse) {
+        _deviceID = deviceInit.deviceID
+        _deviceName = deviceInit.name
+        _deviceUniqueSerial = deviceInit.uniqueSerial
+        _organizerSlug = deviceInit.organizer
+        _securityProfile = PXSecurityProfile(rawValue: deviceInit.securityProfile)
+        saveToDefaults()
+        applySecurityDefaults()
     }
     
     public func valueChanged(_ value: ConfigStoreValue? = nil) {
@@ -412,10 +416,6 @@ private extension DefaultsConfigStore {
         if let checkinListData = defaults.data(forKey: key(.checkInList)) {
             _checkInList = try? jsonDecoder.decode(CheckInList.self, from: checkinListData)
         }
-
-        // Retrieve API Token from KeyChain
-        guard let apiBaseURL = _apiBaseURL?.absoluteString else { return }
-        _apiToken = Keychain.get(account: apiBaseURL, service: apiBaseURL)
     }
     
     private func printDeviceIdentity() {
@@ -449,10 +449,6 @@ private extension DefaultsConfigStore {
         save(_enableSearch, forKey: .enableSearch)
         
         defaults.synchronize()
-
-        // Save api token into keychain
-        guard let apiToken = _apiToken, let apiBaseURL = _apiBaseURL?.absoluteString else { return }
-        Keychain.set(password: apiToken, account: apiBaseURL, service: apiBaseURL)
     }
 
     private func save(_ value: Bool?, forKey key: Keys) {
@@ -498,19 +494,5 @@ private extension DefaultsConfigStore {
     private func key(_ key: Keys) -> String {
         let prefix = (Bundle.main.bundleIdentifier ?? "") + "."
         return prefix + key.rawValue
-    }
-}
-
-
-extension DefaultsConfigStore {
-    public func updateAndApplyCredentials(deviceInit: DeviceInitializationResponse) {
-        _apiToken = deviceInit.apiToken
-        _deviceID = deviceInit.deviceID
-        _deviceName = deviceInit.name
-        _deviceUniqueSerial = deviceInit.uniqueSerial
-        _organizerSlug = deviceInit.organizer
-        _securityProfile = PXSecurityProfile(rawValue: deviceInit.securityProfile)
-        saveToDefaults()
-        applySecurityDefaults()
     }
 }
