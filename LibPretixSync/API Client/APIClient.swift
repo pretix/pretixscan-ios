@@ -897,6 +897,13 @@ private extension APIClient {
         }
         
         guard [200, 201, 400].contains(httpURLResponse.statusCode) else {
+            // check for a server error to show to the user
+            if let data = data,
+               let serverError = try? jsonDecoder.decode(ServerErrorMessage.self, from: data),
+               let managedErrorCode = APIError(from: serverError) {
+                return managedErrorCode
+            }
+            
             switch httpURLResponse.statusCode {
             case 304:
                 return APIError.unchanged

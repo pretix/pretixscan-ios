@@ -38,6 +38,8 @@ extension Error {
                 return "unchanged"
             case .retryAfter(let seconds):
                 return String(format: Localization.Errors.RetryAfter, seconds)
+            case .accessRevoked:
+                return "Device access has been revoked"
             }
         } else {
             return self.localizedDescription

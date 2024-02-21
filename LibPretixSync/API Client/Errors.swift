@@ -25,4 +25,18 @@ enum APIError: Error {
     case couldNotCreateNonce
     case fileNotFound
     case unknownFileType
+    /// The device token has been explicitly revoked and can no longer be used.
+    case accessRevoked
+}
+
+
+extension APIError {
+    init?(from msg: ServerErrorMessage) {
+        if msg.detail == "Device access has been revoked." {
+            self = APIError.accessRevoked
+            return
+        }
+        
+        return nil
+    }
 }
