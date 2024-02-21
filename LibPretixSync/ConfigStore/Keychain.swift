@@ -21,6 +21,11 @@ public struct Keychain {
     private init() {}
 
     public static func set(password: String, account: String, service: String) {
+        print("🔑 Updating token in Keychain")
+        // purge the store from any leaked tokens
+        delete(account: account, service: service)
+        
+        // create a new keychain record
         guard let data = password.data(using: .utf8) else { return }
         let query: [String: Any] = [
             kSecClassValue: kSecClassGenericPasswordValue,
@@ -31,7 +36,6 @@ public struct Keychain {
             kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
         ]
 
-        SecItemDelete(query as CFDictionary)
         SecItemAdd(query as CFDictionary, nil)
     }
 
@@ -55,6 +59,8 @@ public struct Keychain {
     }
 
     public static func delete(account: String, service: String) {
+        print("🔑 Purging old tokens from Keychain")
+        
         let query: [String: Any] = [
             kSecClassValue: kSecClassGenericPasswordValue,
             kSecAttrServiceValue: service,
