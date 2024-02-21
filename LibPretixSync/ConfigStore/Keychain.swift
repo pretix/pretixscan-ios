@@ -27,6 +27,7 @@ public struct Keychain {
             kSecAttrServiceValue: service,
             kSecAttrAccountValue: account,
             kSecValueDataValue: data,
+            kSecAttrSynchronizable as String: kCFBooleanFalse!,
             kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
         ]
 
