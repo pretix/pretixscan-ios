@@ -21,7 +21,8 @@ final class TicketProductChecker {
     func redeem(ticket: SignedTicketData, event: Event) -> Result<Item, ValidationError> {
         // is the product part of the check-in list
         if !checkInList.allProducts {
-            if let limitProducts = checkInList.limitProducts, limitProducts.contains(ticket.item) {
+            if let limitProducts = checkInList.limitProducts,
+               !limitProducts.contains(ticket.item) {
                 return .failure(.product(subEvent: ticket.subEvent))
             }
         }

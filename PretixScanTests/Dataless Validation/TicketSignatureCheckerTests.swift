@@ -88,7 +88,7 @@ class TicketSignatureCheckerTests: XCTestCase {
     
     func testUnknownProductWithLimitProducts() throws {
         // arrange
-        let jsonData = testFileContents("list2", "json")
+        let jsonData = testFileContents("list10", "json")
         let list = try! jsonDecoder.decode(CheckInList.self, from: jsonData)
         let dataStore = mockDataStore
         let sut = TicketProductChecker(list: list, dataStore: dataStore)

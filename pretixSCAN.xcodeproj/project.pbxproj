@@ -107,6 +107,7 @@
 		B59E923E299F9AAA00E32248 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */; };
 		B5A1D4A02ABDB03C00E360EF /* item5.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A1D49F2ABDB03C00E360EF /* item5.json */; };
 		B5A1D4A22ABDB52F00E360EF /* order2.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A1D4A12ABDB52F00E360EF /* order2.json */; };
+		B5A33DD22BBD444600898538 /* list10.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A33DD12BBD444600898538 /* list10.json */; };
 		B5AF40B627DF4C5C001576DD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5AF40B527DF4C5C001576DD /* Camera.storyboard */; };
 		B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF40B727DF4D17001576DD /* PXCameraController.swift */; };
 		B5AF9F082AB053BD009B0D3A /* TicketJsonLogicChecker+configStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF9F072AB053BD009B0D3A /* TicketJsonLogicChecker+configStore.swift */; };
@@ -399,6 +400,7 @@
 		B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
 		B5A1D49F2ABDB03C00E360EF /* item5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item5.json; sourceTree = "<group>"; };
 		B5A1D4A12ABDB52F00E360EF /* order2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = order2.json; sourceTree = "<group>"; };
+		B5A33DD12BBD444600898538 /* list10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = list10.json; sourceTree = "<group>"; };
 		B5AF40B527DF4C5C001576DD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		B5AF40B727DF4D17001576DD /* PXCameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PXCameraController.swift; sourceTree = "<group>"; };
 		B5AF9F072AB053BD009B0D3A /* TicketJsonLogicChecker+configStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TicketJsonLogicChecker+configStore.swift"; sourceTree = "<group>"; };
@@ -726,6 +728,7 @@
 		B5B990A826EB50190029D614 /* Examples */ = {
 			isa = PBXGroup;
 			children = (
+				B5A33DD12BBD444600898538 /* list10.json */,
 				B5B990A626EB50160029D614 /* errorRules.json */,
 				B5798D3328755452006EF8E0 /* event1-datetonull.json */,
 				B5F52FE728112FBA008F5D5A /* event1-se.json */,
@@ -1356,6 +1359,7 @@
 				B5823C1B273123CC00479A73 /* list5.json in Resources */,
 				B548031F299E094000B6356E /* order.json in Resources */,
 				B5F6F1E4272AB35000F702BE /* item1.json in Resources */,
+				B5A33DD22BBD444600898538 /* list10.json in Resources */,
 				B5534220272BF8AF003008AD /* question1.json in Resources */,
 				B5F6F1DD272AAE7B00F702BE /* list2.json in Resources */,
 				B5A1D4A02ABDB03C00E360EF /* item5.json in Resources */,
