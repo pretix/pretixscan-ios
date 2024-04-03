@@ -39,9 +39,6 @@ public protocol ConfigStore: AnyObject {
     /// The base URL for the API
     var apiBaseURL: URL? { get set }
 
-    /// The access token for the API
-    var apiToken: String? { get set }
-
     /// If `true`, the app will use a local cache to redeem tickets. Will access the internet each time otherwise.
     ///
     /// Updates the `ticketValidator` property.
@@ -83,6 +80,9 @@ public protocol ConfigStore: AnyObject {
     
     /// The security profile describing the available API actions this device is allowed to perform
     var securityProfile: PXSecurityProfile {get set}
+    
+    /// Returns `true` if the current configuration store has been initialized with a device connection.
+    var isDeviceInitialized: Bool { get }
 
     // MARK: - Current Event and Check-In List
     /// The currently managed event
@@ -121,9 +121,6 @@ extension ConfigStore {
 
 /// Value Keys to be used for notifications
 public enum ConfigStoreValue: String {
-    /// The API token has changed
-    case apiToken
-
     /// The Organizer slug has changed
     case organizerSlug
 

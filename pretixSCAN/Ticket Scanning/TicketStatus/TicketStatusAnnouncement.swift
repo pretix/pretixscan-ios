@@ -79,8 +79,6 @@ extension TicketStatusAnnouncement  {
                 }
             } else {
                 reason = error.localizedDescription
-                // if we got here, it means the error was not managed so let's send us a signal
-                EventLogger.log(event: "Ticked validation failed for unknown reason: \(String(describing: error))", category: .general, level: .error, type: .error)
             }
         }
     }

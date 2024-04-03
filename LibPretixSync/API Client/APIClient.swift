@@ -88,12 +88,18 @@ public extension APIClient {
                 return
             }
             
+            // update the app token
+            let serviceURL = baseURL.absoluteString
+            Keychain.set(password: initializationResponse.apiToken, account: serviceURL, service: serviceURL)
+            
             // store the published version
             let pxd = PXDeviceInitialization(self.configStore)
             pxd.setPublishedVersion(initializationRequest.softwareVersion)
             
             // setup the configuration store and apply security defaults
             self.configStore.updateAndApplyCredentials(deviceInit: initializationResponse)
+            
+            
             completionHandler(nil)
         }
         
@@ -164,6 +170,11 @@ public extension APIClient {
                 return nil
             }
             
+            guard let serviceURL = configStore.apiBaseURL?.absoluteString else {
+                completionHandler(APIError.notConfigured(message: "Attempted to make server requests without a baseURL."))
+                return nil
+            }
+            
             let task = session.dataTask(with: urlRequest) { (data, _, error) in
                 guard error == nil else {
                     completionHandler(error)
@@ -192,6 +203,8 @@ public extension APIClient {
                     return
                 }
                 
+                // update the app token
+                Keychain.set(password: initializationResponse.apiToken, account: serviceURL, service: serviceURL)
                 self.configStore.updateAndApplyCredentials(deviceInit: initializationResponse)
                 completionHandler(nil)
             }
@@ -871,8 +884,8 @@ private extension APIClient {
     }
     
     func createURLRequestForAnyContent(for url: URL) throws -> URLRequest {
-        guard let apiToken = configStore.apiToken else {
-            throw APIError.notConfigured(message: "APIClient's configStore.apiToken property must be set before calling this function.")
+        guard let serviceURL = configStore.apiBaseURL?.absoluteString, let apiToken = Keychain.get(account: serviceURL, service: serviceURL) else {
+            throw APIError.notConfigured(message: "Attempted to make server requests without a token present.")
         }
         
         var urlRequest = URLRequest(url: url)
@@ -897,6 +910,13 @@ private extension APIClient {
         }
         
         guard [200, 201, 400].contains(httpURLResponse.statusCode) else {
+            // check for a server error to show to the user
+            if let data = data,
+               let serverError = try? jsonDecoder.decode(ServerErrorMessage.self, from: data),
+               let managedErrorCode = APIError(from: serverError) {
+                return managedErrorCode
+            }
+            
             switch httpURLResponse.statusCode {
             case 304:
                 return APIError.unchanged

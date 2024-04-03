@@ -75,7 +75,7 @@ extension ValidateTicketViewController {
         }
         
         // API Connection
-        else if configStore.apiToken == nil {
+        else if !configStore.isDeviceInitialized {
             performSegue(withIdentifier: Segue.presentConnectDeviceViewController, sender: self)
         }
         
