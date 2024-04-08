@@ -197,8 +197,10 @@ public class DefaultsConfigStore: ConfigStore {
         
         saveToDefaults()
 
-        SentrySDK.configureScope { scope in
-            scope.setTags(["event": event.slug, "checkInList": "\(checkInList.identifier)"])
+        DispatchQueue.main.async {
+            SentrySDK.configureScope { scope in
+                scope.setTags(["event": event.slug, "checkInList": "\(checkInList.identifier)"])
+            }
         }
     }
 
