@@ -761,6 +761,35 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         }
     }
     
+    func testRulesEntryStatus() {
+        let rules = """
+        { "==": [{ "var": "entry_status" }, "absent"] }
+        """
+        
+        // first entry
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: mockDataStore([]), event: mockEvent())
+            .redeem(ticket: mockTicket()) {
+        case .success():
+            break
+        case .failure(let err):
+            XCTFail("Expected success but failed with \(String(describing: err))")
+        }
+        
+        // second entry is not allowed
+        let ds2 = mockDataStore([
+            .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: "")
+        ])
+        switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds2, event: mockEvent())
+            .redeem(ticket: mockTicket()) {
+        case .success():
+            XCTFail("attempted redeem with existing entry should fail (entry_status must be absent)")
+        case .failure(let err):
+            XCTAssertEqual(err, .rules)
+        }
+        
+        // JSON rules do not execute on exits
+    }
+    
     func testCheckerValidatesGate() {
         let rules = """
 {

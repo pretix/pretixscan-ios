@@ -103,6 +103,7 @@
 		B59709CA2B051EB200D6B82F /* TicketStatusConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59709C92B051EB200D6B82F /* TicketStatusConfiguration.swift */; };
 		B59709CC2B052C3B00D6B82F /* RedeemTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59709CB2B052C3B00D6B82F /* RedeemTicketView.swift */; };
 		B59709CE2B053B8F00D6B82F /* TicketStatusAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59709CD2B053B8F00D6B82F /* TicketStatusAnnouncement.swift */; };
+		B599C84A2BDF70C100C2508A /* CheckInEntryStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B599C8492BDF70C100C2508A /* CheckInEntryStatus.swift */; };
 		B59AD3972B0746CC0045B593 /* PrimaryGreenButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59AD3962B0746CC0045B593 /* PrimaryGreenButtonStyle.swift */; };
 		B59E923E299F9AAA00E32248 /* pretix_sig1.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */; };
 		B5A1D4A02ABDB03C00E360EF /* item5.json in Resources */ = {isa = PBXBuildFile; fileRef = B5A1D49F2ABDB03C00E360EF /* item5.json */; };
@@ -396,6 +397,7 @@
 		B59709C92B051EB200D6B82F /* TicketStatusConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusConfiguration.swift; sourceTree = "<group>"; };
 		B59709CB2B052C3B00D6B82F /* RedeemTicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemTicketView.swift; sourceTree = "<group>"; };
 		B59709CD2B053B8F00D6B82F /* TicketStatusAnnouncement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketStatusAnnouncement.swift; sourceTree = "<group>"; };
+		B599C8492BDF70C100C2508A /* CheckInEntryStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInEntryStatus.swift; sourceTree = "<group>"; };
 		B59AD3962B0746CC0045B593 /* PrimaryGreenButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryGreenButtonStyle.swift; sourceTree = "<group>"; };
 		B59E923D299F9AAA00E32248 /* pretix_sig1.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pretix_sig1.pb.swift; sourceTree = "<group>"; };
 		B5A1D49F2ABDB03C00E360EF /* item5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = item5.json; sourceTree = "<group>"; };
@@ -1090,6 +1092,7 @@
 				B5000E912997DAC600942799 /* BlockedSecret.swift */,
 				B515CF5529D429A80010CC6D /* DeviceInfoResponse.swift */,
 				B515CF5929D47E8D0010CC6D /* CheckInRequest.swift */,
+				B599C8492BDF70C100C2508A /* CheckInEntryStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1498,6 +1501,7 @@
 				B5FA779C2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift in Sources */,
 				B5AF40B827DF4D17001576DD /* PXCameraController.swift in Sources */,
 				B525796827292269006D9EE9 /* QuestionsDownloader.swift in Sources */,
+				B599C84A2BDF70C100C2508A /* CheckInEntryStatus.swift in Sources */,
 				B571B7772809352800861383 /* TicketJsonLogicChecker+operations.swift in Sources */,
 				DCC0003A223BE07D00236424 /* Event.swift in Sources */,
 				B5C35C802AAF6C86003E17D2 /* LabelWithPadding.swift in Sources */,

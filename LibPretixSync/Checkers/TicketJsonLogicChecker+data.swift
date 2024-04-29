@@ -26,7 +26,8 @@ extension TicketJsonLogicChecker {
             "variation": (ticket.variation ?? 0) > 0 ? "\(ticket.variation!)" : "",
             "entries_number": entryCheckIns.count,
             "entries_today": Self.getEntriesTodayCount(entryCheckIns, calendar: calendar, today: self.now),
-            "entries_days": Self.getEntriesDaysCount(entryCheckIns, calendar: calendar)
+            "entries_days": Self.getEntriesDaysCount(entryCheckIns, calendar: calendar),
+            "entry_status": Self.getEntryStatus(entryCheckIns).rawValue
         ]).rawString()
     }
     
@@ -87,5 +88,21 @@ extension TicketJsonLogicChecker {
             )
         )
         .count
+    }
+    
+    static func getEntryStatus(_ entryCheckIns: [OrderPositionCheckin]) -> CheckInEntryStatus {
+        if let checkInType = entryCheckIns
+            .sorted(by: {(a, b) in a.date < b.date})
+            .last?.checkInType, let type = CheckInType(rawValue: checkInType) {
+            
+            switch type {
+            case .entry:
+                return .present
+            case .exit:
+                return .absent
+            }
+        }
+        
+        return .absent
     }
 }
