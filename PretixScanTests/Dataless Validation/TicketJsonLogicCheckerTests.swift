@@ -787,7 +787,32 @@ class TicketJsonLogicCheckerTests: XCTestCase {
             XCTAssertEqual(err, .rules)
         }
         
-        // JSON rules do not execute on exits
+        // but it's ok to enter after exit
+      let ds3 = mockDataStore([
+          .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: ""),
+          .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T11:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: "")
+      ])
+      switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds3, event: mockEvent())
+          .redeem(ticket: mockTicket()) {
+      case .success():
+          break
+      case .failure(let err):
+          XCTFail("Expected success but failed with \(String(describing: err))")
+      }
+      
+      // dennied after second entry
+      let ds4 = mockDataStore([
+        .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T10:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 2, secret: ""),
+        .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T11:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "exit"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+        .init(redemptionRequest: .init(date: dateFormatter.date(from: "2020-01-01T12:00:00.000Z")!, ignoreUnpaid: false, nonce: "", type: "entry"), eventSlug: "", checkInListIdentifier: 0, secret: ""),
+      ])
+      switch TicketJsonLogicChecker(list: getListWith(rules: JSON(rules)), dataStore: ds4, event: mockEvent())
+          .redeem(ticket: mockTicket()) {
+      case .success():
+          XCTFail("attempted redeem with existing entry should fail (entry_status must be absent)")
+      case .failure(let err):
+          XCTAssertEqual(err, .rules)
+      }
     }
     
     func testCheckerValidatesGate() {
