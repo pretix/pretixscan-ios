@@ -14,6 +14,7 @@ extension TicketJsonLogicChecker {
         
         
         let entryCheckIns = Self.getEntryCheckIns(ticket: ticket, event: self.event, checkInListId: self.checkInList.identifier, dataStore)
+        let allCheckIns = Self.getAllCheckIns(ticket: ticket, event: self.event, checkInListId: self.checkInList.identifier, dataStore)
         let config = getConfigStore()
         
         return JSON([
@@ -27,7 +28,7 @@ extension TicketJsonLogicChecker {
             "entries_number": entryCheckIns.count,
             "entries_today": Self.getEntriesTodayCount(entryCheckIns, calendar: calendar, today: self.now),
             "entries_days": Self.getEntriesDaysCount(entryCheckIns, calendar: calendar),
-            "entry_status": Self.getEntryStatus(entryCheckIns).rawValue
+            "entry_status": Self.getEntryStatus(allCheckIns).rawValue
         ]).rawString()
     }
     
@@ -41,6 +42,18 @@ extension TicketJsonLogicChecker {
         logger.debug("raw queuedCheckIns: \(queuedCheckIns.count), raw orderedCheckIns: \(orderCheckIns.count)")
         return queuedCheckIns + orderCheckIns
     }
+  
+  static func getAllCheckIns(ticket: TicketData, event: Event, checkInListId: Identifier, _ dataStore: DatalessDataStore?) -> [OrderPositionCheckin] {
+      let queuedCheckIns =
+      ((try? dataStore?.getQueuedCheckIns(ticket.secret, eventSlug: ticket.eventSlug, listId: checkInListId).get()) ?? [])
+          .filter({$0.redemptionRequest.date != nil})
+          .map({OrderPositionCheckin(from: $0)})
+      let orderCheckIns = dataStore?.getOrderCheckIns(ticket.secret, type: CheckInType.entry.rawValue, event, listId: checkInListId) ?? []
+      let orderCheckOuts = dataStore?.getOrderCheckIns(ticket.secret, type: CheckInType.exit.rawValue, event, listId: checkInListId) ?? []
+      
+      logger.debug("raw queuedCheckIns: \(queuedCheckIns.count), raw orderedCheckIns: \(orderCheckIns.count)")
+      return queuedCheckIns + orderCheckIns + orderCheckOuts
+  }
     
     static func getMinutesSinceFirstEntryForCheckInListOrMinus1(_ entryCheckIns: [OrderPositionCheckin], listId: Identifier, now: Date) -> Int {
         if let lastCheckInDate = entryCheckIns
