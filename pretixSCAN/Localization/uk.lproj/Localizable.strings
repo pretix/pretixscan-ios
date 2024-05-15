@@ -4,3 +4,7 @@
 /* Ticket is Unpaid */
 "Product" = "Продукт";
 "Continue" = "Продовжити";
+"Canceled" = "Скасовано";
+
+/* Blocked (ticket signature) */
+"Blocked" = "Квиток заблокований";
