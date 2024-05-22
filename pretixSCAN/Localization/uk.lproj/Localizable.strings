@@ -8,3 +8,5 @@
 
 /* Blocked (ticket signature) */
 "Blocked" = "Квиток заблокований";
+"Cancel" = "Скасувати";
+"Settings" = "Налаштування";
