@@ -17,7 +17,7 @@
 "All Contents and Settings were deleted" = "Todo el contento y los ajustes se eliminaron";
 
 /* Ticket is already redeemed */
-"Already Redeemed" = "Ya canjeado";
+"Already Redeemed" = "Ya comprobado";
 "Already Scanned" = "Ya escaneado";
 "App Version" = "Versión de App";
 "Automatic Syncing is now disabled" = "Sincronización automatica está desactivada";
@@ -29,7 +29,7 @@
 "Canceled" = "Cancelado";
 "Connect" = "Conectar";
 "Continue" = "Continuar";
-"Checked In" = "Check-in completado";
+"Checked In" = "Comprobado la entra";
 "Check In Unpaid" = "Check-in sin pagar";
 
 /* Question Type Label */
@@ -125,11 +125,11 @@
 "Total Tickets Sold" = "Total de las entradas vendidas";
 "Currently Attending" = "Asistiendo actualmente";
 "Valid" = "Válido";
-"Redeemed" = "Canjeado";
+"Redeemed" = "Comprobado";
 "Valid Ticket" = "Entrada válida";
 "Ambiguous" = "El código de entrada está ambiguo en la lista";
-"You are not authorized to access this resource" = "No estás autorizado a acceder a este recurso";
-"You can now start scanning" = "Ahora puedes empezar de escanear";
+"You are not authorized to access this resource" = "No autorizar a acceder a este recurso";
+"You can now start scanning" = "Ahora empieza de escanear";
 "Entry" = "La entrada";
 "Exit" = "Salida";
 
@@ -142,12 +142,12 @@
 
 /* Answer to a Boolean Check In Question */
 "Yes" = "Sí";
-"Offline validation" = "Canjear sin conexión";
+"Offline validation" = "Comprobar sin conexión";
 "Take a photo" = "Tomar una foto";
 "Attention, special ticket!" = "¡Atención, entrada especial!";
 
 /* Invalid time (ticket signature) */
-"Invalid time" = "Entrada no está válida actualmente";
+"Invalid time" = "Entrada ya no está válida";
 
 /* Reset Device */
 "Reset Device" = "Restablecer dispositivo";
@@ -168,14 +168,14 @@
 
 /* e.g. do not check in unpaid ticket */
 "No" = "No";
-"You are forbidden from accessing this resource" = "Estás prohibido acceder a este recurso";
+"You are forbidden from accessing this resource" = "Prohibido acceder a este recurso";
 
 /* Question Type Label */
 "NumberQuestionCell" = "Introducir un número";
 "Search will begin after you have typed at least 3 characters." = "La búsqueda empezará después de que has introducido por lo menos 3 caracteres.";
 "The server returned an unkown status code: " = "El servidor envió un código de estatus desconocido ";
-"pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix." = "pretixSCAN es una app de las entradas de eventos que se puede usar para validar las entradas que se vendió por pretix.";
-"This ticket has not been paid for, do you still want to check it in?" = "Esta entrada no ha sido pagada, ¿todavía quieres canjearla?";
+"pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix." = "pretixSCAN es una app de las entradas de eventos que se puede usar para comprobar las entradas que se vendió por pretix.";
+"This ticket has not been paid for, do you still want to check it in?" = "Esta entrada no ha sido pagada, ¿todavía quieres comprobarla?";
 "This will delete event data from the device and log you out. Do you want to continue?" = "Esto eliminará los datos de evento de este dispositivo y cerrará sesión. ¿Quieres continuar?";
 "To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan." = "Para empezar, crea un dispositivo nuevo en la sección «Dispositivos» de la cuenta de organizador en el back-end de pretix. Se te presentará con código de QR de configuración para escanear.";
 "You need to upload a file here. Please do so from your computer" = "Se debe subir un archivo aquí. Por favor, hazlo desde su ordenador";
@@ -188,4 +188,4 @@
 "In online mode, the app will confirm any check-ins in real-time with the server. In offline mode, the app will work locally and only synchronize it's data with the server every couple of minutes. When working with multiple devices, this can potentially mean that a ticket can be used multiple times. Choose offline mode if you have an unreliable internet connection but can tolerate such situations." = "En el modo conectado, el app confirmará los check-in con el servidor en tiempo real. En el modo sin conexión, el app funcionará localmente y solo sincronizará el dato con el servidor cada pocos minutos. Cuando trabajar con varios dispositivos, puede significar que una entrada puede canjear múltiples veces. Escoge el modo sin conexión si no tienes una conexión fiable al internet, pero puedes aceptar tales situaciones.";
 
 /* Note for a required boolean question */
-"You have to answer YES to check in" = "Se debe seleccionar SÍ para canjear";
+"You have to answer YES to check in" = "Se debe seleccionar SÍ para comprobar la entrada";
