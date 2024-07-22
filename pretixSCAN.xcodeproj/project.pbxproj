@@ -11,7 +11,6 @@
 		080DF08027AD234100C7A4D4 /* PXDeviceInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080DF07F27AD234100C7A4D4 /* PXDeviceInitialization.swift */; };
 		08728E7927A53459002379A6 /* SwiftMessages in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7827A53459002379A6 /* SwiftMessages */; };
 		08728E7C27A534B9002379A6 /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7B27A534B9002379A6 /* FMDB */; };
-		08728E7F27A53503002379A6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 08728E7E27A53503002379A6 /* Sentry */; };
 		08C934E126AFD894005FCAFE /* TicketStatusExtraInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C934E026AFD894005FCAFE /* TicketStatusExtraInformation.swift */; };
 		08DEDA9927B1773C009716F3 /* BumpVersionUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DEDA9827B1773C009716F3 /* BumpVersionUploader.swift */; };
 		08DEDA9B27B1889D009716F3 /* PXSecurityProfile+defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DEDA9A27B1889D009716F3 /* PXSecurityProfile+defaults.swift */; };
@@ -85,6 +84,7 @@
 		B5823C1B273123CC00479A73 /* list5.json in Resources */ = {isa = PBXBuildFile; fileRef = B5823C1A273123CC00479A73 /* list5.json */; };
 		B5823C1D27312D0300479A73 /* list6.json in Resources */ = {isa = PBXBuildFile; fileRef = B5823C1C27312D0300479A73 /* list6.json */; };
 		B5823C1F27313F8A00479A73 /* question4.json in Resources */ = {isa = PBXBuildFile; fileRef = B5823C1E27313F8A00479A73 /* question4.json */; };
+		B5884B4C2C4E4A0500A0FD95 /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B5884B4B2C4E4A0500A0FD95 /* Sentry-Dynamic */; };
 		B58994FB2B0654E100D1F951 /* QuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58994FA2B0654E100D1F951 /* QuestionsView.swift */; };
 		B58994FD2B065ADC00D1F951 /* ConditionalViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58994FC2B065ADC00D1F951 /* ConditionalViewModifiers.swift */; };
 		B58994FF2B067EBA00D1F951 /* TicketKeyValuePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58994FE2B067EBA00D1F951 /* TicketKeyValuePair.swift */; };
@@ -600,9 +600,9 @@
 				B50945B528054C8500E8AFC0 /* SwiftyJSON in Frameworks */,
 				B5203DB027158C2B00AAA417 /* SwiftProtobuf in Frameworks */,
 				B5C0B61828018C740089DCDB /* jsonlogic in Frameworks */,
+				B5884B4C2C4E4A0500A0FD95 /* Sentry-Dynamic in Frameworks */,
 				08728E7927A53459002379A6 /* SwiftMessages in Frameworks */,
 				B553422B272C325D003008AD /* PhoneNumberKit in Frameworks */,
-				08728E7F27A53503002379A6 /* Sentry in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1240,9 +1240,9 @@
 				B553422A272C325D003008AD /* PhoneNumberKit */,
 				08728E7827A53459002379A6 /* SwiftMessages */,
 				08728E7B27A534B9002379A6 /* FMDB */,
-				08728E7E27A53503002379A6 /* Sentry */,
 				B5C0B61728018C740089DCDB /* jsonlogic */,
 				B50945B428054C8500E8AFC0 /* SwiftyJSON */,
+				B5884B4B2C4E4A0500A0FD95 /* Sentry-Dynamic */,
 			);
 			productName = PretixScan;
 			productReference = DC07357622392474008326F7 /* pretixSCAN.app */;
@@ -1303,9 +1303,9 @@
 				B5534229272C325D003008AD /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 				08728E7727A53459002379A6 /* XCRemoteSwiftPackageReference "SwiftMessages" */,
 				08728E7A27A534B9002379A6 /* XCRemoteSwiftPackageReference "fmdb" */,
-				08728E7D27A53503002379A6 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				B5C0B61628018C740089DCDB /* XCRemoteSwiftPackageReference "json-logic-swift" */,
 				B50945B328054C8500E8AFC0 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				B5884B4A2C4E4A0500A0FD95 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 			);
 			productRefGroup = DC07357722392474008326F7 /* Products */;
 			projectDirPath = "";
@@ -1965,14 +1965,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		08728E7D27A53503002379A6 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.23.0;
-			};
-		};
 		B50945B328054C8500E8AFC0 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -1997,6 +1989,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		B5884B4A2C4E4A0500A0FD95 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.31.1;
+			};
+		};
 		B5C0B61628018C740089DCDB /* XCRemoteSwiftPackageReference "json-logic-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/advantagefse/json-logic-swift";
@@ -2018,11 +2018,6 @@
 			package = 08728E7A27A534B9002379A6 /* XCRemoteSwiftPackageReference "fmdb" */;
 			productName = FMDB;
 		};
-		08728E7E27A53503002379A6 /* Sentry */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 08728E7D27A53503002379A6 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
-			productName = Sentry;
-		};
 		B50945B428054C8500E8AFC0 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B50945B328054C8500E8AFC0 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
@@ -2042,6 +2037,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B5534229272C325D003008AD /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
 			productName = PhoneNumberKit;
+		};
+		B5884B4B2C4E4A0500A0FD95 /* Sentry-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5884B4A2C4E4A0500A0FD95 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = "Sentry-Dynamic";
 		};
 		B5C0B61728018C740089DCDB /* jsonlogic */ = {
 			isa = XCSwiftPackageProductDependency;
