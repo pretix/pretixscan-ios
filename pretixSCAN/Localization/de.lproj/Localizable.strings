@@ -65,6 +65,9 @@
 "Use device camera" = "Geräte-Kamera benutzen";
 
 /* No comment provided by engineer. */
+"Use front camera" = "Frontkamera benutzen";
+
+/* No comment provided by engineer. */
 "ConnectExternalDevice" = "Bitte benutze die Hardware-Scantasten dines Gerätes zum Scannen.";
 
 /* No comment provided by engineer. */

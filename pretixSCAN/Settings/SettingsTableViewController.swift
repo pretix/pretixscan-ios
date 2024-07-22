@@ -23,6 +23,7 @@ class SettingsTableViewController: UITableViewController, Configurable {
     @IBOutlet weak var offlineModeCell: SettingsTableViewExplanationCell!
     @IBOutlet weak var playSoundsCell: UITableViewCell!
     @IBOutlet weak var useCameraCell: UITableViewCell!
+    @IBOutlet weak var preferFrontCameraCell: UITableViewCell!
     
     
     @IBOutlet weak var libraryLicenseCell1: UITableViewCell!
@@ -59,6 +60,9 @@ class SettingsTableViewController: UITableViewController, Configurable {
         
         useCameraCell.textLabel?.text = Localization.SettingsTableViewController.UseCamera
         useCameraCell.detailTextLabel?.text = configStore?.useDeviceCamera == true ? Icon.enabled : Icon.disabled
+        
+        preferFrontCameraCell.textLabel?.text = Localization.SettingsTableViewController.PreferFrontCamera
+        preferFrontCameraCell.detailTextLabel?.text = configStore?.preferFrontCamera == true ? Icon.enabled : Icon.disabled
         
         beginSyncingCell.textLabel?.text = Localization.SettingsTableViewController.BeginSyncing
         forceSyncCell.textLabel?.text = Localization.SettingsTableViewController.ForceSync
@@ -110,6 +114,8 @@ class SettingsTableViewController: UITableViewController, Configurable {
             toggleShouldDownloadOrders()
         } else if indexPath == tableView.indexPath(for: useCameraCell) {
             toggleUseDeviceCamera()
+        } else if indexPath == tableView.indexPath(for: preferFrontCameraCell) {
+            togglePreferFrontCamera()
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -180,6 +186,12 @@ class SettingsTableViewController: UITableViewController, Configurable {
         configStore?.useDeviceCamera.toggle()
         useCameraCell.detailTextLabel?.text = configStore?.useDeviceCamera == true ? Icon.enabled : Icon.disabled
         configStore?.valueChanged(.useDeviceCamera)
+    }
+    
+    func togglePreferFrontCamera() {
+        configStore?.preferFrontCamera.toggle()
+        preferFrontCameraCell.detailTextLabel?.text = configStore?.preferFrontCamera == true ? Icon.enabled : Icon.disabled
+        configStore?.valueChanged(.preferFrontCamera)
     }
     
     func beginSyncing() {

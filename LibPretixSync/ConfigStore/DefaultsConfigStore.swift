@@ -33,6 +33,7 @@ public class DefaultsConfigStore: ConfigStore {
         case scanMode
         case shouldPlaySounds
         case useDeviceCamera
+        case preferFrontCamera
         case shouldDownloadOrders
         case shouldAutoSync
         case publishedSoftwareVersion
@@ -247,6 +248,12 @@ public class DefaultsConfigStore: ConfigStore {
         }
     }
     
+    public var preferFrontCamera: Bool = false {
+        didSet {
+            save(preferFrontCamera, forKey: .preferFrontCamera)
+        }
+    }
+    
     public var shouldDownloadOrders: Bool = false {
         didSet {
             save(shouldDownloadOrders, forKey: .shouldDownloadOrders)
@@ -341,6 +348,7 @@ public class DefaultsConfigStore: ConfigStore {
         shouldPlaySounds = true
         shouldDownloadOrders = true
         useDeviceCamera = true
+        preferFrontCamera = false
         
         saveToDefaults()
         NotificationCenter.default.post(name: resetNotification, object: self, userInfo: nil)
@@ -379,6 +387,7 @@ private extension DefaultsConfigStore {
         defaults.register(defaults: [
             Keys.shouldPlaySounds.rawValue: true,
             Keys.useDeviceCamera.rawValue: true,
+            Keys.preferFrontCamera.rawValue: false,
             Keys.shouldDownloadOrders.rawValue: true,
             Keys.scanMode.rawValue: "entry",
             Keys.asyncModeEnabled.rawValue: false])
@@ -397,6 +406,7 @@ private extension DefaultsConfigStore {
         _asyncModeEnabled = defaults.bool(forKey: key(.asyncModeEnabled))
         shouldPlaySounds = defaults.bool(forKey: key(.shouldPlaySounds))
         useDeviceCamera = defaults.value(forKey: key(.useDeviceCamera)) as? Bool ?? true
+        preferFrontCamera = defaults.value(forKey: key(.preferFrontCamera)) as? Bool ?? false
         shouldDownloadOrders = defaults.bool(forKey: key(.shouldDownloadOrders))
         _publishedVersion = defaults.string(forKey: key(.publishedSoftwareVersion))
         _enableSearch = defaults.value(forKey: key(.enableSearch)) as? Bool ?? true

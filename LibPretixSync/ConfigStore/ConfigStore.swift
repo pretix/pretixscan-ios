@@ -55,6 +55,9 @@ public protocol ConfigStore: AnyObject {
     
     /// If `true`, the app uses the camera to scan for QR-Codes
     var useDeviceCamera: Bool { get set }
+    
+    /// If `true`, the app will try to use the front-facing camera of the device if it's available
+    var preferFrontCamera: Bool { get set }
 
     /// Entry or exit
     var scanMode: String { get set }
@@ -148,4 +151,6 @@ public enum ConfigStoreValue: String {
     
     /// Indicates if the device should use the camera to scan for QR-codes
     case useDeviceCamera
+    
+    case preferFrontCamera
 }

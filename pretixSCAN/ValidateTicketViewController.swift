@@ -87,6 +87,7 @@ extension ValidateTicketViewController {
         // Begin Scanning
         else {
             ticketScannerViewController.canUseCamera = configStore.useDeviceCamera
+            ticketScannerViewController.preferFrontCamera = configStore.preferFrontCamera
             ticketScannerViewController.shouldScan = true
             configStore.syncManager.beginSyncingIfAutoSync()
         }
