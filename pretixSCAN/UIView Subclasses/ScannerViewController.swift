@@ -170,6 +170,15 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             return
         }
         
+        // check if the session needs to be reconfigured
+        // this is only the case if the camera settings were modified
+        // currently only the preferred camera is of consequence
+        let preferredCaptureDevice = Self.getCaptureDevice(useFrontCamera: preferFrontCamera)
+        if avCaptureDevice?.uniqueID == preferredCaptureDevice?.uniqueID {
+            logger.debug("📸 capture session already configured")
+            return
+        }
+        
         captureSession?.beginConfiguration()
         
         // remove inputs
@@ -178,7 +187,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
         
         // get new input
-        avCaptureDevice = Self.getCaptureDevice(useFrontCamera: preferFrontCamera)
+        avCaptureDevice = preferredCaptureDevice
         guard let videoCaptureDevice = avCaptureDevice else { return }
         
         let videoInput: AVCaptureDeviceInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
