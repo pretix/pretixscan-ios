@@ -24,6 +24,9 @@ final class PXCameraController: UIViewController {
     private var anyCancellables = Set<AnyCancellable>()
     
     var preferFrontCamera: Bool = false
+    var applyVideoTransformation: Bool {
+        return !self.preferFrontCamera
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +48,7 @@ final class PXCameraController: UIViewController {
                 captureSession.addOutput(stillImageOutput)
                 
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                videoPreviewLayer.videoGravity = .resizeAspectFill
+                videoPreviewLayer.videoGravity = .resizeAspect
                 // videoPreviewLayer.connection?.videoOrientation = .portrait
                 
                 previewView.layer.addSublayer(videoPreviewLayer)
@@ -87,21 +90,20 @@ final class PXCameraController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        
         guard previewLayerIsInitialized else {
             return
         }
-
-        super.viewDidLayoutSubviews()
-        videoPreviewLayer.removeFromSuperlayer()
-        videoPreviewLayer.frame = previewView.layer.bounds
-        previewView.layer.addSublayer(videoPreviewLayer)
-
+                
         if videoPreviewLayer.connection?.isVideoOrientationSupported == true {
             guard let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation else {
                 logger.warning("Unknown interfaceOrientation")
                 return
             }
+            
+            videoPreviewLayer.frame = previewView.layer.bounds
+                    
+            
             switch interfaceOrientation {
             case .unknown, .portrait:
                 videoPreviewLayer.connection?.videoOrientation = .portrait
@@ -115,10 +117,22 @@ final class PXCameraController: UIViewController {
                 videoPreviewLayer.connection?.videoOrientation = .portrait
             }
         }
+        
+        if !applyVideoTransformation, let connection = videoPreviewLayer.connection {
+            if connection.isVideoMirroringSupported {
+                connection.automaticallyAdjustsVideoMirroring = false
+                connection.isVideoMirrored = true
+            }
+        }
     }
     
     @IBAction func takePhoto(_ sender: Any) {
         let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+        if let connection = stillImageOutput.connection(with: .video) {
+            // Ensure the mirroring is preserved when photo is taken
+            connection.automaticallyAdjustsVideoMirroring = false
+            connection.isVideoMirrored = true
+        }
         stillImageOutput.capturePhoto(with: settings, delegate: self)
     }
     
