@@ -92,34 +92,40 @@ final class PXCameraController: UIViewController {
         return false
     }
     
+    private func determineVideoOrientation() -> AVCaptureVideoOrientation? {
+        if videoPreviewLayer.connection?.isVideoOrientationSupported != true {
+            return nil
+        }
+        guard let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation else {
+            logger.warning("Unknown interfaceOrientation")
+            return nil
+        }
+                
+        switch interfaceOrientation {
+        case .unknown, .portrait:
+            return .portrait
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
+        case .landscapeLeft:
+            return .landscapeLeft
+        case .landscapeRight:
+            return .landscapeRight
+        @unknown default:
+            return .portrait
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         guard previewLayerIsInitialized else {
             return
         }
-                
-        if videoPreviewLayer.connection?.isVideoOrientationSupported == true {
-            guard let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation else {
-                logger.warning("Unknown interfaceOrientation")
-                return
-            }
-            
-            videoPreviewLayer.frame = previewView.layer.bounds
-                    
-            
-            switch interfaceOrientation {
-            case .unknown, .portrait:
-                videoPreviewLayer.connection?.videoOrientation = .portrait
-            case .portraitUpsideDown:
-                videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
-            case .landscapeLeft:
-                videoPreviewLayer.connection?.videoOrientation = .landscapeLeft
-            case .landscapeRight:
-                videoPreviewLayer.connection?.videoOrientation = .landscapeRight
-            @unknown default:
-                videoPreviewLayer.connection?.videoOrientation = .portrait
-            }
+        
+        let requestedOrientation = determineVideoOrientation()
+        videoPreviewLayer.frame = previewView.layer.bounds
+        if let requestedOrientation {
+            videoPreviewLayer.connection?.videoOrientation = requestedOrientation
         }
         
         if !applyVideoTransformation, let connection = videoPreviewLayer.connection {
@@ -132,10 +138,20 @@ final class PXCameraController: UIViewController {
     
     @IBAction func takePhoto(_ sender: Any) {
         let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
-        if let connection = stillImageOutput.connection(with: .video) {
-            // Ensure the mirroring is preserved when photo is taken
-            connection.automaticallyAdjustsVideoMirroring = false
+        guard let connection = stillImageOutput.connection(with: .video) else {
+            return
+        }
+        
+        // Ensure the mirroring is preserved when photo is taken so "what you see is what you get"
+        connection.automaticallyAdjustsVideoMirroring = false
+        if Self.getCaptureDevice(useFrontCamera: preferFrontCamera)?.position == .front {
             connection.isVideoMirrored = true
+        } else {
+            connection.isVideoMirrored = false
+        }
+        
+        if let requestedOrientation = determineVideoOrientation() {
+            connection.videoOrientation = requestedOrientation
         }
         stillImageOutput.capturePhoto(with: settings, delegate: self)
     }
