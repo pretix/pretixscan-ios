@@ -28,10 +28,6 @@ final class PXCameraController: UIViewController {
         return !self.preferFrontCamera
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         takePhotoButton.setTitle(Localization.QuestionsTableViewController.TakePhotoAction, for: .normal)
@@ -86,10 +82,6 @@ final class PXCameraController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopScanning()
-    }
-    
-    override var shouldAutorotate: Bool {
-        return false
     }
     
     private func determineVideoOrientation() -> AVCaptureVideoOrientation? {
