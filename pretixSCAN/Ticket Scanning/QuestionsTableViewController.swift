@@ -94,7 +94,9 @@ class QuestionsTableViewController: UITableViewController, Configurable, Questio
             returnCell = cell as! MultipleChoiceQuestionCell
         case .fileUpload:
             let cell = tableView.dequeueReusableCell(withIdentifier: FileUploadQuestionCell.reuseIdentifier, for: indexPath)
-            returnCell = cell as! FileUploadQuestionCell
+            let aCell = cell as! FileUploadQuestionCell
+            aCell.preferFrontCamera = configStore?.preferFrontCamera ?? false
+            returnCell = aCell
         case .date:
             let cell = tableView.dequeueReusableCell(withIdentifier: DateQuestionCell.reuseIdentifier, for: indexPath)
             returnCell = cell as! DateQuestionCell

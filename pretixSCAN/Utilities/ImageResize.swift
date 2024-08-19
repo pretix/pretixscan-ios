@@ -52,9 +52,10 @@ public extension UIImage {
     }
     
     func resizeAndCrop(to newSize: CGSize) -> UIImage {
-        let resized = self.normalizeOrientation().resize(to: newSize)!
-        
-        return resized.crop(to: newSize)
+        let normalized = self.normalizeOrientation()
+        let resized = normalized.resize(to: newSize)!
+        let cropped = resized.crop(to: newSize)
+        return cropped
     }
     
     func crop(to newSize: CGSize) -> UIImage {

@@ -14,6 +14,7 @@ class FileUploadQuestionCell: QuestionCell {
     static let ThumbnailSize: CGSize = CGSize(width: 300, height: 400)
     static let Padding: CGFloat = 15
     
+    var preferFrontCamera: Bool = false
     
     let takePictureButton: UIButton = {
         let submit = ChoiceButton()
@@ -104,7 +105,7 @@ class FileUploadQuestionCell: QuestionCell {
             logger.error("PXCameraController not found in storyboard!")
             return
         }
-        
+        vc.preferFrontCamera = preferFrontCamera
         vc.delegate = self
         
         

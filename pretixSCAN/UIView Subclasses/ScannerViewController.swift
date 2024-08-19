@@ -22,6 +22,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     /// If `true`, scanning will be active
     var shouldScan = false {
         didSet {
+            logger.debug("📸 should scan was set")
             if shouldScan && canUseCamera {
                 hideNoCameraView()
                 startScanning()
@@ -35,6 +36,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     var canUseCamera = true
+    var preferFrontCamera = false
     
     private var lastFoundAt: Date = Date.distantPast
     
@@ -54,7 +56,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         view.backgroundColor = UIColor.darkGray
         captureSession = AVCaptureSession()
         
-        avCaptureDevice = AVCaptureDevice.default(for: .video)
+        avCaptureDevice = Self.getCaptureDevice(useFrontCamera: preferFrontCamera)
         guard let videoCaptureDevice = avCaptureDevice else { return }
         let videoInput: AVCaptureDeviceInput
         
@@ -149,7 +151,9 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     private func startScanning() {
-        guard AVCaptureDevice.default(for: .video) != nil else { return }
+        logger.debug("📸 start scanning")
+        try? reconfigureRunningSession()
+        guard Self.getCaptureDevice(useFrontCamera: preferFrontCamera) != nil else { return }
         if captureSession?.isRunning == false {
             DispatchQueue.global(qos: .userInitiated).async {[weak self] in
                 self?.captureSession?.startRunning()
@@ -157,8 +161,46 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         }
     }
     
+    private func reconfigureRunningSession() throws {
+        logger.debug("📸 reconfigure capture session")
+        
+        if captureSession == nil || captureSession?.isRunning != true {
+            // no session or not a running session
+            logger.debug("📸 nothing to reconfigure")
+            return
+        }
+        
+        // check if the session needs to be reconfigured
+        // this is only the case if the camera settings were modified
+        // currently only the preferred camera is of consequence
+        let preferredCaptureDevice = Self.getCaptureDevice(useFrontCamera: preferFrontCamera)
+        if avCaptureDevice?.uniqueID == preferredCaptureDevice?.uniqueID {
+            logger.debug("📸 capture session already configured")
+            return
+        }
+        
+        captureSession?.beginConfiguration()
+        
+        // remove inputs
+        for input in captureSession?.inputs ?? [] {
+            captureSession?.removeInput(input)
+        }
+        
+        // get new input
+        avCaptureDevice = preferredCaptureDevice
+        guard let videoCaptureDevice = avCaptureDevice else { return }
+        
+        let videoInput: AVCaptureDeviceInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+        
+        if captureSession.canAddInput(videoInput) {
+            captureSession.addInput(videoInput)
+        }
+        
+        captureSession?.commitConfiguration()
+    }
+    
     private func stopScanning() {
-        guard AVCaptureDevice.default(for: .video) != nil else { return }
+        guard Self.getCaptureDevice(useFrontCamera: preferFrontCamera) != nil else { return }
         if captureSession?.isRunning == true {
             captureSession.stopRunning()
         }
@@ -217,7 +259,8 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         guard let value = notification.userInfo?["value"] as? ConfigStoreValue, let configStore = notification.object as? ConfigStore else {
             return
         }
-        if [.useDeviceCamera].contains(value) {
+        if [.useDeviceCamera, .preferFrontCamera].contains(value) {
+            preferFrontCamera = configStore.preferFrontCamera
             if configStore.useDeviceCamera == true {
                 canUseCamera = true
                 shouldScan = true
@@ -275,6 +318,16 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             customView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             customView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
         ])
+    }
+    
+    private static func getCaptureDevice(useFrontCamera: Bool) -> AVCaptureDevice? {
+        logger.debug("📸 getCaptureDevice, useFrontCamera: \(useFrontCamera)")
+        if !useFrontCamera {
+            return AVCaptureDevice.default(for: .video)
+        }
+        
+        // try to get a front-facing camera and if that's not possible, fallback to the default video camera.
+        return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) ?? AVCaptureDevice.default(for: .video)
     }
 }
 

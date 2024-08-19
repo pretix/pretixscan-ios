@@ -23,12 +23,17 @@ final class PXCameraController: UIViewController {
     private var previewLayerIsInitialized = false
     private var anyCancellables = Set<AnyCancellable>()
     
+    var preferFrontCamera: Bool = false
+    var applyVideoTransformation: Bool {
+        return !self.preferFrontCamera
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         takePhotoButton.setTitle(Localization.QuestionsTableViewController.TakePhotoAction, for: .normal)
         
-        guard let backCamera = AVCaptureDevice.default(for: .video) else {
-            logger.error("Unable to access back camera!")
+        guard let preferredCamera = Self.getCaptureDevice(useFrontCamera: preferFrontCamera) else {
+            logger.error("Unable to access the device camera!")
             onError()
             return
         }
@@ -36,14 +41,14 @@ final class PXCameraController: UIViewController {
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = .photo
         do {
-            let input = try AVCaptureDeviceInput(device: backCamera)
+            let input = try AVCaptureDeviceInput(device: preferredCamera)
             stillImageOutput = AVCapturePhotoOutput()
             if captureSession.canAddInput(input) && captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addInput(input)
                 captureSession.addOutput(stillImageOutput)
                 
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-                videoPreviewLayer.videoGravity = .resizeAspectFill
+                videoPreviewLayer.videoGravity = .resizeAspect
                 // videoPreviewLayer.connection?.videoOrientation = .portrait
                 
                 previewView.layer.addSublayer(videoPreviewLayer)
@@ -79,49 +84,74 @@ final class PXCameraController: UIViewController {
         stopScanning()
     }
     
-    override var shouldAutorotate: Bool {
-        return false
+    private func determineVideoOrientation() -> AVCaptureVideoOrientation? {
+        if videoPreviewLayer.connection?.isVideoOrientationSupported != true {
+            return nil
+        }
+        guard let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation else {
+            logger.warning("Unknown interfaceOrientation")
+            return nil
+        }
+                
+        switch interfaceOrientation {
+        case .unknown, .portrait:
+            return .portrait
+        case .portraitUpsideDown:
+            return .portraitUpsideDown
+        case .landscapeLeft:
+            return .landscapeLeft
+        case .landscapeRight:
+            return .landscapeRight
+        @unknown default:
+            return .portrait
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        
         guard previewLayerIsInitialized else {
             return
         }
-
-        super.viewDidLayoutSubviews()
-        videoPreviewLayer.removeFromSuperlayer()
+        
+        let requestedOrientation = determineVideoOrientation()
         videoPreviewLayer.frame = previewView.layer.bounds
-        previewView.layer.addSublayer(videoPreviewLayer)
-
-        if videoPreviewLayer.connection?.isVideoOrientationSupported == true {
-            guard let interfaceOrientation = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation else {
-                logger.warning("Unknown interfaceOrientation")
-                return
-            }
-            switch interfaceOrientation {
-            case .unknown, .portrait:
-                videoPreviewLayer.connection?.videoOrientation = .portrait
-            case .portraitUpsideDown:
-                videoPreviewLayer.connection?.videoOrientation = .portraitUpsideDown
-            case .landscapeLeft:
-                videoPreviewLayer.connection?.videoOrientation = .landscapeLeft
-            case .landscapeRight:
-                videoPreviewLayer.connection?.videoOrientation = .landscapeRight
-            @unknown default:
-                videoPreviewLayer.connection?.videoOrientation = .portrait
+        if let requestedOrientation {
+            videoPreviewLayer.connection?.videoOrientation = requestedOrientation
+        }
+        
+        if !applyVideoTransformation, let connection = videoPreviewLayer.connection {
+            if connection.isVideoMirroringSupported {
+                connection.automaticallyAdjustsVideoMirroring = false
+                connection.isVideoMirrored = true
             }
         }
     }
     
     @IBAction func takePhoto(_ sender: Any) {
         let settings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
+        guard let connection = stillImageOutput.connection(with: .video) else {
+            return
+        }
+        
+        // Ensure the mirroring is preserved when photo is taken so "what you see is what you get"
+        connection.automaticallyAdjustsVideoMirroring = false
+        if Self.getCaptureDevice(useFrontCamera: preferFrontCamera)?.position == .front {
+            connection.isVideoMirrored = true
+        } else {
+            connection.isVideoMirrored = false
+        }
+        
+        if let requestedOrientation = determineVideoOrientation() {
+            connection.videoOrientation = requestedOrientation
+        }
         stillImageOutput.capturePhoto(with: settings, delegate: self)
     }
     
     private func startScanning() {
-        guard AVCaptureDevice.default(for: .video) != nil else { return }
+        logger.debug("📸 start scanning")
+        try? reconfigureRunningSession()
+        guard Self.getCaptureDevice(useFrontCamera: preferFrontCamera) != nil else { return }
         if captureSession != nil && captureSession.isRunning == false {
             DispatchQueue.global(qos: .userInitiated).async {[weak self] in
                 self?.captureSession?.startRunning()
@@ -130,7 +160,7 @@ final class PXCameraController: UIViewController {
     }
 
     private func stopScanning() {
-        guard AVCaptureDevice.default(for: .video) != nil else { return }
+        guard Self.getCaptureDevice(useFrontCamera: preferFrontCamera) != nil else { return }
         if captureSession != nil && captureSession.isRunning == true {
             captureSession.stopRunning()
         }
@@ -140,6 +170,45 @@ final class PXCameraController: UIViewController {
         self.stopScanning()
         dismiss(animated: false)
         delegate?.onPhotoCaptureCancelled()
+    }
+    
+    private func reconfigureRunningSession() throws {
+        logger.debug("📸 reconfigure capture session")
+        
+        if captureSession == nil || captureSession?.isRunning != true {
+            // no session or not a running session
+            logger.debug("📸 nothing to reconfigure")
+            return
+        }
+        
+        captureSession?.beginConfiguration()
+        
+        // remove inputs
+        for input in captureSession?.inputs ?? [] {
+            captureSession?.removeInput(input)
+        }
+        
+        // get new input
+        let avCaptureDevice = Self.getCaptureDevice(useFrontCamera: preferFrontCamera)
+        guard let videoCaptureDevice = avCaptureDevice else { return }
+        
+        let videoInput: AVCaptureDeviceInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+        
+        if captureSession.canAddInput(videoInput) {
+            captureSession.addInput(videoInput)
+        }
+        
+        captureSession?.commitConfiguration()
+    }
+    
+    private static func getCaptureDevice(useFrontCamera: Bool) -> AVCaptureDevice? {
+        logger.debug("📸 getCaptureDevice, useFrontCamera: \(useFrontCamera)")
+        if !useFrontCamera {
+            return AVCaptureDevice.default(for: .video)
+        }
+        
+        // try to get a front-facing camera and if that's not possible, fallback to the default video camera.
+        return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) ?? AVCaptureDevice.default(for: .video)
     }
 }
 
