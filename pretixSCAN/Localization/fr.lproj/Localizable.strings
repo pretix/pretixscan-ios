@@ -171,3 +171,11 @@
 
 /* Note for a required boolean question */
 "You have to answer YES to check in" = "Vous devez répondre OUI pour vous enregistrer";
+"Use front camera" = "Utiliser la caméra frontale";
+"Invalid time" = "Billet non valable actuellement";
+"Blocked" = "Billet bloqué";
+"Reset Device" = "Réinitialiser l'appareil";
+"Dismiss" = "Rejeter";
+"There are no events to show" = "Aucun événement actuel ou futur n'a pu être trouvé. Veuillez vérifier les dates et les droits d'accès de vos événements et défiler vers le bas pour actualiser.";
+"Gate" = "Porte";
+"Order not approved" = "Commande non approuvée";
