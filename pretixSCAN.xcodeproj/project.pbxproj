@@ -459,6 +459,7 @@
 		B5FA77992705C40E000E1644 /* QueuedRedemptionRequestsUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuedRedemptionRequestsUploader.swift; sourceTree = "<group>"; };
 		B5FA779B2705C4F1000E1644 /* QueueFailedCheckInsUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueFailedCheckInsUploader.swift; sourceTree = "<group>"; };
 		B5FC7E2226CBFEAD0040CD28 /* PrimaryGreenButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryGreenButton.swift; sourceTree = "<group>"; };
+		DBD8FAF62CE5200F00289FE7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
 		DC0052E92260D385002D985B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		DC07357622392474008326F7 /* pretixSCAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pretixSCAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1296,6 +1297,7 @@
 				en,
 				Base,
 				de,
+				fr,
 			);
 			mainGroup = DC07356D22392474008326F7;
 			packageReferences = (
@@ -1679,6 +1681,7 @@
 			children = (
 				641B4D2322CE641500162D1C /* en */,
 				641B4D2522CE642C00162D1C /* de */,
+				DBD8FAF62CE5200F00289FE7 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
