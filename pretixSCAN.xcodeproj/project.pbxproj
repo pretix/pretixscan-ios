@@ -462,6 +462,7 @@
 		DBD8FAF62CE5200F00289FE7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DBD8FAF72CE5215500289FE7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DBD8FAF82CE5217A00289FE7 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DBD8FAF92CE521F800289FE7 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC0052E7225FB02B002D985B /* FMDBDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FMDBDataStore.swift; sourceTree = "<group>"; };
 		DC0052E92260D385002D985B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		DC07357622392474008326F7 /* pretixSCAN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pretixSCAN.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1302,6 +1303,7 @@
 				fr,
 				es,
 				fi,
+				nl,
 			);
 			mainGroup = DC07356D22392474008326F7;
 			packageReferences = (
@@ -1688,6 +1690,7 @@
 				DBD8FAF62CE5200F00289FE7 /* fr */,
 				DBD8FAF72CE5215500289FE7 /* es */,
 				DBD8FAF82CE5217A00289FE7 /* fi */,
+				DBD8FAF92CE521F800289FE7 /* nl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
