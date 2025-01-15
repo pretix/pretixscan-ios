@@ -130,8 +130,8 @@
 "Ambiguous" = "El código de entrada está ambiguo en la lista";
 "You are not authorized to access this resource" = "No autorizar a acceder a este recurso";
 "You can now start scanning" = "Ahora empieza de escanear";
-"Entry" = "La entrada";
-"Exit" = "Salida";
+"Entry" = "Entrada (Check-In)";
+"Exit" = "Salida (Check-Out)";
 
 /* Not allowed (custom rule) */
 "Not allowed" = "Prohibido";
