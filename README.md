@@ -54,6 +54,10 @@ To build the HTML documentation, install [jazzy](https://github.com/realm/jazzy)
 ## Code Linting
 To check for linting errors, install [swiftlint](https://github.com/realm/swiftlint) by running `brew install swiftlint` (requirements: current macOS and [homebrew](brew.sh)). Code will be linted and warnings and errors generated each time the project is built.
 
+## Security
+
+If you discover a security issue, please contact us at security@pretix.eu and see our [Responsible Disclosure Policy](https://docs.pretix.eu/trust/security/disclosure/) further information.
+
 ## License 
 
 The code in this repository is published under the terms of the Apache License.
