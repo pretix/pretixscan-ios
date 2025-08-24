@@ -44,7 +44,7 @@
 "Automatic Syncing is now enabled" = "自動同期が有効になりました";
 "BoolQuestionCell" = "はい又はいいえ";
 "Cancel" = "キャンセル";
-"Canceled" = "取消し済み";
+"Canceled" = "キャンセル済み";
 "All Contents and Settings were deleted" = "すべてのコンテンツと設定が削除されました";
 "Force Complete Resync" = "再同期の完了を強制する";
 "Check In Unpaid" = "チェックイン・未払い";
@@ -111,8 +111,8 @@
 "You are not authorized to access this resource" = "このリソースにアクセスする権限がありません";
 "You can now start scanning" = "これでスキャンを開始できます";
 "Entry" = "エントリー";
-"Exit" = "退出";
-"Exit stored" = "終了を保存";
+"Exit" = "退場";
+"Exit stored" = "退場記録完了";
 "Not allowed" = "許容されていない";
 "Questions" = "質問";
 "Scan mode" = "スキャンモード";
