@@ -76,7 +76,7 @@
 "Attention, special ticket!" = "注意、特別なチケット!";
 "DateQuestionCell" = "日付を入力";
 "DateTimeQuestionCell" = "日付と時刻を入力";
-"Expired" = "失効";
+"Expired" = "期限切れ";
 "FileUploadQuestionCell" = "ファイルをアップロード";
 "Found %d Results" = "%d件の結果が見つかりました";
 "Last Sync %@ ago " = "前回の同期は%@前 ";
