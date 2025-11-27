@@ -53,9 +53,17 @@ struct RedeemedTicketView: View {
                             if !announcement.reason.isEmpty {
                                 Text(announcement.reason)
                             }
-                            
-                            if !announcement.lastScan.isEmpty {
-                                Text("Last scan: \(announcement.lastScan)")
+
+                            if !announcement.singleEntry.isEmpty {
+                                Text("\(Localization.TicketStatus.ScannedEntry) \(announcement.singleEntry)")
+                            }
+
+                            if !announcement.firstEntry.isEmpty {
+                                Text("\(Localization.TicketStatus.FirstEntry) \(announcement.firstEntry)")
+                            }
+
+                            if !announcement.lastEntry.isEmpty {
+                                Text("\(Localization.TicketStatus.LastEntry) \(announcement.lastEntry)")
                             }
                         }
                         .foregroundStyle(.white)
@@ -153,7 +161,7 @@ struct RedeemedTicketView: View {
 
 #Preview {
     Group {
-        RedeemedTicketView(announcement: TicketStatusAnnouncement(icon: Icon.okay, background: TicketStatusAnnouncement.determineBackground(.redeemed), status:TicketStatusAnnouncement.determineStatus(.redeemed, false), productType: "Product", reason: "Reason explained", lastScan: "17/11/2023 17:20", showAttention: true, showCheckInUnpaid: true, attendeeName: "Attendee Name", orderAndPosition: "AAAAB-1", seat: "Seat B by the window", additionalTexts: ["Comment on product or variation or label", "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:", "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:", "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:"], questions: [.init(key: "Question", value: "answer"), .init(key: "question 2", value: "answer 2")], showOfflineIndicator: true), redeemUnpaid: {})
+        RedeemedTicketView(announcement: TicketStatusAnnouncement(icon: Icon.okay, background: TicketStatusAnnouncement.determineBackground(.redeemed), status:TicketStatusAnnouncement.determineStatus(.redeemed, false), productType: "Product", reason: "Reason explained", showAttention: true, showCheckInUnpaid: true, attendeeName: "Attendee Name", orderAndPosition: "AAAAB-1", seat: "Seat B by the window", additionalTexts: ["Comment on product or variation or label", "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:", "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:", "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:"], questions: [.init(key: "Question", value: "answer"), .init(key: "question 2", value: "answer 2")], showOfflineIndicator: true), redeemUnpaid: {})
         
         RedeemedTicketView(announcement: TicketStatusAnnouncement.init(nil, APIError.badRequest, false, false, isOffline: false), redeemUnpaid: {})
         

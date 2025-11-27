@@ -30,7 +30,13 @@ public struct RedemptionResponse: Codable, Equatable {
     
     /// If the ticket has already been redeemed, this field might contain the last CheckIn
     public var lastCheckIn: CheckIn?
-    
+
+    /// Date of the first entry check-in for this ticket in the current check-in list (if available)
+    public var firstEntryDate: Date? = nil
+
+    /// Date of the last entry check-in for this ticket in the current check-in list (if available)
+    public var lastEntryDate: Date? = nil
+
     /// If the ticket is incomplete, a list of questions that need to be answered
     public let questions: [Question]?
     

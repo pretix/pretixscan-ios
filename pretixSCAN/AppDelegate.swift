@@ -40,9 +40,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Create a Sentry client and start crash handler
 #if !DEBUG
         SentrySDK.start { options in
-                options.dsn = "https://b5aaf76ba03b4e778cd8370a85557263@errors.rami.io/20"
-                options.debug = false // Enabled debug when first installing is always helpful
+            options.dsn = "https://b5aaf76ba03b4e778cd8370a85557263@errors.rami.io/20"
+            options.debug = false
+            options.beforeSend = { event in
+                if let message = event.message?.formatted,
+                   message.contains("status code: 502") ||
+                   message.contains("status code: 503") ||
+                   message.contains("status code: 504") {
+                    return nil
+                }
+                return event
             }
+        }
 #endif
         // Prevent display sleep for the entire app
         // We never want the app to turn itself off

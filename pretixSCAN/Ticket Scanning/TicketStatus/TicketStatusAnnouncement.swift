@@ -17,8 +17,9 @@ struct TicketStatusAnnouncement: Hashable, Equatable {
     var status: String = ""
     var productType: String = ""
     var reason: String = ""
-//    var firstScan: String = "" not supported yet on iOS!!
-    var lastScan: String = ""
+    var singleEntry: String = ""
+    var firstEntry: String = ""
+    var lastEntry: String = ""
     var showAttention: Bool = false
     var showCheckInUnpaid: Bool = false
     var attendeeName: String = "-"
@@ -57,10 +58,31 @@ extension TicketStatusAnnouncement  {
             productType = redemptionResponse.calculatedProductLabel
             orderAndPosition = Self.determineOrderAndPosition(redemptionResponse)
             reason = redemptionResponse.localizedErrorReason
-            lastScan = Self.determineLastScan(redemptionResponse, isExitMode)
+
+            
+            if Self.showFirstEntry(isExitMode),
+               let firstDate = redemptionResponse.firstEntryDate {
+                self.firstEntry = Self.formatEntryDate(firstDate)
+            } else {
+                self.firstEntry = ""
+            }
+            
+            if Self.showLastEntry(redemptionResponse, isExitMode),
+               let _ = redemptionResponse.lastEntryDate {
+                lastEntry = Self.determineLastEntry(redemptionResponse)
+            } else {
+                self.lastEntry = ""
+            }
+            
+            if firstEntry == lastEntry && !firstEntry.isEmpty {
+                singleEntry = firstEntry
+                firstEntry = ""
+                lastEntry = ""
+            }
+            
             showAttention = redemptionResponse.isRequireAttention
             showCheckInUnpaid = redemptionResponse.errorReason == .unpaid && canCheckInUnpaid
-            
+
             // ticket details
             attendeeName = redemptionResponse.position?.attendeeName ?? ""
             seat = redemptionResponse.position?.seat?.name ?? ""
@@ -124,6 +146,25 @@ extension TicketStatusAnnouncement  {
         }
     }
     
+    static func showLastEntry(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> Bool {
+        switch redemptionResponse.status {
+        case .redeemed:
+            return false
+        case .incomplete, .error:
+            if isExitMode {
+               return false
+            }
+            return true
+        }
+    }
+    
+    static func showFirstEntry(_ isExitMode: Bool) -> Bool {
+        if isExitMode {
+            return false
+        }
+        return true
+    }
+    
     static func determineStatus(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
         switch redemptionResponse.status {
         case .redeemed:
@@ -141,25 +182,34 @@ extension TicketStatusAnnouncement  {
             return Localization.TicketStatus.InvalidTicket
         }
     }
-    
-    static func determineLastScan(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
-        switch redemptionResponse.status {
-        case .redeemed:
-            return ""
-        case .incomplete:
-            return ""
-        case .error:
-            if redemptionResponse.errorReason == .alreadyRedeemed, let lastCheckIn = redemptionResponse.lastCheckIn {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .medium
-                dateFormatter.timeStyle = .medium
-                return dateFormatter.string(from: lastCheckIn.date)
-            }
-            
+
+    static func determineFirstEntry(_ redemptionResponse: RedemptionResponse) -> String {
+        guard let firstEntryDate = redemptionResponse.firstEntryDate else {
             return ""
         }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        return dateFormatter.string(from: firstEntryDate)
     }
-    
+
+    static func determineLastEntry(_ redemptionResponse: RedemptionResponse) -> String {
+        guard let lastEntryDate = redemptionResponse.lastEntryDate else {
+            return ""
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        return dateFormatter.string(from: lastEntryDate)
+    }
+
+    static func formatEntryDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        return dateFormatter.string(from: date)
+    }
+
     static func determineAdditionalTexts(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> [String] {
         if !isExitMode {
             return redemptionResponse.checkInTexts ?? []

@@ -191,3 +191,7 @@
 "You have to answer YES to check in" = "Se debe seleccionar SÍ para comprobar la entrada";
 "Could not create Nonce" = "No se pudo crear Nonce";
 "Use front camera" = "Usar la cámara frontal";
+
+"First entry:" = "Primer acceso:";
+"Last entry:" = "Último acceso:";
+"Scanned:" = "Escaneado:";

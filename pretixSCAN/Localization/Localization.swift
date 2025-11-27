@@ -30,6 +30,9 @@ struct Localization {
         static let UnpaidContinueButtonTitle = NSLocalizedString("Check In Unpaid", comment: "")
         static let TicketRequiresAttention = NSLocalizedString("Attention, special ticket!", comment: "")
         static let UnApproved = NSLocalizedString("Order not approved", comment: "")
+        static let FirstEntry = NSLocalizedString("First entry:", comment: "")
+        static let LastEntry = NSLocalizedString("Last entry:", comment: "")
+        static let ScannedEntry = NSLocalizedString("Scanned:", comment: "")
     }
 
     struct WelcomeViewController {

@@ -179,3 +179,7 @@
 "Reset Device" = "Reset apparaat";
 "There are no events to show" = "Geen huidig of toekomstig evenement kan worden gevonden. Controleer de datum en toegangsrechten voor je evenementen en swipe omlaag om te verversen.";
 "Dismiss" = "Afwijzen";
+
+"First entry:" = "Eerste toegang:";
+"Last entry:" = "Laatste toegang:";
+"Scanned:" = "Gescand:";

@@ -143,11 +143,15 @@ public class OnlineTicketValidator: TicketValidator {
             }
 
             if let event = self.configStore.event {
+                // Preserve the fresh check-ins from the API response before enriching with local data
+                let freshCheckIns = position.checkins
+
                 position = position.adding(order: dataStore.getOrder(by: position.orderCode, in: event))
                 position = position.adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
 
-                let checkIns = dataStore.getCheckIns(for: position, in: self.configStore.checkInList, in: event)
-                position = position.adding(checkIns: checkIns)
+                // IMPORTANT: In online mode, use the fresh check-ins from the API response,
+                // not stale data from the local database
+                position = position.adding(checkIns: freshCheckIns)
 
                 redemptionResponse.position = position
             }
@@ -156,12 +160,20 @@ public class OnlineTicketValidator: TicketValidator {
                 $0.listID == checkInList.identifier
             }.first
 
+            // Calculate first and last entry dates for this check-in list
+            let entryCheckIns = (redemptionResponse.position?.checkins ?? []).filter {
+                $0.listID == checkInList.identifier && $0.type == "entry"
+            }.sorted(by: { $0.date < $1.date })
+
+            redemptionResponse.firstEntryDate = entryCheckIns.first?.date
+            redemptionResponse.lastEntryDate = entryCheckIns.last?.date
+
             redemptionResponse = RedemptionResponse.appendDataFromOnlineQuestionsForStatusVisualization(redemptionResponse)
-            
+
             if redemptionResponse == .redeemed {
                 PXTemporaryFile.cleanUp(answers?.compactMap({$0.fileUrl}) ?? [])
             }
-            
+
             completionHandler(redemptionResponse, error)
         }
     }

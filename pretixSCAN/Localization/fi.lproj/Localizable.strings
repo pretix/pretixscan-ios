@@ -2,3 +2,7 @@
 "Canceled" = "Peruttu";
 /* Ticket is Unpaid */
 "Product" = "Tuote";
+
+"First entry:" = "Ensimmäinen sisäänpääsy:";
+"Last entry:" = "Viimeisin sisäänpääsy:";
+"Scanned:" = "Skannattu:";

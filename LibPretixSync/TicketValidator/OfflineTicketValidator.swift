@@ -217,13 +217,21 @@ public class OfflineTicketValidator: TicketValidator {
                 .adding(checkIns: dataStore.getCheckIns(for: position, in: self.configStore.checkInList, in: event))
                 .adding(answers: response.answers)
             response.position = position
-            
+
             response.lastCheckIn = position.checkins.filter {
                 $0.listID == checkInList.identifier
             }.first
+
+            // Calculate first and last entry dates for this check-in list
+            let entryCheckIns = position.checkins.filter {
+                $0.listID == checkInList.identifier && $0.type == "entry"
+            }.sorted(by: { $0.date < $1.date })
+
+            response.firstEntryDate = entryCheckIns.first?.date
+            response.lastEntryDate = entryCheckIns.last?.date
         }
-        
-        
+
+
         completionHandler(response, nil)
         configStore.syncManager.beginSyncingIfAutoSync()
     }

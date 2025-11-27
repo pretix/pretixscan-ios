@@ -148,6 +148,10 @@ final class PXCameraController: UIViewController {
         stillImageOutput.capturePhoto(with: settings, delegate: self)
     }
     
+    static func deviceHasCamera() -> Bool {
+        return Self.getCaptureDevice(useFrontCamera: false) != nil
+    }
+    
     private func startScanning() {
         logger.debug("📸 start scanning")
         try? reconfigureRunningSession()
