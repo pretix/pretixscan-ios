@@ -732,7 +732,7 @@ public extension APIClient {
             let task = session.dataTask(with: urlRequest) { (data, response, error) in
 #if DEBUG
                 if let data = data {
-                    print("response error", String(data: data, encoding: .utf8))
+                    print("➡️ 💿", data.prettyPrintedJSONString ?? String(data: data, encoding: .utf8) ?? "Undecodable")
                 }
 #endif
                 if let error = self.checkResponse(data: data, response: response, error: error) {
@@ -945,5 +945,17 @@ private extension APIClient {
         } catch let jsonError {
             return (nil, jsonError)
         }
+    }
+}
+
+extension Data {
+    /// NSString gives us a nice sanitized debugDescription
+    var prettyPrintedJSONString: NSString? {
+        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+            let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .withoutEscapingSlashes]),
+            let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+        else { return nil }
+
+        return prettyPrintedString
     }
 }

@@ -179,3 +179,7 @@
 "There are no events to show" = "Aucun événement actuel ou futur n'a pu être trouvé. Veuillez vérifier les dates et les droits d'accès de vos événements et défiler vers le bas pour actualiser.";
 "Gate" = "Porte";
 "Order not approved" = "Commande non approuvée";
+
+"First entry:" = "Première entrée :";
+"Last entry:" = "Dernière entrée :";
+"Scanned:" = "Scanné :";

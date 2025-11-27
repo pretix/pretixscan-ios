@@ -330,5 +330,3 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         return AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) ?? AVCaptureDevice.default(for: .video)
     }
 }
-
-

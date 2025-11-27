@@ -17,7 +17,7 @@ class SetupCodeScannerViewController: ScannerViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        shouldScan = true
+        shouldScan = PXCameraController.deviceHasCamera()
     }
 
     override func found(code: String) {

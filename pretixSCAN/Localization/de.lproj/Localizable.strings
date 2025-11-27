@@ -191,3 +191,7 @@
 "Gate" = "Station";
 
 "Order not approved" = "Bestellung nicht freigegeben";
+
+"First entry:" = "Erster Einlass:";
+"Last entry:" = "Letzter Einlass:";
+"Scanned:" = "Gescannt:";
