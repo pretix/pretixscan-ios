@@ -81,7 +81,7 @@
 /* Question Type Label */
 "NumberQuestionCell" = "Voer een getal in";
 "Offline" = "Offline";
-"OK" = "OK";
+"OK" = "Oké";
 
 /* Question Type Label */
 "OneLineStringQuestionCell" = "Voer tekst in";
@@ -173,7 +173,7 @@
 "Use front camera" = "Gebruik camera voorkant";
 "Redeemed" = "Verzilverd";
 "Use device camera" = "Gebruik apparaatcamera";
-"ConnectExternalDevice" = "Druk op de fysieke scanknop van uw apparaat om te scannen";
+"ConnectExternalDevice" = "Druk op de scanknoppen van uw apparaat om te scannen";
 "Invalid time" = "Ticket momenteel niet geldig";
 "Order not approved" = "Bestelling niet goedgekeurd";
 "Reset Device" = "Reset apparaat";
