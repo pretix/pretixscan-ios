@@ -106,7 +106,7 @@
 "Setup Complete" = "Instellen voltooid";
 
 /* Question Type Label */
-"SingleChoiceQuestionCell" = "Kies een optie";
+"SingleChoiceQuestionCell" = "Kies één optie";
 "Start Scanning" = "Start met scannen";
 "Statistics" = "Statistieken";
 "Sync every few minutes" = "Synchroniseer om de paar minuten";
@@ -116,22 +116,22 @@
 "Sync Now" = "Nu synchroniseren";
 "Syncing Done " = "Synchroniseren klaar ";
 "System URL" = "Systeem-URL";
-"The resource was not found on the server" = "De informatie kon niet gevonden worden op de server";
+"The resource was not found on the server" = "De bron is niet gevonden op de server";
 "The server refused to handle our request" = "De server heeft het verzoek van de app geweigerd";
-"The server returned a non HTTP response" = "De server heeft geen HTTP-antwoord teruggegeven";
-"The server returned an empty response" = "De server heeft een leeg antwoord teruggegeven";
+"The server returned a non HTTP response" = "De server heeft een niet-HTTP-antwoord teruggestuurd";
+"The server returned an empty response" = "De server heeft een leeg antwoord teruggestuurd";
 "The server returned an unkown status code: " = "De server gaf een onbekende statuscode terug: ";
 "This feature cannot be used at the moment: " = "Deze functie kan momenteel niet gebruikt worden: ";
 "This is not a ticket, or not a ticket for this event." = "Dit is geen ticket of niet een ticket voor dit evenement.";
-"This ticket has not been paid for, do you still want to check it in?" = "Er is nog niet betaald voor dit ticket, wilt u het ticket alsnog inchecken?";
+"This ticket has not been paid for, do you still want to check it in?" = "Er is nog niet betaald voor dit ticket. Wilt u het alsnog inchecken?";
 "This will delete event data from the device and log you out. Do you want to continue?" = "Dit zal de gegevens over het evenement van het apparaat verwijderen en u uitloggen. Wilt u doorgaan?";
 "Ticket Already Used" = "Ticket al gebruikt";
 
 /* Question Type Label */
 "TimeQuestionCell" = "Voer een tijd in";
-"To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan." = "Maak om te beginnen een nieuw apparaat aan in de sectie 'Apparaten' van uw organisatoraccount in de pretix-backend. Wanneer u dit doet krijgt u een QR-code te zien die u met deze app kunt scannen.";
+"To get started, create a new device in the Devices section of your organizer account in the pretix backend. You will then be presented with a configuration QR code to scan." = "Maak om te beginnen een nieuw apparaat aan in de sectie 'Apparaten' van uw organisatoraccount in de pretix-backend. Wanneer u dit doet, krijgt u een QR-code te zien die u met deze app kunt scannen.";
 "Token" = "Token";
-"Total Tickets Sold" = "Totaal aantal tickets verkocht";
+"Total Tickets Sold" = "Totaal verkochte tickets";
 
 /* Ticket is Unpaid */
 "Unpaid" = "Niet betaald";
@@ -139,8 +139,8 @@
 "Valid Ticket" = "Geldig ticket";
 "Valid Ticket, but needs attention" = "Geldig ticket, maar speciale aandacht nodig";
 "Welcome" = "Welkom";
-"You are forbidden from accessing this resource" = "U heeft geen toegang tot deze informatie";
-"You are not authorized to access this resource" = "U heeft geen toestemming tot deze informatie";
+"You are forbidden from accessing this resource" = "U hebt geen toegang tot deze informatie";
+"You are not authorized to access this resource" = "U hebt geen toegang tot deze informatie";
 "You can now start scanning" = "U kunt nu beginnen met tickets scannen";
 "Entry" = "Binnenkomst";
 "Exit" = "Vertrek";
@@ -158,7 +158,7 @@
 
 /* Note for a required boolean question */
 "You have to answer YES to check in" = "U moet 'Ja' kiezen om deze persoon in te checken";
-"You need to upload a file here. Please do so from your computer" = "U moet hier een bestand uploaden, doe dit vanaf uw computer";
+"You need to upload a file here. Please do so from your computer" = "U moet hier een bestand uploaden. Doe dit vanaf uw computer";
 "Offline validation" = "Offline-validatie";
 "User interface" = "Gebruikersinterface";
 "Blocked" = "Ticket geblokkeerd";
@@ -167,15 +167,15 @@
 "TelQuestionCell" = "Telefoonnummer";
 "Play sounds" = "Speel geluiden af";
 "Download Orders" = "Download bestellingen";
-"Ambiguous" = "Ticket-code op de lijst is niet eenduidig";
+"Ambiguous" = "Ticketcode op de lijst is niet eenduidig";
 "Take a photo" = "Neem een foto";
 "Attention, special ticket!" = "Let op, speciaal ticket!";
 "Use front camera" = "Gebruik camera voorkant";
-"Redeemed" = "Verzilverd";
+"Redeemed" = "Ingewisseld";
 "Use device camera" = "Gebruik apparaatcamera";
 "ConnectExternalDevice" = "Druk op de scanknoppen van uw apparaat om te scannen";
 "Invalid time" = "Ticket momenteel niet geldig";
 "Order not approved" = "Bestelling niet goedgekeurd";
 "Reset Device" = "Reset apparaat";
-"There are no events to show" = "Geen huidig of toekomstig evenement kan worden gevonden. Controleer de datum en toegangsrechten voor je evenementen en swipe omlaag om te verversen.";
+"There are no events to show" = "Geen huidig of toekomstig evenement kan worden gevonden. Controleer de datum en toegangsrechten voor uw evenementen en swipe omlaag om te verversen.";
 "Dismiss" = "Afwijzen";
