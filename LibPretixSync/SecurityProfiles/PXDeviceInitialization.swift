@@ -20,6 +20,10 @@ final class PXDeviceInitialization {
     
     var softwareVersion: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String ?? "n/a"
     
+    var osName: String = UIDevice.current.systemName
+    
+    var osVersion: String = UIDevice.current.systemVersion
+    
     init(_ config: ConfigStore) {
         self.configStore = config
     }
@@ -43,7 +47,7 @@ final class PXDeviceInitialization {
 
     
     func getUpdateRequest() -> DeviceUpdateRequest? {
-        return DeviceUpdateRequest(hardwareBrand: hardwareBrand, hardwareModel: hardwareModel, softwareBrand: softwareBrand, softwareVersion: softwareVersion)
+        return DeviceUpdateRequest(hardwareBrand: hardwareBrand, hardwareModel: hardwareModel, softwareBrand: softwareBrand, softwareVersion: softwareVersion, osName: osName, osVersion: osVersion)
     }
 }
 
@@ -60,10 +64,18 @@ public struct DeviceUpdateRequest: Codable, Equatable {
     /// The software version
     public let softwareVersion: String
 
+    /// The operating system name
+    public let osName: String
+
+    /// The operating system version
+    public let osVersion: String
+
     private enum CodingKeys: String, CodingKey {
         case hardwareBrand = "hardware_brand"
         case hardwareModel = "hardware_model"
         case softwareBrand = "software_brand"
         case softwareVersion = "software_version"
+        case osName = "os_name"
+        case osVersion = "os_version"
     }
 }
