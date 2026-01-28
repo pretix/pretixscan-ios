@@ -37,7 +37,7 @@ final class PXDeviceInitialization {
         }
         
         logger.debug("Needs to update comparing '\(publishedSoftwareVersion)' to current '\(self.softwareVersion)'")
-        return softwareVersion.compare(publishedSoftwareVersion) == .orderedDescending
+        return softwareVersion.compare(publishedSoftwareVersion, options: .numeric) == .orderedDescending
     }
     
     func setPublishedVersion(_ version: String) {
