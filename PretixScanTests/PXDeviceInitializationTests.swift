@@ -30,6 +30,17 @@ class PXDeviceInitializationTests: XCTestCase {
         XCTAssertTrue(sut.needsToUpdate())
     }
     
+    func testNeedsToUpdateWhenVersionSetIsNumericallyLower() {
+        let defaults = UserDefaults(suiteName: "testDatabase")!
+        defaults.set("1.7.0", forKey: defaultsKey(DefaultsConfigStore.Keys.publishedSoftwareVersion.rawValue))
+        let config = DefaultsConfigStore(defaults: defaults)
+        
+        let sut = PXDeviceInitialization(config)
+        sut.softwareVersion = "1.25.0"
+        
+        XCTAssertTrue(sut.needsToUpdate())
+    }
+    
     func testNeedsToUpdateWhenOlderPublishedVersionSet() {
         let defaults = UserDefaults(suiteName: "testDatabase")!
         defaults.set("1.6.1", forKey: defaultsKey(DefaultsConfigStore.Keys.publishedSoftwareVersion.rawValue))
