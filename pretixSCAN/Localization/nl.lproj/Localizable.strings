@@ -1,11 +1,11 @@
 
 
-"In online mode, the app will confirm any check-ins in real-time with the server. In offline mode, the app will work locally and only synchronize it's data with the server every couple of minutes. When working with multiple devices, this can potentially mean that a ticket can be used multiple times. Choose offline mode if you have an unreliable internet connection but can tolerate such situations." = "In de online-modus zal de app iedere check-in eerst controleren bij de pretix-server. In de offline-modus werkt de app lokaal en worden de gegevens elke paar minuten met de server gesynchroniseerd. Als u meerdere apparaten gebruikt om tickets te scannen en de offline-modus gebruikt betekent dit dat een ticket mogelijk meerdere keren gebruikt kan worden. We raden aan voor de offlinemodus te kiezen als u een onbetrouwbare of trage internetverbinding heeft en dit risico voor u acceptabel is.";
+"In online mode, the app will confirm any check-ins in real-time with the server. In offline mode, the app will work locally and only synchronize it's data with the server every couple of minutes. When working with multiple devices, this can potentially mean that a ticket can be used multiple times. Choose offline mode if you have an unreliable internet connection but can tolerate such situations." = "In de online-modus zal de app iedere check-in eerst controleren bij de pretix-server. In de offline-modus werkt de app lokaal en worden de gegevens elke paar minuten met de server gesynchroniseerd. Als u meerdere apparaten gebruikt om tickets te scannen en de offline-modus gebruikt, betekent dit dat een ticket mogelijk meerdere keren gebruikt kan worden. We raden aan voor de offlinemodus te kiezen als u een onbetrouwbare of trage internetverbinding heeft en dit risico voor u acceptabel is.";
 "About this App" = "Over deze app";
 "All Contents and Settings were deleted" = "Alle gegevens en instellingen zijn verwijderd";
 
 /* Ticket is already redeemed */
-"Already Redeemed" = "Al gebruikt";
+"Already Redeemed" = "Al ingewisseld";
 "Already Scanned" = "Al gescand";
 "App Version" = "App-versie";
 "Automatic Syncing is now disabled" = "Automatische synchronisatie is nu uitgeschakeld";
@@ -49,9 +49,9 @@
 /* Placeholder is an integer */
 "Found %d Results" = "%d resultaten gevonden";
 "Found No Results" = "Geen resultaten gevonden";
-"Found one Result" = "Één resultaat gevonden";
+"Found one Result" = "Eén resultaat gevonden";
 "Found too many results, keep typing" = "Te veel resultaten gevonden, voer meer tekens in";
-"I understand that personal data of attendees of my connected events will be stored on this device and I will secure the device properly." = "Ik begrijp dat persoonsgegevens van gasten van mijn verbonden evenementen zullen worden opgeslagen op dit apparaat, en ik zal het apparaat goed beveiligen.";
+"I understand that personal data of attendees of my connected events will be stored on this device and I will secure the device properly." = "Ik begrijp dat persoonsgegevens van deelnemers aan mijn verbonden evenementen zullen worden opgeslagen op dit apparaat, en ik zal het apparaat goed beveiligen.";
 "Incomplete Information" = "Onvolledige informatie";
 "Initialization Token already used" = "Dit initialisatietoken is al gebruikt";
 "Instead of scanning a QR code, you can read these details off your screen." = "U kunt deze gegevens ook handmatig invoeren, in plaats van de QR-code te scannen.";
@@ -100,7 +100,7 @@
 "Reset Contents and Settings" = "Gegevens en instellingen resetten";
 "Search" = "Zoeken";
 "Search will begin after you have typed at least 3 characters." = "Voer ten minste drie tekens in om te zoeken.";
-"Select Check-In List" = "Kies inchecklijst";
+"Select Check-In List" = "Kies check-in-lijst";
 "Select Event" = "Kies evenement";
 "Settings" = "Instellingen";
 "Setup Complete" = "Instellen voltooid";
@@ -122,7 +122,7 @@
 "The server returned an empty response" = "De server heeft een leeg antwoord teruggestuurd";
 "The server returned an unkown status code: " = "De server gaf een onbekende statuscode terug: ";
 "This feature cannot be used at the moment: " = "Deze functie kan momenteel niet gebruikt worden: ";
-"This is not a ticket, or not a ticket for this event." = "Dit is geen ticket of niet een ticket voor dit evenement.";
+"This is not a ticket, or not a ticket for this event." = "Dit is geen ticket of een ticket voor een ander evenement.";
 "This ticket has not been paid for, do you still want to check it in?" = "Er is nog niet betaald voor dit ticket. Wilt u het alsnog inchecken?";
 "This will delete event data from the device and log you out. Do you want to continue?" = "Dit zal de gegevens over het evenement van het apparaat verwijderen en u uitloggen. Wilt u doorgaan?";
 "Ticket Already Used" = "Ticket al gebruikt";
@@ -167,15 +167,15 @@
 "TelQuestionCell" = "Telefoonnummer";
 "Play sounds" = "Speel geluiden af";
 "Download Orders" = "Download bestellingen";
-"Ambiguous" = "Ticketcode op de lijst is niet eenduidig";
+"Ambiguous" = "Ticketcode op de lijst is ambigu";
 "Take a photo" = "Neem een foto";
 "Attention, special ticket!" = "Let op, speciaal ticket!";
 "Use front camera" = "Gebruik camera voorkant";
 "Redeemed" = "Ingewisseld";
-"Use device camera" = "Gebruik apparaatcamera";
+"Use device camera" = "Gebruik camera van apparaat";
 "ConnectExternalDevice" = "Druk op de scanknoppen van uw apparaat om te scannen";
 "Invalid time" = "Ticket momenteel niet geldig";
 "Order not approved" = "Bestelling niet goedgekeurd";
-"Reset Device" = "Reset apparaat";
-"There are no events to show" = "Geen huidig of toekomstig evenement kan worden gevonden. Controleer de datum en toegangsrechten voor uw evenementen en swipe omlaag om te verversen.";
+"Reset Device" = "Apparaat resetten";
+"There are no events to show" = "Er is geen huidig of toekomstig evenement gevonden. Controleer de datum en toegangsrechten voor uw evenementen en swipe omlaag om te verversen.";
 "Dismiss" = "Afwijzen";
