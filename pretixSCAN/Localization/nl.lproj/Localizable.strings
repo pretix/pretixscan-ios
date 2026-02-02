@@ -17,14 +17,14 @@
 
 /* Order Canceled */
 "Canceled" = "Geannuleerd";
-"Check In Unpaid" = "Onbetaald inchecken";
+"Check In Unpaid" = "Onbetaalde tickets inchecken";
 "Checked In" = "Ingecheckt";
 "Configuration" = "Instellingen";
 "Connect" = "Verbinden";
 "Connect Device" = "Apparaat verbinden";
 "Continue" = "Ga verder";
 "Could not create Nonce" = "Nonce-waarde kon niet gegenereerd worden";
-"Could not create URL" = "URL kon niet gemaakt worden";
+"Could not create URL" = "URL kon niet aangemaakt worden";
 
 /* Question Type Label */
 "CountryCodeQuestionCell" = "Kies een land";
