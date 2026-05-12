@@ -92,7 +92,7 @@
 "Pending" = "保留中";
 "pretixSCAN" = "pretixSCAN";
 "pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix." = "pretixSCANは、pretixを通じて販売したチケットを検証するために使用できるイベントエントリーアプリです。";
-"Product" = "商品";
+"Product" = "製品";
 "Search will begin after you have typed at least 3 characters." = "検索は、少なくとも3文字を入力すると開始されます。";
 "Select Check-In List" = "チェックインリストを選択";
 "Select Event" = "イベントを選択";
