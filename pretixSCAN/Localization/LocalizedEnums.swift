@@ -48,6 +48,8 @@ extension RedemptionResponse.ErrorReason {
             return NSLocalizedString("Invalid time", comment: "Invalid time (ticket signature)")
         case .unapproved:
             return NSLocalizedString("Order not approved", comment: "")
+        case .unknown:
+            return NSLocalizedString("Invalid", comment: "Unrecognized check-in error reason")
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import SwiftUI
 @testable import pretixSCAN
 
 class RedemptionResponseTests: XCTestCase {
@@ -75,6 +76,49 @@ class RedemptionResponseTests: XCTestCase {
         let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONError)
         XCTAssertEqual(parsedInstance!.status, .error)
         XCTAssertEqual(parsedInstance!.errorReason, .unpaid)
+    }
+
+    let exampleJSONUnknownStatus = """
+        {
+            "status": "exchange",
+            "reason_explanation": "Ticket needs to be exchanged to a suitable medium."
+        }
+    """.data(using: .utf8)!
+
+    let exampleJSONUnknownReason = """
+        {
+            "status": "error",
+            "reason": "some_brand_new_reason",
+            "reason_explanation": "Server provided a reason this app does not know yet."
+        }
+    """.data(using: .utf8)!
+
+    func testParsingUnknownStatus() {
+        XCTAssertNoThrow(try jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONUnknownStatus))
+        let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONUnknownStatus)
+        XCTAssertEqual(parsedInstance!.status, .unknown)
+        XCTAssertNil(parsedInstance!.errorReason)
+        XCTAssertEqual(parsedInstance!.reasonExplanation, "Ticket needs to be exchanged to a suitable medium.")
+    }
+
+    func testParsingUnknownReason() {
+        XCTAssertNoThrow(try jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONUnknownReason))
+        let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONUnknownReason)
+        XCTAssertEqual(parsedInstance!.status, .error)
+        XCTAssertEqual(parsedInstance!.errorReason, .unknown)
+        XCTAssertEqual(parsedInstance!.reasonExplanation, "Server provided a reason this app does not know yet.")
+    }
+
+    func testUnknownStatusAnnouncesExplanationAsError() {
+        let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONUnknownStatus)
+        guard let parsedInstance = parsedInstance else {
+            XCTFail("RedemptionResponse instance should be arranged")
+            return
+        }
+        let announcement = TicketStatusAnnouncement(parsedInstance, nil, false, false, isOffline: false)
+        XCTAssertEqual(announcement.reason, "Ticket needs to be exchanged to a suitable medium.")
+        XCTAssertEqual(announcement.icon, Icon.error)
+        XCTAssertEqual(announcement.background, Color(uiColor: PXColor.error))
     }
     
     func testResponseRulesParsing() {

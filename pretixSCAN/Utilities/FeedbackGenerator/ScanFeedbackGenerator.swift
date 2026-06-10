@@ -68,7 +68,7 @@ final class ScanFeedbackGenerator: FeedbackGenerator {
         case .incomplete:
             logger.debug("Skipping announcement due to incomplete.")
             performHapticNotification(ofType: .warning)
-        case .error:
+        case .error, .unknown:
             announce(.invalid)
         }
     }

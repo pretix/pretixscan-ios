@@ -123,7 +123,9 @@ extension TicketStatusAnnouncement  {
             if redemptionResponse.errorReason == .alreadyRedeemed {
                 return Color(uiColor: PXColor.warning)
             }
-            
+
+            return Color(uiColor: PXColor.error)
+        case .unknown:
             return Color(uiColor: PXColor.error)
         }
     }
@@ -141,7 +143,9 @@ extension TicketStatusAnnouncement  {
             if redemptionResponse.errorReason == .alreadyRedeemed {
                 return Icon.warning
             }
-            
+
+            return Icon.error
+        case .unknown:
             return Icon.error
         }
     }
@@ -150,7 +154,7 @@ extension TicketStatusAnnouncement  {
         switch redemptionResponse.status {
         case .redeemed:
             return false
-        case .incomplete, .error:
+        case .incomplete, .error, .unknown:
             if isExitMode {
                return false
             }
@@ -178,7 +182,9 @@ extension TicketStatusAnnouncement  {
             if redemptionResponse.errorReason == .alreadyRedeemed {
                 return Localization.TicketStatus.TicketAlreadyRedeemed
             }
-            
+
+            return Localization.TicketStatus.InvalidTicket
+        case .unknown:
             return Localization.TicketStatus.InvalidTicket
         }
     }

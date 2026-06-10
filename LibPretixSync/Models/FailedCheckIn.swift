@@ -111,7 +111,7 @@ extension FailedCheckIn {
         case .incomplete:
             // incomplete entries should not be logged
             return nil
-        case .error:
+        case .error, .unknown:
             if let reason = response.errorReason {
                 switch reason {
                 case .unpaid:
@@ -146,6 +146,9 @@ extension FailedCheckIn {
                     return
                 case .unapproved:
                     self =  FailedCheckIn(.unapproved, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    return
+                case .unknown:
+                    self = FailedCheckIn(.error, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
                 }
             } else {
