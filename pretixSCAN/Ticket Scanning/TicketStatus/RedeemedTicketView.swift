@@ -52,6 +52,9 @@ struct RedeemedTicketView: View {
                             
                             if !announcement.reason.isEmpty {
                                 Text(announcement.reason)
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(3)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
 
                             if !announcement.singleEntry.isEmpty {
@@ -167,4 +170,18 @@ struct RedeemedTicketView: View {
         
         RedeemedTicketView(announcement: TicketStatusAnnouncement.init(nil, NSError(domain: "test", code: 1, userInfo: ["key": "value"]), false, false, isOffline: false), redeemUnpaid: {})
     }
+}
+
+#Preview("Unknown reason fall-through") {
+    let response = RedemptionResponse(
+        status: .error,
+        reasonExplanation: "Server provided a reason this app version does not recognize.",
+        errorReason: .unknown,
+        questions: nil
+    )
+
+    return RedeemedTicketView(
+        announcement: TicketStatusAnnouncement(response, nil, false, false, isOffline: false),
+        redeemUnpaid: {}
+    )
 }
