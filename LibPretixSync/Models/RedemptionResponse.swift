@@ -63,12 +63,20 @@ public struct RedemptionResponse: Codable, Equatable {
     public enum Status: String, Codable {
         /// The ticket has been successfully redeemed and the attendee should be let in
         case redeemed = "ok"
-        
+
         /// Some information is missing
         case incomplete
-        
+
         /// An error occurred, check the `errorReason`
         case error
+
+        /// The server returned a status this app version does not recognize
+        case unknown
+
+        public init(from decoder: Decoder) throws {
+            let raw = try decoder.singleValueContainer().decode(String.self)
+            self = Status(rawValue: raw) ?? .unknown
+        }
     }
     
     /// Possible reasons an error could occur
@@ -99,8 +107,16 @@ public struct RedemptionResponse: Codable, Equatable {
         case blocked
         
         case unapproved
-        
+
         case invalidTime = "invalid_time"
+
+        /// The server returned a reason this app version does not recognize
+        case unknown
+
+        public init(from decoder: Decoder) throws {
+            let raw = try decoder.singleValueContainer().decode(String.self)
+            self = ErrorReason(rawValue: raw) ?? .unknown
+        }
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -118,16 +134,17 @@ public struct RedemptionResponse: Codable, Equatable {
 
 extension RedemptionResponse {
     var localizedErrorReason: String {
+        let explanation = reasonExplanation?.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let reason = self.errorReason else {
-            return ""
+            return explanation ?? ""
         }
         switch reason {
-        case .rules, .invalidTime:
-            if let explanation = reasonExplanation {
-                return "\(reason.localizedDescription()): \(explanation)".trimmingCharacters(in: .whitespacesAndNewlines)
-            }
-            return reason.localizedDescription()
+        case .unknown:
+            return explanation ?? reason.localizedDescription()
         default:
+            if let explanation, !explanation.isEmpty {
+                return "\(reason.localizedDescription()): \(explanation)"
+            }
             return reason.localizedDescription()
         }
     }
