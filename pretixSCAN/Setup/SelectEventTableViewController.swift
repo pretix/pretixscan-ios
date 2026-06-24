@@ -67,42 +67,45 @@ class SelectEventTableViewController: UITableViewController, Configurable {
         hideEmptyMessage()
 
         configStore?.ticketValidator?.getEvents { (eventList, error) in
-            self.presentErrorAlert(ifError: error)
-            self.events = eventList
-            if let events = self.events {
-                if events.isEmpty {
+            DispatchQueue.main.async {
+                self.presentErrorAlert(ifError: error)
+                self.events = eventList
+                if let events = self.events {
+                    if events.isEmpty {
+                        self.isLoading = false
+                        self.showEmptyMessage()
+                    }
+                    subEventsLoading = events.count
+                    for event in events {
+                        guard event.hasSubEvents else {
+                            subEventsLoading -= 1
+                            if subEventsLoading < 1 {
+                                self.isLoading = false
+                            }
+
+                            continue
+                        }
+
+                        self.configStore?.ticketValidator?.getSubEvents(event: event) { (subeventList, error) in
+                            DispatchQueue.main.async {
+                                subEventsLoading -= 1
+                                self.presentErrorAlert(ifError: error)
+
+                                if let subeventList = subeventList {
+                                    self.subEvents?[event] = subeventList
+                                }
+
+                                if subEventsLoading < 1 {
+                                    self.isLoading = false
+                                }
+                            }
+                        }
+                    }
+                } else {
                     self.isLoading = false
                     self.showEmptyMessage()
                 }
-                subEventsLoading = events.count
-                for event in events {
-                    guard event.hasSubEvents else {
-                        subEventsLoading -= 1
-                        if subEventsLoading < 1 {
-                            self.isLoading = false
-                        }
-
-                        continue
-                    }
-
-                    self.configStore?.ticketValidator?.getSubEvents(event: event) { (subeventList, error) in
-                        subEventsLoading -= 1
-                        self.presentErrorAlert(ifError: error)
-
-                        if let subeventList = subeventList {
-                            self.subEvents?[event] = subeventList
-                        }
-
-                        if subEventsLoading < 1 {
-                            self.isLoading = false
-                        }
-                    }
-                }
-            } else {
-                self.isLoading = false
-                self.showEmptyMessage()
             }
-            
         }
     }
     
@@ -150,8 +153,9 @@ class SelectEventTableViewController: UITableViewController, Configurable {
         guard let events = events else { return nil }
         guard events.count > indexPath.section else { return nil }
         let event = events[indexPath.section]
-
-        return subEvents?[event]?[indexPath.row]
+        guard let eventSubEvents = subEvents?[event] else { return nil }
+        guard indexPath.row < eventSubEvents.count else { return nil }
+        return eventSubEvents[indexPath.row]
     }
 
     // MARK: View Communication
@@ -179,7 +183,7 @@ class SelectEventTableViewController: UITableViewController, Configurable {
             self?.configStore?.factoryReset()
             self?.configStore?.syncManager.resetSyncState()
             self?.dismiss(animated: true)
-            if let validateController = (self?.presentingViewController as? UINavigationController)?.viewControllers[0] as? ValidateTicketViewController {
+            if let validateController = (self?.presentingViewController as? UINavigationController)?.viewControllers.first as? ValidateTicketViewController {
                 // as this is a modal, the first run actions will not run automatically
                 DispatchQueue.main.async {
                     validateController.checkFirstRunActions()

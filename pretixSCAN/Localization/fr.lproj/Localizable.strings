@@ -47,7 +47,7 @@
 "Force Complete Resync" = "Forcer la resynchronisation complète";
 
 /* Placeholder is an integer */
-"Found %d Results" = "%s résultats trouvés";
+"Found %d Results" = "%d résultats trouvés";
 "Found No Results" = "Aucun résultat trouvé";
 "Found one Result" = "Un résultat trouvé";
 "Incomplete Information" = "Information imcomplète";
