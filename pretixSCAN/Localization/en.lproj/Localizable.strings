@@ -380,6 +380,9 @@
 /* Gate */
 "Gate" = "Gate";
 
+"Camera Access Required" = "Camera Access Required";
+"pretixSCAN needs access to your camera to scan tickets. You can grant access in Settings." = "pretixSCAN needs access to your camera to scan tickets. You can grant access in Settings.";
+
 "Order not approved" = "Order not approved";
 
 "First entry:" = "First entry:";

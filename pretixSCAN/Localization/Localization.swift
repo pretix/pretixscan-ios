@@ -179,4 +179,10 @@ struct Localization {
     struct Common {
         static let dismiss = NSLocalizedString("Dismiss", comment: "")
     }
+
+    struct Camera {
+        static let AccessDeniedTitle = NSLocalizedString("Camera Access Required", comment: "")
+        static let AccessDeniedMessage = NSLocalizedString("pretixSCAN needs access to your camera to scan tickets. You can grant access in Settings.", comment: "")
+        static let OpenSettings = NSLocalizedString("Settings", comment: "Button that opens the system Settings app")
+    }
 }
