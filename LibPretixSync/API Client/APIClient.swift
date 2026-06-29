@@ -210,13 +210,34 @@ public extension APIClient {
             }
             
             return task
-            
+
         } catch {
             logger.error("API task error \(String(describing: error))")
             completionHandler(error)
             return nil
         }
-        
+
+    }
+
+    func revokeDevice(completionHandler: @escaping (Error?) -> Void) {
+        do {
+            let urlPath = try createURL(for: "/api/v1/device/revoke")
+            var urlRequest = try createURLRequest(for: urlPath)
+            urlRequest.httpMethod = HttpMethod.POST
+            urlRequest.httpBody = "{}".data(using: .utf8)
+
+            guard isAllowed(request: urlRequest) else {
+                completionHandler(APIError.notAllowed)
+                return
+            }
+
+            let task = session.dataTask(with: urlRequest) { (data, response, error) in
+                completionHandler(self.checkResponse(data: data, response: response, error: error))
+            }
+            task.resume()
+        } catch {
+            completionHandler(error)
+        }
     }
 }
 

@@ -162,11 +162,12 @@ class PXSecurityProfileTests: XCTestCase {
     func testProfileFullIsAllowed() {
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/update", method: "POST", profile: .full, expectedName: "api-v1:device.update")
-        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/revoke", method: "POST", profile: .full, expectedName: "api-v1:device.revoke")
+
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:event-list")
-        
+
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .full, expectedName: "api-v1:event-detail")
-        
+
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/?page=1&ordering=datetime", method: "GET", profile: .full, expectedName: "api-v1:subevent-list")
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/subevents/1/", method: "GET", profile: .full, expectedName: "api-v1:subevent-detail")
@@ -200,7 +201,8 @@ class PXSecurityProfileTests: XCTestCase {
     func testProfilePretixScanIsAllowed() {
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/update", method: "POST", profile: .full, expectedName: "api-v1:device.update")
-        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/revoke", method: "POST", profile: .pretixscan, expectedName: "api-v1:device.revoke")
+
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-list")
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-detail")
@@ -234,7 +236,8 @@ class PXSecurityProfileTests: XCTestCase {
     func testProfileNoOrdersIsAllowed() {
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/update", method: "POST", profile: .full, expectedName: "api-v1:device.update")
-        
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/device/revoke", method: "POST", profile: .noOrders, expectedName: "api-v1:device.revoke")
+
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/?page=1&ordering=datetime", method: "GET", profile: .noOrders, expectedName: "api-v1:event-list")
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/", method: "GET", profile: .noOrders, expectedName: "api-v1:event-detail")

@@ -67,6 +67,7 @@ final class PXSecurityProfileRequestValidator {
     /// Endpoint detection expressions
     static let EndpointExpressions: [PXAllowedEndpointName: PXEndpointRegExPattern] = [
         "api-v1:device.update": #"(\/v1\/device\/update)$"#,
+        "api-v1:device.revoke": #"(\/v1\/device\/revoke)$"#,
         "api-v1:device.info": #"(\/v1\/device\/info)$"#,
         "api-v1:event-list": #"(\/v1\/organizers\/)(.+?(?=\/))(\/events\/)$"#,
         "api-v1:event-detail": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)$"#,
@@ -89,6 +90,7 @@ final class PXSecurityProfileRequestValidator {
     
     
     static let AllowListNoOrders: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
+                                                                                    ("POST", "api-v1:device.revoke"),
                                                                                     ("GET", "api-v1:device.info"),
                                                                                     ("GET", "api-v1:event-list"),
                                                                                     ("GET", "api-v1:event-detail"),
@@ -109,6 +111,7 @@ final class PXSecurityProfileRequestValidator {
     
     
     static let AllowListPretixScan: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [("POST", "api-v1:device.update"),
+                                                                                      ("POST", "api-v1:device.revoke"),
                                                                                       ("GET", "api-v1:device.info"),
                                                                                       ("GET", "api-v1:event-list"), // OK
                                                                                       ("GET", "api-v1:event-detail"), // OK, POST?
@@ -130,6 +133,7 @@ final class PXSecurityProfileRequestValidator {
     ]
     
     static let AllowListKiosk: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [    ("POST", "api-v1:device.update"),
+                                                                                     ("POST", "api-v1:device.revoke"),
                                                                                      ("GET", "api-v1:device.info"),
                                                                                      ("GET", "api-v1:event-list"),
                                                                                      ("GET", "api-v1:event-detail"),

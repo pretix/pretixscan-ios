@@ -311,6 +311,7 @@ public class DefaultsConfigStore: ConfigStore {
     }
 
     public func factoryReset() {
+        apiClient?.revokeDevice { _ in }
         for event in allManagedEvents {
             dataStore?.destroyDataStore(for: event, recreate: false)
         }
