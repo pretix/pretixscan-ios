@@ -42,15 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SentrySDK.start { options in
             options.dsn = "https://b5aaf76ba03b4e778cd8370a85557263@errors.rami.io/20"
             options.debug = false
-            options.beforeSend = { event in
-                if let message = event.message?.formatted,
-                   message.contains("status code: 502") ||
-                   message.contains("status code: 503") ||
-                   message.contains("status code: 504") {
-                    return nil
-                }
-                return event
-            }
         }
 #endif
         // Prevent display sleep for the entire app
