@@ -275,8 +275,8 @@ public class SyncManager {
             }
             
             if let error = uploader.error {
-                if let urlError = error as? URLError, urlError.code == URLError.Code.notConnectedToInternet {
-                    logger.debug("BumpVersionUploader Request failed while not connected to internet.")
+                if error.isOperationalError {
+                    logger.debug("BumpVersionUploader upload failed: \(error)")
                 } else {
                     EventLogger.log(event: "BumpVersionUploader Request came back with error: \(error)",
                                     category: .offlineUpload, level: .error, type: .error)
@@ -297,8 +297,8 @@ public class SyncManager {
             }
             
             if let error = downloader.error {
-                if let urlError = error as? URLError, urlError.code == URLError.Code.notConnectedToInternet {
-                    logger.debug("ServerVersionDownloader Request failed while not connected to internet.")
+                if error.isOperationalError {
+                    logger.debug("ServerVersionDownloader download failed: \(error)")
                 } else {
                     EventLogger.log(event: "ServerVersionDownloader Request came back with error: \(error)",
                                     category: .offlineUpload, level: .error, type: .error)
@@ -317,12 +317,8 @@ public class SyncManager {
                 return
             }
             if let error = uploader.error {
-                if let urlError = error as? URLError, (urlError.code == URLError.Code.notConnectedToInternet ||
-                                                       urlError.code == URLError.Code.timedOut ||
-                                                       urlError.code == URLError.Code.cannotConnectToHost ||
-                                                       urlError.code == URLError.Code.networkConnectionLost ||
-                                                       urlError.code == URLError.Code.cannotLoadFromNetwork) {
-                    logger.debug("Queued Redemption Request failed while not connected to internet.")
+                if error.isOperationalError {
+                    logger.debug("Queued Failed Check-In upload failed: \(error)")
                 } else {
                     EventLogger.log(event: "Queued Failed Check-In came back with error: \(error)",
                                     category: .offlineUpload, level: .error, type: .error)

@@ -36,7 +36,24 @@ extension APIError {
             self = APIError.accessRevoked
             return
         }
-        
+
         return nil
+    }
+}
+
+extension Error {
+    /// Errors that arise from the network transport or from the pretix API's responses
+    /// These reflect connectivity or expected workflows so they're just logged locally
+    var isOperationalError: Bool {
+        if self is URLError { return true }
+        guard let apiError = self as? APIError else { return false }
+        switch apiError {
+        case .unchanged, .badRequest, .unauthorized, .forbidden, .notFound,
+             .notAllowed, .retryAfter, .unknownStatusCode, .accessRevoked:
+            return true
+        case .initializationError, .notConfigured, .emptyResponse, .nonHTTPResponse,
+             .couldNotCreateURL, .couldNotCreateNonce, .fileNotFound, .unknownFileType:
+            return false
+        }
     }
 }

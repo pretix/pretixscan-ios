@@ -73,3 +73,24 @@ class RedemptionRequestTests: XCTestCase {
         XCTAssertEqual(exampleObjectNoQuestions, decoded)
     }
 }
+
+class APIErrorClassificationTests: XCTestCase {
+    func testOperationalAPIErrors() {
+        XCTAssertTrue(APIError.forbidden.isOperationalError)
+        XCTAssertTrue(APIError.unknownStatusCode(statusCode: 504).isOperationalError)
+    }
+
+    func testOperationalURLError() {
+        XCTAssertTrue((URLError(.timedOut) as Error).isOperationalError)
+    }
+
+    func testNonOperationalAPIErrors() {
+        XCTAssertFalse(APIError.couldNotCreateURL.isOperationalError)
+        XCTAssertFalse(APIError.emptyResponse.isOperationalError)
+    }
+
+    func testNonOperationalDecodingError() {
+        let error: Error = DecodingError.valueNotFound(Int.self, .init(codingPath: [], debugDescription: ""))
+        XCTAssertFalse(error.isOperationalError)
+    }
+}
