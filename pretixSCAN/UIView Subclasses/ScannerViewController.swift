@@ -24,8 +24,12 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
         didSet {
             logger.debug("📸 should scan was set")
             if shouldScan && canUseCamera {
-                hideNoCameraView()
-                startScanning()
+                if isCameraAccessDenied {
+                    presentCameraAccessDeniedAlert()
+                } else {
+                    hideNoCameraView()
+                    startScanning()
+                }
             } else {
                 stopScanning()
                 if !canUseCamera {
@@ -275,14 +279,35 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     func hideNoCameraView() {
         logger.debug("Hiding no camera view")
-        previewLayer.isHidden = false
+        previewLayer?.isHidden = false
         noCameraView?.isHidden = true
     }
-    
+
     func showNoCameraView() {
         logger.debug("Showing no camera view")
-        previewLayer.isHidden = true
+        previewLayer?.isHidden = true
         noCameraView?.isHidden = false
+    }
+
+    private var isCameraAccessDenied: Bool {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        return status == .denied || status == .restricted
+    }
+
+    private func presentCameraAccessDeniedAlert() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, self.presentedViewController == nil else { return }
+            let alert = UIAlertController(
+                title: Localization.Camera.AccessDeniedTitle,
+                message: Localization.Camera.AccessDeniedMessage,
+                preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: Localization.Errors.Confirm, style: .cancel))
+            alert.addAction(UIAlertAction(title: Localization.Camera.OpenSettings, style: .default) { _ in
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                UIApplication.shared.open(url)
+            })
+            self.present(alert, animated: true)
+        }
     }
     
     func configureNoCameraView() {
