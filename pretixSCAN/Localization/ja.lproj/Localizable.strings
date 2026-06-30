@@ -44,7 +44,7 @@
 "Automatic Syncing is now enabled" = "自動同期が有効になりました";
 "BoolQuestionCell" = "はい又はいいえ";
 "Cancel" = "キャンセル";
-"Canceled" = "取消し済み";
+"Canceled" = "キャンセル済み";
 "All Contents and Settings were deleted" = "すべてのコンテンツと設定が削除されました";
 "Force Complete Resync" = "再同期の完了を強制する";
 "Check In Unpaid" = "チェックイン・未払い";
@@ -76,7 +76,7 @@
 "Attention, special ticket!" = "注意、特別なチケット!";
 "DateQuestionCell" = "日付を入力";
 "DateTimeQuestionCell" = "日付と時刻を入力";
-"Expired" = "失効";
+"Expired" = "期限切れ";
 "FileUploadQuestionCell" = "ファイルをアップロード";
 "Found %d Results" = "%d件の結果が見つかりました";
 "Last Sync %@ ago " = "前回の同期は%@前 ";
@@ -92,7 +92,7 @@
 "Pending" = "保留中";
 "pretixSCAN" = "pretixSCAN";
 "pretixSCAN is an event entry app that you can use to validate tickets that you sold through pretix." = "pretixSCANは、pretixを通じて販売したチケットを検証するために使用できるイベントエントリーアプリです。";
-"Product" = "商品";
+"Product" = "製品";
 "Search will begin after you have typed at least 3 characters." = "検索は、少なくとも3文字を入力すると開始されます。";
 "Select Check-In List" = "チェックインリストを選択";
 "Select Event" = "イベントを選択";
@@ -111,8 +111,8 @@
 "You are not authorized to access this resource" = "このリソースにアクセスする権限がありません";
 "You can now start scanning" = "これでスキャンを開始できます";
 "Entry" = "エントリー";
-"Exit" = "退出";
-"Exit stored" = "終了を保存";
+"Exit" = "退場";
+"Exit stored" = "退場記録完了";
 "Not allowed" = "許容されていない";
 "Questions" = "質問";
 "Scan mode" = "スキャンモード";
