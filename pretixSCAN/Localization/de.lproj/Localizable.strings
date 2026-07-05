@@ -195,3 +195,5 @@
 "First entry:" = "Erster Einlass:";
 "Last entry:" = "Letzter Einlass:";
 "Scanned:" = "Gescannt:";
+"Camera Access Required" = "Kamerazugriff benötigt";
+"pretixSCAN needs access to your camera to scan tickets. You can grant access in Settings." = "pretixSCAN benötigt Zugriff auf Ihre Kamera, um Tickets zu scannen. Sie können den Zugriff in den Einstellungen erlauben.";
