@@ -86,6 +86,8 @@ final class PXSecurityProfileRequestValidator {
         "api-v1:blockedsecrets-list": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)blockedsecrets\/$"#,
         "api-v1:upload": #"\/v1\/upload"#,
         "api-v1:checkinrpc.redeem": #"(\/v1\/organizers\/)(.+?(?=\/))(\/checkinrpc\/redeem\/)$"#,
+        "api-v1:reusablemedium-list": #"(\/v1\/organizers\/)(.+?(?=\/))(\/reusablemedia\/)$"#,
+        "api-v1:event-settings": #"\/v1\/organizers\/.+?(?=\/)\/events\/([^\/\s]+\/)settings\/$"#,
     ]
     
     
@@ -129,7 +131,9 @@ final class PXSecurityProfileRequestValidator {
                                                                                       ("GET", "api-v1:blockedsecrets-list"),
                                                                                       ("GET", "api-v1:order-list"),
                                                                                       ("POST", "api-v1:upload"),
-                                                                                      ("POST", "api-v1:checkinrpc.redeem")
+                                                                                      ("POST", "api-v1:checkinrpc.redeem"),
+                                                                                      ("GET", "api-v1:reusablemedium-list"),
+                                                                                      ("GET", "api-v1:event-settings")
     ]
     
     static let AllowListKiosk: [(PXAllowedHttpMethod, PXAllowedEndpointName)] = [    ("POST", "api-v1:device.update"),

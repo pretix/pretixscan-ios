@@ -10,10 +10,10 @@ import Foundation
 
 public struct CheckInRequest: Codable {
     public init(list: Identifier, secret: String, redemptionRequest: RedemptionRequest) {
-        self.init(secret: secret, lists: [list], type: CheckInType(rawValue: redemptionRequest.type)!, dateTime: redemptionRequest.date, force: redemptionRequest.force, ignoreUnpaid: redemptionRequest.ignoreUnpaid, answers: redemptionRequest.answers, nonce: redemptionRequest.nonce)
+        self.init(secret: secret, lists: [list], type: CheckInType(rawValue: redemptionRequest.type)!, dateTime: redemptionRequest.date, force: redemptionRequest.force, ignoreUnpaid: redemptionRequest.ignoreUnpaid, answers: redemptionRequest.answers, nonce: redemptionRequest.nonce, sourceType: redemptionRequest.sourceType)
     }
-    
-    public init(secret: String, lists: [Identifier], type: CheckInType, dateTime: Date? = nil, force: Bool, ignoreUnpaid: Bool, answers: [String: String]? = nil, nonce: String) {
+
+    public init(secret: String, lists: [Identifier], type: CheckInType, dateTime: Date? = nil, force: Bool, ignoreUnpaid: Bool, answers: [String: String]? = nil, nonce: String, sourceType: String = "barcode") {
         self.secret = secret
         self.lists = lists
         self.type = type
@@ -23,6 +23,7 @@ public struct CheckInRequest: Codable {
         self.ignoreUnpaid = ignoreUnpaid
         self.answers = answers
         self.nonce = nonce
+        self.sourceType = sourceType
     }
     
     public var secret: String
@@ -34,7 +35,8 @@ public struct CheckInRequest: Codable {
     public var ignoreUnpaid: Bool
     public var answers: [String: String]?
     public var nonce: String
-    
+    public var sourceType: String = "barcode"
+
     enum CodingKeys: String, CodingKey {
         case secret
         case lists
@@ -45,6 +47,7 @@ public struct CheckInRequest: Codable {
         case ignoreUnpaid = "ignore_unpaid"
         case answers
         case nonce
+        case sourceType = "source_type"
     }
 }
 

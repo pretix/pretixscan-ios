@@ -72,6 +72,29 @@ class RedemptionRequestTests: XCTestCase {
         let decoded = try! jsonDecoder.decode(RedemptionRequest.self, from: encodedInstance!)
         XCTAssertEqual(exampleObjectNoQuestions, decoded)
     }
+
+    func testEncodingIncludesSourceType() throws {
+        let encoded = try jsonEncoder.encode(exampleObject)
+        let json = try JSONSerialization.jsonObject(with: encoded) as? [String: Any]
+        XCTAssertEqual(json?["source_type"] as? String, "barcode")
+    }
+
+    func testDecodingLegacyJSONWithoutSourceTypeDefaultsToBarcode() {
+        XCTAssertNoThrow(try jsonDecoder.decode(RedemptionRequest.self, from: exampleJSON))
+        let parsedInstance = try? jsonDecoder.decode(RedemptionRequest.self, from: exampleJSON)
+        XCTAssertEqual(parsedInstance?.sourceType, "barcode")
+    }
+}
+
+class CheckInRequestTests: XCTestCase {
+    let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
+
+    func testEncodingIncludesSourceType() throws {
+        let request = CheckInRequest(secret: "secret", lists: [1], type: .entry, force: false, ignoreUnpaid: false, nonce: "nonce")
+        let encoded = try jsonEncoder.encode(request)
+        let json = try JSONSerialization.jsonObject(with: encoded) as? [String: Any]
+        XCTAssertEqual(json?["source_type"] as? String, "barcode")
+    }
 }
 
 class APIErrorClassificationTests: XCTestCase {

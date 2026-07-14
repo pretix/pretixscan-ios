@@ -33,6 +33,9 @@ struct Localization {
         static let FirstEntry = NSLocalizedString("First entry:", comment: "")
         static let LastEntry = NSLocalizedString("Last entry:", comment: "")
         static let ScannedEntry = NSLocalizedString("Scanned:", comment: "")
+        static let MediumExchangeNeeded = NSLocalizedString("Medium Exchange Needed", comment: "")
+        static let MediumExchangeNeededReason = NSLocalizedString("This ticket must be exchanged for a reusable medium. This version of pretixSCAN cannot perform the exchange.", comment: "")
+        static let TicketAlreadyExchanged = NSLocalizedString("Ticket already exchanged", comment: "")
     }
 
     struct WelcomeViewController {

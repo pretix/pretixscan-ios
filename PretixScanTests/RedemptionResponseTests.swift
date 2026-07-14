@@ -80,6 +80,13 @@ class RedemptionResponseTests: XCTestCase {
 
     let exampleJSONUnknownStatus = """
         {
+            "status": "some_brand_new_status",
+            "reason_explanation": "Server provided a status this app does not know yet."
+        }
+    """.data(using: .utf8)!
+
+    let exampleJSONExchangeStatus = """
+        {
             "status": "exchange",
             "reason_explanation": "Ticket needs to be exchanged to a suitable medium."
         }
@@ -93,12 +100,62 @@ class RedemptionResponseTests: XCTestCase {
         }
     """.data(using: .utf8)!
 
+    let exampleJSONAlreadyExchangedReason = """
+        {
+          "status": "error",
+          "reason": "already_exchanged",
+        }
+    """.data(using: .utf8)!
+
+    let exampleJSONMediumInvalidReason = """
+        {
+          "status": "error",
+          "reason": "medium_invalid",
+        }
+    """.data(using: .utf8)!
+
+    let exampleJSONMediumExistsReason = """
+        {
+          "status": "error",
+          "reason": "medium_exists",
+        }
+    """.data(using: .utf8)!
+
     func testParsingUnknownStatus() {
         XCTAssertNoThrow(try jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONUnknownStatus))
         let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONUnknownStatus)
         XCTAssertEqual(parsedInstance!.status, .unknown)
         XCTAssertNil(parsedInstance!.errorReason)
+        XCTAssertEqual(parsedInstance!.reasonExplanation, "Server provided a status this app does not know yet.")
+    }
+
+    func testParsingExchangeStatus() {
+        XCTAssertNoThrow(try jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONExchangeStatus))
+        let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONExchangeStatus)
+        XCTAssertEqual(parsedInstance!.status, .exchange)
+        XCTAssertNil(parsedInstance!.errorReason)
         XCTAssertEqual(parsedInstance!.reasonExplanation, "Ticket needs to be exchanged to a suitable medium.")
+    }
+
+    func testParsingAlreadyExchangedReason() {
+        XCTAssertNoThrow(try jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONAlreadyExchangedReason))
+        let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONAlreadyExchangedReason)
+        XCTAssertEqual(parsedInstance!.status, .error)
+        XCTAssertEqual(parsedInstance!.errorReason, .alreadyExchanged)
+    }
+
+    func testParsingMediumInvalidReason() {
+        XCTAssertNoThrow(try jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONMediumInvalidReason))
+        let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONMediumInvalidReason)
+        XCTAssertEqual(parsedInstance!.status, .error)
+        XCTAssertEqual(parsedInstance!.errorReason, .mediumInvalid)
+    }
+
+    func testParsingMediumExistsReason() {
+        XCTAssertNoThrow(try jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONMediumExistsReason))
+        let parsedInstance = try? jsonDecoder.decode(RedemptionResponse.self, from: exampleJSONMediumExistsReason)
+        XCTAssertEqual(parsedInstance!.status, .error)
+        XCTAssertEqual(parsedInstance!.errorReason, .mediumExists)
     }
 
     func testParsingUnknownReason() {
@@ -116,7 +173,7 @@ class RedemptionResponseTests: XCTestCase {
             return
         }
         let announcement = TicketStatusAnnouncement(parsedInstance, nil, false, false, isOffline: false)
-        XCTAssertEqual(announcement.reason, "Ticket needs to be exchanged to a suitable medium.")
+        XCTAssertEqual(announcement.reason, "Server provided a status this app does not know yet.")
         XCTAssertEqual(announcement.icon, Icon.error)
         XCTAssertEqual(announcement.background, Color(uiColor: PXColor.error))
     }

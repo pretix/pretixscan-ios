@@ -57,7 +57,7 @@ extension TicketStatusAnnouncement  {
             status = Self.determineStatus(redemptionResponse, isExitMode)
             productType = redemptionResponse.calculatedProductLabel
             orderAndPosition = Self.determineOrderAndPosition(redemptionResponse)
-            reason = redemptionResponse.localizedErrorReason
+            reason = Self.determineReason(redemptionResponse)
 
             
             if Self.showFirstEntry(isExitMode),
@@ -127,9 +127,11 @@ extension TicketStatusAnnouncement  {
             return Color(uiColor: PXColor.error)
         case .unknown:
             return Color(uiColor: PXColor.error)
+        case .exchange:
+            return Color(uiColor: PXColor.error)
         }
     }
-    
+
     static func determineIcon(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> String {
         switch redemptionResponse.status {
         case .redeemed:
@@ -147,14 +149,16 @@ extension TicketStatusAnnouncement  {
             return Icon.error
         case .unknown:
             return Icon.error
+        case .exchange:
+            return Icon.error
         }
     }
-    
+
     static func showLastEntry(_ redemptionResponse: RedemptionResponse, _ isExitMode: Bool) -> Bool {
         switch redemptionResponse.status {
         case .redeemed:
             return false
-        case .incomplete, .error, .unknown:
+        case .incomplete, .error, .unknown, .exchange:
             if isExitMode {
                return false
             }
@@ -182,10 +186,27 @@ extension TicketStatusAnnouncement  {
             if redemptionResponse.errorReason == .alreadyRedeemed {
                 return Localization.TicketStatus.TicketAlreadyRedeemed
             }
+            if redemptionResponse.errorReason == .alreadyExchanged {
+                return Localization.TicketStatus.TicketAlreadyExchanged
+            }
+            if redemptionResponse.errorReason == .exchangeOffline {
+                return Localization.TicketStatus.MediumExchangeNeeded
+            }
 
             return Localization.TicketStatus.InvalidTicket
         case .unknown:
             return Localization.TicketStatus.InvalidTicket
+        case .exchange:
+            return Localization.TicketStatus.MediumExchangeNeeded
+        }
+    }
+
+    static func determineReason(_ redemptionResponse: RedemptionResponse) -> String {
+        switch redemptionResponse.status {
+        case .exchange:
+            return Localization.TicketStatus.MediumExchangeNeededReason
+        case .redeemed, .incomplete, .error, .unknown:
+            return redemptionResponse.localizedErrorReason
         }
     }
 

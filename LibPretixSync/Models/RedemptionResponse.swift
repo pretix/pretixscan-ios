@@ -70,6 +70,9 @@ public struct RedemptionResponse: Codable, Equatable {
         /// An error occurred, check the `errorReason`
         case error
 
+        /// The ticket must be exchanged for a reusable medium before it can be checked in
+        case exchange
+
         /// The server returned a status this app version does not recognize
         case unknown
 
@@ -109,6 +112,18 @@ public struct RedemptionResponse: Codable, Equatable {
         case unapproved
 
         case invalidTime = "invalid_time"
+
+        /// The ticket has already been exchanged for a reusable medium
+        case alreadyExchanged = "already_exchanged"
+
+        /// The scanned reusable medium is invalid
+        case mediumInvalid = "medium_invalid"
+
+        /// The scanned reusable medium already exists
+        case mediumExists = "medium_exists"
+
+        /// The ticket must be exchanged for a reusable medium, but this is not possible while offline
+        case exchangeOffline = "exchange_offline"
 
         /// The server returned a reason this app version does not recognize
         case unknown
@@ -286,6 +301,11 @@ extension RedemptionResponse {
     
     static var invalidTime: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalidTime, questions: nil)
+    }
+
+    static func invalidTime(with orderPosition: OrderPosition) -> Self {
+        let response = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalidTime, questions: nil)
+        return appendDataFromOfflineMetadataForStatusVisualization(response, orderPosition: orderPosition)
     }
     
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {

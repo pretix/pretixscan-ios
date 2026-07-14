@@ -111,6 +111,9 @@ extension FailedCheckIn {
         case .incomplete:
             // incomplete entries should not be logged
             return nil
+        case .exchange:
+            self = FailedCheckIn(.exchange, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+            return
         case .error, .unknown:
             if let reason = response.errorReason {
                 switch reason {
@@ -147,6 +150,18 @@ extension FailedCheckIn {
                 case .unapproved:
                     self =  FailedCheckIn(.unapproved, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
+                case .mediumInvalid:
+                    self =  FailedCheckIn(.invalid, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    return
+                case .mediumExists:
+                    self =  FailedCheckIn(.invalid, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    return
+                case .alreadyExchanged:
+                    self =  FailedCheckIn(.exchanged, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    return
+                case .exchangeOffline:
+                    self =  FailedCheckIn(.exchange, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
+                    return
                 case .unknown:
                     self = FailedCheckIn(.error, slug, checkInListIdentifier, checkInType, rawCode, response, event: event)
                     return
@@ -180,4 +195,6 @@ enum FailedCheckInErrorReason: String, Hashable, CaseIterable, Codable {
     case blocked
     case invalidTime = "invalid_time"
     case unapproved
+    case exchange
+    case exchanged = "already_exchanged"
 }

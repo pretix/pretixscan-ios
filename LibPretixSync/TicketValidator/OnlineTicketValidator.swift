@@ -119,7 +119,13 @@ public class OnlineTicketValidator: TicketValidator {
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]? = nil,
                        as type: String,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        configStore.apiClient?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid,
+        let secret = InputUtils.cleanInput(secret)
+        guard let apiClient = configStore.apiClient else {
+            completionHandler(nil, APIError.notConfigured(message: "No APIClient is set"))
+            return
+        }
+
+        apiClient.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid,
                                       answers: answers, as: type) { redemptionResponse, error in
             guard var redemptionResponse = redemptionResponse else {
                 completionHandler(nil, error)

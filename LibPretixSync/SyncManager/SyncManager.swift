@@ -204,10 +204,18 @@ public class SyncManager {
             let partialOrders = PartialOrderDownloader(apiClient: apiClient, dataStore: dataStore, event: event,
                                                        checkInList: checkInList, disableTestMode: true)
             partialOrders.addDependency(fullOrders)
-            
-            allSyncOperations.append(contentsOf: [fullOrders, partialOrders])
+
+            let media = ReusableMediaDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+            media.addDependency(partialOrders)
+
+            allSyncOperations.append(contentsOf: [fullOrders, partialOrders, media])
         }
-        
+
+        let eventSettings = EventSettingsDownloader(apiClient: apiClient, dataStore: dataStore, event: event, checkInList: checkInList)
+        eventSettings.addDependency(events)
+
+        allSyncOperations.append(eventSettings)
+
         allSyncOperations.forEach { queue.addOperation($0) }
         
         // Cleanup

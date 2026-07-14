@@ -20,7 +20,8 @@ final class RedeemTicketViewModel: ObservableObject {
     
     /// Gets the current scanning mode of the app - entry or exit
     private var scanMode: String {
-        configStore!.scanMode
+        assert(configStore != nil, "configStore must be set before accessing scanMode")
+        return configStore?.scanMode ?? "entry"
     }
     
     private var isExitMode: Bool {
@@ -39,14 +40,22 @@ final class RedeemTicketViewModel: ObservableObject {
     
     @MainActor
     private func announceResult(_ redemptionResponse: RedemptionResponse?, _ error: Error?) {
+        guard let configStore, let checkInList = configStore.checkInList, let ticketValidator = configStore.ticketValidator else {
+            assertionFailure("configStore, checkInList and ticketValidator must be set before announcing a result")
+            announcement = TicketStatusAnnouncement(nil, error ?? APIError.notConfigured(message: "No CheckInList is set"), isExitMode, false, isOffline: true)
+            self.isLoading = false
+            startCountDown()
+            return
+        }
+
         // visual announcement
-        announcement = TicketStatusAnnouncement(redemptionResponse, error, isExitMode, configStore!.checkInList!.includePending, isOffline: configStore!.ticketValidator!.isOnline != true)
-        
+        announcement = TicketStatusAnnouncement(redemptionResponse, error, isExitMode, checkInList.includePending, isOffline: ticketValidator.isOnline != true)
+
         // haptic and sound announcements
         if !unpaidAreIgnored {
-            configStore!.feedbackGenerator.announce(redemptionResponse: redemptionResponse, error, isExitMode)
+            configStore.feedbackGenerator.announce(redemptionResponse: redemptionResponse, error, isExitMode)
         }
-        
+
         self.isLoading = false
         startCountDown()
     }
@@ -79,9 +88,15 @@ final class RedeemTicketViewModel: ObservableObject {
         isLoading = true
         askingQuestions = false
         
+        guard let ticketValidator = configStore?.ticketValidator else {
+            assertionFailure("configStore and ticketValidator must be set before redeeming")
+            announceResult(nil, APIError.notConfigured(message: "No TicketValidator is set"))
+            return
+        }
+
         let config = TicketStatusConfiguration(secret: secret, force: forcedRedeem, ignoreUnpaid: unpaidAreIgnored, answers: questionAnswers)
         do {
-            let redemptionResponse = try await configStore!.ticketValidator!.redeem(configuration: config, as: scanMode)
+            let redemptionResponse = try await ticketValidator.redeem(configuration: config, as: scanMode)
             if let redemptionResponse, redemptionResponse.status == .incomplete {
                 // we need to ask questions
                 stopCountDown()

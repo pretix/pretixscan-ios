@@ -1,0 +1,20 @@
+{
+  "id": 27,
+  "organizer": "mtrmt",
+  "created": "2026-05-08T10:00:05.758077Z",
+  "updated": "2026-05-08T10:07:20.207322Z",
+  "type": "barcode",
+  "identifier": "1111",
+  "claim_token": null,
+  "label": null,
+  "active": true,
+  "expires": null,
+  "customer": null,
+  "linked_orderpositions": [18697, 18698],
+  "linked_giftcard": null,
+  "info": {
+
+  },
+  "notes": "Zwei Tickets mit überlappender Gültigkeit in gleicher Veranstaltung",
+  "linked_orderposition": null
+}

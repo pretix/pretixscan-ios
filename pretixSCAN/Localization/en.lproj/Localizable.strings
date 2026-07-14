@@ -388,3 +388,24 @@
 "First entry:" = "First entry:";
 "Last entry:" = "Last entry:";
 "Scanned:" = "Scanned:";
+
+/* No comment provided by engineer. */
+"Medium Exchange Needed" = "Medium Exchange Needed";
+
+/* No comment provided by engineer. */
+"This ticket must be exchanged for a reusable medium. This version of pretixSCAN cannot perform the exchange." = "This ticket must be exchanged for a reusable medium. This version of pretixSCAN cannot perform the exchange.";
+
+/* No comment provided by engineer. */
+"Ticket already exchanged" = "Ticket already exchanged";
+
+/* Ticket is already exchanged for a reusable medium */
+"Already Exchanged" = "Already Exchanged";
+
+/* Scanned reusable medium is invalid */
+"Reusable medium invalid" = "Reusable medium invalid";
+
+/* Scanned reusable medium already exists */
+"Reusable medium already exists" = "Reusable medium already exists";
+
+/* Ticket needs to be exchanged for a reusable medium while offline */
+"This ticket needs to be exchanged, but this isn't possible while offline" = "This ticket needs to be exchanged, but this isn't possible while offline";

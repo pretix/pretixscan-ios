@@ -228,7 +228,7 @@ class PXSecurityProfileTests: XCTestCase {
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/checkinlists/123/positions/abc1234/redeem/", method: "POST", profile: .pretixscan, expectedName: "api-v1:checkinlistpos-redeem")
         
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/revokedsecrets/", method: "GET", profile: .pretixscan, expectedName: "api-v1:revokedsecrets-list")
-        
+
         assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orders/", method: "GET", profile: .pretixscan, expectedName: "api-v1:order-list")
     }
     
@@ -266,5 +266,23 @@ class PXSecurityProfileTests: XCTestCase {
         
         // NOT ALLOWED
         assertUrlInProfile(is: false, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/orders/", method: "GET", profile: .noOrders, expectedName: "api-v1:order-list")
+    }
+
+    /// Reusable media sync is only allowed for the `pretixscan` (offline) profile, matching the server-side profiles.
+    func testReusableMediumListSecurityProfile() {
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/reusablemedia/", method: "GET", profile: .pretixscan, expectedName: "api-v1:reusablemedium-list")
+
+        assertUrlInProfile(is: false, url: "https://pretix.eu/api/v1/organizers/iosdemo/reusablemedia/", method: "GET", profile: .noOrders, expectedName: "api-v1:reusablemedium-list")
+
+        assertUrlInProfile(is: false, url: "https://pretix.eu/api/v1/organizers/iosdemo/reusablemedia/", method: "GET", profile: .kiosk, expectedName: "api-v1:reusablemedium-list")
+    }
+
+    /// Event settings sync is only allowed for the `pretixscan` (offline) profile, matching the server-side profiles.
+    func testEventSettingsSecurityProfile() {
+        assertUrlInProfile(is: true, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/settings/", method: "GET", profile: .pretixscan, expectedName: "api-v1:event-settings")
+
+        assertUrlInProfile(is: false, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/settings/", method: "GET", profile: .noOrders, expectedName: "api-v1:event-settings")
+
+        assertUrlInProfile(is: false, url: "https://pretix.eu/api/v1/organizers/iosdemo/events/democon/settings/", method: "GET", profile: .kiosk, expectedName: "api-v1:event-settings")
     }
 }

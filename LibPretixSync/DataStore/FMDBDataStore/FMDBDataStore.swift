@@ -180,7 +180,17 @@ public class FMDBDataStore: DataStore {
             EventValidKey.store(validKeys, eventSlug: event.slug, in: queue)
             return
         }
-        
+
+        if let media = resources as? [ReusableMedium] {
+            ReusableMedium.store(media, in: queue)
+            return
+        }
+
+        if let settings = resources as? [EventSettings] {
+            EventSettings.store(settings, in: queue)
+            return
+        }
+
         EventLogger.log(event: "Don't know how to store \(T.humanReadableName)", category: .offlineDownload, level: .warning, type: .fault)
     }
 }
@@ -288,6 +298,31 @@ extension FMDBDataStore {
         let queue = databaseQueue(with: event)
         return Order.getOrder(by: code, in: queue)
     }
+
+    public func getReusableMedium(identifier: String, type: String, in event: Event) -> ReusableMedium? {
+        let queue = databaseQueue(with: event)
+        return ReusableMedium.get(identifier: identifier, type: type, in: queue)
+    }
+
+    public func getReusableMediumForCheckIn(identifier: String, type: String, in event: Event) -> ReusableMedium? {
+        let queue = databaseQueue(with: event)
+        return ReusableMedium.getForCheckIn(identifier: identifier, type: type, in: queue)
+    }
+
+    public func getOrderPositions(linkedToMedium medium: ReusableMedium, in event: Event) -> [OrderPosition] {
+        let queue = databaseQueue(with: event)
+        return ReusableMedium.getOrderPositions(linkedToMedium: medium, in: queue)
+    }
+
+    public func getEventSettings(in event: Event) -> EventSettings? {
+        let queue = databaseQueue(with: event)
+        return EventSettings.get(in: queue)
+    }
+
+    public func hasReusableMedium(linkedToPosition orderPositionIdentifier: Identifier, in event: Event) -> Bool {
+        let queue = databaseQueue(with: event)
+        return ReusableMedium.hasLinkedMedium(orderPositionIdentifier: orderPositionIdentifier, in: queue)
+    }
     
     public func getCheckInListStatus(_ checkInList: CheckInList, in event: Event) -> Result<CheckInListStatus, Error> {
         let queue = databaseQueue(with: event)
@@ -349,7 +384,7 @@ extension FMDBDataStore {
     /// Will return `nil` if no orderposition with the specified secret is found
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
                        as type: String,
-                       in checkInList: CheckInList)
+                       in checkInList: CheckInList, mediumUsed: Bool)
     -> RedemptionResponse? {
         let queue = databaseQueue(with: event)
         
@@ -418,7 +453,7 @@ extension FMDBDataStore {
         
         guard var redemptionResponse = orderPosition.createRedemptionResponse(
             force: force, ignoreUnpaid: ignoreUnpaid,
-            in: event, in: checkInList, as: type, with: questions, dataStore: self) else { return nil }
+            in: event, in: checkInList, as: type, with: questions, dataStore: self, mediumUsed: mediumUsed) else { return nil }
         
         guard redemptionResponse.status == .redeemed else {
             return RedemptionResponse

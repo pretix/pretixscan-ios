@@ -1,0 +1,19 @@
+{
+  "id": 42,
+  "organizer": "mtrmt",
+  "created": "2026-01-08T10:00:05.758077Z",
+  "updated": "2026-01-08T10:07:20.207322Z",
+  "type": "barcode",
+  "identifier": "5555",
+  "claim_token": null,
+  "label": null,
+  "active": true,
+  "expires": "2026-12-31T23:59:59Z",
+  "customer": "customer@example.org",
+  "linked_giftcard": null,
+  "info": {
+
+  },
+  "notes": "Legacy server without linked_orderpositions",
+  "linked_orderposition": 18699
+}

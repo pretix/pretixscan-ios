@@ -152,7 +152,8 @@ public class OfflineTicketValidator: TicketValidator {
     public func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                        as type: String,
                        completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        
+        let secret = InputUtils.cleanInput(secret)
+
         guard let event = configStore.event else {
             completionHandler(nil, APIError.notConfigured(message: "No Event is set"))
             return
@@ -176,21 +177,21 @@ public class OfflineTicketValidator: TicketValidator {
     }
     
     func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
-                as type: String,
+                as type: String, nowDate: Date = Date(),
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
-        
+
         // Redeem using DataStore
         // A QueuedRedemptionRequest will automatically be generated
         let response = configStore.dataStore?.redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
                                                      in: event, as: type, in: checkInList)
-        
+
         guard let dataStore = configStore.dataStore else {
             completionHandler(nil, APIError.notConfigured(message: "Redeeming without a nil datastore"))
             return
         }
-        
-        guard var response = response else {
-            // the order was not found in local storage, attempt dataless flow
+
+        guard var response = response ?? redeemUsingReusableMedium(checkInList, event, secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, dataStore: dataStore, nowDate: nowDate) else {
+            // neither a ticket secret nor a reusable medium identifier was found in local storage, attempt dataless flow
             DatalessTicketValidator(dataStore: dataStore).redeem(checkInList, event, secret, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, completionHandler: completionHandler)
             return
         }
@@ -234,5 +235,39 @@ public class OfflineTicketValidator: TicketValidator {
 
         completionHandler(response, nil)
         configStore.syncManager.beginSyncingIfAutoSync()
+    }
+
+    /// Resolves a scanned barcode as a reusable medium identifier and redeems the order position linked to it.
+    ///
+    /// - Returns: `nil` if `secret` does not match a known medium with linked positions in this event, in which
+    ///   case the caller should fall back to the dataless flow. Otherwise a definitive `RedemptionResponse`.
+    private func redeemUsingReusableMedium(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool,
+                                           answers: [Answer]?, as type: String, dataStore: DataStore, nowDate: Date) -> RedemptionResponse? {
+        guard let medium = dataStore.getReusableMediumForCheckIn(identifier: secret, type: "barcode", in: event) else {
+            return nil
+        }
+
+        guard medium.active else {
+            return .invalid
+        }
+
+        if let expires = medium.expires, expires < nowDate {
+            return .invalid
+        }
+
+        let linkedPositions = dataStore.getOrderPositions(linkedToMedium: medium, in: event)
+        guard let selection = ReusableMediumPositionSelector.select(from: linkedPositions, nowDate: nowDate) else {
+            return nil
+        }
+
+        switch selection {
+        case .ambiguous:
+            return .ambiguous
+        case .invalidTime(let position):
+            return .invalidTime(with: position)
+        case .position(let position):
+            return dataStore.redeem(secret: position.secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
+                                    in: event, as: type, in: checkInList, mediumUsed: true) ?? .invalid
+        }
     }
 }

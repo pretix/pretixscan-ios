@@ -61,14 +61,18 @@ public struct RedemptionRequest: Model {
     
     public let type: String
 
+    /// Type of source the secret was obtained from, e.g. "barcode" or "nfc_uid". Defaults to "barcode".
+    public var sourceType: String = "barcode"
+
     init(questionsSupported: Bool = true, date: Date?, force: Bool = false, ignoreUnpaid: Bool, nonce: String,
-         answers: [Answer]? = nil, type: String) {
+         answers: [Answer]? = nil, type: String, sourceType: String = "barcode") {
         self.questionsSupported = questionsSupported
         self.date = date
         self.force = force
         self.ignoreUnpaid = ignoreUnpaid
         self.nonce = nonce
         self.type = type
+        self.sourceType = sourceType
 
         guard let answers = answers else {
             self.answers = nil
@@ -95,7 +99,33 @@ public struct RedemptionRequest: Model {
         case type
         case nonce
         case answers
+        case sourceType = "source_type"
+    }
 
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        questionsSupported = try container.decodeIfPresent(Bool.self, forKey: .questionsSupported) ?? true
+        canceledSupported = try container.decodeIfPresent(Bool.self, forKey: .canceledSupported) ?? true
+        date = try container.decodeIfPresent(Date.self, forKey: .date)
+        force = try container.decodeIfPresent(Bool.self, forKey: .force) ?? false
+        ignoreUnpaid = try container.decode(Bool.self, forKey: .ignoreUnpaid)
+        nonce = try container.decode(String.self, forKey: .nonce)
+        answers = try container.decodeIfPresent([String: String].self, forKey: .answers)
+        type = try container.decode(String.self, forKey: .type)
+        sourceType = try container.decodeIfPresent(String.self, forKey: .sourceType) ?? "barcode"
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(questionsSupported, forKey: .questionsSupported)
+        try container.encode(canceledSupported, forKey: .canceledSupported)
+        try container.encodeIfPresent(date, forKey: .date)
+        try container.encode(force, forKey: .force)
+        try container.encode(ignoreUnpaid, forKey: .ignoreUnpaid)
+        try container.encode(nonce, forKey: .nonce)
+        try container.encodeIfPresent(answers, forKey: .answers)
+        try container.encode(type, forKey: .type)
+        try container.encode(sourceType, forKey: .sourceType)
     }
 }
 

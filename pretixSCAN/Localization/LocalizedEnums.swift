@@ -48,6 +48,14 @@ extension RedemptionResponse.ErrorReason {
             return NSLocalizedString("Invalid time", comment: "Invalid time (ticket signature)")
         case .unapproved:
             return NSLocalizedString("Order not approved", comment: "")
+        case .alreadyExchanged:
+            return NSLocalizedString("Already Exchanged", comment: "Ticket is already exchanged for a reusable medium")
+        case .mediumInvalid:
+            return NSLocalizedString("Reusable medium invalid", comment: "Scanned reusable medium is invalid")
+        case .mediumExists:
+            return NSLocalizedString("Reusable medium already exists", comment: "Scanned reusable medium already exists")
+        case .exchangeOffline:
+            return NSLocalizedString("This ticket needs to be exchanged, but this isn't possible while offline", comment: "Ticket needs to be exchanged for a reusable medium while offline")
         case .unknown:
             return NSLocalizedString("Invalid", comment: "Unrecognized check-in error reason")
         }

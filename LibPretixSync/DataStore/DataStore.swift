@@ -48,7 +48,23 @@ public protocol DataStore: DatalessDataStore {
     
     /// Retrieve an `Order` instance with the specified identifier, is such an Order exists
     func getOrder(by code: String, in event: Event) -> Order?
-    
+
+    /// Retrieve a `ReusableMedium` instance matching the specified identifier and type, if such a medium exists
+    func getReusableMedium(identifier: String, type: String, in event: Event) -> ReusableMedium?
+
+    /// Retrieve a `ReusableMedium` instance matching the specified identifier and type, restricted to media
+    /// that have at least one `OrderPosition` linked within this event
+    func getReusableMediumForCheckIn(identifier: String, type: String, in event: Event) -> ReusableMedium?
+
+    /// Retrieve all `OrderPosition`s linked to the specified `ReusableMedium`
+    func getOrderPositions(linkedToMedium medium: ReusableMedium, in event: Event) -> [OrderPosition]
+
+    /// Retrieve the event's `EventSettings`, if previously synced
+    func getEventSettings(in event: Event) -> EventSettings?
+
+    /// Returns whether any `ReusableMedium` is linked to the specified `OrderPosition`
+    func hasReusableMedium(linkedToPosition orderPositionIdentifier: Identifier, in event: Event) -> Bool
+
     /// Retrieve all CheckIns for the specified `OrderPosition`
     func getCheckIns(for orderPosition: OrderPosition, in event: Event) -> [CheckIn]
     
@@ -67,7 +83,7 @@ public protocol DataStore: DatalessDataStore {
     /// - See `RedemptionResponse` for the response returned in the completion handler.
     func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
                 as type: String,
-                in checkInList: CheckInList) -> RedemptionResponse?
+                in checkInList: CheckInList, mediumUsed: Bool) -> RedemptionResponse?
     
     /// Return a `QueuedRedemptionRequest` instance that has not yet been uploaded to the server
     func getRedemptionRequest() -> QueuedRedemptionRequest?
@@ -83,4 +99,13 @@ public protocol DataStore: DatalessDataStore {
     
     /// Remove a `FailedCheckIn` instance from the database
     func delete(failedCheckInRowId: Int)
+}
+
+public extension DataStore {
+    /// Convenience overload of `redeem(secret:force:ignoreUnpaid:answers:in:as:in:mediumUsed:)` defaulting `mediumUsed` to `false`.
+    func redeem(secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?, in event: Event,
+                as type: String,
+                in checkInList: CheckInList) -> RedemptionResponse? {
+        redeem(secret: secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers, in: event, as: type, in: checkInList, mediumUsed: false)
+    }
 }

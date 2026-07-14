@@ -130,7 +130,8 @@ public struct OrderPosition: Model {
     /// @Note Note that the order position needs to be pre-filled with all its check-ins, items and order. See `FMDBDataStore.swift`'s
     ///       `redeem` function as an example.
     public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList, as type: String = "entry",
-                                         with questions: [Question] = [], dataStore: DataStore? = nil, nowDate: Date = Date()) -> RedemptionResponse? {
+                                         with questions: [Question] = [], dataStore: DataStore? = nil, nowDate: Date = Date(),
+                                         mediumUsed: Bool = false) -> RedemptionResponse? {
         // Check if this ticket is for the correct sub event
         guard (checkInList.subEvent == nil || self.subEvent == checkInList.subEvent) else {
             return nil
@@ -175,6 +176,17 @@ public struct OrderPosition: Model {
         let shouldIgnoreUnpaid = (ignoreUnpaid && checkInList.includePending) || order?.validIfPending == true
         if status == .pending, !shouldIgnoreUnpaid {
             return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
+        }
+
+        if let item = self.item, item.mediaPolicy != .none, item.mediaType != .none, !mediumUsed {
+            let hasLinkedReusableMedium = dataStore?.hasReusableMedium(linkedToPosition: self.identifier, in: event) ?? false
+            if !hasLinkedReusableMedium {
+                return RedemptionResponse(status: .error, reasonExplanation: nil,
+                                          errorReason: .exchangeOffline, position: self, lastCheckIn: nil, questions: nil, answers: nil)
+            } else if dataStore?.getEventSettings(in: event)?.reusableMediaUsageEnforced == true {
+                return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .alreadyExchanged, position: self,
+                                          lastCheckIn: nil, questions: nil, answers: nil)
+            }
         }
 
         let lastCheckin = self.checkins.sorted { (a, b) -> Bool in

@@ -112,6 +112,12 @@ public struct Item: Model {
     /// Definition of bundles that are included in this item
     public let bundles: [ItemBundle]
 
+    /// How reusable media are handled for check-ins of this item. Defaults to `.none`.
+    public let mediaPolicy: MediaPolicy
+
+    /// The type of reusable medium required by this item. Defaults to `.none`.
+    public let mediaType: ReusableMediaType
+
     private enum CodingKeys: String, CodingKey {
         case identifier = "id"
         case name
@@ -144,6 +150,48 @@ public struct Item: Model {
         case addons
         case bundles
         case checkInText = "checkin_text"
+        case mediaPolicy = "media_policy"
+        case mediaType = "media_type"
+    }
+
+}
+
+extension Item {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        identifier = try container.decode(Identifier.self, forKey: .identifier)
+        name = try container.decode(MultiLingualString.self, forKey: .name)
+        internalName = try container.decodeIfPresent(String.self, forKey: .internalName)
+        defaultPrice = try container.decode(Money.self, forKey: .defaultPrice)
+        categoryIdentifier = try container.decodeIfPresent(Identifier.self, forKey: .categoryIdentifier)
+        active = try container.decode(Bool.self, forKey: .active)
+        description = try container.decodeIfPresent(MultiLingualString.self, forKey: .description)
+        freePrice = try container.decode(Bool.self, forKey: .freePrice)
+        taxRate = try container.decode(String.self, forKey: .taxRate)
+        taxRuleIdentifier = try container.decodeIfPresent(Identifier.self, forKey: .taxRuleIdentifier)
+        admission = try container.decode(Bool.self, forKey: .admission)
+        position = try container.decode(Int.self, forKey: .position)
+        picture = try container.decodeIfPresent(String.self, forKey: .picture)
+        salesChannels = try container.decode([String].self, forKey: .salesChannels)
+        availableFrom = try container.decodeIfPresent(Date.self, forKey: .availableFrom)
+        availableUntil = try container.decodeIfPresent(Date.self, forKey: .availableUntil)
+        requireVoucher = try container.decode(Bool.self, forKey: .requireVoucher)
+        hideWithoutVoucher = try container.decode(Bool.self, forKey: .hideWithoutVoucher)
+        allowCancel = try container.decode(Bool.self, forKey: .allowCancel)
+        minPerOrder = try container.decodeIfPresent(Int.self, forKey: .minPerOrder)
+        maxPerOrder = try container.decodeIfPresent(Int.self, forKey: .maxPerOrder)
+        checkInAttention = try container.decode(Bool.self, forKey: .checkInAttention)
+        originalPrice = try container.decodeIfPresent(Money.self, forKey: .originalPrice)
+        requireApproval = try container.decode(Bool.self, forKey: .requireApproval)
+        requireBundling = try container.decode(Bool.self, forKey: .requireBundling)
+        generateTickets = try container.decodeIfPresent(Bool.self, forKey: .generateTickets)
+        checkInText = try container.decodeIfPresent(String.self, forKey: .checkInText)
+        hasVariations = try container.decode(Bool.self, forKey: .hasVariations)
+        variations = try container.decode([ItemVariation].self, forKey: .variations)
+        addons = try container.decode([ItemAddon].self, forKey: .addons)
+        bundles = try container.decode([ItemBundle].self, forKey: .bundles)
+        mediaPolicy = try container.decodeIfPresent(MediaPolicy.self, forKey: .mediaPolicy) ?? .none
+        mediaType = try container.decodeIfPresent(ReusableMediaType.self, forKey: .mediaType) ?? .none
     }
 }
 

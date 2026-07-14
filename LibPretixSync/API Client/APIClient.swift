@@ -23,8 +23,8 @@ public final class APIClient {
     private var configStore: ConfigStore
     
     private let jsonEncoder = JSONEncoder.iso8601withFractionsEncoder
-    private let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
-    private let session = URLSession.shared
+    let jsonDecoder = JSONDecoder.iso8601withFractionsDecoder
+    let session = URLSession.shared
     
     /// A previously fired off search task, so we cancel it if a new task is fired before this one is completed.
     private var previousSearchTask: URLSessionDataTask?
@@ -382,28 +382,30 @@ public extension APIClient {
         if lastUpdated != nil {
             queryItems.append(URLQueryItem(name: "modified_since", value: lastUpdated))
         }
-        
+
         let isFullFetch = lastUpdated == nil
         if isFullFetch {
             queryItems.append(URLQueryItem(name: "ordering", value: "datetime"))
         } else {
             queryItems.append(URLQueryItem(name: "ordering", value: "-last_modified"))
         }
-        
+
         for filter in filters {
             queryItems.append(URLQueryItem(name: filter.key, value: filter.value))
         }
         urlComponents?.queryItems = queryItems
-        
-        // Fix a missing feature in URLComponents where the "+" is not encoded correctly
-        // https://www.djackson.org/why-we-do-not-use-urlcomponents/
-        let percentEncodedURLQuery = urlComponents!.percentEncodedQuery!
-        // manually encode + into percent encoding
+
+        return APIClient.fixPlusEncoding(urlComponents)
+    }
+
+    /// Fix a missing feature in URLComponents where the "+" is not encoded correctly
+    /// https://www.djackson.org/why-we-do-not-use-urlcomponents/
+    static func fixPlusEncoding(_ urlComponents: URLComponents?) -> URLComponents? {
+        var urlComponents = urlComponents
+        guard let percentEncodedURLQuery = urlComponents?.percentEncodedQuery else { return urlComponents }
+        urlComponents?.percentEncodedQuery = percentEncodedURLQuery
             .replacingOccurrences(of: "+", with: "%2B")
-        // optional, probably unnecessary: convert percent-encoded spaces into +
             .replacingOccurrences(of: "%20", with: "+")
-        urlComponents!.percentEncodedQuery = percentEncodedURLQuery
-        
         return urlComponents
     }
 }
@@ -765,6 +767,8 @@ public extension APIClient {
                     let redemptionResponse = try self.jsonDecoder.decode(RedemptionResponse.self, from: data!)
                     completionHandler(redemptionResponse, nil)
                 } catch let jsonError {
+                    logger.error("Failed to decode redemption response: \(String(describing: jsonError))")
+                    EventLogger.log(event: "Failed to decode redemption response: \(String(describing: jsonError))", category: .network, level: .error, type: .error)
                     completionHandler(nil, jsonError)
                     return
                 }
@@ -883,7 +887,7 @@ extension APIClient {
 }
 
 // MARK: - Creating Requests
-private extension APIClient {
+extension APIClient {
     func createURLRequest(for pathComponent: String) throws -> URLRequest {
         let url = try createURL(for: pathComponent)
         let urlRequest = try createURLRequest(for: url)

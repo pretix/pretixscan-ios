@@ -12,4 +12,8 @@ struct ApiResourcePath {
     static func eventDetail(organizer: String, event: String) -> String {
         return "organizers/\(organizer)/events/\(event)/"
     }
+
+    static func eventSettings(organizer: String, event: String) -> String {
+        return "organizers/\(organizer)/events/\(event)/settings/"
+    }
 }
