@@ -131,7 +131,7 @@ class FullDownloader<T: Model>: APIClientOperation {
                     self.dataStore.setLastSyncCreatedTime(creationTimeOfLastObject, of: T.self, in: self.event)
                 }
 
-                if isFirstPage, let generatedAt = pagedList.generatedAt {
+                if isFirstPage, let generatedAt = pagedList.generatedAt, lastSyncCreationTime == nil {
                     self.dataStore.setLastSyncModifiedTime(generatedAt, of: T.self, in: self.event)
                 }
 

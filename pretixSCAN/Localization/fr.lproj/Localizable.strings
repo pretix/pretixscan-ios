@@ -183,3 +183,5 @@
 "First entry:" = "Première entrée :";
 "Last entry:" = "Dernière entrée :";
 "Scanned:" = "Scanné :";
+"Camera Access Required" = "Accès à la caméra requis";
+"pretixSCAN needs access to your camera to scan tickets. You can grant access in Settings." = "pretixSCAN a besoin d'accéder à votre appareil photo pour scanner les billets. Vous pouvez lui accorder cet accès dans les Paramètres.";
