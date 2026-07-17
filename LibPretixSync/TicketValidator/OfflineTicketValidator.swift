@@ -244,26 +244,32 @@ public class OfflineTicketValidator: TicketValidator {
     private func redeemUsingReusableMedium(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool,
                                            answers: [Answer]?, as type: String, dataStore: DataStore, nowDate: Date) -> RedemptionResponse? {
         guard let medium = dataStore.getReusableMediumForCheckIn(identifier: secret, type: "barcode", in: event) else {
+            logger.debug("Reusable medium lookup found no linked medium for this event, falling back to dataless flow")
             return nil
         }
 
         guard medium.active else {
+            logger.debug("Reusable medium \(medium.identifier) is not active")
             return .invalid
         }
 
         if let expires = medium.expires, expires < nowDate {
+            logger.debug("Reusable medium \(medium.identifier) expired at \(expires)")
             return .invalid
         }
 
         let linkedPositions = dataStore.getOrderPositions(linkedToMedium: medium, in: event)
         guard let selection = ReusableMediumPositionSelector.select(from: linkedPositions, nowDate: nowDate) else {
+            logger.debug("Reusable medium \(medium.identifier) has no linked positions, falling back to dataless flow")
             return nil
         }
 
         switch selection {
         case .ambiguous:
+            logger.debug("Reusable medium \(medium.identifier) links multiple currently valid positions")
             return .ambiguous
         case .invalidTime(let position):
+            logger.debug("Reusable medium \(medium.identifier): linked position \(position.identifier) not valid at this time")
             return .invalidTime(with: position)
         case .position(let position):
             return dataStore.redeem(secret: position.secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
