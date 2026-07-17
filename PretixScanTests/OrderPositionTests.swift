@@ -125,8 +125,8 @@ class OrderPositionTests: XCTestCase {
             item: nil, variation: nil, price: "250.00", attendeeName: "Daniel Jilg", attendeeEmail: nil,
             secret: "xmwtyuq5rf3794hwudf7smr6zgmbez9y", subEvent: nil, pseudonymizationId: "DAC7ULNMUB",
             checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: nil, validFrom: nil, validUntil: nil)
-        
-        let order = Order(code: "ABC", status: .paid, secret: "ABC", email: nil, locale: nil, salesChannel: nil,
+
+        let order = Order(code: "ABC", status: .paid, secret: "ABC", email: nil, salesChannel: nil,
                           createdAt: nil, expiresAt: nil, lastModifiedAt: nil, total: nil, comment: nil,
                           checkInAttention: nil, positions: nil, requireApproval: nil, validIfPending: nil, checkInText: nil)
         

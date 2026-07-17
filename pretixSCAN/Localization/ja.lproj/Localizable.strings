@@ -125,3 +125,8 @@
 "There are no events to show" = "現在または将来のイベントは見つかりませんでした。イベントの日付とアクセス権を確認し、プルして更新してください。";
 "Gate" = "ゲート";
 "Order not approved" = "注文が承認されませんでした";
+"Camera Access Required" = "カメラへのアクセスが必要";
+"pretixSCAN needs access to your camera to scan tickets. You can grant access in Settings." = "pretixSCANはチケットをスキャンするために、カメラへのアクセスが必要です。設定でアクセスを許可できます。";
+"First entry:" = "最初のエントリー:";
+"Last entry:" = "最後のエントリー:";
+"Scanned:" = "スキャン済み:";

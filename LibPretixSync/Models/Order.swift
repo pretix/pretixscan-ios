@@ -25,9 +25,6 @@ public struct Order: Model {
     /// The customer email address
     public let email: String?
 
-    /// The locale used for communication with this customer
-    public let locale: RegionCode?
-
     /// Channel this sale was created through, such as `"web"`.
     public let salesChannel: String?
 
@@ -70,7 +67,6 @@ public struct Order: Model {
         case testMode = "testmode"
         case secret
         case email
-        case locale
         case salesChannel = "sales_channel"
         case createdAt = "datetime"
         case expiresAt = "expires"
@@ -92,7 +88,7 @@ public struct Order: Model {
     }
 
     static func stubOrder(code: String, status: Order.Status, secret: String) -> Order {
-        return Order(code: code, status: status, secret: secret, email: nil, locale: nil,
+        return Order(code: code, status: status, secret: secret, email: nil,
                      salesChannel: nil, createdAt: nil, expiresAt: nil, lastModifiedAt: nil,
                      total: nil, comment: nil, checkInAttention: nil, positions: nil,
                      requireApproval: nil, validIfPending: nil, checkInText: nil)

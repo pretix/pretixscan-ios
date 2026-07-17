@@ -19,7 +19,7 @@ class OrderTests: XCTestCase {
       "testmode": false,
       "secret": "24p7qnkvapqplr57",
       "email": null,
-      "locale": "en",
+      "locale": "unk-unknown_language_shouldnt_break_parsing",
       "payment_date": "2019-03-25",
       "payment_provider": "manual",
       "fees": [],
@@ -35,7 +35,7 @@ class OrderTests: XCTestCase {
     """.data(using: .utf8)!
 
     let exampleObject = Order(
-        code: "YFVJA", status: .paid, secret: "24p7qnkvapqplr57", email: nil, locale: .english,
+        code: "YFVJA", status: .paid, secret: "24p7qnkvapqplr57", email: nil,
         salesChannel: "resellers", createdAt: nil, expiresAt: nil, lastModifiedAt: nil,
         total: "250.00", comment: "", checkInAttention: nil, positions: [], requireApproval: false, validIfPending: nil, checkInText: nil)
 
