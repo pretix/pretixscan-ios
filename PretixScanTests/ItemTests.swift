@@ -165,9 +165,10 @@ class ItemTests: XCTestCase {
         }
     }
 
-    func testUnknownMediaPolicyDefaultsToNone() {
+    func testUnknownMediaPolicyDefaultsToUnsupportedAndGates() {
         let item = try! jsonDecoder.decode(Item.self, from: itemJSON(mediaPolicy: "some_future_policy"))
-        XCTAssertEqual(item.mediaPolicy, .none)
+        XCTAssertEqual(item.mediaPolicy, .unsupported)
+        XCTAssertNotEqual(item.mediaPolicy, .none)
     }
 
     func testUnknownMediaTypeDefaultsToUnsupported() {

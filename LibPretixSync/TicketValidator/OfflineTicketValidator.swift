@@ -192,7 +192,7 @@ public class OfflineTicketValidator: TicketValidator {
 
         guard var response = response ?? redeemUsingReusableMedium(checkInList, event, secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, dataStore: dataStore, nowDate: nowDate) else {
             // neither a ticket secret nor a reusable medium identifier was found in local storage, attempt dataless flow
-            DatalessTicketValidator(dataStore: dataStore).redeem(checkInList, event, secret, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, completionHandler: completionHandler)
+            DatalessTicketValidator(dataStore: dataStore).redeem(checkInList, event, secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers, as: type, completionHandler: completionHandler)
             return
         }
         
@@ -259,21 +259,30 @@ public class OfflineTicketValidator: TicketValidator {
         }
 
         let linkedPositions = dataStore.getOrderPositions(linkedToMedium: medium, in: event)
-        guard let selection = ReusableMediumPositionSelector.select(from: linkedPositions, nowDate: nowDate) else {
+        guard let selection = ReusableMediumPositionSelector.select(from: linkedPositions, checkInList: checkInList, nowDate: nowDate) else {
             logger.debug("Reusable medium \(medium.identifier) has no linked positions, falling back to dataless flow")
             return nil
         }
 
         switch selection {
-        case .ambiguous:
+        case .ambiguous(let position):
             logger.debug("Reusable medium \(medium.identifier) links multiple currently valid positions")
-            return .ambiguous
-        case .invalidTime(let position):
-            logger.debug("Reusable medium \(medium.identifier): linked position \(position.identifier) not valid at this time")
-            return .invalidTime(with: position)
+            let enrichedPosition = position.adding(order: dataStore.getOrder(by: position.orderCode, in: event))
+                .adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
+            return .ambiguous(with: enrichedPosition)
         case .position(let position):
+            // Wrong sub-event is rejected as 'product' unless forced (services/checkin.py:1062-1069)
+            if checkInList.subEvent != nil, position.subEvent != checkInList.subEvent, !force {
+                let enrichedPosition = position.adding(order: dataStore.getOrder(by: position.orderCode, in: event))
+                    .adding(item: dataStore.getItem(by: position.itemIdentifier, in: event))
+                return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, position: enrichedPosition,
+                                          lastCheckIn: nil, questions: nil, answers: nil)
+            }
+
+            // nil means the secret lookup found nothing, not a rejection
             return dataStore.redeem(secret: position.secret, force: force, ignoreUnpaid: ignoreUnpaid, answers: answers,
-                                    in: event, as: type, in: checkInList, mediumUsed: true) ?? .invalid
+                                    in: event, as: type, in: checkInList, mediumUsed: true)
+                ?? .invalid
         }
     }
 }

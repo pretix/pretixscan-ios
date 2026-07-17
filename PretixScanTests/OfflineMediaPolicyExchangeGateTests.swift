@@ -60,10 +60,10 @@ class OfflineMediaPolicyExchangeGateTests: XCTestCase {
             checkins: checkins, answers: [], seat: nil, requiresAttention: nil, blocked: nil, validFrom: nil, validUntil: nil)
     }
 
-    private func redeem(_ secret: String) -> RedemptionResponse? {
+    private func redeem(_ secret: String, force: Bool = false) -> RedemptionResponse? {
         var result: RedemptionResponse?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(checkInList, event, secret, force: false, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: Date(), completionHandler: { response, _ in
+        sut.redeem(checkInList, event, secret, force: force, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: Date(), completionHandler: { response, _ in
             result = response
             expectation.fulfill()
         })
@@ -154,6 +154,32 @@ class OfflineMediaPolicyExchangeGateTests: XCTestCase {
         XCTAssertEqual(response?.status, .error)
         XCTAssertEqual(response?.errorReason, .exchangeOffline)
         XCTAssertNotEqual(response?.errorReason, .alreadyRedeemed)
+    }
+
+    func testForcedScanWithoutLinkedMediumBypassesGate() {
+        let item = makeItem(mediaPolicy: .reuse, mediaType: .barcode)
+        dataStore.store([item], for: event)
+        let position = makePosition(identifier: 108, secret: "secret108")
+        dataStore.store([position], for: event)
+
+        let response = redeem("secret108", force: true)
+
+        XCTAssertEqual(response?.status, .redeemed)
+    }
+
+    func testForcedScanWithEnforcementOnBypassesGate() {
+        let item = makeItem(mediaPolicy: .reuse, mediaType: .barcode)
+        dataStore.store([item], for: event)
+        let position = makePosition(identifier: 109, secret: "secret109")
+        dataStore.store([position], for: event)
+        let medium = ReusableMedium(identifier: 909, type: "barcode", mediumIdentifier: "MED909", active: true,
+                                    expires: nil, customer: nil, linkedOrderPositions: [109], linkedGiftCard: nil)
+        dataStore.store([medium], for: event)
+        dataStore.store([EventSettings(reusableMediaUsageEnforced: true)], for: event)
+
+        let response = redeem("secret109", force: true)
+
+        XCTAssertEqual(response?.status, .redeemed)
     }
 
     func testMissingEventSettingsTreatedAsEnforcementFalse() {

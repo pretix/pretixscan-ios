@@ -8,70 +8,68 @@
 
 import Foundation
 
-/// Picks a single `OrderPosition` to redeem out of the positions linked to a scanned reusable medium.
-///
-/// Mirrors the position selection semantics of Android's `AsyncCheckProvider.filterPositions`.
+/// Picks a single `OrderPosition` to redeem out of the positions linked to a scanned reusable medium
+/// (server: api/views/checkin.py ~676-785).
 enum ReusableMediumPositionSelection {
     /// A single position was selected for redemption. It may still fail downstream checks.
     case position(OrderPosition)
-    /// More than one position is valid at `nowDate`, so the pick is ambiguous.
-    case ambiguous
-    /// More than one position is linked to the medium, none is currently valid, and `OrderPosition` is the
-    /// nearest candidate (future first, else past). Redemption must be refused as invalid_time directly.
-    case invalidTime(OrderPosition)
+    /// Still ambiguous after filtering; carries the first original candidate (server: `op_candidates[0]`).
+    case ambiguous(OrderPosition)
 }
 
 extension ReusableMediumPositionSelection: Equatable {
     static func == (lhs: ReusableMediumPositionSelection, rhs: ReusableMediumPositionSelection) -> Bool {
         switch (lhs, rhs) {
-        case (.ambiguous, .ambiguous):
-            return true
-        case (.ambiguous, .position), (.ambiguous, .invalidTime):
-            return false
-        case (.position, .ambiguous), (.position, .invalidTime):
-            return false
-        case (.invalidTime, .ambiguous), (.invalidTime, .position):
+        case (.ambiguous(let lhsPosition), .ambiguous(let rhsPosition)):
+            return lhsPosition.identifier == rhsPosition.identifier
+        case (.ambiguous, .position), (.position, .ambiguous):
             return false
         case (.position(let lhsPosition), .position(let rhsPosition)):
-            return lhsPosition.identifier == rhsPosition.identifier
-        case (.invalidTime(let lhsPosition), .invalidTime(let rhsPosition)):
             return lhsPosition.identifier == rhsPosition.identifier
         }
     }
 }
 
 enum ReusableMediumPositionSelector {
-    /// Selects a position to redeem out of the positions linked to a medium.
-    ///
-    /// - Returns: `nil` if `positions` is empty.
-    static func select(from positions: [OrderPosition], nowDate: Date = Date()) -> ReusableMediumPositionSelection? {
+    /// Selects a position to redeem; `nil` if `positions` is empty.
+    static func select(from positions: [OrderPosition], checkInList: CheckInList, nowDate: Date = Date()) -> ReusableMediumPositionSelection? {
         guard !positions.isEmpty else { return nil }
 
         if positions.count == 1 {
             return .position(positions[0])
         }
 
-        let currentlyValid = positions.filter { isValid(at: nowDate, position: $0) }
-        if currentlyValid.count == 1 {
-            return .position(currentlyValid[0])
-        }
-        if currentlyValid.count > 1 {
-            return .ambiguous
+        // server step 3b: product filter
+        var filtered = positions
+        if filtered.count > 1 {
+            filtered = filtered.filter { checkInList.allProducts || (checkInList.limitProducts?.contains($0.itemIdentifier) ?? false) }
         }
 
-        if let nearestFuture = nearestFuturePosition(in: positions, nowDate: nowDate) {
-            return .invalidTime(nearestFuture)
+        // server step 3c: validity window filter, validFrom inclusive
+        if filtered.count > 1 {
+            filtered = filtered.filter { isValid(at: nowDate, position: $0) }
         }
 
-        if let nearestPast = nearestPastPosition(in: positions, nowDate: nowDate) {
-            return .invalidTime(nearestPast)
+        if filtered.count == 1 {
+            return .position(filtered[0])
         }
 
-        return .ambiguous
+        if filtered.isEmpty {
+            // server fallback: nearest future, else latest past, else first
+            if let nearestFuture = nearestFuturePosition(in: positions, nowDate: nowDate) {
+                return .position(nearestFuture)
+            }
+            if let nearestPast = nearestPastPosition(in: positions, nowDate: nowDate) {
+                return .position(nearestPast)
+            }
+            return .position(positions[0])
+        }
+
+        return .ambiguous(positions[0])
     }
 
     private static func isValid(at nowDate: Date, position: OrderPosition) -> Bool {
-        let validFromOk = position.validFrom == nil || position.validFrom! < nowDate
+        let validFromOk = position.validFrom == nil || position.validFrom! <= nowDate
         let validUntilOk = position.validUntil == nil || position.validUntil! > nowDate
         return validFromOk && validUntilOk
     }
@@ -88,15 +86,15 @@ enum ReusableMediumPositionSelector {
         return nearest
     }
 
-    /// Returns the last already-expired position in `positions`, mirroring Android's tie-break.
+    /// Returns the latest already-expired position.
     private static func nearestPastPosition(in positions: [OrderPosition], nowDate: Date) -> OrderPosition? {
         var nearest: OrderPosition?
         for position in positions {
             guard let validUntil = position.validUntil else { continue }
             if validUntil < nowDate {
-                nearest = position
-            } else if let nearestValidUntil = nearest?.validUntil, validUntil > nearestValidUntil {
-                nearest = position
+                if nearest == nil || validUntil > nearest!.validUntil! {
+                    nearest = position
+                }
             }
         }
         return nearest

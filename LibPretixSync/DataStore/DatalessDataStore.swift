@@ -45,4 +45,7 @@ public protocol DatalessDataStore: AnyObject {
     
     /// Retrieve a subevent by id
     func getSubEvent(id: Identifier, for event: Event) -> Result<SubEvent?, Error>
+
+    /// Retrieve the event's `EventSettings`, if previously synced
+    func getEventSettings(in event: Event) -> EventSettings?
 }

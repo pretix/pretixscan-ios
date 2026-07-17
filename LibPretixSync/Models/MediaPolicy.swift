@@ -10,7 +10,7 @@ import Foundation
 
 /// Determines how reusable media are handled for check-ins of an `Item`.
 public enum MediaPolicy: String, Codable, UnknownCase {
-    public static var unknownCase = MediaPolicy.none
+    public static var unknownCase = MediaPolicy.unsupported
 
     case none
     case new
@@ -18,4 +18,5 @@ public enum MediaPolicy: String, Codable, UnknownCase {
     case reuseOrNew = "reuse_or_new"
     case append
     case appendOrNew = "append_or_new"
+    case unsupported
 }

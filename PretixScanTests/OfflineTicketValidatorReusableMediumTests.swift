@@ -60,10 +60,10 @@ class OfflineTicketValidatorReusableMediumTests: XCTestCase {
             checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: nil, validFrom: validFrom, validUntil: validUntil)
     }
 
-    private func redeem(_ secret: String, in list: CheckInList? = nil, as type: String = "entry", nowDate: Date = Date()) -> RedemptionResponse? {
+    private func redeem(_ secret: String, in list: CheckInList? = nil, force: Bool = false, as type: String = "entry", nowDate: Date = Date()) -> RedemptionResponse? {
         var result: RedemptionResponse?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(list ?? checkInList, event, secret, force: false, ignoreUnpaid: false, answers: nil, as: type, nowDate: nowDate, completionHandler: { response, _ in
+        sut.redeem(list ?? checkInList, event, secret, force: force, ignoreUnpaid: false, answers: nil, as: type, nowDate: nowDate, completionHandler: { response, _ in
             result = response
             expectation.fulfill()
         })
@@ -148,6 +148,7 @@ class OfflineTicketValidatorReusableMediumTests: XCTestCase {
         XCTAssertEqual(response2?.position?.identifier, 3336)
     }
 
+    /// Entry scan in the gap fails invalid_time downstream, not in the selector.
     func testGapBetweenWindowsUsesNearestFutureThenInvalidTime() {
         let now = Date()
         let positionA = makePosition(identifier: 7776, secret: "secret7776",
@@ -170,7 +171,8 @@ class OfflineTicketValidatorReusableMediumTests: XCTestCase {
         XCTAssertEqual(afterAllResponse?.position?.identifier, 7777)
     }
 
-    func testExitScanInGapBetweenWindowsIsInvalidTimeNotRedeemed() {
+    /// Exit scans skip validity checks, so the fallback candidate is redeemed.
+    func testExitScanInGapBetweenWindowsIsRedeemed() {
         let now = Date()
         let positionA = makePosition(identifier: 7778, secret: "secret7778",
                                      validFrom: now.addingTimeInterval(-7200), validUntil: now.addingTimeInterval(-3600))
@@ -183,8 +185,7 @@ class OfflineTicketValidatorReusableMediumTests: XCTestCase {
 
         let response = redeem("7779", as: "exit", nowDate: now)
 
-        XCTAssertEqual(response?.status, .error)
-        XCTAssertEqual(response?.errorReason, .invalidTime)
+        XCTAssertEqual(response?.status, .redeemed)
         XCTAssertEqual(response?.position?.identifier, 7779)
     }
 
@@ -206,7 +207,8 @@ class OfflineTicketValidatorReusableMediumTests: XCTestCase {
         XCTAssertEqual(response?.errorReason, .invalid)
     }
 
-    func testSecondRedeemNilBecauseOfSubEventMismatchIsInvalid() {
+    /// Wrong-subevent medium scan is rejected as 'product'.
+    func testSecondRedeemNilBecauseOfSubEventMismatchIsProduct() {
         let position = makePosition(identifier: 9999, secret: "secret9999")
         dataStore.store([position], for: event)
         let medium = ReusableMedium(identifier: 9999, type: "barcode", mediumIdentifier: "9999", active: true,
@@ -219,8 +221,70 @@ class OfflineTicketValidatorReusableMediumTests: XCTestCase {
         let response = redeem("9999", in: listWithSubEvent)
 
         XCTAssertEqual(response?.status, .error)
-        XCTAssertEqual(response?.errorReason, .invalid)
-        XCTAssertNil(response?.position)
+        XCTAssertEqual(response?.errorReason, .product)
+        XCTAssertEqual(response?.position?.identifier, 9999)
+    }
+
+    /// Force bypasses the subevent check (services/checkin.py:1062).
+    func testForcedRedeemOnSubEventMismatchIsRedeemed() {
+        let position = makePosition(identifier: 9998, secret: "secret9998")
+        dataStore.store([position], for: event)
+        let medium = ReusableMedium(identifier: 9998, type: "barcode", mediumIdentifier: "9998", active: true,
+                                    expires: nil, customer: nil, linkedOrderPositions: [9998], linkedGiftCard: nil)
+        dataStore.store([medium], for: event)
+
+        let listWithSubEvent = try! JSONDecoder.iso8601withFractionsDecoder.decode(CheckInList.self, from: testFileContents("list4", "json"))
+        configStore.checkInList = listWithSubEvent
+
+        let response = redeem("9998", in: listWithSubEvent, force: true)
+
+        XCTAssertEqual(response?.status, .redeemed)
+        XCTAssertEqual(response?.position?.identifier, 9998)
+    }
+
+    func testAmbiguousResponseCarriesAPosition() {
+        let positionA = makePosition(identifier: 1113, secret: "secret1113a")
+        let positionB = makePosition(identifier: 1114, secret: "secret1113b")
+        dataStore.store([positionA, positionB], for: event)
+        let medium = ReusableMedium(identifier: 1113, type: "barcode", mediumIdentifier: "1113", active: true,
+                                    expires: nil, customer: nil, linkedOrderPositions: [1113, 1114], linkedGiftCard: nil)
+        dataStore.store([medium], for: event)
+
+        let response = redeem("1113")
+
+        XCTAssertEqual(response?.status, .error)
+        XCTAssertEqual(response?.errorReason, .ambiguous)
+        XCTAssertEqual(response?.position?.identifier, 1113)
+    }
+
+    /// The carried ambiguous position is item-enriched so `checkInAttention` is populated.
+    func testAmbiguousResponseCarriesCheckInAttentionFromTheFirstCandidatesItem() {
+        let attentionItem = Item(identifier: 2, name: MultiLingualString.english("Attention ticket"), internalName: nil, defaultPrice: "23.00",
+                                 categoryIdentifier: nil, active: true, description: nil, freePrice: false, taxRate: "0.00", taxRuleIdentifier: nil,
+                                 admission: true, position: 0, picture: nil, salesChannels: ["web"], availableFrom: nil, availableUntil: nil,
+                                 requireVoucher: false, hideWithoutVoucher: false, allowCancel: true, minPerOrder: nil, maxPerOrder: nil,
+                                 checkInAttention: true, originalPrice: nil, requireApproval: false, requireBundling: false, generateTickets: nil,
+                                 checkInText: nil, hasVariations: false, variations: [], addons: [], bundles: [],
+                                 mediaPolicy: .none, mediaType: .none)
+        dataStore.store([attentionItem], for: event)
+
+        let positionA = OrderPosition(
+            identifier: 1115, orderCode: "W0JKM", orderStatus: .paid, order: nil, positionid: 1115, itemIdentifier: 2,
+            item: nil, variation: nil, price: "23.00", attendeeName: nil, attendeeEmail: nil,
+            secret: "secret1115a", subEvent: nil, pseudonymizationId: "PSEUDO1115",
+            checkins: [], answers: [], seat: nil, requiresAttention: nil, blocked: nil, validFrom: nil, validUntil: nil)
+        let positionB = makePosition(identifier: 1116, secret: "secret1115b")
+        dataStore.store([positionA, positionB], for: event)
+        let medium = ReusableMedium(identifier: 1115, type: "barcode", mediumIdentifier: "1115", active: true,
+                                    expires: nil, customer: nil, linkedOrderPositions: [1115, 1116], linkedGiftCard: nil)
+        dataStore.store([medium], for: event)
+
+        let response = redeem("1115")
+
+        XCTAssertEqual(response?.status, .error)
+        XCTAssertEqual(response?.errorReason, .ambiguous)
+        XCTAssertEqual(response?.position?.identifier, 1115)
+        XCTAssertEqual(response?.checkInAttention, true)
     }
 }
 

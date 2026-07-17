@@ -18,11 +18,11 @@ final class DatalessTicketValidator {
     }
     
     
-    func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, ignoreUnpaid: Bool, answers: [Answer]?,
+    func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, ignoreUnpaid: Bool, answers: [Answer]?,
                 as type: String, nowDate: Date = Date(),
                 completionHandler: @escaping (RedemptionResponse?, Error?) -> Void) {
         logger.debug("Attempting to redeem without data")
-        switch redeem(checkInList, event, secret, answers: answers, as: type, nowDate: nowDate) {
+        switch redeem(checkInList, event, secret, force: force, answers: answers, as: type, nowDate: nowDate) {
         case .success(let checkStatus):
             var response: RedemptionResponse
             switch checkStatus {
@@ -71,6 +71,11 @@ final class DatalessTicketValidator {
                 if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
                     dataStore?.store(failedCheckIn, for: event)
                 }
+            case .exchange:
+                response = RedemptionResponse.exchangeOffline
+                if let failedCheckIn = FailedCheckIn(response: response, error: nil, event.slug, checkInList.identifier, type, secret, event) {
+                    dataStore?.store(failedCheckIn, for: event)
+                }
             }
             completionHandler(response, nil)
         case .failure(let error):
@@ -78,7 +83,7 @@ final class DatalessTicketValidator {
         }
     }
     
-    private func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, answers: [Answer]?,
+    private func redeem(_ checkInList: CheckInList, _ event: Event, _ secret: String, force: Bool, answers: [Answer]?,
                         as type: String, nowDate: Date = Date()) -> Result<CheckStatus, Error> {
         
         
@@ -95,6 +100,13 @@ final class DatalessTicketValidator {
             }
             switch TicketProductChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, event: event) {
             case .success(let item):
+                if item.mediaPolicy != .none, item.mediaType != .none, !force {
+                    // Media linkage is unknowable without order data
+                    if dataStore.getEventSettings(in: event)?.reusableMediaUsageEnforced == true {
+                        return .success(CheckStatus.exchange)
+                    }
+                }
+
                 let variation = TicketVariationChecker(list: checkInList, dataStore: dataStore).redeem(ticket: signedTicket, item: item)
                 if type == "exit" {
                     return .success(CheckStatus.valid(item: item, variation: variation))
@@ -171,5 +183,6 @@ final class DatalessTicketValidator {
         case product
         case incomplete(questions: [Question], answers: [Answer]?)
         case rules(reason: String?)
+        case exchange
     }
 }

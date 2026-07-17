@@ -1374,6 +1374,10 @@ class TicketJsonLogicCheckerTests: XCTestCase {
         func getSubEvent(id: Identifier, for event: Event) -> Result<SubEvent?, Error> {
             .success(nil)
         }
+
+        func getEventSettings(in event: Event) -> EventSettings? {
+            nil
+        }
         
         func store<T>(_ resource: T, for event: Event) where T : Model {
             stored.append(resource)

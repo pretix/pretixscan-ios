@@ -59,9 +59,6 @@ public protocol DataStore: DatalessDataStore {
     /// Retrieve all `OrderPosition`s linked to the specified `ReusableMedium`
     func getOrderPositions(linkedToMedium medium: ReusableMedium, in event: Event) -> [OrderPosition]
 
-    /// Retrieve the event's `EventSettings`, if previously synced
-    func getEventSettings(in event: Event) -> EventSettings?
-
     /// Returns whether any `ReusableMedium` is linked to the specified `OrderPosition`
     func hasReusableMedium(linkedToPosition orderPositionIdentifier: Identifier, in event: Event) -> Bool
 

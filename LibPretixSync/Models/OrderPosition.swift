@@ -132,8 +132,8 @@ public struct OrderPosition: Model {
     public func createRedemptionResponse(force: Bool, ignoreUnpaid: Bool, in event: Event, in checkInList: CheckInList, as type: String = "entry",
                                          with questions: [Question] = [], dataStore: DataStore? = nil, nowDate: Date = Date(),
                                          mediumUsed: Bool = false) -> RedemptionResponse? {
-        // Check if this ticket is for the correct sub event
-        guard (checkInList.subEvent == nil || self.subEvent == checkInList.subEvent) else {
+        // Check if this ticket is for the correct sub event; forced medium scans pass (services/checkin.py:1062)
+        guard (checkInList.subEvent == nil || self.subEvent == checkInList.subEvent || (mediumUsed && force)) else {
             return nil
         }
 
@@ -178,7 +178,7 @@ public struct OrderPosition: Model {
             return RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .unpaid, position: self, lastCheckIn: nil, questions: nil, answers: nil)
         }
 
-        if let item = self.item, item.mediaPolicy != .none, item.mediaType != .none, !mediumUsed {
+        if let item = self.item, item.mediaPolicy != .none, item.mediaType != .none, !mediumUsed, !force {
             let hasLinkedReusableMedium = dataStore?.hasReusableMedium(linkedToPosition: self.identifier, in: event) ?? false
             if !hasLinkedReusableMedium {
                 return RedemptionResponse(status: .error, reasonExplanation: nil,

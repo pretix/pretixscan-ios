@@ -286,6 +286,10 @@ extension RedemptionResponse {
     static var product: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .product, questions: nil)
     }
+
+    static var exchangeOffline: Self {
+        RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .exchangeOffline, questions: nil)
+    }
     
     static var rules: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .rules, questions: nil)
@@ -294,7 +298,12 @@ extension RedemptionResponse {
     static var ambiguous: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .ambiguous, questions: nil)
     }
-    
+
+    static func ambiguous(with orderPosition: OrderPosition) -> Self {
+        let response = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .ambiguous, questions: nil)
+        return appendDataFromOfflineMetadataForStatusVisualization(response, orderPosition: orderPosition)
+    }
+
     static var blocked: Self {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .blocked, questions: nil)
     }
@@ -303,11 +312,6 @@ extension RedemptionResponse {
         RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalidTime, questions: nil)
     }
 
-    static func invalidTime(with orderPosition: OrderPosition) -> Self {
-        let response = RedemptionResponse(status: .error, reasonExplanation: nil, errorReason: .invalidTime, questions: nil)
-        return appendDataFromOfflineMetadataForStatusVisualization(response, orderPosition: orderPosition)
-    }
-    
     init(incompleteQuestions: [Question], _ answers: [Answer]?) {
         self = RedemptionResponse(status: .incomplete, reasonExplanation: nil, errorReason: nil, position: nil, lastCheckIn: nil, questions: incompleteQuestions, answers: answers, checkInAttention: nil)
     }

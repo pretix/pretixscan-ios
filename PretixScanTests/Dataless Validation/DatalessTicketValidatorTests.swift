@@ -23,7 +23,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -44,7 +44,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         
         // act
         let expectation = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             expectation.fulfill()
         })
         
@@ -66,7 +66,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation1 = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation1.fulfill()
@@ -77,7 +77,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         let answer1 = answer(for: mockQuestions[0].identifier, value: "True")
         
         let expectation2 = expectation(description: "Redeem 2")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: [answer1], as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: [answer1], as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation2.fulfill()
@@ -103,7 +103,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -129,7 +129,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -153,7 +153,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -177,7 +177,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -201,7 +201,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation1 = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation1.fulfill()
@@ -210,7 +210,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         
         let expectation2 = expectation(description: "Redeem2")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation2.fulfill()
@@ -234,7 +234,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation1 = expectation(description: "Entry")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation1.fulfill()
@@ -243,7 +243,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         
         let expectation2 = expectation(description: "Exit")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "exit", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation2.fulfill()
@@ -252,7 +252,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         
         let expectation3 = expectation(description: "Entry 2")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation3.fulfill()
@@ -275,7 +275,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation1 = expectation(description: "Entry")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation1.fulfill()
@@ -284,7 +284,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         
         let expectation2 = expectation(description: "Exit")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "exit", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation2.fulfill()
@@ -293,7 +293,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         
         let expectation3 = expectation(description: "Entry 2")
-        sut.redeem(mockCheckInListNoEntryAfterExit, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListNoEntryAfterExit, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation3.fulfill()
@@ -316,7 +316,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
         let checkInDate = dateFormatter.date(from: "2023-02-03T22:59:59.000Z")!
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -339,7 +339,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
         let checkInDate = dateFormatter.date(from: "2023-02-03T22:59:59.000Z")!
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -362,7 +362,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
         let checkInDate = dateFormatter.date(from: "2023-02-03T23:01:01.000Z")!
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -385,7 +385,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
         let checkInDate = dateFormatter.date(from: "2023-02-03T23:01:01.000Z")!
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -408,7 +408,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
         let checkInDate = dateFormatter.date(from: "2023-02-03T11:01:01.000Z")!
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -431,7 +431,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
         let checkInDate = dateFormatter.date(from: "2023-02-03T11:01:01.000Z")!
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -454,7 +454,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
         let checkInDate = dateFormatter.date(from: "2023-02-03T10:59:59.000Z")!
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", nowDate: checkInDate, completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -477,7 +477,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
         let checkInDate = dateFormatter.date(from: "2023-02-03T10:59:59.000Z")!
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "exit", nowDate: checkInDate, completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -499,7 +499,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -521,7 +521,7 @@ class DatalessTicketValidatorTests: XCTestCase {
         var resultResponse: RedemptionResponse?
         var resultError: Error?
         let expectation = expectation(description: "Redeem")
-        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, ignoreUnpaid: false, answers: nil, as: "exit", completionHandler: {(response, err) in
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "exit", completionHandler: {(response, err) in
             resultResponse = response
             resultError = err
             expectation.fulfill()
@@ -535,6 +535,80 @@ class DatalessTicketValidatorTests: XCTestCase {
         XCTAssertEqual(resultResponse!.errorReason, .blocked)
     }
     
+    func testMediaPolicyItemWithEnforcementRefusesExchangeOffline() {
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let ds = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItemsWithMediaPolicy, checkIns: [],
+                               eventSettings: EventSettings(reusableMediaUsageEnforced: true))
+        let sut = DatalessTicketValidator(dataStore: ds)
+
+        var resultResponse: RedemptionResponse?
+        let expectation = expectation(description: "Redeem")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, _) in
+            resultResponse = response
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5, handler: nil)
+
+        XCTAssertEqual(resultResponse?.status, .error)
+        XCTAssertEqual(resultResponse?.errorReason, .exchangeOffline)
+    }
+
+    func testMediaPolicyItemWithEnforcementRefusesExchangeOfflineOnExit() {
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let ds = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItemsWithMediaPolicy, checkIns: [],
+                               eventSettings: EventSettings(reusableMediaUsageEnforced: true))
+        let sut = DatalessTicketValidator(dataStore: ds)
+
+        var resultResponse: RedemptionResponse?
+        let expectation = expectation(description: "Redeem")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "exit", completionHandler: {(response, _) in
+            resultResponse = response
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5, handler: nil)
+
+        XCTAssertEqual(resultResponse?.status, .error)
+        XCTAssertEqual(resultResponse?.errorReason, .exchangeOffline)
+    }
+
+    func testMediaPolicyItemWithoutEnforcementRedeemsNormally() {
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let ds = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItemsWithMediaPolicy, checkIns: [],
+                               eventSettings: EventSettings(reusableMediaUsageEnforced: false))
+        let sut = DatalessTicketValidator(dataStore: ds)
+
+        var resultResponse: RedemptionResponse?
+        let expectation = expectation(description: "Redeem")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: false, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, _) in
+            resultResponse = response
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5, handler: nil)
+
+        XCTAssertEqual(resultResponse?.status, .redeemed)
+    }
+
+    func testMediaPolicyItemWithForceBypassesGate() {
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let ds = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], questions: [], items: mockItemsWithMediaPolicy, checkIns: [],
+                               eventSettings: EventSettings(reusableMediaUsageEnforced: true))
+        let sut = DatalessTicketValidator(dataStore: ds)
+
+        var resultResponse: RedemptionResponse?
+        let expectation = expectation(description: "Redeem")
+        sut.redeem(mockCheckInListAllProducts, mockEvent, qrCode, force: true, ignoreUnpaid: false, answers: nil, as: "entry", completionHandler: {(response, _) in
+            resultResponse = response
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: 5, handler: nil)
+
+        XCTAssertEqual(resultResponse?.status, .redeemed)
+    }
+
     // MARK: - Mock helpers
     
     private var dateFormatter: DateFormatter = {
@@ -550,16 +624,19 @@ class DatalessTicketValidatorTests: XCTestCase {
         private let items: [Item]
         private var checkIns: [QueuedRedemptionRequest]
         private let blocked: [BlockedSecret]
-        
+        private let eventSettings: EventSettings?
+
         var stored: [Codable] = []
-        
-        init(keys: [String], revoked: [String], questions: [Question], items: [Item], checkIns: [QueuedRedemptionRequest], blocked: [BlockedSecret] = []) {
+
+        init(keys: [String], revoked: [String], questions: [Question], items: [Item], checkIns: [QueuedRedemptionRequest], blocked: [BlockedSecret] = [],
+             eventSettings: EventSettings? = nil) {
             self.keys = keys
             self.revoked = revoked
             self.questions = questions
             self.items = items
             self.checkIns = checkIns
             self.blocked = blocked
+            self.eventSettings = eventSettings
         }
         
         func getValidKeys(for event: Event) -> Result<[EventValidKey], Error> {
@@ -593,7 +670,11 @@ class DatalessTicketValidatorTests: XCTestCase {
         func getSubEvent(id: Identifier, for event: Event) -> Result<SubEvent?, Error> {
             .success(nil)
         }
-        
+
+        func getEventSettings(in event: Event) -> EventSettings? {
+            eventSettings
+        }
+
         func store<T>(_ resource: T, for event: Event) where T : Model {
             stored.append(resource)
             if let resp = resource as? QueuedRedemptionRequest {
@@ -639,6 +720,17 @@ class DatalessTicketValidatorTests: XCTestCase {
         })
     }
     
+    /// `mockItems` with item1 requiring a reusable medium.
+    var mockItemsWithMediaPolicy: [Item] {
+        let jsonData = testFileContents("item1", "json")
+        var json = String(data: jsonData, encoding: .utf8)!
+        let extraFields = ",\n\"media_policy\": \"reuse\",\n\"media_type\": \"barcode\""
+        let insertionIndex = json.index(json.lastIndex(of: "}")!, offsetBy: 0)
+        json.insert(contentsOf: extraFields, at: insertionIndex)
+        let item1WithMediaPolicy = try! jsonDecoder.decode(Item.self, from: json.data(using: .utf8)!)
+        return [item1WithMediaPolicy] + mockItems.filter { $0.identifier != item1WithMediaPolicy.identifier }
+    }
+
     var mockQuestions: [Question] {
         ["question1", "question2", "question3"].map({item -> Question in
             let jsonData = testFileContents(item, "json")
