@@ -47,11 +47,11 @@ extension SignedTicketData {
             return nil
         }
         
-        let payloadLength = Int(data[1]) << 2 + Int(data[2])
-        let signatureLength = Int(data[3]) << 2 + Int(data[4])
+        let payloadLength = Int(data[1]) << 8 + Int(data[2])
+        let signatureLength = Int(data[3]) << 8 + Int(data[4])
         
-        if data.count < (5 + signatureLength) {
-            logger.debug("base64 value has insufficient leading signature bytes")
+        if data.count < (5 + payloadLength + signatureLength) {
+            logger.debug("base64 value has insufficient data bytes")
             return nil
         }
         
