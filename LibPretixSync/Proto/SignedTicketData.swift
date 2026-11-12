@@ -50,7 +50,7 @@ extension SignedTicketData {
         let payloadLength = Int(data[1]) << 8 + Int(data[2])
         let signatureLength = Int(data[3]) << 8 + Int(data[4])
         
-        if data.count < (5 + payloadLength + signatureLength) {
+        if data.count != (5 + payloadLength + signatureLength) {
             logger.debug("base64 value has insufficient data bytes")
             return nil
         }
@@ -58,6 +58,11 @@ extension SignedTicketData {
         let payload = data[5..<(5 + payloadLength)]
         let signature = data[(5 + payloadLength)..<(5 + payloadLength + signatureLength)]
         let ticketInformation = TicketInformation(signature: signature, payload: payload)
+        
+        if String(Self.encodeBase64(ticketInformation).reversed()) != base64 {
+            logger.debug("base64 doesn't match reconstructed")
+            return nil
+        }
         
         if !ticketInformation.hasValidSignature(keys) {
             logger.debug("base64 signature is not valid")
@@ -77,6 +82,19 @@ extension SignedTicketData {
             logger.error("Failed to decode protobuf Ticket payload: \(error.localizedDescription)")
             return nil
         }
+    }
+    
+    static func encodeBase64(_ ti: TicketInformation) -> String {
+        var data = Data([
+            Self.version,
+            UInt8((ti.payload.count >> 8) & 0xFF),
+            UInt8(ti.payload.count & 0xFF),
+            UInt8((ti.signature.count >> 8) & 0xFF),
+            UInt8(ti.signature.count & 0xFF)
+        ])
+        data.append(ti.payload)
+        data.append(ti.signature)
+        return data.base64EncodedString()
     }
     
     /// Converts the `validFromUnixTime` value of the ticket to a date if present. A value if 0 is interpreted as if the value is not set and returns `nil`.
