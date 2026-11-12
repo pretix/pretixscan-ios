@@ -97,6 +97,28 @@ class TicketSignatureCheckerTests: XCTestCase {
         XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.invalid))
     }
     
+    func testInvalidLengthByPrefix() throws {
+        // arrange
+        let qrCode = "AAE4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKgjAPAQA"
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.invalid))
+    }
+    
+    func testBase64Padding() throws {
+        // arrange
+        let qrCode = "==E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKgjAPAQA"
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.invalid))
+    }
+    
     func testUnknownProductWithLimitProducts() throws {
         // arrange
         let jsonData = testFileContents("list10", "json")
