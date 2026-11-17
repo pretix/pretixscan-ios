@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import CryptoKit
 @testable import pretixSCAN
 
 
@@ -84,6 +85,91 @@ class TicketSignatureCheckerTests: XCTestCase {
         // act
         let result = sut.redeem(secret: qrCode, event: mockEvent)
         XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.invalid))
+    }
+    
+    func testInvalidLength() throws {
+        // arrange
+        let qrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKgjAPAQA"
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.invalid))
+    }
+    
+    func testInvalidLengthByPrefix() throws {
+        // arrange
+        let qrCode = "AAE4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKgjAPAQA"
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.invalid))
+    }
+    
+    func testBase64Padding() throws {
+        // arrange
+        let qrCode = "==E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKgjAPAQA"
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        // act
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
+        XCTAssertEqual(result, Result.failure(TicketSignatureChecker.ValidationError.invalid))
+    }
+    
+    func testNonCanonicalEncodingsOfValidTicketAreInvalid() throws {
+        let cases: [(name: String, qrCode: String)] = [
+            ("padding prefix", "==" + validQrCode),
+            ("trailing bytes after signature", "AAAA" + validQrCode),
+            ("payload length too long", "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAeAQA"),
+            ("signature length too long", "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAGAPAQA"),
+        ]
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        for (name, qrCode) in cases {
+            XCTAssertEqual(sut.redeem(secret: qrCode, event: mockEvent), .failure(.invalid), name)
+        }
+    }
+    
+    func testRevokedTicketInNonCanonicalEncodingIsNotAccepted() throws {
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [validQrCode], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        XCTAssertEqual(sut.redeem(secret: validQrCode, event: mockEvent), .failure(.revoked))
+        for qrCode in ["==" + validQrCode, "AAAA" + validQrCode] {
+            XCTAssertEqual(sut.redeem(secret: qrCode, event: mockEvent), .failure(.invalid), qrCode)
+        }
+    }
+    
+    func testMalleatedSignatureIsInvalid() throws {
+        let qrCodeWithSPlusGroupOrder = "U4BibyTSylQOgeKjuMPiTXiaz/E4lH/hJ/bb/WNGfr043gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+        let dataStore = MockDataStore(keys: mockEvent.validKeys!.pems, revoked: [], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        XCTAssertEqual(sut.redeem(secret: qrCodeWithSPlusGroupOrder, event: mockEvent), .failure(.invalid))
+    }
+    
+    func testSignedTicketWithPayloadLongerThan255BytesIsValid() throws {
+        let signingKey = Curve25519.Signing.PrivateKey()
+        var ticket = Ticket()
+        ticket.seed = String(repeating: "s", count: 300)
+        ticket.item = 1
+        let payload: Data = try ticket.serializedBytes()
+        let ticketInformation = TicketInformation(signature: try signingKey.signature(for: payload), payload: payload)
+        let qrCode = String(SignedTicketData.encodeBase64(ticketInformation).reversed())
+        let dataStore = MockDataStore(keys: [Self.validKey(for: signingKey.publicKey)], revoked: [], items: [])
+        let sut = TicketSignatureChecker(dataStore: dataStore)
+        
+        let result = sut.redeem(secret: qrCode, event: mockEvent)
+        
+        XCTAssertGreaterThanOrEqual(payload.count, 256)
+        let header = try XCTUnwrap(Data(base64Encoded: String(qrCode.reversed())))
+        XCTAssertEqual(Array(header[1...2]), [UInt8(payload.count >> 8), UInt8(payload.count & 0xFF)])
+        XCTAssertEqual(try result.get().seed, ticket.seed)
     }
     
     func testUnknownProductWithLimitProducts() throws {
@@ -187,6 +273,15 @@ class TicketSignatureCheckerTests: XCTestCase {
     var mockEvent: Event {
         let eventJsonData = testFileContents("event1", "json")
         return try! jsonDecoder.decode(Event.self, from: eventJsonData)
+    }
+    
+    let validQrCode = "E4BibyTSylQOgeKjuMPiTDxi5HXPuTVsx1qCli3IL0143gj0EZXOB9iQInANxRFJTt4Pf9nXnHdB91Qk/RN0L5AIBABSxw2TKFnSUNUCKAEAPAQA"
+    
+    /// Wraps a raw Ed25519 public key as a base64 encoded PEM SubjectPublicKeyInfo, the format of `EventValidKeys.pems`.
+    static func validKey(for publicKey: Curve25519.Signing.PublicKey) -> String {
+        let subjectPublicKeyInfo = Data([0x30, 0x2a, 0x30, 0x05, 0x06, 0x03, 0x2b, 0x65, 0x70, 0x03, 0x21, 0x00]) + publicKey.rawRepresentation
+        let pem = "-----BEGIN PUBLIC KEY-----\n\(subjectPublicKeyInfo.base64EncodedString())\n-----END PUBLIC KEY-----\n"
+        return Data(pem.utf8).base64EncodedString()
     }
     
     var mockSignedTicket: SignedTicketData {
