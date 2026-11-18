@@ -197,3 +197,10 @@
 "Scanned:" = "Escaneado:";
 "pretixSCAN needs access to your camera to scan tickets. You can grant access in Settings." = "pretixSCAN necesita acceso a su cámara para escanear las entradas. Puede concederle acceso en «Ajustes».";
 "Camera Access Required" = "Se requiere acceso a la cámara";
+"Medium Exchange Needed" = "Se necesita un cambio de soporte reutilizable";
+"This ticket must be exchanged for a reusable medium. This version of pretixSCAN cannot perform the exchange." = "Esta entrada debe canjearse por una entrada reutilizable. Esta versión de pretixSCAN no permite realizar el canje.";
+"Ticket already exchanged" = "Billete ya canjeado";
+"Already Exchanged" = "Ya canjeado";
+"Reusable medium invalid" = "Soporte reutilizable no válido";
+"Reusable medium already exists" = "Ya existe un soporte reutilizable";
+"This ticket needs to be exchanged, but this isn't possible while offline" = "Hay que cambiar este billete, pero no es posible hacerlo sin conexión";
